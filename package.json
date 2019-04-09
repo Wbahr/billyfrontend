@@ -20,6 +20,7 @@
   "homepage": "https://github.com/airline-hydraulics/rma#readme",
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
