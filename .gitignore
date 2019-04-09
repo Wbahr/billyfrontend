@@ -1,0 +1,8 @@
+# ignore these directories
+/node_modules
+/dist
+
+# ignore these file types
+
+# ignore these files
+package-lock.json
