@@ -6,3 +6,5 @@
 
 # ignore these files
 package-lock.json
+*.xml
+*.iml
