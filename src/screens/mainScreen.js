@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 const Header = styled.h1`
   color: green
+  fontSize: 20px
 `
 class MainScreen extends React.Component {
 
