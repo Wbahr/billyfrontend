@@ -6,9 +6,13 @@ const MainButton = styled.button`
    height: 50px;
    color: white;
    font-size: 18px;
-   background-color: red;
+   background: linear-gradient(#b31217, #e52d27);
    border-radius: 50px;
    cursor: pointer;
+   
+   :hover {
+      background: linear-gradient(#74121D, #b31217);
+   };
 `
 
 class Button extends React.Component {
