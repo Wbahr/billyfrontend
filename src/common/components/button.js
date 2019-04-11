@@ -1,16 +1,28 @@
-import React from "react"
+import React from 'react'
+import styled from 'styled-components'
+
+const MainButton = styled.button`
+   width: 150px;
+   height: 50px;
+   color: white;
+   font-size: 18px;
+   background-color: red;
+   border-radius: 50px;
+   cursor: pointer;
+`
 
 class Button extends React.Component {
-
   render(){
     const {
-      name
+      text,
+      onclick,
+      disabled
     } = this.props
 
     return(
-      <button>
-
-      </button>
+      <MainButton onClick={onclick} disabled={disabled}>
+        {text}
+      </MainButton>
     )
   }
 }

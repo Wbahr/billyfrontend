@@ -1,19 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
-// import DatePicker from "react-datepicker"
+import Button from '../common/components/button'
+// import DatePicker from 'react-datepicker'
 
-const Header = styled.h1`
-  color: green
-  fontSize: 20px
+const Background = styled.div`
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding 0;
+  background-color: grey;
+`
+
+const AccountContainer = styled.div`
+  width: 744px;
+  height: 647px;
+  background-color: white;
 `
 class MainScreen extends React.Component {
-
-
   render(){
     return(
-      <div>
-        <Header>This is a test of styled components</Header>
-      </div>
+      <Background>
+        <AccountContainer>
+          This is a test of styled components
+          <Button
+            text={"Process Request"}
+          />
+        </AccountContainer>
+      </Background>
     )
   }
 }
