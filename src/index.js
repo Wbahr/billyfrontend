@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
-// import { createStore } from 'redux'
-// import store from './redux/store'
+import { createStore } from 'redux'
+import reducers from './config/reducers'
+
 import MainScreen from "./screens/mainScreen"
 
 const App = () => {
@@ -16,9 +17,7 @@ const App = () => {
 };
 
 ReactDOM.render(
-  <Provider>
-  {/*<Provider store={store}>*/}
-  {/*<Provider store={createStore()}>*/}
+  <Provider store={createStore(reducers)}>
     <App />
   </Provider>,
   document.getElementById('index')
