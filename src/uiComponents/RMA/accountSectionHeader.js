@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Header = styled.div`
+const StyledHeaderDiv = styled.div`
    width: 100%;
    height: 36px;
    border-bottom: 1px solid #ccc;
+   margin-bottom: 20px;
 `
 const StyledHeaderText = styled.p`
    color: #DB1633;
@@ -20,9 +21,9 @@ class accountSectionHeader extends React.Component {
     } = this.props
 
     return(
-      <Header>
+      <StyledHeaderDiv>
         <StyledHeaderText>{text}</StyledHeaderText>
-      </Header>
+      </StyledHeaderDiv>
     )
   }
 }

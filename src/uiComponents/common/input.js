@@ -6,7 +6,12 @@ const MainInput = styled.input`
    height: 24px;
    font-size: 14px;
    border-radius: 3px;
-   margin: 10px;
+   padding-left: 8px;
+   margin: 10px; 
+   ::placeholder {
+      color: black;
+      font-size: 12px;
+   }
 `
 
 class Input extends React.Component {
