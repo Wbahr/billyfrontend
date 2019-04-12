@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import AccountSectionHeader from '../uiComponents/RMA/accountSectionHeader'
-// import Button from '../common/components/button'
+import Input from '../uiComponents/common/input'
 // import DatePicker from 'react-datepicker'
 
 const Background = styled.div`
@@ -37,7 +37,12 @@ class MainScreen extends React.Component {
     return(
       <Background>
         <AccountContainer>
-          <AccountSectionHeader />
+          <AccountSectionHeader
+            text={'Return Merchandise Authorization (RMA)'}
+          />
+          <Input
+            placeholder={'Search PO #, Order #, or Item ID'}
+          />
         </AccountContainer>
       </Background>
     )

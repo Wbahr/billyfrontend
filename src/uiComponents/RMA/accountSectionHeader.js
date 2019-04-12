@@ -3,19 +3,25 @@ import styled from 'styled-components'
 
 const Header = styled.div`
    width: 100%;
-   height: 32px;
-   color: #DB1633;
-   font-size: 18px;
-   padding: 10px 0;
+   height: 36px;
    border-bottom: 1px solid #ccc;
 `
-
+const StyledHeaderText = styled.p`
+   color: #DB1633;
+   font-family: verdana;
+   font-size: 18px;
+   font-weight: bold;
+   padding: 8px 0 8px 8px;
+`
 class accountSectionHeader extends React.Component {
   render(){
+    const {
+      text
+    } = this.props
 
     return(
       <Header>
-        <p>RMA - Return Management Account</p>
+        <StyledHeaderText>{text}</StyledHeaderText>
       </Header>
     )
   }
