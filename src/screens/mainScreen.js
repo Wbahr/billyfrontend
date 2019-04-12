@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from '../common/components/button'
+// import Button from '../common/components/button'
 // import DatePicker from 'react-datepicker'
 
 const Background = styled.div`
@@ -33,13 +33,7 @@ class MainScreen extends React.Component {
       <Background>
         <AccountContainer>
           This is a test of styled components
-          <Button
-            text={"Process Request"}
-          />
-          {/*<DatePicker*/}
-            {/*selected={this.state.startDate}*/}
-            {/*onChange={this.handleChange}*/}
-          {/*/>*/}
+
         </AccountContainer>
       </Background>
     )
