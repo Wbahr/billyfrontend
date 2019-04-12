@@ -1,20 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import AccountSectionHeader from '../uiComponents/RMA/accountSectionHeader'
 // import Button from '../common/components/button'
 // import DatePicker from 'react-datepicker'
 
 const Background = styled.div`
   width: 100vw;
   height: 100vh;
-   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
   padding 0;
   background-color: grey;
 `
 
 const AccountContainer = styled.div`
   width: 744px;
-  height: 647px;
+  height: 75vh;
   background-color: white;
+  padding: 10px;
 `
 class MainScreen extends React.Component {
   // state = {
@@ -32,8 +37,7 @@ class MainScreen extends React.Component {
     return(
       <Background>
         <AccountContainer>
-          This is a test of styled components
-
+          <AccountSectionHeader />
         </AccountContainer>
       </Background>
     )
