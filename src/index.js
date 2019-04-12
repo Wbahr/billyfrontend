@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducers from './config/reducers'
 
-import MainScreen from "./screens/mainScreen"
+import MainScreen from "./containerComponents/mainScreen"
 
 const App = () => {
   return(
