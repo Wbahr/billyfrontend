@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import AccountSectionHeader from '../uiComponents/RMA/accountSectionHeader'
 import Input from '../uiComponents/common/input'
+import Callout from '../uiComponents/common/callout'
 // import DatePicker from 'react-datepicker'
 
 const StyledBackground = styled.div`
@@ -43,6 +44,10 @@ class MainScreen extends React.Component {
           <Input
             placeholder={'Search PO #, Order #, or Item ID'}
           />
+          <Callout
+            text='This is a test of the callout component'
+          />
+
         </StyledAccountContainer>
       </StyledBackground>
     )
