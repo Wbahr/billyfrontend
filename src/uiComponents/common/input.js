@@ -15,6 +15,14 @@ const MainInput = styled.input`
 `
 
 class Input extends React.Component {
+  state = {
+    value
+  }
+
+  returnValue = (e) => {
+    this.setState({value: e.target.value})
+  }
+
   render(){
     const {
       placeholder,
@@ -23,6 +31,7 @@ class Input extends React.Component {
     return(
       <MainInput
         placeholder={placeholder}
+        onChange={this.returnValue}
       />
     )
   }
