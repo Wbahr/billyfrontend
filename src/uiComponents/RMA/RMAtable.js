@@ -1,25 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import RMAtable from '../uiComponents/RMA/RMAtable'
-
-
-const StyledBackground = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
-`
-
-const StyledAccountContainer = styled.div`
-  width: 744px;
-  height: 75vh;
-  background-color: white;
-  padding: 10px;
-`
+import AccountSectionHeader from './accountSectionHeader'
+import Input from '../common/input'
+import ReactTable from "react-table"
+import 'react-table/react-table.css'
 
 const StyledLink = styled.div`
   background: linear-gradient(#bababa, #555555);
@@ -29,7 +13,7 @@ const StyledLink = styled.div`
   border-radius: 50px;
   padding: 4px;
 `
-class MainScreen extends React.Component {
+class RMAtable extends React.Component {
   state = {
     showDetail: false
   }
@@ -134,13 +118,20 @@ class MainScreen extends React.Component {
     }]
 
     return(
-      <StyledBackground>
-        <StyledAccountContainer>
-          <RMAtable/>
-        </StyledAccountContainer>
-      </StyledBackground>
+      <React.Fragment>
+        <AccountSectionHeader
+          text={'Return Merchandise Authorization (RMA)'}
+        />
+        <Input
+          placeholder={'Search PO #, Order #, or Item ID'}
+        />
+        <ReactTable
+          data={data}
+          columns={columns}
+        />
+      </React.Fragment>
     )
   }
 }
 
-export default MainScreen
+export default RMAtable
