@@ -24,7 +24,30 @@ const StyledAccountContainer = styled.div`
   padding: 10px;
 `
 
-const list = [
+const StyledLink = styled.div`
+  border: 2px solid grey;
+  background: grey;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50px;
+`
+class MainScreen extends React.Component {
+  // state = {
+  //   startDate: new Date()
+  // }
+
+  // handleChange = () => {
+  //   const {
+  //     startDate
+  //   } = this.state
+  //
+  //   console.log({startDate})
+  // }
+
+
+  render(){
+    const data = [
     {
       orderDate: '10/3/2018',
       orderNum: '234548',
@@ -62,21 +85,44 @@ const list = [
     }
   ]
 
-class MainScreen extends React.Component {
-  // state = {
-  //   startDate: new Date()
-  // }
+  const columns = [
+    {
+      Header: 'Order Date',
+      accessor: 'orderDate' // String-based value accessors!
+    },
+    {
+      Header: 'Order #',
+      accessor: 'orderNum',
+      // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+    },
+    {
+      Header: 'PO #',
+      accessor: 'poNum' // String-based value accessors!
+    },
+    {
+      Header: 'Total',
+      accessor: 'total' // String-based value accessors!
+    },
+    {
+      Header: 'Complete',
+      accessor: 'status' // String-based value accessors!
+    },
+    {
+      Header: 'View Details',
+      accessor: 'orderNum',
+      Cell: props => <StyledLink>Click to View</StyledLink> // Custom cell components!
+    },
+    // {
+    //   id: 'friendName', // Required because our accessor is not a string
+    //   Header: 'Friend Name',
+    //   accessor: d => d.friend.name // Custom value accessors!
+    // },
+    // {
+    //   Header: props => <span>Friend Age</span>, // Custom header components!
+    //   accessor: 'friend.age'
+    // }
+    ]
 
-  // handleChange = () => {
-  //   const {
-  //     startDate
-  //   } = this.state
-  //
-  //   console.log({startDate})
-  // }
-
-
-  render(){
     return(
       <StyledBackground>
         <StyledAccountContainer>
@@ -87,6 +133,10 @@ class MainScreen extends React.Component {
             placeholder={'Search PO #, Order #, or Item ID'}
           />
 
+          <ReactTable
+            data={data}
+            columns={columns}
+          />
         </StyledAccountContainer>
       </StyledBackground>
     )

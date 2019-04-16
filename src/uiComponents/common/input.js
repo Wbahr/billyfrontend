@@ -15,10 +15,7 @@ const MainInput = styled.input`
 `
 
 class Input extends React.Component {
-  state = {
-    value
-  }
-
+  
   returnValue = (e) => {
     this.setState({value: e.target.value})
   }
