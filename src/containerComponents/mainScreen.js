@@ -25,35 +25,51 @@ const StyledAccountContainer = styled.div`
 `
 
 const StyledLink = styled.div`
-  border: 2px solid grey;
-  background: grey;
+  background: linear-gradient(#bababa, #555555);
   color: white;
   cursor: pointer;
   text-align: center;
   border-radius: 50px;
+  padding: 4px;
 `
 class MainScreen extends React.Component {
-  // state = {
-  //   startDate: new Date()
-  // }
+  state = {
+    showDetail: false
+  }
 
-  // handleChange = () => {
-  //   const {
-  //     startDate
-  //   } = this.state
-  //
-  //   console.log({startDate})
-  // }
-
+  viewDetails = (order) => {
+    console.log(`viewing details of ${order}`)
+  }
 
   render(){
     const data = [
     {
       orderDate: '10/3/2018',
-      orderNum: '234548',
+      orderNum: '1234',
       poNum: '23422',
       total: '$201.00',
-      status: 'Pending'
+      status: 'Pending',
+      packing: 'Partial',
+      shippingAddress: {
+        name: 'Bobby',
+        address1: '690 Mulberry Drive',
+        city: 'Nazareth',
+        state: 'PA',
+        zip: '18064'
+      },
+      items: [
+        {
+          itemId: 'AZ16-12ZVRK',
+          customerPartNum: 'AZ16-12ZVRK',
+          itemDesc: 'SCHMERSAL Keyed Interlock Schmeral AZ16-12ZVRK',
+          quantityOrdered: 2,
+          quantityOpen: 0,
+          promiseDate: '12/1/2018',
+          trackingCode: '1234523d32f3',
+          totalPrice: '$201.00',
+          unitPrice: '100.50'
+        }
+      ]
     },
     {
       orderDate: '11/5/2018',
@@ -82,6 +98,13 @@ class MainScreen extends React.Component {
       poNum: '23422',
       total: '$883.00',
       status: 'Complete'
+    },
+    {
+      orderDate: '10/4/2018',
+      orderNum: '645548',
+      poNum: '23422',
+      total: '$1,008.00',
+      status: 'Complete'
     }
   ]
 
@@ -108,20 +131,10 @@ class MainScreen extends React.Component {
       accessor: 'status' // String-based value accessors!
     },
     {
-      Header: 'View Details',
+      Header: '',
       accessor: 'orderNum',
-      Cell: props => <StyledLink>Click to View</StyledLink> // Custom cell components!
-    },
-    // {
-    //   id: 'friendName', // Required because our accessor is not a string
-    //   Header: 'Friend Name',
-    //   accessor: d => d.friend.name // Custom value accessors!
-    // },
-    // {
-    //   Header: props => <span>Friend Age</span>, // Custom header components!
-    //   accessor: 'friend.age'
-    // }
-    ]
+      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>View Details</StyledLink> // Custom cell components!
+    }]
 
     return(
       <StyledBackground>
