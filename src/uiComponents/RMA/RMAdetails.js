@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
-import { StyledText0, StyledText1 } from '../../styles/type'
+import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../common/button'
 
 const StyledRMAOrderDetails = styled.div`
@@ -58,6 +58,15 @@ const StyledRMAItemActionsContainer = styled.div`
   padding: 0 24px;
   background-color: #bbbbbb;
   height: 45px;
+`
+
+const StyledRMAReturnReasonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background-color: #ccc;
+  height: 45px;
+ 
 `
 
 const StyledSubmitButtonContainer = styled.div`
@@ -195,11 +204,37 @@ class RMAdetails extends React.Component {
           <StyledRMAItemActionsContainer>
             <StyledCheckbox type='checkbox'/>
             <p>Return <StyledInput /> of 5</p>
-            <p>Item Return Total: $85.50</p>
           </StyledRMAItemActionsContainer>
+          <StyledRMAReturnReasonContainer>
+            <select>
+              <option value='mistake'>Purchased by Mistake</option>
+              <option value='inaccurate'>Inaccurate Description / Recommendation</option>
+              <option value='damaged'>Product / Packaging arrived Damaged</option>
+              <option value='defective'>Item is Defective / Doesn't work</option>
+              <option value='late'>Item arrived too late</option>
+              <option value='incorrect'>Incorrect item sent</option>
+              <option value='excess'>Received more than ordered</option>
+              <option value='early'>Item arrived too early</option>
+              <option value='no_need'>No longer needed</option>
+              <option value='not_approved'>Customer did not approve purchase</option>
+              <option value='missing'>Missing items / Components</option>
+              <option value='other'>Other</option>
+            </select>
+            <input placeholder={'Please Specify'} />
+          </StyledRMAReturnReasonContainer>
+          {/*<div>*/}
+            {/*<select>*/}
+              {/*<option value='credit'>Airline Credit</option>*/}
+              {/*<option value='refund'>Refund</option>*/}
+              {/*<option value='credit'>Replacement</option>*/}
+            {/*</select>*/}
+          {/*</div>*/}
+          <div>
+            <textarea placeholder={'Please give a short comment of how the description / recommendation was inaccurate'} />
+          </div>
         </StyledRMAItemDetailContainer>
         <StyledSubmitButtonContainer>
-          <Button text='Submit Return Request' />
+          <Button text='Continue' />
         </StyledSubmitButtonContainer>
       </React.Fragment>
     )

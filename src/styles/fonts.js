@@ -10,5 +10,3 @@ export const StyledText0 = styled.span`
 export const StyledText1 = styled(StyledText0)`
   font-weight: 900;
 `
-
-

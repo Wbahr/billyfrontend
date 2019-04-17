@@ -22,11 +22,24 @@ const StyledActions = styled.div`
    background-color: #bbbbbb;
 `
 
+
+}
+
 class itemDetail extends React.Component {
+  state = {
+    input: ''
+  }
+}
+  const change = (e) => {
+    this.setState({input: e.target.value})
+  }
+
+
   render(){
 
     return(
       <StyledContainerDiv>
+        <input onChange={this.change} value={this.state.input}/>
       </StyledContainerDiv>
     )
   }
