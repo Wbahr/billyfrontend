@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/type'
+import Button from '../common/button'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -14,11 +15,71 @@ const StyledRMAList = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
+  padding-left: 10px;
+`
+
+const StyledRMAListGrey = styled(StyledRMAList)`
+  background-color: #E9E6E5;
+  width: 40%;
+  padding-top: 10px;
+`
+
+const StyledRMAItemDetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const StyledRMAItemDetailHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  height: 20px;
+ 
+  background-color: #404040;
+  color: white;
+  font-family: verdana;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 20px;
+`
+
+const StyledRMAItemPhotoContainer = styled.div`
+  width: 20%;
+`
+
+const StyledRMAItemDetailsContainer = styled.div`
+  display: flex;
+`
+
+const StyledRMAItemActionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background-color: #bbbbbb;
+  height: 45px;
+`
+
+const StyledSubmitButtonContainer = styled.div`
+  display: flex;
+  padding: 10px;
+  justify-content: flex-end;
+`
+
+const StyledCheckbox = styled.input`
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  padding-right: 18px;
+`
+
+const StyledInput = styled.input`
+  width: 30px;
+  height: 20px;
+  border-radius: 1px;
 `
 
 class RMAdetails extends React.Component {
-
-
 
   render(){
     const data = [
@@ -108,6 +169,36 @@ class RMAdetails extends React.Component {
             <StyledText0>Buffalo, NY 14219</StyledText0>
           </StyledRMAList>
         </StyledRMAOrderDetails>
+
+        <StyledRMAItemDetailContainer>
+          <StyledRMAItemDetailHeader>
+            <p>1</p>
+            <p>Item ID: AZ16-12ZVRK</p>
+            <p>387819</p>
+          </StyledRMAItemDetailHeader>
+          <StyledRMAItemDetailsContainer>
+            <StyledRMAItemPhotoContainer></StyledRMAItemPhotoContainer>
+            <StyledRMAListGrey>
+              <StyledText0><StyledText1>Order Date:</StyledText1> 10/3/2018</StyledText0>
+              <StyledText0><StyledText1>Order Number:</StyledText1> 1234</StyledText0>
+              <StyledText0><StyledText1>P.O. Number:</StyledText1> 43234</StyledText0>
+              <StyledText0><StyledText1>Status:</StyledText1> Complete</StyledText0>
+            </StyledRMAListGrey>
+            <StyledRMAListGrey>
+              <StyledText0><StyledText1>Order Date:</StyledText1> 10/3/2018</StyledText0>
+              <StyledText0><StyledText1>Order Number:</StyledText1> 1234</StyledText0>
+              <StyledText0><StyledText1>P.O. Number:</StyledText1> 43234</StyledText0>
+              <StyledText0><StyledText1>Status:</StyledText1> Complete</StyledText0>
+            </StyledRMAListGrey>
+          </StyledRMAItemDetailsContainer>
+          <StyledRMAItemActionsContainer>
+            <StyledCheckbox type='checkbox'/>
+            <p>Return <StyledInput /> of 5</p>
+          </StyledRMAItemActionsContainer>
+        </StyledRMAItemDetailContainer>
+        <StyledSubmitButtonContainer>
+          <Button text='Submit Return Request' />
+        </StyledSubmitButtonContainer>
       </React.Fragment>
     )
   }
