@@ -179,21 +179,23 @@ class RMAdetails extends React.Component {
           <StyledRMAItemDetailsContainer>
             <StyledRMAItemPhotoContainer></StyledRMAItemPhotoContainer>
             <StyledRMAListGrey>
-              <StyledText0><StyledText1>Order Date:</StyledText1> 10/3/2018</StyledText0>
-              <StyledText0><StyledText1>Order Number:</StyledText1> 1234</StyledText0>
-              <StyledText0><StyledText1>P.O. Number:</StyledText1> 43234</StyledText0>
-              <StyledText0><StyledText1>Status:</StyledText1> Complete</StyledText0>
+              <StyledText0><StyledText1>Customer Part #:</StyledText1> AZ16-12ZVRK</StyledText0>
+              <StyledText0>SCHMERSAL Keyed Interlock Schmersal AZ1612ZVRK</StyledText0>
+              <StyledText0><StyledText1>Quantity Ordered:</StyledText1> 2</StyledText0>
+              <StyledText0><StyledText1>Quantity Open:</StyledText1> 0</StyledText0>
             </StyledRMAListGrey>
             <StyledRMAListGrey>
-              <StyledText0><StyledText1>Order Date:</StyledText1> 10/3/2018</StyledText0>
-              <StyledText0><StyledText1>Order Number:</StyledText1> 1234</StyledText0>
-              <StyledText0><StyledText1>P.O. Number:</StyledText1> 43234</StyledText0>
-              <StyledText0><StyledText1>Status:</StyledText1> Complete</StyledText0>
+              <StyledText0><StyledText1>Promise Date:</StyledText1> 10/3/2018</StyledText0>
+              <StyledText1>Tracking Code(s):</StyledText1>
+              <StyledText0>1DC3529DK2SKX92</StyledText0>
+              <StyledText0><StyledText1>Total Price:</StyledText1> $171.00</StyledText0>
+              <StyledText0><StyledText1>Unit Price:</StyledText1> $85.50</StyledText0>
             </StyledRMAListGrey>
           </StyledRMAItemDetailsContainer>
           <StyledRMAItemActionsContainer>
             <StyledCheckbox type='checkbox'/>
             <p>Return <StyledInput /> of 5</p>
+            <p>Item Return Total: $85.50</p>
           </StyledRMAItemActionsContainer>
         </StyledRMAItemDetailContainer>
         <StyledSubmitButtonContainer>
