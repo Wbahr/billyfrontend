@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const MainInput = styled.input`
    width: 300px;
-   height: 24px;
-   font-size: 14px;
+   height: 32px;
+   font-size: 16px;
    border-radius: 3px;
    padding-left: 8px;
-   margin: 10px; 
+   margin: 10px 0; 
    ::placeholder {
-      color: black;
-      font-size: 12px;
+      color: grey;
+      font-size: 16px;
    }
 `
 

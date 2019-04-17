@@ -12,6 +12,10 @@ const StyledLink = styled.div`
   text-align: center;
   border-radius: 50px;
   padding: 4px;
+  
+  :hover {
+    background: linear-gradient(#555555, #bababa);
+  };
 `
 class RMAtable extends React.Component {
   state = {
@@ -113,8 +117,8 @@ class RMAtable extends React.Component {
     },
     {
       Header: '',
-      accessor: 'orderNum',
-      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>View Details</StyledLink> // Custom cell components!
+      accessor: '',
+      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>Manage Return</StyledLink> // Custom cell components!
     }]
 
     return(
@@ -126,6 +130,9 @@ class RMAtable extends React.Component {
           placeholder={'Search PO #, Order #, or Item ID'}
         />
         <ReactTable
+          sortable={true}
+          showPageSizeOptions={false}
+          minRows={5}
           data={data}
           columns={columns}
         />

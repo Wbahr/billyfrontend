@@ -5,7 +5,7 @@ const StyledHeaderDiv = styled.div`
    width: 100%;
    height: 36px;
    border-bottom: 1px solid #ccc;
-   margin-bottom: 20px;
+   margin-bottom: 16px;
 `
 const StyledHeaderText = styled.p`
    color: #DB1633;

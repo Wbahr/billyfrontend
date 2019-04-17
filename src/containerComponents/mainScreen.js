@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import RMAtable from '../uiComponents/RMA/RMAtable'
+import RMAdetails from '../uiComponents/RMA/RMAdetails'
 
 
 const StyledBackground = styled.div`
@@ -136,7 +137,8 @@ class MainScreen extends React.Component {
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          <RMAtable/>
+          {/*<RMAtable/>*/}
+          <RMAdetails />
         </StyledAccountContainer>
       </StyledBackground>
     )
