@@ -18,9 +18,13 @@ const RMAform = () => (
               <div>
                 {values.friends.map((friend, index) => (
                   <div key={index}>
-                    <Field type='checkbox' name={`returnItems.${index}.willReturn`} />
+                    <Field
+                      type='checkbox'
+                      name={`returnItems.${index}.willReturn`}
+                    />
                     <Field name={`returnItems.${index}.returnQuantity`} />
                     <Field component="select" name={`returnItems.${index}.returnReason`}>
+                      <option value='' selected disabled hidden>Select Return Reason</option>
                       <option value='mistake'>Purchased by Mistake</option>
                       <option value='inaccurate'>Inaccurate Description / Recommendation</option>
                       <option value='damaged'>Product / Packaging arrived Damaged</option>
@@ -35,12 +39,20 @@ const RMAform = () => (
                       <option value='other'>Other</option>
                     </Field>
                     <Field component="select" name={`returnItems.${index}.refundType`}>
+                      <option value='' selected disabled hidden>Select Refund Type</option>
                       <option value='credit'>Airline Credit</option>
                       <option value='refund'>Refund</option>
                       <option value='credit'>Replacement</option>
                     </Field>
-                    <Field name={`returnItems.${index}.otherDesc`} />
-                    <Field type='textarea' name={`returnItems.${index}.details`} />
+                    <Field
+                      placeholder='Please Specify'
+                      name={`returnItems.${index}.otherDesc`}
+                    />
+                    <Field
+                      component='textarea'
+                      placeholder='Please give a short comment of how the description / recommendation was inaccurate'
+                      name={`returnItems.${index}.details`}
+                    />
                   </div>
                 ))}
               </div>

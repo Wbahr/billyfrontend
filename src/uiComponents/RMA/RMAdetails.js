@@ -223,13 +223,13 @@ class RMAdetails extends React.Component {
             </select>
             <input placeholder={'Please Specify'} />
           </StyledRMAReturnReasonContainer>
-          {/*<div>*/}
-            {/*<select>*/}
-              {/*<option value='credit'>Airline Credit</option>*/}
-              {/*<option value='refund'>Refund</option>*/}
-              {/*<option value='credit'>Replacement</option>*/}
-            {/*</select>*/}
-          {/*</div>*/}
+          <div>
+            <select>
+              <option value='credit'>Airline Credit</option>
+              <option value='refund'>Refund</option>
+              <option value='credit'>Replacement</option>
+            </select>
+          </div>
           <div>
             <textarea placeholder={'Please give a short comment of how the description / recommendation was inaccurate'} />
           </div>
