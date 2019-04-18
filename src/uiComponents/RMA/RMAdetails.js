@@ -4,6 +4,7 @@ import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../common/button'
+import RMAform from './RMAform'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -233,6 +234,7 @@ class RMAdetails extends React.Component {
             <textarea placeholder={'Please give a short comment of how the description / recommendation was inaccurate'} />
           </div>
         </StyledRMAItemDetailContainer>
+        <RMAform />
         <StyledSubmitButtonContainer>
           <Button text='Continue' />
         </StyledSubmitButtonContainer>
