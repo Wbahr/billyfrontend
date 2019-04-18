@@ -5,8 +5,8 @@ import RMAdetails from '../uiComponents/RMA/RMAdetails'
 
 
 const StyledBackground = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,9 +17,10 @@ const StyledBackground = styled.div`
 
 const StyledAccountContainer = styled.div`
   width: 744px;
-  height: 75vh;
+  height: 100%;
   background-color: white;
   padding: 10px;
+  margin: 20px 0;
 `
 
 const StyledLink = styled.div`

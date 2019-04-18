@@ -29,7 +29,7 @@ class RMAtable extends React.Component {
   render(){
     const data = [
     {
-      orderDate: '10/3/2018',
+      returnDate: '10/3/2018',
       orderNum: '1234',
       poNum: '23422',
       total: '$201.00',
@@ -57,35 +57,35 @@ class RMAtable extends React.Component {
       ]
     },
     {
-      orderDate: '11/5/2018',
+      returnDate: '11/5/2018',
       orderNum: '333448',
       poNum: '23422',
       total: '$171.00',
       status: 'Complete'
     },
     {
-      orderDate: '10/4/2018',
+      returnDate: '10/4/2018',
       orderNum: '645548',
       poNum: '23422',
       total: '$1,008.00',
       status: 'Complete'
     },
     {
-      orderDate: '10/1/2018',
+      returnDate: '10/1/2018',
       orderNum: '132348',
       poNum: '23422',
       total: '$52.00',
       status: 'Complete'
     },
     {
-      orderDate: '10/10/2018',
+      returnDate: '10/10/2018',
       orderNum: '986548',
       poNum: '23422',
       total: '$883.00',
       status: 'Complete'
     },
     {
-      orderDate: '10/4/2018',
+      returnDate: '10/4/2018',
       orderNum: '645548',
       poNum: '23422',
       total: '$1,008.00',
@@ -95,8 +95,8 @@ class RMAtable extends React.Component {
 
   const columns = [
     {
-      Header: 'Order Date',
-      accessor: 'orderDate' // String-based value accessors!
+      Header: 'Return Date',
+      accessor: 'returnDate' // String-based value accessors!
     },
     {
       Header: 'Order #',
@@ -118,13 +118,13 @@ class RMAtable extends React.Component {
     {
       Header: '',
       accessor: '',
-      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>Manage Return</StyledLink> // Custom cell components!
+      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>Return Items</StyledLink> // Custom cell components!
     }]
 
     return(
       <React.Fragment>
         <AccountSectionHeader
-          text={'Return Merchandise Authorization (RMA)'}
+          text={'Return Material Authorization (RMA)'}
         />
         <Input
           placeholder={'Search PO #, Order #, or Item ID'}
