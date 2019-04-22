@@ -6,10 +6,18 @@ const DivContainer = styled.div`
   width: 500px;
 `
 
+const StyledHeaderDiv = styled.div`
+   width: 100%;
+   height: 36px;
+   border-bottom: 1px solid #ccc;
+   margin-bottom: 16px;
+`
 const PHeader = styled.p`
-  color: red;
-  font-size: 16px;
-  font-family: veranda;
+   color: #DB1633;
+   font-family: verdana;
+   font-size: 18px;
+   font-weight: bold;
+   padding: 8px 0 8px 8px;
 `
 
 const DivItemlist = styled.div`
@@ -41,9 +49,9 @@ class SummaryModal extends React.Component {
   render(){
     return(
       <DivContainer>
-        <PHeader>
-          Return Summary
-        </PHeader>
+        <StyledHeaderDiv>
+          <PHeader>Return Summary</PHeader>
+        </StyledHeaderDiv>
         <DivItemlist>
           <DivItem></DivItem>
         </DivItemlist>

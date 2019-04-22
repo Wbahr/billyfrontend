@@ -19,12 +19,12 @@ class Button extends React.Component {
   render(){
     const {
       text,
-      onclick,
+      onClick,
       disabled
     } = this.props
 
     return(
-      <MainButton onClick={onclick} disabled={disabled}>
+      <MainButton onClick={onClick} disabled={disabled}>
         {text}
       </MainButton>
     )

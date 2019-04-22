@@ -65,7 +65,7 @@ class MainScreen extends React.Component {
           {showTable ? <RMAtable viewDetails={this.viewDetails}/> : null }
           {showDetail ? <RMAdetails /> : null}
           <button onClick={this.onOpenModal}>Open modal</button>
-          <Modal open={showModal} onClose={this.onCloseModal} center>
+          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
             <SummaryModal onClose={this.onCloseModal}/>
           </Modal>
         </StyledAccountContainer>
