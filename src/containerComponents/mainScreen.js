@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
+import SummaryModal from '../uiComponents/RMA/summaryModal'
 import Modal from 'react-responsive-modal'
 
 
@@ -65,7 +66,7 @@ class MainScreen extends React.Component {
           {showDetail ? <RMAdetails /> : null}
           <button onClick={this.onOpenModal}>Open modal</button>
           <Modal open={showModal} onClose={this.onCloseModal} center>
-            <h2>Simple centered modal</h2>
+            <SummaryModal onClose={this.onCloseModal}/>
           </Modal>
         </StyledAccountContainer>
       </StyledBackground>
