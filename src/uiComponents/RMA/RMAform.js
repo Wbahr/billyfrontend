@@ -87,6 +87,7 @@ const RMAform = () => (
     <Formik
       initialValues={{ friends: ['jared', 'ian', 'brent'] }}
       onSubmit={values => console.log('values', values)}
+      // onSubmit={this.props.openModal}
       render={({ values }) => (
         <Form>
           <FieldArray
@@ -160,6 +161,7 @@ const RMAform = () => (
                   </StyledRMAItemDetailContainer>
                 ))}
                 <StyledSubmitButtonContainer>
+                  <Button type="submit" text='Continue' />
                 </StyledSubmitButtonContainer>
               </div>
             )}
