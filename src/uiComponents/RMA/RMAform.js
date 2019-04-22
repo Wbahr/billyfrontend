@@ -121,7 +121,7 @@ const RMAform = () => (
                         type='checkbox'
                         name={`returnItems.${index}.willReturn`}
                       />
-                      <p>Return <Field name={`returnItems.${index}.returnQuantity`} />of 5</p>
+                      <p>Return <Field type='number' name={`returnItems.${index}.returnQuantity`} />of 5</p>
                     </StyledRMAItemActionsContainer>
                     <StyledRMAReturnReasonContainer>
                       <Field component="select" name={`returnItems.${index}.returnReason`}>
@@ -159,9 +159,7 @@ const RMAform = () => (
                     </StyledRMAReturnReasonContainer>
                   </StyledRMAItemDetailContainer>
                 ))}
-                <button type="submit">Console log</button>
                 <StyledSubmitButtonContainer>
-                  <Button text='Continue' />
                 </StyledSubmitButtonContainer>
               </div>
             )}

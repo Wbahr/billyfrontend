@@ -22,8 +22,11 @@ class RMAtable extends React.Component {
     showDetail: false
   }
 
-  viewDetails = (order) => {
-    console.log(`viewing details of ${order}`)
+  handleViewDetails = (order) => {
+    const {
+      viewDetails
+    } = this.props
+    viewDetails()
   }
 
   render(){
@@ -118,7 +121,7 @@ class RMAtable extends React.Component {
     {
       Header: '',
       accessor: '',
-      Cell: props => <StyledLink onClick={() => this.viewDetails('1234')}>Return Items</StyledLink> // Custom cell components!
+      Cell: props => <StyledLink onClick={this.handleViewDetails}>Return Items</StyledLink> // Custom cell components!
     }]
 
     return(
