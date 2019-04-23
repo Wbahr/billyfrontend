@@ -35,10 +35,10 @@ class Button extends React.Component {
       text,
       onClick,
       disabled,
-      type
+      color
     } = this.props
 
-    switch(type){
+    switch(color){
       case('main'):
         return(
           <MainButton onClick={onClick} disabled={disabled}>

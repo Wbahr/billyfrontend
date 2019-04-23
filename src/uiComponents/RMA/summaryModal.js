@@ -47,9 +47,6 @@ const PItemDetail = styled.div`
 `
 
 const PItemRestockingFee = styled(StyledText0)`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 12px;
   color: red;
 `
 
@@ -94,10 +91,13 @@ class SummaryModal extends React.Component {
         <DivItemlist>
           <DivItem>
             <PItemDetail>
-              <StyledText1>Valve Cover - Quantity:2</StyledText1>
+              <StyledText1>Item #DKE-2429482393 - Valve Cover</StyledText1>
               <StyledText0>$54.23</StyledText0>
             </PItemDetail>
-            <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
+            <PItemDetail>
+              <StyledText0>Quantity: 2</StyledText0>
+              <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
+            </PItemDetail>
           </DivItem>
           <DivTotal as='div'>
             Return Total: $48.81
@@ -106,7 +106,7 @@ class SummaryModal extends React.Component {
           <label for='agree'>I've reviewed the above return Summary.</label>
         </DivItemlist>
         <DivActionbar>
-          <Button type='secondary' onClick={this.handleOnClose} text='Cancel' />
+          <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
           <Button onClick={this.handleConfirmReturn} disabled={!this.state.reviewedSummary} text='Confirm Return' />
           {/*<p>{this.state.reviewedSummary}</p>*/}
         </DivActionbar>

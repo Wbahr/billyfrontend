@@ -161,6 +161,7 @@ const RMAform = () => (
                   </StyledRMAItemDetailContainer>
                 ))}
                 <StyledSubmitButtonContainer>
+                  <Button color="secondary" text='Back' />
                   <Button type="submit" text='Continue' />
                 </StyledSubmitButtonContainer>
               </div>
