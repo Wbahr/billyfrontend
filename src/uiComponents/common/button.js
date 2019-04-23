@@ -10,9 +10,23 @@ const MainButton = styled.button`
    border-radius: 50px;
    cursor: pointer;
    
-   :hover {
+   &:hover {
       background: linear-gradient(#74121D, #b31217);
    };
+   
+   &:disabled {
+      background: grey;
+      cursor: default;
+      opacity: 0.3;
+   }
+`
+const SecondaryButton = styled(MainButton)`
+  background: linear-gradient(#246696, #174362);
+  
+  &:hover {
+    background: linear-gradient(#000, #246696);
+  };
+
 `
 
 class Button extends React.Component {
@@ -20,14 +34,33 @@ class Button extends React.Component {
     const {
       text,
       onClick,
-      disabled
+      disabled,
+      type
     } = this.props
 
-    return(
-      <MainButton onClick={onClick} disabled={disabled}>
-        {text}
-      </MainButton>
-    )
+    switch(type){
+      case('main'):
+        return(
+          <MainButton onClick={onClick} disabled={disabled}>
+            {text}
+          </MainButton>
+        )
+        break;
+      case('secondary'):
+        return(
+          <SecondaryButton onClick={onClick} disabled={disabled}>
+            {text}
+          </SecondaryButton>
+        )
+        break;
+      default:
+        return(
+          <MainButton onClick={onClick} disabled={disabled}>
+            {text}
+          </MainButton>
+        )
+    }
+
   }
 }
 
