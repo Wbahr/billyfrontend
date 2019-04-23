@@ -41,6 +41,11 @@ const DivTotal = styled(StyledText1)`
   border-bottom: 1px solid black;
 `
 
+const DivAgree = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 const PItemDetail = styled.div`
   display: flex;
   justify-content: space-between;
@@ -53,6 +58,7 @@ const PItemRestockingFee = styled(StyledText0)`
 const DivActionbar = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 12px;
 `
 
 // const PReturnSubmitted = styled(StyledText0)`
@@ -91,24 +97,25 @@ class SummaryModal extends React.Component {
         <DivItemlist>
           <DivItem>
             <PItemDetail>
-              <StyledText1>Item #DKE-2429482393 - Valve Cover</StyledText1>
+              <StyledText1>Item #DKE-2429482393 - (Qty 2)</StyledText1>
               <StyledText0>$54.23</StyledText0>
             </PItemDetail>
             <PItemDetail>
-              <StyledText0>Quantity: 2</StyledText0>
+              <StyledText0>Valve Cover</StyledText0>
               <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
             </PItemDetail>
           </DivItem>
           <DivTotal as='div'>
             Return Total: $48.81
           </DivTotal>
-          <input id='agree' type='checkbox' onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
-          <label for='agree'>I've reviewed the above return Summary.</label>
+          <DivAgree>
+            <input id='agree' type='checkbox' onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
+            <label for='agree'>I've reviewed the above return Summary.*</label>
+          </DivAgree>
         </DivItemlist>
         <DivActionbar>
           <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
           <Button onClick={this.handleConfirmReturn} disabled={!this.state.reviewedSummary} text='Confirm Return' />
-          {/*<p>{this.state.reviewedSummary}</p>*/}
         </DivActionbar>
       </DivContainer>
       // <DivContainer>
