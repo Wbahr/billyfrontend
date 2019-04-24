@@ -4,7 +4,9 @@ import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
 import SummaryModal from '../uiComponents/RMA/summaryModal'
 import Modal from 'react-responsive-modal'
-
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -74,4 +76,6 @@ class MainScreen extends React.Component {
   }
 }
 
-export default MainScreen
+const mapStateToProps = state => {}
+const mapDispatchToProps = dispatch => bindActionCreators( { requestTesting }, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen)
