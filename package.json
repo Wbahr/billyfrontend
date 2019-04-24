@@ -20,6 +20,7 @@
   "homepage": "https://github.com/airline-hydraulics/rma#readme",
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-regenerator": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.5",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "babel-polyfill": "^6.26.0",
     "formik": "^1.5.2",
     "lodash": "^4.17.11",
     "query-string": "^6.4.2",
