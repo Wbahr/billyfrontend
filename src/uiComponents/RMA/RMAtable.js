@@ -26,75 +26,10 @@ class RMAtable extends React.Component {
     const {
       viewDetails
     } = this.props
-    viewDetails()
+    viewDetails(order)
   }
 
   render(){
-    const data = [
-    {
-      returnDate: '10/3/2018',
-      orderNum: '1234',
-      poNum: '23422',
-      total: '$201.00',
-      status: 'Pending',
-      packing: 'Partial',
-      shippingAddress: {
-        name: 'Bobby',
-        address1: '690 Mulberry Drive',
-        city: 'Nazareth',
-        state: 'PA',
-        zip: '18064'
-      },
-      items: [
-        {
-          itemId: 'AZ16-12ZVRK',
-          customerPartNum: 'AZ16-12ZVRK',
-          itemDesc: 'SCHMERSAL Keyed Interlock Schmeral AZ16-12ZVRK',
-          quantityOrdered: 2,
-          quantityOpen: 0,
-          promiseDate: '12/1/2018',
-          trackingCode: '1234523d32f3',
-          totalPrice: '$201.00',
-          unitPrice: '100.50'
-        }
-      ]
-    },
-    {
-      returnDate: '11/5/2018',
-      orderNum: '333448',
-      poNum: '23422',
-      total: '$171.00',
-      status: 'Complete'
-    },
-    {
-      returnDate: '10/4/2018',
-      orderNum: '645548',
-      poNum: '23422',
-      total: '$1,008.00',
-      status: 'Complete'
-    },
-    {
-      returnDate: '10/1/2018',
-      orderNum: '132348',
-      poNum: '23422',
-      total: '$52.00',
-      status: 'Complete'
-    },
-    {
-      returnDate: '10/10/2018',
-      orderNum: '986548',
-      poNum: '23422',
-      total: '$883.00',
-      status: 'Complete'
-    },
-    {
-      returnDate: '10/4/2018',
-      orderNum: '645548',
-      poNum: '23422',
-      total: '$1,008.00',
-      status: 'Complete'
-    }
-  ]
 
   const columns = [
     {
@@ -120,8 +55,8 @@ class RMAtable extends React.Component {
     },
     {
       Header: '',
-      accessor: '',
-      Cell: props => <StyledLink onClick={this.handleViewDetails}>Return Items</StyledLink> // Custom cell components!
+      accessor: 'orderNum',
+      Cell: row => <StyledLink onClick={() => this.handleViewDetails(row.value)}>Return Items</StyledLink> // Custom cell components!
     }]
 
     return(
@@ -136,7 +71,7 @@ class RMAtable extends React.Component {
           sortable={true}
           showPageSizeOptions={false}
           minRows={5}
-          data={data}
+          data={this.props.data}
           columns={columns}
         />
       </React.Fragment>

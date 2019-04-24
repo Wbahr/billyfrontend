@@ -82,10 +82,11 @@ const StyledSubmitButtonContainer = styled.div`
 //   border-radius: 1px;
 // `
 
-const RMAform = () => (
+const RMAform = (items = {}) => (
+  console.log('items', items),
   <div>
     <Formik
-      initialValues={{ friends: ['jared', 'ian', 'brent'] }}
+      initialValues={items}
       onSubmit={values => console.log('values', values)}
       // onSubmit={this.props.openModal}
       render={({ values }) => (
@@ -94,27 +95,25 @@ const RMAform = () => (
             name="returnItems"
             render={arrayHelpers => (
               <div>
-                {values.friends.map((friend, index) => (
+                {values.items.map((item, index) => (
                   <StyledRMAItemDetailContainer key={index}>
                     <StyledRMAItemDetailHeader>
                       <p>{index + 1}</p>
-                      <p>Item ID: AZ16-12ZVRK</p>
+                      <p>Item ID: {item.itemId}</p>
                       <p>387819</p>
                     </StyledRMAItemDetailHeader>
                     <StyledRMAItemDetailsContainer>
                       <StyledRMAItemPhotoContainer></StyledRMAItemPhotoContainer>
                       <StyledRMAListGrey>
-                        <StyledText0><StyledText1>Customer Part #:</StyledText1> AZ16-12ZVRK</StyledText0>
-                        <StyledText0>SCHMERSAL Keyed Interlock Schmersal AZ1612ZVRK</StyledText0>
-                        <StyledText0><StyledText1>Quantity Ordered:</StyledText1> 2</StyledText0>
-                        <StyledText0><StyledText1>Quantity Open:</StyledText1> 0</StyledText0>
+                        <StyledText0><StyledText1>Customer Part #: </StyledText1>{item.customerPartNum}</StyledText0>
+                        <StyledText0>{item.itemDesc}</StyledText0>
+                        <StyledText0><StyledText1>Quantity Ordered: </StyledText1>{item.quantityOrdered}</StyledText0>
+                        <StyledText0><StyledText1>Quantity Open: </StyledText1>{item.quantityOpen}</StyledText0>
                       </StyledRMAListGrey>
                       <StyledRMAListGrey>
-                        <StyledText0><StyledText1>Promise Date:</StyledText1> 10/3/2018</StyledText0>
-                        <StyledText1>Tracking Code(s):</StyledText1>
-                        <StyledText0>1DC3529DK2SKX92</StyledText0>
-                        <StyledText0><StyledText1>Total Price:</StyledText1> $171.00</StyledText0>
-                        <StyledText0><StyledText1>Unit Price:</StyledText1> $85.50</StyledText0>
+                        <StyledText0><StyledText1>Promise Date: </StyledText1>{item.promiseDate}</StyledText0>
+                        <StyledText0><StyledText1>Total Price: </StyledText1>{item.totalPrice}</StyledText0>
+                        <StyledText0><StyledText1>Unit Price: </StyledText1>{item.unitPrice}</StyledText0>
                       </StyledRMAListGrey>
                     </StyledRMAItemDetailsContainer>
                     <StyledRMAItemActionsContainer>
