@@ -4,6 +4,8 @@ import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
+import Modal from 'react-responsive-modal'
+import SummaryModal from './summaryModal'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -20,16 +22,16 @@ const StyledRMAList = styled.div`
 
 class RMAdetails extends React.Component {
 
-  componentWillMount () {
-    console.log('selected order:', this.props.selectedOrder)
+  state = {
+    showModal: false
   }
 
-  handleOnback = () => {
-    const {
-      onBack
-    } = this.props
-    console.log('back 1')
-    onBack()
+  onOpenModal = () => {
+    this.setState({showModal: true})
+  }
+
+  onCloseModal = () => {
+    this.setState({showModal: false})
   }
 
   render(){
@@ -46,7 +48,9 @@ class RMAdetails extends React.Component {
       }
     } = this.props
 
-    console.log('tiems', items)
+    const {
+      showModal
+    } = this.state
 
     return(
       <React.Fragment>
@@ -69,7 +73,13 @@ class RMAdetails extends React.Component {
             <StyledText0>{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zip}</StyledText0>
           </StyledRMAList>
         </StyledRMAOrderDetails>
-        <RMAform onBack={this.handleOnback} items={items} />
+        <RMAform
+          items={items}
+        />
+        <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
+          <SummaryModal onClose={this.onCloseModal}/>
+        </Modal>
+        <button onClick={this.onOpenModal}>Modal</button>
       </React.Fragment>
     )
   }

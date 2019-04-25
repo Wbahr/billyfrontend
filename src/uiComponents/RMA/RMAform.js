@@ -83,7 +83,6 @@ const StyledSubmitButtonContainer = styled.div`
 // `
 
 const RMAform = (items = {}) => (
-  console.log('items', items),
   <div>
     <Formik
       initialValues={items}
@@ -96,6 +95,7 @@ const RMAform = (items = {}) => (
             render={arrayHelpers => (
               <div>
                 {values.items.map((item, index) => (
+                  console.log('item', item),
                   <StyledRMAItemDetailContainer key={index}>
                     <StyledRMAItemDetailHeader>
                       <p>{index + 1}</p>
@@ -108,7 +108,7 @@ const RMAform = (items = {}) => (
                         <StyledText0><StyledText1>Customer Part #: </StyledText1>{item.customerPartNum}</StyledText0>
                         <StyledText0>{item.itemDesc}</StyledText0>
                         <StyledText0><StyledText1>Quantity Ordered: </StyledText1>{item.quantityOrdered}</StyledText0>
-                        <StyledText0><StyledText1>Quantity Open: </StyledText1>{item.quantityOpen}</StyledText0>
+                        <StyledText0><StyledText1>Quantity Shipped: </StyledText1>{item.quantityShipped}</StyledText0>
                       </StyledRMAListGrey>
                       <StyledRMAListGrey>
                         <StyledText0><StyledText1>Promise Date: </StyledText1>{item.promiseDate}</StyledText0>
@@ -121,7 +121,11 @@ const RMAform = (items = {}) => (
                         type='checkbox'
                         name={`returnItems.${index}.willReturn`}
                       />
-                      <p>Return <Field type='number' name={`returnItems.${index}.returnQuantity`} />of 5</p>
+                      <Field
+                        type='hidden'
+                        name={`returnItems.${index}.itemId`}
+                      />
+                      <p>Return <Field type='number' name={`returnItems.${index}.returnQuantity`} min='0' />of {item.quantityShipped}</p>
                     </StyledRMAItemActionsContainer>
                     <StyledRMAReturnReasonContainer>
                       <Field component="select" name={`returnItems.${index}.returnReason`}>
@@ -160,8 +164,7 @@ const RMAform = (items = {}) => (
                   </StyledRMAItemDetailContainer>
                 ))}
                 <StyledSubmitButtonContainer>
-                  <Button color="secondary" text='Back' />
-                  <Button type="submit" text='Continue' />
+                  <Button type="submit" text='Continue' onClick={()=>{console.log('show modal')}}/>
                 </StyledSubmitButtonContainer>
               </div>
             )}
