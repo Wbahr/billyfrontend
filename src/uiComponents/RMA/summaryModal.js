@@ -89,22 +89,31 @@ class SummaryModal extends React.Component {
   }
 
   render(){
+    let itemBars = []
+    let propItems = []
+    if (true) {
+      _.each(propItems, (item) => {
+        itemBars.push(
+          <DivItem>
+            <PItemDetail>
+              <StyledText1>{`Item #DKE-2429482393 - (Qty ${item.quantityReturn})`}</StyledText1>
+              <StyledText0>{item.total}</StyledText0>
+            </PItemDetail>
+            <PItemDetail>
+              <StyledText0>{item.name}</StyledText0>
+              <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
+            </PItemDetail>
+          </DivItem>
+        )
+      })
+    }
     return(
       <DivContainer>
         <StyledHeaderDiv>
           <PHeader>Return Summary</PHeader>
         </StyledHeaderDiv>
         <DivItemlist>
-          <DivItem>
-            <PItemDetail>
-              <StyledText1>Item #DKE-2429482393 - (Qty 2)</StyledText1>
-              <StyledText0>$54.23</StyledText0>
-            </PItemDetail>
-            <PItemDetail>
-              <StyledText0>Valve Cover</StyledText0>
-              <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
-            </PItemDetail>
-          </DivItem>
+          {itemBars}
           <DivTotal as='div'>
             Return Total: $48.81
           </DivTotal>

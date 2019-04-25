@@ -4,6 +4,7 @@ import AccountSectionHeader from './accountSectionHeader'
 import Input from '../common/input'
 import ReactTable from "react-table"
 import 'react-table/react-table.css'
+import Callout from '../common/callout'
 
 const StyledLink = styled.div`
   background: linear-gradient(#bababa, #555555);
@@ -17,9 +18,18 @@ const StyledLink = styled.div`
     background: linear-gradient(#555555, #bababa);
   };
 `
+const PCenterAlign = styled.div`
+  text-align: center;
+`
+
+const PRightAlign = styled.div`
+  text-align: right;
+`
+
 class RMAtable extends React.Component {
   state = {
-    showDetail: false
+    showDetail: false,
+    showNoResultsCallout: false
   }
 
   handleViewDetails = (order) => {
@@ -31,6 +41,10 @@ class RMAtable extends React.Component {
 
   render(){
 
+    const {
+      showNoResultsCallout
+    } = this.state
+
   const columns = [
     {
       Header: 'Return Date',
@@ -39,19 +53,22 @@ class RMAtable extends React.Component {
     {
       Header: 'Order #',
       accessor: 'orderNum',
-      // Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+      // Cell: row => <PRightAlign>{row.value}</PRightAlign> // Custom cell components!
     },
     {
       Header: 'PO #',
-      accessor: 'poNum' // String-based value accessors!
+      accessor: 'poNum', // String-based value accessors!
+      Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
     },
     {
       Header: 'Total',
-      accessor: 'total' // String-based value accessors!
+      accessor: 'total', // String-based value accessors!
+      Cell: row => <PRightAlign>{row.value}</PRightAlign>
     },
     {
       Header: 'Complete',
-      accessor: 'status' // String-based value accessors!
+      accessor: 'status', // String-based value accessors!
+      Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
     },
     {
       Header: '',
@@ -64,6 +81,10 @@ class RMAtable extends React.Component {
         <AccountSectionHeader
           text={'Return Material Authorization (RMA)'}
         />
+        {showNoResultsCallout ?
+          <Callout text='No results found. Please note that orders placed over a year ago are not eligible for return and will not be displayed. Please contact us with any questions.'/> :
+          null
+        }
         <Input
           placeholder={'Search PO #, Order #, or Item ID'}
         />

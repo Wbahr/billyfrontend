@@ -24,6 +24,14 @@ class RMAdetails extends React.Component {
     console.log('selected order:', this.props.selectedOrder)
   }
 
+  handleOnback = () => {
+    const {
+      onBack
+    } = this.props
+    console.log('back 1')
+    onBack()
+  }
+
   render(){
     const {
       selectedOrder:{
@@ -38,6 +46,7 @@ class RMAdetails extends React.Component {
       }
     } = this.props
 
+    console.log('tiems', items)
 
     return(
       <React.Fragment>
@@ -60,7 +69,7 @@ class RMAdetails extends React.Component {
             <StyledText0>{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zip}</StyledText0>
           </StyledRMAList>
         </StyledRMAOrderDetails>
-        <RMAform items={items} />
+        <RMAform onBack={this.handleOnback} items={items} />
       </React.Fragment>
     )
   }

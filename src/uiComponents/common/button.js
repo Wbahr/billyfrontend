@@ -32,6 +32,7 @@ const SecondaryButton = styled(MainButton)`
 class Button extends React.Component {
   render(){
     const {
+      type,
       text,
       onClick,
       disabled,
@@ -41,21 +42,21 @@ class Button extends React.Component {
     switch(color){
       case('main'):
         return(
-          <MainButton onClick={onClick} disabled={disabled}>
+          <MainButton type={type} onClick={onClick} disabled={disabled}>
             {text}
           </MainButton>
         )
         break;
       case('secondary'):
         return(
-          <SecondaryButton onClick={onClick} disabled={disabled}>
+          <SecondaryButton type={type} onClick={onClick} disabled={disabled}>
             {text}
           </SecondaryButton>
         )
         break;
       default:
         return(
-          <MainButton onClick={onClick} disabled={disabled}>
+          <MainButton type={type} onClick={onClick} disabled={disabled}>
             {text}
           </MainButton>
         )
