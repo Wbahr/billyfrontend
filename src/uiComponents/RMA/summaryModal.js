@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import Button from '../common/button'
 import {StyledText0, StyledText1} from '../../styles/fonts'
+import Callout from '../common/callout'
 
 const DivContainer = styled.div`
   width: 500px;
@@ -74,8 +75,16 @@ class SummaryModal extends React.Component {
     reviewedSummary: false
   }
 
+  componentWillMount() {
+
+  }
+
   handleConfirmReturn = () => {
-    console.log('confirmed return')
+    const {
+      onConfirmReturn
+    } = this.props
+
+    onConfirmReturn()
   }
 
   handleOnClose = () => {
@@ -91,8 +100,12 @@ class SummaryModal extends React.Component {
 
   render(){
     let itemBars = []
-    let propItems = []
-    if (true) {
+    let propItems = [{
+      'quantityReturn': 2,
+      'total': '$23.00',
+      'name': 'Motor Gear'
+    }]
+    if (propItems.length > 0) {
       _.each(propItems, (item) => {
         itemBars.push(
           <DivItem>
@@ -107,6 +120,10 @@ class SummaryModal extends React.Component {
           </DivItem>
         )
       })
+    } else {
+      itemBars = (
+        <Callout text='No Items selected for Return' />
+      )
     }
     return(
       <DivContainer>
@@ -116,10 +133,10 @@ class SummaryModal extends React.Component {
         <DivItemlist>
           {itemBars}
           <DivTotal as='div'>
-            Return Total: $48.81
+            {propItems.length === 0 ? null : 'Total: $48.81'}
           </DivTotal>
           <DivAgree>
-            <input id='agree' type='checkbox' onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
+            <input id='agree' type='checkbox' disabled={propItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
             <label for='agree'>I've reviewed the above return Summary.*</label>
           </DivAgree>
         </DivItemlist>

@@ -60,7 +60,6 @@ const StyledRMAReturnReasonContainer = styled.div`
   padding: 0 24px;
   background-color: #ccc;
   height: 45px;
- 
 `
 
 const StyledSubmitButtonContainer = styled.div`
@@ -81,13 +80,16 @@ const StyledSubmitButtonContainer = styled.div`
 //   height: 20px;
 //   border-radius: 1px;
 // `
-
-const RMAform = (items = {}) => (
+// const printer = (value) => {
+//   console.log('printer', value)
+// }
+const RMAform = ({items, printer}) => (
+  console.log('items::', items),
+  console.log('printer::', printer),
   <div>
     <Formik
-      initialValues={items}
-      onSubmit={values => console.log('values', values)}
-      // onSubmit={this.props.openModal}
+      initialValues={{items}}
+      onSubmit={values => printer(values)}
       render={({ values }) => (
         <Form>
           <FieldArray
@@ -95,7 +97,6 @@ const RMAform = (items = {}) => (
             render={arrayHelpers => (
               <div>
                 {values.items.map((item, index) => (
-                  console.log('item', item),
                   <StyledRMAItemDetailContainer key={index}>
                     <StyledRMAItemDetailHeader>
                       <p>{index + 1}</p>
@@ -163,12 +164,12 @@ const RMAform = (items = {}) => (
                     </StyledRMAReturnReasonContainer>
                   </StyledRMAItemDetailContainer>
                 ))}
-                <StyledSubmitButtonContainer>
-                  <Button type="submit" text='Continue' onClick={()=>{console.log('show modal')}}/>
-                </StyledSubmitButtonContainer>
               </div>
             )}
           />
+          <StyledSubmitButtonContainer>
+            <Button type="submit" text='Continue'/>
+          </StyledSubmitButtonContainer>
         </Form>
       )}
     />

@@ -6,6 +6,7 @@ import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
+import Button from '../common/button'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -32,6 +33,14 @@ class RMAdetails extends React.Component {
 
   onCloseModal = () => {
     this.setState({showModal: false})
+  }
+
+  onConfirmReturn = () => {
+    console.log('hahahaha')
+  }
+
+  printer = (value) => {
+    console.log('printer', value)
   }
 
   render(){
@@ -75,11 +84,11 @@ class RMAdetails extends React.Component {
         </StyledRMAOrderDetails>
         <RMAform
           items={items}
+          printer={this.printer}
         />
         <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
-          <SummaryModal onClose={this.onCloseModal}/>
+          <SummaryModal onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
         </Modal>
-        <button onClick={this.onOpenModal}>Modal</button>
       </React.Fragment>
     )
   }
