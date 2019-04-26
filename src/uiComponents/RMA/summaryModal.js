@@ -63,6 +63,10 @@ const DivActionbar = styled.div`
   margin-top: 12px;
 `
 
+const InputAgree = styled.input`
+  cursor: pointer;
+`
+
 // const PReturnSubmitted = styled(StyledText0)`
 //   display: flex;
 //   justify-content: center;
@@ -132,8 +136,8 @@ class SummaryModal extends React.Component {
             {propItems.length === 0 ? null : 'Total: $48.81'}
           </DivTotal>
           <DivAgree>
-            <input id='agree' type='checkbox' disabled={propItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
-            <label for='agree'>I've reviewed the above return Summary.*</label>
+            <InputAgree id='agree' type='checkbox' disabled={propItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
+            <InputAgree as='label' for='agree'>I've reviewed the above return Summary.*</InputAgree>
           </DivAgree>
         </DivItemlist>
         <DivActionbar>
