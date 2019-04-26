@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import _ from 'lodash'
 import Button from '../common/button'
 import {StyledText0, StyledText1} from '../../styles/fonts'
 

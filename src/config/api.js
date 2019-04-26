@@ -1,12 +1,12 @@
-export const fetchData = async () => {
-  try {
-    const response = await fetch("https://api.airlinehyd.com/")
-    const data = await response.json()
-    return data
-  } catch (e) {
-    console.log(e)
-  }
-}
+// export const fetchData = async () => {
+//   try {
+//     const response = await fetch("https://api.airlinehyd.com/")
+//     const data = await response.json()
+//     return data
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
 
 // const apiConfig = {
 //   'baseURL': 'https://api.airlinehyd.com/'

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
+import { getInvoice, testTracking } from '../api-temp/apiCalls'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
@@ -85,6 +86,10 @@ class MainScreen extends React.Component {
     showDetail: true,
   }
 
+  componentWillMount() {
+    let invoiceData = getInvoice(12209770)
+    console.log('invoice data', invoiceData)
+  }
   // componentWillMount() {
   //   const location = queryString.parse(location.search)
   //   let section = _.get(location,'section', null)
