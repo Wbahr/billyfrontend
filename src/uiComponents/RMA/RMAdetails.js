@@ -39,8 +39,9 @@ class RMAdetails extends React.Component {
     console.log('hahahaha')
   }
 
-  printer = (value) => {
+  handleClickContinue = (value) => {
     console.log('printer', value)
+    this.onOpenModal()
   }
 
   render(){
@@ -84,7 +85,7 @@ class RMAdetails extends React.Component {
         </StyledRMAOrderDetails>
         <RMAform
           items={items}
-          printer={this.printer}
+          clickedContinue={this.handleClickContinue}
         />
         <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
           <SummaryModal onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>

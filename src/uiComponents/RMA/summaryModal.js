@@ -75,10 +75,6 @@ class SummaryModal extends React.Component {
     reviewedSummary: false
   }
 
-  componentWillMount() {
-
-  }
-
   handleConfirmReturn = () => {
     const {
       onConfirmReturn

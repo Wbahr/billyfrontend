@@ -83,13 +83,11 @@ const StyledSubmitButtonContainer = styled.div`
 // const printer = (value) => {
 //   console.log('printer', value)
 // }
-const RMAform = ({items, printer}) => (
-  console.log('items::', items),
-  console.log('printer::', printer),
+const RMAform = ({items, clickedContinue}) => (
   <div>
     <Formik
       initialValues={{items}}
-      onSubmit={values => printer(values)}
+      onSubmit={values => clickedContinue(values)}
       render={({ values }) => (
         <Form>
           <FieldArray
@@ -168,7 +166,7 @@ const RMAform = ({items, printer}) => (
             )}
           />
           <StyledSubmitButtonContainer>
-            <Button type="submit" text='Continue'/>
+            <Button type="submit" text='Continue' />
           </StyledSubmitButtonContainer>
         </Form>
       )}
