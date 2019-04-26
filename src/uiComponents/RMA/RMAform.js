@@ -66,7 +66,7 @@ const StyledRMAReturnReasonContainer = styled.div`
 const StyledSubmitButtonContainer = styled.div`
   display: flex;
   padding: 10px;
-  justify-content: space-between;
+  justify-content: flex-end;
 `
 
 // const StyledCheckbox = styled.input`

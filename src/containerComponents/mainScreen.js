@@ -1,12 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import queryString from 'query-string'
-// import RMAtable from '../uiComponents/RMA/RMAtable'
+import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
-import SummaryModal from '../uiComponents/RMA/summaryModal'
-import Modal from 'react-responsive-modal'
 
-import { connect } from 'react-redux'
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
 const StyledBackground = styled.div`
@@ -28,14 +26,6 @@ const StyledAccountContainer = styled.div`
   margin: 20px 0;
 `
 
-const StyledLink = styled.div`
-  background: linear-gradient(#bababa, #555555);
-  color: white;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 50px;
-  padding: 4px;
-`
 const selectedOrder =
       {
         orderDate: '10/1/2018',
@@ -91,47 +81,38 @@ const selectedOrder =
 
 class MainScreen extends React.Component {
   state = {
-    // showTable: false,
+    showTable: false,
     showDetail: true,
-    showModal: false,
-    // selectedOrder: {}
   }
 
   // componentWillMount() {
   //   const location = queryString.parse(location.search)
   //   let section = _.get(location,'section', null)
-  //   if (!_.isNil(section)) {
-  //     this.setState({ section: section})
-  //   }
-  // }
-
-  // viewDetails = (order) => {
-  //   for (let i = 0; i < data.length; i++) {
-  //     let item = data[i]
-  //     if (item.orderNum === order) {
-  //       this.setState({ selectedOrder: item })
+  //   let invoice = _.get(location, 'invoice', null)
+  //   switch(section){
+  //     case('rma'):
+  //       this.setState({showTable: false, showDetail: true})
+  //       dispatch.getInvoice(invoice)
   //       break
-  //     }
+  //     case('rma-summary'):
+  //       this.setState({showTable: true, showDetail: false})
+  //       break
+  //     default:
+  //       this.setState({showTable: false, showDetail: true})
+  //       dispatch.getInvoice(invoice)
   //   }
-  //   this.setState({showTable: false, showDetail: true})
   // }
-
-  viewTable = () => {
-    this.setState({showTable: true, showDetail: false, selectedOrder: {}})
-  }
 
   render(){
     const {
-      // showModal,
       showDetail,
-      // showTable,
-      // selectedOrder
+      showTable,
     } = this.state
 
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {/*{showTable ? <RMAtable viewDetails={this.viewDetails} data={data} /> : null }*/}
+          {showTable ? <RMAtable viewDetails={this.viewDetails} data={data} /> : null }
           {showDetail ? <RMAdetails selectedOrder={selectedOrder} /> : null}
         </StyledAccountContainer>
       </StyledBackground>
