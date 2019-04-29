@@ -7,6 +7,7 @@ import RMAform from './RMAform'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
 import Button from '../common/button'
+import { formatRMAFormData } from './helpers/formatRMAFormData'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -24,7 +25,8 @@ const StyledRMAList = styled.div`
 class RMAdetails extends React.Component {
 
   state = {
-    showModal: false
+    showModal: false,
+    returnItems: []
   }
 
   onOpenModal = () => {
@@ -32,15 +34,20 @@ class RMAdetails extends React.Component {
   }
 
   onCloseModal = () => {
-    this.setState({showModal: false})
+    this.setState({returnItems:{}, showModal: false})
   }
 
   onConfirmReturn = () => {
-    console.log('hahahaha')
+    const {
+      returnItems
+    } = this.state
+    let mutatedReturnItems = formatRMAFormData(returnItems)
+    console.log('return items ->>', mutatedReturnItems)
   }
 
   handleClickContinue = (value) => {
-    console.log('printer', value)
+    console.log('value', value, typeof value)
+    this.setState({ returnItems: [...value]})
     this.onOpenModal()
   }
 
@@ -61,6 +68,12 @@ class RMAdetails extends React.Component {
     const {
       showModal
     } = this.state
+
+    let initialFormValues = items
+    for (let i = 0; i < items.length; i++) {
+      initialFormValues[i].willReturn = false
+      initialFormValues[i].returnQuantity = 0
+    }
 
     return(
       <React.Fragment>
