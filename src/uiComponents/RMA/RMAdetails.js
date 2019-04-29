@@ -74,6 +74,7 @@ class RMAdetails extends React.Component {
     for (let i = 0; i < items.length; i++) {
       initialFormValues[i].willReturn = false
       initialFormValues[i].returnQuantity = 0
+      initialFormValues[i].returnReason = ''
     }
 
     return(
