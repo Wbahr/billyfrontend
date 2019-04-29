@@ -126,40 +126,46 @@ const RMAform = ({items, clickedContinue}) => (
                       />
                       <p>Return <Field type='number' name={`items.${index}.returnQuantity`} min='0' />of {item.quantityShipped}</p>
                     </StyledRMAItemActionsContainer>
-                      <StyledRMAReturnReasonContainer>
-                        <Field component="select" name={`items.${index}.returnReason`}>
-                          <option value='' selected disabled hidden>Select Return Reason</option>
-                          <option value='mistake'>Purchased by Mistake</option>
-                          <option value='inaccurate'>Inaccurate Description / Recommendation</option>
-                          <option value='damaged'>Product / Packaging arrived Damaged</option>
-                          <option value='defective'>Item is Defective / Doesn't work</option>
-                          <option value='late'>Item arrived too late</option>
-                          <option value='incorrect'>Incorrect item sent</option>
-                          <option value='excess'>Received more than ordered</option>
-                          <option value='early'>Item arrived too early</option>
-                          <option value='no_need'>No longer needed</option>
-                          <option value='not_approved'>Customer did not approve purchase</option>
-                          <option value='missing'>Missing items / Components</option>
-                          <option value='other'>Other</option>
-                        </Field>
-                        <Field
-                          placeholder='Please Specify'
-                          name={`items.${index}.otherDesc`}
-                        />
-                      <Field
-                        component='textarea'
-                        placeholder='Please give a short comment of how the description / recommendation was inaccurate'
-                        name={`items.${index}.details`}
-                      />
-                    </StyledRMAReturnReasonContainer>
-                    <StyledRMAReturnReasonContainer>
-                      <Field component="select" name={`items.${index}.refundType`}>
-                        <option value='' selected disabled hidden>Select Refund Type</option>
-                        <option value='credit'>Airline Credit</option>
-                        <option value='refund'>Refund</option>
-                        <option value='credit'>Replacement</option>
-                      </Field>
-                    </StyledRMAReturnReasonContainer>
+                    { item.willReturn ?
+                      <>
+                        <StyledRMAReturnReasonContainer>
+                          <Field component="select" name={`items.${index}.returnReason`}>
+                            <option value='' selected disabled hidden>Select Return Reason</option>
+                            <option value='mistake'>Purchased by Mistake</option>
+                            <option value='inaccurate'>Inaccurate Description / Recommendation</option>
+                            <option value='damaged'>Product / Packaging arrived Damaged</option>
+                            <option value='defective'>Item is Defective / Doesn't work</option>
+                            <option value='late'>Item arrived too late</option>
+                            <option value='incorrect'>Incorrect item sent</option>
+                            <option value='excess'>Received more than ordered</option>
+                            <option value='early'>Item arrived too early</option>
+                            <option value='no_need'>No longer needed</option>
+                            <option value='not_approved'>Customer did not approve purchase</option>
+                            <option value='missing'>Missing items / Components</option>
+                            <option value='other'>Other</option>
+                          </Field>
+                          <Field
+                            placeholder='Please Specify'
+                            name={`items.${index}.otherDesc`}
+                            hidden={item.returnReason !== 'other'}
+                          />
+                          <Field
+                            component='textarea'
+                            placeholder='Please give a short comment of how the description / recommendation was inaccurate'
+                            name={`items.${index}.details`}
+                            hidden={item.returnReason !== 'inaccurate'}
+                          />
+                        </StyledRMAReturnReasonContainer>
+                        <StyledRMAReturnReasonContainer>
+                          <Field component="select" name={`items.${index}.refundType`}>
+                            <option value='' selected disabled hidden>Select Refund Type</option>
+                            <option value='credit'>Airline Credit</option>
+                            <option value='refund'>Refund</option>
+                            <option value='credit'>Replacement</option>
+                          </Field>
+                        </StyledRMAReturnReasonContainer>
+                      </>
+                      : null}
                   </StyledRMAItemDetailContainer>
                 ))}
               </div>
