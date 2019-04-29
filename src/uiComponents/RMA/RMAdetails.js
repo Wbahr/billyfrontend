@@ -41,13 +41,13 @@ class RMAdetails extends React.Component {
     const {
       returnItems
     } = this.state
-    let mutatedReturnItems = formatRMAFormData(returnItems)
-    console.log('return items ->>', mutatedReturnItems)
+    console.log('return items ->>', returnItems)
   }
 
-  handleClickContinue = (value) => {
-    console.log('value', value, typeof value)
-    this.setState({ returnItems: [...value]})
+  handleClickContinue = (returnItems) => {
+    let mutatedReturnItems = formatRMAFormData(returnItems)
+    console.log('return items ->>', mutatedReturnItems)
+    this.setState({ returnItems: mutatedReturnItems})
     this.onOpenModal()
   }
 
@@ -66,7 +66,8 @@ class RMAdetails extends React.Component {
     } = this.props
 
     const {
-      showModal
+      showModal,
+      returnItems
     } = this.state
 
     let initialFormValues = items
@@ -101,7 +102,7 @@ class RMAdetails extends React.Component {
           clickedContinue={this.handleClickContinue}
         />
         <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
-          <SummaryModal onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
+          <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
         </Modal>
       </React.Fragment>
     )

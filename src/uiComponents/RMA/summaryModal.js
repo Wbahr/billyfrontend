@@ -99,22 +99,22 @@ class SummaryModal extends React.Component {
   }
 
   render(){
+    const {
+      returnItems
+    } = this.props
+
     let itemBars = []
-    let propItems = [{
-      'quantityReturn': 2,
-      'total': '$23.00',
-      'name': 'Motor Gear'
-    }]
-    if (propItems.length > 0) {
-      _.each(propItems, (item) => {
+
+    if (returnItems.length > 0) {
+      _.each(returnItems, (item) => {
         itemBars.push(
           <DivItem>
             <PItemDetail>
-              <StyledText1>{`Item #DKE-2429482393 - (Qty ${item.quantityReturn})`}</StyledText1>
-              <StyledText0>{item.total}</StyledText0>
+              <StyledText1>{`Item #DKE-2429482393 - (Qty ${item.returnQuantity})`}</StyledText1>
+              <StyledText0>{_.get(item,`total`,'$10.00')}</StyledText0>
             </PItemDetail>
             <PItemDetail>
-              <StyledText0>{item.name}</StyledText0>
+              <StyledText0>{item.itemId}</StyledText0>
               <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
             </PItemDetail>
           </DivItem>
@@ -133,10 +133,10 @@ class SummaryModal extends React.Component {
         <DivItemlist>
           {itemBars}
           <DivTotal as='div'>
-            {propItems.length === 0 ? null : 'Total: $48.81'}
+            {returnItems.length === 0 ? null : 'Total: $48.81'}
           </DivTotal>
           <DivAgree>
-            <InputAgree id='agree' type='checkbox' disabled={propItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
+            <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
             <InputAgree as='label' for='agree'>I've reviewed the above return Summary.*</InputAgree>
           </DivAgree>
         </DivItemlist>
@@ -145,12 +145,6 @@ class SummaryModal extends React.Component {
           <Button onClick={this.handleConfirmReturn} disabled={!this.state.reviewedSummary} text='Confirm Return' />
         </DivActionbar>
       </DivContainer>
-      // <DivContainer>
-      //   <PReturnSubmitted as='div'>
-      //     Your return is now being processed. Please look at for an email with addition instructions. Thank you.
-      //   </PReturnSubmitted>
-      //   <Button onClick={this.handleOnClose} text='OK' />
-      // </DivContainer>
     )
   }
 }
