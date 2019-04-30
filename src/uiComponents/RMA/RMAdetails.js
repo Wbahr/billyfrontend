@@ -6,7 +6,6 @@ import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
-import Button from '../common/button'
 import { formatRMAFormData } from './helpers/formatRMAFormData'
 
 const StyledRMAOrderDetails = styled.div`
@@ -46,7 +45,6 @@ class RMAdetails extends React.Component {
 
   handleClickContinue = (returnItems) => {
     let mutatedReturnItems = formatRMAFormData(returnItems)
-    console.log('return items ->>', mutatedReturnItems)
     this.setState({ returnItems: mutatedReturnItems})
     this.onOpenModal()
   }

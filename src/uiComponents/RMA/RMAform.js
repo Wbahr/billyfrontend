@@ -99,12 +99,12 @@ const StyledTextArea = styled.textarea`
 
 const validate = (values) => {
   let errors = {};
-  let returnItems = values.returnItems
+  let returnItems = values.items
   for(let i = 0; i < returnItems.length; i++) {
     let item = returnItems[i]
     if (item.willReturn) {
       // check if quantity is ok
-      if (item.returnQuantity <= 0 && item.returnQuantity > item.quantityShipped) {
+      if (item.returnQuantity <= 0 || item.returnQuantity > item.quantityShipped) {
         errors.quantity = 'Check to ensure all return quantities are valid'
       }
       // check if dropdowns are populated
@@ -121,6 +121,7 @@ const validate = (values) => {
       }
     }
   }
+  console.log('errors: : :', errors)
   return errors
 };
 
@@ -130,7 +131,8 @@ const RMAform = ({items, clickedContinue}) => (
       initialValues={{items}}
       validate={validate}
       onSubmit={values => clickedContinue(values.items)}
-      render={({ values, error }) => (
+      render={({ values, errors }) => (
+        console.log('errors', errors),
         <Form>
           <FieldArray
             name="returnItems"
