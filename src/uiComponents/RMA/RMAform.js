@@ -1,5 +1,6 @@
 import React from 'react'
-import { Formik, Form, Field, FieldArray } from 'formik';
+import { Formik, Form, Field, FieldArray } from 'formik'
+import * as Yup from 'yup'
 import styled from 'styled-components'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../common/button'
@@ -68,27 +69,45 @@ const StyledSubmitButtonContainer = styled.div`
   justify-content: flex-end;
 `
 
-// const StyledCheckbox = styled.input`
-//   width: 15px;
-//   height: 15px;
-//   cursor: pointer;
-//   padding-right: 18px;
-// `
-//
-// const StyledInput = styled.input`
-//   width: 30px;
-//   height: 20px;
-//   border-radius: 1px;
-// `
-// const printer = (value) => {
-//   console.log('printer', value)
-// }
+const StyledCheckbox = styled.input`
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  padding-right: 18px;
+`
+
+const StyledInput = styled.input`
+  width: 48px;
+  height: 20px;
+  border: 1px solid #404040;
+  border-radius: 3px;
+  margin: 0 8px;
+  padding: 0 8px;
+`
+
+const StyledInput2 = styled(StyledInput)`
+  width: 200px;
+`
+
+const StyledTextArea = styled.textarea`
+  width: 350px; 
+  border: 1px solid #404040;
+  border-radius: 3px;
+  margin: 8px;
+  padding: 0 8px;
+`
+
 const RMAform = ({items, clickedContinue}) => (
   <div>
     <Formik
       initialValues={{items}}
+      validationSchema={Yup.object({
+        returnItems: Yup.array().of(Yup.object({
+          returnQuantity: Yup.number().required('Required')
+        }))
+      })}
       onSubmit={values => clickedContinue(values.items)}
-      render={({ values }) => (
+      render={({ values, error }) => (
         <Form>
           <FieldArray
             name="returnItems"
@@ -116,15 +135,23 @@ const RMAform = ({items, clickedContinue}) => (
                       </StyledRMAListGrey>
                     </StyledRMAItemDetailsContainer>
                     <StyledRMAItemActionsContainer>
-                      <Field
-                        type='checkbox'
-                        name={`items.${index}.willReturn`}
-                      />
+                      <Field name={`items.${index}.willReturn`} >
+                        {({ field, form}) => (
+                          <StyledCheckbox {...field} type='checkbox'/>
+                        )}
+                      </Field>
                       <Field
                         type='hidden'
                         name={`items.${index}.itemId`}
                       />
-                      <p>Return <Field type='number' name={`items.${index}.returnQuantity`} min='0' />of {item.quantityShipped}</p>
+                      <p>Return
+                        <Field name={`items.${index}.returnQuantity`}>
+                          {({ field, form}) => (
+                            <StyledInput {...field} type='number' min='0'/>
+                          )}
+                        </Field>
+                        of {item.quantityShipped}
+                      </p>
                     </StyledRMAItemActionsContainer>
                     { item.willReturn ?
                       <>
@@ -144,17 +171,20 @@ const RMAform = ({items, clickedContinue}) => (
                             <option value='missing'>Missing items / Components</option>
                             <option value='other'>Other</option>
                           </Field>
-                          <Field
-                            placeholder='Please Specify'
-                            name={`items.${index}.otherDesc`}
-                            hidden={item.returnReason !== 'other'}
-                          />
-                          <Field
-                            component='textarea'
-                            placeholder='Please give a short comment of how the description / recommendation was inaccurate'
-                            name={`items.${index}.details`}
-                            hidden={item.returnReason !== 'inaccurate'}
-                          />
+                          <Field name={`items.${index}.otherDesc`}>
+                            {({ field, form}) => (
+                              <StyledInput2 {...field} placeholder='Specify a Return Reason' hidden={item.returnReason !== 'other'} />
+                            )}
+                          </Field>
+                          <Field component='textarea' name={`items.${index}.details`}>
+                            {({ field, form}) => (
+                              <StyledTextArea {...field}
+                                component='textarea'
+                                rows='3'
+                                placeholder='Please give a short comment of how the description or recommendation was inaccurate'
+                                hidden={item.returnReason !== 'inaccurate'} />
+                            )}
+                          </Field>
                         </StyledRMAReturnReasonContainer>
                         <StyledRMAReturnReasonContainer>
                           <Field component="select" name={`items.${index}.refundType`}>
