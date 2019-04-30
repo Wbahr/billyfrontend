@@ -130,9 +130,10 @@ const RMAform = ({items, clickedContinue}) => (
     <Formik
       initialValues={{items}}
       validate={validate}
+      validateOnBlur={false}
+      validateOnChange={false}
       onSubmit={values => clickedContinue(values.items)}
       render={({ values, errors }) => (
-        console.log('errors', errors),
         <Form>
           <FieldArray
             name="returnItems"
@@ -231,6 +232,10 @@ const RMAform = ({items, clickedContinue}) => (
             )}
           />
           <StyledSubmitButtonContainer>
+            <div>{errors.quantity}</div>
+            <div>{errors.return}</div>
+            <div>{errors.other}</div>
+            <div>{errors.description}</div>
             <Button type="submit" text='Continue' />
           </StyledSubmitButtonContainer>
         </Form>
