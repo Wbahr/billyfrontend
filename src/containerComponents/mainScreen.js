@@ -88,8 +88,8 @@ class MainScreen extends React.Component {
 
   componentWillMount() {
     let invoiceData = getInvoice(12209770)
-    console.log('invoice data', invoiceData)
   }
+  
   // componentWillMount() {
   //   const location = queryString.parse(location.search)
   //   let section = _.get(location,'section', null)

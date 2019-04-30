@@ -97,15 +97,38 @@ const StyledTextArea = styled.textarea`
   padding: 0 8px;
 `
 
+const validate = (values) => {
+  let errors = {};
+  let returnItems = values.returnItems
+  for(let i = 0; i < returnItems.length; i++) {
+    let item = returnItems[i]
+    if (item.willReturn) {
+      // check if quantity is ok
+      if (item.returnQuantity <= 0 && item.returnQuantity > item.quantityShipped) {
+        errors.quantity = 'Check to ensure all return quantities are valid'
+      }
+      // check if dropdowns are populated
+      if (item.returnReason.length < 1 || item.refundType.length < 1) {
+        errors.return = 'Specify a return reason and refund type for all returns'
+      }
+      // check if other is filled out
+      if (item.returnReason === 'other' && item.otherDesc.length < 1) {
+        errors.other = 'Please describe return reason of other'
+      }
+      // check if description is filled out
+      if (item.returnReason === 'inaccurate' && item.details.length < 1) {
+        errors.description = 'Please describe how part recommendation was inaccurate'
+      }
+    }
+  }
+  return errors
+};
+
 const RMAform = ({items, clickedContinue}) => (
   <div>
     <Formik
       initialValues={{items}}
-      validationSchema={Yup.object({
-        returnItems: Yup.array().of(Yup.object({
-          returnQuantity: Yup.number().required('Required')
-        }))
-      })}
+      validate={validate}
       onSubmit={values => clickedContinue(values.items)}
       render={({ values, error }) => (
         <Form>
@@ -143,6 +166,10 @@ const RMAform = ({items, clickedContinue}) => (
                       <Field
                         type='hidden'
                         name={`items.${index}.itemId`}
+                      />
+                      <Field
+                        type='hidden'
+                        name={`items.${index}.quantityShipped`}
                       />
                       <p>Return
                         <Field name={`items.${index}.returnQuantity`}>
