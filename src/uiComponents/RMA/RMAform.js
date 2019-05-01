@@ -16,6 +16,9 @@ const StyledRMAListGrey = styled(StyledRMAList)`
   background-color: #E9E6E5;
   width: 40%;
   padding-top: 10px;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const StyledRMAItemDetailContainer = styled.div`
@@ -41,10 +44,17 @@ const StyledRMAItemDetailHeader = styled.div`
 
 const StyledRMAItemPhotoContainer = styled.div`
   width: 20%;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const StyledRMAItemDetailsContainer = styled.div`
   display: flex;
+  
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
 `
 
 const StyledRMAItemActionsContainer = styled.div`
@@ -67,6 +77,11 @@ const StyledSubmitButtonContainer = styled.div`
   display: flex;
   padding: 10px;
   justify-content: flex-end;
+  
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const DivErrors = styled.div`
@@ -79,7 +94,7 @@ const DivErrors = styled.div`
   border: 1px solid red;
   border-radius: 3px;
   padding: 8px;
-  margin: 0 auto;
+  margin: 0 auto 8px auto;
   text-align: center;
 `
 

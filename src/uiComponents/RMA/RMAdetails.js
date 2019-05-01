@@ -6,7 +6,7 @@ import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
-import { formatRMAFormData } from './helpers/formatRMAFormData'
+import { formatRMAFormData, postRMA } from './helpers/formatRMAFormData'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -25,7 +25,8 @@ class RMAdetails extends React.Component {
 
   state = {
     showModal: false,
-    returnItems: []
+    returnItems: [],
+    submittingReturn: false,
   }
 
   onOpenModal = () => {
@@ -38,9 +39,16 @@ class RMAdetails extends React.Component {
 
   onConfirmReturn = () => {
     const {
-      returnItems
+      returnItems,
+      submittingReturn
     } = this.state
-    console.log('return items ->>', returnItems)
+    if (!submittingReturn) {
+      this.setState({submittingReturn: true}, postRMA(returnItems).then(
+        function(response) {
+          console.log('response')
+        }
+      ))
+    }
   }
 
   handleClickContinue = (returnItems) => {
