@@ -69,6 +69,20 @@ const StyledSubmitButtonContainer = styled.div`
   justify-content: flex-end;
 `
 
+const DivErrors = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: #ff5252;
+  color: white;
+  border: 1px solid red;
+  border-radius: 3px;
+  padding: 8px;
+  margin-right: auto;
+  text-align: center;
+`
+
 const StyledCheckbox = styled.input`
   width: 15px;
   height: 15px;
@@ -232,10 +246,14 @@ const RMAform = ({items, clickedContinue}) => (
             )}
           />
           <StyledSubmitButtonContainer>
-            <div>{errors.quantity}</div>
-            <div>{errors.return}</div>
-            <div>{errors.other}</div>
-            <div>{errors.description}</div>
+            {Object.keys(errors).length ?
+              <DivErrors>
+                {errors.quantity ? <span>{errors.quantity}</span> : null}
+                {errors.return ? <span>{errors.return}</span> : null}
+                {errors.other ? <span>{errors.other}</span> : null}
+                {errors.description ? <span>{errors.description}</span> : null}
+              </DivErrors>
+            : null}
             <Button type="submit" text='Continue' />
           </StyledSubmitButtonContainer>
         </Form>
