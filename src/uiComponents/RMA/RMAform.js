@@ -79,7 +79,7 @@ const DivErrors = styled.div`
   border: 1px solid red;
   border-radius: 3px;
   padding: 8px;
-  margin-right: auto;
+  margin: 0 auto;
   text-align: center;
 `
 
