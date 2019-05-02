@@ -6,8 +6,11 @@ import {StyledText0, StyledText1} from '../../styles/fonts'
 import Callout from '../common/callout'
 
 const DivContainer = styled.div`
-  max-width: 500px !important;
+  width: 500px;
   
+  @media (max-width: 700px) {
+    width: 300px;
+  }
 `
 
 const StyledHeaderDiv = styled.div`

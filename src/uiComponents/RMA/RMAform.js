@@ -77,6 +77,13 @@ const StyledRMAReturnReasonContainer = styled.div`
   padding: 0 24px;
   background-color: #ccc;
   height: 45px;
+  
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 8px 0;
+  }
 `
 
 const StyledSubmitButtonContainer = styled.div`
@@ -125,7 +132,7 @@ const StyledInput2 = styled(StyledInput)`
 `
 
 const StyledTextArea = styled.textarea`
-  width: 350px; 
+  width: 300px; 
   border: 1px solid #404040;
   border-radius: 3px;
   margin: 8px;
