@@ -1,6 +1,6 @@
 import React from 'react'
 import { Formik, Form, Field, FieldArray } from 'formik'
-import * as Yup from 'yup'
+import Select from 'react-select'
 import styled from 'styled-components'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../common/button'
@@ -174,7 +174,7 @@ const RMAform = ({items, clickedContinue}) => (
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={values => clickedContinue(values.items)}
-      render={({ values, errors }) => (
+      render={({ values, handleChange, errors }) => (
         <Form>
           <FieldArray
             name="returnItems"
@@ -198,7 +198,7 @@ const RMAform = ({items, clickedContinue}) => (
                       <StyledRMAListGrey2>
                         <StyledText0><StyledText1>Promise Date: </StyledText1>{item.promiseDate}</StyledText0>
                         <StyledText0><StyledText1>Total Price: </StyledText1>{item.totalPrice}</StyledText0>
-                        <StyledText0><StyledText1>Unit Price: </StyledText1>{item.unitPrice}</StyledText0>
+                        <StyledText0><StyledText1>Unit Price: </StyledText1>{`$${item.unitPrice}`}</StyledText0>
                       </StyledRMAListGrey2>
                     </StyledRMAItemDetailsContainer>
                     <StyledRMAItemActionsContainer>
@@ -266,7 +266,7 @@ const RMAform = ({items, clickedContinue}) => (
                             <option value='' selected disabled hidden>Select Refund Type</option>
                             <option value='credit'>Airline Credit</option>
                             <option value='refund'>Refund</option>
-                            <option value='credit'>Replacement</option>
+                            <option value='replacement'>Replacement</option>
                           </Field>
                         </StyledRMAReturnReasonContainer>
                       </>
