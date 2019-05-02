@@ -1,11 +1,12 @@
 import _ from 'lodash'
 
+// This function readys the RMA Form data for display on the summary modal and for a POST to our api
 export function formatRMAFormData(formValues) {
   let mutatedFormValues = []
   let j = 0
   for (let i = 0; i < formValues.length; i++) {
     if (formValues[i].willReturn && Number(formValues[i].returnQuantity) > 0) {
-      mutatedFormValues[j] = _.pick(formValues[i], ['itemId', 'returnQuantity', 'willReturn', 'returnReason'])
+      mutatedFormValues[j] = _.pick(formValues[i], ['frecnoNum', 'itemId', 'returnQuantity', 'willReturn', 'returnReason', 'unitPrice'])
       switch (mutatedFormValues[j].returnReason) {
         case ('other'):
           mutatedFormValues[j].other = _.get(formValues[i],`otherDesc`,'')
@@ -25,5 +26,6 @@ export function formatRMAFormData(formValues) {
     }
     j += 1
   }
+  console.log('mutatedFormValues', mutatedFormValues)
   return mutatedFormValues
 }

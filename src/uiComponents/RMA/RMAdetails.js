@@ -64,8 +64,6 @@ class RMAdetails extends React.Component {
         orderNum,
         poNum,
         total,
-        status,
-        packing,
         shippingAddress,
         items
       }
@@ -96,8 +94,6 @@ class RMAdetails extends React.Component {
             <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
             <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
             <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
-            <StyledText0><StyledText1>Status: </StyledText1>{status}</StyledText0>
-            <StyledText0><StyledText1>Packing Basis: </StyledText1>{packing}</StyledText0>
             <StyledText0><StyledText1>Order Total: </StyledText1>{total}</StyledText0>
           </StyledRMAList>
           <StyledRMAList>

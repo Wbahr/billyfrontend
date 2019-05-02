@@ -47,6 +47,7 @@ const selectedOrder =
           {
             itemId: 'AZ16-12ZVRK',
             customerPartNum: 'AZ16-12ZVRK',
+            frecnoNum: '1235234',
             itemDesc: 'SCHMERSAL Keyed Interlock Schmeral AZ16-12ZVRK',
             quantityOrdered: 2,
             quantityShipped: 1,
@@ -58,6 +59,7 @@ const selectedOrder =
           {
             itemId: 'ofwe-12ZVRK',
             customerPartNum: 'AZ16-12ZVRK',
+            frecnoNum: '3958394',
             itemDesc: 'TEST ITEM -12ZVRK',
             quantityOrdered: 8,
             quantityShipped: 8,
@@ -69,6 +71,7 @@ const selectedOrder =
           {
             itemId: 'fsd16-1234VRK',
             customerPartNum: 'AZ16-12ZVRK',
+            frecnoNum: '6948604',
             itemDesc: 'GEAR FOR MOTOR',
             quantityOrdered: 1,
             quantityShipped: 1,

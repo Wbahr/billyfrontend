@@ -21,6 +21,12 @@ const StyledRMAListGrey = styled(StyledRMAList)`
   }
 `
 
+const StyledRMAListGrey2 = styled(StyledRMAListGrey)`
+  @media (max-width: 700px) {
+    padding-top: 0;
+  }
+`
+
 const StyledRMAItemDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -150,7 +156,6 @@ const validate = (values) => {
       }
     }
   }
-  console.log('errors: : :', errors)
   return errors
 };
 
@@ -172,22 +177,22 @@ const RMAform = ({items, clickedContinue}) => (
                   <StyledRMAItemDetailContainer key={index}>
                     <StyledRMAItemDetailHeader>
                       <p>{index + 1}</p>
-                      <p>Item ID: {item.itemId}</p>
-                      <p>387819</p>
+                      {/*<p>Item ID: {item.itemId}</p>*/}
+                      <p>AHC-{item.frecnoNum}</p>
                     </StyledRMAItemDetailHeader>
                     <StyledRMAItemDetailsContainer>
                       <StyledRMAItemPhotoContainer></StyledRMAItemPhotoContainer>
                       <StyledRMAListGrey>
                         <StyledText0><StyledText1>Customer Part #: </StyledText1>{item.customerPartNum}</StyledText0>
-                        <StyledText0>{item.itemDesc}</StyledText0>
+                        <StyledText0><StyledText1>Description: </StyledText1>{item.itemDesc}</StyledText0>
                         <StyledText0><StyledText1>Quantity Ordered: </StyledText1>{item.quantityOrdered}</StyledText0>
                         <StyledText0><StyledText1>Quantity Shipped: </StyledText1>{item.quantityShipped}</StyledText0>
                       </StyledRMAListGrey>
-                      <StyledRMAListGrey>
+                      <StyledRMAListGrey2>
                         <StyledText0><StyledText1>Promise Date: </StyledText1>{item.promiseDate}</StyledText0>
                         <StyledText0><StyledText1>Total Price: </StyledText1>{item.totalPrice}</StyledText0>
                         <StyledText0><StyledText1>Unit Price: </StyledText1>{item.unitPrice}</StyledText0>
-                      </StyledRMAListGrey>
+                      </StyledRMAListGrey2>
                     </StyledRMAItemDetailsContainer>
                     <StyledRMAItemActionsContainer>
                       <Field name={`items.${index}.willReturn`} >
@@ -197,11 +202,15 @@ const RMAform = ({items, clickedContinue}) => (
                       </Field>
                       <Field
                         type='hidden'
-                        name={`items.${index}.itemId`}
+                        name={`items.${index}.frecnoNum`}
                       />
                       <Field
                         type='hidden'
                         name={`items.${index}.quantityShipped`}
+                      />
+                      <Field
+                        type='hidden'
+                        name={`items.${index}.unitPrice`}
                       />
                       <p>Return
                         <Field name={`items.${index}.returnQuantity`}>
