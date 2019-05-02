@@ -6,7 +6,8 @@ import {StyledText0, StyledText1} from '../../styles/fonts'
 import Callout from '../common/callout'
 
 const DivContainer = styled.div`
-  width: 500px;
+  max-width: 500px !important;
+  
 `
 
 const StyledHeaderDiv = styled.div`
@@ -38,7 +39,7 @@ const DivItem = styled.div`
 const DivTotal = styled(StyledText1)`
   display: flex;
   justify-content: flex-end;
-  padding: 10px 0;
+  padding: 10px 8px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 `
@@ -46,6 +47,7 @@ const DivTotal = styled(StyledText1)`
 const DivAgree = styled.div`
   display: flex;
   justify-content: center;
+  background: #eff8ff;
 `
 
 const PItemDetail = styled.div`
@@ -73,10 +75,21 @@ const InputAgree = styled.input`
 //   align-content: center;
 // `
 
+const restockFee = function(total) {
+  let restockFee = (total * 0.25).toFixed(2)
+  return restockFee
+}
+
 class SummaryModal extends React.Component {
 
   state = {
-    reviewedSummary: false
+    reviewedSummary: false,
+    totalRefund: 0,
+    minimumRestockingFee: false
+  }
+
+  componentWillMount() {
+    this.calculateRefundAndFee(this.props.returnItems)
   }
 
   handleConfirmReturn = () => {
@@ -98,10 +111,38 @@ class SummaryModal extends React.Component {
     this.setState({reviewedSummary: !this.state.reviewedSummary})
   }
 
+  calculateRefundAndFee = (returnItems) => {
+    let totalRefund = 0
+    let totalRestockingFee = 0
+    let minRestockingFee = 15
+    let restockingPercentage = 0.25
+
+    for(let i = 0; i < returnItems.length; i++) {
+      let item = returnItems[i]
+      if (item.hasReturnFee) {
+        totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
+      }
+      totalRefund = totalRefund + (item.returnQuantity * item.unitPrice)
+    }
+    if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
+      totalRefund = totalRefund - minRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2), minimumRestockingFee: true})
+    } else {
+      totalRefund = totalRefund - totalRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2)})
+    }
+  }
+
   render(){
     const {
       returnItems
     } = this.props
+
+    const {
+      reviewedSummary,
+      totalRefund,
+      minimumRestockingFee
+    } = this.state
 
     let itemBars = []
 
@@ -110,12 +151,12 @@ class SummaryModal extends React.Component {
         itemBars.push(
           <DivItem>
             <PItemDetail>
-              <StyledText1>{`Item #DKE-2429482393 - (Qty ${item.returnQuantity})`}</StyledText1>
-              <StyledText0>{_.get(item,`total`,'$10.00')}</StyledText0>
+              <StyledText1>{`AHC-${item.frecnoNum} - (Qty ${item.returnQuantity})`}</StyledText1>
+              <StyledText0>{`$${(item.returnQuantity * item.unitPrice).toFixed(2)}`}</StyledText0>
             </PItemDetail>
             <PItemDetail>
-              <StyledText0>{item.itemId}</StyledText0>
-              <PItemRestockingFee as='div'>Restocking Fee: -$5.42</PItemRestockingFee>
+              <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
+              {item.hasReturnFee ? <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
             </PItemDetail>
           </DivItem>
         )
@@ -125,6 +166,8 @@ class SummaryModal extends React.Component {
         <Callout text='No Items selected for Return' />
       )
     }
+
+    let agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
     return(
       <DivContainer>
         <StyledHeaderDiv>
@@ -133,16 +176,16 @@ class SummaryModal extends React.Component {
         <DivItemlist>
           {itemBars}
           <DivTotal as='div'>
-            {returnItems.length === 0 ? null : 'Total: $48.81'}
+            {returnItems.length === 0 ? null : `Total: $${totalRefund}`}
           </DivTotal>
           <DivAgree>
             <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
-            <InputAgree as='label' for='agree'>I've reviewed the above return Summary.*</InputAgree>
+            <InputAgree as='label' for='agree'>{agreementText}</InputAgree>
           </DivAgree>
         </DivItemlist>
         <DivActionbar>
           <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
-          <Button onClick={this.handleConfirmReturn} disabled={!this.state.reviewedSummary} text='Confirm Return' />
+          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' />
         </DivActionbar>
       </DivContainer>
     )
