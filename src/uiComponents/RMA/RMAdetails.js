@@ -103,7 +103,8 @@ class RMAdetails extends React.Component {
     const {
       selectedOrder,
       showModal,
-      returnItems
+      returnItems,
+      submittingReturn
     } = this.state
 
     if (_.isNil(selectedOrder)) {
@@ -156,7 +157,7 @@ class RMAdetails extends React.Component {
             clickedContinue={this.handleClickContinue}
           />
           <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
-            <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
+            <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
         </React.Fragment>
       )

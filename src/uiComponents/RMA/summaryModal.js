@@ -138,7 +138,8 @@ class SummaryModal extends React.Component {
 
   render(){
     const {
-      returnItems
+      returnItems,
+      inFlight
     } = this.props
 
     const {
@@ -188,7 +189,7 @@ class SummaryModal extends React.Component {
         </DivItemlist>
         <DivActionbar>
           <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
-          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' inflightText={'Confirming...'} />
+          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' inFlight={inFlight} inFlightText={'Confirming...'} />
         </DivActionbar>
       </DivContainer>
     )

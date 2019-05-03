@@ -52,8 +52,8 @@ class Button extends React.Component {
         break;
       case('secondary'):
         return(
-          <SecondaryButton type={type} onClick={onClick} disabled={disabled || inFlight}>
-            {inFlight ? inFlightText : text}
+          <SecondaryButton type={type} onClick={onClick}>
+            {text}
           </SecondaryButton>
         )
         break;
