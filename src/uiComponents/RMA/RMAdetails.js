@@ -1,12 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
+import _ from 'lodash'
 import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
+import Loader from '../common/loader'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
-import { formatRMAFormData, postRMA } from './helpers/formatRMAFormData'
+import { formatRMAFormData } from './helpers/formatRMAFormData'
+import { getInvoice, postRMA } from '../../api-temp/apiCalls'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -27,6 +30,41 @@ class RMAdetails extends React.Component {
     showModal: false,
     returnItems: [],
     submittingReturn: false,
+    selectedOrder: null
+  }
+
+  componentWillMount() {
+    getInvoice('12209770').then(
+      (response) => this.selectedOrderMutator(response)
+    ).then(
+      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse }, ()=> console.log('selected order', this.state.selectedOrder))}
+    )
+  }
+
+  selectedOrderMutator = (value) => {
+    if (_.has(value,'error')){
+      return null
+    }
+    let mutatedValue = {}
+    mutatedValue.shippingAddress = value.Order.ShipToAddress
+    mutatedValue.orderNum = value.Order.OrderNumber
+    mutatedValue.poNum = value.Order.PoNumber
+    mutatedValue.orderDate = value.Order.OrderDate.DisplayName
+    let items = []
+    for (let i = 0; i < value.InvoiceDetails; i++) {
+      let item = value.InvoiceDetails[i]
+      let itemObj = {}
+      itemObj.itemId = item.Item.ItemCode
+      itemObj.frecnoNum = item.Item.Id
+      itemObj.customerPartNum = item.Item.ItemCode
+      itemObj.itemDesc = item.Item.itemDescription
+      itemObj.quantityOrdered = 1
+      itemObj.quantityShipped = 1
+      itemObj.unitPrice = '500.00'
+      items.push(itemObj)
+    }
+    mutatedValue.items = items
+    return mutatedValue
   }
 
   onOpenModal = () => {
@@ -43,11 +81,13 @@ class RMAdetails extends React.Component {
       submittingReturn
     } = this.state
     if (!submittingReturn) {
-      this.setState({submittingReturn: true}, postRMA(returnItems).then(
+
+      this.setState({submittingReturn: true})
+      postRMA(returnItems).then(
         function(response) {
-          console.log('response')
+          console.log(response)
         }
-      ))
+      )
     }
   }
 
@@ -59,59 +99,68 @@ class RMAdetails extends React.Component {
 
   render(){
     const {
-      selectedOrder:{
-        orderDate,
-        orderNum,
-        poNum,
-        total,
-        shippingAddress,
-        items
-      }
-    } = this.props
+      selectedOrder
+    } = this.state
 
     const {
       showModal,
       returnItems
     } = this.state
 
-    let initialFormValues = items
-    for (let i = 0; i < items.length; i++) {
-      initialFormValues[i].willReturn = false
-      initialFormValues[i].returnQuantity = 0
-      initialFormValues[i].returnReason = ''
-      initialFormValues[i].refundType = ''
-      initialFormValues[i].otherDesc = ''
-      initialFormValues[i].details = ''
-    }
+    if (_.isNil(selectedOrder)) {
+      return (
+        <Loader />
+      )
+    } else {
+      const {
+        selectedOrder: {
+          orderDate,
+          orderNum,
+          poNum,
+          total,
+          shippingAddress,
+          items
+        }
+      } = this.state
+      let initialFormValues = items
+      for (let i = 0; i < items.length; i++) {
+        initialFormValues[i].willReturn = false
+        initialFormValues[i].returnQuantity = 0
+        initialFormValues[i].returnReason = ''
+        initialFormValues[i].refundType = ''
+        initialFormValues[i].otherDesc = ''
+        initialFormValues[i].details = ''
+      }
 
-    return(
-      <React.Fragment>
-        <AccountSectionHeader
-          text={`RMA - Invoice #${orderNum}`}
-        />
-        <StyledRMAOrderDetails>
-          <StyledRMAList>
-            <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
-            <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
-            <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
-            <StyledText0><StyledText1>Order Total: </StyledText1>{total}</StyledText0>
-          </StyledRMAList>
-          <StyledRMAList>
-            <StyledText1>Ship-to Address:</StyledText1>
-            <StyledText0>{shippingAddress.name}</StyledText0>
-            <StyledText0>{shippingAddress.address1}</StyledText0>
-            <StyledText0>{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zip}</StyledText0>
-          </StyledRMAList>
-        </StyledRMAOrderDetails>
-        <RMAform
-          items={items}
-          clickedContinue={this.handleClickContinue}
-        />
-        <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
-          <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
-        </Modal>
-      </React.Fragment>
-    )
+      return (
+        <React.Fragment>
+          <AccountSectionHeader
+            text={`RMA - Invoice #${orderNum}`}
+          />
+          <StyledRMAOrderDetails>
+            <StyledRMAList>
+              <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
+              <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
+              <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
+              <StyledText0><StyledText1>Order Total: </StyledText1>{total}</StyledText0>
+            </StyledRMAList>
+            <StyledRMAList>
+              <StyledText1>Ship-to Address:</StyledText1>
+              <StyledText0>{shippingAddress.name}</StyledText0>
+              <StyledText0>{shippingAddress.address1}</StyledText0>
+              <StyledText0>{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zip}</StyledText0>
+            </StyledRMAList>
+          </StyledRMAOrderDetails>
+          <RMAform
+            items={items}
+            clickedContinue={this.handleClickContinue}
+          />
+          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
+            <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} onClose={this.onCloseModal}/>
+          </Modal>
+        </React.Fragment>
+      )
+    }
   }
 }
 
