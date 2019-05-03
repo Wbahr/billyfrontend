@@ -36,28 +36,31 @@ class Button extends React.Component {
       text,
       onClick,
       disabled,
-      color
+      color,
+      inFlightText,
+      inFlight
     } = this.props
+
 
     switch(color){
       case('main'):
         return(
-          <MainButton type={type} onClick={onClick} disabled={disabled}>
-            {text}
+          <MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
+            {inFlight ? inFlightText : text}
           </MainButton>
         )
         break;
       case('secondary'):
         return(
-          <SecondaryButton type={type} onClick={onClick} disabled={disabled}>
-            {text}
+          <SecondaryButton type={type} onClick={onClick} disabled={disabled || inFlight}>
+            {inFlight ? inFlightText : text}
           </SecondaryButton>
         )
         break;
       default:
         return(
-          <MainButton type={type} onClick={onClick} disabled={disabled}>
-            {text}
+          <MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
+            {inFlight ? inFlightText : text}
           </MainButton>
         )
     }

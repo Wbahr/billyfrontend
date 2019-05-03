@@ -50,6 +50,7 @@ class RMAdetails extends React.Component {
     mutatedValue.orderNum = value.Order.OrderNumber
     mutatedValue.poNum = value.Order.PoNumber
     mutatedValue.orderDate = value.Order.OrderDate.Display
+    mutatedValue.invoiceNum = value.InvoiceNumber
     let items = []
     for (let i = 0; i < value.InvoiceDetails.length; i++) {
       let item = value.InvoiceDetails[i]
@@ -100,11 +101,7 @@ class RMAdetails extends React.Component {
 
   render(){
     const {
-      selectedOrder
-    } = this.state
-
-    console.log ('state', selectedOrder)
-    const {
+      selectedOrder,
       showModal,
       returnItems
     } = this.state
@@ -118,6 +115,7 @@ class RMAdetails extends React.Component {
         selectedOrder: {
           orderDate,
           orderNum,
+          invoiceNum,
           poNum,
           shippingAddress,
           items
@@ -137,7 +135,7 @@ class RMAdetails extends React.Component {
       return (
         <React.Fragment>
           <AccountSectionHeader
-            text={`RMA - Invoice #${orderNum}`}
+            text={`RMA - Invoice #${invoiceNum}`}
           />
           <StyledRMAOrderDetails>
             <StyledRMAList>

@@ -188,7 +188,7 @@ class SummaryModal extends React.Component {
         </DivItemlist>
         <DivActionbar>
           <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
-          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' />
+          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' inflightText={'Confirming...'} />
         </DivActionbar>
       </DivContainer>
     )
