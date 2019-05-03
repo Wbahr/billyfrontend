@@ -197,7 +197,7 @@ const RMAform = ({items, clickedContinue}) => (
                       </StyledRMAListGrey>
                       <StyledRMAListGrey2>
                         <StyledText0><StyledText1>Promise Date: </StyledText1>{item.promiseDate}</StyledText0>
-                        <StyledText0><StyledText1>Total Price: </StyledText1>{item.totalPrice}</StyledText0>
+                        <StyledText0><StyledText1>Total Price: </StyledText1>{`$${(item.unitPrice * item.quantityOrdered).toFixed(2)}`}</StyledText0>
                         <StyledText0><StyledText1>Unit Price: </StyledText1>{`$${item.unitPrice}`}</StyledText0>
                       </StyledRMAListGrey2>
                     </StyledRMAItemDetailsContainer>

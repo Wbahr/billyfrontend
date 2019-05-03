@@ -46,18 +46,19 @@ class RMAdetails extends React.Component {
       return null
     }
     let mutatedValue = {}
-    mutatedValue.shippingAddress = value.Order.ShipToAddress
+    mutatedValue.shippingAddress = value.ShipToAddress
     mutatedValue.orderNum = value.Order.OrderNumber
     mutatedValue.poNum = value.Order.PoNumber
-    mutatedValue.orderDate = value.Order.OrderDate.DisplayName
+    mutatedValue.orderDate = value.Order.OrderDate.Display
     let items = []
-    for (let i = 0; i < value.InvoiceDetails; i++) {
+    for (let i = 0; i < value.InvoiceDetails.length; i++) {
       let item = value.InvoiceDetails[i]
+      console.log('item', item)
       let itemObj = {}
       itemObj.itemId = item.Item.ItemCode
       itemObj.frecnoNum = item.Item.Id
       itemObj.customerPartNum = item.Item.ItemCode
-      itemObj.itemDesc = item.Item.itemDescription
+      itemObj.itemDesc = item.Item.ItemDescription
       itemObj.quantityOrdered = 1
       itemObj.quantityShipped = 1
       itemObj.unitPrice = '500.00'
@@ -102,6 +103,7 @@ class RMAdetails extends React.Component {
       selectedOrder
     } = this.state
 
+    console.log ('state', selectedOrder)
     const {
       showModal,
       returnItems
@@ -117,11 +119,11 @@ class RMAdetails extends React.Component {
           orderDate,
           orderNum,
           poNum,
-          total,
           shippingAddress,
           items
         }
       } = this.state
+
       let initialFormValues = items
       for (let i = 0; i < items.length; i++) {
         initialFormValues[i].willReturn = false
@@ -142,13 +144,13 @@ class RMAdetails extends React.Component {
               <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
               <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
               <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
-              <StyledText0><StyledText1>Order Total: </StyledText1>{total}</StyledText0>
             </StyledRMAList>
             <StyledRMAList>
               <StyledText1>Ship-to Address:</StyledText1>
-              <StyledText0>{shippingAddress.name}</StyledText0>
-              <StyledText0>{shippingAddress.address1}</StyledText0>
-              <StyledText0>{shippingAddress.city + ', ' + shippingAddress.state + ' ' + shippingAddress.zip}</StyledText0>
+              <StyledText0>{shippingAddress.Name}</StyledText0>
+              <StyledText0>{shippingAddress.Line1}</StyledText0>
+              {shippingAddress.Line2 && <StyledText0>{shippingAddress.Line2}</StyledText0>}
+              <StyledText0>{shippingAddress.City + ', ' + shippingAddress.State + ' ' + shippingAddress.Zip}</StyledText0>
             </StyledRMAList>
           </StyledRMAOrderDetails>
           <RMAform
