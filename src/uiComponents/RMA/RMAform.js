@@ -166,6 +166,8 @@ const validate = (values) => {
   return errors
 };
 
+const showReplacement = ['damaged', 'defective', 'incorrect', 'early', 'missing', 'other']
+
 const RMAform = ({items, clickedContinue}) => (
   <div>
     <Formik
@@ -232,19 +234,19 @@ const RMAform = ({items, clickedContinue}) => (
                       <>
                         <StyledRMAReturnReasonContainer>
                           <Field component="select" name={`items.${index}.returnReason`}>
-                            <option value='' selected disabled hidden>Select Return Reason</option>
-                            <option value='mistake'>Purchased by Mistake</option>
-                            <option value='inaccurate'>Inaccurate Description / Recommendation</option>
-                            <option value='damaged'>Product / Packaging arrived Damaged</option>
-                            <option value='defective'>Item is Defective / Doesn't work</option>
-                            <option value='late'>Item arrived too late</option>
-                            <option value='incorrect'>Incorrect item sent</option>
-                            <option value='excess'>Received more than ordered</option>
-                            <option value='early'>Item arrived too early</option>
-                            <option value='no_need'>No longer needed</option>
-                            <option value='not_approved'>Customer did not approve purchase</option>
-                            <option value='missing'>Missing items / Components</option>
-                            <option value='other'>Other</option>
+                              <option value='' selected disabled hidden>Select Return Reason</option>
+                              <option value='mistake'>Purchased by Mistake</option>
+                              <option value='inaccurate'>Inaccurate Description / Recommendation</option>
+                              <option value='damaged'>Product / Packaging arrived Damaged</option>
+                              <option value='defective'>Item is Defective / Doesn't work</option>
+                              <option value='late'>Item arrived too late</option>
+                              <option value='incorrect'>Incorrect item sent</option>
+                              <option value='excess'>Received more than ordered</option>
+                              <option value='early'>Item arrived too early</option>
+                              <option value='no_need'>No longer needed</option>
+                              <option value='not_approved'>Customer did not approve purchase</option>
+                              <option value='missing'>Missing items / Components</option>
+                              <option value='other'>Other</option>
                           </Field>
                           <Field name={`items.${index}.otherDesc`}>
                             {({ field, form}) => (
@@ -262,11 +264,14 @@ const RMAform = ({items, clickedContinue}) => (
                           </Field>
                         </StyledRMAReturnReasonContainer>
                         <StyledRMAReturnReasonContainer>
-                          <Field component="select" name={`items.${index}.refundType`}>
+                          <Field component='select' name={`items.${index}.refundType`}>
                             <option value='' selected disabled hidden>Select Refund Type</option>
                             <option value='credit'>Airline Credit</option>
                             <option value='refund'>Refund</option>
-                            <option value='replacement'>Replacement</option>
+                            { _.includes(showReplacement, item.returnReason) ?
+                              <option value='replacement'>Replacement</option>
+                              : null
+                            }
                           </Field>
                         </StyledRMAReturnReasonContainer>
                       </>
