@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import AccountSectionHeader from './accountSectionHeader'
 import 'react-table/react-table.css'
+
+import AccountSectionHeader from './accountSectionHeader'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
 import Loader from '../common/loader'
@@ -38,9 +39,9 @@ class RMAdetails extends React.Component {
   }
 
   componentWillMount() {
-    // const location = queryString.parse(location.search)
-    // let invoice = _.get(location, 'invoice', '12209770')
-    getInvoice('12209770').then(
+    const location = queryString.parse(location.search)
+    let invoice = _.get(location, 'invoice', '')
+    getInvoice(invoice).then(
       (response) => this.selectedOrderMutator(response)
     ).then(
       (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse }, ()=> console.log('selected order', this.state.selectedOrder))}

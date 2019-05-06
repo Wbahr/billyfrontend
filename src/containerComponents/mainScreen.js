@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import queryString from 'query-string'
-import RMAtable from '../uiComponents/RMA/RMAtable'
+// import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
@@ -27,26 +27,22 @@ const StyledAccountContainer = styled.div`
 `
 
 class MainScreen extends React.Component {
-  state = {
-    showTable: false,
-    showDetail: true
-  }
 
-  // componentWillMount() {
-  //   const location = queryString.parse(location.search)
-  //   let section = _.get(location,'section', null)
-  //   switch(section){
-  //     case('rma'):
-  //       this.setState({showTable: false, showDetail: true})
-  //       break
-  //     case('rma-summary'):
-  //       this.setState({showTable: true, showDetail: false})
-  //       break
-  //     default:
-  //       this.setState({showTable: false, showDetail: true})
-  //       dispatch.getInvoice(invoice)
-  //   }
-  // }
+  componentWillMount() {
+    const location = queryString.parse(location.search)
+    let section = _.get(location,'section', null)
+    switch(section){
+      case('rma'):
+        this.setState({showTable: false, showDetail: true})
+        break
+      // case('rma-summary'):
+      //   this.setState({showTable: true, showDetail: false})
+      //   break
+      default:
+        this.setState({showTable: false, showDetail: true})
+        dispatch.getInvoice(invoice)
+    }
+  }
 
   render(){
     const {
@@ -57,7 +53,7 @@ class MainScreen extends React.Component {
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {showTable ? <RMAtable data={data} /> : null }
+          {/*{showTable ? <RMAtable data={data} /> : null }*/}
           {showDetail ? <RMAdetails /> : null}
         </StyledAccountContainer>
       </StyledBackground>
