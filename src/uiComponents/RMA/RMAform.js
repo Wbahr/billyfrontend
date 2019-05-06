@@ -234,19 +234,29 @@ const RMAform = ({items, clickedContinue}) => (
                       <>
                         <StyledRMAReturnReasonContainer>
                           <Field component="select" name={`items.${index}.returnReason`}>
-                              <option value='' selected disabled hidden>Select Return Reason</option>
-                              <option value='mistake'>Purchased by Mistake</option>
-                              <option value='inaccurate'>Inaccurate Description / Recommendation</option>
-                              <option value='damaged'>Product / Packaging arrived Damaged</option>
-                              <option value='defective'>Item is Defective / Doesn't work</option>
-                              <option value='late'>Item arrived too late</option>
-                              <option value='incorrect'>Incorrect item sent</option>
-                              <option value='excess'>Received more than ordered</option>
-                              <option value='early'>Item arrived too early</option>
-                              <option value='no_need'>No longer needed</option>
-                              <option value='not_approved'>Customer did not approve purchase</option>
-                              <option value='missing'>Missing items / Components</option>
-                              <option value='other'>Other</option>
+                            {({ field, form}) => (
+                              <input
+                                {...field}
+                                type='select'
+                                onChange={() => {
+                                  form.setFieldValue('items.${index}.refundType', '')
+                                }}
+                              >
+                                <option value='' selected disabled hidden>Select Return Reason</option>
+                                <option value='mistake'>Purchased by Mistake</option>
+                                <option value='inaccurate'>Inaccurate Description / Recommendation</option>
+                                <option value='damaged'>Product / Packaging arrived Damaged</option>
+                                <option value='defective'>Item is Defective / Doesn't work</option>
+                                <option value='late'>Item arrived too late</option>
+                                <option value='incorrect'>Incorrect item sent</option>
+                                <option value='excess'>Received more than ordered</option>
+                                <option value='early'>Item arrived too early</option>
+                                <option value='no_need'>No longer needed</option>
+                                <option value='not_approved'>Customer did not approve purchase</option>
+                                <option value='missing'>Missing items / Components</option>
+                                <option value='other'>Other</option>
+                              </input>
+                            )}
                           </Field>
                           <Field name={`items.${index}.otherDesc`}>
                             {({ field, form}) => (
