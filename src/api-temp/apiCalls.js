@@ -13,7 +13,6 @@ export function getInvoice(invoiceNum) {
             'Authorization': 'bearer ' + token,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            // "Content-Type": "application/x-www-form-urlencoded",
         },
         redirect: "follow", // manual, *follow, error
         referrer: "no-referrer", // no-referrer, *client
@@ -40,7 +39,8 @@ export function postRMA(data) {
         credentials: "same-origin",
         headers: {
             'Authorization': 'bearer ' + token,
-            'Content-Type"': 'application/json',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
         },
         redirect: "follow",
         referrer: "no-referrer",

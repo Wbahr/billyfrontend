@@ -30,10 +30,16 @@ class RMAdetails extends React.Component {
     showModal: false,
     returnItems: [],
     submittingReturn: false,
-    selectedOrder: null
+    selectedOrder: null,
+    postResponse: null,
+    submitError: false,
+    submitSuccess: false,
+    rmaNum: null
   }
 
   componentWillMount() {
+    // const location = queryString.parse(location.search)
+    // let invoice = _.get(location, 'invoice', '12209770')
     getInvoice('12209770').then(
       (response) => this.selectedOrderMutator(response)
     ).then(
@@ -83,11 +89,18 @@ class RMAdetails extends React.Component {
       submittingReturn
     } = this.state
     if (!submittingReturn) {
-
       this.setState({submittingReturn: true})
       postRMA(returnItems).then(
         function(response) {
-          console.log(response)
+          console.log('response', response)
+          if (response.ok) {
+            this.setState({ submitSuccess: true })
+            setTimeout(function () {
+              window.location.replace('https://preprod.airlinehyd.com/MyAccount.aspx?section=Invoices')
+            }, 2000);
+          } else {
+            this.setState({ submitError: true, submittingReturn: false })
+          }
         }
       )
     }
@@ -104,7 +117,10 @@ class RMAdetails extends React.Component {
       selectedOrder,
       showModal,
       returnItems,
-      submittingReturn
+      submittingReturn,
+      rmaNum,
+      submitError,
+      submitSuccess
     } = this.state
 
     if (_.isNil(selectedOrder)) {
@@ -157,7 +173,7 @@ class RMAdetails extends React.Component {
             clickedContinue={this.handleClickContinue}
           />
           <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
-            <SummaryModal returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
+            <SummaryModal submitSuccess={submitSuccess} rmaNum={rmaNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
         </React.Fragment>
       )

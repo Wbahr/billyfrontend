@@ -35,11 +35,9 @@ class MainScreen extends React.Component {
   // componentWillMount() {
   //   const location = queryString.parse(location.search)
   //   let section = _.get(location,'section', null)
-  //   let invoice = _.get(location, 'invoice', null)
   //   switch(section){
   //     case('rma'):
   //       this.setState({showTable: false, showDetail: true})
-  //       dispatch.getInvoice(invoice)
   //       break
   //     case('rma-summary'):
   //       this.setState({showTable: true, showDetail: false})

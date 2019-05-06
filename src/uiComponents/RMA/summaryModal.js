@@ -72,11 +72,19 @@ const InputAgree = styled.input`
   cursor: pointer;
 `
 
-// const PReturnSubmitted = styled(StyledText0)`
-//   display: flex;
-//   justify-content: center;
-//   align-content: center;
-// `
+const DivErrors = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: #ff5252;
+  color: white;
+  border: 1px solid red;
+  border-radius: 3px;
+  padding: 8px;
+  margin: 0 auto 8px auto;
+  text-align: center;
+`
 
 const restockFee = function(total) {
   let restockFee = (total * 0.25).toFixed(2)
@@ -139,7 +147,9 @@ class SummaryModal extends React.Component {
   render(){
     const {
       returnItems,
-      inFlight
+      inFlight,
+      submitError,
+      submitSuccess
     } = this.props
 
     const {
@@ -172,27 +182,50 @@ class SummaryModal extends React.Component {
     }
 
     let agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
-    return(
+    if (submitSuccess) {
       <DivContainer>
         <StyledHeaderDiv>
-          <PHeader>Return Summary</PHeader>
+          <PHeader>Return Request Submitted</PHeader>
+          <p>You will now be redirected to the Invoice Screen</p>
         </StyledHeaderDiv>
-        <DivItemlist>
-          {itemBars}
-          <DivTotal as='div'>
-            {returnItems.length === 0 ? null : `Total: $${totalRefund}`}
-          </DivTotal>
-          <DivAgree>
-            <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary} />
-            <InputAgree as='label' for='agree'>{agreementText}</InputAgree>
-          </DivAgree>
-        </DivItemlist>
-        <DivActionbar>
-          <Button color='secondary' onClick={this.handleOnClose} text='Cancel' />
-          <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return' inFlight={inFlight} inFlightText={'Confirming...'} />
-        </DivActionbar>
       </DivContainer>
-    )
+    } else {
+      return (
+        <DivContainer>
+          <StyledHeaderDiv>
+            <PHeader>Return Summary</PHeader>
+          </StyledHeaderDiv>
+          <DivItemlist>
+            {itemBars}
+            <DivTotal as='div'>
+              {returnItems.length === 0 ? null : `Total: $${totalRefund}`}
+            </DivTotal>
+            <DivAgree>
+              <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox}
+                          value={this.state.reviewedSummary}/>
+              <InputAgree as='label' for='agree'>{agreementText}</InputAgree>
+            </DivAgree>
+            {submitError ?
+              <DivErrors>
+                Submit failed
+              </DivErrors>
+              : null
+            }
+          </DivItemlist>
+          <DivActionbar>
+            {submitError ?
+              <DivErrors>
+                Submit failed
+              </DivErrors>
+              : null
+            }
+            <Button color='secondary' onClick={this.handleOnClose} text='Cancel'/>
+            <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return'
+                    inFlight={inFlight} inFlightText={'Confirming...'}/>
+          </DivActionbar>
+        </DivContainer>
+      )
+    }
   }
 }
 
