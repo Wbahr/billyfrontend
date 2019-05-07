@@ -76,6 +76,7 @@ class RMAtable extends React.Component {
       {
         Header: '',
         accessor: 'rmaNum',
+        sortable: false,
         Cell: row => <ButtonLink onClick={() => this.handleViewDetails(row.value)}>View Details</ButtonLink>
       }
     ]
