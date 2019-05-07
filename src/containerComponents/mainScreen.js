@@ -28,8 +28,8 @@ const StyledAccountContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    showTable: false,
-    showDetail: true
+    showTable: true,
+    showDetail: false
   }
 
   // componentWillMount() {
@@ -57,7 +57,7 @@ class MainScreen extends React.Component {
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {showTable ? <RMAtable data={data} /> : null }
+          {showTable ? <RMAtable /> : null }
           {showDetail ? <RMAdetails /> : null}
         </StyledAccountContainer>
       </StyledBackground>
