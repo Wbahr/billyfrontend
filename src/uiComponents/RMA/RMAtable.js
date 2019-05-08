@@ -113,6 +113,7 @@ class RMAtable extends React.Component {
         accessor: 'status', // String-based value accessors!
         Cell: row => <PCenterAlign>{row.value}</PCenterAlign>,
         id: 'status',
+        filterable: true,
         filterMethod: (filter, row) => {
           if (filter.value === "all") {
             return true;
