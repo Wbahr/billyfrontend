@@ -1,15 +1,53 @@
 import React from 'react'
 import ReactTable from "react-table"
 import 'react-table/react-table.css'
+import styled from 'styled-components'
 
 import AccountSectionHeader from './accountSectionHeader'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
+import _ from 'lodash'
+import { StyledText0, StyledText1 } from '../../styles/fonts'
+
+const DivItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F9F9;
+  padding: 10px;
+  margin: 10px 0;
+`
+const PItemDetail = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const DivTotal = styled(StyledText1)`
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 8px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+`
 
 class RMAtable extends React.Component {
   state = {
     showDetail: false,
     returnItems: [],
-    selectedReturn: null
+    selectedReturn: null,
+    totalRefund: 0
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      returnItems: prevReturnItems
+    } = prevState
+
+    const {
+      returnItems
+    } = this.state
+
+    if (prevReturnItems !== returnItems) {
+      this.calculateRefundAndFee(returnItems)
+    }
   }
 
   handleViewDetails = (order) => {
@@ -17,6 +55,28 @@ class RMAtable extends React.Component {
       viewDetails
     } = this.props
     viewDetails(order)
+  }
+
+  calculateRefundAndFee = (returnItems) => {
+    let totalRefund = 0
+    let totalRestockingFee = 0
+    let minRestockingFee = 15
+    let restockingPercentage = 0.25
+
+    for(let i = 0; i < returnItems.length; i++) {
+      let item = returnItems[i]
+      if (item.hasReturnFee) {
+        totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
+      }
+      totalRefund = totalRefund + (item.returnQuantity * item.unitPrice)
+    }
+    if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
+      totalRefund = totalRefund - minRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2)})
+    } else {
+      totalRefund = totalRefund - totalRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2)})
+    }
   }
 
   render(){
@@ -81,6 +141,24 @@ class RMAtable extends React.Component {
       }
     ]
 
+    let itemBars = []
+
+    if (returnItems.length > 0) {
+      _.each(returnItems, (item) => {
+        itemBars.push(
+          <DivItem>
+            <PItemDetail>
+              <StyledText1>{`AHC-${item.frecnoNum} - (Qty ${item.returnQuantity})`}</StyledText1>
+              <StyledText0>{`$${(item.returnQuantity * item.unitPrice).toFixed(2)}`}</StyledText0>
+            </PItemDetail>
+            <PItemDetail>
+              <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
+              {item.hasReturnFee ? <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
+            </PItemDetail>
+          </DivItem>
+        )
+      })
+
     return(
       <React.Fragment>
         <AccountSectionHeader
@@ -103,6 +181,10 @@ class RMAtable extends React.Component {
             <AccountSectionHeader
               text={`Return Details - ${selectedReturn.rmaNum}`}
             />
+             {itemBars}
+           <DivTotal as='div'>
+            {`Total: $${totalRefund}`}
+           </DivTotal>
            </>
            : null
         }
