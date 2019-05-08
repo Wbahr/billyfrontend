@@ -28,6 +28,19 @@ const DivTotal = styled(StyledText1)`
   border-bottom: 1px solid black;
 `
 
+const StyledRMADetails = styled.div`
+  display: flex;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid #ccc;
+`
+
+const StyledRMAList = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-left: 10px;
+`
+
 class RMAtable extends React.Component {
   state = {
     showDetail: false,
@@ -50,11 +63,14 @@ class RMAtable extends React.Component {
     }
   }
 
-  handleViewDetails = (order) => {
-    const {
-      viewDetails
-    } = this.props
-    viewDetails(order)
+  handleViewDetails = (selectedRMANum) => {
+    for(let i = 0; i < returnItems.length; i++){
+      let item = returnItems[i]
+      if(item.rmaNum === selectedRMANum){
+        this.setState({selectedReturn: item})
+        break
+      }
+    }
   }
 
   calculateRefundAndFee = (returnItems) => {
@@ -185,6 +201,17 @@ class RMAtable extends React.Component {
             <AccountSectionHeader
               text={`Return Details - ${selectedReturn.rmaNum}`}
             />
+           <StyledRMADetails>
+            <StyledRMAList>
+              <StyledText0><StyledText1>Return Date: </StyledText1>{selectedReturn.returnDate}</StyledText0>
+              <StyledText0><StyledText1>RMA Number: </StyledText1>{selectedReturn.rmaNum}</StyledText0>
+              <StyledText0><StyledText1>Invoice Number: </StyledText1>{selectedReturn.invoiceNum}</StyledText0>
+            </StyledRMAList>
+            <StyledRMAList>
+              <StyledText0><StyledText1>Return Total: </StyledText1>{selectedReturn.returnTotal}</StyledText0>
+              <StyledText0><StyledText1>Return Status: </StyledText1>{selectedReturn.returnStatus}</StyledText0>
+            </StyledRMAList>
+           </StyledRMADetails>
              {itemBars}
            <DivTotal as='div'>
             {`Total: $${totalRefund}`}
