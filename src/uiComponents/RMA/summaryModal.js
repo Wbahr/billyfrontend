@@ -103,6 +103,20 @@ class SummaryModal extends React.Component {
     this.calculateRefundAndFee(this.props.returnItems)
   }
 
+  componentWillUpdate(prevProps, prevState) {
+    const {
+      submitError
+    } = this.props
+
+    const {
+      submitError: prevSubmitError
+    } = prevProps
+
+    if(submitError && !prevSubmitError){
+      this.setState({inFlight: false})
+    }
+  }
+
   handleConfirmReturn = () => {
     const {
       onConfirmReturn
@@ -183,12 +197,14 @@ class SummaryModal extends React.Component {
 
     let agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
     if (submitSuccess) {
-      <DivContainer>
-        <StyledHeaderDiv>
-          <PHeader>Return Request Submitted</PHeader>
-          <p>You will now be redirected to the Invoice Screen</p>
-        </StyledHeaderDiv>
-      </DivContainer>
+      return(
+        <DivContainer>
+          <StyledHeaderDiv>
+            <PHeader>Return Request Submitted</PHeader>
+            <p>You will now be redirected to the Invoice Screen</p>
+          </StyledHeaderDiv>
+        </DivContainer>
+      )
     } else {
       return (
         <DivContainer>
@@ -201,8 +217,7 @@ class SummaryModal extends React.Component {
               {returnItems.length === 0 ? null : `Total: $${totalRefund}`}
             </DivTotal>
             <DivAgree>
-              <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox}
-                          value={this.state.reviewedSummary}/>
+              <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary}/>
               <InputAgree as='label' for='agree'>{agreementText}</InputAgree>
             </DivAgree>
             {submitError ?
@@ -213,12 +228,6 @@ class SummaryModal extends React.Component {
             }
           </DivItemlist>
           <DivActionbar>
-            {submitError ?
-              <DivErrors>
-                Submit failed
-              </DivErrors>
-              : null
-            }
             <Button color='secondary' onClick={this.handleOnClose} text='Cancel'/>
             <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return'
                     inFlight={inFlight} inFlightText={'Confirming...'}/>

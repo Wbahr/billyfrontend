@@ -233,14 +233,11 @@ const RMAform = ({items, clickedContinue}) => (
                     { item.willReturn ?
                       <>
                         <StyledRMAReturnReasonContainer>
-                          <Field component="select" name={`items.${index}.returnReason`}>
+                          <Field name={`items.${index}.returnReason`}>
                             {({ field, form}) => (
-                              <input
+                              <select
                                 {...field}
-                                type='select'
-                                onChange={() => {
-                                  form.setFieldValue('items.${index}.refundType', '')
-                                }}
+                                onChange={(e) => {form.setFieldValue(`items.${index}.returnReason`, e.target.value); form.setFieldValue(`items.${index}.refundType`, ''); }}
                               >
                                 <option value='' selected disabled hidden>Select Return Reason</option>
                                 <option value='mistake'>Purchased by Mistake</option>
@@ -255,7 +252,7 @@ const RMAform = ({items, clickedContinue}) => (
                                 <option value='not_approved'>Customer did not approve purchase</option>
                                 <option value='missing'>Missing items / Components</option>
                                 <option value='other'>Other</option>
-                              </input>
+                              </select>
                             )}
                           </Field>
                           <Field name={`items.${index}.otherDesc`}>

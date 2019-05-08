@@ -26,6 +26,5 @@ export function formatRMAFormData(formValues) {
     }
     j += 1
   }
-  console.log('mutatedFormValues', mutatedFormValues)
   return mutatedFormValues
 }
