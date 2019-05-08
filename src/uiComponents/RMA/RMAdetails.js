@@ -172,7 +172,7 @@ class RMAdetails extends React.Component {
             items={items}
             clickedContinue={this.handleClickContinue}
           />
-          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
+          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} closeOnOverlayClick={false} center>
             <SummaryModal submitSuccess={submitSuccess} rmaNum={rmaNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
         </React.Fragment>
