@@ -60,7 +60,6 @@ class RMAdetails extends React.Component {
     let items = []
     for (let i = 0; i < value.InvoiceDetails.length; i++) {
       let item = value.InvoiceDetails[i]
-      console.log('item', item)
       let itemObj = {}
       itemObj.itemId = item.Item.ItemCode
       itemObj.frecnoNum = item.Item.Id
@@ -80,7 +79,7 @@ class RMAdetails extends React.Component {
   }
 
   onCloseModal = () => {
-    this.setState({returnItems:{}, showModal: false})
+    this.setState({returnItems:{}, showModal: false, submitError: false})
   }
 
   onConfirmReturn = () => {
@@ -91,8 +90,7 @@ class RMAdetails extends React.Component {
     if (!submittingReturn) {
       this.setState({submittingReturn: true})
       postRMA(returnItems).then(
-        function(response) {
-          console.log('response', response)
+        (response) => {
           if (response.ok) {
             this.setState({ submitSuccess: true })
             setTimeout(function () {
