@@ -82,7 +82,8 @@ class RMAtable extends React.Component {
   render(){
 
     const {
-      selectedReturn
+      selectedReturn,
+      returnItems
     } = this.state
 
     const columns = [
@@ -153,11 +154,13 @@ class RMAtable extends React.Component {
             </PItemDetail>
             <PItemDetail>
               <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
-              {item.hasReturnFee ? <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
+              {item.hasReturnFee ? <PItemRestockingFee
+                as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
             </PItemDetail>
           </DivItem>
         )
       })
+    }
 
     return(
       <React.Fragment>
