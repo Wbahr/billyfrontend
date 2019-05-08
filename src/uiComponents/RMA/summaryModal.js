@@ -183,12 +183,14 @@ class SummaryModal extends React.Component {
 
     let agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
     if (submitSuccess) {
-      <DivContainer>
-        <StyledHeaderDiv>
-          <PHeader>Return Request Submitted</PHeader>
-          <p>You will now be redirected to the Invoice Screen</p>
-        </StyledHeaderDiv>
-      </DivContainer>
+      return(
+        <DivContainer>
+          <StyledHeaderDiv>
+            <PHeader>Return Request Submitted</PHeader>
+            <p>You will now be redirected to the Invoice Screen</p>
+          </StyledHeaderDiv>
+        </DivContainer>
+      )
     } else {
       return (
         <DivContainer>
