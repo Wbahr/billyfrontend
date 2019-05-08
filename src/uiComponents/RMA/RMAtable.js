@@ -99,7 +99,8 @@ class RMAtable extends React.Component {
 
     const {
       selectedReturn,
-      returnItems
+      returnItems,
+      totalRefund
     } = this.state
 
     const columns = [
