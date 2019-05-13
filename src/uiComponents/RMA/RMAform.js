@@ -275,10 +275,7 @@ const RMAform = ({items, clickedContinue}) => (
                         		<option value='' selected disabled hidden>Select Refund Type</option>
                         		<option value='credit'>Airline Credit</option>
                         		<option value='refund'>Refund</option>
-                        		{ _.includes(showReplacement, item.returnReason) ?
-                        			<option value='replacement'>Replacement</option>
-                        			: null
-                        		}
+                        		{ _.includes(showReplacement, item.returnReason) && <option value='replacement'>Replacement</option>}
                         	</Field>
                         </StyledRMAReturnReasonContainer>
                       </>
@@ -291,10 +288,10 @@ const RMAform = ({items, clickedContinue}) => (
 					<StyledSubmitButtonContainer>
 						{Object.keys(errors).length ?
 							<DivErrors>
-								{errors.quantity ? <span>{errors.quantity}</span> : null}
-								{errors.return ? <span>{errors.return}</span> : null}
-								{errors.other ? <span>{errors.other}</span> : null}
-								{errors.description ? <span>{errors.description}</span> : null}
+								{errors.quantity && <span>{errors.quantity}</span>}
+								{errors.return && <span>{errors.return}</span>}
+								{errors.other && <span>{errors.other}</span>}
+								{errors.description && <span>{errors.description}</span>}
 							</DivErrors>
 							: null}
 						<Button type="submit" text='Continue' />

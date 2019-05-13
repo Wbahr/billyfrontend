@@ -184,7 +184,7 @@ class SummaryModal extends React.Component {
             </PItemDetail>
             <PItemDetail>
               <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
-              {item.hasReturnFee ? <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
+              {item.hasReturnFee && <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee>}
             </PItemDetail>
           </DivItem>
         )
@@ -214,7 +214,7 @@ class SummaryModal extends React.Component {
           <DivItemlist>
             {itemBars}
             <DivTotal as='div'>
-              {returnItems.length === 0 ? null : `Total: $${totalRefund}`}
+              {returnItems.length !== 0 && `Total: $${totalRefund}`}
             </DivTotal>
             <DivAgree>
               <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary}/>
