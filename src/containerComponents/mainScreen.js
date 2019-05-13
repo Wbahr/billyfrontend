@@ -57,7 +57,7 @@ class MainScreen extends React.Component {
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {showTable && <RMAtable data={data} />}
+          {showTable && <RMAtable />}
           {showDetail && <RMAdetails />}
         </StyledAccountContainer>
       </StyledBackground>
