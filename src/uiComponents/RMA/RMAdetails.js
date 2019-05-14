@@ -61,7 +61,6 @@ class RMAdetails extends React.Component {
     let items = []
     for (let i = 0; i < value.InvoiceDetails.length; i++) {
       let item = value.InvoiceDetails[i]
-      console.log('item', item)
       let itemObj = {}
       itemObj.itemId = item.Item.ItemCode
       itemObj.frecnoNum = item.Item.Id
@@ -81,7 +80,7 @@ class RMAdetails extends React.Component {
   }
 
   onCloseModal = () => {
-    this.setState({returnItems:{}, showModal: false})
+    this.setState({returnItems:{}, showModal: false, submitError: false})
   }
 
   onConfirmReturn = () => {
@@ -92,8 +91,7 @@ class RMAdetails extends React.Component {
     if (!submittingReturn) {
       this.setState({submittingReturn: true})
       postRMA(returnItems).then(
-        function(response) {
-          console.log('response', response)
+        (response) => {
           if (response.ok) {
             this.setState({ submitSuccess: true })
             setTimeout(function () {
@@ -173,7 +171,7 @@ class RMAdetails extends React.Component {
             items={items}
             clickedContinue={this.handleClickContinue}
           />
-          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} center>
+          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} closeOnOverlayClick={false} center>
             <SummaryModal submitSuccess={submitSuccess} rmaNum={rmaNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
         </React.Fragment>

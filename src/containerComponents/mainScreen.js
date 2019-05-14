@@ -32,29 +32,30 @@ class MainScreen extends React.Component {
     const location = queryString.parse(location.search)
     let section = _.get(location,'section', null)
     switch(section){
-      case('rma'):
-        this.setState({showTable: false, showDetail: true})
+      case('Rmas'):
+        this.setState({currentDisplay: 'ExistingRMAs'})
         break
-      // case('rma-summary'):
-      //   this.setState({showTable: true, showDetail: false})
-      //   break
+      case('rma-summary'):
+        this.setState({currentDisplay: 'RmaRequestList'})
+        break
       default:
-        this.setState({showTable: false, showDetail: true})
-        dispatch.getInvoice(invoice)
+        this.setState({currentDisplay: ''})
     }
+  }
+  state = {
+    currentDisplay: ''
   }
 
   render(){
     const {
-      showDetail,
-      showTable
+      currentDisplay
     } = this.state
 
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {/*{showTable ? <RMAtable data={data} /> : null }*/}
-          {showDetail ? <RMAdetails /> : null}
+          {currentDisplay === 'ExistingRMAs' && <RMAtable />}
+          {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
         </StyledAccountContainer>
       </StyledBackground>
     )

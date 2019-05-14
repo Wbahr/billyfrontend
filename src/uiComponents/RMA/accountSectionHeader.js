@@ -15,17 +15,17 @@ const StyledHeaderText = styled.p`
    padding: 8px 0 8px 8px;
 `
 class accountSectionHeader extends React.Component {
-  render(){
-    const {
-      text
-    } = this.props
+	render(){
+		const {
+			text
+		} = this.props
 
-    return(
-      <StyledHeaderDiv>
-        <StyledHeaderText>{text}</StyledHeaderText>
-      </StyledHeaderDiv>
-    )
-  }
+		return(
+			<StyledHeaderDiv>
+				<StyledHeaderText>{text}</StyledHeaderText>
+			</StyledHeaderDiv>
+		)
+	}
 }
 
 export default accountSectionHeader
