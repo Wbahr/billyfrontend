@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import queryString from 'query-string'
-// import RMAtable from '../uiComponents/RMA/RMAtable'
+import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
