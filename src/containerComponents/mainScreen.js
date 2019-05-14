@@ -28,37 +28,34 @@ const StyledAccountContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    showExistingRMAsTable: false,
-    showRMARequestDetail: true
+    currentDisplay: ''
   }
 
   // componentWillMount() {
   //   const location = queryString.parse(location.search)
   //   let section = _.get(location,'section', null)
   //   switch(section){
-  //     case('rma'):
-  //       this.setState({showExistingRMAsTable: false, showRMARequestDetail: true})
+  //     case('Rmas'):
+  //       this.setState({currentDisplay: 'ExistingRMAs'})
   //       break
   //     case('rma-summary'):
-  //       this.setState({showExistingRMAsTable: true, showRMARequestDetail: false})
+  //       this.setState({currentDisplay: 'RmaRequestList'})
   //       break
   //     default:
-  //       this.setState({showExistingRMAsTable: false, showRMARequestDetail: true})
-  //       dispatch.getInvoice(invoice)
+  //       this.setState({currentDisplay: ''})
   //   }
   // }
 
   render(){
     const {
-      showExistingRMAsTable,
-      showRMARequestDetail
+      currentDisplay
     } = this.state
 
     return(
       <StyledBackground>
         <StyledAccountContainer>
-          {showExistingRMAsTable && <RMAtable />}
-          {showRMARequestDetail && <RMAdetails />}
+          {currentDisplay === 'ExistingRMAs' && <RMAtable />}
+          {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
         </StyledAccountContainer>
       </StyledBackground>
     )
