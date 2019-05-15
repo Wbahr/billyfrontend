@@ -37,6 +37,7 @@ class InvoicePaymentDetail extends React.Component {
     agreedToTerms: false,
     submittingPayment: false,
     submitError: false,
+    cardToken: ''
   }
 
   onOpenModal = () => {
@@ -49,12 +50,17 @@ class InvoicePaymentDetail extends React.Component {
 
   handleConfirmPayment = () => {
     const {
-      returnItems,
-      submittingPayment
+      submittingPayment,
+      cardToken,
     } = this.state
+    
     if (!submittingPayment) {
+      const paymentData = {
+        'cardToken': cardToken,
+        'invoiceNumber': '1234567890'
+      }
       this.setState({submittingPayment: true})
-      postInvoicePayment(returnItems).then(
+      postInvoicePayment(paymentData).then(
         (response) => {
           if (response.ok) {
             this.setState({ submitSuccess: true }, ()=>{this.onOpenModal()})
