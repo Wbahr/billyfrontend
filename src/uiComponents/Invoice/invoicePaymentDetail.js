@@ -57,7 +57,7 @@ class InvoicePaymentDetail extends React.Component {
       postInvoicePayment(returnItems).then(
         (response) => {
           if (response.ok) {
-            this.setState({ submittingPayment: true }, ()=>{this.onOpenModal()})
+            this.setState({ submitSuccess: true }, ()=>{this.onOpenModal()})
             setTimeout(function () {
               window.location.replace('https://preprod.airlinehyd.com/MyAccount.aspx?section=Invoices')
             }, 2000);
