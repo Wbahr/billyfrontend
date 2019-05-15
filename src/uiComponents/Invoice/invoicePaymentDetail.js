@@ -53,7 +53,7 @@ class InvoicePaymentDetail extends React.Component {
       submittingPayment,
       cardToken,
     } = this.state
-    
+
     if (!submittingPayment) {
       const paymentData = {
         'cardToken': cardToken,
@@ -65,7 +65,7 @@ class InvoicePaymentDetail extends React.Component {
           if (response.ok) {
             this.setState({ submitSuccess: true }, ()=>{this.onOpenModal()})
             setTimeout(function () {
-              window.location.replace('https://preprod.airlinehyd.com/MyAccount.aspx?section=Invoices')
+              window.location.replace('https://airlinehyd.com/MyAccount.aspx?section=Invoices')
             }, 2000);
           } else {
             this.setState({ submitError: true, submittingPayment: false }, ()=>{this.onOpenModal()})
@@ -117,7 +117,7 @@ class InvoicePaymentDetail extends React.Component {
       return (
         <>
           <AccountSectionHeader
-            text={`Invoice Payment #${selectedInvoice.invoiceNum}`}
+            text={`Invoice Payment - Invoice #${selectedInvoice.invoiceNum}`}
           />
           <Nav tabs>
             <NavItem>
