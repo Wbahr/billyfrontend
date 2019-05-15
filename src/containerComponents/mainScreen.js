@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
+import InvoicePayments from '../uiComponents/Invoice/invoicePayment'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
@@ -28,7 +29,7 @@ const StyledAccountContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: ''
+    currentDisplay: 'invoicepayment'
   }
 
   // componentWillMount() {
@@ -40,6 +41,9 @@ class MainScreen extends React.Component {
   //       break
   //     case('rma-summary'):
   //       this.setState({currentDisplay: 'RmaRequestList'})
+  //       break
+  //     case('invoicepayment'):
+  //       this.setState({currentDisplay: 'InvoicePayment'})
   //       break
   //     default:
   //       this.setState({currentDisplay: ''})
@@ -56,6 +60,7 @@ class MainScreen extends React.Component {
         <StyledAccountContainer>
           {currentDisplay === 'ExistingRMAs' && <RMAtable />}
           {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
+          {currentDisplay === 'invoicepayment' && <InvoicePayments />}
         </StyledAccountContainer>
       </StyledBackground>
     )

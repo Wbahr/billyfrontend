@@ -3,7 +3,7 @@ import ReactTable from "react-table"
 import 'react-table/react-table.css'
 import styled from 'styled-components'
 
-import AccountSectionHeader from './accountSectionHeader'
+import AccountSectionHeader from '../common/sectionHeader'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
 import _ from 'lodash'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
