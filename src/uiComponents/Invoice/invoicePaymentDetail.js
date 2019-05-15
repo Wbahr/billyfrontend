@@ -8,7 +8,7 @@ import Modal from 'react-responsive-modal'
 import ConfirmationModal from './confirmationModal'
 import Button from '../common/button'
 import classnames from 'classnames'
-// import { getInvoice, postRMA } from '../../api-temp/apiCalls'
+import { postInvoicePayment } from '../../api-temp/apiCalls'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -54,7 +54,7 @@ class InvoicePaymentDetail extends React.Component {
     } = this.state
     if (!submittingPayment) {
       this.setState({submittingPayment: true})
-      postRMA(returnItems).then(
+      postInvoicePayment(returnItems).then(
         (response) => {
           if (response.ok) {
             this.setState({ submittingPayment: true }, ()=>{this.onOpenModal()})
