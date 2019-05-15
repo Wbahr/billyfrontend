@@ -28,7 +28,8 @@ class RMAdetails extends React.Component {
 
   state = {
     showModal: false,
-    activeTab: '1'
+    activeTab: '1',
+    submitSuccess: false
   }
 
   componentWillMount() {
@@ -104,7 +105,8 @@ class RMAdetails extends React.Component {
 
   render(){
     const {
-      selectedInvoice
+      selectedInvoice,
+      submitSuccess
     } = this.props
 
       let initialFormValues = items
@@ -178,7 +180,7 @@ class RMAdetails extends React.Component {
               {InvoiceSummaryTab}
             </TabPane>
           </TabContent>
-          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} closeOnOverlayClick={false} center>
+          <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={!submitSuccess} closeOnOverlayClick={!submitSuccess} center>
             <ConfirmationModal submitSuccess={submitSuccess} invoiceNum={selectedInvoice.invoiceNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
         </>
