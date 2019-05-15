@@ -1,15 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import AccountSectionHeader from '../common/sectionHeader'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
-import RMAform from './RMAform'
 import Modal from 'react-responsive-modal'
 import ConfirmationModal from './confirmationModal'
-import { formatRMAFormData } from './helpers/formatRMAFormData'
-import { getInvoice, postRMA } from '../../api-temp/apiCalls'
+import Button from '../common/button'
+import classnames from 'classnames'
+// import { getInvoice, postRMA } from '../../api-temp/apiCalls'
 
 const StyledRMAOrderDetails = styled.div`
   display: flex;
@@ -24,100 +23,64 @@ const StyledRMAList = styled.div`
   padding-left: 10px;
 `
 
-class RMAdetails extends React.Component {
+const ActionBar = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`
+
+class InvoicePaymentDetail extends React.Component {
 
   state = {
     showModal: false,
     activeTab: '1',
-    submitSuccess: false
-  }
-
-  componentWillMount() {
-    // const location = queryString.parse(location.search)
-    // let invoice = _.get(location, 'invoice', '12209770')
-    getInvoice('12209770').then(
-      (response) => this.selectedOrderMutator(response)
-    ).then(
-      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse }, ()=> console.log('selected order', this.state.selectedOrder))}
-    )
-  }
-
-  selectedOrderMutator = (value) => {
-    if (_.has(value,'error')){
-      return null
-    }
-    let mutatedValue = {}
-    mutatedValue.shippingAddress = value.ShipToAddress
-    mutatedValue.orderNum = value.Order.OrderNumber
-    mutatedValue.poNum = value.Order.PoNumber
-    mutatedValue.orderDate = value.Order.OrderDate.Display
-    mutatedValue.invoiceNum = value.InvoiceNumber
-    let items = []
-    for (let i = 0; i < value.InvoiceDetails.length; i++) {
-      let item = value.InvoiceDetails[i]
-      let itemObj = {}
-      itemObj.itemId = item.Item.ItemCode
-      itemObj.frecnoNum = item.Item.Id
-      itemObj.customerPartNum = item.Item.ItemCode
-      itemObj.itemDesc = item.Item.ItemDescription
-      itemObj.quantityOrdered = 1
-      itemObj.quantityShipped = 1
-      itemObj.unitPrice = '500.00'
-      items.push(itemObj)
-    }
-    mutatedValue.items = items
-    return mutatedValue
+    submitSuccess: false,
+    agreedToTerms: false,
+    submittingPayment: false,
+    submitError: false,
   }
 
   onOpenModal = () => {
-    this.setState({showModal: true})
+    this.setState({ showModal: true })
   }
 
   onCloseModal = () => {
-    this.setState({returnItems:{}, showModal: false, submitError: false})
+    this.setState({ returnItems:{}, showModal: false, submitError: false })
   }
 
-  onConfirmReturn = () => {
+  handleConfirmPayment = () => {
     const {
       returnItems,
-      submittingReturn
+      submittingPayment
     } = this.state
-    if (!submittingReturn) {
-      this.setState({submittingReturn: true})
+    if (!submittingPayment) {
+      this.setState({submittingPayment: true})
       postRMA(returnItems).then(
         (response) => {
           if (response.ok) {
-            this.setState({ submitSuccess: true })
+            this.setState({ submittingPayment: true }, ()=>{this.onOpenModal()})
             setTimeout(function () {
               window.location.replace('https://preprod.airlinehyd.com/MyAccount.aspx?section=Invoices')
             }, 2000);
           } else {
-            this.setState({ submitError: true, submittingReturn: false })
+            this.setState({ submitError: true, submittingPayment: false }, ()=>{this.onOpenModal()})
           }
         }
       )
     }
   }
 
-  handleClickContinue = () => {
-    this.onOpenModal()
-  }
-
   render(){
     const {
       selectedInvoice,
-      submitSuccess
+      submitSuccess,
+      clearSelectedInvoice
     } = this.props
 
-      let initialFormValues = items
-      for (let i = 0; i < items.length; i++) {
-        initialFormValues[i].willReturn = false
-        initialFormValues[i].returnQuantity = 0
-        initialFormValues[i].returnReason = ''
-        initialFormValues[i].refundType = ''
-        initialFormValues[i].otherDesc = ''
-        initialFormValues[i].details = ''
-      }
+    const {
+      agreedToTerms,
+      showModal,
+      submitError
+    } = this.state
 
       const PaymentTab = (
         <>
@@ -135,10 +98,7 @@ class RMAdetails extends React.Component {
             <StyledText0>{shippingAddress.City + ', ' + shippingAddress.State + ' ' + shippingAddress.Zip}</StyledText0>
           </StyledRMAList>
           </StyledRMAOrderDetails>
-          <RMAform
-          items={items}
-          clickedContinue={this.handleClickContinue}
-          />
+          <Button onClick={this.handleConfirmPayment} disabled={!agreedToTerms} text='Confirm Payment' inFlight={inFlight} inFlightText={'Sending Payment...'}/>
         </>
       )
 
@@ -147,7 +107,6 @@ class RMAdetails extends React.Component {
           <p>insert an invoice summary here</p>
         </>
       )
-
 
       return (
         <>
@@ -180,13 +139,15 @@ class RMAdetails extends React.Component {
               {InvoiceSummaryTab}
             </TabPane>
           </TabContent>
+          <ActionBar>
+            <Button text='Back' color={'secondary'} onClick={() => {clearSelectedInvoice()}} />
+          </ActionBar>
           <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={!submitSuccess} closeOnOverlayClick={!submitSuccess} center>
-            <ConfirmationModal submitSuccess={submitSuccess} invoiceNum={selectedInvoice.invoiceNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
+            <ConfirmationModal submitSuccess={submitSuccess} invoiceNum={selectedInvoice.invoiceNum} submitError={submitError} />
           </Modal>
         </>
       )
     }
-  }
 }
 
-export default RMAdetails
+export default InvoicePaymentDetail

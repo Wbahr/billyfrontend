@@ -22,6 +22,10 @@ class InvoicePaymentTable extends React.Component {
     }
   }
 
+  clearSelectedInvoice = () => {
+    this.setState({ selectedInvoice: null })
+  }
+
   render(){
 
     const {
@@ -57,7 +61,7 @@ class InvoicePaymentTable extends React.Component {
       },
       {
         Header: 'Amount Due',
-        accessor: 'amountDue', // String-based value accessors!
+        accessor: 'amountDue',
         Cell: row => <PRightAlign>{row.value}</PRightAlign>
       },
       {
@@ -72,7 +76,7 @@ class InvoicePaymentTable extends React.Component {
       return(
         <>
           <AccountSectionHeader
-            text={'Invoice Payment'}
+            text={'Outstanding Invoices'}
           />
           <ReactTable
             sortable={true}
@@ -88,7 +92,7 @@ class InvoicePaymentTable extends React.Component {
         </>
       )
     } else {
-      <InvoicePaymentDetail selectedInvoice={selectedInvoice}/>
+      <InvoicePaymentDetail selectedInvoice={selectedInvoice} clearSelectedInvoice={this.clearSelectedInvoice} />
     }
 
   }
