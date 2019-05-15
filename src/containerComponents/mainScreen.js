@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
-import InvoicePayments from '../uiComponents/Invoice/invoicePayment'
+import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
