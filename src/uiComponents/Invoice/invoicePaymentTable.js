@@ -88,7 +88,7 @@ class InvoicePaymentTable extends React.Component {
         </>
       )
     } else {
-      <InvoicePaymentDetail />
+      <InvoicePaymentDetail selectedInvoice={selectedInvoice}/>
     }
 
   }

@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import AccountSectionHeader from '../common/sectionHeader'
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
-import Loader from '../common/loader'
 import Modal from 'react-responsive-modal'
-import SummaryModal from './summaryModal'
+import ConfirmationModal from './confirmationModal'
 import { formatRMAFormData } from './helpers/formatRMAFormData'
 import { getInvoice, postRMA } from '../../api-temp/apiCalls'
 
@@ -28,13 +28,7 @@ class RMAdetails extends React.Component {
 
   state = {
     showModal: false,
-    returnItems: [],
-    submittingReturn: false,
-    selectedOrder: null,
-    postResponse: null,
-    submitError: false,
-    submitSuccess: false,
-    rmaNum: null
+    activeTab: '1'
   }
 
   componentWillMount() {
@@ -104,38 +98,14 @@ class RMAdetails extends React.Component {
     }
   }
 
-  handleClickContinue = (returnItems) => {
-    let mutatedReturnItems = formatRMAFormData(returnItems)
-    this.setState({ returnItems: mutatedReturnItems})
+  handleClickContinue = () => {
     this.onOpenModal()
   }
 
   render(){
     const {
-      selectedOrder,
-      showModal,
-      returnItems,
-      submittingReturn,
-      rmaNum,
-      submitError,
-      submitSuccess
-    } = this.state
-
-    if (_.isNil(selectedOrder)) {
-      return (
-        <Loader />
-      )
-    } else {
-      const {
-        selectedOrder: {
-          orderDate,
-          orderNum,
-          invoiceNum,
-          poNum,
-          shippingAddress,
-          items
-        }
-      } = this.state
+      selectedInvoice
+    } = this.props
 
       let initialFormValues = items
       for (let i = 0; i < items.length; i++) {
@@ -147,33 +117,71 @@ class RMAdetails extends React.Component {
         initialFormValues[i].details = ''
       }
 
-      return (
-        <React.Fragment>
-          <AccountSectionHeader
-            text={`RMA - Invoice #${invoiceNum}`}
-          />
+      const PaymentTab = (
+        <>
           <StyledRMAOrderDetails>
-            <StyledRMAList>
-              <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
-              <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
-              <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
-            </StyledRMAList>
-            <StyledRMAList>
-              <StyledText1>Ship-to Address:</StyledText1>
-              <StyledText0>{shippingAddress.Name}</StyledText0>
-              <StyledText0>{shippingAddress.Line1}</StyledText0>
-              {shippingAddress.Line2 && <StyledText0>{shippingAddress.Line2}</StyledText0>}
-              <StyledText0>{shippingAddress.City + ', ' + shippingAddress.State + ' ' + shippingAddress.Zip}</StyledText0>
-            </StyledRMAList>
+          <StyledRMAList>
+            <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
+            <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
+            <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
+          </StyledRMAList>
+          <StyledRMAList>
+            <StyledText1>Ship-to Address:</StyledText1>
+            <StyledText0>{shippingAddress.Name}</StyledText0>
+            <StyledText0>{shippingAddress.Line1}</StyledText0>
+            {shippingAddress.Line2 && <StyledText0>{shippingAddress.Line2}</StyledText0>}
+            <StyledText0>{shippingAddress.City + ', ' + shippingAddress.State + ' ' + shippingAddress.Zip}</StyledText0>
+          </StyledRMAList>
           </StyledRMAOrderDetails>
           <RMAform
-            items={items}
-            clickedContinue={this.handleClickContinue}
+          items={items}
+          clickedContinue={this.handleClickContinue}
           />
+        </>
+      )
+
+      const InvoiceSummaryTab = (
+        <>
+          <p>insert an invoice summary here</p>
+        </>
+      )
+
+
+      return (
+        <>
+          <AccountSectionHeader
+            text={`Invoice Payment #${selectedInvoice.invoiceNum}`}
+          />
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '1' })}
+                onClick={() => { this.toggle('1'); }}
+              >
+                Payment
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '2' })}
+                onClick={() => { this.toggle('2'); }}
+              >
+                Invoice Details
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              {PaymentTab}
+            </TabPane>
+            <TabPane tabId="2">
+              {InvoiceSummaryTab}
+            </TabPane>
+          </TabContent>
           <Modal open={showModal} onClose={this.onCloseModal} showCloseIcon={false} closeOnOverlayClick={false} center>
-            <SummaryModal submitSuccess={submitSuccess} rmaNum={rmaNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
+            <ConfirmationModal submitSuccess={submitSuccess} invoiceNum={selectedInvoice.invoiceNum} submitError={submitError} returnItems={returnItems} onConfirmReturn={this.onConfirmReturn} inFlight={submittingReturn} onClose={this.onCloseModal}/>
           </Modal>
-        </React.Fragment>
+        </>
       )
     }
   }
