@@ -46,7 +46,8 @@ class RMAtable extends React.Component {
     showDetail: false,
     returnItems: [],
     selectedReturn: null,
-    totalRefund: 0
+    totalRefund: 0,
+    filterAll: ''
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,6 +94,29 @@ class RMAtable extends React.Component {
       totalRefund = totalRefund - totalRestockingFee
       this.setState({totalRefund: totalRefund.toFixed(2)})
     }
+  }
+
+  onFilteredChange = (filtered) => {
+    // console.log('filtered:',filtered);
+    // const { sortedData } = this.reactTable.getResolvedState();
+    // console.log('sortedData:', sortedData);
+
+    // extra check for the "filterAll"
+    if (filtered.length > 1 && this.state.filterAll.length) {
+      // NOTE: this removes any FILTER ALL filter
+      const filterAll = '';
+      this.setState({ filtered: filtered.filter((item) => item.id != 'all'), filterAll })
+    }
+    else
+      this.setState({ filtered });
+  }
+
+  filterAll = (e) => {
+    const { value } = e.target;
+    const filterAll = value;
+    const filtered = [{ id: 'all', value: filterAll }];
+    // NOTE: this completely clears any COLUMN filters
+    this.setState({ filterAll, filtered });
   }
 
   render(){
@@ -185,6 +209,7 @@ class RMAtable extends React.Component {
         <AccountSectionHeader
           text={'Return Material Authorization (RMA)'}
         />
+        <input value={this.state.filterAll} onChange={this.filterAll}/>
         <ReactTable
           sortable={true}
           showPageSizeOptions={false}
