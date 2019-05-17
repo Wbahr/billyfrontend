@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import Button from '../common/button'
+import Button from '../_common/button'
 import {StyledText0, StyledText1} from '../../styles/fonts'
-import Callout from '../common/callout'
+import Callout from '../_common/callout'
 
 const DivContainer = styled.div`
   width: 500px;

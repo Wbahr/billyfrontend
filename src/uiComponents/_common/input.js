@@ -22,12 +22,16 @@ class Input extends React.Component {
 
   render(){
     const {
+      type,
       placeholder,
-      value
+      value,
+      disabled
     } = this.props
 
     return(
       <MainInput
+        disabled={disabled}
+        type={type || ''}
         value={value}
         placeholder={placeholder}
         onChange={this.returnValue}

@@ -3,7 +3,8 @@ import ReactTable from "react-table"
 import 'react-table/react-table.css'
 import styled from 'styled-components'
 
-import AccountSectionHeader from '../common/sectionHeader'
+import AccountSectionHeader from '../_common/sectionHeader'
+import Input from '../_common/input'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
 import _ from 'lodash'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
@@ -209,7 +210,7 @@ class RMAtable extends React.Component {
         <AccountSectionHeader
           text={'Return Material Authorization (RMA)'}
         />
-        <input value={this.state.filterAll} onChange={this.filterAll}/>
+        <Input value={this.state.filterAll} placeholder={'Enter RMA Number'} onChange={this.filterAll}/>
         <ReactTable
           sortable={true}
           showPageSizeOptions={false}

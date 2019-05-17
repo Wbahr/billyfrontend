@@ -2,8 +2,8 @@ import React from 'react'
 import ReactTable from "react-table"
 import _ from 'lodash'
 import 'react-table/react-table.css'
-import AccountSectionHeader from '../common/sectionHeader'
-import Input from '../common/input'
+import AccountSectionHeader from '../_common/sectionHeader'
+import Input from '../_common/input'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
 import InvoicePaymentDetail from './invoicePaymentDetail'
 

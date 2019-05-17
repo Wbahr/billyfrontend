@@ -14,6 +14,7 @@ const StyledHeaderText = styled.p`
    font-weight: bold;
    padding: 8px 0 8px 8px;
 `
+
 class sectionHeader extends React.Component {
 	render(){
 		const {
