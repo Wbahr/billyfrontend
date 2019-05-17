@@ -7,23 +7,9 @@ import RMAdetails from '../uiComponents/RMA/RMAdetails'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
-const StyledBackground = styled.div`
+const DivContainer = styled.div`
   width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
-`
-
-const StyledAccountContainer = styled.div`
-  width: 744px;
-  min-height: 500px;
-  background-color: white;
-  padding: 10px;
-  margin: 20px 0;
+  height: 100%;
 `
 
 class MainScreen extends React.Component {
@@ -52,12 +38,10 @@ class MainScreen extends React.Component {
     } = this.state
 
     return(
-      <StyledBackground>
-        <StyledAccountContainer>
-          {currentDisplay === 'ExistingRMAs' && <RMAtable />}
-          {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
-        </StyledAccountContainer>
-      </StyledBackground>
+      <DivContainer>
+        {currentDisplay === 'ExistingRMAs' && <RMAtable />}
+        {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
+      </DivContainer>
     )
   }
 }
