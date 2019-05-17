@@ -7,6 +7,7 @@ import RMAdetails from '../uiComponents/RMA/RMAdetails'
 import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
 
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
+import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ const StyledAccountContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'invoicepayment'
+    currentDisplay: 'AccountProfile'
   }
 
   render(){
@@ -43,6 +44,7 @@ class MainScreen extends React.Component {
           {currentDisplay === 'ExistingRMAs' && <RMAtable />}
           {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
           {currentDisplay === 'invoicepayment' && <InvoicePayments />}
+          {currentDisplay === 'AccountProfile' && <AccountProfile />}
         </StyledAccountContainer>
       </StyledBackground>
     )
