@@ -23,10 +23,12 @@ class Input extends React.Component {
   render(){
     const {
       placeholder,
+      value
     } = this.props
 
     return(
       <MainInput
+        value={value}
         placeholder={placeholder}
         onChange={this.returnValue}
       />

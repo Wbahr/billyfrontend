@@ -3,6 +3,7 @@ import ReactTable from "react-table"
 import _ from 'lodash'
 import 'react-table/react-table.css'
 import AccountSectionHeader from '../common/sectionHeader'
+import Input from '../common/input'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
 import InvoicePaymentDetail from './invoicePaymentDetail'
 
@@ -77,6 +78,11 @@ class InvoicePaymentTable extends React.Component {
         <>
           <AccountSectionHeader
             text={'Outstanding Invoices'}
+          />
+          <Input
+            value={this.state.filterAll}
+            placeholder={'Enter an Invoice Number'}
+            onChange={this.filterAll}
           />
           <ReactTable
             sortable={true}

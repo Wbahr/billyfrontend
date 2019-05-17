@@ -32,24 +32,6 @@ class MainScreen extends React.Component {
     currentDisplay: 'invoicepayment'
   }
 
-  // componentWillMount() {
-  //   const location = queryString.parse(location.search)
-  //   let section = _.get(location,'section', null)
-  //   switch(section){
-  //     case('Rmas'):
-  //       this.setState({currentDisplay: 'ExistingRMAs'})
-  //       break
-  //     case('rma-summary'):
-  //       this.setState({currentDisplay: 'RmaRequestList'})
-  //       break
-  //     case('invoicepayment'):
-  //       this.setState({currentDisplay: 'InvoicePayment'})
-  //       break
-  //     default:
-  //       this.setState({currentDisplay: ''})
-  //   }
-  // }
-
   render(){
     const {
       currentDisplay
