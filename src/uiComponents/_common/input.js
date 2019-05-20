@@ -7,11 +7,20 @@ const MainInput = styled.input`
    font-size: 16px;
    border-radius: 3px;
    padding-left: 8px;
-   margin: 10px 0; 
+   margin: 0 0 10px 0; 
    ::placeholder {
       color: grey;
       font-size: 16px;
    }
+`
+
+const Label = styled.label`
+  font-family: verdana;
+  color: #111;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-bottom: 2px;
+  font-weight: 700;
 `
 
 class Input extends React.Component {
@@ -25,17 +34,22 @@ class Input extends React.Component {
       type,
       placeholder,
       value,
-      disabled
+      disabled,
+      label
     } = this.props
 
     return(
-      <MainInput
-        disabled={disabled}
-        type={type || ''}
-        value={value}
-        placeholder={placeholder}
-        onChange={this.returnValue}
-      />
+      <>
+        {label && <Label for={label}>{`${label}:`}</Label>}
+        <MainInput
+          disabled={disabled}
+          type={type || ''}
+          value={value}
+          placeholder={placeholder}
+          onChange={this.returnValue}
+          name={label}
+        />
+      </>
     )
   }
 }

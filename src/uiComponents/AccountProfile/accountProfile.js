@@ -22,9 +22,11 @@ const DivContainerButton = styled.div`
 
 const PtagHeader = styled.p`
   font-family: verdana;
-  font-size: 16px;
-  color: darkblue;
-  margin: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #666;
+  margin: 0 0 8px 0;
 `
 
 const DivInputContainer = styled.div`
@@ -121,13 +123,17 @@ class AccountProfile extends React.Component {
           />
           <DivContainer>
             <PtagHeader>Personal Information</PtagHeader>
-              <DivInputContainer><StyledText0>Name: </StyledText0><Input value={userData.name} /></DivInputContainer>
-              <DivInputContainer><StyledText0>Contact Email: </StyledText0><Input  disabled={!editProfile} id='email' value={this.state.email} onChange={this.changeInput}/></DivInputContainer>
+              <DivInputContainer>
+                <Input label='Name' value={userData.name} />
+                <Input  label='Contact Email' disabled={!editProfile} id='email' value={this.state.email} onChange={this.changeInput}/>
+              </DivInputContainer>
             <PtagHeader>Account Information</PtagHeader>
-              <DivInputContainer><StyledText0>Username: </StyledText0><Input value={userData.username} /></DivInputContainer>
-              <DivInputContainer><StyledText0>Password: </StyledText0><input disabled={!editProfile} id='password' type='password' value={this.state.password} onChange={this.changeInput}/></DivInputContainer>
-              <DivInputContainer><StyledText0>Customer ID: </StyledText0><Input value={userData.customerID} /></DivInputContainer>
-              <DivInputContainer><StyledText0>Minimum Purchase: </StyledText0><Input value={userData.minPurchase}/></DivInputContainer>
+              <DivInputContainer>
+                <Input label='Username' value={userData.username} />
+                <input disabled={!editProfile} id='password' type='password' value={this.state.password} onChange={this.changeInput}/>
+                <Input label='Customer ID' value={userData.customerID} />
+                <Input label='Minimum Purchase' value={userData.minPurchase}/>
+              </DivInputContainer>
           </DivContainer>
           <DivContainerButton>
             {editProfile && <Button text='Clear Changes' onClick={this.cancelEdit} />}
