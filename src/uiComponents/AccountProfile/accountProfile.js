@@ -7,7 +7,7 @@ import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Loader from '../_common/loader'
 import Input from '../_common/input'
 import Button from '../_common/button'
-import { getInvoice, updatePassword, updateEmail } from '../../api-temp/apiCalls'
+import { getUserData, updatePassword, updateEmail } from '../../api-temp/apiCalls'
 
 const DivContainer = styled.div`
   display: flex;
@@ -45,19 +45,14 @@ const userData = {
 class AccountProfile extends React.Component {
 
   state = {
-    // userData: null
     editProfile: false,
-    password: userData.password, //BAD! Remove - did this for testing
-    email: userData.password, //BAD! Remove - did this for testing
   }
 
   componentWillMount() {
-    // const location = queryString.parse(location.search)
-    // let invoice = _.get(location, 'invoice', '12209770')
-    getInvoice('12209770').then(
+    getUserData().then(
       (response) => this.selectedOrderMutator(response)
     ).then(
-      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse }, ()=> console.log('selected order', this.state.selectedOrder))}
+      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse })}
     )
   }
 
@@ -119,8 +114,6 @@ class AccountProfile extends React.Component {
         <Loader />
       )
     } else {
-
-
       return (
         <React.Fragment>
           <AccountSectionHeader
@@ -137,7 +130,7 @@ class AccountProfile extends React.Component {
               <DivInputContainer><StyledText0>Minimum Purchase: </StyledText0><Input value={userData.minPurchase}/></DivInputContainer>
           </DivContainer>
           <DivContainerButton>
-            {editProfile && <Button text='Clear Changes' onClick={this.setProfile} />}
+            {editProfile && <Button text='Clear Changes' onClick={this.cancelEdit} />}
             <Button text={ editProfile ? 'Save Changes' : 'Edit Profile' } onClick={this.toggleEdit} />
           </DivContainerButton>
         </React.Fragment>
