@@ -130,7 +130,8 @@ class AccountProfile extends React.Component {
             <PtagHeader>Account Information</PtagHeader>
               <DivInputContainer>
                 <Input label='Username' value={userData.username} />
-                <input disabled={!editProfile} id='password' type='password' value={this.state.password} onChange={this.changeInput}/>
+                <Input label='Password' value={this.state.password} />
+                {/*<input disabled={!editProfile} id='password' type='password' value={this.state.password} onChange={this.changeInput}/>*/}
                 <Input label='Customer ID' value={userData.customerID} />
                 <Input label='Minimum Purchase' value={userData.minPurchase}/>
               </DivInputContainer>
