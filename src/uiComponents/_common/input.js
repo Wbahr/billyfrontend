@@ -35,7 +35,8 @@ class Input extends React.Component {
       placeholder,
       value,
       disabled,
-      label
+      label,
+      error
     } = this.props
 
     return(
@@ -49,6 +50,7 @@ class Input extends React.Component {
           onChange={this.returnValue}
           name={label}
         />
+        {error && <span>{error}</span>}
       </>
     )
   }
