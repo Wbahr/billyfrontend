@@ -6,6 +6,7 @@ import 'react-table/react-table.css'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Loader from '../_common/loader'
 import Input from '../_common/input'
+import DisplayInput from '../_common/displayInput'
 import Button from '../_common/button'
 import { getUserData, updatePassword, updateEmail } from '../../api-temp/apiCalls'
 
@@ -15,9 +16,9 @@ const DivContainer = styled.div`
   padding: 0 10px 10px 10px;
 `
 
-const DivContainerButton = styled.div`
+const DivRow = styled.div`
   display: flex;
-  justify-content: flex-end;
+  align-items: flex-end;
 `
 
 const PtagHeader = styled.p`
@@ -35,6 +36,19 @@ const DivInputContainer = styled.div`
   margin-left: 8px;
 `
 
+const DivNewPasswordContainer = styled.div`
+  background-color: blue;
+`
+
+const P = styled.p`
+  cursor: pointer;
+  font-family: verdana;
+  color: darkblue;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-left: 4px;
+`
+
 const userData = {
   'username': 'bpanczer@airlinehyd.com',
   'password': 'Efewsffosd',
@@ -47,7 +61,8 @@ const userData = {
 class AccountProfile extends React.Component {
 
   state = {
-    editProfile: false,
+    editingEmail: false,
+    editingPassword: false
   }
 
   componentWillMount() {
@@ -58,36 +73,37 @@ class AccountProfile extends React.Component {
     )
   }
 
-  toggleEdit = () => {
-    const {
-      editProfile
-    } = this.state
-
-    if(editProfile){
-      this.saveProfile()
-    }
-    this.setState({ editProfile: !editProfile })
-  }
-
-  cancelEdit = () => {
-
-  }
-
   changeInput = (e) => {
     const inputValue = e.target.value
     this.setState({ password:inputValue })
   }
 
-  saveProfile = () => {
+  toggleEmail = () => {
     const {
-      newPassword,
-      oldPassword,
-      confirmPassword,
-      oldEmail,
-      newEmail
+      editingEmail,
+      newEmail,
+      oldEmail
     } = this.state
 
-    if(newPassword === confirmPassword) {
+    if (editingEmail) {
+      const changeEmailData = {
+        'NewEmail': newEmail,
+        'OldEmail': oldEmail
+      }
+      updateEmail(changeEmailData)
+    }
+    this.setState({ editingEmail: !editingEmail})
+  }
+
+  updatePassword = () => {
+    const {
+      editingPassword,
+      confirmPassword,
+      newPassword,
+      oldPassword
+    } = this.state
+
+    if (editingPassword) {
       const changePasswordData = {
         'ConfirmPassword': confirmPassword,
         'NewPassword': newPassword,
@@ -95,20 +111,13 @@ class AccountProfile extends React.Component {
       }
       updatePassword(changePasswordData)
     }
-    if(oldEmail !== newEmail){
-      const changeEmailData = {
-        'NewEmail': newEmail,
-        'OldEmail': oldEmail
-      }
-      updateEmail(changeEmailData)
-    }
-
+    this.setState({ editingPassword: !editingPassword})
   }
 
   render(){
     const {
-  //  userData,
-      editProfile
+      editingEmail,
+      editingPassword,
     } = this.state
 
     if (_.isNil(userData)) {
@@ -122,24 +131,27 @@ class AccountProfile extends React.Component {
             text={`My Account Profile`}
           />
           <DivContainer>
-            <PtagHeader>Personal Information</PtagHeader>
-              <DivInputContainer>
-                <Input label='Name' value={userData.name} />
-                <Input  label='Contact Email' disabled={!editProfile} id='email' value={this.state.email} onChange={this.changeInput}/>
-              </DivInputContainer>
             <PtagHeader>Account Information</PtagHeader>
               <DivInputContainer>
-                <Input label='Username' value={userData.username} />
-                <Input label='Password' value={this.state.password} />
-                {/*<input disabled={!editProfile} id='password' type='password' value={this.state.password} onChange={this.changeInput}/>*/}
-                <Input label='Customer ID' value={userData.customerID} />
-                <Input label='Minimum Purchase' value={userData.minPurchase}/>
+                <DisplayInput label='Account Holder Name' value={userData.name} />
+                <DivRow>
+                  { editingEmail ?
+                    <Input  label='Username / Contact Email' id='email' value={userData.username} onChange={this.changeInput}/>
+                    : <DisplayInput label='Username / Contact Email' value={userData.username} />}
+                  <P onClick={this.toggleEmail}>{editingEmail ? 'Save' : 'Edit'}</P>
+                </DivRow>
+                <DivRow>
+                  <DisplayInput label='Password Hint' value={'model of first car'} /><P onClick={this.updatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
+                </DivRow>
+                {editingPassword &&
+                  <DivNewPasswordContainer>
+                    <Input  label='New Password' id='new_password' value={userData.username} onChange={this.changeInput}/>
+                    <Input  label='Confirm New Password' id='confirm_new_password' value={userData.username} onChange={this.changeInput}/>
+                  </DivNewPasswordContainer>
+                }
+                <DisplayInput label='Customer ID' value={userData.customerID} />
               </DivInputContainer>
           </DivContainer>
-          <DivContainerButton>
-            {editProfile && <Button text='Clear Changes' onClick={this.cancelEdit} />}
-            <Button text={ editProfile ? 'Save Changes' : 'Edit Profile' } onClick={this.toggleEdit} />
-          </DivContainerButton>
         </React.Fragment>
       )
     }

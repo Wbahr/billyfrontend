@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const DivContainer = styled.div`
+    display flex;
+    flex-direction: column;
+  `
+
 const MainInput = styled.input`
    width: 300px;
    height: 32px;
+   font-family: verdana;
    font-size: 16px;
-   border-radius: 3px;
+   border-radius: 2px;
    padding-left: 8px;
    margin: 0 0 10px 0; 
    ::placeholder {
@@ -40,7 +46,7 @@ class Input extends React.Component {
     } = this.props
 
     return(
-      <>
+      <DivContainer>
         {label && <Label for={label}>{`${label}:`}</Label>}
         <MainInput
           disabled={disabled}
@@ -51,7 +57,7 @@ class Input extends React.Component {
           name={label}
         />
         {error && <span>{error}</span>}
-      </>
+      </DivContainer>
     )
   }
 }
