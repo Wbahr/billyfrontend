@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import 'react-table/react-table.css'
-
 import AccountSectionHeader from './accountSectionHeader'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'

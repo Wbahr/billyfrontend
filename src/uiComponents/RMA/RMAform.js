@@ -1,7 +1,7 @@
 import React from 'react'
 import { Formik, Form, Field, FieldArray } from 'formik'
-import Select from 'react-select'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../common/button'
 
