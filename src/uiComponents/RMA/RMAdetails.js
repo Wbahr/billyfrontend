@@ -44,7 +44,7 @@ class RMAdetails extends React.Component {
     getInvoice(invoice).then(
       (response) => this.selectedOrderMutator(response)
     ).then(
-      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse }, ()=> console.log('selected order', this.state.selectedOrder))}
+      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse })}
     )
   }
 
