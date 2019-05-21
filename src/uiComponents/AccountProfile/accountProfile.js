@@ -98,25 +98,37 @@ class AccountProfile extends React.Component {
   }
 
   changeInput = (e) => {
-    const inputValue = e.target.value
-    this.setState({ password:inputValue })
+    let name =  e.target.name
+    switch(name){
+      case('Username / Contact Email'):
+        this.setState({ email: e.target.value })
+        break
+      case('New Password'):
+        this.setState({ password: e.target.value })
+        break
+      case('Confirm New Password'):
+        this.setState({ confirmPassword: e.target.value })
+        break
+      default:
+    }
+
   }
 
   toggleEmail = () => {
     const {
       editingEmail,
-      newEmail,
+      email,
       oldEmail
     } = this.state
 
     if (editingEmail) {
       const changeEmailData = {
-        'NewEmail': newEmail,
+        'NewEmail': email,
         'OldEmail': oldEmail
       }
-      updateEmail(changeEmailData)
+      // updateEmail(changeEmailData)
     }
-    this.setState({ editingEmail: !editingEmail})
+    this.setState({ editingEmail: !editingEmail, email: email})
   }
 
   toggleUpdatePassword = () => {
@@ -129,32 +141,34 @@ class AccountProfile extends React.Component {
 
   savePassword = () => {
     const {
+      password,
       confirmPassword,
-      newPassword,
       oldPassword
     } = this.state
 
-    let validationErrors = this.validatePassword(newPassword, confirmPassword)
+    let validationErrors = this.validatePassword(password, confirmPassword)
     if(validationErrors.length === 0){
       const changePasswordData = {
         'ConfirmPassword': confirmPassword,
-        'NewPassword': newPassword,
+        'NewPassword': password,
         'OldPassword': oldPassword
       }
       // updatePassword(changePasswordData)
+      this.setState({passwordError: '', editingPassword: false})
     } else {
       this.setState({passwordError: validationErrors})
     }
   }
 
-  validatePassword = (newPassword, confirmPassword) => {
-    if (newPassword !== confirmPassword) {
+  validatePassword = (password, confirmPassword) => {
+    console.log('passwords', password, confirmPassword)
+    if (password !== confirmPassword) {
       return 'Passwords do no match'
-    }
-    if (newPassword.length < 8) {
+    } else if (password.length < 8) {
       return 'Passwords must be at least 8 characters'
+    } else {
+      return ''
     }
-    return ''
   }
 
 
@@ -163,6 +177,9 @@ class AccountProfile extends React.Component {
       editingEmail,
       editingPassword,
       passwordError,
+      email,
+      password,
+      confirmPassword
     } = this.state
 
     if (_.isNil(userData)) {
@@ -181,8 +198,8 @@ class AccountProfile extends React.Component {
                 <DisplayInput label='Account Holder Name' value={userData.name} />
                 <DivRow>
                   { editingEmail ?
-                    <Input  label='Username / Contact Email' id='email' value={userData.username} onChange={this.changeInput}/>
-                    : <DisplayInput label='Username / Contact Email' value={userData.username} />}
+                    <Input  label='Username / Contact Email' id='email' value={email} onChange={this.changeInput}/>
+                    : <DisplayInput label='Username / Contact Email' value={email} />}
                   <P onClick={this.toggleEmail}>{editingEmail ? 'Save' : 'Edit'}</P>
                 </DivRow>
                 <DivRow>
@@ -190,8 +207,8 @@ class AccountProfile extends React.Component {
                 </DivRow>
                 {editingPassword &&
                   <DivNewPasswordContainer>
-                    <Input  label='New Password' id='new_password' value={userData.username} onChange={this.changeInput}/>
-                    <Input  label='Confirm New Password' id='confirm_new_password' value={userData.username} onChange={this.changeInput}/>
+                    <Input  label='New Password' type='password' value={password} onChange={this.changeInput}/>
+                    <Input  label='Confirm New Password' type='password' value={confirmPassword} onChange={this.changeInput}/>
                     <DivPasswordAction>
                       <DivError>{passwordError}</DivError>
                       <P onClick={this.savePassword}>Save</P>

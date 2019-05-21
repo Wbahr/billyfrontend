@@ -30,36 +30,36 @@ const Label = styled.label`
 `
 
 class Input extends React.Component {
-  
-  returnValue = (e) => {
-    this.setState({value: e.target.value})
+
+  handleOnChange = (e) => {
+    this.props.onChange(e)
   }
 
-  render(){
-    const {
-      type,
-      placeholder,
-      value,
-      disabled,
-      label,
-      error
-    } = this.props
+	render(){
+		const {
+			type,
+			placeholder,
+			value,
+			disabled,
+			label,
+			error
+		} = this.props
 
-    return(
-      <DivContainer>
-        {label && <Label for={label}>{`${label}:`}</Label>}
-        <MainInput
-          disabled={disabled}
-          type={type || ''}
-          value={value}
-          placeholder={placeholder}
-          onChange={this.returnValue}
-          name={label}
-        />
-        {error && <span>{error}</span>}
-      </DivContainer>
-    )
-  }
+		return(
+			<DivContainer>
+				{label && <Label for={label}>{`${label}:`}</Label>}
+				<MainInput
+					disabled={disabled}
+					type={type || ''}
+					value={value}
+					placeholder={placeholder}
+					onChange={this.handleOnChange}
+					name={label}
+				/>
+				{error && <span>{error}</span>}
+			</DivContainer>
+		)
+	}
 }
 
 export default Input

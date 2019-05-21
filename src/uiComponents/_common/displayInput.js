@@ -31,7 +31,7 @@ class Input extends React.Component {
 	render(){
 		const {
 			value,
-			label
+			label,
 		} = this.props
 
 		return(
