@@ -128,7 +128,8 @@ class AccountProfile extends React.Component {
       oldEmail
     } = this.state
 
-    if (editingEmail) {
+    let emailValid = this.validateEmail(email)
+    if (editingEmail && emailValid) {
       const changeEmailData = {
         'NewEmail': email,
         'OldEmail': oldEmail
@@ -187,7 +188,7 @@ class AccountProfile extends React.Component {
   }
 
   validateEmail = (email) => {
-
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   }
 
 
