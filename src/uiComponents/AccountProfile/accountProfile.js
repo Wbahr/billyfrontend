@@ -37,7 +37,24 @@ const DivInputContainer = styled.div`
 `
 
 const DivNewPasswordContainer = styled.div`
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  background-color: #cce5ff;
+  border: 1px #b8daff solid;
+  border-radius: 3px;
+  align-items: center;
+  padding: 8px 0;
+  margin: 0 0 8px 0;
+  width: 50%;
+`
+
+const DivPasswordAction = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 20px;
+  margin-right: 40px;
 `
 
 const P = styled.p`
@@ -47,6 +64,12 @@ const P = styled.p`
   font-size: 14px;
   text-decoration: underline;
   margin-left: 4px;
+`
+
+const DivError = styled.div`
+  border: 1px #f5c6cb solid;
+  background-color: #f8d7da;
+  color: #721c24;
 `
 
 const userData = {
@@ -61,6 +84,7 @@ const userData = {
 class AccountProfile extends React.Component {
 
   state = {
+    passwordError: '',
     editingEmail: false,
     editingPassword: false
   }
@@ -95,29 +119,50 @@ class AccountProfile extends React.Component {
     this.setState({ editingEmail: !editingEmail})
   }
 
-  updatePassword = () => {
+  toggleUpdatePassword = () => {
     const {
       editingPassword,
+    } = this.state
+
+    this.setState({ editingPassword: !editingPassword})
+  }
+
+  savePassword = () => {
+    const {
       confirmPassword,
       newPassword,
       oldPassword
     } = this.state
 
-    if (editingPassword) {
+    let validationErrors = this.validatePassword(newPassword, confirmPassword)
+    if(validationErrors.length === 0){
       const changePasswordData = {
         'ConfirmPassword': confirmPassword,
         'NewPassword': newPassword,
         'OldPassword': oldPassword
       }
-      updatePassword(changePasswordData)
+      // updatePassword(changePasswordData)
+    } else {
+      this.setState({passwordError: validationErrors})
     }
-    this.setState({ editingPassword: !editingPassword})
   }
+
+  validatePassword = (newPassword, confirmPassword) => {
+    if (newPassword !== confirmPassword) {
+      return 'Passwords do no match'
+    }
+    if (newPassword.length < 8) {
+      return 'Passwords must be at least 8 characters'
+    }
+    return ''
+  }
+
 
   render(){
     const {
       editingEmail,
       editingPassword,
+      passwordError,
     } = this.state
 
     if (_.isNil(userData)) {
@@ -141,12 +186,16 @@ class AccountProfile extends React.Component {
                   <P onClick={this.toggleEmail}>{editingEmail ? 'Save' : 'Edit'}</P>
                 </DivRow>
                 <DivRow>
-                  <DisplayInput label='Password Hint' value={'model of first car'} /><P onClick={this.updatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
+                  <DisplayInput label='Password Hint' value={'model of first car'} /><P onClick={this.toggleUpdatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
                 </DivRow>
                 {editingPassword &&
                   <DivNewPasswordContainer>
                     <Input  label='New Password' id='new_password' value={userData.username} onChange={this.changeInput}/>
                     <Input  label='Confirm New Password' id='confirm_new_password' value={userData.username} onChange={this.changeInput}/>
+                    <DivPasswordAction>
+                      <DivError>{passwordError}</DivError>
+                      <P onClick={this.savePassword}>Save</P>
+                    </DivPasswordAction>
                   </DivNewPasswordContainer>
                 }
                 <DisplayInput label='Customer ID' value={userData.customerID} />
