@@ -39,7 +39,7 @@ class RMAdetails extends React.Component {
 
   componentWillMount() {
     const location = queryString.parse(location.search)
-    let invoice = _.get(location, 'invoice', '')
+    let invoice = _.get(location, 'id', '')
     getInvoice(invoice).then(
       (response) => this.selectedOrderMutator(response)
     ).then(
