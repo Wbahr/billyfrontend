@@ -78,15 +78,20 @@ const userData = {
   'name': 'Bobby Panczer',
   'email': 'bpanczer@airlinehyd.com',
   'customerID': '523523',
-  'minPurchase': 'No Minimum'
+  'minPurchase': 'No Minimum',
+  'passwordHint': 'model of first car'
 }
 
 class AccountProfile extends React.Component {
 
   state = {
+    email: userData.email,
     passwordError: '',
     editingEmail: false,
-    editingPassword: false
+    editingPassword: false,
+    hint: userData.passwordHint,
+    newhint: userData.passwordHint
+
   }
 
   componentWillMount() {
@@ -109,9 +114,11 @@ class AccountProfile extends React.Component {
       case('Confirm New Password'):
         this.setState({ confirmPassword: e.target.value })
         break
+      case('Password Hint'):
+        this.setState({ newhint: e.target.value })
+        break
       default:
     }
-
   }
 
   toggleEmail = () => {
@@ -136,6 +143,9 @@ class AccountProfile extends React.Component {
       editingPassword,
     } = this.state
 
+    if (editingPassword) {
+      this.setState({ password: '', confirmPassword: ''})
+    }
     this.setState({ editingPassword: !editingPassword})
   }
 
@@ -143,32 +153,41 @@ class AccountProfile extends React.Component {
     const {
       password,
       confirmPassword,
-      oldPassword
+      newhint
     } = this.state
 
-    let validationErrors = this.validatePassword(password, confirmPassword)
+    let validationErrors = this.validatePassword(password, confirmPassword, newhint)
+    console.log('errors', validationErrors)
     if(validationErrors.length === 0){
-      const changePasswordData = {
-        'ConfirmPassword': confirmPassword,
-        'NewPassword': password,
-        'OldPassword': oldPassword
-      }
+      // const changePasswordData = {
+      //   'ConfirmPassword': confirmPassword,
+      //   'NewPassword': password,
+      //   'PasswordHint': newhint
+      // }
       // updatePassword(changePasswordData)
-      this.setState({passwordError: '', editingPassword: false})
+      this.setState({passwordError: '', password: '', confirmPassword: '', editingPassword: false, hint: newhint})
     } else {
       this.setState({passwordError: validationErrors})
     }
   }
 
-  validatePassword = (password, confirmPassword) => {
-    console.log('passwords', password, confirmPassword)
+  validatePassword = (password, confirmPassword, hint) => {
     if (password !== confirmPassword) {
       return 'Passwords do no match'
+    } else if (!_.isNil(password) && password.length < 8) {
+      return 'Passwords must be at least 8 characters'
     } else if (password.length < 8) {
       return 'Passwords must be at least 8 characters'
-    } else {
+    } else if (hint.length > 24) {
+      return 'Hint must be less than 25 characters'
+    }
+    else {
       return ''
     }
+  }
+
+  validateEmail = (email) => {
+
   }
 
 
@@ -179,7 +198,9 @@ class AccountProfile extends React.Component {
       passwordError,
       email,
       password,
-      confirmPassword
+      confirmPassword,
+      hint,
+      newhint
     } = this.state
 
     if (_.isNil(userData)) {
@@ -203,12 +224,13 @@ class AccountProfile extends React.Component {
                   <P onClick={this.toggleEmail}>{editingEmail ? 'Save' : 'Edit'}</P>
                 </DivRow>
                 <DivRow>
-                  <DisplayInput label='Password Hint' value={'model of first car'} /><P onClick={this.toggleUpdatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
+                  <DisplayInput label='Password Hint' value={hint} /><P onClick={this.toggleUpdatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
                 </DivRow>
                 {editingPassword &&
                   <DivNewPasswordContainer>
                     <Input  label='New Password' type='password' value={password} onChange={this.changeInput}/>
                     <Input  label='Confirm New Password' type='password' value={confirmPassword} onChange={this.changeInput}/>
+                    <Input  label='Password Hint' value={newhint} onChange={this.changeInput}/>
                     <DivPasswordAction>
                       <DivError>{passwordError}</DivError>
                       <P onClick={this.savePassword}>Save</P>
