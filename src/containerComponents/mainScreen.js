@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
+import SMCProductConfigSearch from '../uiComponents/SMCProductConfigurator/productConfigSearch'
 import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
-
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 
 const StyledBackground = styled.div`
@@ -19,7 +19,7 @@ const StyledBackground = styled.div`
   background-color: grey;
 `
 
-const StyledAccountContainer = styled.div`
+const DivAccountContainer = styled.div`
   width: 744px;
   min-height: 500px;
   background-color: white;
@@ -27,9 +27,16 @@ const StyledAccountContainer = styled.div`
   margin: 20px 0;
 `
 
+const DivFullContainer = styled.div`
+  width: 1014px;
+  height: 100vh;
+  background-color: white;
+  padding: 10px;
+`
+
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'invoicepayment'
+    currentDisplay: 'SMCProductConfigSearch'
   }
 
   render(){
@@ -39,11 +46,26 @@ class MainScreen extends React.Component {
 
     return(
       <StyledBackground>
-        <StyledAccountContainer>
-          {currentDisplay === 'ExistingRMAs' && <RMAtable />}
-          {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
-          {currentDisplay === 'invoicepayment' && <InvoicePayments />}
-        </StyledAccountContainer>
+          {currentDisplay === 'SMCProductConfigSearch' &&
+            <DivFullContainer>
+              <SMCProductConfigSearch />
+            </DivFullContainer>
+          }
+          {currentDisplay === 'ExistingRMAs' &&
+            <DivAccountContainer>
+              <RMAtable />
+            </DivAccountContainer>
+          }
+          {currentDisplay === 'RMARequestDetail' &&
+            <DivAccountContainer>
+              <RMAdetails />
+            </DivAccountContainer>
+          }
+          {currentDisplay === 'invoicepayment' &&
+            <DivAccountContainer>
+              <InvoicePayments />
+            </DivAccountContainer>
+          }
       </StyledBackground>
     )
   }
