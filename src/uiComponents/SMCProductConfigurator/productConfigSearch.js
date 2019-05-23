@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import smclogo from '../../imgs/SMCLogo.png'
 import Loader from '../_common/loader'
+import { getSMCParts } from '../../api-temp/apiCalls'
 
 
 const DivRow = styled.div`
@@ -129,16 +130,16 @@ const ButtonSearch = styled.button`
 const searchResultsR = {
   'searchTerm': 'nossels',
   'searchResults': [
-    {
-      'searchTerm': 'Actuator with double fittings - Brass',
-      'img': 'https://content2.smcetech.com/image/small/3001D_US.jpg',
-      'link': 'https://www.google.com'
-    },
-    {
-      'searchTerm': 'Dual Connector with orange nossle',
-      'img': 'https:////content2.smcetech.com/image/small/3001C_US.jpg',
-      'link': 'https://www.bing.com'
-    }
+    // {
+    //   'searchTerm': 'Actuator with double fittings - Brass',
+    //   'img': 'https://content2.smcetech.com/image/small/3001D_US.jpg',
+    //   'link': 'https://www.google.com'
+    // },
+    // {
+    //   'searchTerm': 'Dual Connector with orange nossle',
+    //   'img': 'https:////content2.smcetech.com/image/small/3001C_US.jpg',
+    //   'link': 'https://www.bing.com'
+    // }
   ]
 }
 
@@ -168,6 +169,12 @@ class ProductConfigSearch extends React.Component {
     }
   }
 
+  handleKeyPress = (e) => {
+   if(e.key == 'Enter'){
+     this.handleSearchClick()
+    }
+  }
+
   render(){
     const {
       searchResults,
@@ -181,6 +188,7 @@ class ProductConfigSearch extends React.Component {
           placeholder='Search for SMC Products...'
           value={searchTerm}
           onChange={(e) =>{this.setState({searchTerm: e.target.value})}}
+          onKeyPress={this.handleKeyPress}
         />
         <ButtonSearch onClick={this.handleSearchClick}>
           Search
