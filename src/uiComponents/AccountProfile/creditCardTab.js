@@ -8,7 +8,7 @@ import Loader from '../_common/loader'
 import Input from '../_common/input'
 import DisplayInput from '../_common/displayInput'
 import Button from '../_common/button'
-import { getUserData, updatePassword, updateEmail } from '../../api-temp/apiCalls'
+import { getCreditCardData, deleteCreditCard, addCreditCard} from '../../api-temp/apiCalls'
 
 const DivContainer = styled.div`
   display: flex;
@@ -72,34 +72,40 @@ const DivError = styled.div`
   color: #721c24;
 `
 
-const userData = {
-  'username': 'bpanczer@airlinehyd.com',
-  'password': 'Efewsffosd',
-  'name': 'Bobby Panczer',
-  'email': 'bpanczer@airlinehyd.com',
-  'customerID': '523523',
-  'minPurchase': 'No Minimum',
-  'passwordHint': 'model of first car'
-}
+const creditCardDataR = [
+  {
+    'token': 'FOKSDF34N4FE82NFE9239FE',
+    'last4': '3435',
+    'type': 'visa',
+    'exp': '12/23'
+  },
+  {
+    'token': '9FD9FG9GS9FDS9FEWNH9D9',
+    'last4': '5555',
+    'type': 'master',
+    'exp': '05/21'
+  },
+]
 
 class AccountInfoTab extends React.Component {
 
   state = {
-    email: userData.email,
-    passwordError: '',
-    editingEmail: false,
-    editingPassword: false,
-    hint: userData.passwordHint,
-    newhint: userData.passwordHint
-
+    creditCardData: {},
+    addingCard: false
   }
 
   componentWillMount() {
-    getUserData().then(
-      (response) => this.selectedOrderMutator(response)
-    ).then(
-      (mutatedResponse) => {this.setState({ selectedOrder: mutatedResponse })}
+    getCreditCardData().then(
+      (response) => {
+        if(response.ok) {
+          this.setState({ creditCardData: response.json})
+        }
+      }
     )
+  }
+
+  addCard = () => {
+    this.setState({addingCard: true})
   }
 
   changeInput = (e) => {
@@ -119,35 +125,6 @@ class AccountInfoTab extends React.Component {
         break
       default:
     }
-  }
-
-  toggleEmail = () => {
-    const {
-      editingEmail,
-      email,
-      oldEmail
-    } = this.state
-
-    let emailValid = this.validateEmail(email)
-    if (editingEmail && emailValid) {
-      const changeEmailData = {
-        'NewEmail': email,
-        'OldEmail': oldEmail
-      }
-      // updateEmail(changeEmailData)
-    }
-    this.setState({ editingEmail: !editingEmail, email: email})
-  }
-
-  toggleUpdatePassword = () => {
-    const {
-      editingPassword,
-    } = this.state
-
-    if (editingPassword) {
-      this.setState({ password: '', confirmPassword: ''})
-    }
-    this.setState({ editingPassword: !editingPassword})
   }
 
   savePassword = () => {
@@ -172,39 +149,54 @@ class AccountInfoTab extends React.Component {
     }
   }
 
-  validatePassword = (password, confirmPassword, hint) => {
-    if (password !== confirmPassword) {
-      return 'Passwords do no match'
-    } else if (!_.isNil(password) && password.length < 8) {
-      return 'Passwords must be at least 8 characters'
-    } else if (password.length < 8) {
-      return 'Passwords must be at least 8 characters'
-    } else if (hint.length > 24) {
-      return 'Hint must be less than 25 characters'
-    }
-    else {
-      return ''
-    }
-  }
-
-  validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
-
-
   render(){
     const {
-      editingEmail,
-      editingPassword,
-      passwordError,
-      email,
-      password,
-      confirmPassword,
-      hint,
-      newhint
+      creditCardData,
+      addingCard
     } = this.state
+    let SavedCards = _.map(creditCardDataR, (card) => {
+      <div>
+        <p>{card.type + ' ' + card.last4}</p>
+        <p>{card.exp}</p>
+      </div>
+    })
 
-    if (_.isNil(userData)) {
+    let AddNewCard = (
+      <div onClick={this.addCard}>
+        <p>Add a New Card</p>
+      </div>
+    )
+
+    let NewCard = (
+      <div>
+        <Input
+          label={'First Name'}
+          placeholder={'Otto'}
+        />
+        <Input
+          label={'Last Name'}
+          placeholder={'Mechanic'}
+        />
+        <Input
+          label={'Credit Card Number'}
+          placeholder={'0000 0000 0000 0000'}
+        />
+        <Input
+          label={'MM'}
+          placeholder={'MM'}
+        />
+        <Input
+          label={'YY'}
+          placeholder={'YY'}
+        />
+        <Input
+          label={'Security Code'}
+          placeholder={'123'}
+        />
+      </div>
+    )
+
+    if (_.isNil(creditCardData)) {
       return (
         <Loader />
       )
@@ -216,10 +208,8 @@ class AccountInfoTab extends React.Component {
         />
           <DivContainer>
             <PtagHeader>Saved Credit Cards</PtagHeader>
-            <Input
-              label={'Credit Card Number'}
-              placeholder={'0000 0000 0000 0000'}
-            />
+            {creditCardData.length && SavedCards}
+            {addingCard ? NewCard : AddNewCard}
           </DivContainer>
         </React.Fragment>
       )
