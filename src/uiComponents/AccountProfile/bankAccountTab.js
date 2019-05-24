@@ -212,34 +212,11 @@ class AccountInfoTab extends React.Component {
       return (
         <React.Fragment>
         <AccountSectionHeader
-          text={`My Account Profile`}
+          text={`Manage Bank Accounts`}
         />
           <DivContainer>
-            <PtagHeader>Account Information</PtagHeader>
-              <DivInputContainer>
-                <DisplayInput label='Account Holder Name' value={userData.name} />
-                <DivRow>
-                  { editingEmail ?
-                    <Input  label='Username / Contact Email' id='email' value={email} onChange={this.changeInput}/>
-                    : <DisplayInput label='Username / Contact Email' value={email} />}
-                  <P onClick={this.toggleEmail}>{editingEmail ? 'Save' : 'Edit'}</P>
-                </DivRow>
-                <DivRow>
-                  <DisplayInput label='Password Hint' value={hint} /><P onClick={this.toggleUpdatePassword}>{editingPassword ? 'Cancel' : 'Change Password'}</P>
-                </DivRow>
-                {editingPassword &&
-                  <DivNewPasswordContainer>
-                    <Input  label='New Password' type='password' value={password} onChange={this.changeInput}/>
-                    <Input  label='Confirm New Password' type='password' value={confirmPassword} onChange={this.changeInput}/>
-                    <Input  label='Password Hint' value={newhint} onChange={this.changeInput}/>
-                    <DivPasswordAction>
-                      <DivError>{passwordError}</DivError>
-                      <P onClick={this.savePassword}>Save</P>
-                    </DivPasswordAction>
-                  </DivNewPasswordContainer>
-                }
-                <DisplayInput label='Customer ID' value={userData.customerID} />
-              </DivInputContainer>
+            <PtagHeader>Saved Bank Accounts</PtagHeader>
+
           </DivContainer>
         </React.Fragment>
       )
