@@ -6,18 +6,16 @@ const DivContainer = styled.div`
     flex-direction: column;
   `
 
-const MainInput = styled.input`
-   width: 300px;
-   height: 32px;
+const P = styled.p`
    font-family: verdana;
+   width: 300px;
+   // height: 32px;
    font-size: 16px;
-   border-radius: 2px;
    padding-left: 8px;
-   margin: 0 0 10px 0; 
-   ::placeholder {
-      color: grey;
-      font-size: 16px;
-   }
+   padding-bottom: 6px;
+   border-bottom: 1px #191919 solid;
+   margin: 12px 0; 
+   color: #191919;
 `
 
 const Label = styled.label`
@@ -25,38 +23,21 @@ const Label = styled.label`
   color: #111;
   font-size: 13px;
   padding-left: 2px;
-  padding-bottom: 2px;
   font-weight: 700;
 `
 
 class Input extends React.Component {
 
-  handleOnChange = (e) => {
-    this.props.onChange(e)
-  }
-
 	render(){
 		const {
-			type,
-			placeholder,
 			value,
-			disabled,
 			label,
-			error
 		} = this.props
 
 		return(
 			<DivContainer>
 				{label && <Label for={label}>{`${label}:`}</Label>}
-				<MainInput
-					disabled={disabled}
-					type={type || ''}
-					value={value}
-					placeholder={placeholder}
-					onChange={this.handleOnChange}
-					name={label}
-				/>
-				{error && <span>{error}</span>}
+				<P>{value}</P>
 			</DivContainer>
 		)
 	}
