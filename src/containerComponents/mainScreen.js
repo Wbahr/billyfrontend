@@ -47,32 +47,31 @@ class MainScreen extends React.Component {
 
     return(
       <StyledBackground>
-        <StyledAccountContainer>
-          {currentDisplay === 'ExistingRMAs' && <RMAtable />}
-          {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
-          {currentDisplay === 'invoicepayment' && <InvoicePayments />}
-          {currentDisplay === 'AccountInfoTab' && <AccountProfile />}
-        </StyledAccountContainer>
-          {currentDisplay === 'SMCProductConfigSearch' &&
-            <DivFullContainer>
-              <SMCProductConfigSearch />
-            </DivFullContainer>
-          }
-          {currentDisplay === 'ExistingRMAs' &&
-            <DivAccountContainer>
-              <RMAtable />
-            </DivAccountContainer>
-          }
-          {currentDisplay === 'RMARequestDetail' &&
-            <DivAccountContainer>
-              <RMAdetails />
-            </DivAccountContainer>
-          }
-          {currentDisplay === 'invoicepayment' &&
-            <DivAccountContainer>
-              <InvoicePayments />
-            </DivAccountContainer>
-          }
+        {currentDisplay === 'SMCProductConfigSearch' &&
+          <DivFullContainer>
+            <SMCProductConfigSearch />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'ExistingRMAs' &&
+          <DivAccountContainer>
+            <RMAtable />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'RMARequestDetail' &&
+          <DivAccountContainer>
+            <RMAdetails />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'invoicepayment' &&
+          <DivAccountContainer>
+            <InvoicePayments />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'AccountInfoTab' &&
+          <DivAccountContainer>
+            <AccountProfile />
+          </DivAccountContainer>
+        }
       </StyledBackground>
     )
   }
