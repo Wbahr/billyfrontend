@@ -30,7 +30,7 @@ const StyledAccountContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'AccountProfile'
+    currentDisplay: 'AccountInfoTab'
   }
 
   render(){
@@ -44,7 +44,7 @@ class MainScreen extends React.Component {
           {currentDisplay === 'ExistingRMAs' && <RMAtable />}
           {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
           {currentDisplay === 'invoicepayment' && <InvoicePayments />}
-          {currentDisplay === 'AccountProfile' && <AccountProfile />}
+          {currentDisplay === 'AccountInfoTab' && <AccountProfile />}
         </StyledAccountContainer>
       </StyledBackground>
     )
