@@ -1,8 +1,9 @@
 # Airline Frontend Base
 #### Contains
-- RMA - Return processing
+- Account Profile with Tabs (in dev)
 - Invoice Payments (in dev)
-- Account Profile (in dev)
+- RMA - Return processing
+- SMC Product Search (in dev)
 
 This project uses:
 - Styled Components for all css styling. Check out https://www.styled-components.com/ for more info.
