@@ -3,11 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import AccountSectionHeader from '../_common/sectionHeader'
 import 'react-table/react-table.css'
-import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Loader from '../_common/loader'
-import Input from '../_common/input'
-import DisplayInput from '../_common/displayInput'
-import Button from '../_common/button'
 import { updateAccountNotifications, updateMarketingNotifications } from '../../api-temp/apiCalls'
 
 const DivContainer = styled.div`
@@ -37,15 +33,6 @@ const Label = styled.label`
   font-size: 16px;
   padding: 0 0 6px 4px;
   margin: 0;
-`
-
-const P = styled.p`
-  cursor: pointer;
-  font-family: verdana;
-  color: darkblue;
-  font-size: 14px;
-  text-decoration: underline;
-  margin-left: 4px;
 `
 
 class AccountInfoTab extends React.Component {
