@@ -61,7 +61,7 @@ class AccountProfile extends React.Component {
             <NotificationsTab/>
 					</TabPane>
           <TabPane tabId="3">
-            <CreditCardTab/>
+            {/*<CreditCardTab/>*/}
 					</TabPane>
           <TabPane tabId="4">
             <BankAccountTab/>
