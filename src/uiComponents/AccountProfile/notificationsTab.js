@@ -19,7 +19,7 @@ const DivContainer = styled.div`
 const DivInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 8px;
+  margin: 0 0 8px 30px;
 `
 
 const PtagHeader = styled.p`
@@ -28,13 +28,24 @@ const PtagHeader = styled.p`
   font-size: 18px;
   line-height: 1.2;
   color: #666;
+  width: fit-content;
   margin: 0 0 8px 0;
 `
 
 const Label = styled.label`
   font-family: verdana;
   font-size: 16px;
-  padding-left: 4px;
+  padding: 0 0 6px 4px;
+  margin: 0;
+`
+
+const P = styled.p`
+  cursor: pointer;
+  font-family: verdana;
+  color: darkblue;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-left: 4px;
 `
 
 class AccountInfoTab extends React.Component {
@@ -77,7 +88,6 @@ class AccountInfoTab extends React.Component {
       'Shipment': Shipment,
     }
     updateAccountNotifications(data)
-
   }
 
   handleMarketingNotificationsSave = () => {
@@ -117,7 +127,7 @@ class AccountInfoTab extends React.Component {
           text={`Manage Notifications`}
         />
           <DivContainer>
-            <span><PtagHeader>Account Notifications</PtagHeader><button onClick={this.handleAccountNotificationsSave}>Save</button></span>
+            <PtagHeader>Account Notifications</PtagHeader>
             <DivInputContainer>
               <span>
                 <input type='checkbox' name='invoiceReminders' id='invoiceReminders' value={invoiceReminders} onChange={this.changeInput}/>
@@ -140,7 +150,7 @@ class AccountInfoTab extends React.Component {
                 <Label htmlFor='Shipment'>Shipment Notifications</Label>
               </span>
             </DivInputContainer>
-            <span><PtagHeader>Marketing Notifications</PtagHeader><button onClick={this.handleMarketingNotificationsSave}>Save</button></span>
+            <PtagHeader>Marketing Notifications</PtagHeader>
             <DivInputContainer>
               <span>
                 <input type='checkbox' name='hydTech' id='hydTech' value={hydTech} onChange={this.changeInput}/>

@@ -14,7 +14,7 @@ const P = styled.p`
    padding-left: 8px;
    padding-bottom: 6px;
    border-bottom: 1px #191919 solid;
-   margin: 12px 0; 
+   // margin: 12px 0; 
    color: #191919;
 `
 

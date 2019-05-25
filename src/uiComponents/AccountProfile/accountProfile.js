@@ -8,7 +8,7 @@ import NotificationsTab from './notificationsTab'
 
 class AccountProfile extends React.Component {
 	state = {
-    activeTab: '1'
+    activeTab: '2'
   }
 
 	toggle = (tab) => {
