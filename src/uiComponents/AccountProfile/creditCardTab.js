@@ -16,11 +16,6 @@ const DivContainer = styled.div`
   padding: 0 10px 10px 10px;
 `
 
-const DivRow = styled.div`
-  display: flex;
-  align-items: flex-end;
-`
-
 const PtagHeader = styled.p`
   font-family: verdana;
   font-weight: 400;
@@ -30,47 +25,45 @@ const PtagHeader = styled.p`
   margin: 0 0 8px 0;
 `
 
-const DivInputContainer = styled.div`
+const DivSavedCard = styled.div`
   display: flex;
-  flex-direction: column;
-  margin-left: 8px;
-`
-
-const DivNewPasswordContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: #cce5ff;
-  border: 1px #b8daff solid;
-  border-radius: 3px;
+  justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  margin: 0 0 8px 0;
-  width: 50%;
+  border: 1px grey solid;
+  border-radius: 2px;
+  width 320px;
+  height: 50px;
+  padding: 10px;
+  margin-bottom: 8px;
+  p {
+    font-family: verdana;
+    margin: 0;
+  }
 `
 
-const DivPasswordAction = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  height: 20px;
-  margin-right: 40px;
-`
-
-const P = styled.p`
+const DivAddNewCard = styled.div`
   cursor: pointer;
-  font-family: verdana;
-  color: darkblue;
-  font-size: 14px;
-  text-decoration: underline;
-  margin-left: 4px;
+  display: flex;
+  align-items: center;
+  border: 1px grey solid;
+  border-radius: 2px;
+  width 320px;
+  height: 50px;
+  padding: 10px;
+  background-color: #EDEDED;
+  :hover {
+    box-shadow: 0 0 5px #3887FF;
+  }
+  p {
+    font-family: verdana;
+    margin: 0;
+  }
 `
 
-const DivError = styled.div`
-  border: 1px #f5c6cb solid;
-  background-color: #f8d7da;
-  color: #721c24;
+const DivNewCardButtons = styled.div`
+  display: flex;
 `
+
 
 const creditCardDataR = [
   {
@@ -84,7 +77,7 @@ const creditCardDataR = [
     'last4': '5555',
     'type': 'master',
     'exp': '05/21'
-  },
+  }
 ]
 
 class AccountInfoTab extends React.Component {
@@ -94,18 +87,34 @@ class AccountInfoTab extends React.Component {
     addingCard: false
   }
 
-  componentWillMount() {
-    getCreditCardData().then(
-      (response) => {
-        if(response.ok) {
-          this.setState({ creditCardData: response.json})
-        }
-      }
-    )
-  }
+  // componentWillMount() {
+  //   getCreditCardData().then(
+  //     (response) => {
+  //       if(response.ok) {
+  //         this.setState({ creditCardData: response.json})
+  //       }
+  //     }
+  //   )
+  // }
 
   addCard = () => {
     this.setState({addingCard: true})
+  }
+
+  removeCard = (removeCard) => {
+    let removeToken = creditCardDataR[removeCard].token
+    // deleteCreditCard(removeToken).then((response) => (
+    //   getCreditCardData().then((response) => (
+    //     if (response.ok) {
+    //       this.setState(creditCardData: response.json)
+    //     }
+    //   ))
+    //   )
+    // )
+  }
+
+  cancelNewCard = () => {
+    this.setState({addingCard: false})
   }
 
   changeInput = (e) => {
@@ -149,51 +158,48 @@ class AccountInfoTab extends React.Component {
     }
   }
 
-  render(){
+  render() {
     const {
       creditCardData,
       addingCard
     } = this.state
-    let SavedCards = _.map(creditCardDataR, (card) => {
-      <div>
+    let SavedCards = _.map(creditCardDataR, (card, index) => (
+      <DivSavedCard>
         <p>{card.type + ' ' + card.last4}</p>
         <p>{card.exp}</p>
-      </div>
-    })
+        <p onClick={()=>{this.removeCard(index)}}>Remove</p>
+      </DivSavedCard>
+    ))
+
 
     let AddNewCard = (
-      <div onClick={this.addCard}>
-        <p>Add a New Card</p>
-      </div>
+      <DivAddNewCard onClick={this.addCard}>
+        <p>+ Add a New Card</p>
+      </DivAddNewCard>
     )
 
+    console.log('creditCardDataR',creditCardDataR)
+    console.log('Saved Cards', SavedCards)
+
     let NewCard = (
-      <div>
-        <Input
-          label={'First Name'}
-          placeholder={'Otto'}
-        />
-        <Input
-          label={'Last Name'}
-          placeholder={'Mechanic'}
-        />
-        <Input
-          label={'Credit Card Number'}
-          placeholder={'0000 0000 0000 0000'}
-        />
-        <Input
-          label={'MM'}
-          placeholder={'MM'}
-        />
-        <Input
-          label={'YY'}
-          placeholder={'YY'}
-        />
-        <Input
-          label={'Security Code'}
-          placeholder={'123'}
-        />
-      </div>
+      <>
+          <Input
+            label={'Full Name on Card'}
+            placeholder={'Otto Smith'}
+          />
+          <Input
+            label={'Credit Card Number'}
+            placeholder={'0000 0000 0000 0000'}
+          />
+          <Input
+            label={'Expiration Date'}
+            placeholder={'MM'}
+          />
+          <Input
+            placeholder={'YY'}
+          />
+        <DivNewCardButtons><p onClick={this.cancelNewCard}>Close</p><p>Save</p></DivNewCardButtons>
+      </>
     )
 
     if (_.isNil(creditCardData)) {
@@ -207,8 +213,8 @@ class AccountInfoTab extends React.Component {
           text={`Manage Credit Cards`}
         />
           <DivContainer>
-            <PtagHeader>Saved Credit Cards</PtagHeader>
-            {creditCardData.length && SavedCards}
+            <PtagHeader>{addingCard ? 'Add a New Card' : 'Saved Credit Cards'}</PtagHeader>
+            {(creditCardDataR.length && !addingCard) && SavedCards}
             {addingCard ? NewCard : AddNewCard}
           </DivContainer>
         </React.Fragment>

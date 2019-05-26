@@ -8,7 +8,7 @@ import NotificationsTab from './notificationsTab'
 
 class AccountProfile extends React.Component {
 	state = {
-    activeTab: '2'
+    activeTab: '3'
   }
 
 	toggle = (tab) => {
@@ -55,13 +55,13 @@ class AccountProfile extends React.Component {
 				</Nav>
 				<TabContent activeTab={this.state.activeTab}>
 					<TabPane tabId="1">
-						<AccountInfoTab />
+						<AccountInfoTab/>
 					</TabPane>
 					<TabPane tabId="2">
             <NotificationsTab/>
 					</TabPane>
           <TabPane tabId="3">
-            {/*<CreditCardTab/>*/}
+            <CreditCardTab/>
 					</TabPane>
           <TabPane tabId="4">
             <BankAccountTab/>
