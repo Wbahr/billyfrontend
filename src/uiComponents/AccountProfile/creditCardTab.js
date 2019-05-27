@@ -78,6 +78,7 @@ const creditCardDataR = [
     'type': 'master',
     'exp': '05/21'
   }
+  // }
 ]
 
 class AccountInfoTab extends React.Component {
@@ -214,7 +215,8 @@ class AccountInfoTab extends React.Component {
         />
           <DivContainer>
             <PtagHeader>{addingCard ? 'Add a New Card' : 'Saved Credit Cards'}</PtagHeader>
-            {(creditCardDataR.length && !addingCard) && SavedCards}
+            {(creditCardDataR.length > 0 && !addingCard) && SavedCards}
+            {(creditCardDataR.length === 0) && <p>You have no Saved Credit Cards</p>}
             {addingCard ? NewCard : AddNewCard}
           </DivContainer>
         </React.Fragment>
