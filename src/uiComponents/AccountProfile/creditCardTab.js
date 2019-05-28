@@ -35,6 +35,9 @@ const DivSavedCard = styled.div`
   height: 50px;
   padding: 10px;
   margin-bottom: 8px;
+  :hover {
+    box-shadow: 0 0 2px grey;
+  }
   p {
     font-family: verdana;
     margin: 0;
@@ -45,12 +48,12 @@ const DivAddNewCard = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: 1px grey solid;
+  background-color: #f9f9ff;
+  border: 2px #007aff solid;
   border-radius: 2px;
   width 320px;
   height: 50px;
   padding: 10px;
-  background-color: #EDEDED;
   :hover {
     box-shadow: 0 0 5px #3887FF;
   }
@@ -69,13 +72,13 @@ const creditCardDataR = [
   {
     'token': 'FOKSDF34N4FE82NFE9239FE',
     'last4': '3435',
-    'type': 'visa',
+    'type': 'Visa',
     'exp': '12/23'
   },
   {
     'token': '9FD9FG9GS9FDS9FEWNH9D9',
     'last4': '5555',
-    'type': 'master',
+    'type': 'Master',
     'exp': '05/21'
   }
   // }
@@ -166,7 +169,7 @@ class AccountInfoTab extends React.Component {
     } = this.state
     let SavedCards = _.map(creditCardDataR, (card, index) => (
       <DivSavedCard>
-        <p>{card.type + ' ' + card.last4}</p>
+        <p>{card.type + '-' + card.last4}</p>
         <p>{card.exp}</p>
         <p onClick={()=>{this.removeCard(index)}}>Remove</p>
       </DivSavedCard>
