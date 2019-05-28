@@ -39,8 +39,8 @@ const DivInputContainer = styled.div`
 const DivNewPasswordContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #cce5ff;
-  border: 1px #b8daff solid;
+  background-color: #f9f9ff;
+  border: 2px #007aff solid;
   border-radius: 3px;
   align-items: center;
   padding: 8px 0;
