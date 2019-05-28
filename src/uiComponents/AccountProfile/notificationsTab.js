@@ -15,7 +15,7 @@ const DivContainer = styled.div`
 const DivInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 8px 30px;
+  margin: 0 0 18px 8px;
 `
 
 const PtagHeader = styled.p`
