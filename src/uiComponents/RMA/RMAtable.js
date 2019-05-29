@@ -51,6 +51,10 @@ class RMAtable extends React.Component {
     filterAll: ''
   }
 
+  componentWillMount() {
+
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const {
       returnItems: prevReturnItems
@@ -223,7 +227,7 @@ class RMAtable extends React.Component {
           className="-striped -highlight"
         />
         {
-         !_.isNil(selectedReturn) ?
+         !_.isNil(selectedReturn) &&
            <>
             <AccountSectionHeader
               text={`Return Details - ${selectedReturn.rmaNum}`}
@@ -244,7 +248,6 @@ class RMAtable extends React.Component {
             {`Total: $${totalRefund}`}
            </DivTotal>
            </>
-           : null
         }
       </React.Fragment>
     )

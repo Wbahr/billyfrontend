@@ -74,7 +74,6 @@ const DivError = styled.div`
 
 const userData = {
   'username': 'bpanczer@airlinehyd.com',
-  'password': 'Efewsffosd',
   'name': 'Bobby Panczer',
   'email': 'bpanczer@airlinehyd.com',
   'customerID': '523523',

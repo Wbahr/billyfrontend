@@ -130,16 +130,16 @@ const ButtonSearch = styled.button`
 const searchResultsR = {
   'searchTerm': 'nossels',
   'searchResults': [
-    // {
-    //   'searchTerm': 'Actuator with double fittings - Brass',
-    //   'img': 'https://content2.smcetech.com/image/small/3001D_US.jpg',
-    //   'link': 'https://www.google.com'
-    // },
-    // {
-    //   'searchTerm': 'Dual Connector with orange nossle',
-    //   'img': 'https:////content2.smcetech.com/image/small/3001C_US.jpg',
-    //   'link': 'https://www.bing.com'
-    // }
+    {
+      'searchTerm': 'Actuator with double fittings - Brass',
+      'img': 'https://content2.smcetech.com/image/small/3001D_US.jpg',
+      'link': 'https://www.google.com'
+    },
+    {
+      'searchTerm': 'Dual Connector with orange nossle',
+      'img': 'https:////content2.smcetech.com/image/small/3001C_US.jpg',
+      'link': 'https://www.bing.com'
+    }
   ]
 }
 
