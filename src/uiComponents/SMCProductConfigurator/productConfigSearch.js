@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import queryString from 'query-string'
 import smclogo from '../../imgs/SMCLogo.png'
 import Loader from '../_common/loader'
 import { getSMCParts } from '../../api-temp/apiCalls'
@@ -151,9 +152,10 @@ class ProductConfigSearch extends React.Component {
   }
 
   componentWillMount() {
-    if (true) {
-      let value = 
-      this.setState({searchTerm: value})
+    const location = queryString.parse(location.search)
+    let smcSearchTerm = _.get(location,'smcSearchTerm', null)
+    if (!_.isNil(smcSearchTerm)) {
+      this.setState({searchTerm: smcSearchTerm})
       this.handleSearchClick
     }
   }
