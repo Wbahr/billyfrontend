@@ -150,6 +150,14 @@ class ProductConfigSearch extends React.Component {
     searching: false
   }
 
+  componentWillMount() {
+    if (true) {
+      let value = 
+      this.setState({searchTerm: value})
+      this.handleSearchClick
+    }
+  }
+
   handleSearchClick = () => {
    const {
      searchTerm,
