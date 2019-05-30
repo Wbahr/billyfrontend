@@ -1,6 +1,10 @@
 # Airline Frontend Base
 #### Contains
-- Account Profile with Tabs (in dev)
+- My Account with Tabs (in dev)
+  - Account Profile (in dev)
+  - Notifications (in dev)
+  - Credit Card Manager (in dev)
+  - Bank Account Manager (in dev)
 - Invoice Payments (in dev)
 - RMA - Return processing
 - SMC Product Search (in dev)
