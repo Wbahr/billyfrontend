@@ -29,13 +29,13 @@ const DivTotal = styled(StyledText1)`
   border-bottom: 1px solid black;
 `
 
-const StyledRMADetails = styled.div`
+const DivRMADetails = styled.div`
   display: flex;
   padding: 0 10px 10px 10px;
   border-bottom: 1px solid #ccc;
 `
 
-const StyledRMAList = styled.div`
+const DivRMAList = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -232,17 +232,17 @@ class RMAtable extends React.Component {
             <AccountSectionHeader
               text={`Return Details - ${selectedReturn.rmaNum}`}
             />
-           <StyledRMADetails>
-            <StyledRMAList>
+           <DivRMADetails>
+            <DivRMAList>
               <StyledText0><StyledText1>Return Date: </StyledText1>{selectedReturn.returnDate}</StyledText0>
               <StyledText0><StyledText1>RMA Number: </StyledText1>{selectedReturn.rmaNum}</StyledText0>
               <StyledText0><StyledText1>Invoice Number: </StyledText1>{selectedReturn.invoiceNum}</StyledText0>
-            </StyledRMAList>
-            <StyledRMAList>
+            </DivRMAList>
+            <DivRMAList>
               <StyledText0><StyledText1>Return Total: </StyledText1>{selectedReturn.returnTotal}</StyledText0>
               <StyledText0><StyledText1>Return Status: </StyledText1>{selectedReturn.returnStatus}</StyledText0>
-            </StyledRMAList>
-           </StyledRMADetails>
+            </DivRMAList>
+           </DivRMADetails>
              {itemBars}
            <DivTotal as='div'>
             {`Total: $${totalRefund}`}

@@ -13,7 +13,7 @@ const DivContainer = styled.div`
   }
 `
 
-const StyledHeaderDiv = styled.div`
+const DivHeader = styled.div`
    width: 100%;
    height: 36px;
    border-bottom: 1px solid #ccc;
@@ -199,18 +199,18 @@ class SummaryModal extends React.Component {
     if (submitSuccess) {
       return(
         <DivContainer>
-          <StyledHeaderDiv>
+          <DivHeader>
             <PHeader>Return Request Submitted</PHeader>
             <p>You will now be redirected to the Invoice Screen</p>
-          </StyledHeaderDiv>
+          </DivHeader>
         </DivContainer>
       )
     } else {
       return (
         <DivContainer>
-          <StyledHeaderDiv>
+          <DivHeader>
             <PHeader>Return Summary</PHeader>
-          </StyledHeaderDiv>
+          </DivHeader>
           <DivItemlist>
             {itemBars}
             <DivTotal as='div'>
