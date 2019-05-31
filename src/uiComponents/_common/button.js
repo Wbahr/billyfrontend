@@ -19,6 +19,15 @@ const MainButton = styled.button`
       cursor: default;
       opacity: 0.3;
    }
+   
+   &:active {
+    outline: none;
+    box-shadow: 0 0 5px blue;
+   }
+   
+   &:focus {
+    outline: none;
+   }
 `
 const SecondaryButton = styled(MainButton)`
   background: linear-gradient(#246696, #174362);

@@ -8,6 +8,7 @@ import SMCProductConfigSearch from '../uiComponents/SMCProductConfigurator/produ
 import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
+import ContactUs from '../uiComponents/ContactUs/contactUs'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -37,7 +38,7 @@ const DivFullContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'AccountInfoTab'
+    currentDisplay: 'ContactUs'
   }
 
   render(){
@@ -50,6 +51,11 @@ class MainScreen extends React.Component {
         {currentDisplay === 'SMCProductConfigSearch' &&
           <DivFullContainer>
             <SMCProductConfigSearch />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'ContactUs' &&
+          <DivFullContainer>
+            <ContactUs />
           </DivFullContainer>
         }
         {currentDisplay === 'ExistingRMAs' &&
