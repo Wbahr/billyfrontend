@@ -1,9 +1,9 @@
 import React from 'react'
-import { Formik, Form, Field, FieldArray } from 'formik'
-import Select from 'react-select'
+import _ from 'lodash'
+import { Formik, Form, Field } from 'formik'
 import styled from 'styled-components'
-import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../_common/button'
+import { emailIsValid, requiredField  } from '../_common/helpers/generalHelperFunctions'
 
 const DivFieldContainer = styled.div`
   display: flex;
@@ -27,13 +27,9 @@ const StyledRMAListGrey = styled(StyledRMAList)`
 
 const StyledSubmitButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 10px;
   justify-content: flex-end;
-  
-  @media (max-width: 700px) {
-    flex-direction: column;
-    align-items: center;
-  }
 `
 
 const DivErrors = styled.div`
@@ -57,30 +53,47 @@ const StyledCheckbox = styled.input`
   padding-right: 18px;
 `
 
-const StyledInput = styled.input`
-  width: 48px;
-  height: 20px;
-  border: 1px solid #404040;
-  border-radius: 3px;
-  margin: 0 8px;
-  padding: 0 8px;
-`
-
-const StyledInput2 = styled(StyledInput)`
-  width: 200px;
+const Input = styled.input`
+  width: 350px;
+  height: 25px;
+  border: none;
+  border-bottom: 2px solid #404040;
+  margin: 8px;
+  padding: 16px 8px;
+  :focus {
+    outline: none;
+    border-bottom: 3px solid #404040;
+  }
 `
 
 const StyledTextArea = styled.textarea`
-  width: 300px; 
+  width: 350px; 
   border: 1px solid #404040;
   border-radius: 3px;
   margin: 8px;
   padding: 0 8px;
+  :focus {
+    outline: none;
+  }
 `
 
 const validate = (values) => {
-	let errors = null
-	console.log('values', values)
+	let errors = {}
+  if (Object.entries(values).length === 0 && values.constructor === Object){
+    errors[0].push('Please complete all required fields')
+  } else if (requiredField(values.firstname) || requiredField(values.lastname)){
+    errors = 'Must fill out full name'
+  } else if (requiredField(values.company)){
+    errors = 'Must include a company'
+  } else if (requiredField(values.phone)){
+    errors = 'Must include a contact number'
+  } else if (requiredField(values.email) || emailIsValid(values.email)){
+    errors = 'Must  include a valid email'
+  } else if (requiredField(values.zip) || requiredField(values.state)){
+    errors = 'Must include a zipcode and state'
+  }
+  // console.log('values', values)
+  // console.log('errors', errors)
 	return errors
 }
 
@@ -92,26 +105,78 @@ const ContactUsForm = ({ clickedContinue}) => (
 			validateOnChange={false}
 			onSubmit={values => clickedContinue(values.items)}
 			render={({ values, handleChange, errors }) => (
-				<Form>
+        <Form>
           <DivFieldContainer>
-            <Field
-              name={`firstname`}
-            />
-            <Field
-              name={`lastname`}
-            />
-            <Field
-              name={`jobtitle`}
-            />
-            <Field
-              name={`company`}
-            />
-            <Field
-              name={`city`}
-            />
-            <Field
-              name={`firstname`}
-            />
+            <Field name={`firstname`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='First Name*' />
+              )}
+            </Field>
+            <Field name={`lastname`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Last Name*' />
+              )}
+            </Field>
+            <Field name={`jobtitle`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Job Title' />
+              )}
+            </Field>
+            <Field name={`company`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Company*' />
+              )}
+            </Field>
+            <Field name={`city`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='City' />
+              )}
+            </Field>
+            <Field name={`state`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='State*' />
+              )}
+            </Field>
+            <Field name={`zip`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Zipcode*' />
+              )}
+            </Field>
+            <Field name={`email`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Email*' />
+              )}
+            </Field>
+            <Field name={`phone`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Phone*' />
+              )}
+            </Field>
+            <Field name={`jobnum`}>
+              {({ field, form}) => (
+                <Input {...field}
+                  component='input'
+                  placeholder='Job or PO Number' />
+              )}
+            </Field>
             <Field component='textarea' name={`items.${index}.details`}>
               {({ field, form}) => (
                 <StyledTextArea {...field}
@@ -121,15 +186,15 @@ const ContactUsForm = ({ clickedContinue}) => (
               )}
             </Field>
           </DivFieldContainer>
-					<StyledSubmitButtonContainer>
-						{!_.isNil(errors) &&
-							<DivErrors>
-								{errors && <span>{errors.message}</span>}
-							</DivErrors>
-						}
-						<Button type="submit" text='Submit' />
-					</StyledSubmitButtonContainer>
-				</Form>
+          <StyledSubmitButtonContainer>
+            {!_.isNil(errors) &&
+              <DivErrors>
+                {Object.keys(errors).length > 0 && <span>{errors[0]}</span>}
+              </DivErrors>
+            }
+            <Button type="submit" text='Submit' />
+          </StyledSubmitButtonContainer>
+        </Form>
 			)}
 		/>
 	</div>
