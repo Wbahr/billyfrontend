@@ -42,6 +42,11 @@ const Aemail = styled.a`
   line-height: 30px;
 `
 
+const Alink = styled.a`
+  color: #0070C0;
+  font-size: 13px;
+`
+
 const DivEmail = styled.div`
     background-color: #818286;
     line-height: 25px;
@@ -80,8 +85,8 @@ class ContactUs extends React.Component {
           </DivBlock>
 					<DivBlock>
 						<AccountSectionHeader text={'Headquarters'} />
-            <p>3557 Progress Drive Bensalem, PA 19020</p>
-            <p>Phone: <a href="tel:215-638-4700">(215) 638-4700</a></p>
+            <Alink href='https://goo.gl/maps/J8AydtGDQaS2' target='_blank'>3557 Progress Drive Bensalem, PA 19020</Alink>
+            <p>Phone: <a href='tel:215-638-4700'>(215) 638-4700</a></p>
             <p>Fax: (215) 638-1707</p>
             <img src={HQMap} alt='office location map' width='255px' />
             <Button color='secondary' onClick={()=> location.assign(window.location.hostname + '/pages/about/locations')} text='Branch Locations'/>
