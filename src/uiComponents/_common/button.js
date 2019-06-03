@@ -9,6 +9,7 @@ const MainButton = styled.button`
    background: linear-gradient(#b31217, #e52d27);
    border-radius: 50px;
    cursor: pointer;
+   border: none;
    
    &:hover {
       background: linear-gradient(#74121D, #b31217);
