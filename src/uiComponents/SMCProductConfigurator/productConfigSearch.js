@@ -83,7 +83,7 @@ const Alink = styled.a`
 
 const H1 = styled.h1`
   font-family: verdana;
-  color: #777
+  color: #2786C2;
   font-size: 16px;
   margin: 10px 0 6px 0;
 `
@@ -238,6 +238,7 @@ class ProductConfigSearch extends React.Component {
         </DivColumn>
         <DivColumn1>
           {searchBar}
+          {_.isNil(resultCount) && brandDescription}
           {resultCount !== 0 && searchResultsComponent}
           {searching && <Loader />}
         </DivColumn1>
