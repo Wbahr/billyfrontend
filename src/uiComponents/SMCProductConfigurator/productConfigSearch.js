@@ -60,6 +60,16 @@ const DivResultItem = styled.div`
   }
 `
 
+const DivNoResults = styled.div`
+  display: flex;
+  align-items: center;
+  color: #DB1633;
+  font-size: 16px;
+  font-family: verdana;
+  font-weight: 500;
+  margin: 12px 0;
+`
+
 const PresultSummary = styled.p`
   font-family: verdana;
   font-weight: 400;
@@ -142,7 +152,8 @@ class ProductConfigSearch extends React.Component {
     searchResults: {},
     searchTerm: '',
     searchedTerm: '',
-    searching: false
+    searching: false,
+    noSearchResults: false
   }
 
   componentWillMount() {
@@ -163,10 +174,14 @@ class ProductConfigSearch extends React.Component {
    } = this.state
 
     if(!searching && searchTerm.length !== 0) {
-      this.setState({searching: true, searchResults: {}})
+      this.setState({searching: true, searchResults: {}, noSearchResults: false})
       getSMCParts(searchTerm).then(
       (response) => {
-        this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false})
+        if (_.isNil(response.length)){
+          this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false, noSearchResults: true})
+        } else {
+          this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false})
+        }
       })
     }
   }
@@ -182,7 +197,8 @@ class ProductConfigSearch extends React.Component {
       searchResults,
       searchTerm,
       searchedTerm,
-      searching
+      searching,
+      noSearchResults
     } = this.state
 
     let searchBar = (
@@ -209,6 +225,7 @@ class ProductConfigSearch extends React.Component {
 
     let searchResultsComponent
     let resultCount = searchResults.length
+    console.log('search result len', resultCount)
     let Items = _.map(searchResults, (result)=>
       <DivResultItem onClick={()=>{location.replace('https://preprod.airlinehyd.com/customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
         <Img src={result.Img} height='50px' width='auto' />
@@ -239,6 +256,7 @@ class ProductConfigSearch extends React.Component {
         <DivColumn1>
           {searchBar}
           {_.isNil(resultCount) && brandDescription}
+          {noSearchResults && <DivNoResults>{`We're Sorry, no SMC Products found for '${searchedTerm}'.`}</DivNoResults>}
           {resultCount !== 0 && searchResultsComponent}
           {searching && <Loader />}
         </DivColumn1>
