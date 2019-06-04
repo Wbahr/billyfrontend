@@ -9,6 +9,7 @@ import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
 import ContactUs from '../uiComponents/ContactUs/contactUs'
+import BrandScreen from './brandScreen'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -38,7 +39,7 @@ const DivFullContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'ContactUs'
+    currentDisplay: 'SMCProductConfigSearch'
   }
 
   render(){
@@ -77,6 +78,11 @@ class MainScreen extends React.Component {
           <DivAccountContainer>
             <AccountProfile />
           </DivAccountContainer>
+        }
+        {currentDisplay === 'BrandScreen' &&
+          <DivFullContainer>
+            <BrandScreen />
+          </DivFullContainer>
         }
       </StyledBackground>
     )

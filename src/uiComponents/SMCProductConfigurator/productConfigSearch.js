@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
-import smclogo from '../../imgs/SMCLogo.png'
+import smclogo from '../../imgs/logos/smc.png'
 import Loader from '../_common/loader'
 import { getSMCParts } from '../../api-temp/apiCalls'
-
 
 const DivRow = styled.div`
   display: flex;
@@ -19,6 +18,7 @@ const DivResultsSummary = styled.div`
   border-bottom: 1px #999 solid;
   align-items: center;
   justify-content: space-between;
+  margin-top: 16px;
 `
 
 const DivColumn = styled.div`
@@ -42,6 +42,8 @@ const DivItemsContainer = styled.div`
 `
 
 const DivResultItem = styled.div`
+  display: flex;
+  align-items: center;
   font-family: verdana;
   font-size: 14px;
   color: #337ab7;
@@ -49,8 +51,12 @@ const DivResultItem = styled.div`
   display: flex;
   height: 52px;
   border-bottom: 1px solid #999;
+  padding: 4px 0;
   :hover {
     font-weight: 600;
+  }
+  p {
+    margin: 0;
   }
 `
 
@@ -126,37 +132,28 @@ const ButtonSearch = styled.button`
   :active {
     box-shadow: 0 0 4px black inset;
   }
+  :focus {
+    outline: none;
+  }
 `
-
-const searchResultsR = {
-  'searchTerm': 'nossels',
-  'searchResults': [
-    {
-      'searchTerm': 'Actuator with double fittings - Brass',
-      'img': 'https://content2.smcetech.com/image/small/3001D_US.jpg',
-      'link': 'https://www.google.com'
-    },
-    {
-      'searchTerm': 'Dual Connector with orange nossle',
-      'img': 'https:////content2.smcetech.com/image/small/3001C_US.jpg',
-      'link': 'https://www.bing.com'
-    }
-  ]
-}
 
 class ProductConfigSearch extends React.Component {
   state = {
     searchResults: {},
     searchTerm: '',
+    searchedTerm: '',
     searching: false
   }
 
   componentWillMount() {
-    const location = queryString.parse(location.search)
-    let smcSearchTerm = _.get(location,'smcSearchTerm', null)
-    if (!_.isNil(smcSearchTerm)) {
-      this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
+    const location = queryString.parse(_.get(location,'search',null))
+    if (!_.isNil(location)){
+      let smcSearchTerm = _.get(location,'smcSearchTerm', null)
+      if (!_.isNil(smcSearchTerm)) {
+        this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
+      }
     }
+
   }
 
   handleSearchClick = () => {
@@ -165,15 +162,11 @@ class ProductConfigSearch extends React.Component {
      searching
    } = this.state
 
-    if(!searching && searchTerm.length === 0) {
-      this.setState({searching: true})
+    if(!searching && searchTerm.length !== 0) {
+      this.setState({searching: true, searchResults: {}})
       getSMCParts(searchTerm).then(
       (response) => {
-        if(response.ok) {
-          this.setState({searchResults: response.searchResults, searching: false})
-        } else {
-          this.setState({searching: false})
-        }
+        this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false})
       })
     }
   }
@@ -188,6 +181,7 @@ class ProductConfigSearch extends React.Component {
     const {
       searchResults,
       searchTerm,
+      searchedTerm,
       searching
     } = this.state
 
@@ -200,7 +194,7 @@ class ProductConfigSearch extends React.Component {
           onKeyPress={this.handleKeyPress}
         />
         <ButtonSearch onClick={this.handleSearchClick}>
-          Search
+          {searching ? 'Searching..' : 'Search'}
         </ButtonSearch>
       </DivRow>
     )
@@ -214,11 +208,11 @@ class ProductConfigSearch extends React.Component {
     )
 
     let searchResultsComponent
-    let resultCount = searchResultsR.searchResults.length
-    let Items = _.map(searchResultsR.searchResults, (result)=>
-      <DivResultItem onClick={()=>{location.replace(result.link)}}>
-        <Img src={result.img} width='50px' height='50px' />
-        <p>{result.searchTerm}</p>
+    let resultCount = searchResults.length
+    let Items = _.map(searchResults, (result)=>
+      <DivResultItem onClick={()=>{location.replace('https://preprod.airlinehyd.com/customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
+        <Img src={result.Img} height='50px' width='auto' />
+        <p>{result.ResultName}</p>
       </DivResultItem>
     )
 
@@ -227,7 +221,7 @@ class ProductConfigSearch extends React.Component {
       searchResultsComponent = (
         <DivResultsContainer>
           <DivResultsSummary>
-            <PresultSummary>{`Your search for '${searchResultsR.searchTerm}' returned ${resultCount} ${resultText}.`}</PresultSummary>
+            <PresultSummary>{`Your search for '${searchedTerm}' returned ${resultCount} ${resultText}.`}</PresultSummary>
             <Alink href='https://preprod.airlinehyd.com/customer/aihyco/smc/pages/smcusa.aspx' >Back to Categories</Alink>
           </DivResultsSummary>
           <DivItemsContainer>
@@ -240,7 +234,7 @@ class ProductConfigSearch extends React.Component {
       <>
       <DivContainer>
         <DivColumn>
-          <img src={smclogo} alt='smc-logo' height='50px' width='150px'/>
+          <img src={smclogo} alt='smc-logo' height='48px' width='150px'/>
         </DivColumn>
         <DivColumn1>
           {searchBar}

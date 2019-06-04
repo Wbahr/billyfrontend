@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import AccountSectionHeader from '../_common/sectionHeader'
 import Button from '../_common/button'
 import ContactUsForm from './contactUsForm'
-import HQMap from '../../imgs/Headquarters_Map_2017.png'
+import HQMap from '../../imgs/airline/Headquarters_Map_2017.png'
 
 const DivContainer = styled.div`
   display: flex;
