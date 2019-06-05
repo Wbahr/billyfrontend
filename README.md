@@ -1,4 +1,6 @@
-# Airline Frontend Base
+# Airline Frontend
+### Master - Local Development Branch 
+### Prod - Website Ready Code for our prod and preprod sites (will not run on localhost)
 #### Contains
 - My Account with Tabs (in dev)
   - Account Profile (in dev)
@@ -7,7 +9,7 @@
   - Bank Account Manager (in dev)
 - Invoice Payments (in dev)
 - RMA - Return processing
-- SMC Product Search (in dev)
+- SMC Product Search
 
 This project uses:
 - Styled Components for all css styling. Check out https://www.styled-components.com/ for more info.
