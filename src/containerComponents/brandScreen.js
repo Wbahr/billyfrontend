@@ -22,12 +22,13 @@ class BrandScreen extends React.Component {
         break
     }
 
-    const FullBrands = ['abb']
-    const MinimalBrands = ['test']
+    const FullBrands = ['abb','aventics','rexroth','eaton','parker','smc','hydac','omron','lincoln','haskel','butech','clippard','paccar','rittal','schmersal','ross','oriental','phoenix']
+    // airline breaks
+    // alkon goes right to website
 
     if (FullBrands.includes(BrandName)) {
       BrandComponent = <FullBrandPage brand={BrandData}/>
-    } else if (MinimalBrands.includes(BrandName)) {
+    } else {
       BrandComponent = <MinimalBrandPage brand={BrandData}/>
     }
     return(

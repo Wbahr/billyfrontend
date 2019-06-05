@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
-import smclogo from '../../imgs/logos/smc.png'
+import smclogo from '../../imgs/manufacturerLogos/smc.png'
 import Loader from '../_common/loader'
 import { getSMCParts } from '../../api-temp/apiCalls'
 

@@ -1,16 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
+import { StyledText0 } from '../../styles/fonts'
+import SectionHeader from '../_common/sectionHeader'
 // import _ from 'lodash'
 
-const Div = styled.div`
-  width: 100%;
-  min-height: 100vh;
+const DivRow = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
+`
+
+const DivColumn1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+`
+
+const DivColumn2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 75%;
 `
 
 class GeneralFullBrand extends React.Component {
@@ -29,7 +36,7 @@ class GeneralFullBrand extends React.Component {
     let productList = _.map(products, (product)=>
       <div>
         <p>{product.name}</p>
-        <p>{product.detail}</p>
+        <StyledText0>{product.detail}</StyledText0>
         <div>
           {
             _.map(product.bullets, (bullet) => (
@@ -43,11 +50,15 @@ class GeneralFullBrand extends React.Component {
     )
 
     return(
-      <>
-        <p>{companyName}</p>
-        <p>{companyDescription}</p>
-        {productList}
-      </>
+      <DivRow>
+        <DivColumn1>
+        </DivColumn1>
+        <DivColumn2>
+          <SectionHeader text={companyName} />
+          <StyledText0>{companyDescription}</StyledText0>
+          {productList}
+        </DivColumn2>
+      </DivRow>
     )
   }
 }
