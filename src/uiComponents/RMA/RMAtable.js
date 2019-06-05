@@ -1,100 +1,254 @@
 import React from 'react'
-import styled from 'styled-components'
-import AccountSectionHeader from './accountSectionHeader'
-import Input from '../common/input'
 import ReactTable from "react-table"
 import 'react-table/react-table.css'
-import Callout from '../common/callout'
+import styled from 'styled-components'
 
-const StyledLink = styled.div`
-  background: linear-gradient(#bababa, #555555);
-  color: white;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 50px;
-  padding: 4px;
-  
-  :hover {
-    background: linear-gradient(#555555, #bababa);
-  };
+import AccountSectionHeader from '../_common/sectionHeader'
+import Input from '../_common/input'
+import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
+import _ from 'lodash'
+import { StyledText0, StyledText1 } from '../../styles/fonts'
+
+const DivItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F9F9;
+  padding: 10px;
+  margin: 10px 0;
 `
-const PCenterAlign = styled.div`
-  text-align: center;
+const PItemDetail = styled.div`
+  display: flex;
+  justify-content: space-between;
 `
 
-const PRightAlign = styled.div`
-  text-align: right;
+const DivTotal = styled(StyledText1)`
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 8px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+`
+
+const DivRMADetails = styled.div`
+  display: flex;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid #ccc;
+`
+
+const DivRMAList = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-left: 10px;
 `
 
 class RMAtable extends React.Component {
   state = {
     showDetail: false,
-    showNoResultsCallout: false
+    returnItems: [],
+    selectedReturn: null,
+    totalRefund: 0,
+    filterAll: ''
   }
 
-  handleViewDetails = (order) => {
+  componentWillMount() {
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const {
-      viewDetails
-    } = this.props
-    viewDetails(order)
+      returnItems: prevReturnItems
+    } = prevState
+
+    const {
+      returnItems
+    } = this.state
+
+    if (prevReturnItems !== returnItems) {
+      this.calculateRefundAndFee(returnItems)
+    }
+  }
+
+  handleViewDetails = (selectedRMANum) => {
+    for(let i = 0; i < returnItems.length; i++){
+      let item = returnItems[i]
+      if(item.rmaNum === selectedRMANum){
+        this.setState({selectedReturn: item})
+        break
+      }
+    }
+  }
+
+  calculateRefundAndFee = (returnItems) => {
+    let totalRefund = 0
+    let totalRestockingFee = 0
+    let minRestockingFee = 15
+    let restockingPercentage = 0.25
+
+    for(let i = 0; i < returnItems.length; i++) {
+      let item = returnItems[i]
+      if (item.hasReturnFee) {
+        totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
+      }
+      totalRefund = totalRefund + (item.returnQuantity * item.unitPrice)
+    }
+    if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
+      totalRefund = totalRefund - minRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2)})
+    } else {
+      totalRefund = totalRefund - totalRestockingFee
+      this.setState({totalRefund: totalRefund.toFixed(2)})
+    }
+  }
+
+  onFilteredChange = (filtered) => {
+    // console.log('filtered:',filtered);
+    // const { sortedData } = this.reactTable.getResolvedState();
+    // console.log('sortedData:', sortedData);
+
+    // extra check for the "filterAll"
+    if (filtered.length > 1 && this.state.filterAll.length) {
+      // NOTE: this removes any FILTER ALL filter
+      const filterAll = '';
+      this.setState({ filtered: filtered.filter((item) => item.id != 'all'), filterAll })
+    }
+    else
+      this.setState({ filtered });
+  }
+
+  filterAll = (e) => {
+    const { value } = e.target;
+    const filterAll = value;
+    const filtered = [{ id: 'all', value: filterAll }];
+    // NOTE: this completely clears any COLUMN filters
+    this.setState({ filterAll, filtered });
   }
 
   render(){
 
     const {
-      showNoResultsCallout
+      selectedReturn,
+      returnItems,
+      totalRefund
     } = this.state
 
-  const columns = [
-    {
-      Header: 'Return Date',
-      accessor: 'returnDate' // String-based value accessors!
-    },
-    {
-      Header: 'Order #',
-      accessor: 'orderNum',
-      // Cell: row => <PRightAlign>{row.value}</PRightAlign> // Custom cell components!
-    },
-    {
-      Header: 'PO #',
-      accessor: 'poNum', // String-based value accessors!
-      Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
-    },
-    {
-      Header: 'Total',
-      accessor: 'total', // String-based value accessors!
-      Cell: row => <PRightAlign>{row.value}</PRightAlign>
-    },
-    {
-      Header: 'Complete',
-      accessor: 'status', // String-based value accessors!
-      Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
-    },
-    {
-      Header: '',
-      accessor: 'orderNum',
-      Cell: row => <StyledLink onClick={() => this.handleViewDetails(row.value)}>Return Items</StyledLink> // Custom cell components!
-    }]
+    const columns = [
+      {
+        Header: 'Return Date',
+        accessor: 'returnDate' // String-based value accessors!
+      },
+      {
+        Header: 'RMA #',
+        accessor: 'rmaNum',
+        filterable: true,
+        Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
+      },
+      {
+        Header: 'Invoice #',
+        accessor: 'invoiceNum',
+        filterable: true,
+        Cell: row => <PCenterAlign>{row.value}</PCenterAlign>
+      },
+      {
+        Header: 'Return Total',
+        accessor: 'total', // String-based value accessors!
+        Cell: row => <PRightAlign>{row.value}</PRightAlign>
+      },
+      {
+        Header: 'Return Status',
+        accessor: 'status', // String-based value accessors!
+        Cell: row => <PCenterAlign>{row.value}</PCenterAlign>,
+        id: 'status',
+        filterable: true,
+        filterMethod: (filter, row) => {
+          if (filter.value === "all") {
+            return true;
+          }
+          if (filter.value === "complete") {
+            return row[filter.id] >= 21;
+          } else if (filter.value === "pending") {
+            return row[filter.id] < 21;
+          }
+        },
+        Filter: ({ filter, onChange }) =>
+          <select
+            onChange={event => onChange(event.target.value)}
+            style={{width: "100%"}}
+            value={filter ? filter.value : "all"}
+          >
+            <option value="all">Show All</option>
+            <option value="complete">Complete</option>
+            <option value="pending">Pending</option>
+          </select>
+      },
+      {
+        Header: '',
+        accessor: 'rmaNum',
+        sortable: false,
+        Cell: row => <ButtonLink onClick={() => this.handleViewDetails(row.value)}>View Details</ButtonLink>
+      }
+    ]
+
+    let itemBars = []
+
+    if (returnItems.length > 0) {
+      _.each(returnItems, (item) => {
+        itemBars.push(
+          <DivItem>
+            <PItemDetail>
+              <StyledText1>{`AHC-${item.frecnoNum} - (Qty ${item.returnQuantity})`}</StyledText1>
+              <StyledText0>{`$${(item.returnQuantity * item.unitPrice).toFixed(2)}`}</StyledText0>
+            </PItemDetail>
+            <PItemDetail>
+              <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
+              {item.hasReturnFee ? <PItemRestockingFee
+                as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
+            </PItemDetail>
+          </DivItem>
+        )
+      })
+    }
 
     return(
       <React.Fragment>
         <AccountSectionHeader
           text={'Return Material Authorization (RMA)'}
         />
-        {showNoResultsCallout ?
-          <Callout text='No results found. Please note that orders placed over a year ago are not eligible for return and will not be displayed. Please contact us with any questions.'/> :
-          null
-        }
-        <Input
-          placeholder={'Search PO #, Order #, or Item ID'}
-        />
+        <Input value={this.state.filterAll} placeholder={'Enter RMA Number'} onChange={this.filterAll}/>
         <ReactTable
           sortable={true}
           showPageSizeOptions={false}
           minRows={5}
-          data={this.props.data}
+          data={this.state.returnItems}
           columns={columns}
+          noDataText={'No Returns Found'}
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]) === filter.value}
+          className="-striped -highlight"
         />
+        {
+         !_.isNil(selectedReturn) &&
+           <>
+            <AccountSectionHeader
+              text={`Return Details - ${selectedReturn.rmaNum}`}
+            />
+           <DivRMADetails>
+            <DivRMAList>
+              <StyledText0><StyledText1>Return Date: </StyledText1>{selectedReturn.returnDate}</StyledText0>
+              <StyledText0><StyledText1>RMA Number: </StyledText1>{selectedReturn.rmaNum}</StyledText0>
+              <StyledText0><StyledText1>Invoice Number: </StyledText1>{selectedReturn.invoiceNum}</StyledText0>
+            </DivRMAList>
+            <DivRMAList>
+              <StyledText0><StyledText1>Return Total: </StyledText1>{selectedReturn.returnTotal}</StyledText0>
+              <StyledText0><StyledText1>Return Status: </StyledText1>{selectedReturn.returnStatus}</StyledText0>
+            </DivRMAList>
+           </DivRMADetails>
+             {itemBars}
+           <DivTotal as='div'>
+            {`Total: $${totalRefund}`}
+           </DivTotal>
+           </>
+        }
       </React.Fragment>
     )
   }

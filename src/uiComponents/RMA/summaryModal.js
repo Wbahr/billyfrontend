@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import Button from '../common/button'
+import Button from '../_common/button'
 import {StyledText0, StyledText1} from '../../styles/fonts'
-import Callout from '../common/callout'
+import Callout from '../_common/callout'
 
 const DivContainer = styled.div`
   width: 500px;
@@ -13,7 +13,7 @@ const DivContainer = styled.div`
   }
 `
 
-const StyledHeaderDiv = styled.div`
+const DivHeader = styled.div`
    width: 100%;
    height: 36px;
    border-bottom: 1px solid #ccc;
@@ -199,18 +199,18 @@ class SummaryModal extends React.Component {
     if (submitSuccess) {
       return(
         <DivContainer>
-          <StyledHeaderDiv>
+          <DivHeader>
             <PHeader>Return Request Submitted</PHeader>
             <p>You will now be redirected to the Invoice Screen</p>
-          </StyledHeaderDiv>
+          </DivHeader>
         </DivContainer>
       )
     } else {
       return (
         <DivContainer>
-          <StyledHeaderDiv>
+          <DivHeader>
             <PHeader>Return Summary</PHeader>
-          </StyledHeaderDiv>
+          </DivHeader>
           <DivItemlist>
             {itemBars}
             <DivTotal as='div'>

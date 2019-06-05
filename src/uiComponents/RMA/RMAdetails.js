@@ -1,23 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
+import AccountSectionHeader from '../_common/sectionHeader'
 import 'react-table/react-table.css'
-import AccountSectionHeader from './accountSectionHeader'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import RMAform from './RMAform'
-import Loader from '../common/loader'
+import Loader from '../_common/loader'
 import Modal from 'react-responsive-modal'
 import SummaryModal from './summaryModal'
 import { formatRMAFormData } from './helpers/formatRMAFormData'
 import { getInvoice, postRMA } from '../../api-temp/apiCalls'
 
-const StyledRMAOrderDetails = styled.div`
+const DivRMAOrderDetails = styled.div`
   display: flex;
   padding: 0 10px 10px 10px;
   border-bottom: 1px solid #ccc;
 `
 
-const StyledRMAList = styled.div`
+const DivRMAList = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -94,7 +94,7 @@ class RMAdetails extends React.Component {
           if (response.ok) {
             this.setState({ submitSuccess: true })
             setTimeout(function () {
-              window.location.replace('https://preprod.airlinehyd.com/MyAccount.aspx?section=Invoices')
+              window.location.replace(window.location.origin + '/MyAccount.aspx?section=Invoices')
             }, 2000);
           } else {
             this.setState({ submitError: true, submittingReturn: false })
@@ -152,20 +152,20 @@ class RMAdetails extends React.Component {
           <AccountSectionHeader
             text={`RMA - Invoice #${invoiceNum}`}
           />
-          <StyledRMAOrderDetails>
-            <StyledRMAList>
+          <DivRMAOrderDetails>
+            <DivRMAList>
               <StyledText0><StyledText1>Order Date: </StyledText1>{orderDate}</StyledText0>
               <StyledText0><StyledText1>Order Number: </StyledText1>{orderNum}</StyledText0>
               <StyledText0><StyledText1>P.O. Number: </StyledText1>{poNum}</StyledText0>
-            </StyledRMAList>
-            <StyledRMAList>
+            </DivRMAList>
+            <DivRMAList>
               <StyledText1>Ship-to Address:</StyledText1>
               <StyledText0>{shippingAddress.Name}</StyledText0>
               <StyledText0>{shippingAddress.Line1}</StyledText0>
               {shippingAddress.Line2 && <StyledText0>{shippingAddress.Line2}</StyledText0>}
               <StyledText0>{shippingAddress.City + ', ' + shippingAddress.State + ' ' + shippingAddress.Zip}</StyledText0>
-            </StyledRMAList>
-          </StyledRMAOrderDetails>
+            </DivRMAList>
+          </DivRMAOrderDetails>
           <RMAform
             items={items}
             clickedContinue={this.handleClickContinue}

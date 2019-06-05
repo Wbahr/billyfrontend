@@ -4,12 +4,26 @@ import styled from 'styled-components'
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
-
+import SMCProductConfigSearch from '../uiComponents/SMCProductConfigurator/productConfigSearch'
+import InvoicePayments from '../uiComponents/Invoice/invoicePaymentTable'
 import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
+import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
+import ContactUs from '../uiComponents/ContactUs/contactUs'
+import BrandScreen from './brandScreen'
 
-const DivContainer = styled.div`
-  width: 100%;
-  height: 100%;
+const DivAccountContainer = styled.div`
+  width: 744px;
+  min-height: 500px;
+  background-color: white;
+  padding: 10px;
+  margin: 20px 0;
+`
+
+const DivFullContainer = styled.div`
+  width: 1014px;
+  height: 100vh;
+  background-color: white;
+  padding: 10px;
 `
 
 class MainScreen extends React.Component {
@@ -29,7 +43,7 @@ class MainScreen extends React.Component {
     }
   }
   state = {
-    currentDisplay: ''
+    currentDisplay: 'SMCProductConfigSearch'
   }
 
   render(){
@@ -38,10 +52,43 @@ class MainScreen extends React.Component {
     } = this.state
 
     return(
-      <DivContainer>
-        {currentDisplay === 'ExistingRMAs' && <RMAtable />}
-        {currentDisplay === 'RMARequestDetail' && <RMAdetails />}
-      </DivContainer>
+      <StyledBackground>
+        {currentDisplay === 'SMCProductConfigSearch' &&
+          <DivFullContainer>
+            <SMCProductConfigSearch />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'ContactUs' &&
+          <DivFullContainer>
+            <ContactUs />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'ExistingRMAs' &&
+          <DivAccountContainer>
+            <RMAtable />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'RMARequestDetail' &&
+          <DivAccountContainer>
+            <RMAdetails />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'invoicepayment' &&
+          <DivAccountContainer>
+            <InvoicePayments />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'AccountInfoTab' &&
+          <DivAccountContainer>
+            <AccountProfile />
+          </DivAccountContainer>
+        }
+        {currentDisplay === 'BrandScreen' &&
+          <DivFullContainer>
+            <BrandScreen />
+          </DivFullContainer>
+        }
+      </StyledBackground>
     )
   }
 }

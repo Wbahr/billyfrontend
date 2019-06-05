@@ -55,3 +55,132 @@ export function postRMA(data) {
 			return {'error': 'Bad Request. Try again.'}
 		})
 }
+
+export function postInvoicePayment(data) {
+	const endpoint = '/corvus/invoicepayment'
+	return fetch(url + endpoint, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrer: 'no-referrer',
+		body: JSON.stringify(data),
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
+
+export function updatePassword(data) {
+	const endpoint = '/corvus/security/ChangePassword'
+	return fetch(url + endpoint, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrer: 'no-referrer',
+		body: JSON.stringify(data),
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
+
+export function updateEmail(data) {
+	const endpoint = '/corvus/security/ChangeEmail'
+	return fetch(url + endpoint, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrer: 'no-referrer',
+		body: JSON.stringify(data),
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
+
+export function getUserData() {
+	const endpoint = '/corvus/security/UserData'
+	return fetch(url + endpoint, {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
+		redirect: 'follow',
+		referrer: 'no-referrer',
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
+
+export function getSMCParts(searchTerm) {
+	const endpoint = '/airline/smcsearch'
+	return fetch(url + endpoint, {
+		method: 'POST',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+    body: JSON.stringify(searchTerm),
+		redirect: 'follow', // manual, *follow, error
+		referrer: 'no-referrer', // no-referrer, *client
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}

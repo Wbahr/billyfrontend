@@ -9,6 +9,7 @@ const MainButton = styled.button`
    background: linear-gradient(#b31217, #e52d27);
    border-radius: 50px;
    cursor: pointer;
+   border: none;
    
    &:hover {
       background: linear-gradient(#74121D, #b31217);
@@ -18,6 +19,15 @@ const MainButton = styled.button`
       background: grey;
       cursor: default;
       opacity: 0.3;
+   }
+   
+   &:active {
+    outline: none;
+    box-shadow: 0 0 5px blue;
+   }
+   
+   &:focus {
+    outline: none;
    }
 `
 const SecondaryButton = styled(MainButton)`

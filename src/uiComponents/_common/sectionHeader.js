@@ -14,7 +14,8 @@ const StyledHeaderText = styled.p`
    font-weight: bold;
    padding: 8px 0 8px 8px;
 `
-class accountSectionHeader extends React.Component {
+
+class sectionHeader extends React.Component {
 	render(){
 		const {
 			text
@@ -28,4 +29,4 @@ class accountSectionHeader extends React.Component {
 	}
 }
 
-export default accountSectionHeader
+export default sectionHeader
