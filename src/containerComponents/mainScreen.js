@@ -38,12 +38,15 @@ class MainScreen extends React.Component {
       case('rma-summary'):
         this.setState({currentDisplay: 'RmaRequestList'})
         break
+      case('SMCSearch'):
+        this.setState({currentDisplay: 'SMCSearch'})
+        break
       default:
         this.setState({currentDisplay: ''})
     }
   }
   state = {
-    currentDisplay: 'SMCProductConfigSearch'
+    currentDisplay: ''
   }
 
   render(){
@@ -53,7 +56,7 @@ class MainScreen extends React.Component {
 
     return(
       <StyledBackground>
-        {currentDisplay === 'SMCProductConfigSearch' &&
+        {currentDisplay === 'SMCSearch' &&
           <DivFullContainer>
             <SMCProductConfigSearch />
           </DivFullContainer>
