@@ -1,4 +1,4 @@
-# Airline Frontend Base
+# Airline Frontend
 #### Contains
 - My Account with Tabs (in dev)
   - Account Profile (in dev)
