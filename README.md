@@ -7,7 +7,7 @@
   - Bank Account Manager (in dev)
 - Invoice Payments (in dev)
 - RMA - Return processing
-- SMC Product Search (in dev)
+- SMC Product Search
 
 This project uses:
 - Styled Components for all css styling. Check out https://www.styled-components.com/ for more info.
