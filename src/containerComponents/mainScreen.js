@@ -39,7 +39,7 @@ const DivFullContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'SMCSearch'
+    currentDisplay: 'BrandScreen'
   }
 
   render(){

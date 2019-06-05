@@ -1,4 +1,4 @@
-export const brandData = {
+const brandData = {
   'companyName': 'abb',
   'companyDescription': 'ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration.',
   'products':[
@@ -101,3 +101,5 @@ export const brandData = {
     }
   ]
 }
+
+export default brandData
