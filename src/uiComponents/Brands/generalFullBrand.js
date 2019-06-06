@@ -29,6 +29,22 @@ const DivProductShortcuts = styled.div`
   width: 200px;
 `
 
+const DivProductHeader = styled.div`
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: #535353;
+  height: 35px;
+  width: 100%;
+  padding-left: 20px;
+`
+
+const DivProductDetail = styled.div`
+  padding: 0 25px;
+`
+
 class GeneralFullBrand extends React.Component {
   componentWillMount(){
     console.log('brand: ',this.props.brand)
@@ -44,15 +60,28 @@ class GeneralFullBrand extends React.Component {
 
     let productList = _.map(products, (product)=>
       <div>
-        <p id={product.name}>{product.name}</p>
-        <StyledText0>{product.detail}</StyledText0>
+        <DivProductHeader id={product.name}>{product.name}</DivProductHeader>
+        <DivProductDetail>
+          <StyledText0>{product.detail}</StyledText0>
+        </DivProductDetail>
         <div>
           {
-            _.map(product.bullets, (bullet) => (
-              <ul>
-                <li>{bullet}</li>
-              </ul>
-            ))
+            _.map(product.bullets, (bullet, index) => {
+                if (index%2 === 0) {
+                  return (
+                    <ul>
+                      <li>{bullet}</li>
+                    </ul>
+                  )
+                } else {
+                 return (
+                    <ul>
+                      <li>{bullet}</li>
+                    </ul>
+                  )
+                }
+              }
+            )
           }
         </div>
       </div>
