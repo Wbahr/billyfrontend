@@ -11,13 +11,22 @@ const DivRow = styled.div`
 const DivColumn1 = styled.div`
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 200px;
 `
 
 const DivColumn2 = styled.div`
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: auto;
+`
+
+const DivProductShortcuts = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 200px;
+  border: 2px solid black;
+  width: 200px;
 `
 
 class GeneralFullBrand extends React.Component {
@@ -35,7 +44,7 @@ class GeneralFullBrand extends React.Component {
 
     let productList = _.map(products, (product)=>
       <div>
-        <p>{product.name}</p>
+        <p id={product.name}>{product.name}</p>
         <StyledText0>{product.detail}</StyledText0>
         <div>
           {
@@ -49,9 +58,21 @@ class GeneralFullBrand extends React.Component {
       </div>
     )
 
+    let productItems =  _.map(products, (product)=>
+      <div>
+        <a href={'#'+ product.name}>{product.name}</a>
+      </div>
+    )
+    let productSummary = (
+      <DivProductShortcuts>
+        {productItems}
+      </DivProductShortcuts>
+    )
+
     return(
       <DivRow>
         <DivColumn1>
+          {productSummary}
         </DivColumn1>
         <DivColumn2>
           <SectionHeader text={companyName} />
