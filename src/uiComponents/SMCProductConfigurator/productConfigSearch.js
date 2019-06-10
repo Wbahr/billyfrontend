@@ -61,7 +61,7 @@ const DivResultItem = styled.div`
   color: #337ab7;
   cursor: pointer;
   display: flex;
-  height: 52px;
+  min-height: 52px;
   border-bottom: 1px solid #999;
   padding: 4px 0;
   :hover {
