@@ -237,11 +237,19 @@ class ProductConfigSearch extends React.Component {
 
     let searchResultsComponent
     let resultCount = searchResults.length
-    let Items = _.map(searchResults, (result)=>
-      <DivResultItem onClick={()=>{location.replace(window.location.origin + 'customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
-        <Img src={result.Img} height='50px' width='auto' />
-        <p>{result.ResultName}</p>
-      </DivResultItem>
+    let pdfCount = 0
+    let Items = _.map(searchResults, (result)=> {
+      if (result.XmlId !== 0) {
+        return (
+          <DivResultItem onClick={()=>{location.replace(window.location.origin + 'customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
+            <Img src={result.Img} height='50px' width='auto' />
+            <p>{result.ResultName}</p>
+          </DivResultItem>
+        )
+      } else {
+        pdfCount += 1
+      }
+    }
     )
 
     if (resultCount > 0) {
@@ -249,7 +257,7 @@ class ProductConfigSearch extends React.Component {
       searchResultsComponent = (
         <DivResultsContainer>
           <DivResultsSummary>
-            <PresultSummary>{`Your search for '${searchedTerm}' returned ${resultCount} ${resultText}.`}</PresultSummary>
+            <PresultSummary>{`Your search for '${searchedTerm}' returned ${resultCount - pdfCount} ${resultText}.`}</PresultSummary>
             <Alink href={'/customer/aihyco/smc/pages/smcusa.aspx'} >Back to Categories</Alink>
           </DivResultsSummary>
           <DivItemsContainer>
