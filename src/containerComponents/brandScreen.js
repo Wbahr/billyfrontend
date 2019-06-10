@@ -12,22 +12,24 @@ class BrandScreen extends React.Component {
   }
 
   render(){
-    let BrandComponent
-    //for testing - get from query string
+    let BrandComponent, BrandData
     let BrandName = 'abb'
-    let BrandData
+    //for testing - get from query string
+
     switch(BrandName){
-      case 'abb':
+      case(BrandName):
         BrandData = abb
+        break
     }
 
-    const FullBrands = ['abb']
-    const MinimalBrands = ['test']
+    const FullBrands = ['abb','aventics','rexroth','eaton','parker','smc','hydac','omron','lincoln','haskel','butech','clippard','paccar','rittal','schmersal','ross','oriental','phoenix']
+    // airline breaks
+    // alkon goes right to website
 
     if (FullBrands.includes(BrandName)) {
-      BrandComponent = <FullBrandPage brand={eval(BrandData)}/>
-    } else if (MinimalBrands.includes(BrandName)) {
-      BrandComponent = <MinimalBrandPage brand={eval(BrandData)}/>
+      BrandComponent = <FullBrandPage brand={BrandData}/>
+    } else {
+      BrandComponent = <MinimalBrandPage brand={BrandData}/>
     }
     return(
       <>
