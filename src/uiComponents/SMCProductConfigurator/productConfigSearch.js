@@ -241,7 +241,7 @@ class ProductConfigSearch extends React.Component {
     let Items = _.map(searchResults, (result)=> {
       if (result.XmlId !== 0) {
         return (
-          <DivResultItem onClick={()=>{location.replace(window.location.origin + 'customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
+          <DivResultItem onClick={()=>{location.replace(window.location.origin + '/customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
             <Img src={result.Img} height='50px' width='auto' />
             <p>{result.ResultName}</p>
           </DivResultItem>

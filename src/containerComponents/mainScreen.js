@@ -57,7 +57,7 @@ class MainScreen extends React.Component {
     } = this.state
 
     return(
-      <StyledBackground>
+      <>
         {currentDisplay === 'SMCSearch' &&
           <DivFullContainer>
             <SMCProductConfigSearch />
@@ -93,7 +93,7 @@ class MainScreen extends React.Component {
             <BrandScreen />
           </DivFullContainer>
         }
-      </StyledBackground>
+      </>
     )
   }
 }
