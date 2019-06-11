@@ -4,6 +4,7 @@ import _ from 'lodash'
 import 'react-table/react-table.css'
 import RPlogo from '../../imgs/airline/redpalletlogo.png'
 import { StyledTextGrey, StyledTextGreyBold } from '../../styles/fonts'
+import RedPalletForm from './redPalletForm'
 // import { } from '../../api-temp/apiCalls'
 
 const DivRedPallet = styled.div`
@@ -26,6 +27,7 @@ class RedPalletPage extends React.Component {
             promptly with details regarding the pick up of your components.</StyledTextGrey>
           <StyledTextGreyBold>*Note: The form will save your information for the next time you make a request from the same device.</StyledTextGreyBold>
         </DivRedPallet>
+        {/*<RedPalletForm />*/}
       </React.Fragment>
     )
   }

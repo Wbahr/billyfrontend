@@ -170,14 +170,18 @@ const validate = (values) => {
 const RMAform = ({items, clickedContinue}) => (
 	<div>
 		<Formik
-			initialValues={{items}}
+			// initialValues={{items}}
 			// validate={validate}
 			validateOnBlur={false}
 			validateOnChange={false}
 			onSubmit={values => clickedContinue(values.items)}
 			render={({ values, handleChange, errors }) => (
 				<Form>
-
+          <Field name={`items.test`}>
+            {({ field, form}) => (
+              <StyledInput {...field} type='text'/>
+            )}
+          </Field>
 					<StyledSubmitButtonContainer>
 						{Object.keys(errors).length &&
 							<DivErrors>
