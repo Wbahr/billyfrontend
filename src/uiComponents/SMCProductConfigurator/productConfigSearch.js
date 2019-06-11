@@ -13,6 +13,11 @@ const DivRow = styled.div`
     max-width: 480px;
   }
 `
+const DivPageContainer = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
 const DivContainer = styled.div`
   display: flex;
    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -32,9 +37,11 @@ const DivResultsSummary = styled.div`
 const DivColumn = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 20px;
    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     width: 100vw;
     padding: 0 4px;
+    margin: 0;
    }
 `
 
@@ -267,21 +274,21 @@ class ProductConfigSearch extends React.Component {
       )
     }
     return (
-      <>
-      <DivContainer>
-        <DivColumn>
-          <img src={smclogo} alt='smc-logo' height='48px' width='150px'/>
-        </DivColumn>
-        <DivColumn1>
-          {searchBar}
-          {_.isNil(resultCount) && brandDescription}
-          {noSearchResults && <DivNoResults>{`We're Sorry, no SMC Products found for '${searchedTerm}'.`}</DivNoResults>}
-          {resultCount !== 0 && searchResultsComponent}
-          {searching && <Loader />}
-        </DivColumn1>
-      </DivContainer>
+      <DivPageContainer>
+        <DivContainer>
+          <DivColumn>
+            <img src={smclogo} alt='smc-logo' height='48px' width='150px'/>
+          </DivColumn>
+          <DivColumn1>
+            {searchBar}
+            {_.isNil(resultCount) && brandDescription}
+            {noSearchResults && <DivNoResults>{`We're Sorry, no SMC Products found for '${searchedTerm}'.`}</DivNoResults>}
+            {resultCount !== 0 && searchResultsComponent}
+            {searching && <Loader />}
+          </DivColumn1>
+        </DivContainer>
         {resultCount === 0 && brandDescription}
-      </>
+      </DivPageContainer>
     )
   }
 }
