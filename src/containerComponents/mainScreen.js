@@ -13,17 +13,18 @@ import BrandScreen from './brandScreen'
 
 const DivAccountContainer = styled.div`
   width: 744px;
-  min-height: 500px;
+  height: auto;
   background-color: white;
   padding: 10px;
-  margin: 20px 0;
+  margin: 20px auto;
 `
 
 const DivFullContainer = styled.div`
   width: 1014px;
-  height: 100vh;
+  height: auto;
   background-color: white;
   padding: 10px;
+  margin: 0 auto;
 `
 
 class MainScreen extends React.Component {
