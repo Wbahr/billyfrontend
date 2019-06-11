@@ -37,16 +37,19 @@ const DivResultsSummary = styled.div`
 const DivColumn = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     width: 100vw;
     padding: 0 4px;
-    margin: 0;
-   }
+  }
 `
 
 const DivColumn1 = styled(DivColumn)`
   flex-grow: 4;
+  margin-left: 20px;
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    margin: 0;
+  }
+
 `
 
 const DivResultsContainer = styled.div`
@@ -202,7 +205,16 @@ class ProductConfigSearch extends React.Component {
           this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false})
         }
       })
+      this.hideCatTabs()
     }
+  }
+
+  hideCatTabs = () => {
+    document.getElementById('catTabs').style.visibility = 'hidden'
+  }
+
+  showCatTabs = () => {
+    document.getElementById('catTabs').style.visibility = 'visible'
   }
 
   handleKeyPress = (e) => {
@@ -265,7 +277,7 @@ class ProductConfigSearch extends React.Component {
         <DivResultsContainer>
           <DivResultsSummary>
             <PresultSummary>{`Your search for '${searchedTerm}' returned ${resultCount - pdfCount} ${resultText}.`}</PresultSummary>
-            <Alink href={'/customer/aihyco/smc/pages/smcusa.aspx'} >Back to Categories</Alink>
+            <Alink onClick={()=>this.showCatTabs()}>Back to Categories</Alink>
           </DivResultsSummary>
           <DivItemsContainer>
             {Items}
