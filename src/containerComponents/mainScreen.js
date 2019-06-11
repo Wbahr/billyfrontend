@@ -29,9 +29,9 @@ const DivFullContainer = styled.div`
 class MainScreen extends React.Component {
 
   componentWillMount() {
-    const location = queryString.parse(location.search)
-    let section = _.get(location,'section', null)
-    console.log('section:', section)
+    const location = queryString.parse(_.get(window,`location.search`, null))
+    let section = _.get(location,'section', '')
+    console.log('section', section)
     switch(section){
       case('Rmas'):
         this.setState({currentDisplay: 'ExistingRMAs'})
@@ -44,6 +44,7 @@ class MainScreen extends React.Component {
         break
       default:
         this.setState({currentDisplay: ''})
+
     }
   }
   state = {

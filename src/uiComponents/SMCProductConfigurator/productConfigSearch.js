@@ -168,18 +168,16 @@ class ProductConfigSearch extends React.Component {
     noSearchResults: false
   }
 
-  componentWillMount() {
-    console.log('SMC')
-    const location = queryString.parse(location.search)
-    let searchTerm = _.get(location,'search', null)
-    if (!_.isNil(searchTerm)){
-      let smcSearchTerm = _.get(location,'smcSearchTerm', null)
-      if (!_.isNil(smcSearchTerm)) {
-        this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
-      }
-    }
-
-  }
+  // componentWillMount() {
+  //   const location = queryString.parse(location.search)
+  //   let searchTerm = _.get(location,'search', null)
+  //   if (!_.isNil(searchTerm)){
+  //     let smcSearchTerm = _.get(location,'smcSearchTerm', null)
+  //     if (!_.isNil(smcSearchTerm)) {
+  //       this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
+  //     }
+  //   }
+  // }
 
   handleSearchClick = () => {
    const {
