@@ -10,6 +10,7 @@ import {requestTesting} from '../uiComponents/RMA/redux/actionConsts'
 import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
 import ContactUs from '../uiComponents/ContactUs/contactUs'
 import BrandScreen from './brandScreen'
+import RedPallet from '../uiComponents/RedPallet/redPallet'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -39,7 +40,7 @@ const DivFullContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'SMCSearch'
+    currentDisplay: 'RedPallet'
   }
 
   render(){
@@ -82,6 +83,11 @@ class MainScreen extends React.Component {
         {currentDisplay === 'BrandScreen' &&
           <DivFullContainer>
             <BrandScreen />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'RedPallet' &&
+          <DivFullContainer>
+            <RedPallet />
           </DivFullContainer>
         }
       </StyledBackground>
