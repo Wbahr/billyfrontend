@@ -210,11 +210,12 @@ class ProductConfigSearch extends React.Component {
   }
 
   hideCatTabs = () => {
-    document.getElementById('catTabs').style.visibility = 'hidden'
+    document.getElementById('catTabs').style.display = 'none'
   }
 
   showCatTabs = () => {
-    document.getElementById('catTabs').style.visibility = 'visible'
+    this.setState({searchedTerm: '', searchTerm:'', searchResults: {}})
+    document.getElementById('catTabs').style.display = 'block'
   }
 
   handleKeyPress = (e) => {
@@ -289,7 +290,7 @@ class ProductConfigSearch extends React.Component {
       <DivPageContainer>
         <DivContainer>
           <DivColumn>
-            <img src={smclogo} alt='smc-logo' height='48px' width='150px'/>
+            <img src={window.location.origin + '/customer/aihyco/smc/images/SMCLogo.png'} alt='smc-logo' height='48px' width='150px'/>
           </DivColumn>
           <DivColumn1>
             {searchBar}
