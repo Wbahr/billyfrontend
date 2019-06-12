@@ -8,3 +8,7 @@
 package-lock.json
 *.xml
 *.iml
+.DS_Store
+src/.DS_Store
+src/uiComponents/.DS_Store
+src/uiComponents/Brands/.DS_Store

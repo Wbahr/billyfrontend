@@ -13,6 +13,11 @@ const DivRow = styled.div`
     max-width: 480px;
   }
 `
+const DivPageContainer = styled.div`
+  width: 90%;
+  margin: 0 auto;
+`
+
 const DivContainer = styled.div`
   display: flex;
    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
@@ -32,14 +37,19 @@ const DivResultsSummary = styled.div`
 const DivColumn = styled.div`
   display: flex;
   flex-direction: column;
-   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     width: 100vw;
     padding: 0 4px;
-   }
+  }
 `
 
 const DivColumn1 = styled(DivColumn)`
   flex-grow: 4;
+  margin-left: 20px;
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    margin: 0;
+  }
+
 `
 
 const DivResultsContainer = styled.div`
@@ -168,16 +178,16 @@ class ProductConfigSearch extends React.Component {
     noSearchResults: false
   }
 
-  componentWillMount() {
-    const location = queryString.parse(_.get(location,'search',null))
-    if (!_.isNil(location)){
-      let smcSearchTerm = _.get(location,'smcSearchTerm', null)
-      if (!_.isNil(smcSearchTerm)) {
-        this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
-      }
-    }
-
-  }
+  // componentWillMount() {
+  //   const location = queryString.parse(location.search)
+  //   let searchTerm = _.get(location,'search', null)
+  //   if (!_.isNil(searchTerm)){
+  //     let smcSearchTerm = _.get(location,'smcSearchTerm', null)
+  //     if (!_.isNil(smcSearchTerm)) {
+  //       this.setState({searchTerm: smcSearchTerm}, () => this.handleSearchClick())
+  //     }
+  //   }
+  // }
 
   handleSearchClick = () => {
    const {
@@ -195,7 +205,17 @@ class ProductConfigSearch extends React.Component {
           this.setState({searchResults: response, searchedTerm: searchTerm ,searching: false})
         }
       })
+      this.hideCatTabs()
     }
+  }
+
+  hideCatTabs = () => {
+    document.getElementById('catTabs').style.display = 'none'
+  }
+
+  showCatTabs = () => {
+    this.setState({searchedTerm: '', searchTerm:'', searchResults: {}})
+    document.getElementById('catTabs').style.display = 'block'
   }
 
   handleKeyPress = (e) => {
@@ -241,7 +261,7 @@ class ProductConfigSearch extends React.Component {
     let Items = _.map(searchResults, (result)=> {
       if (result.XmlId !== 0) {
         return (
-          <DivResultItem onClick={()=>{location.replace(window.location.origin + 'customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
+          <DivResultItem onClick={()=>{location.replace(window.location.origin + '/customer/aihyco/smc/pages/smcusa.aspx?cat=' + result.XmlId)}}>
             <Img src={result.Img} height='50px' width='auto' />
             <p>{result.ResultName}</p>
           </DivResultItem>
@@ -258,7 +278,7 @@ class ProductConfigSearch extends React.Component {
         <DivResultsContainer>
           <DivResultsSummary>
             <PresultSummary>{`Your search for '${searchedTerm}' returned ${resultCount - pdfCount} ${resultText}.`}</PresultSummary>
-            <Alink href={'/customer/aihyco/smc/pages/smcusa.aspx'} >Back to Categories</Alink>
+            <Alink onClick={()=>this.showCatTabs()}>Back to Categories</Alink>
           </DivResultsSummary>
           <DivItemsContainer>
             {Items}
@@ -267,21 +287,21 @@ class ProductConfigSearch extends React.Component {
       )
     }
     return (
-      <>
-      <DivContainer>
-        <DivColumn>
-          <img src={smclogo} alt='smc-logo' height='48px' width='150px'/>
-        </DivColumn>
-        <DivColumn1>
-          {searchBar}
-          {_.isNil(resultCount) && brandDescription}
-          {noSearchResults && <DivNoResults>{`We're Sorry, no SMC Products found for '${searchedTerm}'.`}</DivNoResults>}
-          {resultCount !== 0 && searchResultsComponent}
-          {searching && <Loader />}
-        </DivColumn1>
-      </DivContainer>
+      <DivPageContainer>
+        <DivContainer>
+          <DivColumn>
+            <img src={window.location.origin + '/customer/aihyco/smc/images/SMCLogo.png'} alt='smc-logo' height='48px' width='150px'/>
+          </DivColumn>
+          <DivColumn1>
+            {searchBar}
+            {_.isNil(resultCount) && brandDescription}
+            {noSearchResults && <DivNoResults>{`We're Sorry, no SMC Products found for '${searchedTerm}'.`}</DivNoResults>}
+            {resultCount !== 0 && searchResultsComponent}
+            {searching && <Loader />}
+          </DivColumn1>
+        </DivContainer>
         {resultCount === 0 && brandDescription}
-      </>
+      </DivPageContainer>
     )
   }
 }
