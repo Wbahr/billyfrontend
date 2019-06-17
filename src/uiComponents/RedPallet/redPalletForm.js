@@ -5,6 +5,9 @@ import Select from 'react-select'
 import styled from 'styled-components'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../_common/button'
+import Header from '../_common/sectionHeader'
+import Addsvg from '../../imgs/airline/add.svg'
+import Subsvg from '../../imgs/airline/sub.svg'
 
 const DivForm = styled.div`
   display: flex;
@@ -61,8 +64,19 @@ const StyledTextArea = styled.textarea`
 `
 
 const DivRepairItemContainer = styled.div`
+  background-color: whitesmoke;
+  width: 516px; 
+  min-width: 316px;
+  padding: 16px 8px;
+  margin: 16px auto;
+  border-radius: 2px;
 `
 
+const DivAddSubItem = styled.div`
+  cursor: pointer;
+  font-size: 18px;
+  color: #246696;
+`
 const validate = (values) => {
 
 }
@@ -77,6 +91,7 @@ const RMAform = ({repairItems}) => (
 			onSubmit={values => clickedContinue(values)}
 			render={({ values, handleChange, errors }) => (
 				<Form>
+          <Header text={'General Information'} />
             <Field name={`company`}>
               {({ field, form}) => (
                 <Input {...field}
@@ -178,24 +193,9 @@ const RMAform = ({repairItems}) => (
               )}
             </Field>
           </DivLeftAlign>
+          <Header text={'Part Repair Details'} />
           <DivLeftAlign>
-            <Field name={`repairType`}>
-              {({ field, form}) => (
-                <>
-                <p>Type of Repair*:</p>
-                  <select
-                    {...field}
-                  >
-                    <option value='' selected disabled hidden>Select Repair Type</option>
-                    <option value='hyd'>Hydraulic</option>
-                    <option value='elec'>Electrical</option>
-                    <option value='pnue'>Pnuematic</option>
-                    <option value='other'>Other</option>
-                  </select>
-                </>
-              )}
-            </Field>
-            <Field name={`repairType`}>
+            <Field name={`pickup`}>
               {({ field, form}) => (
                 <>
                 <p>Pickup*:</p>
@@ -218,6 +218,29 @@ const RMAform = ({repairItems}) => (
                 <>
                   {values.repairItems.map((item, index) => (
                     <DivRepairItemContainer key={index}>
+                      <DivLeftAlign>
+                        <Field name={`repairItems.${index}.repairType`}>
+                          {({ field, form}) => (
+                            <>
+                            <p>Type of Repair*:</p>
+                              <select
+                                {...field}
+                              >
+                                <option value='' selected disabled hidden>Select Repair Type</option>
+                                <option value='hyd'>Hydraulic</option>
+                                <option value='elec'>Electrical</option>
+                                <option value='pnue'>Pnuematic</option>
+                                <option value='other'>Other</option>
+                              </select>
+                            </>
+                          )}
+                        </Field>
+                        {(index === 0 && values.repairItems.length === 1) ? null :
+                          <DivAddSubItem onClick={() => arrayHelpers.remove(index)}>
+                            <img src={Subsvg} alt="remove-item"/>
+                          </DivAddSubItem>
+                        }
+                      </DivLeftAlign>
                       <DivLeftAlign>
                         <Field name={`repairItems.${index}.po`}>
                           {({ field, form}) => (
@@ -299,11 +322,16 @@ const RMAform = ({repairItems}) => (
                           />
                         )}
                       </Field>
-                      {(index === 0 && values.repairItems.length === 1) ? null : <button type="button" onClick={() => arrayHelpers.remove(index)}>-</button>}
                     </DivRepairItemContainer>
                     ))
                   }
-                  {values.repairItems.length < 6 && <DivLeftAlign><button type="button" onClick={() => arrayHelpers.insert(values.repairItems.length, {})}>Add Item +</button></DivLeftAlign>}
+                  {values.repairItems.length < 6 &&
+                    <DivLeftAlign>
+                      <DivAddSubItem onClick={() => arrayHelpers.insert(values.repairItems.length, {})}>
+                        <img src={Addsvg} alt="add-item"/>Add Item
+                      </DivAddSubItem>
+                    </DivLeftAlign>
+                  }
                 </>
                 )}
             />
@@ -327,6 +355,9 @@ const RMAform = ({repairItems}) => (
 						{/*}*/}
 						{/*<Button type="submit" text='Submit' />*/}
 					{/*</StyledSubmitButtonContainer>*/}
+					<DivLeftAlign>
+            <Button type="submit" text='Submit' />
+          </DivLeftAlign>
 				</Form>
 			)}
 		/>
