@@ -5,6 +5,7 @@ import 'react-table/react-table.css'
 import RPlogo from '../../imgs/airline/redpalletlogo.png'
 import { StyledTextGrey, StyledTextGreyBold } from '../../styles/fonts'
 import RedPalletForm from './redPalletForm'
+import RMAform from '../RMA/RMAform'
 // import { } from '../../api-temp/apiCalls'
 
 const DivRedPallet = styled.div`
@@ -24,10 +25,13 @@ class RedPalletPage extends React.Component {
           <img src={RPlogo} width={'50%'} height={'auto'}/>
           <StyledTextGrey>Airline’s Red Pallet Program is a fast and easy way to get your repair pickups scheduled and move on with
             your day. Simply fill out the information about your repair needs and hit submit. You will be contacted
-            promptly with details regarding the pick up of your components.</StyledTextGrey>
-          <StyledTextGreyBold>*Note: The form will save your information for the next time you make a request from the same device.</StyledTextGreyBold>
+            promptly with details regarding the pick up of your components. <StyledTextGreyBold>*Required Fields</StyledTextGreyBold>
+          </StyledTextGrey>
         </DivRedPallet>
-        {/*<RedPalletForm />*/}
+        <RedPalletForm
+          // repairItems={[{part:'test 1', serial: '23034204', model: 'P9000', manufacturer: 'Airline'},{}]}
+          repairItems={[{}]}
+        />
       </React.Fragment>
     )
   }
