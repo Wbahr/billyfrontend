@@ -195,6 +195,22 @@ const RMAform = ({repairItems}) => (
                 </>
               )}
             </Field>
+            <Field name={`repairType`}>
+              {({ field, form}) => (
+                <>
+                <p>Pickup*:</p>
+                  <select
+                    {...field}
+                  >
+                    <option value='' selected disabled hidden>Select Pickup Type</option>
+                    <option value='airline'>Airline Pickup</option>
+                    <option value='customer'>Customer Drop-off</option>
+                    <option value='ship'>Shipping Company</option>
+                    <option value='sales'>Sales Drop-off</option>
+                  </select>
+                </>
+              )}
+            </Field>
           </DivLeftAlign>
             <FieldArray
               name="repairItems"
@@ -202,6 +218,30 @@ const RMAform = ({repairItems}) => (
                 <>
                   {values.repairItems.map((item, index) => (
                     <DivRepairItemContainer key={index}>
+                      <DivLeftAlign>
+                        <Field name={`repairItems.${index}.po`}>
+                          {({ field, form}) => (
+                            <Inputm {...field}
+                              component='input'
+                              placeholder='PO #' />
+                          )}
+                        </Field>
+                        <Field name={`repairItems.${index}.head`}>
+                          {({ field, form}) => (
+                            <>
+                            <p>Urgency:</p>
+                              <select
+                                {...field}
+                              >
+                                <option value='' selected disabled hidden>Select Urgency</option>
+                                <option value='hot'>Hot</option>
+                                <option value='warm'>Warm</option>
+                                <option value='normal'>Normal</option>
+                              </select>
+                            </>
+                          )}
+                        </Field>
+                      </DivLeftAlign>
                       <DivLeftAlign>
                         <Field name={`repairItems.${index}.manufacturer`}>
                           {({ field, form}) => (
@@ -234,6 +274,22 @@ const RMAform = ({repairItems}) => (
                           )}
                         </Field>
                       </DivLeftAlign>
+                      <DivLeftAlign>
+                        <Field name={`repairItems.${index}.warranty`}>
+                          {({ field, form}) => (
+                            <>
+                            <p>Warranty*:</p>
+                              <select
+                                {...field}
+                              >
+                                <option value='' selected disabled hidden>Has Warranty?</option>
+                                <option value='true'>Yes</option>
+                                <option value='false'>No</option>
+                              </select>
+                            </>
+                          )}
+                        </Field>
+                      </DivLeftAlign>
                       <Field component='textarea' name={`repairItems.${index}.issue`}>
                         {({ field, form}) => (
                           <StyledTextArea {...field}
@@ -256,7 +312,7 @@ const RMAform = ({repairItems}) => (
                 <StyledTextArea {...field}
                   component='textarea'
                   rows='3'
-                  placeholder='Please enter any additional information here'
+                  placeholder='Pickup or other information'
                 />
               )}
             </Field>
