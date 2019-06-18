@@ -233,7 +233,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                     <SelectInput
                       {...field}
                     >
-                      <option value='' selected disabled hidden>Select Pickup Type</option>
+                      <option value='' selected disabled hidden>--</option>
                       <option value='airline'>Airline Pickup</option>
                       <option value='customer'>Customer Drop-off</option>
                       <option value='ship'>Shipping Company</option>
@@ -259,7 +259,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                                 <SelectInput
                                   {...field}
                                 >
-                                  <option value='' selected disabled hidden>Select Repair Type</option>
+                                  <option value='' selected disabled hidden>--</option>
                                   <option value='hyd'>Hydraulic</option>
                                   <option value='elec'>Electrical</option>
                                   <option value='pnue'>Pnuematic</option>
