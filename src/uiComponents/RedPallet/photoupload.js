@@ -7,8 +7,8 @@ const DivContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
-  border: 2px dashed rgba(0, 0, 255, .4);
-  border-radius: 3px;
+  border: 2px dashed #318EFC;
+  // border-radius: 3px;
   height: 100px;
   width: 500px;
   min-width: 300px;

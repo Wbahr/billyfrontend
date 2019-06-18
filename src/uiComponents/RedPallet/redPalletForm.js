@@ -96,7 +96,7 @@ const DivSubItem = styled.div`
   justify-content: flex-end;
   cursor: pointer;
   font-size: 18px;
-  color: #246696;
+  color: #318EFC;
   margin: 0 0 16px 0;
 `
 
@@ -106,8 +106,8 @@ const DivAddItem = styled.div`
   align-items: center;
   cursor: pointer;
   font-size: 18px;
-  color: #246696;
-  background-color: darkgrey;
+  color: #318EFC;
+  background-color: black;
   width: 100%;
   height: 50px;
   margin: 0 0 16px 0;
