@@ -3,11 +3,12 @@ import _ from 'lodash'
 import { Formik, Form, Field, FieldArray } from 'formik'
 import Select from 'react-select'
 import styled from 'styled-components'
-import { StyledText0, StyledText1 } from '../../styles/fonts'
+import { FormText1 } from '../../styles/fonts'
 import Button from '../_common/button'
 import Header from '../_common/sectionHeader'
-import Addsvg from '../../imgs/airline/add.svg'
-import Subsvg from '../../imgs/airline/sub.svg'
+// import addsvg from '../../imgs/airline/add.svg'
+// import subsvg from '../../imgs/airline/sub.svg'
+import Dropzone from './photoupload'
 
 const DivForm = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const DivForm = styled.div`
 
 const DivLeftAlign = styled.div`
   display: flex;
+  align-items: flex-end;
   width: 516px;
   min-width: 316px;
   margin: 0 auto;
@@ -29,8 +31,8 @@ const Input = styled.input`
   width: 500px;
   min-width: 300px;
   height: 25px;
-  border: none;
-  border-bottom: 2px solid black;
+  border: 1px solid grey;
+  border-radius: 3px;
   margin: 8px;
   padding: 16px 8px;
   :focus {
@@ -54,6 +56,15 @@ const Inputxsm = styled(Input)`
   min-width: 50px;
 `
 
+const SelectInput = styled.select`
+  padding: 0 8px;
+  margin: 0 0 0 8px;
+`
+
+const DivSelectContainer = styled.div`
+  margin: 8px;
+`
+
 const StyledTextArea = styled.textarea`
   width: 500px; 
   min-width: 300px;
@@ -72,16 +83,33 @@ const DivRepairItemContainer = styled.div`
   border-radius: 2px;
 `
 
-const DivAddSubItem = styled.div`
+const DivSubItem = styled.div`
+  display: flex;
+  justify-content: flex-end;
   cursor: pointer;
   font-size: 18px;
   color: #246696;
+  margin: 0 0 16px 0;
 `
+
+const DivAddItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 18px;
+  color: #246696;
+  background-color: darkgrey;
+  width: 100%;
+  height: 50px;
+  margin: 0 0 16px 0;
+`
+
 const validate = (values) => {
 
 }
 
-const RMAform = ({repairItems}) => (
+const RMAform = ({repairItems, emptyItem}) => (
 	<DivForm>
 		<Formik
 			initialValues={{repairItems}}
@@ -158,59 +186,63 @@ const RMAform = ({repairItems}) => (
               )}
             </Field>
           <DivLeftAlign>
-            <Field name={`state`}>
-              {({ field, form}) => (
-                <>
-                <p>State*:</p>
-                  <select
-                    {...field}
-                  >
-                    <option value='' selected disabled hidden>Select a State</option>
-                    <option value='CT'>CT</option>
-                    <option value='DE'>DE</option>
-                    <option value='DC'>DC</option>
-                    <option value='ME'>ME</option>
-                    <option value='MD'>MD</option>
-                    <option value='MA'>MA</option>
-                    <option value='NH'>NH</option>
-                    <option value='NJ'>NJ</option>
-                    <option value='NY'>NY</option>
-                    <option value='OH'>OH</option>
-                    <option value='PA'>PA</option>
-                    <option value='RI'>RI</option>
-                    <option value='VA'>VA</option>
-                    <option value='VT'>VT</option>
-                    <option value='WV'>WV</option>
-                  </select>
-                </>
-              )}
-            </Field>
-            <Field name={`zip`}>
-              {({ field, form}) => (
-                <Inputsm {...field}
-                  component='input'
-                  placeholder='Zip*' />
-              )}
-            </Field>
+            <DivSelectContainer>
+              <Field name={`state`}>
+                {({ field, form}) => (
+                  <>
+                  <FormText1>State*:</FormText1>
+                    <SelectInput
+                      {...field}
+                    >
+                      <option value='' selected disabled hidden>--</option>
+                      <option value='CT'>CT</option>
+                      <option value='DE'>DE</option>
+                      <option value='DC'>DC</option>
+                      <option value='ME'>ME</option>
+                      <option value='MD'>MD</option>
+                      <option value='MA'>MA</option>
+                      <option value='NH'>NH</option>
+                      <option value='NJ'>NJ</option>
+                      <option value='NY'>NY</option>
+                      <option value='OH'>OH</option>
+                      <option value='PA'>PA</option>
+                      <option value='RI'>RI</option>
+                      <option value='VA'>VA</option>
+                      <option value='VT'>VT</option>
+                      <option value='WV'>WV</option>
+                    </SelectInput>
+                  </>
+                )}
+              </Field>
+              <Field name={`zip`}>
+                {({ field, form}) => (
+                  <Inputsm {...field}
+                    component='input'
+                    placeholder='Zip*' />
+                )}
+              </Field>
+            </DivSelectContainer>
           </DivLeftAlign>
           <Header text={'Part Repair Details'} />
           <DivLeftAlign>
-            <Field name={`pickup`}>
-              {({ field, form}) => (
-                <>
-                <p>Pickup*:</p>
-                  <select
-                    {...field}
-                  >
-                    <option value='' selected disabled hidden>Select Pickup Type</option>
-                    <option value='airline'>Airline Pickup</option>
-                    <option value='customer'>Customer Drop-off</option>
-                    <option value='ship'>Shipping Company</option>
-                    <option value='sales'>Sales Drop-off</option>
-                  </select>
-                </>
-              )}
-            </Field>
+            <DivSelectContainer>
+              <Field name={`pickup`}>
+                {({ field, form}) => (
+                  <>
+                  <FormText1>Pickup*:</FormText1>
+                    <SelectInput
+                      {...field}
+                    >
+                      <option value='' selected disabled hidden>Select Pickup Type</option>
+                      <option value='airline'>Airline Pickup</option>
+                      <option value='customer'>Customer Drop-off</option>
+                      <option value='ship'>Shipping Company</option>
+                      <option value='sales'>Sales Drop-off</option>
+                    </SelectInput>
+                  </>
+                )}
+              </Field>
+            </DivSelectContainer>
           </DivLeftAlign>
             <FieldArray
               name="repairItems"
@@ -219,26 +251,29 @@ const RMAform = ({repairItems}) => (
                   {values.repairItems.map((item, index) => (
                     <DivRepairItemContainer key={index}>
                       <DivLeftAlign>
-                        <Field name={`repairItems.${index}.repairType`}>
-                          {({ field, form}) => (
-                            <>
-                            <p>Type of Repair*:</p>
-                              <select
-                                {...field}
-                              >
-                                <option value='' selected disabled hidden>Select Repair Type</option>
-                                <option value='hyd'>Hydraulic</option>
-                                <option value='elec'>Electrical</option>
-                                <option value='pnue'>Pnuematic</option>
-                                <option value='other'>Other</option>
-                              </select>
-                            </>
-                          )}
-                        </Field>
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.repairType`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Type of Repair*:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='' selected disabled hidden>Select Repair Type</option>
+                                  <option value='hyd'>Hydraulic</option>
+                                  <option value='elec'>Electrical</option>
+                                  <option value='pnue'>Pnuematic</option>
+                                  <option value='other'>Other</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                         {(index === 0 && values.repairItems.length === 1) ? null :
-                          <DivAddSubItem onClick={() => arrayHelpers.remove(index)}>
-                            <img src={Subsvg} alt="remove-item"/>
-                          </DivAddSubItem>
+                          <DivSubItem onClick={() => arrayHelpers.remove(index)}>
+                            {/*<img src={subsvg} height='auto' width='auto' alt="remove-item"/>*/}
+                            Remove Item
+                          </DivSubItem>
                         }
                       </DivLeftAlign>
                       <DivLeftAlign>
@@ -249,21 +284,23 @@ const RMAform = ({repairItems}) => (
                               placeholder='PO #' />
                           )}
                         </Field>
-                        <Field name={`repairItems.${index}.head`}>
-                          {({ field, form}) => (
-                            <>
-                            <p>Urgency:</p>
-                              <select
-                                {...field}
-                              >
-                                <option value='' selected disabled hidden>Select Urgency</option>
-                                <option value='hot'>Hot</option>
-                                <option value='warm'>Warm</option>
-                                <option value='normal'>Normal</option>
-                              </select>
-                            </>
-                          )}
-                        </Field>
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.head`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Urgency:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='' selected disabled hidden>--</option>
+                                  <option value='hot'>Hot</option>
+                                  <option value='warm'>Warm</option>
+                                  <option value='normal'>Normal</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <Field name={`repairItems.${index}.manufacturer`}>
@@ -298,20 +335,22 @@ const RMAform = ({repairItems}) => (
                         </Field>
                       </DivLeftAlign>
                       <DivLeftAlign>
-                        <Field name={`repairItems.${index}.warranty`}>
-                          {({ field, form}) => (
-                            <>
-                            <p>Warranty*:</p>
-                              <select
-                                {...field}
-                              >
-                                <option value='' selected disabled hidden>Has Warranty?</option>
-                                <option value='true'>Yes</option>
-                                <option value='false'>No</option>
-                              </select>
-                            </>
-                          )}
-                        </Field>
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.warranty`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Warranty*:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='' selected disabled hidden>--</option>
+                                  <option value='true'>Yes</option>
+                                  <option value='false'>No</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                       </DivLeftAlign>
                       <Field component='textarea' name={`repairItems.${index}.issue`}>
                         {({ field, form}) => (
@@ -327,14 +366,16 @@ const RMAform = ({repairItems}) => (
                   }
                   {values.repairItems.length < 6 &&
                     <DivLeftAlign>
-                      <DivAddSubItem onClick={() => arrayHelpers.insert(values.repairItems.length, {})}>
-                        <img src={Addsvg} alt="add-item"/>Add Item
-                      </DivAddSubItem>
+                      <DivAddItem onClick={() => arrayHelpers.insert(values.repairItems.length, emptyItem)}>
+                        {/*<img src={addsvg} alt="add-item"/>*/}
+                        Add Item
+                      </DivAddItem>
                     </DivLeftAlign>
                   }
                 </>
                 )}
             />
+            <Dropzone />
             <Field component='textarea' name={`additionalNotes`}>
               {({ field, form}) => (
                 <StyledTextArea {...field}

@@ -18,3 +18,8 @@ export const StyledTextGrey = styled(StyledText0)`
 export const StyledTextGreyBold = styled(StyledTextGrey)`
   font-weight: 900;
 `
+
+export const FormText1 = styled.span`
+  font-size: 16px;
+  color: black;
+`

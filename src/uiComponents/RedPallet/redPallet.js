@@ -15,6 +15,17 @@ const DivRedPallet = styled.div`
   max-width: 800px;
   margin: 0 auto;
 `
+const emptyItem = {
+  'repairType': '',
+  'po': '',
+  'head': '',
+  'manufacturer': '',
+  'model': '',
+  'serial': '',
+  'part': '',
+  'warranty': '',
+  'issue': ''
+}
 
 class RedPalletPage extends React.Component {
 
@@ -29,8 +40,8 @@ class RedPalletPage extends React.Component {
           </StyledTextGrey>
         </DivRedPallet>
         <RedPalletForm
-          // repairItems={[{part:'test 1', serial: '23034204', model: 'P9000', manufacturer: 'Airline'},{}]}
-          repairItems={[{}]}
+          repairItems={[emptyItem]}
+          emptyItem={emptyItem}
         />
       </React.Fragment>
     )
