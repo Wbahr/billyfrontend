@@ -37,7 +37,7 @@ const Input = styled.input`
   padding: 16px 8px;
   :focus {
     outline: none;
-    border-bottom: 2px solid darkblue;
+    border: 1px solid #318EFC;
   }
 `
 
@@ -59,6 +59,10 @@ const Inputxsm = styled(Input)`
 const SelectInput = styled.select`
   padding: 0 8px;
   margin: 0 0 0 8px;
+  :focus {
+    outline: none;
+    border: 1px solid #318EFC;
+  }
 `
 
 const DivSelectContainer = styled.div`
@@ -72,6 +76,10 @@ const StyledTextArea = styled.textarea`
   border-radius: 3px;
   margin: 8px;
   padding: 0 8px;
+  :focus {
+    outline: none;
+    border: 1px solid #318EFC;
+  }
 `
 
 const DivRepairItemContainer = styled.div`
