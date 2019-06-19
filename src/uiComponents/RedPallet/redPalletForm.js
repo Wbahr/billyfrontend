@@ -394,7 +394,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                     </DivRepairItemContainer>
                     ))
                   }
-                  {values.repairItems.length < 6 &&
+                  {values.repairItems.length < 5 &&
                     <DivLeftAlign>
                       <DivAddItem onClick={() => arrayHelpers.insert(values.repairItems.length, emptyItem)}>
                         {/*<img src={addsvg} alt="add-item"/>*/}
