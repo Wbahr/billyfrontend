@@ -154,21 +154,27 @@ const RMAform = ({repairItems, emptyItem}) => (
               {({ field, form}) => (
                 <Input {...field}
                   component='input'
-                  placeholder='Company*' />
+                  placeholder='Company*'
+                  value='Airline Hydraulics'
+                />
               )}
             </Field>
             <Field name={`fullname`}>
               {({ field, form}) => (
                 <Input {...field}
                   component='input'
-                  placeholder='Full Name*' />
+                  placeholder='Full Name*'
+                  value='Bobby Panczer'
+                />
               )}
             </Field>
             <Field name={`email`}>
               {({ field, form}) => (
                 <Input {...field}
                   component='input'
-                  placeholder='Email*' />
+                  placeholder='Email*'
+                  value='bpanczer@airlinehyd.com'
+                />
               )}
             </Field>
             <Field name={`phone`}>
@@ -187,13 +193,24 @@ const RMAform = ({repairItems, emptyItem}) => (
                 )}
               </Field>
             </DivLeftAlign>
-            {/*<Field name={`saved_address`}>*/}
-              {/*{({ field, form}) => (*/}
-                {/*<Input {...field}*/}
-                  {/*component='input'*/}
-                  {/*placeholder='Saved Address' />*/}
-              {/*)}*/}
-            {/*</Field>*/}
+            <DivLeftAlign>
+              <DivSelectContainer>
+                <Field name={`shipto`}>
+                  {({ field, form}) => (
+                    <>
+                    <FormText1>Ship To*:</FormText1>
+                      <SelectInput
+                        {...field}
+                      >
+                        <option value='' selected>New Address</option>
+                        <option value='airline'>425 Main St. Bethlehem, PA </option>
+                        <option value='customer'>220 Sun Vista Court N Treasure Island, FL</option>
+                      </SelectInput>
+                    </>
+                  )}
+                </Field>
+              </DivSelectContainer>
+            </DivLeftAlign>
             <Field name={`address_1`}>
               {({ field, form}) => (
                 <Input {...field}
@@ -391,6 +408,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                           />
                         )}
                       </Field>
+                      <Dropzone />
                     </DivRepairItemContainer>
                     ))
                   }
@@ -405,7 +423,6 @@ const RMAform = ({repairItems, emptyItem}) => (
                 </>
                 )}
             />
-            <Dropzone />
             <Field component='textarea' name={`additionalNotes`}>
               {({ field, form}) => (
                 <StyledTextArea {...field}
