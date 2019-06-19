@@ -26,6 +26,11 @@ const DivLeftAlign = styled.div`
   margin: 0 auto;
 `
 
+const DivRow = styled.div`
+  display: flex;
+  width 100%;
+`
+
 const Input = styled.input`
   cursor: pointer;
   width: 500px;
@@ -82,6 +87,10 @@ const StyledTextArea = styled.textarea`
   }
 `
 
+const StyledTextArea1 = styled(StyledTextArea)`
+  margin: 0;
+`
+
 const DivRepairItemContainer = styled.div`
   background-color: whitesmoke;
   width: 516px; 
@@ -94,10 +103,12 @@ const DivRepairItemContainer = styled.div`
 const DivSubItem = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   cursor: pointer;
   font-size: 18px;
   color: #318EFC;
-  margin: 0 0 16px 0;
+  height: auto;
+  margin-left: auto;
 `
 
 const DivAddItem = styled.div`
@@ -107,10 +118,21 @@ const DivAddItem = styled.div`
   cursor: pointer;
   font-size: 18px;
   color: #318EFC;
-  background-color: black;
-  width: 100%;
+  background-color: white;
+  border: 1px solid #318EFC;
+  border-radius: 3px;
+  width: 50%;
   height: 50px;
-  margin: 0 0 16px 0;
+  margin: 0 auto 16px auto;
+`
+
+const DivSubmitContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 516px;
+  min-width: 316px;
+  margin: 0 auto;
 `
 
 const validate = (values) => {
@@ -258,7 +280,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                 <>
                   {values.repairItems.map((item, index) => (
                     <DivRepairItemContainer key={index}>
-                      <DivLeftAlign>
+                      <DivRow>
                         <DivSelectContainer>
                           <Field name={`repairItems.${index}.repairType`}>
                             {({ field, form}) => (
@@ -283,7 +305,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                             Remove Item
                           </DivSubItem>
                         }
-                      </DivLeftAlign>
+                      </DivRow>
                       <DivLeftAlign>
                         <Field name={`repairItems.${index}.po`}>
                           {({ field, form}) => (
@@ -362,7 +384,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                       </DivLeftAlign>
                       <Field component='textarea' name={`repairItems.${index}.issue`}>
                         {({ field, form}) => (
-                          <StyledTextArea {...field}
+                          <StyledTextArea1 {...field}
                             component='textarea'
                             rows='3'
                             placeholder='Please enter a description of the repair needed'
@@ -393,20 +415,9 @@ const RMAform = ({repairItems, emptyItem}) => (
                 />
               )}
             </Field>
-					{/*<StyledSubmitButtonContainer>*/}
-						{/*{Object.keys(errors).length &&*/}
-							{/*<DivErrors>*/}
-								{/*{errors.quantity && <span>{errors.quantity}</span>}*/}
-								{/*{errors.return && <span>{errors.return}</span>}*/}
-								{/*{errors.other && <span>{errors.other}</span>}*/}
-								{/*{errors.description && <span>{errors.description}</span>}*/}
-							{/*</DivErrors>*/}
-						{/*}*/}
-						{/*<Button type="submit" text='Submit' />*/}
-					{/*</StyledSubmitButtonContainer>*/}
-					<DivLeftAlign>
+					<DivSubmitContainer>
             <Button type="submit" text='Submit' />
-          </DivLeftAlign>
+          </DivSubmitContainer>
 				</Form>
 			)}
 		/>
