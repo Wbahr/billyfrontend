@@ -324,13 +324,24 @@ const RMAform = ({repairItems, emptyItem}) => (
                         }
                       </DivRow>
                       <DivLeftAlign>
-                        <Field name={`repairItems.${index}.po`}>
-                          {({ field, form}) => (
-                            <Inputm {...field}
-                              component='input'
-                              placeholder='PO #' />
-                          )}
-                        </Field>
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.fluidType`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Fluid Type*:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='' selected disabled hidden>--</option>
+                                  <option value='mineraloil'>Standard Mineral oil</option>
+                                  <option value='phosphateester'>Phosphate Ester</option>
+                                  <option value='waterglycol'>Water Glycol</option>
+                                  <option value='air'>Air</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                         <DivSelectContainer>
                           <Field name={`repairItems.${index}.head`}>
                             {({ field, form}) => (
@@ -350,6 +361,22 @@ const RMAform = ({repairItems, emptyItem}) => (
                         </DivSelectContainer>
                       </DivLeftAlign>
                       <DivLeftAlign>
+                        <Field name={`repairItems.${index}.po`}>
+                          {({ field, form}) => (
+                            <Inputm {...field}
+                              component='input'
+                              placeholder='PO #' />
+                          )}
+                        </Field>
+                        <Field name={`repairItems.${index}.part`}>
+                          {({ field, form}) => (
+                            <Inputm {...field}
+                              component='input'
+                              placeholder='Part #' />
+                          )}
+                        </Field>
+                      </DivLeftAlign>
+                      <DivLeftAlign>
                         <Field name={`repairItems.${index}.manufacturer`}>
                           {({ field, form}) => (
                             <Inputm {...field}
@@ -366,6 +393,40 @@ const RMAform = ({repairItems, emptyItem}) => (
                         </Field>
                       </DivLeftAlign>
                       <DivLeftAlign>
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.head`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Qty:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='' selected disabled hidden>--</option>
+                                  <option value='1'>1</option>
+                                  <option value='2'>2</option>
+                                  <option value='3'>3</option>
+                                  <option value='1'>4</option>
+                                  <option value='2'>5</option>
+                                  <option value='3'>6</option>
+                                  <option value='1'>7</option>
+                                  <option value='2'>8</option>
+                                  <option value='3'>9</option>
+                                  <option value='1'>10</option>
+                                  <option value='2'>11</option>
+                                  <option value='3'>12</option>
+                                  <option value='1'>13</option>
+                                  <option value='2'>14</option>
+                                  <option value='3'>15</option>
+                                  <option value='1'>16</option>
+                                  <option value='2'>17</option>
+                                  <option value='3'>18</option>
+                                  <option value='1'>19</option>
+                                  <option value='2'>20</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                         <Field name={`repairItems.${index}.serial`}>
                           {({ field, form}) => (
                             <Inputm {...field}
@@ -373,26 +434,18 @@ const RMAform = ({repairItems, emptyItem}) => (
                               placeholder='Serial #' />
                           )}
                         </Field>
-                        <Field name={`repairItems.${index}.part`}>
-                          {({ field, form}) => (
-                            <Inputm {...field}
-                              component='input'
-                              placeholder='Part #' />
-                          )}
-                        </Field>
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.warranty`}>
+                          <Field name={`repairItems.${index}.warrantyRequest`}>
                             {({ field, form}) => (
                               <>
-                              <FormText1>Warranty*:</FormText1>
+                              <FormText1>Warranty Request*:</FormText1>
                                 <SelectInput
                                   {...field}
                                 >
-                                  <option value='' selected disabled hidden>--</option>
+                                  <option value='false' selected>No</option>
                                   <option value='true'>Yes</option>
-                                  <option value='false'>No</option>
                                 </SelectInput>
                               </>
                             )}

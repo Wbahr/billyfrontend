@@ -38,6 +38,8 @@ class RedPalletPage extends React.Component {
             your day. Simply fill out the information about your repair needs and hit submit. You will be contacted
             promptly with details regarding the pick up of your components. <StyledTextGreyBold>*Required Fields</StyledTextGreyBold>
           </StyledTextGrey>
+          <StyledTextGreyBold>Note: There will be a minimum charge of $95.00 for tear down & evaluation. If an order is not placed, item
+          will be returned as is un-assembled.</StyledTextGreyBold>
         </DivRedPallet>
         <RedPalletForm
           repairItems={[emptyItem]}
