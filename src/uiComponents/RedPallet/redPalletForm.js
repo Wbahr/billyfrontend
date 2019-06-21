@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { Formik, Form, Field, FieldArray } from 'formik'
 import Select from 'react-select'
 import styled from 'styled-components'
-import { FormText1 } from '../../styles/fonts'
+import { FormText1, FormText1Bold } from '../../styles/fonts'
 import Button from '../_common/button'
 import Header from '../_common/sectionHeader'
 // import addsvg from '../../imgs/airline/add.svg'
@@ -124,6 +124,15 @@ const DivAddItem = styled.div`
   width: 50%;
   height: 50px;
   margin: 0 auto 16px auto;
+`
+
+const DivAlert = styled.div`
+  height: 30px;
+  width: 100%;
+  border: 1px solid orange;
+  border-radius: 2px;
+  background-color: cornsilk;
+  color: darkorange;
 `
 
 const DivSubmitContainer = styled.div`
@@ -299,6 +308,28 @@ const RMAform = ({repairItems, emptyItem}) => (
                     <DivRepairItemContainer key={index}>
                       <DivRow>
                         <DivSelectContainer>
+                          <FormText1Bold>{`Repair Item ${index + 1}`}</FormText1Bold>
+                        </DivSelectContainer>
+                        {(index === 0 && values.repairItems.length === 1) ? null :
+                          <DivSubItem onClick={() => arrayHelpers.remove(index)}>
+                            Remove Item
+                          </DivSubItem>
+                        }
+                      </DivRow>
+                      <DivRow>
+                        { item.head === 'hot' &&
+                          <DivAlert>
+                            <span>Urgency Hot - Additional charges WILL apply</span>
+                          </DivAlert>
+                        }
+                        { item.head === 'warm' &&
+                          <DivAlert>
+                            <span>Urgency Warm - Additional charges may apply</span>
+                          </DivAlert>
+                        }
+                      </DivRow>
+                      <DivRow>
+                        <DivSelectContainer>
                           <Field name={`repairItems.${index}.repairType`}>
                             {({ field, form}) => (
                               <>
@@ -316,12 +347,22 @@ const RMAform = ({repairItems, emptyItem}) => (
                             )}
                           </Field>
                         </DivSelectContainer>
-                        {(index === 0 && values.repairItems.length === 1) ? null :
-                          <DivSubItem onClick={() => arrayHelpers.remove(index)}>
-                            {/*<img src={subsvg} height='auto' width='auto' alt="remove-item"/>*/}
-                            Remove Item
-                          </DivSubItem>
-                        }
+                        <DivSelectContainer>
+                          <Field name={`repairItems.${index}.head`}>
+                            {({ field, form}) => (
+                              <>
+                              <FormText1>Urgency:</FormText1>
+                                <SelectInput
+                                  {...field}
+                                >
+                                  <option value='normal' selected>Normal</option>
+                                  <option value='warm'>Warm</option>
+                                  <option value='hot'>Hot</option>
+                                </SelectInput>
+                              </>
+                            )}
+                          </Field>
+                        </DivSelectContainer>
                       </DivRow>
                       <DivLeftAlign>
                         <DivSelectContainer>
@@ -342,23 +383,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                             )}
                           </Field>
                         </DivSelectContainer>
-                        <DivSelectContainer>
-                          <Field name={`repairItems.${index}.head`}>
-                            {({ field, form}) => (
-                              <>
-                              <FormText1>Urgency:</FormText1>
-                                <SelectInput
-                                  {...field}
-                                >
-                                  <option value='' selected disabled hidden>--</option>
-                                  <option value='hot'>Hot</option>
-                                  <option value='warm'>Warm</option>
-                                  <option value='normal'>Normal</option>
-                                </SelectInput>
-                              </>
-                            )}
-                          </Field>
-                        </DivSelectContainer>
+
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <Field name={`repairItems.${index}.po`}>
@@ -394,47 +419,56 @@ const RMAform = ({repairItems, emptyItem}) => (
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.head`}>
+                          <Field name={`repairItems.${index}.quantity`}>
                             {({ field, form}) => (
                               <>
-                              <FormText1>Qty:</FormText1>
+                              <FormText1>Quantity:</FormText1>
                                 <SelectInput
                                   {...field}
                                 >
-                                  <option value='' selected disabled hidden>--</option>
-                                  <option value='1'>1</option>
+                                  <option value='1' selected>1</option>
                                   <option value='2'>2</option>
                                   <option value='3'>3</option>
-                                  <option value='1'>4</option>
-                                  <option value='2'>5</option>
-                                  <option value='3'>6</option>
-                                  <option value='1'>7</option>
-                                  <option value='2'>8</option>
-                                  <option value='3'>9</option>
-                                  <option value='1'>10</option>
-                                  <option value='2'>11</option>
-                                  <option value='3'>12</option>
-                                  <option value='1'>13</option>
-                                  <option value='2'>14</option>
-                                  <option value='3'>15</option>
-                                  <option value='1'>16</option>
-                                  <option value='2'>17</option>
-                                  <option value='3'>18</option>
-                                  <option value='1'>19</option>
-                                  <option value='2'>20</option>
+                                  <option value='4'>4</option>
+                                  <option value='5'>5</option>
+                                  <option value='6'>6</option>
+                                  <option value='7'>7</option>
+                                  <option value='8'>8</option>
+                                  <option value='9'>9</option>
+                                  <option value='10'>10</option>
+                                  <option value='11'>11</option>
+                                  <option value='12'>12</option>
+                                  <option value='13'>13</option>
+                                  <option value='14'>14</option>
+                                  <option value='15'>15</option>
+                                  <option value='16'>16</option>
+                                  <option value='17'>17</option>
+                                  <option value='18'>18</option>
+                                  <option value='19'>19</option>
+                                  <option value='20'>20</option>
                                 </SelectInput>
                               </>
                             )}
                           </Field>
                         </DivSelectContainer>
-                        <Field name={`repairItems.${index}.serial`}>
-                          {({ field, form}) => (
-                            <Inputm {...field}
-                              component='input'
-                              placeholder='Serial #' />
-                          )}
-                        </Field>
                       </DivLeftAlign>
+                      <FieldArray
+                        name="serialNumbers"
+                        render={arrayHelpers => (
+                            <>
+                              {values.repairItems.map((item, index) => (
+                                <Field name={`serialNumbers.${index}`}>
+                                  {({ field, form}) => (
+                                    <Inputm {...field}
+                                      component='input'
+                                      placeholder='Serial #' />
+                                  )}
+                                </Field>
+                                ))
+                              }
+                            </>
+                          )}
+                      />
                       <DivLeftAlign>
                         <DivSelectContainer>
                           <Field name={`repairItems.${index}.warrantyRequest`}>
@@ -465,10 +499,9 @@ const RMAform = ({repairItems, emptyItem}) => (
                     </DivRepairItemContainer>
                     ))
                   }
-                  {values.repairItems.length < 5 &&
+                  {values.repairItems.length < 10 &&
                     <DivLeftAlign>
                       <DivAddItem onClick={() => arrayHelpers.insert(values.repairItems.length, emptyItem)}>
-                        {/*<img src={addsvg} alt="add-item"/>*/}
                         Add Item
                       </DivAddItem>
                     </DivLeftAlign>

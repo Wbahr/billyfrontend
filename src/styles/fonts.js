@@ -23,3 +23,7 @@ export const FormText1 = styled.span`
   font-size: 16px;
   color: black;
 `
+
+export const FormText1Bold = styled(FormText1)`
+  font-weight: 700;
+`
