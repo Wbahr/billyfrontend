@@ -169,6 +169,8 @@ const setAddress = (shipToId, form) => {
   }
 }
 
+const supportedStates = ['CT','DE','DC','ME','MD','MA','NH','NJ','NY','OH','PA','RI','VA','VT','WV']
+
 const RMAform = ({initValues, emptyItem}) => (
 	<DivForm>
 		<Formik
@@ -212,7 +214,7 @@ const RMAform = ({initValues, emptyItem}) => (
                     <FormText1>Ship To*:</FormText1>
                       <SelectInput
                         {...field}
-                        onChange={(e) => { setAddress(e.target.value, form) }}
+                        onChange={(e) => { setAddress(e.target.value, form); form.setFieldValue(`pickup`, '-1')}}
                       >
                         {values.ShipTos.map((shipto, index) => (
                           <option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
@@ -254,6 +256,7 @@ const RMAform = ({initValues, emptyItem}) => (
                   <FormText1>State*:</FormText1>
                     <SelectInput
                       {...field}
+                      onChange={(e) => { form.setFieldValue(`pickup`, '-1')}}
                     >
                       <option value='' selected disabled hidden>--</option>
                       <option value='AL'>AL</option>
@@ -336,10 +339,14 @@ const RMAform = ({initValues, emptyItem}) => (
                     <SelectInput
                       {...field}
                     >
-                      <option value='' selected disabled hidden>--</option>
-                      <option value='airline'>Airline Pickup</option>
-                      <option value='customer'>Customer Drop-off</option>
-                      <option value='sales'>Salesperson Pickup</option>
+                      <option value='-1' selected disabled hidden>--</option>
+                      { _.includes(supportedStates, values.state) &&
+                        <>
+                          <option value='airline'>Airline Pickup</option>
+                          <option value='customer'>Customer Drop-off</option>
+                          <option value='sales'>Salesperson Pickup</option>
+                        </>
+                      }
                       <option value='ship'>Shipped via Commercial Carrier</option>
                     </SelectInput>
                   </>
