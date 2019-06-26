@@ -256,7 +256,7 @@ const RMAform = ({initValues, emptyItem}) => (
                   <FormText1>State*:</FormText1>
                     <SelectInput
                       {...field}
-                      onChange={(e) => { form.setFieldValue(`pickup`, '-1')}}
+                      onChange={(e) => { form.setFieldValue(`state`, e.target.value); form.setFieldValue(`pickup`, '-1')}}
                     >
                       <option value='' selected disabled hidden>--</option>
                       <option value='AL'>AL</option>
