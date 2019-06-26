@@ -430,15 +430,21 @@ const RMAform = ({initValues, emptyItem}) => (
                               </>
                             )}
                           </Field>
-                          <Field name={`other`}>
-                            {({ field, form}) => (
-                              <Inputsm {...field}
-                                component='input'
-                                placeholder='Other' />
-                            )}
-                          </Field>
                         </DivSelectContainer>
                       </DivLeftAlign>
+                      { item.fluidType === 'other' &&
+                        <DivLeftAlign>
+                          <Field name={`RepairItems.${index}.other`}>
+                              {({ field, form}) => (
+                                <>
+                                  <Inputm {...field}
+                                    component='input'
+                                    placeholder='Other Fluid' />
+                                </>
+                              )}
+                          </Field>
+                        </DivLeftAlign>
+                      }
                       <DivLeftAlign>
                         <Field name={`RepairItems.${index}.po`}>
                           {({ field, form}) => (
