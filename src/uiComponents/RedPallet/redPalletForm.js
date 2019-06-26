@@ -371,12 +371,12 @@ const RMAform = ({initValues, emptyItem}) => (
                         }
                       </DivRow>
                       <DivRow>
-                        { item.head === 'hot' &&
+                        { item.urgency === 'hot' &&
                           <DivAlert>
                             <span>Urgency Hot - Additional charges WILL apply</span>
                           </DivAlert>
                         }
-                        { item.head === 'warm' &&
+                        { item.urgency === 'warm' &&
                           <DivAlert>
                             <span>Urgency Warm - Additional charges may apply</span>
                           </DivAlert>
@@ -421,11 +421,15 @@ const RMAform = ({initValues, emptyItem}) => (
                       <DivLeftAlign>
                         <DivSelectContainer>
                           <Field name={`RepairItems.${index}.fluidType`}>
-                            {({ field, form}) => (
+                            {({ field, form }) => (
                               <>
                               <FormText1>Fluid Type*:</FormText1>
                                 <SelectInput
                                   {...field}
+                                  onChange={(e) => {
+                                    form.setFieldValue(`RepairItems.${index}.fluidType`, e.target.value)
+                                    form.setFieldValue(`RepairItems.${index}.fluidOther`, '')
+                                  }}
                                 >
                                   <option value='' selected disabled hidden>--</option>
                                   <option value='air'>Air</option>
@@ -441,7 +445,7 @@ const RMAform = ({initValues, emptyItem}) => (
                       </DivLeftAlign>
                       { item.fluidType === 'other' &&
                         <DivLeftAlign>
-                          <Field name={`RepairItems.${index}.other`}>
+                          <Field name={`RepairItems.${index}.fluidOther`}>
                               {({ field, form}) => (
                                 <>
                                   <Inputm {...field}
