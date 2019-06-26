@@ -450,7 +450,7 @@ const RMAform = ({initValues, emptyItem}) => (
                                 <>
                                   <Inputm {...field}
                                     component='input'
-                                    placeholder='Other Fluid' />
+                                    placeholder='Specify Other Fluid Type*' />
                                 </>
                               )}
                           </Field>
