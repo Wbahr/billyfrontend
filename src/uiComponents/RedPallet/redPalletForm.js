@@ -148,6 +148,16 @@ const validate = (values) => {
   console.log('values',JSON.stringify(values))
 }
 
+const cleanPhoneNumber = (phonenum) => {
+  //Added this helper because phone numbers can be very messy
+  let cleanedPhoneNum = phonenum.replace(/\D/g,'')
+  let mutatedPhoneNum = cleanedPhoneNum.slice(0,3) + '-' + cleanedPhoneNum.slice(3,6) + '-' + cleanedPhoneNum.slice(6,10)
+  if(cleanedPhoneNum.slice(10,).length > 0){
+    mutatedPhoneNum += cleanedPhoneNum.slice(10,)
+  }
+  return mutatedPhoneNum
+}
+
 const setAddress = (shipToId, form) => {
   for (let i = 0; i < form.values.ShipTos.length; i++) {
     if (shipToId === '-1') {
@@ -164,7 +174,7 @@ const setAddress = (shipToId, form) => {
         form.setFieldValue(`city`, _.isNil(ShipToItem.City) ? '' : ShipToItem.City)
         form.setFieldValue(`state`, _.isNil(ShipToItem.State) ? '' : ShipToItem.State)
         form.setFieldValue(`zip`, _.isNil(ShipToItem.Zip) ? '' : ShipToItem.Zip)
-        form.setFieldValue(`phone`, _.isNil(ShipToItem.Phone) ? '' : ShipToItem.Phone)
+        form.setFieldValue(`phone`, _.isNil(ShipToItem.Phone) ? '' : cleanPhoneNumber(ShipToItem.Phone))
     }
   }
 }
