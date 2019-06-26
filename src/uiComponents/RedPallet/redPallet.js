@@ -50,18 +50,19 @@ class RedPalletPage extends React.Component {
 
   userDataMutator = (response) => {
     let mutatedResponse = response
-    let supportedStates = ['CT','DE','DC','ME','MD','MA','NH','NJ','NY','OH','PA','RI','VA','VT','WV']
-    let unsupportedAddresses = []
-    for(let i = 0; i < mutatedResponse.ShipTos.length;i++) {
-      if (!_.includes(supportedStates, mutatedResponse.ShipTos[i].State)){
-        unsupportedAddresses.push(i)
-      }
-    }
-    for(let i = unsupportedAddresses.length - 1; i >= 0;i--){
-      let j = unsupportedAddresses[i]
-      delete mutatedResponse.ShipTos[j]
-    }
+    // let supportedStates = ['CT','DE','DC','ME','MD','MA','NH','NJ','NY','OH','PA','RI','VA','VT','WV']
+    // let unsupportedAddresses = []
+    // for(let i = 0; i < mutatedResponse.ShipTos.length;i++) {
+    //   if (!_.includes(supportedStates, mutatedResponse.ShipTos[i].State)){
+    //     unsupportedAddresses.push(i)
+    //   }
+    // }
+    // for(let i = unsupportedAddresses.length - 1; i >= 0;i--){
+    //   let j = unsupportedAddresses[i]
+    //   delete mutatedResponse.ShipTos[j]
+    // }
     mutatedResponse.RepairItems = [emptyItem]
+    mutatedResponse.Company = response.CustomerName
     console.log('mutatedResponse',mutatedResponse)
     return mutatedResponse
   }

@@ -150,13 +150,21 @@ const validate = (values) => {
 
 const setAddress = (shipToId, form) => {
   for (let i = 0; i < form.values.ShipTos.length; i++) {
-    if(String(form.values.ShipTos[i].Id) === shipToId){
-      let ShipToItem = form.values.ShipTos[i]
-      form.setFieldValue(`address_1`, _.isNil(ShipToItem.Line1) ? '' : ShipToItem.Line1)
-      form.setFieldValue(`address_2`, _.isNil(ShipToItem.Line2) ? '' : ShipToItem.Line2)
-      form.setFieldValue(`city`, _.isNil(ShipToItem.City) ? '' : ShipToItem.City)
-      form.setFieldValue(`state`, _.isNil(ShipToItem.State) ? '' : ShipToItem.State)
-      form.setFieldValue(`zip`, _.isNil(ShipToItem.Zip) ? '' : ShipToItem.Zip)
+    if (shipToId === '-1') {
+        form.setFieldValue(`address_1`, '')
+        form.setFieldValue(`address_2`, '')
+        form.setFieldValue(`city`, '')
+        form.setFieldValue(`state`, '')
+        form.setFieldValue(`zip`, '')
+        form.setFieldValue(`phone`, '')
+    } else if (String(form.values.ShipTos[i].Id) === shipToId) {
+        let ShipToItem = form.values.ShipTos[i]
+        form.setFieldValue(`address_1`, _.isNil(ShipToItem.Line1) ? '' : ShipToItem.Line1)
+        form.setFieldValue(`address_2`, _.isNil(ShipToItem.Line2) ? '' : ShipToItem.Line2)
+        form.setFieldValue(`city`, _.isNil(ShipToItem.City) ? '' : ShipToItem.City)
+        form.setFieldValue(`state`, _.isNil(ShipToItem.State) ? '' : ShipToItem.State)
+        form.setFieldValue(`zip`, _.isNil(ShipToItem.Zip) ? '' : ShipToItem.Zip)
+        form.setFieldValue(`phone`, _.isNil(ShipToItem.Phone) ? '' : ShipToItem.Phone)
     }
   }
 }
@@ -196,22 +204,6 @@ const RMAform = ({initValues, emptyItem}) => (
                 />
               )}
             </Field>
-            <Field name={`phone`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Phone*' />
-              )}
-            </Field>
-            <DivLeftAlign>
-              <Field name={`ext`}>
-                {({ field, form}) => (
-                  <Inputsm {...field}
-                    component='input'
-                    placeholder='Ext' />
-                )}
-              </Field>
-            </DivLeftAlign>
             <DivLeftAlign>
               <DivSelectContainer>
                 <Field name={`shipto`}>
@@ -226,7 +218,7 @@ const RMAform = ({initValues, emptyItem}) => (
                           <option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
                         ))
                         }
-                        <option key={-1} value=''>New Address</option>
+                        <option key={-1} value={-1}>New Address</option>
                       </SelectInput>
                     </>
                   )}
@@ -264,21 +256,56 @@ const RMAform = ({initValues, emptyItem}) => (
                       {...field}
                     >
                       <option value='' selected disabled hidden>--</option>
+                      <option value='AL'>AL</option>
+                      <option value='AK'>AK</option>
+                      <option value='AZ'>AZ</option>
+                      <option value='AR'>AR</option>
+                      <option value='CA'>CA</option>
+                      <option value='CO'>CO</option>
                       <option value='CT'>CT</option>
                       <option value='DE'>DE</option>
-                      <option value='DC'>DC</option>
+                      <option value='FL'>FL</option>
+                      <option value='GA'>GA</option>
+                      <option value='HI'>HI</option>
+                      <option value='ID'>ID</option>
+                      <option value='IL'>IL</option>
+                      <option value='IN'>IN</option>
+                      <option value='IA'>IA</option>
+                      <option value='KS'>KS</option>
+                      <option value='KY'>KY</option>
+                      <option value='LA'>LA</option>
                       <option value='ME'>ME</option>
                       <option value='MD'>MD</option>
                       <option value='MA'>MA</option>
+                      <option value='MI'>MI</option>
+                      <option value='MN'>MN</option>
+                      <option value='MS'>MS</option>
+                      <option value='MO'>MO</option>
+                      <option value='MT'>MT</option>
+                      <option value='NE'>NE</option>
+                      <option value='NV'>NV</option>
                       <option value='NH'>NH</option>
                       <option value='NJ'>NJ</option>
+                      <option value='NM'>NM</option>
                       <option value='NY'>NY</option>
+                      <option value='NC'>NC</option>
+                      <option value='ND'>ND</option>
                       <option value='OH'>OH</option>
+                      <option value='OK'>OK</option>
+                      <option value='OR'>OR</option>
                       <option value='PA'>PA</option>
                       <option value='RI'>RI</option>
-                      <option value='VA'>VA</option>
+                      <option value='SC'>SC</option>
+                      <option value='SD'>SD</option>
+                      <option value='TN'>TN</option>
+                      <option value='TX'>TX</option>
+                      <option value='UT'>UT</option>
                       <option value='VT'>VT</option>
+                      <option value='VA'>SD</option>
+                      <option value='WA'>WA</option>
                       <option value='WV'>WV</option>
+                      <option value='WI'>WI</option>
+                      <option value='WY'>WY</option>
                     </SelectInput>
                   </>
                 )}
@@ -290,6 +317,13 @@ const RMAform = ({initValues, emptyItem}) => (
                     placeholder='Zip*' />
                 )}
               </Field>
+              <Field name={`phone`}>
+              {({ field, form}) => (
+                <Inputm {...field}
+                  component='input'
+                  placeholder='Phone*' />
+              )}
+            </Field>
             </DivSelectContainer>
           </DivLeftAlign>
           <Header text={'Part Repair Details'} />
@@ -305,8 +339,8 @@ const RMAform = ({initValues, emptyItem}) => (
                       <option value='' selected disabled hidden>--</option>
                       <option value='airline'>Airline Pickup</option>
                       <option value='customer'>Customer Drop-off</option>
-                      <option value='ship'>Shipping Company</option>
-                      <option value='sales'>Sales Drop-off</option>
+                      <option value='sales'>Salesperson Pickup</option>
+                      <option value='ship'>Shipped via Commercial Carrier</option>
                     </SelectInput>
                   </>
                 )}
@@ -387,16 +421,23 @@ const RMAform = ({initValues, emptyItem}) => (
                                   {...field}
                                 >
                                   <option value='' selected disabled hidden>--</option>
-                                  <option value='mineraloil'>Standard Mineral oil</option>
-                                  <option value='phosphateester'>Phosphate Ester</option>
-                                  <option value='waterglycol'>Water Glycol</option>
                                   <option value='air'>Air</option>
+                                  <option value='phosphateester'>Phosphate Ester</option>
+                                  <option value='mineraloil'>Standard Mineral oil</option>
+                                  <option value='waterglycol'>Water Glycol</option>
+                                  <option value='other'>Other</option>
                                 </SelectInput>
                               </>
                             )}
                           </Field>
+                          <Field name={`other`}>
+                            {({ field, form}) => (
+                              <Inputsm {...field}
+                                component='input'
+                                placeholder='Other' />
+                            )}
+                          </Field>
                         </DivSelectContainer>
-
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <Field name={`RepairItems.${index}.po`}>
