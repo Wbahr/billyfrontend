@@ -145,14 +145,27 @@ const DivSubmitContainer = styled.div`
 `
 
 const validate = (values) => {
-
+  console.log('values',JSON.stringify(values))
 }
 
-const RMAform = ({repairItems, emptyItem}) => (
+const setAddress = (shipToId, form) => {
+  for (let i = 0; i < form.values.ShipTos.length; i++) {
+    if(String(form.values.ShipTos[i].Id) === shipToId){
+      let ShipToItem = form.values.ShipTos[i]
+      form.setFieldValue(`address_1`, _.isNil(ShipToItem.Line1) ? '' : ShipToItem.Line1)
+      form.setFieldValue(`address_2`, _.isNil(ShipToItem.Line2) ? '' : ShipToItem.Line2)
+      form.setFieldValue(`city`, _.isNil(ShipToItem.City) ? '' : ShipToItem.City)
+      form.setFieldValue(`state`, _.isNil(ShipToItem.State) ? '' : ShipToItem.State)
+      form.setFieldValue(`zip`, _.isNil(ShipToItem.Zip) ? '' : ShipToItem.Zip)
+    }
+  }
+}
+
+const RMAform = ({initValues, emptyItem}) => (
 	<DivForm>
 		<Formik
-			initialValues={{repairItems}}
-			// validate={validate}
+			initialValues={initValues}
+			validate={validate}
 			validateOnBlur={false}
 			validateOnChange={false}
 			onSubmit={values => clickedContinue(values)}
@@ -164,25 +177,22 @@ const RMAform = ({repairItems, emptyItem}) => (
                 <Input {...field}
                   component='input'
                   placeholder='Company*'
-                  value='Airline Hydraulics'
                 />
               )}
             </Field>
-            <Field name={`fullname`}>
+            <Field name={`FullName`}>
               {({ field, form}) => (
                 <Input {...field}
                   component='input'
                   placeholder='Full Name*'
-                  value='Bobby Panczer'
                 />
               )}
             </Field>
-            <Field name={`email`}>
+            <Field name={`Email`}>
               {({ field, form}) => (
                 <Input {...field}
                   component='input'
                   placeholder='Email*'
-                  value='bpanczer@airlinehyd.com'
                 />
               )}
             </Field>
@@ -210,10 +220,13 @@ const RMAform = ({repairItems, emptyItem}) => (
                     <FormText1>Ship To*:</FormText1>
                       <SelectInput
                         {...field}
+                        onChange={(e) => { setAddress(e.target.value, form) }}
                       >
-                        <option value='' selected>New Address</option>
-                        <option value='airline'>425 Main St. Bethlehem, PA </option>
-                        <option value='customer'>220 Sun Vista Court N Treasure Island, FL</option>
+                        {values.ShipTos.map((shipto, index) => (
+                          <option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
+                        ))
+                        }
+                        <option key={-1} value=''>New Address</option>
                       </SelectInput>
                     </>
                   )}
@@ -301,16 +314,16 @@ const RMAform = ({repairItems, emptyItem}) => (
             </DivSelectContainer>
           </DivLeftAlign>
             <FieldArray
-              name="repairItems"
+              name="RepairItems"
               render={arrayHelpers => (
                 <>
-                  {values.repairItems.map((item, index) => (
+                  {values.RepairItems.map((item, index) => (
                     <DivRepairItemContainer key={index}>
                       <DivRow>
                         <DivSelectContainer>
                           <FormText1Bold>{`Repair Item ${index + 1}`}</FormText1Bold>
                         </DivSelectContainer>
-                        {(index === 0 && values.repairItems.length === 1) ? null :
+                        {(index === 0 && values.RepairItems.length === 1) ? null :
                           <DivSubItem onClick={() => arrayHelpers.remove(index)}>
                             Remove Item
                           </DivSubItem>
@@ -330,7 +343,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                       </DivRow>
                       <DivRow>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.repairType`}>
+                          <Field name={`RepairItems.${index}.repairType`}>
                             {({ field, form}) => (
                               <>
                               <FormText1>Type of Repair*:</FormText1>
@@ -348,7 +361,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                           </Field>
                         </DivSelectContainer>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.head`}>
+                          <Field name={`RepairItems.${index}.urgency`}>
                             {({ field, form}) => (
                               <>
                               <FormText1>Urgency:</FormText1>
@@ -366,7 +379,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                       </DivRow>
                       <DivLeftAlign>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.fluidType`}>
+                          <Field name={`RepairItems.${index}.fluidType`}>
                             {({ field, form}) => (
                               <>
                               <FormText1>Fluid Type*:</FormText1>
@@ -386,14 +399,14 @@ const RMAform = ({repairItems, emptyItem}) => (
 
                       </DivLeftAlign>
                       <DivLeftAlign>
-                        <Field name={`repairItems.${index}.po`}>
+                        <Field name={`RepairItems.${index}.po`}>
                           {({ field, form}) => (
                             <Inputm {...field}
                               component='input'
                               placeholder='PO #' />
                           )}
                         </Field>
-                        <Field name={`repairItems.${index}.part`}>
+                        <Field name={`RepairItems.${index}.part`}>
                           {({ field, form}) => (
                             <Inputm {...field}
                               component='input'
@@ -402,14 +415,14 @@ const RMAform = ({repairItems, emptyItem}) => (
                         </Field>
                       </DivLeftAlign>
                       <DivLeftAlign>
-                        <Field name={`repairItems.${index}.manufacturer`}>
+                        <Field name={`RepairItems.${index}.manufacturer`}>
                           {({ field, form}) => (
                             <Inputm {...field}
                               component='input'
                               placeholder='Manufacturer' />
                           )}
                         </Field>
-                        <Field name={`repairItems.${index}.model`}>
+                        <Field name={`RepairItems.${index}.model`}>
                           {({ field, form}) => (
                             <Inputm {...field}
                               component='input'
@@ -419,7 +432,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                       </DivLeftAlign>
                       <DivLeftAlign>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.quantity`}>
+                          <Field name={`RepairItems.${index}.quantity`}>
                             {({ field, form}) => (
                               <>
                               <FormText1>Quantity:</FormText1>
@@ -452,26 +465,26 @@ const RMAform = ({repairItems, emptyItem}) => (
                           </Field>
                         </DivSelectContainer>
                       </DivLeftAlign>
-                      <FieldArray
-                        name="serialNumbers"
-                        render={arrayHelpers => (
-                            <>
-                              {values.repairItems.map((item, index) => (
-                                <Field name={`serialNumbers.${index}`}>
-                                  {({ field, form}) => (
-                                    <Inputm {...field}
-                                      component='input'
-                                      placeholder='Serial #' />
-                                  )}
-                                </Field>
-                                ))
-                              }
-                            </>
-                          )}
-                      />
+                      {/*<FieldArray*/}
+                        {/*name="serialNumbers"*/}
+                        {/*render={arrayHelpers => (*/}
+                            {/*<>*/}
+                              {/*{values.repairItems.map((item, index) => (*/}
+                                {/*<Field name={`serialNumbers.${index}`}>*/}
+                                  {/*{({ field, form}) => (*/}
+                                    {/*<Inputm {...field}*/}
+                                      {/*component='input'*/}
+                                      {/*placeholder='Serial #' />*/}
+                                  {/*)}*/}
+                                {/*</Field>*/}
+                                {/*))*/}
+                              {/*}*/}
+                            {/*</>*/}
+                          {/*)}*/}
+                      {/*/>*/}
                       <DivLeftAlign>
                         <DivSelectContainer>
-                          <Field name={`repairItems.${index}.warrantyRequest`}>
+                          <Field name={`RepairItems.${index}.warrantyRequest`}>
                             {({ field, form}) => (
                               <>
                               <FormText1>Warranty Request*:</FormText1>
@@ -486,7 +499,7 @@ const RMAform = ({repairItems, emptyItem}) => (
                           </Field>
                         </DivSelectContainer>
                       </DivLeftAlign>
-                      <Field component='textarea' name={`repairItems.${index}.issue`}>
+                      <Field component='textarea' name={`RepairItems.${index}.issue`}>
                         {({ field, form}) => (
                           <StyledTextArea1 {...field}
                             component='textarea'
@@ -499,9 +512,9 @@ const RMAform = ({repairItems, emptyItem}) => (
                     </DivRepairItemContainer>
                     ))
                   }
-                  {values.repairItems.length < 10 &&
+                  {values.RepairItems.length < 10 &&
                     <DivLeftAlign>
-                      <DivAddItem onClick={() => arrayHelpers.insert(values.repairItems.length, emptyItem)}>
+                      <DivAddItem onClick={() => arrayHelpers.insert(values.RepairItems.length, emptyItem)}>
                         Add Item
                       </DivAddItem>
                     </DivLeftAlign>

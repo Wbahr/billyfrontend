@@ -133,7 +133,7 @@ export function updateEmail(data) {
 }
 
 export function getUserData() {
-	const endpoint = '/corvus/security/UserData'
+	const endpoint = '/corvus/security/CurrentUser'
 	return fetch(url + endpoint, {
 		method: 'GET',
 		mode: 'cors',
