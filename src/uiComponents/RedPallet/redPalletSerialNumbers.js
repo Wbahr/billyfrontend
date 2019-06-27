@@ -47,14 +47,14 @@ class RedPalletSerialNumbers extends  React.Component {
               {({ field, form}) => (
                 <Inputm {...field}
                   component='input'
-                  placeholder='Serial Number' />
+                  placeholder='Serial #' />
               )}
             </Field>
             <Field name={`RepairItems.${index}.serialNumber.${fieldNumber + 1}`}>
               {({ field, form}) => (
                 <Inputm {...field}
                   component='input'
-                  placeholder='Serial Number' />
+                  placeholder='Serial #' />
               )}
             </Field>
           </DivLeftAlign>
@@ -67,7 +67,7 @@ class RedPalletSerialNumbers extends  React.Component {
               {({ field, form}) => (
                 <Inputm {...field}
                   component='input'
-                  placeholder='Serial Number' />
+                  placeholder='Serial #' />
               )}
             </Field>
           </DivLeftAlign>
