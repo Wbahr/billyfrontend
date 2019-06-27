@@ -403,10 +403,18 @@ const RMAform = ({initValues, emptyItem}) => (
                                   {...field}
                                 >
                                   <option value='' selected disabled hidden>--</option>
-                                  <option value='hyd'>Hydraulic</option>
-                                  <option value='elec'>Electrical</option>
-                                  <option value='pnue'>Pnuematic</option>
-                                  <option value='other'>Other</option>
+                                  <option value='VALVE REPAIR'>Hydraulic Valve</option>
+                                  <option value='PUMP REPAIR'>Hydraulic Pump</option>
+                                  <option value='MOTOR FOR REPAIR'>Hydraulic Motor</option>
+                                  <option value='ACCUMULATOR FOR REPAIR'>Hydraulic Accumulator</option>
+                                  <option value='CYLINDER FOR REPAIR'>Hydraulic Cylinder</option>
+                                  <option value='MOTOR REPAIR'>Electric Motor</option>
+                                  <option value='GEARBOX'>Gearbox</option>
+                                  <option value='RPR(R)-HASKEL REPAIR'>Haskel Pump</option>
+                                  <option value='WINCH REPAIR'>Winch</option>
+                                  <option value='HYDRAULIC HOSE'>Hydraulic Hose</option>
+                                  <option value='BRC REPAIR'>Servo Drive</option>
+                                  <option value='BRC REPAIR'>Servo Motor</option>
                                 </SelectInput>
                               </>
                             )}
