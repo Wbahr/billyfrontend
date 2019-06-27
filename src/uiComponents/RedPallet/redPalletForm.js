@@ -9,6 +9,7 @@ import Header from '../_common/sectionHeader'
 // import addsvg from '../../imgs/airline/add.svg'
 // import subsvg from '../../imgs/airline/sub.svg'
 import Dropzone from './photoupload'
+import SerialNumberFields from './redPalletSerialNumbers'
 
 const DivForm = styled.div`
   display: flex;
@@ -533,23 +534,10 @@ const RMAform = ({initValues, emptyItem}) => (
                           </Field>
                         </DivSelectContainer>
                       </DivLeftAlign>
-                      {/*<FieldArray*/}
-                        {/*name="serialNumbers"*/}
-                        {/*render={arrayHelpers => (*/}
-                            {/*<>*/}
-                              {/*{values.repairItems.map((item, index) => (*/}
-                                {/*<Field name={`serialNumbers.${index}`}>*/}
-                                  {/*{({ field, form}) => (*/}
-                                    {/*<Inputm {...field}*/}
-                                      {/*component='input'*/}
-                                      {/*placeholder='Serial #' />*/}
-                                  {/*)}*/}
-                                {/*</Field>*/}
-                                {/*))*/}
-                              {/*}*/}
-                            {/*</>*/}
-                          {/*)}*/}
-                      {/*/>*/}
+                      <SerialNumberFields
+                        fieldCount={item.quantity}
+                        index={index}
+                      />
                       <DivLeftAlign>
                         <DivSelectContainer>
                           <Field name={`RepairItems.${index}.warrantyRequest`}>
