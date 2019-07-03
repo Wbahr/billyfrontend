@@ -5,7 +5,6 @@ import 'react-table/react-table.css'
 import RPlogo from '../../imgs/airline/redpalletlogo.png'
 import { StyledTextGrey, StyledTextGreyBold } from '../../styles/fonts'
 import RedPalletForm from './redPalletForm'
-import RMAform from '../RMA/RMAform'
 import { getUserData } from '../../api-temp/apiCalls'
 
 const DivRedPallet = styled.div`
@@ -26,22 +25,6 @@ const emptyItem = {
   'issue': '',
   'quantity': '1'
 }
-
-// const val = {
-//   'company': 'Airline Hydraulics',
-//   'fullname': 'Bobby Panczer',
-//   'email': 'bpanczer@airlinehyd.com',
-//   'phone': '',
-//   'ext': '',
-//   'address_1': '',
-//   'address_2': '',
-//   'city': '',
-//   'state': '',
-//   'zip': '',
-//   'pickup': '',
-//   'repairItems': [emptyItem],
-//   'additionalNotes': ''
-// }
 
 class RedPalletPage extends React.Component {
   state = {
@@ -76,7 +59,7 @@ class RedPalletPage extends React.Component {
 
   render(){
     return (
-      <React.Fragment>
+      <>
         <DivRedPallet>
           <img src={RPlogo} width={'50%'} height={'auto'}/>
           <StyledTextGrey>Airline’s Red Pallet Program is a fast and easy way to get your repair pickups scheduled and move on with
@@ -92,8 +75,7 @@ class RedPalletPage extends React.Component {
             emptyItem={emptyItem}
           />
         }
-
-      </React.Fragment>
+      </>
     )
   }
 }
