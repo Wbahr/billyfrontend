@@ -25,6 +25,9 @@ const DivLeftAlign = styled.div`
   width: 516px;
   min-width: 316px;
   margin: 0 auto;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const DivRow = styled.div`
@@ -45,11 +48,17 @@ const Input = styled.input`
     outline: none;
     border: 1px solid #318EFC;
   }
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const Inputm = styled(Input)`
   width: 225px;
   min-width: 125px;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const Inputsm = styled(Input)`
@@ -69,10 +78,19 @@ const SelectInput = styled.select`
     outline: none;
     border: 1px solid #318EFC;
   }
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const DivSelectContainer = styled.div`
   margin: 8px;
+  @media (max-width: 700px) {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `
 
 const StyledTextArea = styled.textarea`
@@ -85,6 +103,9 @@ const StyledTextArea = styled.textarea`
   :focus {
     outline: none;
     border: 1px solid #318EFC;
+  }
+  @media (max-width: 700px) {
+    width: auto;
   }
 `
 
@@ -99,6 +120,9 @@ const DivRepairItemContainer = styled.div`
   padding: 16px 8px;
   margin: 16px auto;
   border-radius: 2px;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const DivSubItem = styled.div`
@@ -143,6 +167,9 @@ const DivSubmitContainer = styled.div`
   width: 516px;
   min-width: 316px;
   margin: 0 auto;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 const validate = (values) => {

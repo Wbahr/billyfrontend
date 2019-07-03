@@ -8,6 +8,11 @@ const DivLeftAlign = styled.div`
   width: 516px;
   min-width: 316px;
   margin: 0 auto;
+  @media (max-width: 700px) {
+    width: auto;
+    min-width: none;
+    flex-direction: column;
+  }
 `
 
 const Input = styled.input`
@@ -22,6 +27,11 @@ const Input = styled.input`
   :focus {
     outline: none;
     border: 1px solid #318EFC;
+  }
+  @media (max-width: 700px) {
+    width: 100%;
+    min-width: none;
+    flex-direction: column;
   }
 `
 

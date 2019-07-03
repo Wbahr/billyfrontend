@@ -13,6 +13,9 @@ const DivContainer = styled.div`
   width: 500px;
   min-width: 300px;
   margin: 0 auto;
+  @media (max-width: 700px) {
+    width: auto;
+  }
 `
 
 class DropzoneComponent extends React.Component {

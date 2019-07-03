@@ -31,7 +31,7 @@ const DivAccountContainer = styled.div`
 `
 
 const DivFullContainer = styled.div`
-  width: 1014px;
+  width: 100vw;
   height: 100vh;
   background-color: white;
   padding: 10px;
