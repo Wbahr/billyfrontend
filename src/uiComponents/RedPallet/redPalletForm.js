@@ -373,7 +373,7 @@ const RMAform = ({initValues, emptyItem}) => (
               <Field name={`pickup`}>
                 {({ field, form}) => (
                   <>
-                  <FormText1>Pickup*:</FormText1>
+                  <FormText1>Shipped via*:</FormText1>
                     <SelectInput
                       {...field}
                     >
@@ -385,7 +385,7 @@ const RMAform = ({initValues, emptyItem}) => (
                           <option value='sales'>Salesperson Pickup</option>
                         </>
                       }
-                      <option value='ship'>Shipped via Commercial Carrier</option>
+                      <option value='ship'>Commercial Carrier</option>
                     </SelectInput>
                   </>
                 )}
@@ -442,6 +442,7 @@ const RMAform = ({initValues, emptyItem}) => (
                                   <option value='HYDRAULIC HOSE'>Hydraulic Hose</option>
                                   <option value='BRC REPAIR'>Servo Drive</option>
                                   <option value='BRC REPAIR'>Servo Motor</option>
+                                  <option value='GENERAL LINCOLN'>General Lincoln</option>
                                 </SelectInput>
                               </>
                             )}
@@ -482,6 +483,7 @@ const RMAform = ({initValues, emptyItem}) => (
                                   <option value='phosphateester'>Phosphate Ester</option>
                                   <option value='mineraloil'>Standard Mineral oil</option>
                                   <option value='waterglycol'>Water Glycol</option>
+                                  <option value='grease'>Grease</option>
                                   <option value='other'>Other</option>
                                 </SelectInput>
                               </>
@@ -507,7 +509,7 @@ const RMAform = ({initValues, emptyItem}) => (
                           {({ field, form}) => (
                             <Inputm {...field}
                               component='input'
-                              placeholder='PO #' />
+                              placeholder='PO #*' />
                           )}
                         </Field>
                         <Field name={`RepairItems.${index}.part`}>
@@ -578,7 +580,7 @@ const RMAform = ({initValues, emptyItem}) => (
                           <Field name={`RepairItems.${index}.warrantyRequest`}>
                             {({ field, form}) => (
                               <>
-                              <FormText1>Warranty Request*:</FormText1>
+                              <FormText1>Warranty Request:</FormText1>
                                 <SelectInput
                                   {...field}
                                 >
@@ -589,6 +591,15 @@ const RMAform = ({initValues, emptyItem}) => (
                             )}
                           </Field>
                         </DivSelectContainer>
+                        { item.warrantyRequest === 'true' &&
+                          <Field name={`RepairItems.${index}.warrantInfo`}>
+                            {({ field, form}) => (
+                              <Inputm {...field}
+                                component='input'
+                                placeholder='Original Order or PO #' />
+                            )}
+                          </Field>
+                        }
                       </DivLeftAlign>
                       <Field component='textarea' name={`RepairItems.${index}.issue`}>
                         {({ field, form}) => (

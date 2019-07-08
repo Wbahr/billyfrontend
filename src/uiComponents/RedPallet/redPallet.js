@@ -14,6 +14,17 @@ const DivRedPallet = styled.div`
   max-width: 800px;
   margin: 0 auto;
 `
+
+const DivAlert = styled.div`
+  height: auto;
+  width: 100%;
+  border: 1px solid orange;
+  border-radius: 2px;
+  background-color: cornsilk;
+  color: darkorange;
+  padding 4px;
+`
+
 const emptyItem = {
   'repairType': '',
   'po': '',
@@ -66,8 +77,10 @@ class RedPalletPage extends React.Component {
             your day. Simply fill out the information about your repair needs and hit submit. You will be contacted
             promptly with details regarding the pick up of your components. <StyledTextGreyBold>*Required Fields</StyledTextGreyBold>
           </StyledTextGrey>
-          <StyledTextGreyBold>Note: There will be a minimum charge of $95.00 for tear down & evaluation. If an order is not placed, item
-          will be returned as is un-assembled.</StyledTextGreyBold>
+          <DivAlert>
+            <span>Note: There will be a minimum charge of $95.00 per item for tear down & evaluation. If an order is not placed, item
+          will be returned as is un-assembled.</span>
+          </DivAlert>
         </DivRedPallet>
         { !_.isNil(this.state.initValues) &&
           <RedPalletForm
