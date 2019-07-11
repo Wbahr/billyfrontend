@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import {Elements, StripeProvider} from 'react-stripe-elements';
 import queryString from 'query-string'
 import RMAtable from '../uiComponents/RMA/RMAtable'
 import RMAdetails from '../uiComponents/RMA/RMAdetails'
@@ -11,6 +12,7 @@ import AccountProfile from '../uiComponents/AccountProfile/accountProfile'
 import ContactUs from '../uiComponents/ContactUs/contactUs'
 import BrandScreen from './brandScreen'
 import RedPallet from '../uiComponents/RedPallet/redPallet'
+import InstantQuote from '../uiComponents/InstantQuote/instantQuote'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -39,7 +41,19 @@ const DivFullContainer = styled.div`
 
 class MainScreen extends React.Component {
   state = {
-    currentDisplay: 'RedPallet'
+    stripe: null,
+    currentDisplay: 'InstantQuote'
+  }
+
+  componentDidMount() {
+    if (window.Stripe) {
+      this.setState({stripe: window.Stripe('pk_test_SQ8ib6LMt1YpCE7nVDFenpmH00PWAbBTk0')})
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        this.setState({stripe: window.Stripe('pk_test_SQ8ib6LMt1YpCE7nVDFenpmH00PWAbBTk0')})
+      })
+    }
   }
 
   render(){
@@ -87,6 +101,17 @@ class MainScreen extends React.Component {
         {currentDisplay === 'RedPallet' &&
           <DivFullContainer>
             <RedPallet />
+          </DivFullContainer>
+        }
+        {currentDisplay === 'InstantQuote' &&
+          <DivFullContainer>
+           <StripeProvider stripe={this.state.stripe}>
+            <div className="example">
+              <Elements>
+                <InstantQuote />
+              </Elements>
+            </div>
+          </StripeProvider>
           </DivFullContainer>
         }
       </StyledBackground>
