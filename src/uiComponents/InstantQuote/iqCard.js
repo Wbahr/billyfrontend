@@ -2,11 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 
 const DivCard = styled.div`
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
   width: 300px;
   height: 200px;
   margin: 15px;
-  border: 1px solid grey;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -1px 1px 9px lightgrey;
+  &:hover {
+    box-shadow: -1px 1px 9px #C8C8C8;
+  }
+`
+
+const DivCardDark = styled(DivCard)`
+  background-color: rgba(0,0,0,0.1);
+`
+
+const DivPic = styled.div`
+  width: 75%;
+  height: 150px;
+  background-color: grey;
 `
 
 class IQCard extends React.Component {
@@ -15,7 +32,8 @@ class IQCard extends React.Component {
   }
   render(){
     const {
-      text
+      text,
+      selectedCard
     } = this.props
 
     let imageSource
@@ -26,13 +44,24 @@ class IQCard extends React.Component {
       default:
         imageSource = null
     }
+    if(selectedCard === "" || selectedCard === text) {
+      return (
+        <DivCard onClick={this.handleCardClick}>
+          {/*<img source={imageSource} />*/}
+          <DivPic />
+          <span>{text}</span>
+        </DivCard>
+      )
+    } else {
+      return (
+        <DivCardDark onClick={this.handleCardClick}>
+          {/*<img source={imageSource} />*/}
+          <DivPic />
+          <span>{text}</span>
+        </DivCardDark>
+      )
+    }
 
-    return (
-      <DivCard onClick={this.handleCardClick}>
-        {/*<img source={imageSource} />*/}
-        <p>{text}</p>
-      </DivCard>
-    )
   }
 }
 

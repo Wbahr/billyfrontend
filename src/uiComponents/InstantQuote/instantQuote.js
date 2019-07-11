@@ -40,7 +40,7 @@ function noScroll(){
 
 class ProductConfigSearch extends React.Component {
   state = {
-    type: ''
+    selectedCard: ''
   }
 
   componentWillMount() {
@@ -56,11 +56,11 @@ class ProductConfigSearch extends React.Component {
   }
 
   cardClick = (brand) => {
-    this.setState({type: brand}, this.scrollToQuestions)
+    this.setState({selectedCard: brand}, this.scrollToQuestions)
   }
 
   backClick = () => {
-    this.setState({type: ""}, this.scrollToCards)
+    this.setState({selectedCard: ""}, this.scrollToCards)
   }
 
   render(){
@@ -70,21 +70,25 @@ class ProductConfigSearch extends React.Component {
           <DivCardContainer id='cards'>
             <DivRow>
               <IQCard
-                text='haskell'
+                text='Haskell Pump'
+                selectedCard={this.state.selectedCard}
                 cardClick={this.cardClick}
               />
               <IQCard
-                text='haskell'
+                text='Haskell Hydraulic'
+                selectedCard={this.state.selectedCard}
                 cardClick={this.cardClick}
               />
               <IQCard
-                text='haskell'
+                text='Haskell Pipe'
+                selectedCard={this.state.selectedCard}
                 cardClick={this.cardClick}
               />
             </DivRow>
           </DivCardContainer>
           <DivCardContainerGrey id='product'>
             <span onClick={this.backClick}>back to cards</span>
+            <span>{this.state.selectedCard}</span>
             <DivStripeCard>
               <CardElement />
             </DivStripeCard>
