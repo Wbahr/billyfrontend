@@ -592,7 +592,7 @@ const RMAform = ({initValues, emptyItem}) => (
                           </Field>
                         </DivSelectContainer>
                         { item.warrantyRequest === 'true' &&
-                          <Field name={`RepairItems.${index}.warrantInfo`}>
+                          <Field name={`RepairItems.${index}.warrantyInfo`}>
                             {({ field, form}) => (
                               <Inputm {...field}
                                 component='input'

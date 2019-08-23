@@ -13,6 +13,7 @@ import ContactUs from '../uiComponents/ContactUs/contactUs'
 import BrandScreen from './brandScreen'
 import RedPallet from '../uiComponents/RedPallet/redPallet'
 import InstantQuote from '../uiComponents/InstantQuote/instantQuote'
+import Checkout from '../uiComponents/Checkout/checkout'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -42,7 +43,7 @@ const DivFullContainer = styled.div`
 class MainScreen extends React.Component {
   state = {
     stripe: null,
-    currentDisplay: 'InstantQuote'
+    currentDisplay: 'Checkout'
   }
 
   componentDidMount() {
@@ -105,13 +106,24 @@ class MainScreen extends React.Component {
         }
         {currentDisplay === 'InstantQuote' &&
           <DivFullContainer>
-           <StripeProvider stripe={this.state.stripe}>
-            <div className="example">
-              <Elements>
-                <InstantQuote />
-              </Elements>
-            </div>
-          </StripeProvider>
+            <StripeProvider stripe={this.state.stripe}>
+              <div className="example">
+                <Elements>
+                  <InstantQuote />
+                </Elements>
+              </div>
+            </StripeProvider>
+          </DivFullContainer>
+        }
+        {currentDisplay === 'Checkout' &&
+          <DivFullContainer>
+            <StripeProvider stripe={this.state.stripe}>
+              <div className="example">
+                <Elements>
+                  <Checkout />
+                </Elements>
+              </div>
+            </StripeProvider>
           </DivFullContainer>
         }
       </StyledBackground>

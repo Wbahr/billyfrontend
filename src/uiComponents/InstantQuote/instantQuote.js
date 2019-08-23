@@ -13,6 +13,7 @@ const DivCardContainer = styled.div`
 
 const DivCardContainerGrey = styled(DivCardContainer)`
   background-color: grey;
+  width: 50%;
 `
 
 const DivRow = styled.div`
