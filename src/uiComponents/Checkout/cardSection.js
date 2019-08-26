@@ -1,5 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CardElement } from 'react-stripe-elements'
+
+const DivSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const DivStripeCard = styled.div`
+  width: 300px;
+  background-color: white;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 2px;
+`
 
 class CardSection extends React.Component {
 
@@ -19,11 +33,17 @@ class CardSection extends React.Component {
       }
     } = this.props
     return(
-      <>
+      <DivSection>
         <h2>Credit Card Info</h2>
           <label for="name">Cardholder Full Name</label>
           <input id="name" onChange={this.handleFieldChange} value={name} placeholder="Cardholder Name"></input>
-      </>
+          <label for="card-element">Credit or debit card</label>
+          <div id="card-element">
+            <DivStripeCard>
+              <CardElement />
+            </DivStripeCard>            
+          </div>
+      </DivSection>
 		)
 	}
 }

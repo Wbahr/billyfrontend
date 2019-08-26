@@ -1,6 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
+const DivSection = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 class AddressSection extends React.Component {
 
   handleFieldChange = (e) => {
@@ -23,7 +28,7 @@ class AddressSection extends React.Component {
       }
     } = this.props
     return(
-      <>
+      <DivSection>
         <h2>Billing Address</h2>
           <label for="address_line1">Address 1</label>
           <input id="address_line1" onChange={this.handleFieldChange} value={address1} placeholder="Address 1"></input>
@@ -35,7 +40,7 @@ class AddressSection extends React.Component {
           <input id="address_state" onChange={this.handleFieldChange} value={state} placeholder="State"></input>
           <label for="address_zip">Zip</label>
           <input id="address_zip" onChange={this.handleFieldChange} value={zip} placeholder="Zip"></input>
-      </>
+      </DivSection>
 		)
 	}
 }

@@ -1,16 +1,15 @@
 import React from 'react'
-import { CardElement, injectStripe } from 'react-stripe-elements'
+import { injectStripe } from 'react-stripe-elements'
 import styled from 'styled-components'
 import CardSection from './cardSection'
 import BillingAddressSection from './addressSection'
 
-const DivStripeCard = styled.div`
-  width: 300px;
-  background-color: white;
-  padding: 8px;
-  margin: 8px;
-  border-radius: 2px;
+const DivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
 `
+
 class Checkout extends React.Component {
 
   state = {
@@ -62,7 +61,7 @@ class Checkout extends React.Component {
     return(
       <>
         <form onSubmit={this.handleSubmit}>          
-          <div class="form-row">
+          <DivContainer>
             <CardSection 
               cardData={this.state}
               changeFieldValue={this.handleFieldChange}
@@ -71,16 +70,8 @@ class Checkout extends React.Component {
               cardData={this.state}
               changeFieldValue={this.handleFieldChange}
             />
-            <label for="card-element">
-              Credit or debit card
-            </label>
-            <div id="card-element">
-              <DivStripeCard>
-                <CardElement />
-              </DivStripeCard>            
-            </div>
             <div id="card-errors" role="alert"></div>
-          </div>
+          </DivContainer>
           <button>Submit Payment</button>
         </form>
       </>
