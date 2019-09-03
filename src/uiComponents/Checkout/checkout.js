@@ -1,6 +1,8 @@
 import React from 'react'
 import { injectStripe } from 'react-stripe-elements'
 import styled from 'styled-components'
+import _ from 'lodash'
+import { getUserPaymentOptions, getStripeUser, createStripeUser, saveStripePaymentMethod } from '../api-temp/apiCalls'
 import CardSection from './cardSection'
 import BillingAddressSection from './addressSection'
 
@@ -20,6 +22,24 @@ class Checkout extends React.Component {
     'address_state': '',
     'address_zip': '',
     'address_country': 'US',
+  }
+
+  componentWillMount(){
+    let apiToken = Cookies.get('b2bApiToken')
+    if (!_.isNil(apiToken)){
+      // check if stripe user, get payment options
+      // let paymentOptions = getUserPaymentOptions()
+      if (getStripeUser(apiToken)) {
+        // if they are a stripe user, 
+      } else {
+        let stripeToken = createStripeUser()
+      }
+    // let paymentOptions = getUserPaymentOptions()
+
+    } else {
+      //  trigger signin modal
+    }
+
   }
 
   handleFieldChange = (field, value) => {
