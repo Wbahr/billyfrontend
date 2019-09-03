@@ -2,7 +2,7 @@ import React from 'react'
 import { injectStripe } from 'react-stripe-elements'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { getUserPaymentOptions, getStripeUser, createStripeUser, saveStripePaymentMethod } from '../api-temp/apiCalls'
+// import { getUserPaymentOptions, getStripeUser, createStripeUser, saveStripePaymentMethod } from '../api-temp/apiCalls'
 import CardSection from './cardSection'
 import BillingAddressSection from './addressSection'
 
@@ -32,7 +32,7 @@ class Checkout extends React.Component {
       if (getStripeUser(apiToken)) {
         // if they are a stripe user, 
       } else {
-        let stripeToken = createStripeUser()
+        // let stripeToken = createStripeUser()
       }
     // let paymentOptions = getUserPaymentOptions()
 

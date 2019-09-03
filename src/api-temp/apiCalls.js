@@ -285,3 +285,54 @@ export function saveStripePaymentMethod() {
 			return {'error': 'Bad Request. Try again.'}
 		})
 }
+
+// finish
+export function updateAccountNotifications() {
+  const endpoint = '/stripe/updateAccountNotifications'
+	return fetch(newapi + endpoint, {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow', // manual, *follow, error
+		referrer: 'no-referrer', // no-referrer, *client
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
+
+export function updateMarketingNotifications() {
+  const endpoint = '/stripe/updateMarketingNotifications'
+	return fetch(newapi + endpoint, {
+		method: 'GET',
+		mode: 'cors',
+		cache: 'no-cache',
+		credentials: 'same-origin',
+		headers: {
+			'Authorization': 'bearer ' + token,
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		redirect: 'follow', // manual, *follow, error
+		referrer: 'no-referrer', // no-referrer, *client
+	})
+		.then(function(response){
+			if(response.ok){
+				return response.json()
+			}
+			throw new Error('Bad Request.')
+		}).catch(function(error) {
+			return {'error': 'Bad Request. Try again.'}
+		})
+}
