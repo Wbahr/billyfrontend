@@ -43,7 +43,7 @@ const DivFullContainer = styled.div`
 class MainScreen extends React.Component {
   state = {
     stripe: null,
-    currentDisplay: 'RedPallet'
+    currentDisplay: 'Checkout'
   }
 
   componentDidMount() {

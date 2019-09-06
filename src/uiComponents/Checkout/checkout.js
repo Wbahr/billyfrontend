@@ -2,9 +2,10 @@ import React from 'react'
 import { injectStripe } from 'react-stripe-elements'
 import styled from 'styled-components'
 import _ from 'lodash'
-// import { getUserPaymentOptions, getStripeUser, createStripeUser, saveStripePaymentMethod } from '../api-temp/apiCalls'
+import { getStripeUser, stripeTokenHandler } from '../../api-temp/stripe'
 import CardSection from './cardSection'
 import BillingAddressSection from './addressSection'
+import Cookies from 'js-cookie'
 
 const DivContainer = styled.div`
   display: flex;
@@ -26,20 +27,23 @@ class Checkout extends React.Component {
 
   componentWillMount(){
     let apiToken = Cookies.get('b2bApiToken')
+    apiToken = '12345'
     if (!_.isNil(apiToken)){
-      // check if stripe user, get payment options
-      // let paymentOptions = getUserPaymentOptions()
-      if (getStripeUser(apiToken)) {
-        // if they are a stripe user, 
-      } else {
-        // let stripeToken = createStripeUser()
-      }
-    // let paymentOptions = getUserPaymentOptions()
-
+      // Get stripe user
+      console.log('getting stripe token')
+      getStripeUser(apiToken).then((response) => {
+        if(_.has(response,'stripeCustomerID')) {
+          stripe.customers.retrieve(
+                response.,
+  function(err, customer) {
+    // asynchronously called
+  }
+        } else {
+          createStripeUser(apiToken)
+        })
     } else {
       //  trigger signin modal
     }
-
   }
 
   handleFieldChange = (field, value) => {
@@ -50,6 +54,8 @@ class Checkout extends React.Component {
     const {
       stripe
     } = this.props
+
+    console.log('handling submit')
 
     e.preventDefault()
     
@@ -70,7 +76,7 @@ class Checkout extends React.Component {
           errorElement.textContent = result.error.message;
         } else {
           // Send the token to your server.
-          // stripeTokenHandler(result.token);
+          stripeTokenHandler(result.token);
           console.log('result', result)
         }
     })
