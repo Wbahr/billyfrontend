@@ -33,14 +33,16 @@ class Checkout extends React.Component {
       console.log('getting stripe token')
       getStripeUser(apiToken).then((response) => {
         if(_.has(response,'stripeCustomerID')) {
-          stripe.customers.retrieve(
-                response.,
-  function(err, customer) {
-    // asynchronously called
-  }
+          // stripe.customers.retrieve(
+          //       response.,
+          //     function(err, customer) {
+          //       // asynchronously called
+          //     }
+          // )
         } else {
           createStripeUser(apiToken)
-        })
+        }
+      })
     } else {
       //  trigger signin modal
     }
@@ -59,27 +61,7 @@ class Checkout extends React.Component {
 
     e.preventDefault()
     
-    stripe.createToken(
-      {
-        type: 'card', 
-        name: this.state.name,
-        address_line1: this.state.address_line1,
-        address_line2: this.state.address_line2,
-        address_city: this.state.address_city,
-        address_state: this.state.address_state,
-        address_zip: this.state.zip,
-        address_country: 'US'
-      }).then(function(result) {
-        if (result.error) {
-          // Inform the customer that there was an error.
-          var errorElement = document.getElementById('card-errors');
-          errorElement.textContent = result.error.message;
-        } else {
-          // Send the token to your server.
-          stripeTokenHandler(result.token);
-          console.log('result', result)
-        }
-    })
+
   }
 
 
