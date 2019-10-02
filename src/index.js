@@ -2,9 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Provider } from 'react-redux'
-import { store } from './config/store'
-
 import MainScreen from './containerComponents/mainScreen'
 
 const App = () => {
@@ -16,8 +13,6 @@ const App = () => {
 }
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
+	<App />,
 	document.getElementById('index')
 )

@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import {Elements, StripeProvider} from 'react-stripe-elements';
 import queryString from 'query-string'
@@ -14,6 +13,7 @@ import BrandScreen from './brandScreen'
 import RedPallet from '../uiComponents/RedPallet/redPallet'
 import InstantQuote from '../uiComponents/InstantQuote/instantQuote'
 import Checkout from '../uiComponents/Checkout/checkout'
+import Search from '../uiComponents/Search/testSearch'
 
 const StyledBackground = styled.div`
   width: 100%;
@@ -43,7 +43,7 @@ const DivFullContainer = styled.div`
 class MainScreen extends React.Component {
   state = {
     stripe: null,
-    currentDisplay: 'Checkout'
+    currentDisplay: 'Search'
   }
 
   componentDidMount() {
@@ -64,6 +64,11 @@ class MainScreen extends React.Component {
 
     return(
       <StyledBackground>
+        currentDisplay === 'Search' &&
+          <DivFullContainer>
+            <Search />
+          </DivFullContainer>
+        }
         {currentDisplay === 'SMCSearch' &&
           <DivFullContainer>
             <SMCProductConfigSearch />
@@ -131,10 +136,4 @@ class MainScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => {}
-const mapDispatchToProps = { requestTesting }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainScreen)
+export default MainScreen
