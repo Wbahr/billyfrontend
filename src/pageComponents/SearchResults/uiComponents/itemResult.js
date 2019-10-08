@@ -6,7 +6,6 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   max-width: 700px;
   height: 180px;
-  margin: 100px auto;
 `
 
 const DivPartNumberRow = styled.div`
@@ -102,6 +101,13 @@ const Pprice = styled.p`
   padding: 0 4px;
 `
 
+const PBlue = styled.p`
+  color: #328EFC
+  margin: 0;
+  font-size: 13px;
+  padding: 0 4px;
+`
+
 export function ItemResult(props) {
   return(
     <DivItemResultContainer>
@@ -111,7 +117,7 @@ export function ItemResult(props) {
         <DivPartDetails>
           <PpartTitle>SMC SY3100-5U1, 5 PORT SOLENOID VALVE</PpartTitle>
           <PpartDesc>SY3000, 2 POSITION - SINGLE SOLENOID, BASE MOUNTED, INTERNAL PILOT, 24 VDC</PpartDesc>
-          <PpartAvailability>Availability: 9631 -- Locations</PpartAvailability>
+          <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>9631</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
         </DivPartDetails>
         <DivPartAction>
           <Div><Pprice>$12.23</Pprice><p>/EA</p></Div>
