@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { ItemResult } from '../pageComponents/SearchResults/uiComponents/itemResult'
 
 const ContentScreenContainer = styled.div`
   display: flex;
@@ -7,17 +8,10 @@ const ContentScreenContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
 `
-
-class ContentScreen extends React.Component {
-  render(){
-    return(
-      <ContentScreenContainer>
-        <div>
-          <p>Test Div</p>
-        </div>
-      </ContentScreenContainer>
-    )
-  }
+export default function ContentScreen(props) {
+  return(
+    <ContentScreenContainer>
+      <ItemResult/>
+    </ContentScreenContainer>
+  )
 }
-
-export default ContentScreen

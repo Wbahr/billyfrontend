@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
-import FullBrandPage from '../uiComponents/Brands/generalFullBrand'
-import MinimalBrandPage from '../uiComponents/Brands/generalMinimalBrand'
-import abb from '../uiComponents/Brands/jsonData/abb'
+import FullBrandPage from '../pageComponents/Brands/generalFullBrand'
+import MinimalBrandPage from '../pageComponents/Brands/generalMinimalBrand'
+import abb from '../pageComponents/Brands/jsonData/abb'
 import queryString from 'query-string'
 
 class BrandScreen extends React.Component {
