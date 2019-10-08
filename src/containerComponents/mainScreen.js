@@ -15,36 +15,43 @@ import InstantQuote from '../uiComponents/InstantQuote/instantQuote'
 import Checkout from '../uiComponents/Checkout/checkout'
 import Search from '../uiComponents/Search/testSearch'
 
-const StyledBackground = styled.div`
-  width: 100%;
+// const StyledBackground = styled.div`
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin: 0;
+//   padding 0;
+//   background-color: grey;
+// `
+
+const MainScreenContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
-`
-
-const DivAccountContainer = styled.div`
-  width: 744px;
-  min-height: 500px;
-  background-color: white;
-  padding: 10px;
-  margin: 20px 0;
-`
-
-const DivFullContainer = styled.div`
+  flex-direction: column;
   width: 100vw;
   height: 100vh;
-  background-color: white;
-  padding: 10px;
 `
 
+// const DivAccountContainer = styled.div`
+//   width: 744px;
+//   min-height: 500px;
+//   background-color: white;
+//   padding: 10px;
+//   margin: 20px 0;
+// `
+
+// const DivFullContainer = styled.div`
+//   width: 100vw;
+//   height: 100vh;
+//   background-color: white;
+//   padding: 10px;
+// `
+
 class MainScreen extends React.Component {
-  state = {
-    stripe: null,
-    currentDisplay: 'Search'
-  }
+  // state = {
+  //   stripe: null,
+  //   currentDisplay: 'Search'
+  // }
 
   componentDidMount() {
     if (window.Stripe) {
@@ -58,81 +65,87 @@ class MainScreen extends React.Component {
   }
 
   render(){
-    const {
-      currentDisplay
-    } = this.state
-
     return(
-      <StyledBackground>
-        currentDisplay === 'Search' &&
-          <DivFullContainer>
-            <Search />
-          </DivFullContainer>
-        }
-        {currentDisplay === 'SMCSearch' &&
-          <DivFullContainer>
-            <SMCProductConfigSearch />
-          </DivFullContainer>
-        }
-        {currentDisplay === 'ContactUs' &&
-          <DivFullContainer>
-            <ContactUs />
-          </DivFullContainer>
-        }
-        {currentDisplay === 'ExistingRMAs' &&
-          <DivAccountContainer>
-            <RMAtable />
-          </DivAccountContainer>
-        }
-        {currentDisplay === 'RMARequestDetail' &&
-          <DivAccountContainer>
-            <RMAdetails />
-          </DivAccountContainer>
-        }
-        {currentDisplay === 'invoicepayment' &&
-          <DivAccountContainer>
-            <InvoicePayments />
-          </DivAccountContainer>
-        }
-        {currentDisplay === 'AccountInfoTab' &&
-          <DivAccountContainer>
-            <AccountProfile />
-          </DivAccountContainer>
-        }
-        {currentDisplay === 'BrandScreen' &&
-          <DivFullContainer>
-            <BrandScreen />
-          </DivFullContainer>
-        }
-        {currentDisplay === 'RedPallet' &&
-          <DivFullContainer>
-            <RedPallet />
-          </DivFullContainer>
-        }
-        {currentDisplay === 'InstantQuote' &&
-          <DivFullContainer>
-            <StripeProvider stripe={this.state.stripe}>
-              <div className="example">
-                <Elements>
-                  <InstantQuote />
-                </Elements>
-              </div>
-            </StripeProvider>
-          </DivFullContainer>
-        }
-        {currentDisplay === 'Checkout' &&
-          <DivFullContainer>
-            <StripeProvider stripe={this.state.stripe}>
-              <div className="example">
-                <Elements>
-                  <Checkout />
-                </Elements>
-              </div>
-            </StripeProvider>
-          </DivFullContainer>
-        }
-      </StyledBackground>
+      <MainScreenContainer>
+        <p>login</p>
+        <p>navbar</p>
+        <p>search</p>
+        <p>product categories</p>
+        <p>zachary</p>
+        <p>footer</p>
+      </MainScreenContainer>
     )
+    // return(
+      // <StyledBackground>
+      //   currentDisplay === 'Search' &&
+      //     <DivFullContainer>
+      //       <Search />
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'SMCSearch' &&
+      //     <DivFullContainer>
+      //       <SMCProductConfigSearch />
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'ContactUs' &&
+      //     <DivFullContainer>
+      //       <ContactUs />
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'ExistingRMAs' &&
+      //     <DivAccountContainer>
+      //       <RMAtable />
+      //     </DivAccountContainer>
+      //   }
+      //   {currentDisplay === 'RMARequestDetail' &&
+      //     <DivAccountContainer>
+      //       <RMAdetails />
+      //     </DivAccountContainer>
+      //   }
+      //   {currentDisplay === 'invoicepayment' &&
+      //     <DivAccountContainer>
+      //       <InvoicePayments />
+      //     </DivAccountContainer>
+      //   }
+      //   {currentDisplay === 'AccountInfoTab' &&
+      //     <DivAccountContainer>
+      //       <AccountProfile />
+      //     </DivAccountContainer>
+      //   }
+      //   {currentDisplay === 'BrandScreen' &&
+      //     <DivFullContainer>
+      //       <BrandScreen />
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'RedPallet' &&
+      //     <DivFullContainer>
+      //       <RedPallet />
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'InstantQuote' &&
+      //     <DivFullContainer>
+      //       <StripeProvider stripe={this.state.stripe}>
+      //         <div className="example">
+      //           <Elements>
+      //             <InstantQuote />
+      //           </Elements>
+      //         </div>
+      //       </StripeProvider>
+      //     </DivFullContainer>
+      //   }
+      //   {currentDisplay === 'Checkout' &&
+      //     <DivFullContainer>
+      //       <StripeProvider stripe={this.state.stripe}>
+      //         <div className="example">
+      //           <Elements>
+      //             <Checkout />
+      //           </Elements>
+      //         </div>
+      //       </StripeProvider>
+      //     </DivFullContainer>
+      //   }
+      // </StyledBackground>
+    // )
   }
 }
 
