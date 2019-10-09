@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { ItemResult } from '../pageComponents/SearchResults/uiComponents/itemResult'
 import ResultsSummary from '../pageComponents/SearchResults/uiComponents/resultsSummary'
 import ResultsSearch from '../pageComponents/SearchResults/uiComponents/resultsSearch'
+import Header from '../containerComponents/header'
 
 const ContentScreenContainer = styled.div`
   display: flex;
@@ -14,10 +15,13 @@ const ContentScreenContainer = styled.div`
 
 export default function ContentScreen(props) {
   return(
-    <ContentScreenContainer>
-      <ResultsSummary /> 
-      <ResultsSearch />
-      <ItemResult/>
-    </ContentScreenContainer>
+    <>
+      <Header />
+      <ContentScreenContainer>
+        <ResultsSummary /> 
+        <ResultsSearch />
+        <ItemResult/>
+      </ContentScreenContainer>
+    </>
   )
 }
