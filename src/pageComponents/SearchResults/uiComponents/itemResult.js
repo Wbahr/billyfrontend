@@ -119,8 +119,9 @@ export function ItemResult(props) {
   }
 
   function handleAddToCart() {
-    console.log('quantity', quantity, frecno)
+    if (quantity.length > 0){
     // addToCart(quantity, frecno)
+    }
   }
   return(
     <DivItemResultContainer>
