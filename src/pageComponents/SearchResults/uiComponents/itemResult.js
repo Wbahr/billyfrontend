@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const DivItemResultContainer = styled.div`
@@ -109,6 +109,19 @@ const PBlue = styled.p`
 `
 
 export function ItemResult(props) {
+  const frecno = 23123123
+  const [quantity, setQuantity] = useState(1)
+
+  function handleSetQuantity(quantity){
+    if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
+      setQuantity(quantity)
+    }
+  }
+
+  function handleAddToCart() {
+    console.log('quantity', quantity, frecno)
+    // addToCart(quantity, frecno)
+  }
   return(
     <DivItemResultContainer>
       <DivPartNumberRow><p>Item ID: SMC SY3100-5U1</p><p>Airline #: 92382384</p></DivPartNumberRow>
@@ -121,8 +134,8 @@ export function ItemResult(props) {
         </DivPartDetails>
         <DivPartAction>
           <Div><Pprice>$12.23</Pprice><p>/EA</p></Div>
-          <Div><p>Quantity:</p><InputQuantity/></Div>
-          <ButtonRed>Add to Cart</ButtonRed>
+          <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivPartAction>
       </DivPartDetailsRow>
     </DivItemResultContainer>
