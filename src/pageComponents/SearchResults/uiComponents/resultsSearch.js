@@ -27,16 +27,19 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-
 export default function ResultsSearch(props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortType, setSortType] = useState(0)
   const [showQuantity, setShowQuantity] = useState(10)
 
+  function handleSearch() {
+    console.log(searchTerm, sortType, showQuantity)
+  }
+
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch>Search</ButtonSearch>
+        <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
         <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
