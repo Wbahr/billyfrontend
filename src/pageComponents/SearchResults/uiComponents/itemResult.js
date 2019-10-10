@@ -6,6 +6,7 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   max-width: 700px;
   height: 180px;
+  margin-bottom: 20px;
 `
 
 const DivPartNumberRow = styled.div`

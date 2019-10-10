@@ -5,7 +5,7 @@ const DivResultsSummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 700px;
-  margin: 100px 0 20px 0;
+  margin: 0 0 20px 0;
 
 `
 

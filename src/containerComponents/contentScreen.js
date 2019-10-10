@@ -8,9 +8,12 @@ import Header from '../containerComponents/header'
 const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   max-width: 1200px;
-  margin: 100px auto;
+  margin: 28px auto;
+`
+
+const Temp = styled.div`
+  margin-left: 257px;
 `
 
 export default function ContentScreen(props) {
@@ -18,9 +21,15 @@ export default function ContentScreen(props) {
     <>
       <Header />
       <ContentScreenContainer>
-        <ResultsSummary /> 
-        <ResultsSearch />
-        <ItemResult/>
+        <Temp>
+          <ResultsSummary /> 
+          <ResultsSearch />
+          <ItemResult/>
+          <ItemResult/>
+          <ItemResult/>
+          <ItemResult/>
+        </Temp>
+
       </ContentScreenContainer>
     </>
   )
