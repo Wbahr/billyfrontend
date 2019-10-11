@@ -114,7 +114,7 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent() {
   return(
-    <>
+    <Router>
       <NavTop>
         <NavBottomContainer>
           <div>
@@ -133,15 +133,31 @@ export default function HeaderComponent() {
       </NavTop>
       <NavBottom>
         <NavBottomContainer>
-          <img src={AirlineLogo} height="50px"/>
+          <Link to="/">
+            <img src={AirlineLogo} height="50px"/>
+          </Link>
           <LinkContainer>
-            <NavItem>Shop</NavItem>
-            <NavItem>Services</NavItem>
-            <NavItem>Industries</NavItem>
-            <NavItem>Brands</NavItem>
-            <NavItem>Resources</NavItem>
-            <NavItem>About</NavItem>
-            <NavItem>Contact</NavItem>
+            <Link to="/shop">
+              <NavItem>Shop</NavItem>
+            </Link>
+            <Link to="/services">
+              <NavItem>Services</NavItem>
+            </Link>
+            <Link to="/industries">
+              <NavItem>Industries</NavItem>
+            </Link>
+            <Link to="/brands">
+              <NavItem>Brands</NavItem>
+            </Link>
+            <Link to="/resources">
+              <NavItem>Resources</NavItem>
+            </Link>
+            <Link to="/about">
+              <NavItem>About</NavItem>
+            </Link>
+            <Link to="/contact">
+              <NavItem>Contact</NavItem>
+            </Link>
           </LinkContainer>
           <Div>
             <InputSearch placeholder="Search by Part # or Keyword" />
@@ -150,6 +166,6 @@ export default function HeaderComponent() {
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
       </NavBottom>
-    </>
+    </Router>
   )
 }
