@@ -1,6 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const NavTop = styled.div`
   display: flex;
