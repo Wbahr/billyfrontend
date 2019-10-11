@@ -1,8 +1,22 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
+// Layouts
+import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
+// Components
+import Homepage from '../layoutComponents/contentScreen'
 
-import Homepage from '../containerComponents/contentScreen'
-import Main from '../containerComponents/mainScreen'
+
+function WrapperRoute({ component: Component, layout: LayoutWrapperComponent }) {
+  return (
+    <Route
+      render={routeProps => (
+        <LayoutWrapperComponent>
+          <Component {...routeProps} />
+        </LayoutWrapperComponent>
+      )}
+    />
+  );
+}
 
 class App extends React.Component {
   // componentDidUpdate (prevProps) {
@@ -25,9 +39,7 @@ class App extends React.Component {
   render () {
     return (
       <Switch>
-        <Route exact path='/' component={Homepage} />
-        <Route exact path='/shop' component={Main} />
-        {/* <Route exact path='/reset-password/:reset_token' component={ResetPasswordScreen} /> */}
+        <WrapperRoute exact path='/' component={Homepage} layout={HeaderFooterLayout}/>
       </Switch>
     )
   }

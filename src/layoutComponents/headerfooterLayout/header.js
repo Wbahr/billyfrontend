@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import AirlineLogo from '../imgs/airline/airline_vector.png'
+import AirlineLogo from '../../imgs/airline/airline_vector.png'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -30,7 +31,7 @@ const LinkContainer = styled.div`
   display: flex;
   height: 100%;
   width: 40%;
-  color: black;
+  color: black !important;
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
@@ -46,6 +47,7 @@ const NavBottomContainer = styled.div`
 
 const NavItem =styled.a`
   cursor: pointer;
+  color: black !important;
   &:hover{
     transition: border-bottom 500ms;
     transition: margin-bottom 500ms;

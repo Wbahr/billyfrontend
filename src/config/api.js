@@ -13,7 +13,7 @@
 // }
 //
 // import _ from 'lodash'
-// // import * as apiConfig from '../../config/api'
+// import * as apiConfig from '../../config/api'
 // import { errorStatus, requestStatus, successStatus } from '../../config/fetch'
 // import queryString from 'query-string'
 //

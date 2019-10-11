@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Switch from './config/switch'
 // import MainScreen from './containerComponents/mainScreen'
-import SearchResults from './pageComponents/SearchResults/searchResultsPage'
+// import SearchResults from './pageComponents/SearchResults/searchResultsPage'
 
 ReactDOM.render(
   <Router>
