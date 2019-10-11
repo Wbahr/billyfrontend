@@ -114,7 +114,7 @@ const Aphone = styled(A)`
   color: white;
 `
 
-export default function HeaderComponent() {
+export default function HeaderComponent(props) {
   return(
     <Router>
       <NavTop>

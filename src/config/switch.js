@@ -12,7 +12,7 @@ function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ..
     <Route
       {...otherProps}
       render={routeProps => (
-        <LayoutWrapperComponent>
+        <LayoutWrapperComponent {...routeProps}>
           <Component {...routeProps} />
         </LayoutWrapperComponent>
       )}
