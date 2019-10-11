@@ -1,13 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 const NavTop = styled.div`
   display: flex;
@@ -116,7 +110,7 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   return(
-    <Router>
+    <>
       <NavTop>
         <NavBottomContainer>
           <div>
@@ -168,6 +162,6 @@ export default function HeaderComponent(props) {
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
       </NavBottom>
-    </Router>
+    </>
   )
 }

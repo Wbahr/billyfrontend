@@ -42,7 +42,15 @@ class App extends React.Component {
     return (
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/shop' component={SearchResults} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/redpallet' component={Home} layout={HeaderFooterLayout}/>
       </Switch>
     )
   }
