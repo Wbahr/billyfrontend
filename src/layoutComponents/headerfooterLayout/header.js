@@ -40,6 +40,7 @@ const NavBottomContainer = styled.div`
 `
 
 const NavItem =styled.a`
+  display: block;
   cursor: pointer;
   color: black !important;
   &:hover{
@@ -133,25 +134,25 @@ export default function HeaderComponent(props) {
             <img src={AirlineLogo} height="50px"/>
           </Link>
           <LinkContainer>
-            <Link to="/shop">
+            <Link to="/shop" style={{ textDecoration: 'none' }}>
               <NavItem>Shop</NavItem>
             </Link>
-            <Link to="/services">
+            <Link to="/services" style={{ textDecoration: 'none' }}>
               <NavItem>Services</NavItem>
             </Link>
-            <Link to="/industries">
+            <Link to="/industries" style={{ textDecoration: 'none' }}>
               <NavItem>Industries</NavItem>
             </Link>
-            <Link to="/brands">
+            <Link to="/brands" style={{ textDecoration: 'none' }}>
               <NavItem>Brands</NavItem>
             </Link>
-            <Link to="/resources">
+            <Link to="/resources" style={{ textDecoration: 'none' }}>
               <NavItem>Resources</NavItem>
             </Link>
-            <Link to="/about">
+            <Link to="/about" style={{ textDecoration: 'none' }}>
               <NavItem>About</NavItem>
             </Link>
-            <Link to="/contact">
+            <Link to="/contact" style={{ textDecoration: 'none' }}>
               <NavItem>Contact</NavItem>
             </Link>
           </LinkContainer>
