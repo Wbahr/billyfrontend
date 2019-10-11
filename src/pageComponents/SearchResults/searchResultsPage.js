@@ -1,15 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import ContentScreen from '../../containerComponents/contentScreen'
+import ItemResult from './uiComponents/itemResult'
+import ResultsSearch from './uiComponents/resultsSearch'
 
-const 
 class SearchResultsPage extends React.Component {
   render(){
     return(
       <ContentScreen>
-        <div>
-          <p>Test Div</p>
-        </div>
+        <ResultsSearch />
+        <ItemResult />
       </ContentScreen>
     )
   }
