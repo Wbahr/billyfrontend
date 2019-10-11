@@ -2,9 +2,11 @@ import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 // Layouts
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
+import EmptyLayout from '../layoutComponents/emptyLayout'
 // Components
 import Home from '../pageComponents/Home/homePage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 
 
 function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -50,7 +52,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/redpallet' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
       </Switch>
     )
   }
