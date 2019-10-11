@@ -7,7 +7,7 @@ import React from 'react'
 class SearchResultsPage extends React.Component {
   render(){
     return(
-      <p>HEELLO WORLD</p>
+      <p>Home page content here</p>
     )
   }
 }

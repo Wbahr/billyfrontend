@@ -3,12 +3,14 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 // Layouts
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 // Components
-import Homepage from '../layoutComponents/contentScreen'
+import Home from '../pageComponents/Home/homePage'
+import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 
 
-function WrapperRoute({ component: Component, layout: LayoutWrapperComponent }) {
+function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
     <Route
+      {...otherProps}
       render={routeProps => (
         <LayoutWrapperComponent>
           <Component {...routeProps} />
@@ -39,7 +41,8 @@ class App extends React.Component {
   render () {
     return (
       <Switch>
-        <WrapperRoute exact path='/' component={Homepage} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/shop' component={SearchResults} layout={HeaderFooterLayout}/>
       </Switch>
     )
   }

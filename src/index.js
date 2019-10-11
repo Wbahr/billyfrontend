@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter, browserHistory } from 'react-router-dom'
 import Switch from './config/switch'
 // import MainScreen from './containerComponents/mainScreen'
 // import SearchResults from './pageComponents/SearchResults/searchResultsPage'
 
 ReactDOM.render(
-  <Router>
+  <BrowserRouter history={browserHistory}>
     <Switch />
-  </Router>
+  </BrowserRouter>
   , document.getElementById('index')
 )
