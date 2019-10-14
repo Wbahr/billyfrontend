@@ -8,7 +8,7 @@ export function GraphQLCall(body){
         'Content-Type': 'application/json',
     },
     redirect: 'follow', // manual, *follow, error
-    referrer: 'no-referrer', // no-referrer, *client
+    // referrer: 'no-referrer', // no-referrer, *client
     body: body, // make sure this is stringified  
   })
   .then( res => res.json() )

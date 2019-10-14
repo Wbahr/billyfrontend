@@ -15,6 +15,7 @@ const NavTop = styled.div`
 const NavBottom = styled.div`
   display: flex;
   margin: 0 auto;
+  width: 100%;
   height: 60px;
   background-color: white;
   justify-content: center;
@@ -117,7 +118,7 @@ export default function HeaderComponent(props) {
   }
 
   return(
-    <>
+    <div>
       <NavTop>
         <NavBottomContainer>
           <div>
@@ -169,6 +170,6 @@ export default function HeaderComponent(props) {
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
       </NavBottom>
-    </>
+    </div>
   )
 }
