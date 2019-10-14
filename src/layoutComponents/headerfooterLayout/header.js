@@ -112,9 +112,13 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
+  let isSignedIn = true
+  let isAnonmyous = false
+  let itemsInCart = 4
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}`)
+
   }
 
   return(
@@ -122,16 +126,16 @@ export default function HeaderComponent(props) {
       <NavTop>
         <NavBottomContainer>
           <div>
-            <Puser>Hello, Bobby Panczer (Airline Hydraulics)</Puser>
-            {/* <PeUser>Hello, Zach Linsell (Airline Hydraulics) [Emulating]</PeUser> */}
+            { (isSignedIn && !isAnonmyous) && <Puser>Hello, Bobby Panczer (Airline Hydraulics)</Puser>} 
+            { (isSignedIn && isAnonmyous) && <PeUser>Hello, Zach Linsell (Airline Hydraulics) [Emulating]</PeUser>}
           </div>
           <Div>
             <Aphone href="tel:+18009997378">800-999-7378</Aphone>
-            <A>Sign Out</A>
+            { isSignedIn ? <A>Sign Out</A> : <A>Sign In</A> }
             <A>|</A>
-            <A>Account</A>
+            { isSignedIn ? <A>My Account</A> : <A>Create Account</A> }
             <A>|</A>
-            <A>Cart(4)</A>
+            <A>Cart({itemsInCart})</A>
           </Div>
         </NavBottomContainer>
       </NavTop>
