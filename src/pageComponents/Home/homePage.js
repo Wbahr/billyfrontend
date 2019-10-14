@@ -4,7 +4,7 @@ import React from 'react'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
 
-class SearchResultsPage extends React.Component {
+class HomePage extends React.Component {
   render(){
     return(
       <p>Home page content here</p>
@@ -12,4 +12,4 @@ class SearchResultsPage extends React.Component {
   }
 }
 
-export default SearchResultsPage
+export default HomePage

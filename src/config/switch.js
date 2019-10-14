@@ -44,6 +44,7 @@ class App extends React.Component {
     return (
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>

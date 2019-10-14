@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const NavTop = styled.div`
   display: flex;
@@ -110,6 +110,12 @@ const Aphone = styled(A)`
 `
 
 export default function HeaderComponent(props) {
+  const [searchTerm, setSearchTerm] = useState('')
+
+  function handleSearch() {
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}`)
+  }
+
   return(
     <>
       <NavTop>
@@ -157,8 +163,8 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <InputSearch placeholder="Search by Part # or Keyword" />
-            <ButtonSearch>Search</ButtonSearch>
+            <InputSearch value={searchTerm} placeholder="Searchy by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)}/>
+            <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
