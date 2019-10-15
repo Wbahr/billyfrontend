@@ -11,10 +11,8 @@ function SearchResultsPage() {
   useEffect(() => {
     const parsed = queryString.parse(location.search);
     let searchTerm = parsed.searchTerm
-    let body = {"query" : '{itemSearch(searchParams: {searchTerm: "bosch"}){result}}'}
-    console.log(JSON.stringify(body))
+    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}"}){result}}`}
     GraphQLCall(JSON.stringify(body))
-    console.log('search', searchTerm)
   })
 
   return(
