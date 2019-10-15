@@ -34,11 +34,11 @@ const Pblue = styled.p`
   font-weight: 700;
 `
 
-export default function ResultsSummary(props) {
+export default function ResultsSummary({searchTerm, resultSize, resultPage, totalResults}) {
   return(
     <DivResultsSummaryContainer>
-      <Div><Pgrey>Search Results for:</Pgrey><Pblue>"value"</Pblue></Div>
-      <Div><Pgrey2>Results displayed: 1-50 of 10000+</Pgrey2></Div>
+      <Div><Pgrey>Search Results for:</Pgrey><Pblue>{searchTerm}</Pblue></Div>
+      <Div><Pgrey2>Results displayed: {1 + (resultSize * (resultPage-1))}-{resultSize * resultPage} of {totalResults === 10000 ? totalResults + '+' : totalResults}</Pgrey2></Div>
     </DivResultsSummaryContainer>
   )
 }

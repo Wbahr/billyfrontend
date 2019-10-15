@@ -13,6 +13,7 @@ const Div = styled.div`
 const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
   max-width: 1200px;
   margin: 28px auto;
 `

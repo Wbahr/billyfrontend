@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -14,8 +14,14 @@ const InputSearch = styled.input`
   width: 300px;
   height: 30px;
   font-size: 14px;
-  border-width: 1px 0px 1px 1px;
+  border-color: #dadada;
+  border-top: 1px #dadada solid;
+  border-left: 1px #dadada solid;
+  border-bottom: 1px #e7e7e7 solid;
+  border-right: 0px;
   padding: 0 4px;
+  box-shadow: inset 0px 2px 3px #c1c1c1;
+  border-radius: 3px 0 0 3px;
 `
 
 const ButtonSearch = styled.button`
@@ -23,17 +29,24 @@ const ButtonSearch = styled.button`
   height: 30px;
   background-color: rgb(219, 22, 51);
   color: white;
+  font-weight: 500;
   border: 0;
+  border-radius: 0 3px 3px 0;
+  box-shadow: inset 0px 2px 3px #7f0c1d;
   font-size: 14px;
 `
 
-export default function ResultsSearch(props) {
+export default function ResultsSearch() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortType, setSortType] = useState(0)
-  const [showQuantity, setShowQuantity] = useState(10)
+  const [sortType, setSortType] = useState('relevancy')
+  const [resultSize, setResultSize] = useState(10)
+
+  useEffect(() => {
+
+  }, [searchTerm, sortType, resultSize])
 
   function handleSearch() {
-    console.log(searchTerm, sortType, showQuantity)
+
   }
 
   return(
@@ -43,12 +56,12 @@ export default function ResultsSearch(props) {
       </DivResultsSearch>
       <DivResultsSearch>
         <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
-          <option value={0}>Sort by Relevance</option>
-          <option value={1}>Sort by Availability</option>
-          <option value={2}>Sort by Popularity</option>
+          <option value={'relevancy'}>Sort by Relevance</option>
+          <option value={'availability'}>Sort by Availability</option>
+          <option value={'popularity'}>Sort by Popularity</option>
         </select>
         <label for="show">Show:</label>
-        <select id="show" value={showQuantity} onChange={(e) => setShowQuantity(e.target.value)}>
+        <select id="show" value={resultSize} onChange={(e) => setResultSize(e.target.value)}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>

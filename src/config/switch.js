@@ -1,12 +1,13 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 // Layouts
-import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 import EmptyLayout from '../layoutComponents/emptyLayout'
+import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 // Components
 import Home from '../pageComponents/Home/homePage'
-import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
+import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 
 
 function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -46,6 +47,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/product/:itemCode' component={ItemDetail} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>

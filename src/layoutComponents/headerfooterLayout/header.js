@@ -117,7 +117,7 @@ export default function HeaderComponent(props) {
   let itemsInCart = 4
 
   function handleSearch() {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}`)
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10`)
 
   }
 
