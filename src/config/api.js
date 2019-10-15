@@ -1,5 +1,5 @@
 export function GraphQLCall(body){
-  fetch(`${process.env.API_URL + '/graphql'}`, {
+  return fetch(`${process.env.API_URL + '/graphql'}`, {
     method: 'POST',
     cache: 'no-cache',
     credentials: 'omit', // include, *same-origin, omit

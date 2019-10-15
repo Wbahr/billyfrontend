@@ -109,8 +109,7 @@ const PBlue = styled.p`
   padding: 0 4px;
 `
 
-export function ItemResult(props) {
-  const frecno = 23123123
+export default function ItemResult({result}) {
   const [quantity, setQuantity] = useState(1)
 
   function handleSetQuantity(quantity){
@@ -126,13 +125,13 @@ export function ItemResult(props) {
   }
   return(
     <DivItemResultContainer>
-      <DivPartNumberRow><p>Item ID: SMC SY3100-5U1</p><p>Airline #: 92382384</p></DivPartNumberRow>
+      <DivPartNumberRow><p>{result.item_id}</p><p>Airline #: {result.frecno}</p></DivPartNumberRow>
       <DivPartDetailsRow>
         <DivPartImg />
         <DivPartDetails>
           <PpartTitle>SMC SY3100-5U1, 5 PORT SOLENOID VALVE</PpartTitle>
-          <PpartDesc>SY3000, 2 POSITION - SINGLE SOLENOID, BASE MOUNTED, INTERNAL PILOT, 24 VDC</PpartDesc>
-          <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>9631</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
+          <PpartDesc>{result.item_desc}</PpartDesc>
+          <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>{result.availability}</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
         </DivPartDetails>
         <DivPartAction>
           <Div><Pprice>$12.23</Pprice><p>/EA</p></Div>
