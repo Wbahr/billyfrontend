@@ -123,18 +123,20 @@ export default function ItemResult({result}) {
     // addToCart(quantity, frecno)
     }
   }
+  let imagePath = 'https://www.airlinehyd.com/images/items/000048_t.jpg'
+  
   return(
     <DivItemResultContainer>
-      <DivPartNumberRow><p>{result.item_id}</p><p>Airline #: {result.frecno}</p></DivPartNumberRow>
+      <DivPartNumberRow><p>Item ID: {result.item_id}</p><p>Airline #: AHC{result.frecno}</p></DivPartNumberRow>
       <DivPartDetailsRow>
-        <DivPartImg />
+        <DivPartImg src={imagePath} width='100%'/>
         <DivPartDetails>
-          <PpartTitle>SMC SY3100-5U1, 5 PORT SOLENOID VALVE</PpartTitle>
-          <PpartDesc>{result.item_desc}</PpartDesc>
+          <PpartTitle>{result.item_desc}</PpartTitle>
+          <PpartDesc>{result.extended_desc}</PpartDesc>
           <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>{result.availability}</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
         </DivPartDetails>
         <DivPartAction>
-          <Div><Pprice>$12.23</Pprice><p>/EA</p></Div>
+          <Div><Pprice>{result.anon_price}</Pprice><p>/EA</p></Div>
           <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivPartAction>

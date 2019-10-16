@@ -16,6 +16,8 @@ const ContentScreenContainer = styled.div`
   height: 100%;
   max-width: 1200px;
   margin: 28px auto;
+  justify-content: space-between;
+  flex-grow: 99;
 `
 
 export default function HeaderFooterLayout(props) {

@@ -7,6 +7,7 @@ import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import Paginator from './uiComponents/paginator'
+import Loader from '../_common/loader'
 
 function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState([])
@@ -15,6 +16,7 @@ function SearchResultsPage() {
   const [resultPage, setResultPage] = useState('relevancy')
   const [resultSize, setResultSize] = useState(10)
   const [totalResults, setTotalResults] = useState(0)
+  const [isSearching, setSearching] = useState(true)
   
   // Check for updates to Search Term in URL
   useEffect(() => {
@@ -32,9 +34,9 @@ function SearchResultsPage() {
   // Get New Search Term results when the searchTerm in state changes
   useEffect(() => {
     let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
-
+    setSearching(true)
     if (searchTerm !== ''){
-      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result))
+      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
     }
   }, [searchTerm])
 
@@ -58,14 +60,16 @@ function SearchResultsPage() {
 
   return(
     <>
-      <ResultsSummary 
-        searchTerm={searchTerm}
-        resultSize={resultSize}
-        resultPage={resultPage}
-        totalResults={totalResults}
-      />
-      <ResultsSearch />
-      {SearchResults}
+      <div>
+        <ResultsSummary 
+          searchTerm={searchTerm}
+          resultSize={resultSize}
+          resultPage={resultPage}
+          totalResults={totalResults}
+        />
+        <ResultsSearch />
+      </div>
+      { isSearching ? <Loader/> : SearchResults}
       <Paginator 
         resultSize={resultSize}
         resultPage={resultPage}
