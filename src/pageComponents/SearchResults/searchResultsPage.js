@@ -34,7 +34,7 @@ function SearchResultsPage() {
   // Get New Search Term results when the searchTerm in state changes
   useEffect(() => {
     let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
-    setSearching(true)
+    setSearching(true) 
     if (searchTerm !== ''){
       GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
     }

@@ -29,6 +29,7 @@ const DivPartDetailsRow = styled.div`
 `
 
 const DivPartImg = styled.div`
+  display: flex;
   width: 150px;
   background-color: white;
   border-left: 1px #F3F3F3 solid;
@@ -109,6 +110,10 @@ const PBlue = styled.p`
   padding: 0 4px;
 `
 
+const Img = styled.img`
+  margin: auto;
+`
+
 export default function ItemResult({result}) {
   const [quantity, setQuantity] = useState(1)
 
@@ -123,20 +128,31 @@ export default function ItemResult({result}) {
     // addToCart(quantity, frecno)
     }
   }
-  let imagePath = 'https://www.airlinehyd.com/images/items/000048_t.jpg'
+
+  let imagePath
+  if (_.isNil(result.thumbnail_image_path)){
+    console.log(result.thumbnail_image_path)
+    imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+  } else {
+    let imagePathArray = result.thumbnail_image_path.split("\\")
+    imagePath = 'https://www.airlinehyd.com/images/items/' + imagePathArray[imagePathArray.length - 1]
+  }
+
   
   return(
     <DivItemResultContainer>
       <DivPartNumberRow><p>Item ID: {result.item_id}</p><p>Airline #: AHC{result.frecno}</p></DivPartNumberRow>
       <DivPartDetailsRow>
-        <DivPartImg src={imagePath} width='100%'/>
+        <DivPartImg>
+          <Img src={imagePath} width='65%'/>
+        </DivPartImg>
         <DivPartDetails>
           <PpartTitle>{result.item_desc}</PpartTitle>
           <PpartDesc>{result.extended_desc}</PpartDesc>
           <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>{result.availability}</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
         </DivPartDetails>
         <DivPartAction>
-          <Div><Pprice>{result.anon_price}</Pprice><p>/EA</p></Div>
+          <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></Div>
           <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivPartAction>

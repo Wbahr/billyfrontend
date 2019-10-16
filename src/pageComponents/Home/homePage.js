@@ -7,7 +7,9 @@ import React from 'react'
 class HomePage extends React.Component {
   render(){
     return(
-      <p>Home page content here</p>
+      <>
+        <p>HomePage Content</p>
+      </>
     )
   }
 }
