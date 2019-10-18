@@ -1,18 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { H2 } from './text'
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  margin: 20px 0;
+`
 
 const StyledHeaderDiv = styled.div`
-   width: 100%;
-   height: 36px;
-   border-bottom: 1px solid #ccc;
-   margin-bottom: 16px;
-`
-const StyledHeaderText = styled.p`
-   color: #DB1633;
-   font-family: verdana;
-   font-size: 18px;
-   font-weight: bold;
-   padding: 8px 0 8px 8px;
+   border-bottom: 5px solid #DB1633;
+   width: max-content;
 `
 
 class sectionHeader extends React.Component {
@@ -22,9 +22,11 @@ class sectionHeader extends React.Component {
 		} = this.props
 
 		return(
-			<StyledHeaderDiv>
-				<StyledHeaderText>{text}</StyledHeaderText>
-			</StyledHeaderDiv>
+      <Div>
+        <StyledHeaderDiv>
+          <H2>{text}</H2>
+        </StyledHeaderDiv>
+      </Div>
 		)
 	}
 }

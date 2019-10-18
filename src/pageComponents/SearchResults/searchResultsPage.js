@@ -54,7 +54,6 @@ export default function SearchResultsPage(props) {
     if (!_.isNil(sortType)){
       query += `&sortType=${sortType}`
     }
-    console.log('query', query)
     props.history.push({
       pathname: '/search',
       search: query
@@ -76,7 +75,6 @@ export default function SearchResultsPage(props) {
   }
 
   function handleUpdateSearchTerm(newSearchTerm){
-    console.log('handle update search', newSearchTerm)
     setSearchTerm(searchTerm + ' ' + newSearchTerm)
   }
 

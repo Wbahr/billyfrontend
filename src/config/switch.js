@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 // Layouts
 import EmptyLayout from '../layoutComponents/emptyLayout'
+import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/headerfooterHomepageLayout'
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 // Components
 import Home from '../pageComponents/Home/homePage'
@@ -44,7 +45,7 @@ class App extends React.Component {
   render () {
     return (
       <Switch>
-        <WrapperRoute exact path='/' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/product/:itemCode' component={ItemDetail} layout={HeaderFooterLayout}/>

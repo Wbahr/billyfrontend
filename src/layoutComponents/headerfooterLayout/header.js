@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -44,6 +45,9 @@ const NavItem =styled.a`
   display: block;
   cursor: pointer;
   color: black !important;
+  font-weight: 300;
+  font-size: 16px;
+  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
   &:hover{
     transition: border-bottom 500ms;
     transition: margin-bottom 500ms;
@@ -130,7 +134,10 @@ export default function HeaderComponent(props) {
             { (isSignedIn && isAnonmyous) && <PeUser>Hello, Zach Linsell (Airline Hydraulics) [Emulating]</PeUser>}
           </div>
           <Div>
-            <Aphone href="tel:+18009997378">800-999-7378</Aphone>
+            <Div>
+              <FontAwesomeIcon icon="phone-alt" color="white"/>        
+              <Aphone href="tel:+18009997378">800-999-7378</Aphone>
+            </Div>
             { isSignedIn ? <A>Sign Out</A> : <A>Sign In</A> }
             <A>|</A>
             { isSignedIn ? <A>My Account</A> : <A>Create Account</A> }

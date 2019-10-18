@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -58,7 +58,7 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onChange={() => updateSearchTerm(searchTerm)}>Search</ButtonSearch>
+        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onChange={(searchTerm) => updateSearchTerm(searchTerm)}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
         <select value={sortType} onChange={(e) => handleSetSortType(e.target.value)}>
