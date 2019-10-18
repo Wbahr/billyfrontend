@@ -26,7 +26,7 @@ const NavBottom = styled.div`
 const LinkContainer = styled.div`
   display: flex;
   height: 100%;
-  width: 40%;
+  width: 45%;
   color: black !important;
   justify-content: space-between;
   align-items: center;
@@ -45,9 +45,10 @@ const NavItem =styled.a`
   display: block;
   cursor: pointer;
   color: black !important;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+
   &:hover{
     transition: border-bottom 500ms;
     transition: margin-bottom 500ms;
