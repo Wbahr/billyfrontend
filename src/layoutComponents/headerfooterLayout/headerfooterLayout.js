@@ -25,7 +25,7 @@ export default function HeaderFooterLayout(props) {
   return(
     <Div>
       <Header {...props}/>
-      <ContentScreenContainer>
+      <ContentScreenContainer {...props}>
         {props.children}
       </ContentScreenContainer>
       <Footer />

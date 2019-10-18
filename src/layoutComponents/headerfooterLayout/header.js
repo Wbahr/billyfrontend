@@ -117,7 +117,7 @@ export default function HeaderComponent(props) {
   let itemsInCart = 4
 
   function handleSearch() {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10`)
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
 
   }
 
@@ -168,7 +168,7 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <InputSearch value={searchTerm} placeholder="Searchy by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)}/>
+            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)}/>
             <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}

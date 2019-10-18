@@ -103,7 +103,14 @@ const Pprice = styled.p`
   padding: 0 4px;
 `
 
+const ACall = styled.a`
+  color: #328EFC
+  font-weight: 700;
+  padding: 0 4px;
+`
+
 const PBlue = styled.p`
+  cursor: pointer;
   color: #328EFC
   margin: 0;
   font-size: 13px;
@@ -149,10 +156,14 @@ export default function ItemResult({result}) {
         <DivPartDetails>
           <PpartTitle>{result.item_desc}</PpartTitle>
           <PpartDesc>{result.extended_desc}</PpartDesc>
-          <Div><PpartAvailability>Availability:</PpartAvailability><PBlue>{result.availability}</PBlue><PpartAvailability> -- Locations</PpartAvailability></Div>
+          <Div><PpartAvailability>Availability:</PpartAvailability>
+          {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
+          </Div>
         </DivPartDetails>
         <DivPartAction>
-          <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></Div>
+          <Div>
+            {result.anon_price !== 0 ? <><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+          </Div>
           <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivPartAction>

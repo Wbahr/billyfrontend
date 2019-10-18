@@ -36,32 +36,38 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch() {
+export default function ResultsSearch({updateSearchTerm, updateSortType, updateResultSize}) {
   const [searchTerm, setSearchTerm] = useState('')
   const [sortType, setSortType] = useState('relevancy')
   const [resultSize, setResultSize] = useState(10)
 
-  useEffect(() => {
+  function handleSetSortType(value){
+    setSortType(value)
+    updateSortType(value)
+  }
 
-  }, [searchTerm, sortType, resultSize])
+  function handleSetResultSize(value){
+    setResultSize(value)
+    updateResultSize(value)
+  }
 
-  function handleSearch() {
-
+  function handleSetSearchTerm(value){
+    setSearchTerm(value)
   }
 
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
+        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onChange={() => updateSearchTerm(searchTerm)}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
-        <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
+        <select value={sortType} onChange={(e) => handleSetSortType(e.target.value)}>
           <option value={'relevancy'}>Sort by Relevance</option>
           <option value={'availability'}>Sort by Availability</option>
           <option value={'popularity'}>Sort by Popularity</option>
         </select>
         <label for="show">Show:</label>
-        <select id="show" value={resultSize} onChange={(e) => setResultSize(e.target.value)}>
+        <select id="show" value={resultSize} onChange={(e) => handleSetResultSize(e.target.value)}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>

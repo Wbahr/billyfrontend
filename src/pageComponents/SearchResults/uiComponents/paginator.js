@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
 const DivPaginatorContainer = styled.div`
@@ -26,7 +26,9 @@ const DivSelected = styled(Div)`
   // color: white;
 `
 
-export default function Paginator({resultSize, resultPage, totalResults}) {
+export default function Paginator({resultSize, resultPage, totalResults, updateCurrentPage}) {
+  const didMountRef = useRef(false);
+
   const [currentPage, setCurrentPage] = useState(1)
   const [direction, setDirection] = useState(true)
   const [currentPageSet, setCurrentPageSet] = useState(1)
@@ -35,6 +37,13 @@ export default function Paginator({resultSize, resultPage, totalResults}) {
   const [resultPageOption3, setResultPageOption3] = useState(3)
   const [resultPageOption4, setResultPageOption4] = useState(4)
   const [resultPageOption5, setResultPageOption5] = useState(5)
+
+  useEffect(() => {
+    if(didMountRef.current){
+      updateCurrentPage(currentPage)
+    }
+    didMountRef.current = true
+  }, [currentPage])
 
   useEffect(() => {
     if(currentPage > 1){
@@ -54,12 +63,13 @@ export default function Paginator({resultSize, resultPage, totalResults}) {
 
   function handleSetCurrentPage(change){
     switch(change){
-      case 'prev':
-        setCurrentPage(currentPage - 1)
-        if(currentPage%5 === 0){
-          setDirection(false)
-          setCurrentPage(currentPageSet - 1)
-        }
+      case 'first':
+        setCurrentPage(1)
+        setResultPageOption1(1)
+        setResultPageOption2(2)
+        setResultPageOption3(3)
+        setResultPageOption4(4)
+        setResultPageOption5(5)
         break
       case 'next':
         setCurrentPage(currentPage + 1)
@@ -75,7 +85,7 @@ export default function Paginator({resultSize, resultPage, totalResults}) {
  
   return(
     <DivPaginatorContainer>
-      <DivAction onClick={() => handleSetCurrentPage('prev')}>Prev</DivAction>
+      <DivAction onClick={() => handleSetCurrentPage('first')}>First</DivAction>
       {(currentPage === resultPageOption1) ? <DivSelected onClick={() => handleSetCurrentPage(resultPageOption1)}>{resultPageOption1}</DivSelected> : <Div onClick={() => handleSetCurrentPage(resultPageOption1)}>{resultPageOption1}</Div>}
       {(currentPage === resultPageOption2) ? <DivSelected onClick={() => handleSetCurrentPage(resultPageOption2)}>{resultPageOption2}</DivSelected> : <Div onClick={() => handleSetCurrentPage(resultPageOption2)}>{resultPageOption2}</Div>}
       {(currentPage === resultPageOption3) ? <DivSelected onClick={() => handleSetCurrentPage(resultPageOption3)}>{resultPageOption3}</DivSelected> : <Div onClick={() => handleSetCurrentPage(resultPageOption3)}>{resultPageOption3}</Div>}
