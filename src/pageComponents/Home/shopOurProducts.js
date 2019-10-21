@@ -17,6 +17,11 @@ const Div = styled.div`
   margin-bottom: 20px;
 `
 
+const DivRight = styled(Div)`
+  justify-content: flex-start;
+
+`
+
 const Card = styled.div`
   display: flex;
   align-items: center;
@@ -32,6 +37,23 @@ const Card = styled.div`
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
 `
 
+const Suggestion = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center
+  cursor: pointer;
+  height: 45px;
+  padding: 0px 8px;
+  margin: 0 5px;
+  border: 2px solid #dadada;
+  color: #303030;
+  &:hover {
+    border: 2px solid #328EFC;
+    transition: border 500ms;
+  }
+`
+
 export default function ShopOurProducts() {
   const [searchTerm, setSearchTerm] = useState('')
 
@@ -41,6 +63,20 @@ export default function ShopOurProducts() {
         <SectionHeader
           text='Recommended For You'
         />
+        <DivRight>
+          <Suggestion>
+            Solenoid Valve
+          </Suggestion>
+          <Suggestion>
+            SY Valve
+          </Suggestion>
+          <Suggestion>
+            Manifold
+          </Suggestion>
+          <Suggestion>
+            Phoenix Terminal Block
+          </Suggestion>
+        </DivRight>
       </div>
       <div>
       <div>
@@ -64,30 +100,30 @@ export default function ShopOurProducts() {
       </Div>
       <Div>
         <Card>
-          Aluminum Hydraulic Components
+          Automation & Control
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+          Hydraulic
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+          Machine Safety
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+          Winches & Gear Drives
         </Card>
       </Div>
       <Div>
         <Card>
-          Aluminum Hydraulic Components
+          Electrical Components
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+          Liquid & Gas Pressure
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+         Pneumatics
         </Card>
         <Card>
-          Aluminum Hydraulic Components
+          SMC ETech
         </Card>
       </Div>
       </div>

@@ -111,7 +111,7 @@ const ACall = styled.a`
 
 const PBlue = styled.p`
   cursor: pointer;
-  color: #328EFC
+  color: #328EFC;
   margin: 0;
   font-size: 13px;
   padding: 0 4px;
