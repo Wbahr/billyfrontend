@@ -70,7 +70,7 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
           <option value={'availability'}>Sort by Availability</option>
           <option value={'popularity'}>Sort by Popularity</option>
         </select>
-        <label for="show">Show:</label>
+        <label htmlFor="show">Show:</label>
         <select id="show" value={resultSize} onChange={(e) => handleSetResultSize(e.target.value)}>
           <option value={10}>10</option>
           <option value={20}>20</option>
