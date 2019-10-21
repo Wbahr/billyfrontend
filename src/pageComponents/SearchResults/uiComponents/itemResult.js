@@ -162,7 +162,7 @@ export default function ItemResult({result}) {
         </DivPartDetails>
         <DivPartAction>
           <Div>
-            {result.anon_price !== 0 ? <><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+            {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></> : <ACall href="tel:+18009997378">Call for Price</ACall>}
           </Div>
           <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
