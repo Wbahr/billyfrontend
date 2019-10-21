@@ -80,7 +80,7 @@ export default function SearchResultsPage(props) {
 
   let SearchResults = _.map(searchResults, result => {
     return(
-      <ItemResult result={result} updateResults={handleUpdateResults}/>
+      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
     )
   })
 
