@@ -21,12 +21,13 @@ const ContentScreenContainer = styled.div`
 `
 
 class HomePage extends React.Component {
+
   render(){
     return(
       <>
         <Banner src='https://www.airlinehyd.com/customer/aihyco/images/Home/oct-web-banner-desktop.png' width='100%'/>
         <ContentScreenContainer>
-          <ShopOurProducts />
+          <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
         </ContentScreenContainer>
       </>

@@ -54,8 +54,12 @@ const Suggestion = styled.div`
   }
 `
 
-export default function ShopOurProducts() {
-  const [searchTerm, setSearchTerm] = useState('')
+export default function ShopOurProducts(props) {
+
+  function handleSearch(searchTerm) {
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+
+  }
 
   return(
     <>
@@ -64,16 +68,16 @@ export default function ShopOurProducts() {
           text='Recommended For You'
         />
         <DivRight>
-          <Suggestion>
+          <Suggestion onClick={()=>handleSearch('Solenoid Valve')} >
             Solenoid Valve
           </Suggestion>
-          <Suggestion>
+          <Suggestion onClick={()=>handleSearch('SY Valve')}>
             SY Valve
           </Suggestion>
-          <Suggestion>
+          <Suggestion onClick={()=>handleSearch('Manifold')}>
             Manifold
           </Suggestion>
-          <Suggestion>
+          <Suggestion onClick={()=>handleSearch('Phoenix Terminal Block')}>
             Phoenix Terminal Block
           </Suggestion>
         </DivRight>
