@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import queryString from 'query-string'
 import _ from 'lodash'
-// import { useParams } from "react-router-dom";
-// import styled from 'styled-components'
 import { GraphQLCall } from '../../config/api'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
@@ -14,13 +12,11 @@ export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
   const prevHistoryRef = useRef();
   const preformSearchRef = useRef(true);
-  
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [resultSize, setResultSize] = useState(search.resultSize)
   const [sortType, setSortType] = useState(search.sortType)
-
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [isSearching, setSearching] = useState(true)
@@ -42,7 +38,6 @@ export default function SearchResultsPage(props) {
       if (searchOld.resultSize !== searchNew.resultSize){
         setResultSize(searchNew.resultSize)
       }
-      console.log('search updated')
       prevHistoryRef.current = props.history.location
       preformSearchRef.current = true
     }
@@ -97,23 +92,6 @@ export default function SearchResultsPage(props) {
       pathname: '/search',
       search: query
     })
-    // preformSearchRef.current = true
-  }
-
-  function handleUpdateCurrentPage(currentPage){
-    handleUpdateResults({'page': currentPage})
-  }
-
-  function handleUpdateResultSize(newResultSize){
-    handleUpdateResults({'resultSize': newResultSize})
-  }
-
-  function handleUpdateSortType(newSortType){
-    handleUpdateResults({'sort': newSortType})
-  }
-
-  function handleUpdateSearchTerm(newSearchTerm){
-    handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})
   }
 
   let SearchResults = _.map(searchResults, result => {
@@ -134,9 +112,9 @@ export default function SearchResultsPage(props) {
         <ResultsSearch
           resultSize={resultSize}
           sortType={sortType}
-          updateSearchTerm={(newSearchTerm) => handleUpdateSearchTerm(newSearchTerm)}
-          updateResultSize={(newResultSize) => handleUpdateResultSize(newResultSize)}
-          updateSortType={(newSortType) => handleUpdateSortType(newSortType)}
+          updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
+          updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
+          updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
         />
       </div>
       { isSearching ? <Loader/> : SearchResults}
@@ -144,7 +122,8 @@ export default function SearchResultsPage(props) {
         resultSize={resultSize}
         resultPage={resultPage}
         totalResults={totalResults}
-        updateCurrentPage={(currentPage) => handleUpdateCurrentPage(currentPage)}
+        updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
+      }
       />
     </>
   )
