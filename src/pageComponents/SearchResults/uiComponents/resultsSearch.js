@@ -36,20 +36,8 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({updateSearchTerm, updateSortType, updateResultSize}) {
+export default function ResultsSearch({updateSearchTerm, updateSortType, updateResultSize, sortType, resultSize}) {
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortType, setSortType] = useState('relevancy')
-  const [resultSize, setResultSize] = useState(10)
-
-  function handleSetSortType(value){
-    setSortType(value)
-    updateSortType(value)
-  }
-
-  function handleSetResultSize(value){
-    setResultSize(value)
-    updateResultSize(value)
-  }
 
   function handleUpdateSearchTerm(){
     updateSearchTerm(searchTerm)
@@ -62,16 +50,16 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
+        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
-        <select value={sortType} onChange={(e) => handleSetSortType(e.target.value)}>
+        <select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>
           <option value={'relevancy'}>Sort by Relevance</option>
           <option value={'availability'}>Sort by Availability</option>
           <option value={'popularity'}>Sort by Popularity</option>
         </select>
         <label htmlFor="show">Show:</label>
-        <select id="show" value={resultSize} onChange={(e) => handleSetResultSize(e.target.value)}>
+        <select id="show" value={resultSize} onChange={(e) => updateResultSize(e.target.value)}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>

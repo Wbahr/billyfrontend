@@ -19,6 +19,7 @@ export default function SearchResultsPage(props) {
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [resultSize, setResultSize] = useState(search.resultSize)
+  const [sortType, setSortType] = useState(search.sortType)
 
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
@@ -88,6 +89,7 @@ export default function SearchResultsPage(props) {
         query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
         break;
       case 'sort':
+        setSortType(updateObj.sort)
         query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
         break;
     }
@@ -130,6 +132,8 @@ export default function SearchResultsPage(props) {
           totalResults={totalResults}
         />
         <ResultsSearch
+          resultSize={resultSize}
+          sortType={sortType}
           updateSearchTerm={(newSearchTerm) => handleUpdateSearchTerm(newSearchTerm)}
           updateResultSize={(newResultSize) => handleUpdateResultSize(newResultSize)}
           updateSortType={(newSortType) => handleUpdateSortType(newSortType)}
