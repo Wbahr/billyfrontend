@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useParams } from "react-router-dom";
 import queryString from 'query-string'
 import _ from 'lodash'
-import styled from 'styled-components'
+// import { useParams } from "react-router-dom";
+// import styled from 'styled-components'
 import { GraphQLCall } from '../../config/api'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
@@ -12,6 +12,7 @@ import Loader from '../_common/loader'
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
+  const prevHistoryRef = useRef();
   const search = queryString.parse(location.search)
   
   const [searchResults, setSearchResults] = useState([])
@@ -21,7 +22,21 @@ export default function SearchResultsPage(props) {
   const [resultSize, setResultSize] = useState(search.resultSize)
   const [totalResults, setTotalResults] = useState(0)
   const [isSearching, setSearching] = useState(true)
-  
+
+  useEffect(() => {
+    if (!didMountRef.current) {
+      prevHistoryRef.current = props.history.location
+    }
+    const prevHistory = prevHistoryRef.current
+    if(props.history.location.search !== prevHistory.search){
+      prevHistoryRef.current = props.history.location
+      didMountRef.current = false      
+      const search = queryString.parse(location.search)
+      setSearchTerm(search.searchTerm)
+      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
+      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
+    }
+  })
   // Handle ComponentDidMount call
   useEffect(() => {
     if (!didMountRef.current) {
