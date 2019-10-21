@@ -28,6 +28,12 @@ module.exports = (env) => {
       filename: 'index_bundle.js',
       publicPath: '/'
     },
+    resolve: {
+      modules: [
+        path.resolve(__dirname, './src'),
+        path.resolve('./node_modules')
+      ]
+    },
     module: {
       rules: [
         {
