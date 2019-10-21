@@ -51,6 +51,10 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
     updateResultSize(value)
   }
 
+  function handleUpdateSearchTerm(){
+    updateSearchTerm(searchTerm)
+  }
+
   function handleSetSearchTerm(value){
     setSearchTerm(value)
   }
@@ -58,7 +62,7 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onChange={(searchTerm) => updateSearchTerm(searchTerm)}>Search</ButtonSearch>
+        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)}value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
         <select value={sortType} onChange={(e) => handleSetSortType(e.target.value)}>
