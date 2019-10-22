@@ -50,6 +50,10 @@ const A = styled.a`
   }
 `
 
+const Img = styled.img`
+  cursor: pointer;
+`
+
 const Button = styled.button`
   background-color: black;
   color: white;
@@ -62,11 +66,10 @@ const Button = styled.button`
   }
 `
 
-export default function LoginPage() {
+export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [forgotPassword, setforgotPassword] = useState(false)
-
 
   useEffect(() => {
   },[email, password])
@@ -85,7 +88,7 @@ export default function LoginPage() {
 
   return(
     <LoginPageContainer>
-      <img src={AirlineLogoCircle} height='75px' onClick={()=> console.log('go home')}/>
+      <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
       <DivInput>
         <Label for='email'>Email Address</Label>
