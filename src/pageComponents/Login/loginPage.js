@@ -100,7 +100,8 @@ export default function LoginPage({history}) {
       </DivInput>
       <Button onClick={()=>handleSignin()}>Sign In</Button>
       <A onClick={()=>handleForgotPassword()}>Forgot your Password?</A>
-      <A onClick={()=>handleForgotPassword()}>Create an Account</A>
+      <A onClick={()=> history.push('/signup')}>Create an Account</A>
+
     </LoginPageContainer>
   )
 }

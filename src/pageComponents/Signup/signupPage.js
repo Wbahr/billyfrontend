@@ -1,12 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
+import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
+
 
 const SignupPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-  max-width: 1200px;
+  width: 350px;
   margin: 28px auto;
   flex-grow: 99;
 `
@@ -14,10 +16,60 @@ const SignupPageContainer = styled.div`
 const DivInput = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 `
-export default function SignupPage() {
+
+const P = styled.p`
+  margin: 20px 0;
+  border-bottom: 1px #ddd solid;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+`
+
+const Label = styled.label`
+  color: grey;
+  font-size: 14px;
+  font-weight: 300;
+  padding-left: 4px;
+  margin: 0;
+`
+
+const Input = styled.input`
+  width: 300px;
+  height: 42px;
+  padding: 0 8px;
+`
+
+const A = styled.a`
+  cursor: pointer;
+  margin-top: 8px;
+  color: grey;
+  &:hover{
+    color: blue;
+  }
+`
+
+const Img = styled.img`
+  cursor: pointer;
+`
+
+const Button = styled.button`
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 8px 16px;
+  &:hover{
+    background-color: #DB1633;
+    transition: background-color 300ms;
+  }
+`
+
+export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [forgotPassword, setforgotPassword] = useState(false)
 
   useEffect(() => {
   },[email, password])
@@ -36,19 +88,18 @@ export default function SignupPage() {
 
   return(
     <SignupPageContainer>
-      <p>Logo</p>
-      <p>Login</p>
+      <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
+      <P>Airline Hydraulics Signup</P>
       <DivInput>
-        <label for='email'>Email Address</label>
-        <input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
+        <Label for='email'>Email Address</Label>
+        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
       </DivInput>
       <DivInput>
-        <label for='password'>Password</label>
-        <input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
+        <Label for='password'>Password</Label>
+        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
       </DivInput>
-      <a onClick={()=>handleForgotPassword()}>Forgot your Password?</a>
-      <a onClick={()=>handleForgotPassword()}>Don't have an Account? Create one here</a>
-      <button onClick={()=>handleSignin()}>Sign In</button>
+      <Button onClick={()=>handleSignin()}>Create Account</Button>
+      <A onClick={()=> history.push('/login')}>Have an Account? Login</A>
     </SignupPageContainer>
   )
 }
