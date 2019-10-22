@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import ItemService, { getItemById } from 'services/ItemService';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 // import styled from 'styled-components'
