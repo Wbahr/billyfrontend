@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import GraphQLCall from "config/api";
 import ItemService, { getItemById } from 'services/ItemService';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
@@ -40,28 +39,32 @@ const GET_ITEM_BY_ID = gql`
     }
 `;
 
-
 const ItemDetailPage = () => {
 
     let { itemId } = useParams()
-    if (!itemId) return <h1>Loading...</h1>
+
+    const [item, setItem] = useState()
 
     const { loading, error, data } = useQuery(GET_ITEM_BY_ID, {
-        variables: { itemId }
+        variables: { itemId },
+        onCompleted: result => {
+            if (result.items.length) {
+                setItem(result.items[0])
+            } else {
+                setItem(null);
+            }
+        }
     })
 
     if (loading) return <h1>Loading...</h1>
     if (error) return <p>{error}</p>
-    console.log(data)
-
     return <>
         <div>
             {
-                data.items.length > 0
-                    ? <p>{data.items[0].itemDesc}</p>
+                item
+                    ? <p>{item.itemDesc}</p>
                     : <p>No item found</p>
             }
-
         </div>
     </>
 }
