@@ -7,9 +7,10 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 // Components
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
+import Login from '../pageComponents/Login/loginPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
-
+import Signup from '../pageComponents/Signup/signupPage'
 
 function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
@@ -46,17 +47,20 @@ class App extends React.Component {
     return (
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
+        <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
+        <WrapperRoute exact path='/product/:itemId' component={ItemDetail} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
+        <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/product/:itemId' component={ItemDetail} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
+        <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
       </Switch>
     )
   }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import queryString from 'query-string'
 import _ from 'lodash'
-// import { useParams } from "react-router-dom";
-// import styled from 'styled-components'
 import { GraphQLCall } from '../../config/api'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
@@ -13,13 +11,13 @@ import Loader from '../_common/loader'
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
   const prevHistoryRef = useRef();
+  const preformSearchRef = useRef(true);
   const search = queryString.parse(location.search)
-  
-  const [searchResults, setSearchResults] = useState([])
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
-  const [sortType, setSortType] = useState(search.sortType)
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [resultSize, setResultSize] = useState(search.resultSize)
+  const [sortType, setSortType] = useState(search.sortType)
+  const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [isSearching, setSearching] = useState(true)
 
@@ -29,27 +27,36 @@ export default function SearchResultsPage(props) {
     }
     const prevHistory = prevHistoryRef.current
     if(props.history.location.search !== prevHistory.search){
+      let searchNew = queryString.parse(props.history.location.search)
+      let searchOld = queryString.parse(prevHistory.search)
+      if (searchOld.searchTerm !== searchNew.searchTerm){
+        setSearchTerm(searchNew.searchTerm)
+      }
+      if (searchOld.resultPage !== searchNew.resultPage){
+        setResultPage(searchNew.resultPage)
+      }
+      if (searchOld.resultSize !== searchNew.resultSize){
+        setResultSize(searchNew.resultSize)
+      }
       prevHistoryRef.current = props.history.location
-      didMountRef.current = false      
-      const search = queryString.parse(location.search)
-      setSearchTerm(search.searchTerm)
-      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
-      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
+      preformSearchRef.current = true
     }
   })
-  // Handle ComponentDidMount call
+
   useEffect(() => {
-    if (!didMountRef.current) {
-      didMountRef.current = true;
-      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
+    if(preformSearchRef.current){
+      const search = queryString.parse(location.search)
+      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}"}){result,count}}`}
       setSearching(true) 
-      if (searchTerm !== ''){
+      if (search.searchTerm !== ''){
         GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
+        preformSearchRef.current = false
       }
-    } else {
-      handleUpdateResults()
     }
-  }, [searchTerm, resultSize, resultPage, sortType])
+    if (!didMountRef.current) {
+      didMountRef.current = true
+    }
+  })
 
   function parseQueryResults(result) {
     let searchResultArray = _.get(result,`data.itemSearch.result`, [])
@@ -58,39 +65,33 @@ export default function SearchResultsPage(props) {
     setTotalResults(totalResultCount)
   }
 
-  function handleUpdateResults(){
-    let query = `?searchTerm=${searchTerm}`
-    if (!_.isNil(resultSize)){
-      query += `&resultSize=${resultSize}`
-    }
-    if (!_.isNil(resultPage)){
-      query += `&resultPage=${resultPage}`
-    }
-    if (!_.isNil(sortType)){
-      query += `&sortType=${sortType}`
+  function handleUpdateResults(updateObj){
+    const search = queryString.parse(location.search)
+    let query
+    let update = Object.keys(updateObj)[0]
+    switch(update){
+      case 'searchTerm':
+        setSearchTerm(updateObj.searchTerm)
+        setResultPage(1)
+        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
+        break;
+      case 'resultSize':
+        setResultSize(updateObj.resultSize)
+        query = `?searchTerm=${search.searchTerm}&resultSize=${updateObj.resultSize}&resultPage=${search.resultPage}&sortType=${search.sortType}`
+        break;
+      case 'page':
+        setResultPage(updateObj.page)
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
+        break;
+      case 'sort':
+        setSortType(updateObj.sort)
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
+        break;
     }
     props.history.push({
       pathname: '/search',
       search: query
     })
-    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}", resultSize: ${resultSize}, resultPage: ${resultPage}, sortType: "${sortType}"}){result,count}}`}
-    GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
-  }
-
-  function handleUpdateCurrentPage(currentPage){
-    setResultPage(currentPage)
-  }
-
-  function handleUpdateResultSize(newResultSize){
-    setResultSize(newResultSize)
-  }
-
-  function handleUpdateSortType(newSortType){
-    setSortType(newSortType)
-  }
-
-  function handleUpdateSearchTerm(newSearchTerm){
-    setSearchTerm(searchTerm + ' ' + newSearchTerm)
   }
 
   let SearchResults = _.map(searchResults, result => {
@@ -109,9 +110,11 @@ export default function SearchResultsPage(props) {
           totalResults={totalResults}
         />
         <ResultsSearch
-          updateSearchTerm={(newSearchTerm) => handleUpdateSearchTerm(newSearchTerm)}
-          updateResultSize={(newResultSize) => handleUpdateResultSize(newResultSize)}
-          updateSortType={(newSortType) => handleUpdateSortType(newSortType)}
+          resultSize={resultSize}
+          sortType={sortType}
+          updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
+          updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
+          updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
         />
       </div>
       { isSearching ? <Loader/> : SearchResults}
@@ -119,7 +122,8 @@ export default function SearchResultsPage(props) {
         resultSize={resultSize}
         resultPage={resultPage}
         totalResults={totalResults}
-        updateCurrentPage={(currentPage) => handleUpdateCurrentPage(currentPage)}
+        updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
+      }
       />
     </>
   )

@@ -117,13 +117,16 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
-  let isSignedIn = true
+  let isSignedIn = false
   let isAnonmyous = false
   let itemsInCart = 4
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+  }
 
+  function handleSignOut(){
+    console.log('signing out...')
   }
 
   return(
@@ -139,9 +142,9 @@ export default function HeaderComponent(props) {
               <FontAwesomeIcon icon="phone-alt" color="white"/>        
               <Aphone href="tel:+18009997378">800-999-7378</Aphone>
             </Div>
-            { isSignedIn ? <A>Sign Out</A> : <A>Sign In</A> }
+            { isSignedIn ? <A onClick={()=>{handleSignOut()}}>Sign Out</A> : <A onClick={()=>props.history.push('/login')}>Sign In</A> }
             <A>|</A>
-            { isSignedIn ? <A>My Account</A> : <A>Create Account</A> }
+            { isSignedIn ? <A onClick={()=>props.history.push('/account')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
             <A>|</A>
             <A>Cart({itemsInCart})</A>
           </Div>
