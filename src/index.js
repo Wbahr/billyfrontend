@@ -17,7 +17,7 @@ const customHistory = createBrowserHistory();
 // import SearchResults from './pageComponents/SearchResults/searchResultsPage'
 
 const apolloClient = new ApolloClient({
-  uri: process.env.API_URL
+  uri: process.env.API_URL + '/graphql'
 })
 
 

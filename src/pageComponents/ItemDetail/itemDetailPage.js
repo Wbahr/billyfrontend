@@ -1,43 +1,69 @@
-// import React, { useState, useEffect } from './node_modules/react'
-// import queryString from './node_modules/query-string'
-// import { GraphQLCall } from '../../config/api'
-// import _ from './node_modules/lodash'
-// // import styled from 'styled-components'
-// import ItemResult from './uiComponents/itemResult'
-// import ResultsSearch from './uiComponents/resultsSearch'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import GraphQLCall from "config/api";
+import ItemService, { getItemById } from 'services/ItemService';
+import { useQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+// import styled from 'styled-components'
 
-// function ItemDetailPage() {
-//   // const [searchResults, setSearchResults] = useState([])
-//   // const [searchTerm, setSearchTerm] = useState('')
-  
-//   // // Check for updates to Search Term in URL
-//   // useEffect(() => {
-//   //   const parsed = queryString.parse(location.search);
-//   //   let searchTermParam = parsed.searchTerm
-//   //   setSearchTerm(searchTermParam)
-//   // })
+const GET_ITEM_BY_ID = gql`
+    query ItemById($itemId: ID){
+        items(invMastUid: $itemId) {
+            anonPrice
+            assembly
+            availability
+            availabilityMessage
+            cBrandId
+            dateCreated
+            dateModified
+            extendedDesc
+            filters
+            hideOnWeb
+            invMastUid
+            itemCode
+            itemDesc
+            listPrice
+            mfgPartNo
+            modelCode
+            p21ItemDesc
+            p21NonWeb
+            popularity
+            preferredSourceLoc
+            relevancy
+            restrictedCustomerCodes
+            rootCategoryUids
+            showPrice
+            supplierId
+            tariff
+            unitSizeMultiple
+        }
+    }
+`;
 
-//   // // Get New Search Term results when the searchTerm in state changes
-//   // useEffect(() => {
-//   //   let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${searchTerm}"}){result}}`}
-//   //   if (searchTerm !== ''){
-//   //     GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result))
-//   //   }
-//   // }, [searchTerm])
 
-//   function parseQueryResults(result) {
-//     let searchResultArray = _.get(result,`data.itemSearch.result`, [])
-//     console.log('searchResultArray', searchResultArray)
-//     setSearchResults(searchResultArray)
-//   }
+const ItemDetailPage = () => {
 
-//   return(
-//     <>
-//       <div>
-//         <p>Test</p>
-//       </div>
-//     </>
-//   )
-// }
+    let { itemId } = useParams()
+    if (!itemId) return <h1>Loading...</h1>
 
-// export default ItemDetailPage
+    const { loading, error, data } = useQuery(GET_ITEM_BY_ID, {
+        variables: { itemId }
+    })
+
+    if (loading) return <h1>Loading...</h1>
+    if (error) return <p>{error}</p>
+    console.log(data)
+
+    return <>
+        <div>
+            {
+                data.items.length > 0
+                    ? <p>{data.items[0].itemDesc}</p>
+                    : <p>No item found</p>
+            }
+
+        </div>
+    </>
+}
+
+export default ItemDetailPage

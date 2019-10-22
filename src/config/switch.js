@@ -48,7 +48,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/product/:itemCode' component={ItemDetail} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/product/:itemId' component={ItemDetail} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
