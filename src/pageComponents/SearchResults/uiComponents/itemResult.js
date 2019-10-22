@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import styled from "styled-components"
 
 const DivItemResultContainer = styled.div`
   display: flex;
@@ -154,7 +155,7 @@ export default function ItemResult({result}) {
           <Img src={imagePath} width='65%'/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle>{result.item_desc}</PpartTitle>
+          <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
           <PpartDesc>{result.extended_desc}</PpartDesc>
           <Div><PpartAvailability>Availability:</PpartAvailability>
           {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
