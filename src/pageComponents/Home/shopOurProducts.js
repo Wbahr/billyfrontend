@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { H2 } from '../_common/text'
 import SectionHeader from '../_common/sectionHeader.js'
 import { Link, useHistory } from 'react-router-dom'
+import CategoryGrid from '../ProductCategories/uiComponents/categoryGrid'
 
 const Thing = styled.div`
   margin-top: -6px;
@@ -49,8 +50,12 @@ const Suggestion = styled.div`
   border: 2px solid #dadada;
   color: #303030;
   &:hover {
-    border: 2px solid #328EFC;
+    background-color: #328EFC;
+    border: 2px solid #1E5597;
+    color: white;
+    transition: color 500ms;
     transition: border 500ms;
+    transition: background-color 500ms;
   }
 `
 
@@ -89,6 +94,9 @@ export default function ShopOurProducts(props) {
         />
       </div>
       <Div>
+        <CategoryGrid />
+      </Div>
+      {/* <Div>
         <Card>
           Aluminum Structural Framing
         </Card>
@@ -129,7 +137,7 @@ export default function ShopOurProducts(props) {
         <Card>
           SMC ETech
         </Card>
-      </Div>
+      </Div> */}
       </div>
       
     </>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
 import { GraphQLCall } from '../../config/api'
@@ -6,7 +7,19 @@ import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import Paginator from './uiComponents/paginator'
+import AttributeFilter from './uiComponents/attributeFilter'
+import CategoryFilter from './uiComponents/categoryFilter'
 import Loader from '../_common/loader'
+
+const DivContainer = styled.div`
+  display: flex;
+`
+
+const ResultsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+`
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
@@ -101,30 +114,37 @@ export default function SearchResultsPage(props) {
   })
 
   return(
-    <>
+    <DivContainer>
       <div>
-        <ResultsSummary 
-          searchTerm={searchTerm}
+        <CategoryFilter />
+        <AttributeFilter />
+        <AttributeFilter />
+        <AttributeFilter />
+      </div>
+      <ResultsContainer>
+        <div>
+          <ResultsSummary 
+            searchTerm={searchTerm}
+            resultSize={resultSize}
+            resultPage={resultPage}
+            totalResults={totalResults}
+          />
+          <ResultsSearch
+            resultSize={resultSize}
+            sortType={sortType}
+            updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
+            updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
+            updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
+          />
+        </div>
+        { isSearching ? <Loader/> : SearchResults}
+        <Paginator 
           resultSize={resultSize}
           resultPage={resultPage}
           totalResults={totalResults}
-        />
-        <ResultsSearch
-          resultSize={resultSize}
-          sortType={sortType}
-          updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
-          updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
-          updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
-        />
-      </div>
-      { isSearching ? <Loader/> : SearchResults}
-      <Paginator 
-        resultSize={resultSize}
-        resultPage={resultPage}
-        totalResults={totalResults}
-        updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
-      }
-      />
-    </>
+          updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
+        } />
+      </ResultsContainer>
+    </DivContainer>
   )
 }

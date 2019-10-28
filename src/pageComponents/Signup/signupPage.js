@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-
+import CustomerSelect from './uiComponents/customerSelect'
+import NewCustomer from './uiComponents/newCustomer'
+import ExistingCustomer from './uiComponents/existingCustomer'
 
 const SignupPageContainer = styled.div`
   display: flex;
@@ -67,38 +69,28 @@ const Button = styled.button`
 `
 
 export default function LoginPage({history}) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [forgotPassword, setforgotPassword] = useState(false)
+  const [selectedCustomerType, selectCustomerType] = useState(false)
+  let CustomerSignupForm = <ExistingCustomer />
 
-  useEffect(() => {
-  },[email, password])
-
-  function handleSignin(){
-    console.log('signing in')
-  }
-
-  function setToken() {
-    console.log('setting token')
-  }
-
-  function handleForgotPassword(){
-    console.log('forgot password')
+  function handleCustomerSelect(value){
+    if(value === 'existing'){
+      console.log('existing')
+      CustomerSignupForm = <ExistingCustomer />
+    } else {
+      CustomerSignupForm = <NewCustomer />
+    }
+    selectCustomerType(true)
   }
 
   return(
     <SignupPageContainer>
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Signup</P>
-      <DivInput>
-        <Label for='email'>Email Address</Label>
-        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
-      </DivInput>
-      <DivInput>
-        <Label for='password'>Password</Label>
-        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
-      </DivInput>
-      <Button onClick={()=>handleSignin()}>Create Account</Button>
+      {selectedCustomerType ? CustomerSignupForm :
+        <CustomerSelect 
+          selectCustomer={(value)=> handleCustomerSelect(value)}
+        />
+      }
       <A onClick={()=> history.push('/login')}>Have an Account? Login</A>
     </SignupPageContainer>
   )
