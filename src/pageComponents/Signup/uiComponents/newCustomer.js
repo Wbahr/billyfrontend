@@ -56,7 +56,13 @@ const DivInputContainerDark = styled(DivInputContainer)`
   background-color: #e8e8e8;
 `
 
-
+const H3 = styled.h3`
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  color: black;
+`
 
 const NewCustomer = () => (
   <div>
@@ -102,6 +108,7 @@ const NewCustomer = () => (
         <Form>
           <DivFormContainer>
             <DivInputContainer>
+              <H3>Account Information</H3>
               <FormikInput label="First Name" type="text" name="firstName" />
               <FormikInput label="Last Name" type="text" name="lastName" />
               <FormikInput label="Job Title"type="email" name="email" />
@@ -112,6 +119,7 @@ const NewCustomer = () => (
               <FormikInput label="Verify Password" type="password" name="verifyPassword" />
             </DivInputContainer>
             <DivInputContainerDark>
+              <H3>Billing Information</H3>
               <FormikInput label="Company" type="text" name="billing_firstName" />
               <FormikInput label="Address Line 1" type="text" name="billing_lastName" />
               <FormikInput label="Address Line 2"type="email" name="billing_email" />
@@ -121,6 +129,7 @@ const NewCustomer = () => (
               <FormikInput label="Country" type="password" name="billing_password" />
             </DivInputContainerDark>
             <DivInputContainer>
+              <H3>Shipping Information</H3>
               <FormikInput label="Same as Billing Checkbox" type="text" name="shipping_firstName" />
               <FormikInput label="Company" type="text" name="shipping_firstName" />
               <FormikInput label="Address Line 1" type="text" name="shipping_lastName" />
