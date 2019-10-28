@@ -20,6 +20,20 @@ const ButtonRed = styled.button`
   }
 `
 
+const H2 = styled.h2`
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  margin: 0;
+`
+
+const H4 = styled.h4`
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  color: #DB1633;
+`
+
 const DivCenter = styled.div`
   display: flex;
   justify-content: center;
@@ -27,6 +41,8 @@ const DivCenter = styled.div`
 
 const ExistingCustomer = () => (
   <div>
+    <H2>Express Registration</H2>
+    <H4>for Existing Customers</H4>
     <Formik
       initialValues={{ firstName: '', lastName: '', email: '', customerID: '', password: '', verifyPassword: '' }}
       validate={values => {

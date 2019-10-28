@@ -15,8 +15,8 @@ const Div = styled.div`
   cursor: pointer;
   width: 200px;
   height: 200px;
-  background-color: black;
   margin: 10px;
+  border: 1px solid black;
 `
 
 export default function CustomerSelectPage({selectCustomer}) {

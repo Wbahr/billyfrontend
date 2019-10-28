@@ -6,12 +6,12 @@ import { Field, ErrorMessage } from 'formik'
 const DivContainer = styled.div`
     display flex;
     flex-direction: column;
-    height: 81px;
+    height: 71px;
   `
 
 const MainInput = styled.input`
   width: 300px;
-  height: 42px;
+  height: 33px;
   padding: 0 8px;
 `
 

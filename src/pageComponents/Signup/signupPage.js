@@ -70,14 +70,22 @@ const Button = styled.button`
 
 export default function LoginPage({history}) {
   const [selectedCustomerType, selectCustomerType] = useState(false)
-  let CustomerSignupForm = <ExistingCustomer />
+  const [customerType, setCustomerType] = useState('')
+  let CustomerSignupForm = <NewCustomer />
+
+  useEffect(() => {
+    if(customerType === 'existing'){
+      CustomerSignupForm = <ExistingCustomer />
+    } else if (customerType === 'new') {
+      CustomerSignupForm = <NewCustomer />
+    }
+  })
 
   function handleCustomerSelect(value){
     if(value === 'existing'){
-      console.log('existing')
-      CustomerSignupForm = <ExistingCustomer />
+      setCustomerType('existing')
     } else {
-      CustomerSignupForm = <NewCustomer />
+      setCustomerType('new')
     }
     selectCustomerType(true)
   }
