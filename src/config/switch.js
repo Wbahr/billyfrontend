@@ -8,6 +8,7 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
+import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import Signup from '../pageComponents/Signup/signupPage'
@@ -50,6 +51,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
@@ -59,7 +61,6 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/shop' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
       </Switch>
     )

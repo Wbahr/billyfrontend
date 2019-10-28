@@ -156,8 +156,8 @@ export default function HeaderComponent(props) {
             <img src={AirlineLogo} height="50px"/>
           </Link>
           <LinkContainer>
-            <Link to="/shop" style={{ textDecoration: 'none' }}>
-              <NavItem>Shop</NavItem>
+            <Link to="/categories" style={{ textDecoration: 'none' }}>
+              <NavItem>Shop <FontAwesomeIcon icon="caret-down" color="black"/></NavItem>
             </Link>
             <Link to="/services" style={{ textDecoration: 'none' }}>
               <NavItem>Services</NavItem>
