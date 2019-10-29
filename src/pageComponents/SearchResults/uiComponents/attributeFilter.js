@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,24 +19,13 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
   display: flex; 
   flex-direction: column;
-  margin-left: 16px;
-  background: ${({ state }) => {
-      switch (state) {
-        case "entering":
-          return "red"
-        case "entered":
-          return "blue"
-        case "exiting":
-          return "green"
-        case "exited":
-          return "yellow"
-      }
-    }
-  }
+  height: 250px;
+  overflow: scroll;
 `
 
 const DivOptionRow = styled.div`
   display: flex; 
+  width: 250px;
   align-items: center;
   margin: 8px 0 0 24px;
 `
@@ -63,33 +53,37 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-// export default function AttributeFilter({filterName, filterOptions, openByDefault}) {
-export default function AttributeFilter() {
-  const [isOpen, setIsOpen] = useState(false)
+export default function AttributeFilter({name, options, open}) {
+  const [isOpen, setIsOpen] = useState(open)
 
-  let FilterName = 'Color'
-  let FilterOptions = ['White', 'Black', 'Red', 'Blue', 'Green']
-  let AttributeOptions = _.map(FilterOptions, option => {
-    return (
-      <DivOptionRow>
-        <input type="checkbox" id={option} name={option}/>
-        <Label for={option}>{option}</Label>
-      </DivOptionRow>
-    )
+  let AttributeOptions = _.map(options, option => {
+    if(option.featureName !== 'Null'){
+      return (
+        <DivOptionRow>
+          <input type="checkbox" id={option.featureName} name={option.featureName}/>
+          <Label for={option.featureName}>{option.featureName}</Label>
+        </DivOptionRow>
+      )
+    }
   })
 
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{FilterName}</P>
+        <P>{name}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
-      {/* <Transition in={isOpen} timeout={300}>
-        {state => (
-          <DivOptions state={state}>{AttributeOptions}</DivOptions>
-        )}
-      </Transition> */}
-      {isOpen && AttributeOptions}
+      {isOpen && 
+        <DivOptions>
+          {AttributeOptions}
+        </DivOptions>
+      }
     </>
   )
+}
+
+AttributeFilter.propTypes = {
+  name: PropTypes.string.isRequired,
+  options: PropTypes.string,
+  open: PropTypes.bool
 }

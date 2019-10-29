@@ -32,6 +32,7 @@ export default function SearchResultsPage(props) {
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
+  const [attributeCategories, setAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(true)
 
   useEffect(() => {
@@ -74,8 +75,10 @@ export default function SearchResultsPage(props) {
   function parseQueryResults(result) {
     let searchResultArray = _.get(result,`data.itemSearch.result`, [])
     let totalResultCount = _.get(result,`data.itemSearch.count`, 0)
+    let attributeCategories = _.get(result,`data.itemSearch.attributeCategories`, [])
     setSearchResults(searchResultArray)
     setTotalResults(totalResultCount)
+    setAttributeCategories(attributeCategories)
   }
 
   function handleUpdateResults(updateObj){
@@ -113,13 +116,22 @@ export default function SearchResultsPage(props) {
     )
   })
 
+  let AttributeFilters = _.map(attributeCategories, attribute => {
+    return(
+      <AttributeFilter 
+        name={attribute.categoryName}
+        options={attribute.features}
+      />
+    )
+  }
+
+  )
+
   return(
     <DivContainer>
       <div>
         <CategoryFilter />
-        <AttributeFilter />
-        <AttributeFilter />
-        <AttributeFilter />
+        {AttributeFilters}
       </div>
       <ResultsContainer>
         <div>
