@@ -92,7 +92,7 @@ export default function AttributeFilter({name, options, open, toggleAttribute}) 
       {isOpen && 
         <>
           <div>
-            {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+            {options.length > 10 && <InputSearch placeholder={`Search ${name}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
