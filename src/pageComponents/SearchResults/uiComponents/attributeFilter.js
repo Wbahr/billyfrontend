@@ -42,7 +42,7 @@ const Label = styled.label`
 `
 
 const InputSearch = styled.input`
-  margin: 4px;
+  margin: 4px 16px;
   width: 250px;
 `
 
@@ -90,10 +90,14 @@ export default function AttributeFilter({name, options, open, toggleAttribute}) 
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
-        <DivOptions>
-          {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}}></InputSearch>}
-          {AttributeOptions}
-        </DivOptions>
+        <>
+          <div>
+            {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}}></InputSearch>}
+          </div>
+          <DivOptions>
+            {AttributeOptions}
+          </DivOptions>
+        </>
       }
     </>
   )
