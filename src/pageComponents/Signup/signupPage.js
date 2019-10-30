@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import CustomerSelect from './uiComponents/customerSelect'
@@ -15,32 +16,12 @@ const SignupPageContainer = styled.div`
   flex-grow: 99;
 `
 
-const DivInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-`
-
 const P = styled.p`
   margin: 20px 0;
   border-bottom: 1px #ddd solid;
   width: 100%;
   text-align: center;
   font-size: 20px;
-`
-
-const Label = styled.label`
-  color: grey;
-  font-size: 14px;
-  font-weight: 300;
-  padding-left: 4px;
-  margin: 0;
-`
-
-const Input = styled.input`
-  width: 300px;
-  height: 42px;
-  padding: 0 8px;
 `
 
 const A = styled.a`
@@ -69,17 +50,25 @@ const Button = styled.button`
 `
 
 export default function LoginPage({history}) {
-  const [selectedCustomerType, selectCustomerType] = useState(false)
   const [customerType, setCustomerType] = useState('')
-  let CustomerSignupForm = <NewCustomer />
 
-  useEffect(() => {
-    if(customerType === 'existing'){
-      CustomerSignupForm = <ExistingCustomer />
+  const renderContent = () => {
+    if (customerType === 'existing') {
+      return (
+        <ExistingCustomer />
+      )
     } else if (customerType === 'new') {
-      CustomerSignupForm = <NewCustomer />
+      return (
+        <NewCustomer />
+      )
+    } else {
+      return(
+        <CustomerSelect 
+          selectCustomer={(value)=> handleCustomerSelect(value)}
+        />
+      )
     }
-  })
+  }
 
   function handleCustomerSelect(value){
     if(value === 'existing'){
@@ -94,12 +83,12 @@ export default function LoginPage({history}) {
     <SignupPageContainer>
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Signup</P>
-      {selectedCustomerType ? CustomerSignupForm :
-        <CustomerSelect 
-          selectCustomer={(value)=> handleCustomerSelect(value)}
-        />
-      }
+      {renderContent()}
       <A onClick={()=> history.push('/login')}>Have an Account? Login</A>
     </SignupPageContainer>
   )
+}
+
+LoginPage.propTypes = {
+  history: PropTypes.object.isRequired
 }
