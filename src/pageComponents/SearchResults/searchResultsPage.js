@@ -136,6 +136,7 @@ export default function SearchResultsPage(props) {
     console.log('search status', performSearchRef)
     console.log('mutated', mutatedAttributeFilterObj)
     setAttributeFilter(mutatedAttributeFilterObj)
+    console.log('real', attributeFilterObj)
   }
 
   let SearchResults = _.map(searchResults, result => {

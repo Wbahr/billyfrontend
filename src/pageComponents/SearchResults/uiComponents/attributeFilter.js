@@ -19,7 +19,7 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
   display: flex; 
   flex-direction: column;
-  height: 250px;
+  max-height: 250px;
   overflow: scroll;
 `
 
@@ -41,6 +41,11 @@ const Label = styled.label`
   margin-left: 4px;
 `
 
+const InputSearch = styled.input`
+  margin: 4px;
+  width: 250px;
+`
+
 const defaultStyle = {
   transition: `opacity 300ms ease-in-out`,
   opacity: 0,
@@ -55,9 +60,10 @@ const transitionStyles = {
 
 export default function AttributeFilter({name, options, open, toggleAttribute}) {
   const [isOpen, setIsOpen] = useState(open)
+  const [filter, setFilter] = useState('')
 
   let AttributeOptions = _.map(options, option => {
-    if(option.featureName !== 'Null'){
+    if(option.featureName !== 'Null' && _.startsWith(option.featureName, filter)){
       return (
         <DivOptionRow>
           <input type="checkbox" 
@@ -71,7 +77,7 @@ export default function AttributeFilter({name, options, open, toggleAttribute}) 
               }
               )}}
           />
-          <Label htmlFor={option.featureName}>{option.featureName}</Label>
+          <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
         </DivOptionRow>
       )
     }
@@ -85,6 +91,7 @@ export default function AttributeFilter({name, options, open, toggleAttribute}) 
       </DivTitle>
       {isOpen && 
         <DivOptions>
+          {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}}></InputSearch>}
           {AttributeOptions}
         </DivOptions>
       }
