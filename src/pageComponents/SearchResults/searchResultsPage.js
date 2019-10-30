@@ -24,7 +24,7 @@ const ResultsContainer = styled.div`
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
   const prevHistoryRef = useRef();
-  const preformSearchRef = useRef(true);
+  const performSearchRef = useRef(true);
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
   const [resultPage, setResultPage] = useState(search.resultPage)
@@ -34,6 +34,8 @@ export default function SearchResultsPage(props) {
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(true)
+  const [attributeFilterObj, setAttributeFilter] = useState({})
+
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -53,18 +55,22 @@ export default function SearchResultsPage(props) {
         setResultSize(searchNew.resultSize)
       }
       prevHistoryRef.current = props.history.location
-      preformSearchRef.current = true
+      performSearchRef.current = true
     }
   })
 
   useEffect(() => {
-    if(preformSearchRef.current){
+    console.log('use Effect!!!!!!!!!!!!!!!!!!!')
+    if(performSearchRef.current){
       const search = queryString.parse(location.search)
       let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+      if(Object.keys(attributeFilterObj).length > 0){
+        body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}", attributeFilter: "${attributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+      }
       setSearching(true) 
       if (search.searchTerm !== ''){
         GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
-        preformSearchRef.current = false
+        performSearchRef.current = false
       }
     }
     if (!didMountRef.current) {
@@ -110,6 +116,28 @@ export default function SearchResultsPage(props) {
     })
   }
 
+  function handleSelectAttribute(value){
+    performSearchRef.current = true
+    let mutatedAttributeFilterObj = attributeFilterObj
+    let currentKey = value.attribute
+    if (value.checked) {
+      if(currentKey in mutatedAttributeFilterObj){
+        mutatedAttributeFilterObj[currentKey].push(value.bucket) 
+      } else {
+        mutatedAttributeFilterObj[currentKey] = [value.bucket]
+      }
+    } else {
+      let list = mutatedAttributeFilterObj[currentKey]
+      list =  _.remove(list, function(elem) {
+        return elem !== value.bucket;
+      })
+      mutatedAttributeFilterObj[currentKey] = list
+    }
+    console.log('search status', performSearchRef)
+    console.log('mutated', mutatedAttributeFilterObj)
+    setAttributeFilter(mutatedAttributeFilterObj)
+  }
+
   let SearchResults = _.map(searchResults, result => {
     return(
       <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
@@ -121,6 +149,7 @@ export default function SearchResultsPage(props) {
       <AttributeFilter 
         name={attribute.categoryName}
         options={attribute.features}
+        toggleAttribute={handleSelectAttribute}
       />
     )
   }

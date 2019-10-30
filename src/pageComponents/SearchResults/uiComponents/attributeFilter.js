@@ -53,15 +53,25 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name, options, open}) {
+export default function AttributeFilter({name, options, open, toggleAttribute}) {
   const [isOpen, setIsOpen] = useState(open)
 
   let AttributeOptions = _.map(options, option => {
     if(option.featureName !== 'Null'){
       return (
         <DivOptionRow>
-          <input type="checkbox" id={option.featureName} name={option.featureName}/>
-          <Label for={option.featureName}>{option.featureName}</Label>
+          <input type="checkbox" 
+            id={option.featureName} 
+            name={option.featureName} 
+            onClick={(e)=>{toggleAttribute(
+              {
+                attribute: name,
+                bucket: option.featureName,
+                checked: e.target.checked
+              }
+              )}}
+          />
+          <Label htmlFor={option.featureName}>{option.featureName}</Label>
         </DivOptionRow>
       )
     }
@@ -84,6 +94,7 @@ export default function AttributeFilter({name, options, open}) {
 
 AttributeFilter.propTypes = {
   name: PropTypes.string.isRequired,
-  options: PropTypes.string,
-  open: PropTypes.bool
+  options: PropTypes.array,
+  open: PropTypes.bool,
+  toggleAttribute: PropTypes.func
 }
