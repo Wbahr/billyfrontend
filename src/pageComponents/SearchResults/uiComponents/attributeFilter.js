@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Transition } from "react-transition-group"
+// import { Transition } from "react-transition-group"
 
 const DivTitle = styled.div`
   display: flex;
@@ -92,7 +92,7 @@ export default function AttributeFilter({name, options, open, toggleAttribute}) 
       {isOpen && 
         <>
           <div>
-            {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}}></InputSearch>}
+            {options.length > 10 && <InputSearch onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
