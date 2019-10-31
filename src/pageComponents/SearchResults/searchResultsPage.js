@@ -17,23 +17,34 @@ const DivContainer = styled.div`
 
 const ResultsContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin-left: 8px;
+`
+
+const DivResultSummaryRow = styled.div`
+  display: flex;
+`
+
+const DivSearchResultsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
   const prevHistoryRef = useRef();
-  const preformSearchRef = useRef(true);
+  const performSearchRef = useRef(true);
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
   const [resultPage, setResultPage] = useState(search.resultPage)
-  const [resultSize, setResultSize] = useState(search.resultSize)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(true)
+  const [attributeFilterObj, setAttributeFilter] = useState({})
+
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -49,22 +60,23 @@ export default function SearchResultsPage(props) {
       if (searchOld.resultPage !== searchNew.resultPage){
         setResultPage(searchNew.resultPage)
       }
-      if (searchOld.resultSize !== searchNew.resultSize){
-        setResultSize(searchNew.resultSize)
-      }
       prevHistoryRef.current = props.history.location
-      preformSearchRef.current = true
+      performSearchRef.current = true
     }
   })
 
   useEffect(() => {
-    if(preformSearchRef.current){
+    console.log('use Effect!!!!!!!!!!!!!!!!!!!')
+    if(performSearchRef.current){
       const search = queryString.parse(location.search)
       let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+      if(Object.keys(attributeFilterObj).length > 0){
+        body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}", attributeFilter: "${attributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+      }
       setSearching(true) 
       if (search.searchTerm !== ''){
         GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
-        preformSearchRef.current = false
+        performSearchRef.current = false
       }
     }
     if (!didMountRef.current) {
@@ -91,10 +103,6 @@ export default function SearchResultsPage(props) {
         setResultPage(1)
         query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
         break;
-      case 'resultSize':
-        setResultSize(updateObj.resultSize)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${updateObj.resultSize}&resultPage=${search.resultPage}&sortType=${search.sortType}`
-        break;
       case 'page':
         setResultPage(updateObj.page)
         query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
@@ -110,6 +118,29 @@ export default function SearchResultsPage(props) {
     })
   }
 
+  function handleSelectAttribute(value){
+    performSearchRef.current = true
+    let mutatedAttributeFilterObj = attributeFilterObj
+    let currentKey = value.attribute
+    if (value.checked) {
+      if(currentKey in mutatedAttributeFilterObj){
+        mutatedAttributeFilterObj[currentKey].push(value.bucket) 
+      } else {
+        mutatedAttributeFilterObj[currentKey] = [value.bucket]
+      }
+    } else {
+      let list = mutatedAttributeFilterObj[currentKey]
+      list =  _.remove(list, function(elem) {
+        return elem !== value.bucket;
+      })
+      mutatedAttributeFilterObj[currentKey] = list
+    }
+    console.log('search status', performSearchRef)
+    console.log('mutated', mutatedAttributeFilterObj)
+    setAttributeFilter(mutatedAttributeFilterObj)
+    console.log('real', attributeFilterObj)
+  }
+
   let SearchResults = _.map(searchResults, result => {
     return(
       <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
@@ -121,6 +152,7 @@ export default function SearchResultsPage(props) {
       <AttributeFilter 
         name={attribute.categoryName}
         options={attribute.features}
+        toggleAttribute={handleSelectAttribute}
       />
     )
   }
@@ -134,24 +166,27 @@ export default function SearchResultsPage(props) {
         {AttributeFilters}
       </div>
       <ResultsContainer>
-        <div>
+        <DivResultSummaryRow>
           <ResultsSummary 
             searchTerm={searchTerm}
-            resultSize={resultSize}
             resultPage={resultPage}
             totalResults={totalResults}
           />
           <ResultsSearch
-            resultSize={resultSize}
             sortType={sortType}
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
-            updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
-        </div>
-        { isSearching ? <Loader/> : SearchResults}
+        </DivResultSummaryRow>
+        { isSearching ? 
+          <Loader/> 
+          : 
+          <DivSearchResultsContainer>
+            {SearchResults} 
+          </DivSearchResultsContainer>
+        
+        }
         <Paginator 
-          resultSize={resultSize}
           resultPage={resultPage}
           totalResults={totalResults}
           updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})

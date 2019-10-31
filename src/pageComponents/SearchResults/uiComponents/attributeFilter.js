@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Transition } from "react-transition-group"
+// import { Transition } from "react-transition-group"
 
 const DivTitle = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
   display: flex; 
   flex-direction: column;
-  height: 250px;
+  max-height: 250px;
   overflow: scroll;
 `
 
@@ -41,6 +41,11 @@ const Label = styled.label`
   margin-left: 4px;
 `
 
+const InputSearch = styled.input`
+  margin: 4px 16px;
+  width: 250px;
+`
+
 const defaultStyle = {
   transition: `opacity 300ms ease-in-out`,
   opacity: 0,
@@ -53,15 +58,26 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name, options, open}) {
+export default function AttributeFilter({name, options, open, toggleAttribute}) {
   const [isOpen, setIsOpen] = useState(open)
+  const [filter, setFilter] = useState('')
 
   let AttributeOptions = _.map(options, option => {
-    if(option.featureName !== 'Null'){
+    if(option.featureName !== 'Null' && _.startsWith(option.featureName, filter)){
       return (
         <DivOptionRow>
-          <input type="checkbox" id={option.featureName} name={option.featureName}/>
-          <Label for={option.featureName}>{option.featureName}</Label>
+          <input type="checkbox" 
+            id={option.featureName} 
+            name={option.featureName} 
+            onClick={(e)=>{toggleAttribute(
+              {
+                attribute: name,
+                bucket: option.featureName,
+                checked: e.target.checked
+              }
+              )}}
+          />
+          <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
         </DivOptionRow>
       )
     }
@@ -74,9 +90,14 @@ export default function AttributeFilter({name, options, open}) {
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
-        <DivOptions>
-          {AttributeOptions}
-        </DivOptions>
+        <>
+          <div>
+            {options.length > 10 && <InputSearch placeholder={`Search ${name}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+          </div>
+          <DivOptions>
+            {AttributeOptions}
+          </DivOptions>
+        </>
       }
     </>
   )
@@ -84,6 +105,7 @@ export default function AttributeFilter({name, options, open}) {
 
 AttributeFilter.propTypes = {
   name: PropTypes.string.isRequired,
-  options: PropTypes.string,
-  open: PropTypes.bool
+  options: PropTypes.array,
+  open: PropTypes.bool,
+  toggleAttribute: PropTypes.func
 }

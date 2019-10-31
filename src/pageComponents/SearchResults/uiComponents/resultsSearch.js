@@ -3,11 +3,13 @@ import styled from 'styled-components'
 
 const Div = styled.div`
   display: flex;
+  flex-direction: column;
 `
 
 const DivResultsSearch = styled.div`
   display: flex;
   margin-bottom: 10px;
+  margin-right: 8px;
 `
 
 const InputSearch = styled.input`
@@ -36,7 +38,7 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({updateSearchTerm, updateSortType, updateResultSize, sortType, resultSize}) {
+export default function ResultsSearch({updateSearchTerm, updateSortType, sortType}) {
   const [searchTerm, setSearchTerm] = useState('')
 
   function handleUpdateSearchTerm(){
@@ -58,12 +60,6 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, updateR
           <option value={'availability'}>Sort by Availability</option>
           <option value={'popularity'}>Sort by Popularity</option>
         </select>
-        <label htmlFor="show">Show:</label>
-        <select id="show" value={resultSize} onChange={(e) => updateResultSize(e.target.value)}>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={50}>50</option>
-        </select> 
       </DivResultsSearch>
     </Div>
   )
