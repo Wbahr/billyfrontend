@@ -50,6 +50,7 @@ const DivPartDetailsRow = styled.div`
 const DivPartImg = styled.div`
   display: flex;
   width: 150px;
+  height: 150px;
   background-color: white;
 `
 
@@ -58,7 +59,7 @@ const DivPartDetails = styled.div`
   flex-direction: column;
   padding: 4px 8px;
   height: 134px;
-  overflow: scroll;
+  overflow: hidden;
 `
 
 const PpartTitle = styled.p`
@@ -142,6 +143,8 @@ const PBlue = styled.p`
 
 const Img = styled.img`
   margin: auto;
+  height: auto;
+  width: auto;
 `
 
 export default function ItemResult({result}) {
@@ -174,7 +177,7 @@ export default function ItemResult({result}) {
     <DivItemResultContainer>
       <DivPartDetailsRow>
         <DivPartImg>
-          <Img src={imagePath} height='150px'/>
+          <Img src={imagePath}/>
         </DivPartImg>
         <DivPartDetails>
           <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
