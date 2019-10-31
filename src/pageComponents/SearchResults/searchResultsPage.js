@@ -17,8 +17,18 @@ const DivContainer = styled.div`
 
 const ResultsContainer = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   margin-left: 8px;
+`
+
+const DivResultSummaryRow = styled.div`
+  display: flex;
+`
+
+const DivSearchResultsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
 `
 
 export default function SearchResultsPage(props) {
@@ -28,7 +38,6 @@ export default function SearchResultsPage(props) {
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
   const [resultPage, setResultPage] = useState(search.resultPage)
-  const [resultSize, setResultSize] = useState(search.resultSize)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
@@ -50,9 +59,6 @@ export default function SearchResultsPage(props) {
       }
       if (searchOld.resultPage !== searchNew.resultPage){
         setResultPage(searchNew.resultPage)
-      }
-      if (searchOld.resultSize !== searchNew.resultSize){
-        setResultSize(searchNew.resultSize)
       }
       prevHistoryRef.current = props.history.location
       performSearchRef.current = true
@@ -96,10 +102,6 @@ export default function SearchResultsPage(props) {
         setSearchTerm(updateObj.searchTerm)
         setResultPage(1)
         query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
-        break;
-      case 'resultSize':
-        setResultSize(updateObj.resultSize)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${updateObj.resultSize}&resultPage=${search.resultPage}&sortType=${search.sortType}`
         break;
       case 'page':
         setResultPage(updateObj.page)
@@ -164,24 +166,27 @@ export default function SearchResultsPage(props) {
         {AttributeFilters}
       </div>
       <ResultsContainer>
-        <div>
+        <DivResultSummaryRow>
           <ResultsSummary 
             searchTerm={searchTerm}
-            resultSize={resultSize}
             resultPage={resultPage}
             totalResults={totalResults}
           />
           <ResultsSearch
-            resultSize={resultSize}
             sortType={sortType}
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
-            updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
-        </div>
-        { isSearching ? <Loader/> : SearchResults}
+        </DivResultSummaryRow>
+        { isSearching ? 
+          <Loader/> 
+          : 
+          <DivSearchResultsContainer>
+            {SearchResults} 
+          </DivSearchResultsContainer>
+        
+        }
         <Paginator 
-          resultSize={resultSize}
           resultPage={resultPage}
           totalResults={totalResults}
           updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})

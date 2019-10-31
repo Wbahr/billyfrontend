@@ -5,9 +5,10 @@ import styled from "styled-components"
 const DivItemResultContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 700px;
-  height: 180px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  width: 320px;
+  height: 400px;
+  margin: 0 8px 20px 8px;
 `
 
 const DivPartNumberRow = styled.div`
@@ -25,29 +26,30 @@ const DivPartNumberRow = styled.div`
 
 const DivPartDetailsRow = styled.div`
   display: flex;
-  background-color: #F3F3F3;
-  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 99;
+  background-color: #fff;
+  width: 100%;
 `
 
 const DivPartImg = styled.div`
   display: flex;
   width: 150px;
   background-color: white;
-  border-left: 1px #F3F3F3 solid;
-  border-bottom: 1px #F3F3F3 solid;
 `
 
 const DivPartDetails = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
   padding: 4px 8px;
 `
 
 const PpartTitle = styled.p`
   margin: 0;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
+  color: #000000 !important;
   &:hover{
     cursor: pointer;
     color: #328EFC;
@@ -56,7 +58,7 @@ const PpartTitle = styled.p`
 
 const PpartDesc = styled.p`
   margin: 0 0 auto 0;
-  font-size: 14px;
+  font-size: 13px;
 `
 
 const PpartAvailability = styled.p`
@@ -152,7 +154,7 @@ export default function ItemResult({result}) {
       <DivPartNumberRow><p>Item ID: {result.item_id}</p><p>Airline #: AHC{result.frecno}</p></DivPartNumberRow>
       <DivPartDetailsRow>
         <DivPartImg>
-          <Img src={imagePath} width='65%'/>
+          <Img src={'https://www.airlinehyd.com/images/items/SMC%20VHS5510-N10B-Z_l.jpg'} width='100%'/>
         </DivPartImg>
         <DivPartDetails>
           <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
@@ -165,8 +167,10 @@ export default function ItemResult({result}) {
           <Div>
             {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></> : <ACall href="tel:+18009997378">Call for Price</ACall>}
           </Div>
-          <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+          <Div>
+            <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+          </Div>
         </DivPartAction>
       </DivPartDetailsRow>
     </DivItemResultContainer>

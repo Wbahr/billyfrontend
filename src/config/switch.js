@@ -4,6 +4,7 @@ import { Route, Switch, withRouter } from 'react-router-dom'
 import EmptyLayout from '../layoutComponents/emptyLayout'
 import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/headerfooterHomepageLayout'
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
+import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
@@ -58,8 +59,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/product/:itemId' component={ItemDetail} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
       </Switch>

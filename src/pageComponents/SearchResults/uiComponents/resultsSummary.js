@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const DivResultsSummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 700px;
   margin: 0 0 20px 0;
 
 `
@@ -38,7 +37,7 @@ export default function ResultsSummary({searchTerm, resultSize, resultPage, tota
   return(
     <DivResultsSummaryContainer>
       <Div><Pgrey>Search Results for:</Pgrey><Pblue>{searchTerm}</Pblue></Div>
-      <Div><Pgrey2>Results displayed: {1 + (resultSize * (resultPage-1))}-{resultSize * resultPage} of {totalResults === 10000 ? totalResults + '+' : totalResults}</Pgrey2></Div>
+      <Div><Pgrey2>Results returned: {totalResults === 10000 ? totalResults + '+' : totalResults}</Pgrey2></Div>
     </DivResultsSummaryContainer>
   )
 }
