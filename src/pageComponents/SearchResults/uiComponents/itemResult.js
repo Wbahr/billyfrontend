@@ -174,7 +174,7 @@ export default function ItemResult({result}) {
     <DivItemResultContainer>
       <DivPartDetailsRow>
         <DivPartImg>
-          <Img src={imagePath} width='100%'/>
+          <Img src={imagePath} height='150px'/>
         </DivPartImg>
         <DivPartDetails>
           <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
