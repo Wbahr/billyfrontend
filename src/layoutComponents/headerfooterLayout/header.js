@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
 
+const DivSticky = styled.div`
+`
+
 const NavTop = styled.div`
   display: flex;
   margin: 0 auto;
@@ -122,7 +125,7 @@ export default function HeaderComponent(props) {
   let itemsInCart = 4
 
   function handleSearch() {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=48&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
   }
 
   function handleSignOut(){
@@ -130,7 +133,7 @@ export default function HeaderComponent(props) {
   }
 
   return(
-    <div>
+    <DivSticky>
       <NavTop>
         <NavBottomContainer>
           <div>
@@ -185,6 +188,6 @@ export default function HeaderComponent(props) {
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
       </NavBottom>
-    </div>
+    </DivSticky>
   )
 }

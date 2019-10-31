@@ -7,21 +7,35 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 320px;
-  height: 400px;
+  height: 415px;
   margin: 0 8px 20px 8px;
+  padding: 8px 0;
+  border-bottom: 1px grey solid;
 `
 
 const DivPartNumberRow = styled.div`
   width: 100%;
-  height: 30px;
   display: flex;
-  justify-content: space-between;
-  background-color: #404040;
-  color: #fff;
-  padding: 5px;
+  color: #000;
+  padding: 0 5px;
   font-size: 12px;
   font-weight: bold;
   font-family: Arial, sans-serif;
+`
+
+const DivPartNumberRowSpread = styled(DivPartNumberRow)`
+  justify-content: space-between;
+`
+
+const P = styled.p`
+  margin: 0;
+  font-weight: 500;
+  margin: 0 4px;
+`
+
+const Pred = styled(P)`
+  font-weight: 600;
+  margin: 0;
 `
 
 const DivPartDetailsRow = styled.div`
@@ -43,6 +57,8 @@ const DivPartDetails = styled.div`
   display: flex;
   flex-direction: column;
   padding: 4px 8px;
+  height: 134px;
+  overflow: scroll;
 `
 
 const PpartTitle = styled.p`
@@ -75,14 +91,15 @@ const DivPartAction = styled.div`
 `
 
 const ButtonRed = styled.button`
-  background-color: rgb(219, 22, 51);
-  color: white;
+background-color: #b51029;
+color: white;
   font-weight: 600;
   border: 0;
   padding: 4px 8px;
-  box-shadow: 2px 2px 4px #000;
+  margin: 4px 0;
+  box-shadow: 1px 1px 2px #000;
   &:hover{
-    background-color: #b51029;
+    background-color: rgb(219, 22, 51);
   }
   &:active{
     background-color: #b51029;
@@ -92,6 +109,7 @@ const ButtonRed = styled.button`
 
 const Div = styled.div`
   display: flex;
+  align-items: center;
 `
 
 const InputQuantity = styled.input`
@@ -102,8 +120,10 @@ const InputQuantity = styled.input`
 
 const Pprice = styled.p`
   color: #328EFC
+  font-size: 18px;
   font-weight: 700;
   padding: 0 4px;
+  margin: 0;
 `
 
 const ACall = styled.a`
@@ -141,37 +161,38 @@ export default function ItemResult({result}) {
 
   let imagePath
   if (_.isNil(result.thumbnail_image_path)){
-    console.log(result.thumbnail_image_path)
     imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
   } else {
     let imagePathArray = result.thumbnail_image_path.split("\\")
-    imagePath = 'https://www.airlinehyd.com/images/items/' + imagePathArray[imagePathArray.length - 1]
+    let imageFile = imagePathArray[imagePathArray.length - 1]
+    imageFile = imageFile.slice(0, -5) + 'l.jpg'
+    imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
   
   return(
     <DivItemResultContainer>
-      <DivPartNumberRow><p>Item ID: {result.item_id}</p><p>Airline #: AHC{result.frecno}</p></DivPartNumberRow>
       <DivPartDetailsRow>
         <DivPartImg>
-          <Img src={'https://www.airlinehyd.com/images/items/SMC%20VHS5510-N10B-Z_l.jpg'} width='100%'/>
+          <Img src={imagePath} width='100%'/>
         </DivPartImg>
         <DivPartDetails>
           <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
           <PpartDesc>{result.extended_desc}</PpartDesc>
-          <Div><PpartAvailability>Availability:</PpartAvailability>
-          {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
-          </Div>
         </DivPartDetails>
-        <DivPartAction>
-          <Div>
-            {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <><Pprice>${result.anon_price.toFixed(2)}</Pprice><p>/EA</p></> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-          </Div>
-          <Div>
-            <Div><p>Quantity:</p><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-          </Div>
-        </DivPartAction>
+        <DivPartNumberRow>
+          <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
+        </DivPartNumberRow>
+        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+          {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
+        </DivPartNumberRow>
+        <DivPartNumberRowSpread>
+          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+          {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+        </DivPartNumberRowSpread>
+        <Div>
+          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+        </Div>
       </DivPartDetailsRow>
     </DivItemResultContainer>
   )
