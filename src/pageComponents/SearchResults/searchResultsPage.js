@@ -126,9 +126,8 @@ export default function SearchResultsPage(props) {
       })
       mutatedAttributeFilterObj[currentKey] = list
     }
-    console.log('search status', performSearchRef)
-    console.log('mutated', mutatedAttributeFilterObj)
-    setAttributeFilter(mutatedAttributeFilterObj).then(() => loadFunc(false))
+    setAttributeFilter(mutatedAttributeFilterObj)
+    loadFunc(false)
   }
 
   function loadFunc(isFirstLoad){
