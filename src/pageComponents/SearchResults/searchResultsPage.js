@@ -24,6 +24,9 @@ const ResultsContainer = styled.div`
 
 const DivResultSummaryRow = styled.div`
   display: flex;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `
 
 const DivSearchResultsContainer = styled.div`
@@ -188,7 +191,7 @@ export default function SearchResultsPage(props) {
         <InfiniteScroll
             pageStart={0}
             loadMore={() => loadFunc(false)}
-            hasMore={true}
+            hasMore={totalResults > searchResults.length}
             loader={<Loader/>}
         >
           <DivSearchResultsContainer>
