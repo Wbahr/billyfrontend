@@ -125,7 +125,7 @@ export default function HeaderComponent(props) {
   let itemsInCart = 4
 
   function handleSearch() {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=48&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
   }
 
   function handleSignOut(){

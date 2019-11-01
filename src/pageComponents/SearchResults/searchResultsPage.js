@@ -10,6 +10,7 @@ import Paginator from './uiComponents/paginator'
 import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import Loader from '../_common/loader'
+import InfiniteScroll from 'react-infinite-scroller'
 
 const DivContainer = styled.div`
   display: flex;
@@ -42,8 +43,9 @@ export default function SearchResultsPage(props) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
-  const [isSearching, setSearching] = useState(true)
+  const [isSearching, setSearching] = useState(false)
   const [attributeFilterObj, setAttributeFilter] = useState({})
+  const [currentPage, setCurrentPage] = useState(0)
 
 
   useEffect(() => {
@@ -66,18 +68,8 @@ export default function SearchResultsPage(props) {
   })
 
   useEffect(() => {
-    console.log('use Effect!!!!!!!!!!!!!!!!!!!')
-    if(performSearchRef.current){
-      const search = queryString.parse(location.search)
-      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-      if(Object.keys(attributeFilterObj).length > 0){
-        body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}", attributeFilter: "${attributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-      }
-      setSearching(true) 
-      if (search.searchTerm !== ''){
-        GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
-        performSearchRef.current = false
-      }
+    if(performSearchRef.current && !didMountRef.current){
+      loadFunc(true)
     }
     if (!didMountRef.current) {
       didMountRef.current = true
@@ -88,7 +80,7 @@ export default function SearchResultsPage(props) {
     let searchResultArray = _.get(result,`data.itemSearch.result`, [])
     let totalResultCount = _.get(result,`data.itemSearch.count`, 0)
     let attributeCategories = _.get(result,`data.itemSearch.attributeCategories`, [])
-    setSearchResults(searchResultArray)
+    setSearchResults([...searchResults, ...searchResultArray])
     setTotalResults(totalResultCount)
     setAttributeCategories(attributeCategories)
   }
@@ -141,6 +133,22 @@ export default function SearchResultsPage(props) {
     console.log('real', attributeFilterObj)
   }
 
+  function loadFunc(isFirstLoad){
+    const search = queryString.parse(location.search)
+    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+    if(isFirstLoad){
+      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${1}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+    }
+    if(Object.keys(attributeFilterObj).length > 0){
+      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilter: "${attributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+    }
+    if (search.searchTerm !== '' && !isSearching){
+      setSearching(true) 
+      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false)).then(() => setCurrentPage(currentPage + 1))
+      performSearchRef.current = false
+    }
+  }
+
   let SearchResults = _.map(searchResults, result => {
     return(
       <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
@@ -178,19 +186,16 @@ export default function SearchResultsPage(props) {
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
         </DivResultSummaryRow>
-        { isSearching ? 
-          <Loader/> 
-          : 
+        <InfiniteScroll
+            pageStart={0}
+            loadMore={() => loadFunc(false)}
+            hasMore={true}
+            loader={<Loader/>}
+        >
           <DivSearchResultsContainer>
-            {SearchResults} 
+            {SearchResults}
           </DivSearchResultsContainer>
-        
-        }
-        <Paginator 
-          resultPage={resultPage}
-          totalResults={totalResults}
-          updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
-        } />
+        </InfiniteScroll>
       </ResultsContainer>
     </DivContainer>
   )
