@@ -61,9 +61,6 @@ export default function SearchResultsPage(props) {
       if (searchOld.searchTerm !== searchNew.searchTerm){
         setSearchTerm(searchNew.searchTerm)
       }
-      if (searchOld.resultPage !== searchNew.resultPage){
-        setResultPage(searchNew.resultPage)
-      }
       prevHistoryRef.current = props.history.location
       performSearchRef.current = true
     }
@@ -131,8 +128,7 @@ export default function SearchResultsPage(props) {
     }
     console.log('search status', performSearchRef)
     console.log('mutated', mutatedAttributeFilterObj)
-    setAttributeFilter(mutatedAttributeFilterObj)
-    console.log('real', attributeFilterObj)
+    setAttributeFilter(mutatedAttributeFilterObj).then(() => loadFunc(false))
   }
 
   function loadFunc(isFirstLoad){
@@ -195,6 +191,7 @@ export default function SearchResultsPage(props) {
             loader={<Loader/>}
         >
           <DivSearchResultsContainer>
+            {(searchResults.length === 0 && isSearching) && <Loader/>}
             {SearchResults}
           </DivSearchResultsContainer>
         </InfiniteScroll>

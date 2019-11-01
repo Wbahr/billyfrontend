@@ -11,7 +11,7 @@ const DivContainer = styled.div`
 
 const Loader = () => (
 	<DivContainer>
-		<ReactLoading type={'spin'} color={'#bbb'}/>
+		<ReactLoading type={'bubbles'} color={'#bbb'}/>
 	</DivContainer>
 )
 
