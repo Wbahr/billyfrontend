@@ -143,8 +143,8 @@ const PBlue = styled.p`
 
 const Img = styled.img`
   margin: auto;
-  height: auto;
-  width: auto;
+  max-height: 100%;
+  max-width: 100%;
 `
 
 export default function ItemResult({result}) {
