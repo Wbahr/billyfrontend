@@ -10,6 +10,7 @@ import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
+import formatAttributeFilter from './helperFunctions/formatAttributeFilter'
 
 const DivContainer = styled.div`
   display: flex;
@@ -137,7 +138,8 @@ export default function SearchResultsPage(props) {
       body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${1}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
     }
     if(Object.keys(attributeFilterObj).length > 0){
-      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilter: "${attributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+      let mutatedAttributeFilterObj = formatAttributeFilter(attributeFilterObj)
+      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilter: "${mutatedAttributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
     }
     if (search.searchTerm !== '' && !isSearching){
       setSearching(true) 
