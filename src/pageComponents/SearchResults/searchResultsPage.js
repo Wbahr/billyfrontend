@@ -10,7 +10,6 @@ import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
-import formatAttributeFilter from './helperFunctions/formatAttributeFilter'
 
 const DivContainer = styled.div`
   display: flex;
@@ -47,9 +46,8 @@ export default function SearchResultsPage(props) {
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
-  const [attributeFilterObj, setAttributeFilter] = useState({})
   const [currentPage, setCurrentPage] = useState(0)
-
+  const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -68,13 +66,8 @@ export default function SearchResultsPage(props) {
   })
 
   useEffect(() => {
-    if(performSearchRef.current && !didMountRef.current){
-      loadFunc(true)
-    }
-    if (!didMountRef.current) {
-      didMountRef.current = true
-    }
-  })
+    loadFunc()
+  }, [checkedAttributeFilters])
 
   function parseQueryResults(result) {
     let searchResultArray = _.get(result,`data.itemSearch.result`, [])
@@ -110,37 +103,19 @@ export default function SearchResultsPage(props) {
     })
   }
 
-  function handleSelectAttribute(value){
-    performSearchRef.current = true
-    let mutatedAttributeFilterObj = attributeFilterObj
-    let currentKey = value.attribute
-    if (value.checked) {
-      if(currentKey in mutatedAttributeFilterObj){
-        mutatedAttributeFilterObj[currentKey].push(value.bucket) 
-      } else {
-        mutatedAttributeFilterObj[currentKey] = [value.bucket]
-      }
-    } else {
-      let list = mutatedAttributeFilterObj[currentKey]
-      list =  _.remove(list, function(elem) {
-        return elem !== value.bucket;
-      })
-      mutatedAttributeFilterObj[currentKey] = list
-    }
-    setAttributeFilter(mutatedAttributeFilterObj)
-    loadFunc(false)
+  function handleUpdatedFeatureToggle(updatedState){
+    setCheckedAttributeFilters(updatedState)
   }
 
-  function loadFunc(isFirstLoad){
+  function loadFunc(){
     const search = queryString.parse(location.search)
-    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-    if(isFirstLoad){
-      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${1}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-    }
-    if(Object.keys(attributeFilterObj).length > 0){
-      let mutatedAttributeFilterObj = formatAttributeFilter(attributeFilterObj)
-      body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilter: "${mutatedAttributeFilterObj}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-    }
+
+    let attributeFiltersText = checkedAttributeFilters.length
+      ? "[" + checkedAttributeFilters.map(filter => "{ field : \"" + filter.field + "\", values : " + JSON.stringify(filter.values)) + "}]"
+      : "[]"
+
+    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilters: ${attributeFiltersText}}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
+    console.log(body)
     if (search.searchTerm !== '' && !isSearching){
       setSearching(true) 
       GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false)).then(() => setCurrentPage(currentPage + 1))
@@ -154,12 +129,15 @@ export default function SearchResultsPage(props) {
     )
   })
 
-  let AttributeFilters = _.map(attributeCategories, attribute => {
+  let AttributeFilters = attributeCategories.map((attribute, index) => {
+
     return(
       <AttributeFilter 
+        key={index}
         name={attribute.categoryName}
         options={attribute.features}
-        toggleAttribute={handleSelectAttribute}
+        attributeFeatureToggleStates={checkedAttributeFilters}
+        updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
       />
     )
   }

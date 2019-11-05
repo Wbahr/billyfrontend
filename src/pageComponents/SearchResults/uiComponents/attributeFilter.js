@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import _ from 'lodash'
@@ -58,24 +58,49 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name, options, open, toggleAttribute}) {
+export default function AttributeFilter({name, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent}) {
   const [isOpen, setIsOpen] = useState(open)
   const [filter, setFilter] = useState('')
+  const [attribute, setAttribute] = useState(null)
 
-  let AttributeOptions = _.map(options, option => {
+  useEffect(() => {
+    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === name)
+
+    setAttribute({
+      field: name,
+      values: inputAttribute ? [...inputAttribute.values] : []
+    })
+
+  }, [attributeFeatureToggleStates])
+
+  const handleFeatureToggle = (e, option) => {
+
+    var newAttribute = {
+      ...attribute
+    };
+
+    if(e.target.checked){
+      newAttribute.values = [...new Set([...newAttribute.values, option.featureName])]
+    }
+
+    var newToggleStates = [
+      ...attributeFeatureToggleStates.filter(f => f.field !== name)
+    ]
+
+    if(newAttribute.values.length){
+      newToggleStates.push(newAttribute)
+    }
+
+    updatedFeatureToggleEvent(newToggleStates)
+  }
+
+  let AttributeOptions = options.map((option, index) => {
     if(option.featureName !== 'Null' && _.startsWith(option.featureName, filter)){
       return (
-        <DivOptionRow>
+        <DivOptionRow key={index}>
           <input type="checkbox" 
-            id={option.featureName} 
-            name={option.featureName} 
-            onClick={(e)=>{toggleAttribute(
-              {
-                attribute: name,
-                bucket: option.featureName,
-                checked: e.target.checked
-              }
-              )}}
+            checked={attribute && attribute.values.indexOf(option.featureName) > -1}
+            onChange={(e) => handleFeatureToggle(e, option)}
           />
           <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
         </DivOptionRow>
