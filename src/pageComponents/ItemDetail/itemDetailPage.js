@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-// import styled from 'styled-components'
 
+//This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
         items(invMastUid: $itemId) {
@@ -34,6 +34,76 @@ const GET_ITEM_BY_ID = gql`
             supplierId
             tariff
             unitSizeMultiple
+            feature {
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                modifiedBy
+                sequence
+                text
+                type
+                uid
+              }
+              image {
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                modifiedBy
+                path
+                sequence
+                type
+                uid
+              }
+              itemAssociationInvMastU {
+                associatedInvMastUid
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                modifiedBy
+                quantity
+                type
+                uid
+              }
+              itemAssociationAssociatedInvMastU {
+                associatedInvMastUid
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                modifiedBy
+                quantity
+                type
+                uid
+              }
+              itemLink {
+                audienceType
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                linkPath
+                linkType
+                modifiedBy
+                sequence
+                thumbnail
+                title
+                uid
+              }
+              techSpec {
+                attributeCategoryId
+                createDate
+                createdBy
+                invMastUid
+                lastModifiedDate
+                modifiedBy
+                name
+                sequence
+                uid
+                value
+              }
         }
     }
 `;
