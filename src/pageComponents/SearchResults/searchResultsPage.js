@@ -10,6 +10,8 @@ import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const DivContainer = styled.div`
   display: flex;
@@ -34,6 +36,22 @@ const DivSearchResultsContainer = styled.div`
   flex-wrap: wrap;
 `
 
+const QUERY_ITEM_SEARCH = gql`
+  query ItemSearch($searchParams: ElasticSearchItemRequest!){
+    itemSearch(searchParams: $searchParams){
+      result
+      count
+      attributeCategories{
+        categoryName
+        features{
+          featureName
+          itemCount
+        }
+      }
+    }
+  }
+`
+
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
   const prevHistoryRef = useRef();
@@ -48,6 +66,16 @@ export default function SearchResultsPage(props) {
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
+
+  const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    onCompleted: result => {
+      if (result.items.length) {
+        setItem(result.items[0])
+      } else {
+        setItem(null);
+      }
+    }
+  })
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -110,14 +138,27 @@ export default function SearchResultsPage(props) {
   function loadFunc(){
     const search = queryString.parse(location.search)
 
-    let attributeFiltersText = checkedAttributeFilters.length
-      ? "[" + checkedAttributeFilters.map(filter => "{ field : \"" + filter.field + "\", values : " + JSON.stringify(filter.values)) + "}]"
-      : "[]"
+    setSearching(true) 
 
-    let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${currentPage + 1}, sortType: "${search.sortType}", attributeFilters: ${attributeFiltersText}}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-    console.log(body)
+    performItemSearch({
+      variables: {
+        searchParams: {
+          searchTerm: search.searchTerm,
+          resultSize: search.resultSize,
+          resultPage: currentPage + 1,
+          sortType: search.sortType,
+          attributeFilters: checkedAttributeFilters.map(filter => {
+            return {
+              field: filter.field,
+              values: filter.values
+            }
+          })
+        }
+      }
+    })
+
     if (search.searchTerm !== '' && !isSearching){
-      setSearching(true) 
+      
       GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false)).then(() => setCurrentPage(currentPage + 1))
       performSearchRef.current = false
     }
