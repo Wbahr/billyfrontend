@@ -58,37 +58,46 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent}) {
+export default function AttributeFilter({name: attributeCategoryName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent}) {
   const [isOpen, setIsOpen] = useState(open)
   const [filter, setFilter] = useState('')
   const [attribute, setAttribute] = useState(null)
 
   useEffect(() => {
-    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === name)
+    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === attributeCategoryName)
 
     setAttribute({
-      field: name,
+      field: attributeCategoryName,
       values: inputAttribute ? [...inputAttribute.values] : []
     })
 
   }, [attributeFeatureToggleStates])
 
   const handleFeatureToggle = (e, option) => {
-
     var newAttribute = {
       ...attribute
     };
-
+    
+    //Add or remove the feature from the field category, depending on the checked status.
     if(e.target.checked){
       newAttribute.values = [...new Set([...newAttribute.values, option.featureName])]
+    } else {
+      newAttribute.values = newAttribute.values.filter(val => val !== option.featureName)
     }
 
+    //Create a new array with all the attribute category filter selections.
+    //Temporarily remove this attribute category
     var newToggleStates = [
-      ...attributeFeatureToggleStates.filter(f => f.field !== name)
+      ...attributeFeatureToggleStates.filter(f => f.field !== newAttribute.field)
     ]
 
-    if(newAttribute.values.length){
-      newToggleStates.push(newAttribute)
+    //Re-add the new category attribute values if any features of the category are
+    //selected for filtering
+    if(newAttribute.values.length !== 0){
+      newToggleStates = [
+        ...newToggleStates,
+        newAttribute
+      ]
     }
 
     updatedFeatureToggleEvent(newToggleStates)
@@ -111,13 +120,13 @@ export default function AttributeFilter({name, options, open, attributeFeatureTo
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{name}</P>
+        <P>{attributeCategoryName}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
         <>
           <div>
-            {options.length > 10 && <InputSearch placeholder={`Search ${name}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+            {options.length > 10 && <InputSearch placeholder={`Search ${attributeCategoryName}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
