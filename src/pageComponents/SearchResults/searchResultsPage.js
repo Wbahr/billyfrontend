@@ -66,14 +66,22 @@ export default function SearchResultsPage(props) {
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
+  const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
-    onCompleted: result => {
-      if (result.items.length) {
-        setItem(result.items[0])
-      } else {
-        setItem(null);
+    onCompleted: data => {
+      var itemSearchResult = data.itemSearch
+
+      //If the number of retrieved results equals the requesting page size,
+      //then enable the scroller to possibly load more.
+      const search = queryString.parse(location.search)
+      if(itemSearchResult.result.length == search.resultSize){
+        setInfiniteScrollHasMore(true)
+        console.log("reset hasMore for page " + currentPage)
       }
+
+      parseQueryResults(itemSearchResult)
+      setSearching(false)
     }
   })
 
@@ -95,15 +103,26 @@ export default function SearchResultsPage(props) {
 
   useEffect(() => {
     loadFunc()
-  }, [checkedAttributeFilters])
+  }, [checkedAttributeFilters, currentPage])
 
-  function parseQueryResults(result) {
-    let searchResultArray = _.get(result,`data.itemSearch.result`, [])
-    let totalResultCount = _.get(result,`data.itemSearch.count`, 0)
-    let attributeCategories = _.get(result,`data.itemSearch.attributeCategories`, [])
-    setSearchResults([...searchResults, ...searchResultArray])
+  function parseQueryResults(itemSearchData) {
+    let additionalSearchResults = itemSearchData.result
+    let totalResultCount = itemSearchData.count
+    let attrCategories = itemSearchData.attributeCategories
+
+    if(currentPage >= 0){
+      setSearchResults([...searchResults, ...additionalSearchResults])
+    } else{
+      setSearchResults([...additionalSearchResults])
+    }
+    
     setTotalResults(totalResultCount)
-    setAttributeCategories(attributeCategories)
+
+    //Only set the attribute categories once
+    if(attributeCategories.length === 0){
+      setAttributeCategories(attrCategories)
+    }
+    
   }
 
   function handleUpdateResults(updateObj){
@@ -136,10 +155,10 @@ export default function SearchResultsPage(props) {
   }
 
   function loadFunc(){
+    console.log("loadFunc for page " + currentPage)
     const search = queryString.parse(location.search)
-
-    setSearching(true) 
-
+    
+    setSearching(true)
     performItemSearch({
       variables: {
         searchParams: {
@@ -156,12 +175,6 @@ export default function SearchResultsPage(props) {
         }
       }
     })
-
-    if (search.searchTerm !== '' && !isSearching){
-      
-      GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false)).then(() => setCurrentPage(currentPage + 1))
-      performSearchRef.current = false
-    }
   }
 
   let SearchResults = _.map(searchResults, result => {
@@ -206,8 +219,12 @@ export default function SearchResultsPage(props) {
         </DivResultSummaryRow>
         <InfiniteScroll
             pageStart={0}
-            loadMore={() => loadFunc(false)}
-            hasMore={totalResults > searchResults.length}
+            loadMore={(newPage) => {
+              console.log("Starting load for page " + newPage)
+              setInfiniteScrollHasMore(false)
+              setCurrentPage(newPage)
+            }}
+            hasMore={infiniteScrollHasMore}
             loader={<Loader/>}
         >
           <DivSearchResultsContainer>
