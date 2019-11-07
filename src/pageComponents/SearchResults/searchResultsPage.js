@@ -66,6 +66,7 @@ export default function SearchResultsPage(props) {
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
+  const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
@@ -77,10 +78,10 @@ export default function SearchResultsPage(props) {
       const search = queryString.parse(location.search)
       if(itemSearchResult.result.length == search.resultSize){
         setInfiniteScrollHasMore(true)
-        console.log("reset hasMore for page " + currentPage)
       }
 
       parseQueryResults(itemSearchResult)
+      setIsReplacingResults(false)
       setSearching(false)
     }
   })
@@ -102,27 +103,32 @@ export default function SearchResultsPage(props) {
   })
 
   useEffect(() => {
-    loadFunc()
-  }, [checkedAttributeFilters, currentPage])
+    if(currentPage > 0){
+      loadFunc()
+    }
+  }, [currentPage])
+
+  useEffect(() => {
+    setCurrentPage(0)
+    setIsReplacingResults(true)
+    loadFunc(true)
+  }, [checkedAttributeFilters])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
-    let totalResultCount = itemSearchData.count
-    let attrCategories = itemSearchData.attributeCategories
 
-    if(currentPage >= 0){
-      setSearchResults([...searchResults, ...additionalSearchResults])
-    } else{
+    if(isReplacingResults){
       setSearchResults([...additionalSearchResults])
+    } else{
+      setSearchResults([...searchResults, ...additionalSearchResults])
     }
     
-    setTotalResults(totalResultCount)
+    setTotalResults(itemSearchData.count)
 
     //Only set the attribute categories once
     if(attributeCategories.length === 0){
-      setAttributeCategories(attrCategories)
+      setAttributeCategories(itemSearchData.attributeCategories)
     }
-    
   }
 
   function handleUpdateResults(updateObj){
@@ -154,8 +160,7 @@ export default function SearchResultsPage(props) {
     setCheckedAttributeFilters(updatedState)
   }
 
-  function loadFunc(){
-    console.log("loadFunc for page " + currentPage)
+  function loadFunc(isAttributeUpdate){
     const search = queryString.parse(location.search)
     
     setSearching(true)
@@ -164,7 +169,7 @@ export default function SearchResultsPage(props) {
         searchParams: {
           searchTerm: search.searchTerm,
           resultSize: search.resultSize,
-          resultPage: currentPage + 1,
+          resultPage: isAttributeUpdate ? 1 : currentPage + 1,
           sortType: search.sortType,
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {
@@ -220,9 +225,8 @@ export default function SearchResultsPage(props) {
         <InfiniteScroll
             pageStart={0}
             loadMore={(newPage) => {
-              console.log("Starting load for page " + newPage)
               setInfiniteScrollHasMore(false)
-              setCurrentPage(newPage)
+              setCurrentPage(currentPage + 1)
             }}
             hasMore={infiniteScrollHasMore}
             loader={<Loader/>}
