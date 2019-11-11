@@ -72,8 +72,8 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
   useEffect(() => {
     let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === attributeCategoryName)
     filteredAttributeCategories.map(filterAttrObj => {
-      if(filterAttrObj.term === attributeCategoryName) {
-        setFilteredAttributeValues(filterAttrObj.values)
+      if(filterAttrObj.categoryName === attributeCategoryName) {
+        setFilteredAttributeValues(filterAttrObj.features)
       } else {
         setFilteredAttributeValues([])
       }
