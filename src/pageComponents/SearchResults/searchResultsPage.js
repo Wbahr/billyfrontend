@@ -62,6 +62,7 @@ export default function SearchResultsPage(props) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
+  const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
@@ -127,6 +128,8 @@ export default function SearchResultsPage(props) {
     //Only set the attribute categories once
     if(attributeCategories.length === 0){
       setAttributeCategories(itemSearchData.attributeCategories)
+    } else {
+      setFilteredAttributeCategories(itemSearchData.attributeCategories)
     }
   }
 
@@ -196,6 +199,7 @@ export default function SearchResultsPage(props) {
         options={attribute.features}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
+        filteredAttributeCategories={filteredAttributeCategories}
       />
     )
   }
