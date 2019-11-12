@@ -71,9 +71,17 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
 
   useEffect(() => {
     let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === attributeCategoryName)
+    console.log('filteredAttributeCategories', filteredAttributeCategories)
     filteredAttributeCategories.map(filterAttrObj => {
       if(filterAttrObj.categoryName === attributeCategoryName) {
-        setFilteredAttributeValues(filterAttrObj.features)
+        console.log('in both', filterAttrObj.categoryName)
+        console.log('both2', filterAttrObj)
+        let newAttributeFeatureNames = [] 
+        filterAttrObj.features.map(feature => {
+          newAttributeFeatureNames.push(feature.featureName)
+        })
+        console.log('new names', newAttributeFeatureNames)
+        setFilteredAttributeValues(newAttributeFeatureNames)
       } else {
         setFilteredAttributeValues([])
       }

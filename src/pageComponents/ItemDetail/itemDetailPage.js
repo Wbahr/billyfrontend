@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import styled from 'styled-components'
+import { useQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 //This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
@@ -106,36 +107,56 @@ const GET_ITEM_BY_ID = gql`
               }
         }
     }
-`;
+`
 
-const ItemDetailPage = () => {
+const DivPhoto = styled.div`
+    width: 400px;
+    height: 400px;
+`
 
-    let { itemId } = useParams()
+export default function ItemDetailPage(){
+  let { itemId } = useParams()
 
-    const [item, setItem] = useState()
+  const [item, setItem] = useState(null)
+  const { 
+    loading, 
+    error, 
+    data 
+  } = useQuery(GET_ITEM_BY_ID, {
+    variables: { itemId },
+    onCompleted: result => {
+      if (result.items.length) {
+        setItem(result.items[0])
+      } else {
+        setItem({})
+      }
+    }
+  })
 
-    const { loading, error, data } = useQuery(GET_ITEM_BY_ID, {
-        variables: { itemId },
-        onCompleted: result => {
-            if (result.items.length) {
-                setItem(result.items[0])
-            } else {
-                setItem(null);
-            }
-        }
-    })
-
-    if (loading) return <h1>Loading...</h1>
-    if (error) return <p>{error}</p>
-    return <>
+  if (_.isNil(item)) {
+    return(<h1>Loading...</h1>)
+  } else if (!_.has(item,`invMastUid`)){
+    return(<p>No item found</p>)
+  } else {
+    let imagePath
+    let resultImage = item.image[0].path
+    if (_.isNil(resultImage)){
+      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+    } else {
+      let imagePathArray = resultImage.split("\\")
+      let imageFile = imagePathArray[imagePathArray.length - 1]
+      imageFile = imageFile.slice(0, -5) + 'o.jpg'
+      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+    }
+    return(
+      <>
+        <DivPhoto>
+          <img src={imagePath}/>
+        </DivPhoto>
         <div>
-            {
-                item
-                    ? <p>{item.itemDesc}</p>
-                    : <p>No item found</p>
-            }
+        <p>{item.itemDesc}</p>
         </div>
-    </>
+      </>
+    )
+  }
 }
-
-export default ItemDetailPage
