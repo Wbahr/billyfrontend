@@ -269,7 +269,7 @@ export default function ItemDetailPage(){
           <p>{`$${item.anonPrice} /each`}</p>
           <p>{item.mfgPartNo}</p>
           <p>{item.itemCode}</p>
-          <p>{item.invMastUid}</p>
+          <p>AHC#{item.invMastUid}</p>
           <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
           <H3ItemSection>Features</H3ItemSection>
           {Features}
@@ -278,9 +278,13 @@ export default function ItemDetailPage(){
         </DivDetails>
         <DivPurchaseInfo>
           <Div>
-
+            <p>{`$${item.anonPrice} /each`}</p>
+            <label>Qty:</label><input value={1}/>
+            <hr/>
+            <p>Availability</p>
           </Div>
           <Div>
+            <hr/>
             <ButtonRed>Add to Cart</ButtonRed>
             <ButtonBlack>Buy Now</ButtonBlack>
           </Div>
