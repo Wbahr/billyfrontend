@@ -170,7 +170,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function ItemResult({result, history}) {
+export default function ItemResult({result, history, toggleDetailsModal}) {
   const [quantity, setQuantity] = useState(1)
 
   function handleSetQuantity(quantity){
@@ -183,10 +183,6 @@ export default function ItemResult({result, history}) {
     if (quantity.length > 0){
     // addToCart(quantity, frecno)
     }
-  }
-
-  function handleShowDetails() {
-    console.log('showing details modal for:')
   }
 
   let imagePath
@@ -220,7 +216,7 @@ export default function ItemResult({result, history}) {
           {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
         </DivPartNumberRowSpread>
         <DivSpace>
-          <ButtonBlack onClick={handleShowDetails}>Show Details</ButtonBlack>
+          <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Show Details</ButtonBlack>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivSpace>
       </DivPartDetailsRow>

@@ -7,6 +7,7 @@ import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
+import DetailsModal from './uiComponents/detailsModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -66,6 +67,7 @@ export default function SearchResultsPage(props) {
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -184,7 +186,14 @@ export default function SearchResultsPage(props) {
 
   let SearchResults = _.map(searchResults, result => {
     return(
-      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults} history={props.history}/>
+      <ItemResult 
+        key={result.frecno} 
+        result={result} 
+        updateResults={handleUpdateResults} 
+        history={props.history}
+        showDetailsModal={showDetailsModal}
+        toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
+      />
     )
   })
 
@@ -206,6 +215,7 @@ export default function SearchResultsPage(props) {
 
   return(
     <DivContainer>
+      {showDetailsModal && DetailsModal}
       <div>
         <CategoryFilter />
         {AttributeFilters}
