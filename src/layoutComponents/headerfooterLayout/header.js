@@ -20,7 +20,7 @@ const NavBottom = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color: white;
   justify-content: center;
   box-shadow: 0px 3px 4px #dadada;

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { GraphQLCall } from '../../config/api'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
@@ -24,11 +23,9 @@ const ResultsContainer = styled.div`
   margin-left: 8px;
 `
 
-const DivResultSummaryRow = styled.div`
+const DivResultSummary = styled.div`
   display: flex;
-  @media screen and (max-width: 800px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 
 const DivSearchResultsContainer = styled.div`
@@ -63,6 +60,7 @@ export default function SearchResultsPage(props) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
+  const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
@@ -128,6 +126,8 @@ export default function SearchResultsPage(props) {
     //Only set the attribute categories once
     if(attributeCategories.length === 0){
       setAttributeCategories(itemSearchData.attributeCategories)
+    } else {
+      setFilteredAttributeCategories(itemSearchData.attributeCategories)
     }
   }
 
@@ -184,7 +184,7 @@ export default function SearchResultsPage(props) {
 
   let SearchResults = _.map(searchResults, result => {
     return(
-      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
+      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults} history={props.history}/>
     )
   })
 
@@ -197,6 +197,7 @@ export default function SearchResultsPage(props) {
         options={attribute.features}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
+        filteredAttributeCategories={filteredAttributeCategories}
       />
     )
   }
@@ -210,7 +211,7 @@ export default function SearchResultsPage(props) {
         {AttributeFilters}
       </div>
       <ResultsContainer>
-        <DivResultSummaryRow>
+        <DivResultSummary>
           <ResultsSummary 
             searchTerm={searchTerm}
             resultPage={resultPage}
@@ -221,7 +222,7 @@ export default function SearchResultsPage(props) {
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
-        </DivResultSummaryRow>
+        </DivResultSummary>
         <InfiniteScroll
             pageStart={0}
             loadMore={(newPage) => {

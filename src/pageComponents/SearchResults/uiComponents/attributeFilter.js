@@ -41,6 +41,10 @@ const Label = styled.label`
   margin-left: 4px;
 `
 
+const DisabledLabel = styled(Label)`
+  color: whitesmoke;
+`
+
 const InputSearch = styled.input`
   margin: 4px 16px;
   width: 250px;
@@ -58,13 +62,30 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name: attributeCategoryName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent}) {
+export default function AttributeFilter({name: attributeCategoryName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
   const [isOpen, setIsOpen] = useState(open)
   const [filter, setFilter] = useState('')
   const [attribute, setAttribute] = useState(null)
+  const [filteredAttributeValues, setFilteredAttributeValues] = useState([])
+  const [] = useState(false)
 
   useEffect(() => {
     let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === attributeCategoryName)
+    console.log('filteredAttributeCategories', filteredAttributeCategories)
+    filteredAttributeCategories.map(filterAttrObj => {
+      if(filterAttrObj.categoryName === attributeCategoryName) {
+        console.log('in both', filterAttrObj.categoryName)
+        console.log('both2', filterAttrObj)
+        let newAttributeFeatureNames = [] 
+        filterAttrObj.features.map(feature => {
+          newAttributeFeatureNames.push(feature.featureName)
+        })
+        console.log('new names', newAttributeFeatureNames)
+        setFilteredAttributeValues(newAttributeFeatureNames)
+      } else {
+        setFilteredAttributeValues([])
+      }
+    })
 
     setAttribute({
       field: attributeCategoryName,
@@ -104,14 +125,21 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
   }
 
   let AttributeOptions = options.map((option, index) => {
+    let disable = filteredAttributeValues.includes(option)
+
     if(option.featureName !== 'Null' && _.startsWith(option.featureName, filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
             checked={attribute && attribute.values.indexOf(option.featureName) > -1}
             onChange={(e) => handleFeatureToggle(e, option)}
+            disabled={disable}
           />
-          <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
+          {disable ?
+            <DisabledLabel htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</DisabledLabel>
+          :
+            <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
+          }
         </DivOptionRow>
       )
     }

@@ -7,7 +7,7 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 320px;
-  height: 415px;
+  height: 330px;
   margin: 0 8px 20px 8px;
   padding: 8px 0;
   border-bottom: 1px grey solid;
@@ -19,7 +19,6 @@ const DivPartNumberRow = styled.div`
   color: #000;
   padding: 0 5px;
   font-size: 12px;
-  font-weight: bold;
   font-family: Arial, sans-serif;
 `
 
@@ -57,9 +56,7 @@ const DivPartImg = styled.div`
 const DivPartDetails = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
-  height: 134px;
-  overflow: hidden;
+  padding: 4px;
 `
 
 const PpartTitle = styled.p`
@@ -67,6 +64,8 @@ const PpartTitle = styled.p`
   font-weight: 700;
   font-size: 15px;
   color: #000000 !important;
+  height: 45px;
+  overflow: hidden;
   &:hover{
     cursor: pointer;
     color: #328EFC;
@@ -92,25 +91,49 @@ const DivPartAction = styled.div`
 `
 
 const ButtonRed = styled.button`
-background-color: #b51029;
-color: white;
+  background-color: #b51029;
+  color: white;
   font-weight: 600;
   border: 0;
   padding: 4px 8px;
-  margin: 4px 0;
   box-shadow: 1px 1px 2px #000;
+  margin: 4px auto;
   &:hover{
     background-color: rgb(219, 22, 51);
   }
   &:active{
     background-color: #b51029;
-    box-shadow: 2px 2px 2px #000;
+    box-shadow: 0px 0px 1px #000;
+  }
+`
+const ButtonBlack = styled.button`
+  background-color: #000;
+  width: max-content;
+  color: white;
+  font-weight: 600;
+  border: 0;
+  padding: 4px 8px;
+  margin: 4px auto;
+  opacity: 0.75;
+  &:hover{
+    opacity: 1;
+  }
+  &:active{
+    opacity: 1;
   }
 `
 
 const Div = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`
+
+const DivSpace = styled(Div)`
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-grow: 99;
 `
 
 const InputQuantity = styled.input`
@@ -120,7 +143,7 @@ const InputQuantity = styled.input`
 `
 
 const Pprice = styled.p`
-  color: #328EFC
+  color: #328EFC;
   font-size: 18px;
   font-weight: 700;
   padding: 0 4px;
@@ -128,7 +151,7 @@ const Pprice = styled.p`
 `
 
 const ACall = styled.a`
-  color: #328EFC
+  color: #328EFC;
   font-weight: 700;
   padding: 0 4px;
 `
@@ -147,7 +170,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function ItemResult({result}) {
+export default function ItemResult({result, history}) {
   const [quantity, setQuantity] = useState(1)
 
   function handleSetQuantity(quantity){
@@ -160,6 +183,10 @@ export default function ItemResult({result}) {
     if (quantity.length > 0){
     // addToCart(quantity, frecno)
     }
+  }
+
+  function handleShowDetails() {
+    console.log('showing details modal for:')
   }
 
   let imagePath
@@ -180,8 +207,7 @@ export default function ItemResult({result}) {
           <Img src={imagePath}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
-          <PpartDesc>{result.extended_desc}</PpartDesc>
+          <PpartTitle onClick={()=>{history.push(`/product/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
@@ -193,9 +219,10 @@ export default function ItemResult({result}) {
           <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
         </DivPartNumberRowSpread>
-        <Div>
+        <DivSpace>
+          <ButtonBlack onClick={handleShowDetails}>Show Details</ButtonBlack>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-        </Div>
+        </DivSpace>
       </DivPartDetailsRow>
     </DivItemResultContainer>
   )
