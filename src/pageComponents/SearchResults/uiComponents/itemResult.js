@@ -19,7 +19,6 @@ const DivPartNumberRow = styled.div`
   color: #000;
   padding: 0 5px;
   font-size: 12px;
-  font-weight: bold;
   font-family: Arial, sans-serif;
 `
 
@@ -57,7 +56,7 @@ const DivPartImg = styled.div`
 const DivPartDetails = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4px 8px;
+  padding: 4px;
 `
 
 const PpartTitle = styled.p`
@@ -144,7 +143,7 @@ const InputQuantity = styled.input`
 `
 
 const Pprice = styled.p`
-  color: #328EFC
+  color: #328EFC;
   font-size: 18px;
   font-weight: 700;
   padding: 0 4px;
@@ -152,7 +151,7 @@ const Pprice = styled.p`
 `
 
 const ACall = styled.a`
-  color: #328EFC
+  color: #328EFC;
   font-weight: 700;
   padding: 0 4px;
 `
@@ -208,7 +207,7 @@ export default function ItemResult({result}) {
           <Img src={imagePath}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle><Link to={("/product/" + result.frecno)}>{result.item_desc}</Link></PpartTitle>
+          <PpartTitle onClick={()=>{props.history.push(`/product/ + ${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>

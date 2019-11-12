@@ -23,11 +23,9 @@ const ResultsContainer = styled.div`
   margin-left: 8px;
 `
 
-const DivResultSummaryRow = styled.div`
+const DivResultSummary = styled.div`
   display: flex;
-  @media screen and (max-width: 800px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 
 const DivSearchResultsContainer = styled.div`
@@ -213,7 +211,7 @@ export default function SearchResultsPage(props) {
         {AttributeFilters}
       </div>
       <ResultsContainer>
-        <DivResultSummaryRow>
+        <DivResultSummary>
           <ResultsSummary 
             searchTerm={searchTerm}
             resultPage={resultPage}
@@ -224,7 +222,7 @@ export default function SearchResultsPage(props) {
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
-        </DivResultSummaryRow>
+        </DivResultSummary>
         <InfiniteScroll
             pageStart={0}
             loadMore={(newPage) => {
