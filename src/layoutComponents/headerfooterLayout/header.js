@@ -51,12 +51,12 @@ const NavItem =styled.a`
   font-weight: 400;
   font-size: 16px;
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  border-bottom: 3px white solid;
+  margin-bottom: -3px;
 
   &:hover{
-    transition: border-bottom 500ms;
-    transition: margin-bottom 500ms;
+    transition: border-bottom 200ms;
     border-bottom: 3px rgb(219,22,51) solid;
-    margin-bottom: -3px;
   }
 `
 
