@@ -121,15 +121,79 @@ const DivPhoto = styled.div`
 
 const DivDetails = styled.div`
   flex-grow: 99;
+  margin: 0 32px;
 `
 
 const DivPurchaseInfo = styled.div`
-  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  height: 400px;
+  margin: 30px 8px 0 12px;
+  padding: 8px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+`
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-content: center;
 `
 
 const H2ItemTitle = styled.h2`
   font-size: 25px;
   font-weight: 500;
+`
+const PManufacturer = styled.p`
+  font-size: 14px;
+`
+
+const PItemExtendedDescription = styled.p`
+  font-size: 16px;
+  color: slate;
+`
+
+const H3ItemSection = styled.h3`
+  background-color: rgb(64, 64, 64);  
+  color: white;  
+  padding: 4px 0 4px 8px;
+  font-size: 1.5rem;
+`
+
+const ButtonRed = styled.button`
+  background-color: #b51029;
+  width: 90%
+  color: white;
+  font-weight: 600;
+  border: 0;
+  box-shadow: 1px 1px 2px #000;
+  margin: 4px auto;
+  padding: 4px 0;
+  &:hover{
+    background-color: rgb(219, 22, 51);
+  }
+  &:active{
+    background-color: #b51029;
+    box-shadow: 0px 0px 1px #000;
+  }
+`
+const ButtonBlack = styled.button`
+  background-color: rgb(219, 22, 51);
+  width: 90%
+  color: white;
+  font-weight: 600;
+  border: 0;
+  padding: 4px 0;
+  margin: 4px auto;
+  &:hover{
+    opacity: 1;
+  }
+  &:active{
+    opacity: 1;
+  }
 `
 
 export default function ItemDetailPage(){
@@ -173,8 +237,22 @@ export default function ItemDetailPage(){
         </DivPhoto>
         <DivDetails>
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
+          <PManufacturer>Manufacturer: {item.itemCode}</PManufacturer>
+          <hr/>
+          <p>{`Availability: ${item.availability}`}</p>
+          <p>{`$${item.anonPrice} /each`}</p>
+          <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
+          <H3ItemSection>Product Specifications</H3ItemSection>
+          <H3ItemSection>Features</H3ItemSection>
         </DivDetails>
         <DivPurchaseInfo>
+          <Div>
+
+          </Div>
+          <Div>
+            <ButtonRed>Add to Cart</ButtonRed>
+            <ButtonBlack>Buy Now</ButtonBlack>
+          </Div>
         </DivPurchaseInfo>
       </ItemDetailPageContainer>
     )
