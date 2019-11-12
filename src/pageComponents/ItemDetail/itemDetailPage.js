@@ -108,10 +108,28 @@ const GET_ITEM_BY_ID = gql`
         }
     }
 `
+const ItemDetailPageContainer = styled.div`
+  display: flex;
+  width: 100%;  
+`
 
 const DivPhoto = styled.div`
     width: 400px;
     height: 400px;
+    margin: 0px 8px;
+`
+
+const DivDetails = styled.div`
+  flex-grow: 99;
+`
+
+const DivPurchaseInfo = styled.div`
+  width: 200px;
+`
+
+const H2ItemTitle = styled.h2`
+  font-size: 25px;
+  font-weight: 500;
 `
 
 export default function ItemDetailPage(){
@@ -149,14 +167,16 @@ export default function ItemDetailPage(){
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
     return(
-      <>
+      <ItemDetailPageContainer>
         <DivPhoto>
           <img src={imagePath}/>
         </DivPhoto>
-        <div>
-        <p>{item.itemDesc}</p>
-        </div>
-      </>
+        <DivDetails>
+          <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
+        </DivDetails>
+        <DivPurchaseInfo>
+        </DivPurchaseInfo>
+      </ItemDetailPageContainer>
     )
   }
 }
