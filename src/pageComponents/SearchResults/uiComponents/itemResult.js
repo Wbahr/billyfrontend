@@ -170,7 +170,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function ItemResult({result}) {
+export default function ItemResult({result, history}) {
   const [quantity, setQuantity] = useState(1)
 
   function handleSetQuantity(quantity){
@@ -207,7 +207,7 @@ export default function ItemResult({result}) {
           <Img src={imagePath}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{props.history.push(`/product/ + ${result.frecno}`)}}>{result.item_desc}</PpartTitle>
+          <PpartTitle onClick={()=>{history.push(`/product/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
