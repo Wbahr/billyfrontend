@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import Loader from '../_common/loader'
+
 
 //This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
@@ -216,7 +218,7 @@ export default function ItemDetailPage(){
   })
 
   if (_.isNil(item)) {
-    return(<h1>Loading...</h1>)
+    return(<Loader/>)
   } else if (!_.has(item,`invMastUid`)){
     return(<p>No item found</p>)
   } else {
@@ -230,6 +232,30 @@ export default function ItemDetailPage(){
       imageFile = imageFile.slice(0, -5) + 'o.jpg'
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
+    
+    let FeatureItems = item.feature.map(elem => {
+      return(
+        <li>{elem.text}</li>
+      )
+    })
+
+    let TechSpecItems = item.techSpec.map(elem => {
+      return(
+        <li>{elem.name} {elem.value}</li>
+      )
+    })
+
+    let Features = (
+      <ul>
+        {FeatureItems}
+      </ul>
+    )
+    
+    let TechSpecs = (
+      <ul>
+        {TechSpecItems}
+      </ul>
+    )
     return(
       <ItemDetailPageContainer>
         <DivPhoto>
@@ -239,11 +265,16 @@ export default function ItemDetailPage(){
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
           <PManufacturer>Manufacturer: {item.itemCode}</PManufacturer>
           <hr/>
-          <p>{`Availability: ${item.availability}`}</p>
+          {item.availability === 0 ? <p>{item.availabilityMessage}</p> : <p>{`Availability: ${item.availability}`}</p>}
           <p>{`$${item.anonPrice} /each`}</p>
+          <p>{item.mfgPartNo}</p>
+          <p>{item.itemCode}</p>
+          <p>{item.invMastUid}</p>
           <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
-          <H3ItemSection>Product Specifications</H3ItemSection>
           <H3ItemSection>Features</H3ItemSection>
+          {Features}
+          <H3ItemSection>Tech Specs</H3ItemSection>
+          {TechSpecs}
         </DivDetails>
         <DivPurchaseInfo>
           <Div>
