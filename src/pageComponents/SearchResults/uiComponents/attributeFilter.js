@@ -47,7 +47,7 @@ const DisabledLabel = styled(Label)`
 
 const InputSearch = styled.input`
   margin: 4px 16px;
-  width: 250px;
+  width: 240px;
 `
 
 const defaultStyle = {
