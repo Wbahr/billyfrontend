@@ -193,6 +193,7 @@ export default function SearchResultsPage(props) {
         history={props.history}
         showDetailsModal={showDetailsModal}
         toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
+
       />
     )
   })
@@ -215,7 +216,7 @@ export default function SearchResultsPage(props) {
 
   return(
     <DivContainer>
-      {showDetailsModal && DetailsModal}
+      {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter />
         {AttributeFilters}
