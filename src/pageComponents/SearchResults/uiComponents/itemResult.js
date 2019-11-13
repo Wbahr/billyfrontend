@@ -7,7 +7,7 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 320px;
-  height: 330px;
+  height: 350px;
   margin: 0 8px 20px 8px;
   padding: 8px 0;
   border-bottom: 1px grey solid;
@@ -107,20 +107,13 @@ const ButtonRed = styled.button`
   }
 `
 const ButtonBlack = styled.button`
-  background-color: #000;
   width: max-content;
-  color: white;
+  background-color: white;
+  color: #328EFC;
   font-weight: 600;
+  font-size: 12px;
   border: 0;
-  padding: 4px 8px;
-  margin: 4px auto;
-  opacity: 0.75;
-  &:hover{
-    opacity: 1;
-  }
-  &:active{
-    opacity: 1;
-  }
+  margin-top: 4px;
 `
 
 const Div = styled.div`
@@ -202,6 +195,7 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
         <DivPartImg>
           <Img src={imagePath}/>
         </DivPartImg>
+        <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Quick Look</ButtonBlack>
         <DivPartDetails>
           <PpartTitle onClick={()=>{history.push(`/product/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>
@@ -216,7 +210,6 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
           {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
         </DivPartNumberRowSpread>
         <DivSpace>
-          <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Show Details</ButtonBlack>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
         </DivSpace>
       </DivPartDetailsRow>
