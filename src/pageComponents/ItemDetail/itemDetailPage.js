@@ -133,7 +133,7 @@ const DivPurchaseInfo = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 300px;
-  height: 400px;
+  height: 300px;
   margin: 30px 8px 0 12px;
   padding: 8px 16px
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -266,6 +266,31 @@ const InputQuantity = styled.input`
   margin-left: 4px;
 `
 
+const TABLE = styled.table`
+  margin-top: 20px;
+`
+
+
+const TR2 = styled.tr`
+  border-top: 1px lightgrey solid;
+  border-bottom: 1px lightgrey solid;
+`
+
+const TDGrey = styled.td`
+  text-align: right;
+  padding: 4px 8px 4px 24px;
+  font-weight: 500;
+  background-color: whitesmoke;
+`
+
+const TDWhite = styled.td`
+padding: 4px 24px 4px 8px;
+`
+
+const IMG = styled.img`
+  opacity: 0.6;
+`
+
 export default function ItemDetailPage(){
   let { itemId } = useParams()
 
@@ -356,26 +381,27 @@ export default function ItemDetailPage(){
         </DivPhoto>
         <DivDetails>
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
-          <PManufacturer>Manufacturer: {item.itemCode}</PManufacturer>
-          <hr/>
+          <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
           <Row>
             <Pprice>{`Price: $${item.anonPrice}.00`}</Pprice>
             {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           </Row>
-          <H4>Overview</H4>
-          <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
-          <DivSection>
-            <P>Manufacturer Part #: {item.mfgPartNo}</P>
-            <P>Manufacturer Item Code: {item.itemCode}</P>
-            <P>AHC Part #: {item.invMastUid}</P>
-          </DivSection>
-          <H4>Features</H4>
+          <TABLE>
+            <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src='https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact2.jpg'/></TDWhite></TR2>
+            <TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
+            <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
+            <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
+            <TR2><TDGrey>Customer Part #</TDGrey><TDWhite>--</TDWhite></TR2>
+            <TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
+          </TABLE>
+          <hr/>
+          <H4 id='feature'>Features</H4>
           {Features}
-          <H4>Tech Specifications</H4>
+          <H4 id='techspec'>Tech Specifications</H4>
           {TechSpecs}
           <H4>Links</H4>
           {Links}
-          <H4>Accessory Items</H4>
+          <H4 id='accessory'>Accessory Items</H4>
           <DivAccessoryItems>
             {AccessoryItems}
           </DivAccessoryItems>
@@ -388,12 +414,15 @@ export default function ItemDetailPage(){
             </RowEnd>
           </RowSpaced>
           <hr/>
-          <p>Availability</p>
+          {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           <Div>
             <hr/>
             <ButtonRed>Add to Cart</ButtonRed>
             <ButtonBlack>Buy Now</ButtonBlack>
           </Div>
+          <a href='#feature'>Features</a>
+          <a href='#techspec'>Tech Specs</a>
+          <a href='#accessory'>Accessory</a>
         </DivPurchaseInfo>
       </ItemDetailPageContainer>
     )
