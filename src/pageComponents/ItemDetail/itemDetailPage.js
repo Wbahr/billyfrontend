@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Loader from '../_common/loader'
-import { AccessoryItem } from './uiComponents/accessoryItem'
+import AccessoryItem from './uiComponents/accessoryItem'
 
 //This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
@@ -171,6 +171,12 @@ const DivSection = styled.div`
   margin-left: 24px;
 `
 
+const DivAccessoryItems = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`
+
 const H2ItemTitle = styled.h2`
   font-size: 25px;
   font-weight: 600;
@@ -321,7 +327,9 @@ export default function ItemDetailPage(){
 
     let AccessoryItems = item.itemAssociationInvMastU.map(elem => {
       return(
-        <AccessoryItem associatedItemId={elem.associatedInvMastUid}/>
+        <AccessoryItem 
+          associatedItemId={elem.associatedInvMastUid}
+        />
       )
     })
 
@@ -352,9 +360,9 @@ export default function ItemDetailPage(){
           <H4>Links</H4>
           {Links}
           <H4>Accessory Items</H4>
-          <DivSection>
+          <DivAccessoryItems>
             {AccessoryItems}
-          </DivSection>
+          </DivAccessoryItems>
         </DivDetails>
         <DivPurchaseInfo>
           <Div>
