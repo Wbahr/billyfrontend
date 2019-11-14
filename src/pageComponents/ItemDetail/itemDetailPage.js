@@ -135,7 +135,7 @@ const DivPurchaseInfo = styled.div`
   width: 300px;
   height: 400px;
   margin: 30px 8px 0 12px;
-  padding: 8px 0;
+  padding: 8px 16px
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
@@ -150,6 +150,14 @@ const Row = styled.div`
   display: flex;
   width: 100%;  
   align-items: flex-end;
+`
+
+const RowEnd = styled(Row)`
+  justify-content: flex-end;
+`
+
+const RowSpaced = styled(Row)`
+  justify-content: space-between;
 `
 
 const P = styled.p`
@@ -252,10 +260,18 @@ const Pprice = styled.p`
   margin: 0;
 `
 
+const InputQuantity = styled.input`
+  width: 50px;
+  height: 25px;
+  margin-left: 4px;
+`
+
 export default function ItemDetailPage(){
   let { itemId } = useParams()
 
   const [item, setItem] = useState(null)
+  const [quantity, setQuantity] = useState(1)
+
   const { 
     loading, 
     error, 
@@ -346,8 +362,8 @@ export default function ItemDetailPage(){
             <Pprice>{`Price: $${item.anonPrice}.00`}</Pprice>
             {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           </Row>
+          <H4>Overview</H4>
           <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
-          <H4>Product Specifications</H4>
           <DivSection>
             <P>Manufacturer Part #: {item.mfgPartNo}</P>
             <P>Manufacturer Item Code: {item.itemCode}</P>
@@ -365,12 +381,14 @@ export default function ItemDetailPage(){
           </DivAccessoryItems>
         </DivDetails>
         <DivPurchaseInfo>
-          <Div>
-            <p>{`$${item.anonPrice} /EA`}</p>
-            <label>Qty:</label><input value={1}/>
-            <hr/>
-            <p>Availability</p>
-          </Div>
+          <RowSpaced>
+            <Row><Pprice>{`$${item.anonPrice}.00`}</Pprice><P> /each</P></Row>
+            <RowEnd>
+              <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
+            </RowEnd>
+          </RowSpaced>
+          <hr/>
+          <p>Availability</p>
           <Div>
             <hr/>
             <ButtonRed>Add to Cart</ButtonRed>
