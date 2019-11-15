@@ -182,7 +182,7 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)}/>
+            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
