@@ -89,6 +89,7 @@ export default function SearchResultsPage(props) {
   useEffect(() => {
     if (!didMountRef.current) {
       prevHistoryRef.current = props.history.location
+      didMountRef.current = true
     }
     const prevHistory = prevHistoryRef.current
     if(props.history.location.search !== prevHistory.search){
@@ -96,6 +97,8 @@ export default function SearchResultsPage(props) {
       let searchOld = queryString.parse(prevHistory.search)
       if (searchOld.searchTerm !== searchNew.searchTerm){
         setSearchTerm(searchNew.searchTerm)
+        loadFunc(true)
+        setIsReplacingResults(true)
       }
       prevHistoryRef.current = props.history.location
       performSearchRef.current = true
