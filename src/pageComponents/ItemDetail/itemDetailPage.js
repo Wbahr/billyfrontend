@@ -121,6 +121,11 @@ const DivPhoto = styled.div`
   margin: 0px 8px;
 `
 
+const Img = styled.img`
+  max-height:100%; 
+  max-width:100%;    
+`
+
 const DivDetails = styled.div`
   width: 500px;
   padding: 0 32px;
@@ -377,7 +382,7 @@ export default function ItemDetailPage(){
     return(
       <ItemDetailPageContainer>
         <DivPhoto>
-          <img src={imagePath}/>
+          <Img src={imagePath}/>
         </DivPhoto>
         <DivDetails>
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
