@@ -47,6 +47,7 @@ const QUERY_ITEM_SEARCH = gql`
           itemCount
         }
       }
+      queryJson
     }
   }
 `
