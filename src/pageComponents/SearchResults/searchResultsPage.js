@@ -43,6 +43,7 @@ const QUERY_ITEM_SEARCH = gql`
         categoryName
         features{
           featureName
+          featureNameDisplay
           itemCount
         }
       }

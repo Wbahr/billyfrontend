@@ -127,7 +127,7 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
   let AttributeOptions = options.map((option, index) => {
     let disable = filteredAttributeValues.includes(option)
 
-    if(option.featureName !== 'Null' && _.startsWith(option.featureName, filter)){
+    if(option.featureName !== 'Null' && _.startsWith(option.featureNameDisplay, filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
@@ -136,9 +136,9 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
             disabled={disable}
           />
           {disable ?
-            <DisabledLabel htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</DisabledLabel>
+            <DisabledLabel htmlFor={option.featureName}>{option.featureNameDisplay}{` (${option.itemCount})`}</DisabledLabel>
           :
-            <Label htmlFor={option.featureName}>{option.featureName}{` (${option.itemCount})`}</Label>
+            <Label htmlFor={option.featureName}>{option.featureNameDisplay}{` (${option.itemCount})`}</Label>
           }
         </DivOptionRow>
       )
