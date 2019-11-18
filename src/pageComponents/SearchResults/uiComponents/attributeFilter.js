@@ -127,7 +127,7 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
   let AttributeOptions = options.map((option, index) => {
     let disable = filteredAttributeValues.includes(option)
 
-    if(option.featureName !== 'Null' && _.startsWith(option.featureNameDisplay, filter)){
+    if(option.featureName.toLowerCase() !== 'null' && _.startsWith(option.featureNameDisplay, filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
