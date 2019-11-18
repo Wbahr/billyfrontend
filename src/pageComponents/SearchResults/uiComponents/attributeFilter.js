@@ -136,9 +136,9 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
             disabled={disable}
           />
           {disable ?
-            <DisabledLabel htmlFor={option.featureName}>{option.featureNameDisplay}{` (${option.itemCount})`}</DisabledLabel>
+            <DisabledLabel htmlFor={option.featureName}>{option.featureNameDisplay}</DisabledLabel>
           :
-            <Label htmlFor={option.featureName}>{option.featureNameDisplay}{` (${option.itemCount})`}</Label>
+            <Label htmlFor={option.featureName}>{option.featureNameDisplay}</Label>
           }
         </DivOptionRow>
       )
