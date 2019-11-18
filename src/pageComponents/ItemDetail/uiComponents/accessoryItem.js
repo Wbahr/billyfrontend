@@ -1,6 +1,46 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useRef} from 'react'
 import { Link } from "react-router-dom"
+import Loader from '../../_common/loader'
 import styled from "styled-components"
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
+
+const GET_ITEM_BY_ID = gql`
+    query ItemById($associatedItemId: ID){
+        items(invMastUid: $associatedItemId) {
+            anonPrice
+            assembly
+            availability
+            availabilityMessage
+            cBrandId
+            dateCreated
+            dateModified
+            extendedDesc
+            filters
+            hideOnWeb
+            invMastUid
+            itemCode
+            itemDesc
+            listPrice
+            mfgPartNo
+            modelCode
+            p21ItemDesc
+            p21NonWeb
+            popularity
+            preferredSourceLoc
+            relevancy
+            restrictedCustomerCodes
+            rootCategoryUids
+            showPrice
+            supplierId
+            tariff
+            unitSizeMultiple
+            image {
+              path
+            }
+        }
+    }
+`
 
 const DivItemResultContainer = styled.div`
   display: flex;
@@ -163,8 +203,31 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function ItemResult({result, history, toggleDetailsModal}) {
+export default function AccessoryItem({associatedItemId, history}) {
+  const didMountRef = useRef(false);
   const [quantity, setQuantity] = useState(1)
+  const [item, setItem] = useState(null)
+  
+  // useEffect(() => {
+  //   console.log('effect')
+    
+  // })
+
+  const { 
+    loading, 
+    error, 
+    data 
+  } = useQuery(GET_ITEM_BY_ID, {
+    variables: { associatedItemId },
+    onCompleted: result => {
+      if (result.items.length) {
+        setItem(result.items[0])
+      } else {
+        setItem({})
+      }
+    }
+  })
+
 
   function handleSetQuantity(quantity){
     if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -179,40 +242,45 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
   }
 
   let imagePath
-  if (_.isNil(result.thumbnail_image_path)){
+  let resultImage = _.get(item,`image[0].path`,null)
+  if (_.isNil(resultImage)){
     imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
   } else {
-    let imagePathArray = result.thumbnail_image_path.split("\\")
+    let imagePathArray = resultImage.split("\\")
     let imageFile = imagePathArray[imagePathArray.length - 1]
-    imageFile = imageFile.slice(0, -5) + 'l.jpg'
+    imageFile = imageFile.slice(0, -5) + 'o.jpg'
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
-  
-  return(
-    <DivItemResultContainer>
-      <DivPartDetailsRow>
-        <DivPartImg>
-          <Img src={imagePath}/>
-        </DivPartImg>
-        <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Quick Look</ButtonBlack>
-        <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
-        </DivPartDetails>
-        <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
-        </DivPartNumberRow>
-        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-          {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
-        </DivPartNumberRow>
-        <DivPartNumberRowSpread>
-          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-          {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-        </DivPartNumberRowSpread>
-        <DivSpace>
-          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-        </DivSpace>
-      </DivPartDetailsRow>
-    </DivItemResultContainer>
-  )
+  if (_.isNil(item)){
+    return(
+      <Loader />
+    )
+  } else {
+    return(
+      <DivItemResultContainer>
+        <DivPartDetailsRow>
+          <DivPartImg>
+            <Img src={imagePath}/>
+          </DivPartImg>
+          <DivPartDetails>
+            <PpartTitle onClick={()=>{history.push(`/product/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>
+          </DivPartDetails>
+          <DivPartNumberRow>
+            <PpartAvailability>Airline #: AHC{item.invMastUid}</PpartAvailability>
+          </DivPartNumberRow>
+          <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+            {item.availability !== 0 ? <PBlue>{item.availability} -- Locations </PBlue> : <PBlue>{item.availabilityMessage}</PBlue>}
+          </DivPartNumberRow>
+          <DivPartNumberRowSpread>
+            <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+            {(!_.isNil(item.anonPrice) && item.anonPrice !== 0) ? <Div><Pprice>${item.anonPrice.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+          </DivPartNumberRowSpread>
+          <DivSpace>
+            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+          </DivSpace>
+        </DivPartDetailsRow>
+      </DivItemResultContainer>
+    )
+  }
 }

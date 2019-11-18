@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { GraphQLCall } from '../../config/api'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import AttributeFilter from './uiComponents/attributeFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
+import DetailsModal from './uiComponents/detailsModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -24,11 +24,9 @@ const ResultsContainer = styled.div`
   margin-left: 8px;
 `
 
-const DivResultSummaryRow = styled.div`
+const DivResultSummary = styled.div`
   display: flex;
-  @media screen and (max-width: 800px) {
-    flex-direction: column;
-  }
+  flex-direction: column;
 `
 
 const DivSearchResultsContainer = styled.div`
@@ -64,11 +62,13 @@ export default function SearchResultsPage(props) {
   const [searchResults, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
+  const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
+  const [showDetailsModal, setShowDetailsModal] = useState(false)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -90,6 +90,7 @@ export default function SearchResultsPage(props) {
   useEffect(() => {
     if (!didMountRef.current) {
       prevHistoryRef.current = props.history.location
+      didMountRef.current = true
     }
     const prevHistory = prevHistoryRef.current
     if(props.history.location.search !== prevHistory.search){
@@ -97,6 +98,8 @@ export default function SearchResultsPage(props) {
       let searchOld = queryString.parse(prevHistory.search)
       if (searchOld.searchTerm !== searchNew.searchTerm){
         setSearchTerm(searchNew.searchTerm)
+        loadFunc(true)
+        setIsReplacingResults(true)
       }
       prevHistoryRef.current = props.history.location
       performSearchRef.current = true
@@ -129,6 +132,8 @@ export default function SearchResultsPage(props) {
     //Only set the attribute categories once
     if(attributeCategories.length === 0){
       setAttributeCategories(itemSearchData.attributeCategories)
+    } else {
+      setFilteredAttributeCategories(itemSearchData.attributeCategories)
     }
   }
 
@@ -185,7 +190,15 @@ export default function SearchResultsPage(props) {
 
   let SearchResults = _.map(searchResults, result => {
     return(
-      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
+      <ItemResult 
+        key={result.frecno} 
+        result={result} 
+        updateResults={handleUpdateResults} 
+        history={props.history}
+        showDetailsModal={showDetailsModal}
+        toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
+
+      />
     )
   })
 
@@ -198,6 +211,7 @@ export default function SearchResultsPage(props) {
         options={attribute.features}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
+        filteredAttributeCategories={filteredAttributeCategories}
       />
     )
   }
@@ -206,12 +220,13 @@ export default function SearchResultsPage(props) {
 
   return(
     <DivContainer>
+      {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter />
         {AttributeFilters}
       </div>
       <ResultsContainer>
-        <DivResultSummaryRow>
+        <DivResultSummary>
           <ResultsSummary 
             searchTerm={searchTerm}
             resultPage={resultPage}
@@ -222,7 +237,7 @@ export default function SearchResultsPage(props) {
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
           />
-        </DivResultSummaryRow>
+        </DivResultSummary>
         <InfiniteScroll
             pageStart={0}
             loadMore={(newPage) => {

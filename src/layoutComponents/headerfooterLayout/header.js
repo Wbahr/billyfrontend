@@ -20,7 +20,7 @@ const NavBottom = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color: white;
   justify-content: center;
   box-shadow: 0px 3px 4px #dadada;
@@ -51,12 +51,12 @@ const NavItem =styled.a`
   font-weight: 400;
   font-size: 16px;
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  border-bottom: 3px white solid;
+  margin-bottom: -3px;
 
   &:hover{
-    transition: border-bottom 500ms;
-    transition: margin-bottom 500ms;
+    transition: border-bottom 200ms;
     border-bottom: 3px rgb(219,22,51) solid;
-    margin-bottom: -3px;
   }
 `
 
@@ -182,7 +182,7 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)}/>
+            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
