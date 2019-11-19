@@ -52,6 +52,7 @@ const QUERY_ITEM_SEARCH = gql`
     }
   }
 `
+let isAttributesStale = true;
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
@@ -99,6 +100,7 @@ export default function SearchResultsPage(props) {
       let searchNew = queryString.parse(props.history.location.search)
       let searchOld = queryString.parse(prevHistory.search)
       if (searchOld.searchTerm !== searchNew.searchTerm){
+        isAttributesStale = true;
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
@@ -132,7 +134,7 @@ export default function SearchResultsPage(props) {
     setTotalResults(itemSearchData.count)
 
     //Only set the attribute categories once
-    if(attributeCategories.length === 0){
+    if(isAttributesStale){
       setAttributeCategories(itemSearchData.attributeCategories)
     } else {
       setFilteredAttributeCategories(itemSearchData.attributeCategories)
@@ -168,7 +170,7 @@ export default function SearchResultsPage(props) {
     setCheckedAttributeFilters(updatedState)
   }
 
-  function loadFunc(isAttributeUpdate){
+  function loadFunc(isNewSearch){
     const search = queryString.parse(location.search)
     
     setSearching(true)
@@ -177,7 +179,7 @@ export default function SearchResultsPage(props) {
         searchParams: {
           searchTerm: search.searchTerm,
           resultSize: search.resultSize,
-          resultPage: isAttributeUpdate ? 1 : currentPage + 1,
+          resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {
