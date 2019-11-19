@@ -59,6 +59,7 @@ export default function SearchResultsPage(props) {
   const performSearchRef = useRef(true);
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
+  const [firstSearchTerm, setFirstSearchTerm] = useState('')
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
@@ -71,9 +72,9 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
-  const [oldSearch, setOldSearch] = useState(null)
-  const [newSearch, setNewSearch] = useState(null)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
+  const [newAttributeCategories, setNewAttributeCategories] = useState([]);
+
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -86,6 +87,8 @@ export default function SearchResultsPage(props) {
         setInfiniteScrollHasMore(true)
       }
 
+      setNewAttributeCategories(itemSearchResult.attributeCategories)
+      setFirstSearchTerm(searchTerm.split(' ')[0])
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -101,9 +104,6 @@ export default function SearchResultsPage(props) {
     if(props.history.location.search !== prevHistory.search){
       let searchNew = queryString.parse(props.history.location.search)
       let searchOld = queryString.parse(prevHistory.search)
-
-      setOldSearch(searchOld)
-      setNewSearch(searchNew)
       setCheckedAttributeFilters([])
 
       if (searchOld.searchTerm !== searchNew.searchTerm){
@@ -115,6 +115,10 @@ export default function SearchResultsPage(props) {
       performSearchRef.current = true
     }
   })
+
+  useEffect(() => {
+    setAttributeCategories(newAttributeCategories)
+  }, [firstSearchTerm])
 
   useEffect(() => {
     if(currentPage > 0){
@@ -138,13 +142,6 @@ export default function SearchResultsPage(props) {
     }
     
     setTotalResults(itemSearchData.count)
-
-    //Only set the attribute categories once
-    if(attributeCategories.length === 0 || (oldSearch && oldSearch.nonce !== newSearch.nonce)){
-      setAttributeCategories(itemSearchData.attributeCategories)
-    } else {
-      setFilteredAttributeCategories(itemSearchData.attributeCategories)
-    }
   }
 
   function handleUpdateResults(updateObj){
@@ -155,15 +152,15 @@ export default function SearchResultsPage(props) {
       case 'searchTerm':
         setSearchTerm(updateObj.searchTerm)
         setResultPage(1)
-        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}&nonce=${search.nonce}`
+        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
         break;
       case 'page':
         setResultPage(updateObj.page)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}&nonce=${search.nonce}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
         break;
       case 'sort':
         setSortType(updateObj.sort)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}&nonce=${search.nonce}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
         break;
     }
     setClearInnerSearch(true)
@@ -215,7 +212,8 @@ export default function SearchResultsPage(props) {
 
   let AttributeFilters = attributeCategories.map((attribute, index) => {
     return <AttributeFilter 
-        key={index}
+        key={("" + index + new Date().getTime())}
+        //key={index}
         categoryAttribute={attribute}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
