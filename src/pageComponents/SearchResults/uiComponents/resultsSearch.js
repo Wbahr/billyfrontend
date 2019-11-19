@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -38,7 +38,7 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({updateSearchTerm, updateSortType, sortType}) {
+export default function ResultsSearch({updateSearchTerm, updateSortType, sortType, clearInnerSearch, handleClearedInnerSearch}) {
   const [searchTerm, setSearchTerm] = useState('')
 
   function handleUpdateSearchTerm(){
@@ -49,10 +49,18 @@ export default function ResultsSearch({updateSearchTerm, updateSortType, sortTyp
     setSearchTerm(value)
   }
 
+  useEffect(() => {
+    if(clearInnerSearch){
+      handleClearedInnerSearch()
+      setSearchTerm('')
+    }
+  })
+
+
   return(
     <Div>
       <DivResultsSearch>
-        <InputSearch placeholder="Search within these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
+        <InputSearch placeholder="Add keywords to refine these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
       </DivResultsSearch>
       <DivResultsSearch>
         <select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>

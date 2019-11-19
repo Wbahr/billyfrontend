@@ -71,6 +71,7 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [clearInnerSearch, setClearInnerSearch] = useState(false)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -158,6 +159,7 @@ export default function SearchResultsPage(props) {
         query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
         break;
     }
+    setClearInnerSearch(true)
     props.history.push({
       pathname: '/search',
       search: query
@@ -239,6 +241,8 @@ export default function SearchResultsPage(props) {
             sortType={sortType}
             updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
             updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
+            handleClearedInnerSearch={()=> setClearInnerSearch(false)}
+            clearInnerSearch={clearInnerSearch}
           />
         </DivResultSummary>
         <InfiniteScroll
