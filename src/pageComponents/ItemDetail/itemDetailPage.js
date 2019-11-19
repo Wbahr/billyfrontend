@@ -296,7 +296,7 @@ const IMG = styled.img`
   opacity: 0.6;
 `
 
-export default function ItemDetailPage(){
+export default function ItemDetailPage({history}){
   let { itemId } = useParams()
 
   const [item, setItem] = useState(null)
@@ -375,6 +375,7 @@ export default function ItemDetailPage(){
       return(
         <AccessoryItem 
           associatedItemId={elem.associatedInvMastUid}
+          history={history}
         />
       )
     })
@@ -388,7 +389,7 @@ export default function ItemDetailPage(){
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
           <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
           <Row>
-            <Pprice>{`Price: $${item.anonPrice}.00`}</Pprice>
+            <Pprice>{`Price: $${item.anonPrice.toFixed(2)}`}</Pprice>
             {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           </Row>
           <TABLE>
@@ -413,7 +414,7 @@ export default function ItemDetailPage(){
         </DivDetails>
         <DivPurchaseInfo>
           <RowSpaced>
-            <Row><Pprice>{`$${item.anonPrice}.00`}</Pprice><P> /each</P></Row>
+            <Row><Pprice>{`$${item.anonPrice.toFixed(2)}`}</Pprice><P> /each</P></Row>
             <RowEnd>
               <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
             </RowEnd>
