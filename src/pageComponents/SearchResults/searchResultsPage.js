@@ -41,6 +41,7 @@ const QUERY_ITEM_SEARCH = gql`
       count
       attributeCategories{
         categoryName
+        categoryNameDisplay
         features{
           featureName
           featureNameDisplay
@@ -209,6 +210,7 @@ export default function SearchResultsPage(props) {
       <AttributeFilter 
         key={index}
         name={attribute.categoryName}
+        displayName={attribute.categoryNameDisplay}
         options={attribute.features}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
