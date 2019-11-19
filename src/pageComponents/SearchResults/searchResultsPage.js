@@ -71,6 +71,8 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [oldSearch, setOldSearch] = useState(null)
+  const [newSearch, setNewSearch] = useState(null)
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -98,6 +100,11 @@ export default function SearchResultsPage(props) {
     if(props.history.location.search !== prevHistory.search){
       let searchNew = queryString.parse(props.history.location.search)
       let searchOld = queryString.parse(prevHistory.search)
+
+      setOldSearch(searchOld)
+      setNewSearch(searchNew)
+      setCheckedAttributeFilters([])
+
       if (searchOld.searchTerm !== searchNew.searchTerm){
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
@@ -132,7 +139,7 @@ export default function SearchResultsPage(props) {
     setTotalResults(itemSearchData.count)
 
     //Only set the attribute categories once
-    if(attributeCategories.length === 0){
+    if(attributeCategories.length === 0 || (oldSearch && oldSearch.nonce !== newSearch.nonce)){
       setAttributeCategories(itemSearchData.attributeCategories)
     } else {
       setFilteredAttributeCategories(itemSearchData.attributeCategories)
@@ -147,15 +154,15 @@ export default function SearchResultsPage(props) {
       case 'searchTerm':
         setSearchTerm(updateObj.searchTerm)
         setResultPage(1)
-        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
+        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}&nonce=${search.nonce}`
         break;
       case 'page':
         setResultPage(updateObj.page)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}&nonce=${search.nonce}`
         break;
       case 'sort':
         setSortType(updateObj.sort)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}&nonce=${search.nonce}`
         break;
     }
     props.history.push({
