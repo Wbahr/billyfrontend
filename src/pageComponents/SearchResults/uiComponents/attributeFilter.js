@@ -62,7 +62,7 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name: attributeCategoryName, displayName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
+export default function AttributeFilter({categoryAttribute, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
   const [isOpen, setIsOpen] = useState(open)
   const [filter, setFilter] = useState('')
   const [attribute, setAttribute] = useState(null)
@@ -70,9 +70,9 @@ export default function AttributeFilter({name: attributeCategoryName, displayNam
   const [] = useState(false)
 
   useEffect(() => {
-    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === attributeCategoryName)
+    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === categoryAttribute.categoryName)
     filteredAttributeCategories.map(filterAttrObj => {
-      if(filterAttrObj.categoryName === attributeCategoryName) {
+      if(filterAttrObj.categoryName === categoryAttribute.categoryName) {
         let newAttributeFeatureNames = [] 
         filterAttrObj.features.map(feature => {
           newAttributeFeatureNames.push(feature.featureName)
@@ -82,9 +82,9 @@ export default function AttributeFilter({name: attributeCategoryName, displayNam
         setFilteredAttributeValues([])
       }
     })
-
+    
     setAttribute({
-      field: attributeCategoryName,
+      field: categoryAttribute.categoryName,
       values: inputAttribute ? [...inputAttribute.values] : []
     })
 
@@ -120,21 +120,21 @@ export default function AttributeFilter({name: attributeCategoryName, displayNam
     updatedFeatureToggleEvent(newToggleStates)
   }
 
-  let AttributeOptions = options.map((option, index) => {
-    let disable = filteredAttributeValues.includes(option)
+  let AttributeOptions = categoryAttribute.features.map((feature, index) => {
+    let disable = filteredAttributeValues.includes(feature)
 
-    if(option.featureName.toLowerCase() !== 'null' && _.startsWith(option.featureNameDisplay, filter)){
+    if(feature.featureName.toLowerCase() !== 'null' && _.startsWith(feature.featureNameDisplay, filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
-            checked={attribute && attribute.values.indexOf(option.featureName) > -1}
-            onChange={(e) => handleFeatureToggle(e, option)}
+            checked={attribute && attribute.values.indexOf(feature.featureName) > -1}
+            onChange={(e) => handleFeatureToggle(e, feature)}
             disabled={disable}
           />
           {disable ?
-            <DisabledLabel htmlFor={option.featureName}>{option.featureNameDisplay}</DisabledLabel>
+            <DisabledLabel htmlFor={feature.featureName}>{feature.featureNameDisplay}</DisabledLabel>
           :
-            <Label htmlFor={option.featureName}>{option.featureNameDisplay}</Label>
+            <Label htmlFor={feature.featureName}>{feature.featureNameDisplay}</Label>
           }
         </DivOptionRow>
       )
@@ -144,13 +144,13 @@ export default function AttributeFilter({name: attributeCategoryName, displayNam
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{displayName}</P>
+        <P>{categoryAttribute.categoryNameDisplay}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
         <>
           <div>
-            {options.length > 10 && <InputSearch placeholder={`Search ${displayName}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+            {categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
@@ -162,8 +162,7 @@ export default function AttributeFilter({name: attributeCategoryName, displayNam
 }
 
 AttributeFilter.propTypes = {
-  name: PropTypes.string.isRequired,
-  options: PropTypes.array,
+  categoryAttribute: PropTypes.object.isRequired,
   open: PropTypes.bool,
   toggleAttribute: PropTypes.func
 }

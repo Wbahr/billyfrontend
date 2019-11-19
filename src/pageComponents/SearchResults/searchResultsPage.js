@@ -214,21 +214,14 @@ export default function SearchResultsPage(props) {
   })
 
   let AttributeFilters = attributeCategories.map((attribute, index) => {
-
-    return(
-      <AttributeFilter 
+    return <AttributeFilter 
         key={index}
-        name={attribute.categoryName}
-        displayName={attribute.categoryNameDisplay}
-        options={attribute.features}
+        categoryAttribute={attribute}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
         filteredAttributeCategories={filteredAttributeCategories}
-      />
-    )
-  }
-
-  )
+    />
+  })
 
   return(
     <DivContainer>
