@@ -52,7 +52,6 @@ const QUERY_ITEM_SEARCH = gql`
     }
   }
 `
-let isAttributesStale = true;
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
@@ -100,7 +99,6 @@ export default function SearchResultsPage(props) {
       let searchNew = queryString.parse(props.history.location.search)
       let searchOld = queryString.parse(prevHistory.search)
       if (searchOld.searchTerm !== searchNew.searchTerm){
-        isAttributesStale = true;
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
@@ -134,7 +132,7 @@ export default function SearchResultsPage(props) {
     setTotalResults(itemSearchData.count)
 
     //Only set the attribute categories once
-    if(isAttributesStale){
+    if(attributeCategories.length === 0){
       setAttributeCategories(itemSearchData.attributeCategories)
     } else {
       setFilteredAttributeCategories(itemSearchData.attributeCategories)
