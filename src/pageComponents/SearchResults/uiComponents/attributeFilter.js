@@ -62,7 +62,7 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-export default function AttributeFilter({name: attributeCategoryName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
+export default function AttributeFilter({name: attributeCategoryName, displayName, options, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
   const [isOpen, setIsOpen] = useState(open)
   const [filter, setFilter] = useState('')
   const [attribute, setAttribute] = useState(null)
@@ -144,13 +144,13 @@ export default function AttributeFilter({name: attributeCategoryName, options, o
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{attributeCategoryName}</P>
+        <P>{displayName}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
         <>
           <div>
-            {options.length > 10 && <InputSearch placeholder={`Search ${attributeCategoryName}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+            {options.length > 10 && <InputSearch placeholder={`Search ${displayName}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
