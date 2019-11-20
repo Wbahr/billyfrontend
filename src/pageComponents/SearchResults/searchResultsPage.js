@@ -106,7 +106,8 @@ export default function SearchResultsPage(props) {
       let searchOld = queryString.parse(prevHistory.search)
       setCheckedAttributeFilters([])
 
-      if (searchOld.searchTerm !== searchNew.searchTerm){
+      if (searchOld.searchTerm !== searchNew.searchTerm || searchOld.sortType !== searchNew.sortType){
+        setSearchResults([])
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
