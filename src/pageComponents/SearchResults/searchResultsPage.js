@@ -59,7 +59,6 @@ export default function SearchResultsPage(props) {
   const performSearchRef = useRef(true);
   const search = queryString.parse(location.search)
   const [searchTerm, setSearchTerm] = useState(search.searchTerm)
-  const [firstSearchTerm, setFirstSearchTerm] = useState('')
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
@@ -74,6 +73,8 @@ export default function SearchResultsPage(props) {
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
+  const [isSetNewCategories, setIsSetNewCategories] = useState(false);
+  const [searchNonce, setSearchNonce] = useState(0);
 
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
@@ -87,8 +88,9 @@ export default function SearchResultsPage(props) {
         setInfiniteScrollHasMore(true)
       }
 
+      setSearchNonce(search.nonce)
+
       setNewAttributeCategories(itemSearchResult.attributeCategories)
-      setFirstSearchTerm(searchTerm.split(' ')[0])
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -118,8 +120,15 @@ export default function SearchResultsPage(props) {
   })
 
   useEffect(() => {
-    setAttributeCategories(newAttributeCategories)
-  }, [firstSearchTerm])
+    if(isSetNewCategories){
+      setAttributeCategories(newAttributeCategories)
+      setIsSetNewCategories(false)
+    }
+  }, [isSetNewCategories])
+
+  useEffect(() => {
+    setIsSetNewCategories(true)
+  }, [searchNonce])
 
   useEffect(() => {
     if(currentPage > 0){
@@ -153,15 +162,15 @@ export default function SearchResultsPage(props) {
       case 'searchTerm':
         setSearchTerm(updateObj.searchTerm)
         setResultPage(1)
-        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
+        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}&nonce=${search.nonce}`
         break;
       case 'page':
         setResultPage(updateObj.page)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}&nonce=${search.nonce}`
         break;
       case 'sort':
         setSortType(updateObj.sort)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
+        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}&nonce=${search.nonce}`
         break;
     }
     setClearInnerSearch(true)
