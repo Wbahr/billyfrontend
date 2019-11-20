@@ -107,6 +107,7 @@ export default function SearchResultsPage(props) {
       setCheckedAttributeFilters([])
 
       if (searchOld.searchTerm !== searchNew.searchTerm){
+        setSearchResults([])
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
