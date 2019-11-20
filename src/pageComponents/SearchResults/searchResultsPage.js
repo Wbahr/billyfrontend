@@ -212,8 +212,7 @@ export default function SearchResultsPage(props) {
 
   let AttributeFilters = attributeCategories.map((attribute, index) => {
     return <AttributeFilter 
-        key={("" + index + new Date().getTime())}
-        //key={index}
+        key={("" + index + attribute.categoryName)}
         categoryAttribute={attribute}
         attributeFeatureToggleStates={checkedAttributeFilters}
         updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
