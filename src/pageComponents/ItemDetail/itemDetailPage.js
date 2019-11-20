@@ -405,9 +405,9 @@ export default function ItemDetailPage({history}){
           {Features}
           <H4 id='techspec'>Tech Specifications</H4>
           {TechSpecs}
-          <H4>Links</H4>
+          {item.itemLink.length > 0 && <H4>Links</H4>}
           {Links}
-          <H4 id='accessory'>Accessory Items</H4>
+          {item.itemAssociationInvMastU.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
           <DivAccessoryItems>
             {AccessoryItems}
           </DivAccessoryItems>
