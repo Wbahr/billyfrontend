@@ -123,7 +123,7 @@ export default function AttributeFilter({categoryAttribute, open, attributeFeatu
   let AttributeOptions = categoryAttribute.features.map((feature, index) => {
     let disable = filteredAttributeValues.includes(feature)
 
-    if(feature.featureName.toLowerCase() !== 'null' && _.startsWith(feature.featureNameDisplay, filter)){
+    if(feature.featureName.toLowerCase() !== 'null' && _.startsWith(feature.featureNameDisplay.toLowerCase(), filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
@@ -150,7 +150,7 @@ export default function AttributeFilter({categoryAttribute, open, attributeFeatu
       {isOpen && 
         <>
           <div>
-            {categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value)}} value={filter}></InputSearch>}
+            {categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
             {AttributeOptions}
