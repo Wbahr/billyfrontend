@@ -66,6 +66,7 @@ export default function SearchResultsPage(props) {
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
@@ -93,6 +94,7 @@ export default function SearchResultsPage(props) {
       setSearchNonce(search.nonce)
 
       setNewAttributeCategories(itemSearchResult.attributeCategories)
+      setBrands(itemSearchResult.brands)
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -242,7 +244,7 @@ export default function SearchResultsPage(props) {
       <div>
         <CategoryFilter />
         <BrandFilter 
-          brands={['SMC', 'Phoenix']}
+          brands={brands}
           updatedBrandFilter={handleUpdatedBrandToggle}
         />
         {AttributeFilters}
