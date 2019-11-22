@@ -12,6 +12,8 @@ const DivTitle = styled.div`
   height: 36px;
   padding: 0 16px;
   background-color: #f3f3f3;
+  color: white;
+  background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
@@ -101,7 +103,7 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>Brand</P>
+        <P>Brands</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 

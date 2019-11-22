@@ -67,6 +67,7 @@ export default function SearchResultsPage(props) {
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
@@ -78,6 +79,8 @@ export default function SearchResultsPage(props) {
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
   const [searchNonce, setSearchNonce] = useState(0);
+  const [parentCategory, setParentCategory] = useState(null);
+  const [childCategory, setChildCategory] = useState(null);
 
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
@@ -95,6 +98,7 @@ export default function SearchResultsPage(props) {
 
       setNewAttributeCategories(itemSearchResult.attributeCategories)
       // setBrands(itemSearchResult.brands)
+      // setCategories(itemSearchResult.categories)
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -192,6 +196,14 @@ export default function SearchResultsPage(props) {
     setCheckedBrandFilters(selectedBrands)
   }
 
+  function handleUpdatedCategoryToggle(categoryType, selectedCategory){
+    if(categoryType === 'parent'){
+      setParentCategory(selectedCategory)
+    } else {
+      setChildCategory(selectedCategory)
+    }
+  }
+
   function loadFunc(isNewSearch){
     const search = queryString.parse(location.search)
     
@@ -242,7 +254,10 @@ export default function SearchResultsPage(props) {
     <DivContainer>
       {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
-        <CategoryFilter />
+        <CategoryFilter 
+          categories={categories}
+          updatedCategoriesFilter={handleUpdatedCategoryToggle}
+        />
         <BrandFilter 
           brands={brands}
           updatedBrandFilter={handleUpdatedBrandToggle}
