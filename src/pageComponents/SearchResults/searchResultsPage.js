@@ -6,6 +6,7 @@ import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import AttributeFilter from './uiComponents/attributeFilter'
+import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import DetailsModal from './uiComponents/detailsModal'
 import Loader from '../_common/loader'
@@ -65,9 +66,11 @@ export default function SearchResultsPage(props) {
   const [totalResults, setTotalResults] = useState(0)
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
+  const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
@@ -91,6 +94,7 @@ export default function SearchResultsPage(props) {
       setSearchNonce(search.nonce)
 
       setNewAttributeCategories(itemSearchResult.attributeCategories)
+      // setBrands(itemSearchResult.brands)
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -140,7 +144,7 @@ export default function SearchResultsPage(props) {
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
-  }, [checkedAttributeFilters])
+  }, [checkedAttributeFilters, checkedBrandFilters])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
@@ -182,6 +186,10 @@ export default function SearchResultsPage(props) {
 
   function handleUpdatedFeatureToggle(updatedState){
     setCheckedAttributeFilters(updatedState)
+  }
+
+  function handleUpdatedBrandToggle(selectedBrands){
+    setCheckedBrandFilters(selectedBrands)
   }
 
   function loadFunc(isNewSearch){
@@ -235,6 +243,10 @@ export default function SearchResultsPage(props) {
       {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter />
+        <BrandFilter 
+          brands={brands}
+          updatedBrandFilter={handleUpdatedBrandToggle}
+        />
         {AttributeFilters}
       </div>
       <ResultsContainer>
