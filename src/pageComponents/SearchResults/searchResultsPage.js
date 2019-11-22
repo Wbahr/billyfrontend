@@ -69,6 +69,7 @@ export default function SearchResultsPage(props) {
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
+  const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
@@ -141,7 +142,7 @@ export default function SearchResultsPage(props) {
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
-  }, [checkedAttributeFilters])
+  }, [checkedAttributeFilters, checkedBrandFilters])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
@@ -183,6 +184,10 @@ export default function SearchResultsPage(props) {
 
   function handleUpdatedFeatureToggle(updatedState){
     setCheckedAttributeFilters(updatedState)
+  }
+
+  function handleUpdatedBrandToggle(selectedBrands){
+    setCheckedBrandFilters(selectedBrands)
   }
 
   function loadFunc(isNewSearch){
@@ -236,7 +241,10 @@ export default function SearchResultsPage(props) {
       {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter />
-        <BrandFilter />
+        <BrandFilter 
+          brands={['SMC', 'Phoenix']}
+          updatedBrandFilter={handleUpdatedBrandToggle}
+        />
         {AttributeFilters}
       </div>
       <ResultsContainer>

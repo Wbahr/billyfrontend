@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Transition } from "react-transition-group"
+// import { Transition } from "react-transition-group"
 
 const DivTitle = styled.div`
   display: flex;
@@ -18,24 +19,13 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
   display: flex; 
   flex-direction: column;
-  margin-left: 16px;
-  background: ${({ state }) => {
-      switch (state) {
-        case "entering":
-          return "red"
-        case "entered":
-          return "blue"
-        case "exiting":
-          return "green"
-        case "exited":
-          return "yellow"
-      }
-    }
-  }
+  max-height: 250px;
+  overflow: scroll;
 `
 
 const DivOptionRow = styled.div`
   display: flex; 
+  width: 250px;
   align-items: center;
   margin: 8px 0 0 24px;
 `
@@ -44,19 +34,20 @@ const P = styled.p`
   margin: 0;
 `
 
-const Acategory = styled.p`
-  cursor: pointer;
+const Label = styled.label`
   margin: 0;
   color: #535353;
   font-size: 12px;
-  :hover{
-    color: #0056b3;
-  }
+  margin-left: 4px;
 `
 
-const Label = styled.label`
-  margin-bottom: 0;
-  margin-left: 4px;
+const DisabledLabel = styled(Label)`
+  color: whitesmoke;
+`
+
+const InputSearch = styled.input`
+  margin: 4px 16px;
+  width: 240px;
 `
 
 const defaultStyle = {
@@ -71,32 +62,64 @@ const transitionStyles = {
   exited:  { opacity: 0 },
 };
 
-// export default function AttributeFilter({filterName, filterOptions, openByDefault}) {
-export default function BrandFilter() {
-  const [isOpen, setIsOpen] = useState(false)
+export default function BrandFilter({brands, updatedBrandFilter}) {
+  const [isOpen, setIsOpen] = useState(open)
+  const [filter, setFilter] = useState('')
+  const [brandFilterValues, setBrandFilterValues] = useState([])
 
-  let FilterName = 'Brand'
-  let FilterOptions = ['Circuit Protection', 'Industrial Controls', 'Pneumatics', 'Power Products', 'Sensors']
-  let AttributeOptions = _.map(FilterOptions, option => {
-    return (
-      <DivOptionRow>
-        <Acategory>{option}</Acategory>
-      </DivOptionRow>
-    )
+  const handleFeatureToggle = (e, brand) => {
+    if(e.target.checked){
+      newBrandFilterValues = [...brandFilterValues, brand]
+      setBrandFilterValues(newBrandFilterValues)
+    } else {
+      newBrandFilterValues = _.pull(brandFilterValues, brand)
+      setBrandFilterValues(newBrandFilterValues)
+    }
+    updatedBrandFilter(brandFilterValues)
+  }
+
+  let BrandOptions = brands.map((brand, index) => {
+    let disable = false
+
+    if(brand.toLowerCase() !== 'null' && _.startsWith(brand.toLowerCase(), filter)){
+      return (
+        <DivOptionRow key={index}>
+          <input type="checkbox" 
+            onChange={(e) => handleFeatureToggle(e, brand)}
+            disabled={disable}
+          />
+          {disable ?
+            <DisabledLabel htmlFor={brand}>{brand}</DisabledLabel>
+          :
+            <Label htmlFor={brand}>{brand}</Label>
+          }
+        </DivOptionRow>
+      )
+    }
   })
 
   return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{FilterName}</P>
+        <P>Brand</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
-      {/* <Transition in={isOpen} timeout={300}>
-        {state => (
-          <DivOptions state={state}>{AttributeOptions}</DivOptions>
-        )}
-      </Transition> */}
-      {isOpen && AttributeOptions}
+      {isOpen && 
+        <>
+          <div>
+            {brands.length > 10 && <InputSearch placeholder={`Search Brands`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
+          </div>
+          <DivOptions>
+            {BrandOptions}
+          </DivOptions>
+        </>
+      }
     </>
   )
+}
+
+BrandFilter.propTypes = {
+  brand: PropTypes.array.isRequired,
+  open: PropTypes.bool,
+  toggleAttribute: PropTypes.func
 }
