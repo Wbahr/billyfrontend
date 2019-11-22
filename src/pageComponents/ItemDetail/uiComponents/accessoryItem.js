@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($associatedItemId: ID){
-        items(invMastUid: $associatedItemId) {
+        itemDetails(invMastUid: $associatedItemId) {
             anonPrice
             assembly
             availability
@@ -220,8 +220,8 @@ export default function AccessoryItem({associatedItemId, history}) {
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { associatedItemId },
     onCompleted: result => {
-      if (result.items.length) {
-        setItem(result.items[0])
+      if (result.itemDetails.length) {
+        setItem(result.itemDetails[0])
       } else {
         setItem({})
       }

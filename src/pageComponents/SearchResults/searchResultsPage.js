@@ -217,8 +217,8 @@ export default function SearchResultsPage(props) {
           sortType: search.sortType,
           brandFilter: brands,
           categoryFilter: {
-            'parent': parentCategory,
-            'child': childCategory
+            'parentCategory': parentCategory,
+            'childCategory': childCategory
           },
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {

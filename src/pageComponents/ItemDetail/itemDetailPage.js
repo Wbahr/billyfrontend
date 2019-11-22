@@ -9,7 +9,7 @@ import AccessoryItem from './uiComponents/accessoryItem'
 //This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
-        items(invMastUid: $itemId) {
+        itemDetails(invMastUid: $itemId) {
             anonPrice
             assembly
             availability
@@ -309,8 +309,8 @@ export default function ItemDetailPage({history}){
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
     onCompleted: result => {
-      if (result.items.length) {
-        setItem(result.items[0])
+      if (result.itemDetails.length) {
+        setItem(result.itemDetails[0])
       } else {
         setItem({})
       }
