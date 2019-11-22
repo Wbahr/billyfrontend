@@ -79,8 +79,8 @@ export default function SearchResultsPage(props) {
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
   const [searchNonce, setSearchNonce] = useState(0);
-  const [parentCategory, setParentCategory] = useState(null);
-  const [childCategory, setChildCategory] = useState(null);
+  const [parentCategory, setParentCategory] = useState('');
+  const [childCategory, setChildCategory] = useState('');
 
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
@@ -215,6 +215,11 @@ export default function SearchResultsPage(props) {
           resultSize: search.resultSize,
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
+          brandFilter: brands,
+          categoryFilter: {
+            'parent': parentCategory,
+            'child': childCategory
+          },
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {
               field: filter.field,
