@@ -6,6 +6,7 @@ import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
 import AttributeFilter from './uiComponents/attributeFilter'
+import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import DetailsModal from './uiComponents/detailsModal'
 import Loader from '../_common/loader'
@@ -235,6 +236,7 @@ export default function SearchResultsPage(props) {
       {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter />
+        <BrandFilter />
         {AttributeFilters}
       </div>
       <ResultsContainer>
