@@ -32,9 +32,9 @@ const DivText = styled.div`
   color: white;
 `
 
-export default function CategoryImage({text,src}) {
+export default function CategoryImage({text,src,history}) {
   return(
-    <DivContainer>
+    <DivContainer onClick={()=>history.push(`/search/categories/${text}`)}>
       <DivImgWrapper>
         <img src={src} width='165px' height='140px'/>
       </DivImgWrapper>

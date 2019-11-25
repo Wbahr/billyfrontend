@@ -94,7 +94,9 @@ export default function ShopOurProducts(props) {
         />
       </div>
       <Div>
-        <CategoryGrid />
+        <CategoryGrid 
+          history={props.history}
+        />
       </Div>
       {/* <Div>
         <Card>
