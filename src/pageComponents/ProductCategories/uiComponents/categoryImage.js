@@ -32,9 +32,17 @@ const DivText = styled.div`
   color: white;
 `
 
+function convertText(text){
+  let mutatedText = text.toLowerCase()
+  mutatedText = mutatedText.replace(/&/g,'') // remove &
+  mutatedText = mutatedText.replace(/\s/g, '-') // convert spaces to -
+  return(mutatedText)
+}
+
 export default function CategoryImage({text,src,history}) {
+  let urlText = convertText(text)
   return(
-    <DivContainer onClick={()=>history.push(`/search/categories/${text}`)}>
+    <DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>
       <DivImgWrapper>
         <img src={src} width='165px' height='140px'/>
       </DivImgWrapper>
