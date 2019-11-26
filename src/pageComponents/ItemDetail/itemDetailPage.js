@@ -309,8 +309,8 @@ export default function ItemDetailPage({history}){
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
     onCompleted: result => {
-      if (result.itemDetails.length) {
-        setItem(result.itemDetails[0])
+      if (result.itemDetails) {
+        setItem(result.itemDetails)
       } else {
         setItem({})
       }
