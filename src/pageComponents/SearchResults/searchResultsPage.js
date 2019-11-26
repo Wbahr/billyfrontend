@@ -56,6 +56,7 @@ const QUERY_ITEM_SEARCH = gql`
 
 export default function SearchResultsPage(props) {
   const didMountRef = useRef(false);
+  const didSetDefaults = useRef(false);
   const prevHistoryRef = useRef();
   const performSearchRef = useRef(true);
   const search = queryString.parse(location.search)
@@ -82,6 +83,20 @@ export default function SearchResultsPage(props) {
   const [parentCategory, setParentCategory] = useState('');
   const [childCategory, setChildCategory] = useState('');
 
+  // Set search defaults for categories. This occurs before the first search is executed
+  useEffect(() => {
+    if (!didSetDefaults.current) {
+      didSetDefaults.current = true
+      prevHistoryRef.current = props.history.location
+      let pathArray = props.history.location.pathname.slice(1).split("/")
+      if(pathArray[1] === 'categories'){
+        setParentCategory(pathArray[2])
+        if(pathArray.length === 4){
+          setChildCategory(pathArray[3])
+        }
+      }
+    }
+  })
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
@@ -108,6 +123,14 @@ export default function SearchResultsPage(props) {
   useEffect(() => {
     if (!didMountRef.current) {
       prevHistoryRef.current = props.history.location
+      let pathArray = props.history.location.pathname.slice(1).split("/")
+      if(pathArray[1] === 'categories'){
+        setParentCategory(pathArray[2])
+        if(pathArray.length === 4){
+          setChildCategory(pathArray[3])
+        }
+      }
+
       didMountRef.current = true
     }
     const prevHistory = prevHistoryRef.current

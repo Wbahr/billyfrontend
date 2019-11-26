@@ -121,7 +121,7 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
 }
 
 BrandFilter.propTypes = {
-  brand: PropTypes.array.isRequired,
+  brands: PropTypes.array.isRequired,
   open: PropTypes.bool,
   toggleAttribute: PropTypes.func
 }
