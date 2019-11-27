@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -170,7 +170,7 @@ const Img = styled.img`
 `
 
 const QUERY_STOCK_AVAILABILITY = gql`
-  query StockAvailability($invMastUid: ID){
+  query GetStockAvailability($invMastUid: ID){
     getStockAvailability(invMastUid: $invMastUid){
       airlineStocks {
         companyId
@@ -195,7 +195,7 @@ const QUERY_STOCK_AVAILABILITY = gql`
   }
 `
 
-export default function ItemResult({result, history, toggleDetailsModal}) {
+export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal}) {
   const [quantity, setQuantity] = useState(1)
   const [airlineStock, setAirlineStock] = useState([])
   const [factoryStock, setFactoryStock] = useState([])
@@ -231,7 +231,7 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
-  let ItemAvailability = <PBlue>(Show Locations)</PBlue>
+  let ItemAvailability = <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
 
   
   return(

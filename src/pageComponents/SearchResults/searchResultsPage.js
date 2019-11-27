@@ -80,6 +80,7 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
@@ -268,7 +269,7 @@ export default function SearchResultsPage(props) {
         history={props.history}
         showDetailsModal={showDetailsModal}
         toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
-
+        toggleLocationsModa={()=>{setShowLocationsModal(!showLocationsModal)}}
       />
     )
   })
@@ -286,6 +287,7 @@ export default function SearchResultsPage(props) {
   return(
     <DivContainer>
       {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
+      {showLocationsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
       <div>
         <CategoryFilter 
           categories={categories}
