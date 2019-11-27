@@ -11,6 +11,8 @@ const DivTitle = styled.div`
   padding: 0 16px;
   background-color: #f3f3f3;
   color: white;
+  font-weight: 600;
+  letter-spacing: .1px;
   background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
   justify-content: space-between;
   align-items: center;

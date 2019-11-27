@@ -172,6 +172,7 @@ export default function SearchResultsPage(props) {
   }, [currentPage])
 
   useEffect(() => {
+    setSearchResults([])
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
