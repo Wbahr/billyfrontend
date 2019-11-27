@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
 const DivItemResultContainer = styled.div`
   display: flex;
@@ -163,8 +165,45 @@ const Img = styled.img`
   max-width: 100%;
 `
 
+const QUERY_STOCK_AVAILABILITY = gql`
+  query StockAvailability($invMastUid: ID){
+    getStockAvailability(invMastUid: $invMastUid){
+      airlineStocks {
+        companyId
+        itemCode
+        locationId
+        locationName
+        locationType
+        quantityAllocated
+        quantityAvailable
+        quantityFrozen
+        quantityNonPickable
+        quantityOnHand
+        quantityQuarantined
+      }
+      factoryStock {
+        factoryAvailability
+        factoryMessage
+        invMastUid
+        leadTimeDays
+      }
+    }
+  }
+`
+
 export default function ItemResult({result, history, toggleDetailsModal}) {
   const [quantity, setQuantity] = useState(1)
+  const [airlineStock, setAirlineStock] = useState([])
+  const [factoryStock, setFactoryStock] = useState([])
+  const invMastUid = result.frecno
+  const { loading, error, data } = useQuery(QUERY_STOCK_AVAILABILITY, {
+    variables: { invMastUid },
+    onCompleted: data => {
+      setAirlineStock(data.airlineStocks)
+      setFactoryStock(data.factoryStock)
+      console.log(data)
+    }
+  })
 
   function handleSetQuantity(quantity){
     if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -188,6 +227,8 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
+  let ItemAvailability
+
   
   return(
     <DivItemResultContainer>
@@ -203,7 +244,14 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
           <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
         </DivPartNumberRow>
         <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-          {result.availability !== 0 ? <PBlue>{result.availability} -- Locations </PBlue> : <PBlue>{result.availability_message}</PBlue>}
+          {result.availability !== 0 ? 
+            <div>
+              <PBlue>{result.availability}</PBlue>
+              {ItemAvailability}
+            </div> 
+          : 
+            <PBlue>{result.availability_message}</PBlue>
+          }
         </DivPartNumberRow>
         <DivPartNumberRowSpread>
           <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>

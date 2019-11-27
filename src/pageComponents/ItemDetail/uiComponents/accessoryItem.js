@@ -270,7 +270,7 @@ export default function AccessoryItem({associatedItemId, history}) {
             <PpartAvailability>Airline #: AHC{item.invMastUid}</PpartAvailability>
           </DivPartNumberRow>
           <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-            {item.availability !== 0 ? <PBlue>{item.availability} -- Locations </PBlue> : <PBlue>{item.availabilityMessage}</PBlue>}
+            {item.availability !== 0 ? <PBlue>{item.availability}</PBlue> : <PBlue>{item.availabilityMessage}</PBlue>}
           </DivPartNumberRow>
           <DivPartNumberRowSpread>
             <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
