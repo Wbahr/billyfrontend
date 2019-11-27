@@ -78,7 +78,6 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
       newBrandFilterValues = [...brandFilterValues, brand]
       setBrandFilterValues(newBrandFilterValues)
     } else {
-      newBrandFilterValues = _.pull(brandFilterValues, brand)
       newBrandFilterValues = _.without(brandFilterValues, brand)
       setBrandFilterValues(newBrandFilterValues)
     }
