@@ -65,7 +65,7 @@ const transitionStyles = {
 };
 
 export default function BrandFilter({brands, updatedBrandFilter}) {
-  const [isOpen, setIsOpen] = useState(open)
+  const [isOpen, setIsOpen] = useState(false)
   const [filter, setFilter] = useState('')
   const [brandFilterValues, setBrandFilterValues] = useState([])
 

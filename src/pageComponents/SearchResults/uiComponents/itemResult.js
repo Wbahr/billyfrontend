@@ -15,6 +15,10 @@ const DivItemResultContainer = styled.div`
   border-bottom: 1px grey solid;
 `
 
+const DivRow = styled.div`
+  display: flex;
+`
+
 const DivPartNumberRow = styled.div`
   width: 100%;
   display: flex;
@@ -227,7 +231,7 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
-  let ItemAvailability
+  let ItemAvailability = <PBlue>(Show Locations)</PBlue>
 
   
   return(
@@ -245,10 +249,10 @@ export default function ItemResult({result, history, toggleDetailsModal}) {
         </DivPartNumberRow>
         <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
           {result.availability !== 0 ? 
-            <div>
+            <DivRow>
               <PBlue>{result.availability}</PBlue>
               {ItemAvailability}
-            </div> 
+            </DivRow> 
           : 
             <PBlue>{result.availability_message}</PBlue>
           }
