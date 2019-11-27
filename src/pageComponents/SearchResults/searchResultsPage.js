@@ -111,7 +111,7 @@ export default function SearchResultsPage(props) {
       setSearchNonce(search.nonce)
 
       setNewAttributeCategories(itemSearchResult.attributeCategories)
-      // setBrands(itemSearchResult.brands)
+      setBrands(_.get(itemSearchResult,`brands`,[]))
       // setCategories(itemSearchResult.categories)
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
