@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { H2 } from '../_common/text'
 import SectionHeader from '../_common/sectionHeader.js'
 import { Link, useHistory } from 'react-router-dom'
-import CategoryGrid from '../ProductCategories/uiComponents/categoryGrid'
+import CategoryGrid from './categoryGrid'
 
 const Thing = styled.div`
   margin-top: -6px;

@@ -39,15 +39,10 @@ function convertText(text){
   return(mutatedText)
 }
 
-export default function CategoryImage({text,src,getChildGrid,history,selectedParent}) {
-
-  function searchCategory(){
-    let urlChildText = convertText(text)
-    let urlParentText = convertText(selectedParent)
-    history.push(`/search/categories/${urlParentText}/${urlChildText}`)
-  }
+export default function CategoryImage({text,src,history}) {
+  let urlText = convertText(text)
   return(
-    <DivContainer onClick={_.isNil(selectedParent) ? ()=>{getChildGrid()} : ()=>searchCategory()}>
+    <DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>
       <DivImgWrapper>
         <img src={src} width='165px' height='140px'/>
       </DivImgWrapper>

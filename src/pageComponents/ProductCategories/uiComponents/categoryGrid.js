@@ -134,6 +134,7 @@ export default function CategoryGrid({history}) {
           text={child.name}
           src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
           history={history}
+          selectedParent={selectedParent}
         />
       )
     })

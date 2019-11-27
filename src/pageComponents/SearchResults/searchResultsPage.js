@@ -238,7 +238,7 @@ export default function SearchResultsPage(props) {
           resultSize: search.resultSize,
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
-          brandFilter: brands,
+          brandFilters: brands,
           categoryFilter: {
             'parentCategory': parentCategory,
             'childCategory': childCategory
