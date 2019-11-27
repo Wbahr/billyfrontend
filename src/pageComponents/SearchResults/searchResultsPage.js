@@ -49,7 +49,6 @@ const QUERY_ITEM_SEARCH = gql`
           itemCount
         }
       }
-      queryJson
     }
   }
 `
@@ -239,10 +238,10 @@ export default function SearchResultsPage(props) {
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
           brandFilters: brands,
-          categoryFilter: {
-            'parentCategory': parentCategory,
-            'childCategory': childCategory
-          },
+          // categoryFilters: {
+          //   'parentCategory': parentCategory,
+          //   'childCategory': childCategory
+          // },
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {
               field: filter.field,
