@@ -49,6 +49,11 @@ const QUERY_ITEM_SEARCH = gql`
           itemCount
         }
       }
+      brands{
+        brandCount
+        brandName
+        brandNameDisplay
+      }
     }
   }
 `
@@ -237,7 +242,7 @@ export default function SearchResultsPage(props) {
           resultSize: search.resultSize,
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
-          brandFilters: brands,
+          brandFilters: checkedBrandFilters,
           // categoryFilters: {
           //   'parentCategory': parentCategory,
           //   'childCategory': childCategory
@@ -285,10 +290,13 @@ export default function SearchResultsPage(props) {
           categories={categories}
           updatedCategoriesFilter={handleUpdatedCategoryToggle}
         />
-        <BrandFilter 
-          brands={brands}
-          updatedBrandFilter={handleUpdatedBrandToggle}
-        />
+        { brands.length > 0 &&
+          <BrandFilter 
+            brands={brands}
+            updatedBrandFilter={handleUpdatedBrandToggle}
+          />
+        }
+
         {AttributeFilters}
       </div>
       <ResultsContainer>

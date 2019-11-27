@@ -67,9 +67,11 @@ const transitionStyles = {
 export default function BrandFilter({brands, updatedBrandFilter}) {
   const [isOpen, setIsOpen] = useState(false)
   const [filter, setFilter] = useState('')
+  const [allBrands, setBrands] = useState(brands)
   const [brandFilterValues, setBrandFilterValues] = useState([])
 
   const handleFeatureToggle = (e, brand) => {
+    let newBrandFilterValues
     if(e.target.checked){
       newBrandFilterValues = [...brandFilterValues, brand]
       setBrandFilterValues(newBrandFilterValues)
@@ -77,23 +79,23 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
       newBrandFilterValues = _.pull(brandFilterValues, brand)
       setBrandFilterValues(newBrandFilterValues)
     }
-    updatedBrandFilter(brandFilterValues)
+    updatedBrandFilter(newBrandFilterValues)
   }
 
-  let BrandOptions = brands.map((brand, index) => {
+  let BrandOptions = allBrands.map((brand, index) => {
     let disable = false
 
-    if(brand.toLowerCase() !== 'null' && _.startsWith(brand.toLowerCase(), filter)){
+    if(brand.brandName.toLowerCase() !== 'null' && _.startsWith(brand.brandName.toLowerCase(), filter)){
       return (
         <DivOptionRow key={index}>
           <input type="checkbox" 
-            onChange={(e) => handleFeatureToggle(e, brand)}
+            onChange={(e) => handleFeatureToggle(e, brand.brandName)}
             disabled={disable}
           />
           {disable ?
-            <DisabledLabel htmlFor={brand}>{brand}</DisabledLabel>
+            <DisabledLabel htmlFor={brand.brandName}>{brand.brandNameDisplay}</DisabledLabel>
           :
-            <Label htmlFor={brand}>{brand}</Label>
+            <Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
           }
         </DivOptionRow>
       )
