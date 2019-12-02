@@ -82,7 +82,8 @@ export default function SearchResultsPage(props) {
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [brands, setBrands] = useState([])
-  const [categories, setCategories] = useState([])
+  const [parentCategories, setParentCategories] = useState([])
+  const [childCategories, setChildCategories] = useState([])
   const [isSearching, setSearching] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
@@ -131,7 +132,8 @@ export default function SearchResultsPage(props) {
 
       setNewAttributeCategories(itemSearchResult.attributeCategories)
       setBrands(_.get(itemSearchResult,`brands`,[]))
-      // setCategories(itemSearchResult.categories)
+      setParentCategories(itemSearchResult.parentCategories)
+      setChildCategories(itemSearchResult.childCategories)
       parseQueryResults(itemSearchResult)
       setIsReplacingResults(false)
       setSearching(false)
@@ -258,10 +260,10 @@ export default function SearchResultsPage(props) {
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
           brandFilters: checkedBrandFilters,
-          // categoryFilters: {
-          //   'parentCategory': parentCategory,
-          //   'childCategory': childCategory
-          // },
+          categoryFilter: {
+            'parentCategory': parentCategory,
+            'childCategory': childCategory
+          },
           attributeFilters: checkedAttributeFilters.map(filter => {
             return {
               field: filter.field,
@@ -313,7 +315,8 @@ export default function SearchResultsPage(props) {
       />
       <div>
         <CategoryFilter 
-          categories={categories}
+          parentCategories={parentCategories}
+          childCategories={childCategories}
           updatedCategoriesFilter={handleUpdatedCategoryToggle}
         />
         { brands.length > 0 &&
