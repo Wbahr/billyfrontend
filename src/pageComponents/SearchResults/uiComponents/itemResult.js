@@ -197,15 +197,16 @@ const QUERY_STOCK_AVAILABILITY = gql`
 
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal}) {
   const [quantity, setQuantity] = useState(1)
+  const [showLocation, setShowLocation] = useState(false)
   const [airlineStock, setAirlineStock] = useState([])
   const [factoryStock, setFactoryStock] = useState([])
   const invMastUid = result.frecno
   const { loading, error, data } = useQuery(QUERY_STOCK_AVAILABILITY, {
     variables: { invMastUid },
     onCompleted: data => {
-      setAirlineStock(data.airlineStocks)
-      setFactoryStock(data.factoryStock)
-      console.log(data)
+      setShowLocation(true)
+      setAirlineStock(data.getStockAvailability.airlineStocks)
+      setFactoryStock(data.getStockAvailability.factoryStock)
     }
   })
 
@@ -231,9 +232,6 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
-  let ItemAvailability = <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
-
-  
   return(
     <DivItemResultContainer>
       <DivPartDetailsRow>
@@ -251,7 +249,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           {result.availability !== 0 ? 
             <DivRow>
               <PBlue>{result.availability}</PBlue>
-              {ItemAvailability}
+              {showLocation && <PBlue onClick={()=>toggleLocationsModal(airlineStock, factoryStock)}>(Show Locations)</PBlue>}
             </DivRow> 
           : 
             <PBlue>{result.availability_message}</PBlue>

@@ -8,7 +8,7 @@ import ResultsSummary from './uiComponents/resultsSummary'
 import AttributeFilter from './uiComponents/attributeFilter'
 import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
-import DetailsModal from './uiComponents/detailsModal'
+import LocationsModal from './uiComponents/locationsModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -81,6 +81,9 @@ export default function SearchResultsPage(props) {
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
+  const [locationAirlineStock, setLocationAirlineStock] = useState([])
+  const [locationFactoryStock, setLocationFactoryStock] = useState([])
+
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
@@ -260,6 +263,13 @@ export default function SearchResultsPage(props) {
     })
   }
 
+  function handleShowLocationsModal(airlineStock, factoryStock){
+    setShowLocationsModal(!showLocationsModal)
+    setLocationAirlineStock(airlineStock)
+    setLocationFactoryStock(factoryStock)
+    console.log('stock', airlineStock, factoryStock)
+  }
+
   let SearchResults = _.map(searchResults, result => {
     return(
       <ItemResult 
@@ -269,7 +279,7 @@ export default function SearchResultsPage(props) {
         history={props.history}
         showDetailsModal={showDetailsModal}
         toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
-        toggleLocationsModa={()=>{setShowLocationsModal(!showLocationsModal)}}
+        toggleLocationsModal={(airlineStock, factoryStock)=>{handleShowLocationsModal(airlineStock, factoryStock)}}
       />
     )
   })
@@ -286,8 +296,12 @@ export default function SearchResultsPage(props) {
 
   return(
     <DivContainer>
-      {showDetailsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
-      {showLocationsModal && <DetailsModal toggleDetailsModal={()=>console.log('hi')}/>}
+      <LocationsModal 
+        open={showLocationsModal} 
+        toggleDetailsModal={()=>console.log('hi')}
+        airlineStock={locationAirlineStock}
+        factoryStock={locationFactoryStock}
+      />
       <div>
         <CategoryFilter 
           categories={categories}
