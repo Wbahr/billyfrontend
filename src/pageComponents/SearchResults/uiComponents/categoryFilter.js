@@ -44,18 +44,32 @@ const Label = styled.label`
   margin-left: 4px;
 `
 
-export default function CategoryFilter({categories, updatedCategoriesFilter}) {
+export default function CategoryFilter({parentCategories, childCategories, updatedCategoriesFilter}) {
   const [isOpen, setIsOpen] = useState(false)
-  let categorieslevel = 'parent'
-  categories = ['Circuit Protection', 'Industrial Controls', 'Pneumatics', 'Power Products', 'Sensors']
-
+  let categorieslevel
+  let categories
+  if (_.isNil(childCategories)){
+    categorieslevel = 'parent'
+    categories = parentCategories
+  } else {
+    categorieslevel = 'child'
+    categories = childCategories
+  }
   let FilterName = 'Categories'
   let CategoryOptions = _.map(categories, option => {
-    return (
-      <DivOptionRow>
-        <Acategory value={option} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.value)}>{option}</Acategory>
-      </DivOptionRow>
-    )
+    if(_.isNil(childCategories)){
+      return (
+        <DivOptionRow>
+          <Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
+        </DivOptionRow>
+      )
+    } else {
+      return (
+        <DivOptionRow>
+          <Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
+        </DivOptionRow>
+      )
+    }
   })
 
   return(
