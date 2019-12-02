@@ -187,12 +187,13 @@ export default function SearchResultsPage(props) {
     }
   }, [currentPage])
 
+  // Execute additional search
   useEffect(() => {
     setSearchResults([])
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
-  }, [checkedAttributeFilters, checkedBrandFilters])
+  }, [checkedAttributeFilters, checkedBrandFilters, parentCategory, childCategory])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
@@ -241,6 +242,7 @@ export default function SearchResultsPage(props) {
   }
 
   function handleUpdatedCategoryToggle(categoryType, selectedCategory){
+    console.log('selectedCategory', selectedCategory)
     if(categoryType === 'parent'){
       setParentCategory(selectedCategory)
     } else {
@@ -317,7 +319,7 @@ export default function SearchResultsPage(props) {
         <CategoryFilter 
           parentCategories={parentCategories}
           childCategories={childCategories}
-          updatedCategoriesFilter={handleUpdatedCategoryToggle}
+          updatedCategoriesFilter={(categorieslevel, value)=>handleUpdatedCategoryToggle(categorieslevel, value)}
         />
         { brands.length > 0 &&
           <BrandFilter 

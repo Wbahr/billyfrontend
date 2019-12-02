@@ -57,11 +57,19 @@ export default function CategoryFilter({parentCategories, childCategories, updat
   }
   let FilterName = 'Categories'
   let CategoryOptions = _.map(categories, option => {
-    return (
-      <DivOptionRow>
-        <Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.value)}>{option.parentCategoryDisplayName}</Acategory>
-      </DivOptionRow>
-    )
+    if(_.isNil(childCategories)){
+      return (
+        <DivOptionRow>
+          <Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
+        </DivOptionRow>
+      )
+    } else {
+      return (
+        <DivOptionRow>
+          <Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
+        </DivOptionRow>
+      )
+    }
   })
 
   return(
