@@ -40,6 +40,16 @@ const QUERY_ITEM_SEARCH = gql`
     itemSearch(searchParams: $searchParams){
       result
       count
+      parentCategories {
+        parentCategoryCount
+        parentCategoryDisplayName
+        parentCategoryName
+      }
+      childCategories {
+        childCategoryCount
+        childCategoryDisplayName
+        childCategoryName
+      }
       attributeCategories{
         categoryName
         categoryNameDisplay
@@ -267,7 +277,6 @@ export default function SearchResultsPage(props) {
     setShowLocationsModal(!showLocationsModal)
     setLocationAirlineStock(airlineStock)
     setLocationFactoryStock(factoryStock)
-    console.log('stock', airlineStock, factoryStock)
   }
 
   let SearchResults = _.map(searchResults, result => {
