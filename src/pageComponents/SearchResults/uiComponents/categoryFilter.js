@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinusSquare } from '@fortawesome/free-regular-svg-icons'
-import { removeFragmentSpreadFromDocument } from 'apollo-utilities'
 import Loader from '../../_common/loader'
 
 const DivTitle = styled.div`
@@ -54,11 +53,6 @@ const Acategory = styled.p`
   }
 `
 
-const Label = styled.label`
-  margin-bottom: 0;
-  margin-left: 4px;
-`
-
 export default function CategoryFilter({isUpdating, parentCategories, childCategories, updatedCategoriesFilter, selectedParent, selectedChild, removeParent, removeChild}) {
   const [isOpen, setIsOpen] = useState(false)
   let categorieslevel
@@ -102,7 +96,7 @@ export default function CategoryFilter({isUpdating, parentCategories, childCateg
         <P>{FilterName}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
-      {(isOpen && !_.isNil(childCategories)) &&<DivRow><PparentTitle>{selectedParent} <span onClick={()=>removeParent()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span></PparentTitle></DivRow>}
+      {(isOpen && !_.isNil(childCategories) && childCategories.length > 0) &&<DivRow><PparentTitle>{selectedParent} <span onClick={()=>removeParent()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span></PparentTitle></DivRow>}
       {(isOpen && !isUpdating) && CategoryOptions}
       {(isUpdating && isOpen) && <Loader/>}
     </>
