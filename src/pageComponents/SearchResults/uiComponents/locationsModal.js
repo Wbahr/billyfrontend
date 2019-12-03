@@ -24,7 +24,7 @@ const TDWhite = styled.td`
 padding: 4px 24px 4px 8px;
 `
 
-export default function DetailsModal({open, toggleDetailsModal, airlineStock, factoryStock}) {
+export default function LocationsModal({open, hideLocationsModal, airlineStock, factoryStock}) {
   let AirlineStockRows 
   if(airlineStock.length > 0){
     AirlineStockRows = _.map(airlineStock, location => {
@@ -54,7 +54,7 @@ export default function DetailsModal({open, toggleDetailsModal, airlineStock, fa
   }
 
   return(
-    <Popup open={open} onClose={toggleDetailsModal()} closeOnDocumentClick>
+    <Popup open={open} onClose={()=>hideLocationsModal()} closeOnDocumentClick>
       <Table>
         <tr>
           <th>Location</th>

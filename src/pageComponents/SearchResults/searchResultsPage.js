@@ -278,9 +278,13 @@ export default function SearchResultsPage(props) {
   }
 
   function handleShowLocationsModal(airlineStock, factoryStock){
-    setShowLocationsModal(!showLocationsModal)
+    setShowLocationsModal(true)
     setLocationAirlineStock(airlineStock)
     setLocationFactoryStock(factoryStock)
+  }
+
+  function handleHideLocationsModal(){
+    setShowLocationsModal(false)
   }
 
   let SearchResults = _.map(searchResults, result => {
@@ -311,7 +315,7 @@ export default function SearchResultsPage(props) {
     <DivContainer>
       <LocationsModal 
         open={showLocationsModal} 
-        toggleDetailsModal={()=>console.log('hi')}
+        hideLocationsModal={handleHideLocationsModal}
         airlineStock={locationAirlineStock}
         factoryStock={locationFactoryStock}
       />
