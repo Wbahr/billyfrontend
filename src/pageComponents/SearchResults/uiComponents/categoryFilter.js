@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinusSquare } from '@fortawesome/free-regular-svg-icons'
+import { removeFragmentSpreadFromDocument } from 'apollo-utilities'
+import Loader from '../../_common/loader'
 
 const DivTitle = styled.div`
   display: flex;
@@ -19,14 +22,26 @@ const DivTitle = styled.div`
   margin-top: 8px;
 `
 
+const DivRow = styled.div`
+  display: flex; 
+`
+
 const DivOptionRow = styled.div`
   display: flex; 
   align-items: center;
-  margin: 8px 0 0 24px;
+  margin: 4px 0 4px 24px;
 `
 
 const P = styled.p`
   margin: 0;
+`
+
+const PparentTitle = styled.p`
+  margin-left: 16px;
+  margin-bottom: 0px;
+  color: #535353;
+  font-size: 14px;
+  font-weight: 500;
 `
 
 const Acategory = styled.p`
@@ -44,7 +59,7 @@ const Label = styled.label`
   margin-left: 4px;
 `
 
-export default function CategoryFilter({parentCategories, childCategories, updatedCategoriesFilter}) {
+export default function CategoryFilter({isUpdating, parentCategories, childCategories, updatedCategoriesFilter, selectedParent, selectedChild, removeParent, removeChild}) {
   const [isOpen, setIsOpen] = useState(false)
   let categorieslevel
   let categories
@@ -57,10 +72,19 @@ export default function CategoryFilter({parentCategories, childCategories, updat
   }
   let FilterName = 'Categories'
   let CategoryOptions = _.map(categories, option => {
-    if(_.isNil(childCategories)){
+    if (_.isNil(childCategories)) {
       return (
         <DivOptionRow>
           <Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
+        </DivOptionRow>
+      )
+    } else if (selectedChild.length > 0 && !isUpdating) {
+      return (
+        <DivOptionRow>
+          <DivRow>
+            <Acategory value={option.childCategoryName}>{option.childCategoryDisplayName} </Acategory>
+            <span onClick={()=>removeChild()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span>
+          </DivRow>
         </DivOptionRow>
       )
     } else {
@@ -68,7 +92,7 @@ export default function CategoryFilter({parentCategories, childCategories, updat
         <DivOptionRow>
           <Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
         </DivOptionRow>
-      )
+      )   
     }
   })
 
@@ -78,7 +102,9 @@ export default function CategoryFilter({parentCategories, childCategories, updat
         <P>{FilterName}</P>
         {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
-      {isOpen && CategoryOptions}
+      {(isOpen && !_.isNil(childCategories)) &&<DivRow><PparentTitle>{selectedParent} <span onClick={()=>removeParent()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span></PparentTitle></DivRow>}
+      {(isOpen && !isUpdating) && CategoryOptions}
+      {(isUpdating && isOpen) && <Loader/>}
     </>
   )
 }

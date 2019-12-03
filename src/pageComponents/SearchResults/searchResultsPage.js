@@ -287,6 +287,11 @@ export default function SearchResultsPage(props) {
     setShowLocationsModal(false)
   }
 
+  function removeParentChildren(){
+    setParentCategory('')
+    setChildCategory('')
+  }
+
   let SearchResults = _.map(searchResults, result => {
     return(
       <ItemResult 
@@ -321,9 +326,14 @@ export default function SearchResultsPage(props) {
       />
       <div>
         <CategoryFilter 
+          isUpdating={isSearching}
           parentCategories={parentCategories}
           childCategories={childCategories}
           updatedCategoriesFilter={(categorieslevel, value)=>handleUpdatedCategoryToggle(categorieslevel, value)}
+          selectedParent={parentCategory}
+          selectedChild={childCategory}
+          removeParent={()=>removeParentChildren()}
+          removeChild={()=>setChildCategory('')}
         />
         { brands.length > 0 &&
           <BrandFilter 
