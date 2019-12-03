@@ -25,7 +25,7 @@ padding: 4px 24px 4px 8px;
 `
 
 export default function LocationsModal({open, hideLocationsModal, airlineStock, factoryStock}) {
-  let AirlineStockRows 
+  let AirlineStockRows
   if(airlineStock.length > 0){
     AirlineStockRows = _.map(airlineStock, location => {
       if(location.quantityAvailable > 0){
@@ -52,12 +52,14 @@ export default function LocationsModal({open, hideLocationsModal, airlineStock, 
   return(
     <Popup open={open} onClose={()=>hideLocationsModal()} closeOnDocumentClick>
       <Table>
-        <tr>
-          <th>Location</th>
-          <th>Quantity Available</th>
-        </tr>
-        {AirlineStockRows}
-        {FactoryStockRows}
+        <tbody>
+          <tr>
+            <th>Location</th>
+            <th>Quantity Available</th>
+          </tr>
+          {AirlineStockRows}
+          {FactoryStockRows}
+        </tbody>
       </Table>
     </Popup>
   )
