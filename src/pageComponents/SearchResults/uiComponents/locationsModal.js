@@ -40,17 +40,13 @@ export default function LocationsModal({open, hideLocationsModal, airlineStock, 
   }
 
   let FactoryStockRows 
-  if(factoryStock.length > 0){
-    FactoryStockRows = _.map(factoryStock, location => {
-      if(location.quantityAvailable > 0){
-        return(
-          <TR>
-            <TDGrey>{location.locationName}</TDGrey>
-            <TDWhite>{location.quantityAvailable}</TDWhite>
-          </TR>
-        )
-      }
-    })
+  if(factoryStock.factoryAvailability > 0){
+    FactoryStockRows = (
+      <TR>
+        <TDGrey>Factory Stock</TDGrey>
+        <TDWhite>{factoryStock.factoryAvailability}</TDWhite>
+      </TR>
+    )
   }
 
   return(
