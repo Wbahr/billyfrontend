@@ -85,6 +85,9 @@ export default function ShopOurProducts(props) {
           <Suggestion onClick={()=>handleSearch('Phoenix Terminal Block')}>
             Phoenix Terminal Block
           </Suggestion>
+          <Suggestion onClick={()=>handleSearch('Valve')}>
+            Valve
+          </Suggestion>
         </DivRight>
       </div>
       <div>
