@@ -201,6 +201,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
   const [airlineStock, setAirlineStock] = useState([])
   const [factoryStock, setFactoryStock] = useState([])
   const invMastUid = result.frecno
+  const mutatedItemId = mutateItemId(result.item_id) 
   const { loading, error, data } = useQuery(QUERY_STOCK_AVAILABILITY, {
     variables: { invMastUid },
     onCompleted: data => {
@@ -209,6 +210,11 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
       setFactoryStock(data.getStockAvailability.factoryStock)
     }
   })
+
+  function mutateItemId(itemId){
+    let mutatedItemId = itemId.replace(/\s/g, '-')
+    return(mutatedItemId)
+  }
 
   function handleSetQuantity(quantity){
     if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -240,7 +246,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
         </DivPartImg>
         <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Quick Look</ButtonBlack>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
+          <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>

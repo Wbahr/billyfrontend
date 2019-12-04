@@ -208,10 +208,10 @@ export default function AccessoryItem({associatedItemId, history}) {
   const [quantity, setQuantity] = useState(1)
   const [item, setItem] = useState(null)
   
-  // useEffect(() => {
-  //   console.log('effect')
-    
-  // })
+  function mutateItemId(itemId){
+    let mutatedItemId = itemId.replace(/\s/g, '-')
+    return(mutatedItemId)
+  }
 
   const { 
     loading, 
@@ -257,6 +257,7 @@ export default function AccessoryItem({associatedItemId, history}) {
       <Loader />
     )
   } else {
+    let mutatedItemId = mutateItemId(_.get(item,`item_id`,''))
     return(
       <DivItemResultContainer>
         <DivPartDetailsRow>
@@ -264,7 +265,7 @@ export default function AccessoryItem({associatedItemId, history}) {
             <Img src={imagePath}/>
           </DivPartImg>
           <DivPartDetails>
-            <PpartTitle onClick={()=>{history.push(`/product/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>
+            <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>
           </DivPartDetails>
           <DivPartNumberRow>
             <PpartAvailability>Airline #: AHC{item.invMastUid}</PpartAvailability>
