@@ -35,6 +35,9 @@ const DivText = styled.div`
 function convertText(text){
   let mutatedText = text.toLowerCase()
   mutatedText = mutatedText.replace(/&\s/g,'') // remove &
+  mutatedText = mutatedText.replace(/,\s/g, '') // remove ,
+  mutatedText = mutatedText.replace(/[()]/g, '') // remove ( and )
+  mutatedText = mutatedText.replace(/[/]/g, '-') // remove /
   mutatedText = mutatedText.replace(/\s/g, '-') // convert spaces to -
   return(mutatedText)
 }
