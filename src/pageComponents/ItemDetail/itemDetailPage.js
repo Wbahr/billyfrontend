@@ -426,9 +426,9 @@ export default function ItemDetailPage({history}){
             <ButtonRed>Add to Cart</ButtonRed>
             <ButtonBlack>Buy Now</ButtonBlack>
           </Div>
-          <a href='#feature'>Features</a>
-          <a href='#techspec'>Tech Specs</a>
-          <a href='#accessory'>Accessory</a>
+          {item.feature.length > 0 && <a href='#feature'>Features</a>}
+          {item.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
+          {item.itemAssociationInvMastU.length > 0 && <a href='#accessory'>Accessory</a>}
         </DivPurchaseInfo>
       </ItemDetailPageContainer>
     )
