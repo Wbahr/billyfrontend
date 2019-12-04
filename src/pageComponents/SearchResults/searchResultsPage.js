@@ -129,7 +129,6 @@ export default function SearchResultsPage(props) {
       }
 
       setSearchNonce(search.nonce)
-
       setNewAttributeCategories(itemSearchResult.attributeCategories)
       setBrands(_.get(itemSearchResult,`brands`,[]))
       setParentCategories(itemSearchResult.parentCategories)
@@ -182,7 +181,7 @@ export default function SearchResultsPage(props) {
   }, [searchNonce])
 
   useEffect(() => {
-    if(currentPage > 0){
+    if(currentPage > 0 && !isSearching){
       loadFunc()
     }
   }, [currentPage])
