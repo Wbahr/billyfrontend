@@ -2,13 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import FeaturedManufacturers from './featuredManufacturers'
 import ShopOurProducts from './shopOurProducts'
+import Banner from './uiComponents/banner'
 // import ContentScreen from '../../containerComponents/contentScreen'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
 
-const Banner = styled.img`
-  box-shadow: 0px 3px 3px #dadada;
-`
 
 const ContentScreenContainer = styled.div`
   display: flex;
@@ -25,7 +23,7 @@ class HomePage extends React.Component {
   render(){
     return(
       <>
-        <Banner src='https://www.airlinehyd.com/customer/aihyco/images/Home/oct-web-banner-desktop.png' width='100%'/>
+        <Banner />
         <ContentScreenContainer>
           <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
