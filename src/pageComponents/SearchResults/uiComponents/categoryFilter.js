@@ -23,6 +23,7 @@ const DivTitle = styled.div`
 
 const DivRow = styled.div`
   display: flex; 
+  align-items: center;
 `
 
 const DivOptionRow = styled.div`
@@ -45,7 +46,7 @@ const PparentTitle = styled.p`
 
 const Acategory = styled.p`
   cursor: pointer;
-  margin: 0;
+  margin: 0 4px 0 0;
   color: #535353;
   font-size: 12px;
   :hover{
