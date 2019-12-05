@@ -349,6 +349,7 @@ export default function SearchResultsPage(props) {
             searchTerm={searchTerm}
             resultPage={resultPage}
             totalResults={totalResults}
+            isSearching={isSearching}
           />
           <ResultsSearch
             sortType={sortType}

@@ -9,7 +9,7 @@ import Loader from 'pageComponents/_common/loader'
 const DivContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  max-width: 800px;
+  max-width: 1200px;
 `
 
 export default function CategoryGrid({history}) {

@@ -34,7 +34,7 @@ const Div2 = styled.div`
   height: 150px;
 `
 
-class HomePage extends React.Component {
+class Banner extends React.Component {
 
   render(){
     return(
@@ -51,4 +51,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage
+export default Banner

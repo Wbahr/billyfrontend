@@ -33,10 +33,17 @@ const Pblue = styled.p`
   font-weight: 700;
 `
 
-export default function ResultsSummary({searchTerm, resultSize, resultPage, totalResults}) {
+export default function ResultsSummary({searchTerm, resultSize, resultPage, totalResults, isSearching}) {
+
+  let ResultsText
+  if (isSearching){
+    ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+  } else {
+    ResultsText = (<><Pgrey>{totalResults === 10000 ? totalResults + '+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+  }
   return(
     <DivResultsSummaryContainer>
-      <Div><Pgrey>{totalResults === 10000 ? totalResults + '+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></Div>
+      <Div>{ResultsText}</Div>
     </DivResultsSummaryContainer>
   )
 }
