@@ -275,7 +275,6 @@ const TABLE = styled.table`
   margin-top: 20px;
 `
 
-
 const TR2 = styled.tr`
   border-top: 1px lightgrey solid;
   border-bottom: 1px lightgrey solid;

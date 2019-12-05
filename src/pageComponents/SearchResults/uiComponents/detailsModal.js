@@ -4,6 +4,113 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Loader from '../../_common/loader'
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  p {
+    text-align: center;
+  }
+`
+
+const DivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+`
+
+const DivCol1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const DivCol2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+`
+
+const DivImg = styled.div`
+  max-width: 150px;
+  max-height: 150px;
+`
+
+const TABLE = styled.table`
+`
+
+const TR2 = styled.tr`
+  border-top: 1px lightgrey solid;
+  border-bottom: 1px lightgrey solid;
+`
+
+const TDGrey = styled.td`
+  text-align: right;
+  padding: 4px 8px 4px 24px;
+  font-weight: 500;
+  background-color: whitesmoke;
+`
+
+const TDWhite = styled.td`
+padding: 4px 24px 4px 8px;
+`
+
+const IMG = styled.img`
+  opacity: 0.6;
+`
+
+const PpartTitle = styled.p`
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  font-size: 18px;
+  color: #000000 !important;
+`
+
+const DivRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+`
+
+const DivColRow = styled.div`
+  display: flex;
+  justify-content: space-around;
+`
+
+const ButtonRed = styled.button`
+  background-color: #b51029;
+  color: white;
+  font-weight: 600;
+  border: 0;
+  padding: 4px 8px;
+  box-shadow: 1px 1px 2px #000;
+  margin: 4px auto 4px 16px;
+  &:hover{
+    background-color: rgb(219, 22, 51);
+  }
+  &:active{
+    background-color: #b51029;
+    box-shadow: 0px 0px 1px #000;
+  }
+`
+
+const InputQuantity = styled.input`
+  width: 50px;
+  height: 25px;
+  margin-left: 4px;
+`
+
+const ButtonBlack = styled.button`
+  width: max-content;
+  background-color: white;
+  color: #328EFC;
+  font-weight: 600;
+  font-size: 12px;
+  border: 0;
+  margin: 4px auto 0 auto;
+`
 
 const GET_ITEM_DETAILS = gql`
 query ItemById($invMastUid: ID){
@@ -35,60 +142,100 @@ query ItemById($invMastUid: ID){
         supplierId
         tariff
         unitSizeMultiple
-        feature {
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            modifiedBy
-            sequence
-            text
-            type
-            uid
-          }
-          image {
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            modifiedBy
-            path
-            sequence
-            type
-            uid
-          }
+        image {
+          path
+          sequence
+          type
+        }
     }
 }
 `
 
 export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
-  const [itemDetails, setItemDetails] = useState(null)
+  const [item, setItem] = useState(null)
+  const [quantity, setQuantity] = useState(1)
   const searchSent = useRef(false); 
 
   const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_DETAILS, {
     variables: { invMastUid },
     onCompleted: data => {
-      console.log('data', data)
-      setItemDetails(data.itemDetails)
+      console.log('data', data.itemDetails)
+      setItem(data.itemDetails)
     }
   })
 
   if(open && !_.isNil(invMastUid) && !searchSent.current){
     searchSent.current = true
     performItemDetailSearch()
-  } else if (!open && searchSent.current || !open && !_.isNil(itemDetails)) {
+  } else if (!open && searchSent.current || !open && !_.isNil(item)) {
     searchSent.current = false
-    setItemDetails(null)
+    const [item, setItem] = useState(null)
+    setItem(null)
   }
 
   let PopupContent
-  if(_.isNil(itemDetails)){
+  if(_.isNil(item)){
     PopupContent =(
-      <p>no details yet</p>
+      <Div>
+        <p>Getting your product details...</p>      
+        <Loader/>
+      </Div>
     )
   } else {
+    let imagePath
+    console.log('item', item)
+    for (let i=0; i < item.image.length; i++){
+      let currentImage = item.image[i]
+      if(currentImage.type === 1){
+        imagePath = currentImage.path
+      }
+    }
+    if (_.isNil(imagePath)){
+      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+    } else {
+      let imagePathArray = imagePath.split("\\")
+      let imageFile = imagePathArray[imagePathArray.length - 1]
+      imageFile = imageFile.slice(0, -5) + 'l.jpg'
+      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+    }
     PopupContent =(
-      <p>details</p>
+      <DivContainer>
+        <DivColRow>
+          <DivCol1>
+            <DivImg>
+              <img src={imagePath}/>
+              <ButtonBlack>View More Details</ButtonBlack>
+            </DivImg>
+          </DivCol1>
+          <DivCol2>
+            <PpartTitle>{item.itemDesc}</PpartTitle>
+            <p>{item.extendedDesc}</p>
+            <DivRow>
+              <DivRow>
+                <p>{`$${item.anonPrice.toFixed(2)}`}</p><p> /each</p>
+              </DivRow>
+              <DivRow>
+                <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
+                <ButtonRed>Add to Cart</ButtonRed>
+              </DivRow>
+            </DivRow>
+            <DivRow>
+              <p>Availability: {item.listPrice}</p>
+              <p>{item.availabilityMessage}</p>
+            </DivRow>
+            <TABLE>
+              <tbody>
+                <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src='https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact2.jpg'/></TDWhite></TR2>
+                <TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
+                <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
+                <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
+                <TR2><TDGrey>Customer Part #</TDGrey><TDWhite>--</TDWhite></TR2>
+                <TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
+              </tbody>
+            </TABLE>
+          </DivCol2>
+        </DivColRow>
+      </DivContainer>
     )
   }
     return(
