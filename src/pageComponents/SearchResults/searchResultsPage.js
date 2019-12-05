@@ -347,7 +347,6 @@ export default function SearchResultsPage(props) {
         <DivResultSummary>
           <ResultsSummary 
             searchTerm={searchTerm}
-            resultPage={resultPage}
             totalResults={totalResults}
             isSearching={isSearching}
           />

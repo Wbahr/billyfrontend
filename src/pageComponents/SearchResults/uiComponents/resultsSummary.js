@@ -33,7 +33,7 @@ const Pblue = styled.p`
   font-weight: 700;
 `
 
-export default function ResultsSummary({searchTerm, resultSize, resultPage, totalResults, isSearching}) {
+export default function ResultsSummary({searchTerm, totalResults, isSearching}) {
 
   let ResultsText
   if (isSearching){
