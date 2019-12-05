@@ -57,54 +57,6 @@ query ItemById($invMastUid: ID){
             type
             uid
           }
-          itemAssociationInvMastU {
-            associatedInvMastUid
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            modifiedBy
-            quantity
-            type
-            uid
-          }
-          itemAssociationAssociatedInvMastU {
-            associatedInvMastUid
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            modifiedBy
-            quantity
-            type
-            uid
-          }
-          itemLink {
-            audienceType
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            linkPath
-            linkType
-            modifiedBy
-            sequence
-            thumbnail
-            title
-            uid
-          }
-          techSpec {
-            attributeCategoryId
-            createDate
-            createdBy
-            invMastUid
-            lastModifiedDate
-            modifiedBy
-            name
-            sequence
-            uid
-            value
-          }
     }
 }
 `
