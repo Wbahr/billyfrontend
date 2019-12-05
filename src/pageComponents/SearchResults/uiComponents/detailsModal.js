@@ -169,7 +169,6 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     performItemDetailSearch()
   } else if (!open && searchSent.current || !open && !_.isNil(item)) {
     searchSent.current = false
-    const [item, setItem] = useState(null)
     setItem(null)
   }
 
