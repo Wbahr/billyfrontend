@@ -244,7 +244,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
         <DivPartImg>
           <Img src={imagePath}/>
         </DivPartImg>
-        <ButtonBlack onClick={()=>{toggleDetailsModal()}}>Quick Look</ButtonBlack>
+        <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno)}}>Quick Look</ButtonBlack>
         <DivPartDetails>
           <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
         </DivPartDetails>

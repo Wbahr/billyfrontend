@@ -9,6 +9,7 @@ import AttributeFilter from './uiComponents/attributeFilter'
 import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import LocationsModal from './uiComponents/locationsModal'
+import DetailsModal from './uiComponents/detailsModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -91,6 +92,7 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [detailsModalItem, setDetailsModalItem] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [locationAirlineStock, setLocationAirlineStock] = useState([])
   const [locationFactoryStock, setLocationFactoryStock] = useState([])
@@ -286,6 +288,15 @@ export default function SearchResultsPage(props) {
     setShowLocationsModal(false)
   }
 
+  function handleShowDetailsModal(freqno){
+    setShowDetailsModal(true)
+    setDetailsModalItem(freqno)
+  }
+
+  function handleHideDetailsModal(){
+    setShowDetailsModal(false)
+  }
+
   function removeParentChildren(){
     setParentCategory('')
     setChildCategory('')
@@ -299,7 +310,7 @@ export default function SearchResultsPage(props) {
         updateResults={handleUpdateResults} 
         history={props.history}
         showDetailsModal={showDetailsModal}
-        toggleDetailsModal={()=>{setShowDetailsModal(!showDetailsModal)}}
+        toggleDetailsModal={(freqno)=>{handleShowDetailsModal(freqno)}}
         toggleLocationsModal={(airlineStock, factoryStock)=>{handleShowLocationsModal(airlineStock, factoryStock)}}
       />
     )
@@ -322,6 +333,11 @@ export default function SearchResultsPage(props) {
         hideLocationsModal={handleHideLocationsModal}
         airlineStock={locationAirlineStock}
         factoryStock={locationFactoryStock}
+      />
+      <DetailsModal 
+        open={showDetailsModal} 
+        hideDetailsModal={handleHideDetailsModal}
+        invMastUid={detailsModalItem}
       />
       <div>
         <CategoryFilter 
