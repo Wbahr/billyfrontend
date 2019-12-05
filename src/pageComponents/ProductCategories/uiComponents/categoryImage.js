@@ -37,7 +37,7 @@ function convertText(text){
   mutatedText = mutatedText.replace(/&\s/g,'') // remove &
   mutatedText = mutatedText.replace(/,\s/g, '') // remove ,
   mutatedText = mutatedText.replace(/[()]/g, '') // remove ( and )
-  mutatedText = mutatedText.replace(/[/]/g, '-') // remove /
+  mutatedText = mutatedText.replace(/[/]/g, '-') // convert / to -
   mutatedText = mutatedText.replace(/\s/g, '-') // convert spaces to -
   return(mutatedText)
 }
