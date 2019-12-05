@@ -4,6 +4,7 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Loader from '../../_common/loader'
 
 const Table = styled.table`
   margin: 0 16px;
@@ -24,6 +25,14 @@ const TDGrey = styled.td`
 
 const TDWhite = styled.td`
 padding: 4px 24px 4px 8px;
+`
+
+const Div = styled.div`
+  display: flex;
+  flex-direction: column;
+  p {
+    text-align: center;
+  }
 `
 
 const QUERY_STOCK_AVAILABILITY = gql`
@@ -98,8 +107,17 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
     )
   }
 
-  return(
-    <Popup open={open} onClose={()=>hideLocationsModal()} closeOnDocumentClick>
+  let PopupContent
+
+  if (airlineStock.length === 0 && factoryStock.length === 0) {
+    PopupContent = (
+      <Div>
+        <p>Searching our warehouses..</p>
+        <Loader/>
+      </Div>
+    )
+  } else {
+    PopupContent = (
       <Table>
         <tbody>
           <tr>
@@ -110,6 +128,13 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
           {FactoryStockRows}
         </tbody>
       </Table>
+    )
+  }
+
+
+  return(
+    <Popup open={open} onClose={()=>hideLocationsModal()} closeOnDocumentClick>
+      {PopupContent}
     </Popup>
   )
 }
