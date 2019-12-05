@@ -92,11 +92,8 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
-  const [detailsModalItem, setDetailsModalItem] = useState(null)
+  const [modalItem, setModalItem] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
-  const [locationAirlineStock, setLocationAirlineStock] = useState([])
-  const [locationFactoryStock, setLocationFactoryStock] = useState([])
-
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
@@ -278,23 +275,24 @@ export default function SearchResultsPage(props) {
     })
   }
 
-  function handleShowLocationsModal(airlineStock, factoryStock){
+  function handleShowLocationsModal(freqno){
     setShowLocationsModal(true)
-    setLocationAirlineStock(airlineStock)
-    setLocationFactoryStock(factoryStock)
+    setModalItem(freqno)
   }
 
   function handleHideLocationsModal(){
     setShowLocationsModal(false)
+    setModalItem(null)
   }
 
   function handleShowDetailsModal(freqno){
     setShowDetailsModal(true)
-    setDetailsModalItem(freqno)
+    setModalItem(freqno)
   }
 
   function handleHideDetailsModal(){
     setShowDetailsModal(false)
+    setModalItem(null)
   }
 
   function removeParentChildren(){
@@ -311,7 +309,7 @@ export default function SearchResultsPage(props) {
         history={props.history}
         showDetailsModal={showDetailsModal}
         toggleDetailsModal={(freqno)=>{handleShowDetailsModal(freqno)}}
-        toggleLocationsModal={(airlineStock, factoryStock)=>{handleShowLocationsModal(airlineStock, factoryStock)}}
+        toggleLocationsModal={(freqno)=>{handleShowLocationsModal(freqno)}}
       />
     )
   })
@@ -331,13 +329,12 @@ export default function SearchResultsPage(props) {
       <LocationsModal 
         open={showLocationsModal} 
         hideLocationsModal={handleHideLocationsModal}
-        airlineStock={locationAirlineStock}
-        factoryStock={locationFactoryStock}
+        invMastUid={modalItem}
       />
       <DetailsModal 
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
-        invMastUid={detailsModalItem}
+        invMastUid={modalItem}
       />
       <div>
         <CategoryFilter 

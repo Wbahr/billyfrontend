@@ -169,47 +169,9 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-const QUERY_STOCK_AVAILABILITY = gql`
-  query GetStockAvailability($invMastUid: ID){
-    getStockAvailability(invMastUid: $invMastUid){
-      airlineStocks {
-        companyId
-        itemCode
-        locationId
-        locationName
-        locationType
-        quantityAllocated
-        quantityAvailable
-        quantityFrozen
-        quantityNonPickable
-        quantityOnHand
-        quantityQuarantined
-      }
-      factoryStock {
-        factoryAvailability
-        factoryMessage
-        invMastUid
-        leadTimeDays
-      }
-    }
-  }
-`
-
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal}) {
   const [quantity, setQuantity] = useState(1)
-  const [showLocation, setShowLocation] = useState(false)
-  const [airlineStock, setAirlineStock] = useState([])
-  const [factoryStock, setFactoryStock] = useState([])
-  const invMastUid = result.frecno
   const mutatedItemId = mutateItemId(result.item_id) 
-  const { loading, error, data } = useQuery(QUERY_STOCK_AVAILABILITY, {
-    variables: { invMastUid },
-    onCompleted: data => {
-      setShowLocation(true)
-      setAirlineStock(data.getStockAvailability.airlineStocks)
-      setFactoryStock(data.getStockAvailability.factoryStock)
-    }
-  })
 
   function mutateItemId(itemId){
     let mutatedItemId = itemId.replace(/\s/g, '-')
@@ -255,7 +217,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           {result.availability !== 0 ? 
             <DivRow>
               <PBlue>{result.availability}</PBlue>
-              {showLocation && <PBlue onClick={()=>toggleLocationsModal(airlineStock, factoryStock)}>(Show Locations)</PBlue>}
+              <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
             </DivRow> 
           : 
             <PBlue>{result.availability_message}</PBlue>
