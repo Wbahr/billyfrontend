@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { H2 } from '../_common/text'
-import SectionHeader from '../_common/sectionHeader.js'
+import { H2 } from '../../_common/text'
+import SectionHeader from '../../_common/sectionHeader.js'
 import { Link, useHistory } from 'react-router-dom'
 import CategoryGrid from './categoryGrid'
 
@@ -91,58 +91,16 @@ export default function ShopOurProducts(props) {
         </DivRight>
       </div>
       <div>
-      <div>
-        <SectionHeader
-          text='Shop Our Categories'
-        />
-      </div>
-      <Div>
-        <CategoryGrid 
-          history={props.history}
-        />
-      </Div>
-      {/* <Div>
-        <Card>
-          Aluminum Structural Framing
-        </Card>
-        <Card>
-          Hose & Fitting
-        </Card>
-        <Card>
-          Lubrication
-        </Card>
-        <Card>
-          Process & Instrumentation
-        </Card>
-      </Div>
-      <Div>
-        <Card>
-          Automation & Control
-        </Card>
-        <Card>
-          Hydraulic
-        </Card>
-        <Card>
-          Machine Safety
-        </Card>
-        <Card>
-          Winches & Gear Drives
-        </Card>
-      </Div>
-      <Div>
-        <Card>
-          Electrical Components
-        </Card>
-        <Card>
-          Liquid & Gas Pressure
-        </Card>
-        <Card>
-         Pneumatics
-        </Card>
-        <Card>
-          SMC ETech
-        </Card>
-      </Div> */}
+        <div>
+          <SectionHeader
+            text='Shop Our Categories'
+          />
+        </div>
+        <Div>
+          <CategoryGrid 
+            history={props.history}
+          />
+        </Div>
       </div>
       
     </>

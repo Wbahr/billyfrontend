@@ -22,9 +22,9 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { H2 } from '../_common/text'
+import { H2 } from '../../_common/text'
 import { LeftArrow, RightArrow, Slide } from './featuredManufacturersSubComponents'
-import SectionHeader from '../_common/sectionHeader.js'
+import SectionHeader from '../../_common/sectionHeader.js'
 
 const Thing = styled.div`
   margin-top: -6px;

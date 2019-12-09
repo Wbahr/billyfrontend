@@ -5,7 +5,10 @@ const BannerContainer = styled.div`
   display: flex;
   height: 100%;
   max-width: 1400px;
-  margin: 24px auto 0 auto;
+  margin: 12px auto 0 auto;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `
 
 const Col = styled.div`

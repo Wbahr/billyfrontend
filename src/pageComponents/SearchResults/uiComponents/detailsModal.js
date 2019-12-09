@@ -182,7 +182,6 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     )
   } else {
     let imagePath
-    console.log('item', item)
     for (let i=0; i < item.image.length; i++){
       let currentImage = item.image[i]
       if(currentImage.type === 1){

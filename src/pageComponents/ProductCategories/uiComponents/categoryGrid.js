@@ -17,12 +17,17 @@ const DivRow = styled.div`
   width: 100%;
 `
 
-const GET_CATEGORY_CHILDREN_SEARCH = gql`
-  query CategoryChildrenByParentId($parentId: ID){
-    getCategory(categoryUid: $parentId) {
+const GET_CATEGORY_SEARCH = gql`
+  {
+    getAllParentCategories {
       name
+      nameForUrl
+      parentId
+      uid
       children {
         name
+        nameForUrl
+        parentId
         uid
       }
     }
@@ -33,8 +38,10 @@ export default function CategoryGrid({history}) {
   const [childGrid, setChildGrid] = useState([]);
   const [selectedParent, setSeletedParent] = useState('')
   const loadingChildren = useRef(false);
-  const [getChildGridQuery, { loading, error, data }] = useLazyQuery(GET_CATEGORY_CHILDREN_SEARCH, {
+  
+  const { loading, error, data }= useQuery(GET_CATEGORY_SEARCH, {
     onCompleted: data => {
+      console.log('category data', data)
       var getCategory = data.getCategory
       setChildGrid(getCategory.children)
       setSeletedParent(getCategory.name)
