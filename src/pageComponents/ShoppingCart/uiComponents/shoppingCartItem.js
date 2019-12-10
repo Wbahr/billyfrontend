@@ -32,7 +32,7 @@ const GET_ITEM_BY_ID = gql`
 
 export default function ShoppingCartItem({item}) {
   const [itemDetails, setItem] = useState(null)
-  const itemId = item.freqno
+  const itemId = parseInt(item.freqno,10)
 
   const { 
     loading, 
