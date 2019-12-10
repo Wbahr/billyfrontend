@@ -250,13 +250,15 @@ export default function SearchResultsPage(props) {
 
   function loadFunc(isNewSearch){
     const search = queryString.parse(location.search)
+
+    var resultSize = search.resultSize ? parseInt(search.resultSize) : 25
     
     setSearching(true)
     performItemSearch({
       variables: {
         searchParams: {
           searchTerm: search.searchTerm,
-          resultSize: search.resultSize,
+          resultSize: resultSize,
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
           brandFilters: checkedBrandFilters,
