@@ -301,6 +301,7 @@ export default function ItemDetailPage({history}){
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
 
+  itemId = parseInt(itemId,10)
   const { 
     loading, 
     error, 
