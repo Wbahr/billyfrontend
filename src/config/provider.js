@@ -3,7 +3,14 @@ import Context from './context'
 
 class Provider extends React.Component {
   state = {
-    shoppingCart: []
+    shoppingCart: [
+      {
+        'freqno': 1845077,
+        'quantity': 2,
+        'itemNotes': '',
+        'requestedShipDate': null
+      }
+    ]
   }
 
   render() {
