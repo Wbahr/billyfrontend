@@ -8,16 +8,20 @@ import ShoppingCart from './uiComponents/shoppingCart'
 
 const DivContainer = styled.div`
   display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
 `
 
 const DivShoppingCartCol = styled.div`
   display: flex;
   flex-direction: column;
+  width: 800px;
 `
 
 const DivOrderTotalCol = styled.div`
   display: flex;
   flex-direction: column;
+  width: 400px;
 `
 
 export default function ShoppingCartPage() {

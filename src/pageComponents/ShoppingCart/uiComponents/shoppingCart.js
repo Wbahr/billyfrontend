@@ -6,9 +6,24 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const DivContainer = styled.div`
+const Div = styled.div`
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px grey solid;
+`
+const H5 = styled.h5`
+  margin: 0 0 2px 4px;
+`
+
+const Ashare = styled.a`
+  margin-right: 4px
+`
+
+const DivShare = styled.div`
+  cursor: pointer;
+  margin-right: 4px;
 `
 
 const DivShoppingCartCol = styled.div`
@@ -39,10 +54,13 @@ export default function ShoppingCart() {
 
   return(
     <>
-      <div>
-        <p>Shopping Cart</p>
-        <a>Share</a>
-      </div>
+      <Div>
+        <H5>Shopping Cart</H5>
+        <DivShare>
+          <Ashare>Share</Ashare>
+          <FontAwesomeIcon icon="share" color="black"/>
+        </DivShare>
+      </Div>
       {ShoppingCartItems}
     </>
   )

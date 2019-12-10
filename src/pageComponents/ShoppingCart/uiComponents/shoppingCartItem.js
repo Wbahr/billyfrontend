@@ -7,6 +7,13 @@ import gql from 'graphql-tag';
 
 const DivContainer = styled.div`
   display: flex;
+  border-bottom: 2px whitesmoke solid;
+  padding: 8px 0;
+  height: 150px;
+`
+
+const DivCard = styled.div`
+  display: flex;
 `
 
 const GET_ITEM_BY_ID = gql`
@@ -61,17 +68,18 @@ export default function ShoppingCartItem({item}) {
     } else {
       let imagePathArray = resultImage.split("\\")
       let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 'o.jpg'
+      imageFile = imageFile.slice(0, -5) + 't.jpg'
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
     Content = (
-      <div>
-        <img src={imagePath} />
+      <DivCard>
+        <img height='100px'  src={imagePath} />
         <p>{itemDetails.itemDesc}</p>
         <p>{itemDetails.anonPrice}</p>
         <input value={item.quantity} />
-      </div>
+        <p>{itemDetails.anonPrice * item.quantity}</p>
+      </DivCard>
     )
   }
   return(
