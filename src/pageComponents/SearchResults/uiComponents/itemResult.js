@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Context from '../../../config/context'
 
 const DivItemResultContainer = styled.div`
   display: flex;
@@ -201,36 +202,47 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
   }
 
   return(
-    <DivItemResultContainer>
-      <DivPartDetailsRow>
-        <DivPartImg>
-          <Img src={imagePath}/>
-        </DivPartImg>
-        <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno)}}>Quick Look</ButtonBlack>
-        <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
-        </DivPartDetails>
-        <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
-        </DivPartNumberRow>
-        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-          {result.availability !== 0 ? 
-            <DivRow>
-              <PBlue>{result.availability}</PBlue>
-              <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
-            </DivRow> 
-          : 
-            <PBlue>{result.availability_message}</PBlue>
-          }
-        </DivPartNumberRow>
-        <DivPartNumberRowSpread>
-          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-          {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-        </DivPartNumberRowSpread>
-        <DivSpace>
-          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-        </DivSpace>
-      </DivPartDetailsRow>
-    </DivItemResultContainer>
+      <DivItemResultContainer>
+        <DivPartDetailsRow>
+          <DivPartImg>
+            <Img src={imagePath}/>
+          </DivPartImg>
+          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno)}}>Quick Look</ButtonBlack>
+          <DivPartDetails>
+            <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
+          </DivPartDetails>
+          <DivPartNumberRow>
+            <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
+          </DivPartNumberRow>
+          <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+            {result.availability !== 0 ? 
+              <DivRow>
+                <PBlue>{result.availability}</PBlue>
+                <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
+              </DivRow> 
+            : 
+              <PBlue>{result.availability_message}</PBlue>
+            }
+          </DivPartNumberRow>
+          <DivPartNumberRowSpread>
+            <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+            {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+          </DivPartNumberRowSpread>
+          <DivSpace>
+            <Context.Consumer>
+              {({addItem}) => (
+                <ButtonRed onClick={()=>{
+                  addItem({
+                    'freqno': result.frecno,
+                    'quantity': parseInt(quantity, 10),
+                    'itemNotes': '',
+                    'requestedShipDate': null
+                  })
+                  }}>Add to Cart</ButtonRed>
+              )}
+            </Context.Consumer>
+          </DivSpace>
+        </DivPartDetailsRow>
+      </DivItemResultContainer>
   )
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
+import Context from '../../config/context'
 
 const DivSticky = styled.div`
 `
@@ -149,7 +150,13 @@ export default function HeaderComponent(props) {
             <A>|</A>
             { isSignedIn ? <A onClick={()=>props.history.push('/account')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
             <A>|</A>
-            <A>Cart({itemsInCart})</A>
+            <Context.Consumer>
+              {({cart}) => (
+                  <Link to='/viewCart' style={{ textDecoration: 'none' }}>
+                    <A>Cart({cart.length})</A>
+                  </Link>
+              )}
+            </Context.Consumer>
           </Div>
         </NavBottomContainer>
       </NavTop>
