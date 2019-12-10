@@ -41,8 +41,8 @@ export default function ShoppingCartItem({item}) {
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
     onCompleted: result => {
-      if (result.itemDetails.length) {
-        setItem(result.itemDetails[0])
+      if (!_.isNil(result.itemDetails)) {
+        setItem(result.itemDetails)
       } else {
         setItem({})
       }
@@ -54,6 +54,7 @@ export default function ShoppingCartItem({item}) {
     Content = (<p>{item.freqno}</p>)
   } else {
     let imagePath
+    console.log('items details', itemDetails)
     let resultImage = _.get(itemDetails,`image[0].path`,null)
     if (_.isNil(resultImage)){
       imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
