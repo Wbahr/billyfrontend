@@ -9,6 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from 'apollo-boost'
+import ContextProvider from './config/provider'
 
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp)
 
@@ -22,11 +23,12 @@ const apolloClient = new ApolloClient({
 
 
 ReactDOM.render(
-  <ApolloProvider client={apolloClient}>
-    <BrowserRouter history={customHistory}>
-      <Switch />
-    </BrowserRouter>
-  </ApolloProvider>
-  
+  <ContextProvider>
+    <ApolloProvider client={apolloClient}>
+      <BrowserRouter history={customHistory}>
+        <Switch />
+      </BrowserRouter>
+    </ApolloProvider>
+  </ContextProvider>
   , document.getElementById('index')
 )
