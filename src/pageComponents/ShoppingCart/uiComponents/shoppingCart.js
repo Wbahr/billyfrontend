@@ -14,6 +14,19 @@ const Div = styled.div`
   border-bottom: 1px grey solid;
   margin-top: 24px;
 `
+
+const DivRow = styled.div`
+  display: flex;
+  justify-content: flex-bottom;
+  p {
+    cursor: pointer;
+    color: grey;
+    margin: 0 0 2px 12px;
+    align-self: flex-end;
+    font-size: 12px;
+  }
+`
+
 const H3 = styled.h3`
   margin: 0 0 2px 4px;
 `
@@ -56,7 +69,16 @@ export default function ShoppingCart() {
   return(
     <>
       <Div>
-        <H3>Shopping Cart</H3>
+        <Context.Consumer>
+          {({emptyCart}) => {
+            return(
+              <DivRow>
+                <H3>Shopping Cart</H3>
+                <p onClick={()=>emptyCart()}>(empty cart)</p>
+              </DivRow>
+            )
+          }}
+        </Context.Consumer>
         <DivShare>
           <Ashare>Share</Ashare>
           <FontAwesomeIcon icon="share" color="grey"/>
