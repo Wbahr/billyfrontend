@@ -12,7 +12,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 500px;
+  height: 450px;
   margin-left: auto;
   padding: 16px;
   align-items: flex-end;
