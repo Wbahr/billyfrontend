@@ -9,6 +9,18 @@ class Provider extends React.Component {
         'quantity': 2,
         'itemNotes': '',
         'requestedShipDate': null
+      },
+      {
+        'freqno': 1847612,
+        'quantity': 4,
+        'itemNotes': '',
+        'requestedShipDate': null
+      },
+      {
+        'freqno': 1055269,
+        'quantity': 1,
+        'itemNotes': '',
+        'requestedShipDate': null
       }
     ]
   }

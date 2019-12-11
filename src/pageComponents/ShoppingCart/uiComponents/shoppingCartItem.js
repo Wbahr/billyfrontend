@@ -30,6 +30,7 @@ const DivMove = styled.div`
 
 const DivTitle = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   height: 100%;
   flex-grow: 99;
@@ -37,6 +38,10 @@ const DivTitle = styled.div`
     font-size: 16px;
     margin: 0;
   }
+`
+
+const DivImg = styled.div`
+  display: flex;
 `
 
 const Img = styled.img`
@@ -132,8 +137,10 @@ export default function ShoppingCartItem({item}) {
         <DivMove>
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
-        <DivTitle>
+        <DivImg>
           <Img height='80px'  src={imagePath} />
+        </DivImg>
+        <DivTitle>
           <p>{itemDetails.itemDesc}</p>
           <p>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}}</p>
         </DivTitle>

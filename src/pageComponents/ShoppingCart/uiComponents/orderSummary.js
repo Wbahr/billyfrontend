@@ -19,6 +19,16 @@ const Div = styled.div`
   background-color: whitesmoke;
 `
 
+const H4 = styled.h4`
+  width: 100%;
+  padding-left: 4px;
+  border-bottom: 1px solid darkgrey;
+`
+
+const DivButtonContainer = styled.div `
+  margin: auto auto 0 auto;
+`
+
 const DivCheckoutButton = styled.div`
   display: flex;
   align-items: center;
@@ -28,7 +38,7 @@ const DivCheckoutButton = styled.div`
   padding: 8px 16px;
   cursor: pointer;
   width: 250px;
-  margin: 4px 0;
+  margin: 8px 0;
   box-shadow: 1px 1px 2px #000;
   p {
     margin: 0;
@@ -38,8 +48,18 @@ const DivCheckoutButton = styled.div`
   }
 `
 
+const DivLineItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  min-width: 250px;
+  p {
+    margin: 0;
+  }
+`
+
 const DivQuoteButton = styled(DivCheckoutButton)`
-  background-color: #001b64;
+  background-color: #535353;
 `
 
 const H5 = styled.h5`
@@ -69,19 +89,37 @@ export default function OrderSummary() {
   return(
     <>
       <Div>
-        <p>Order Summary</p>
-        <p>Subtotal - $100.00</p>
-        <p>Tariff --</p>
-        <p>Tax (Calculated at Checkout)</p>
+        <H4>Order Summary</H4>
+        <DivLineItem>
+          <p>Subtotal</p>
+          <p>$100.00</p>
+        </DivLineItem>
+        <DivLineItem>
+          <p>Tariff</p>
+          <p>--</p>
+        </DivLineItem>        
+        <DivLineItem>
+          <p>Tax</p>
+          <p>(Calculated at Checkout)</p>
+        </DivLineItem>
+        <DivLineItem>
+          <p>(Coupon: WINTERSALE)</p>
+          <p>-$50.00</p>
+        </DivLineItem>
+        <DivLineItem>
+          <p>remove coupon</p>
+        </DivLineItem>    
         <p>Add a Coupon Code +</p>
         <p>Total (without tax) $100.00</p>
-        <DivCheckoutButton>
-          <FontAwesomeIcon icon="lock" color="white"/>
-          <p>Start Secure Checkout</p>
-        </DivCheckoutButton>
-        <DivQuoteButton>
-          <p>Create a Quote</p>
-        </DivQuoteButton>
+        <DivButtonContainer>
+          <DivCheckoutButton>
+            <FontAwesomeIcon icon="lock" color="white"/>
+            <p>Start Secure Checkout</p>
+          </DivCheckoutButton>
+          <DivQuoteButton>
+            <p>Create a Quote</p>
+          </DivQuoteButton>
+        </DivButtonContainer>
       </Div>
     </>
   )

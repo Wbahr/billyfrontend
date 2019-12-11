@@ -38,13 +38,13 @@ const DivCheckoutButton = styled.div`
 `
 
 const DivQuoteButton = styled(DivCheckoutButton)`
-  background-color: #001b64;
+  background-color: #535353;
 `
 
 const DivShoppinglistButton = styled(DivCheckoutButton)`
   background-color: white;
-  color: #001b64;
-  border: 2px solid #001b64;
+  color: #535353;
+  border: 2px solid #535353;
 `
 
 const H5 = styled.h5`
