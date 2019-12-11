@@ -230,7 +230,8 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'freqno': result.frecno,
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
-                    'requestedShipDate': null
+                    'requestedShipDate': null,
+                    'price': result.anon_price
                   }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}

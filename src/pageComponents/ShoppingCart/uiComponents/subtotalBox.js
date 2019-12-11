@@ -10,11 +10,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Div = styled.div`
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px grey solid;
-  margin-top: 24px;
+  flex-direction: column;
+  width: 300px;
+  height: 200px;
+  margin-left: auto;
+  padding-right: 16px;
+  align-items: flex-end;
 `
-const H3 = styled.h3`
+
+const DivCheckoutButton = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  p {
+    margin: 0;
+    margin-left: 8px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+`
+
+const H5 = styled.h5`
   margin: 0 0 2px 4px;
 `
 
@@ -37,32 +56,15 @@ const DivOrderTotalCol = styled.div`
   flex-direction: column;
 `
 
-const ShoppingCartItems = (
-    <Context.Consumer>
-    {({cart, emptyCart}) => (
-      cart.map((item)=>{
-        return(
-          <ShoppingCartItem
-            item={item}
-            emptyCart={emptyCart}
-          />
-        )
-      })
-    )}
-  </Context.Consumer>
-)
-export default function ShoppingCart() {
 
+export default function SubtotalBox() {
   return(
-    <>
-      <Div>
-        <H3>Shopping Cart</H3>
-        <DivShare>
-          <Ashare>Share</Ashare>
-          <FontAwesomeIcon icon="share" color="black"/>
-        </DivShare>
-      </Div>
-      {ShoppingCartItems}
-    </>
+    <Div>
+      <p>Subtotal: $100.00</p>
+      <DivCheckoutButton>
+        <FontAwesomeIcon icon="lock" color="white"/>
+        <p>Start Secure Checkout</p>
+      </DivCheckoutButton>
+    </Div>
   )
 }

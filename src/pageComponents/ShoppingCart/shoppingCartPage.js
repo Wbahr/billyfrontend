@@ -5,6 +5,8 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import ShoppingCart from './uiComponents/shoppingCart'
+import SubtotalBox from './uiComponents/subtotalBox'
+import OrderSummary from './uiComponents/orderSummary'
 
 const DivContainer = styled.div`
   display: flex;
@@ -30,8 +32,10 @@ export default function ShoppingCartPage() {
     <DivContainer>
       <DivShoppingCartCol>
         <ShoppingCart/>
+        <SubtotalBox/>
       </DivShoppingCartCol>
       <DivOrderTotalCol>
+        <OrderSummary/>
       </DivOrderTotalCol>
     </DivContainer>
   )
