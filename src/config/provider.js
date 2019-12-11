@@ -22,7 +22,12 @@ class Provider extends React.Component {
         'itemNotes': '',
         'requestedShipDate': null
       }
-    ]
+    ],
+    shoppingCartDisplay: []
+  }
+
+  updateShoppingCart = () => {
+
   }
 
   render() {
@@ -30,15 +35,28 @@ class Provider extends React.Component {
       <Context.Provider
         value={{
           cart: this.state.shoppingCart,
+          cartDisplay: this.state.shoppingCartDisplay,
           addItem: (item) => {
-            this.setState({shoppingCart: [...this.state.shoppingCart, item]}, console.log('cart', this.state.shoppingCart))// item is an item object
+            this.setState({shoppingCart: [...this.state.shoppingCart, item]}, ()=>updateShoppingCart())// item is an item object
+          },
+          moveItem: (itemLocation, newLocation)=>{
+
+            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
           },
           removeItem: (itemLocation) => {
             let mutatedCart = [...this.state.shoppingCart].splice(itemLocation, 1)
-            this.setState([...mutatedCart]) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+          },
+          splitItem: (itemLocation, splitInformation)=>{
+
+            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+          },
+          updateItem: (itemLocation, updateInformation)=>{
+
+            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
           },
           emptyCart: () => {
-            this.setState({shoppingCart: []})
+            this.setState({shoppingCart: []}, ()=>updateShoppingCart())
           }
         }}
       >
