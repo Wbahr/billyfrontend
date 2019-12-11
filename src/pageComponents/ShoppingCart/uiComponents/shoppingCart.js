@@ -13,7 +13,7 @@ const Div = styled.div`
   justify-content: space-between;
   border-bottom: 1px grey solid;
 `
-const H5 = styled.h5`
+const H3 = styled.h3`
   margin: 0 0 2px 4px;
 `
 
@@ -55,7 +55,7 @@ export default function ShoppingCart() {
   return(
     <>
       <Div>
-        <H5>Shopping Cart</H5>
+        <H3>Shopping Cart</H3>
         <DivShare>
           <Ashare>Share</Ashare>
           <FontAwesomeIcon icon="share" color="black"/>

@@ -237,7 +237,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
                     'requestedShipDate': null
-                  })
+                  }), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}
             </Context.Consumer>

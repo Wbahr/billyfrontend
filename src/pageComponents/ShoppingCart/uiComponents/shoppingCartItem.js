@@ -4,16 +4,67 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DivContainer = styled.div`
   display: flex;
+  border-top: 2px whitesmoke solid;
   border-bottom: 2px whitesmoke solid;
   padding: 8px 0;
-  height: 150px;
+  margin: 8px 0;
+  height: 100px;
 `
 
 const DivCard = styled.div`
   display: flex;
+  align-items: center;
+  width: 100%;
+`
+
+const DivMove = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding: 0 16px;
+`
+
+const DivTitle = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-grow: 99;
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+`
+
+const DivQty = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 16px;
+`
+
+const DivTotalPrice = styled.div`
+  align-text: right;
+  width: 150px;
+  p {
+    text-align: right;
+    margin-right: 16px;
+    font-size: 18px;
+  }
+`
+
+const Label = styled.label`
+  margin: 0;
+  font-size: 14px;
+`
+
+const Input = styled.input`
+  width: 50px;
+  height: 25px;
+  margin-left: 4px;
 `
 
 const GET_ITEM_BY_ID = gql`
@@ -74,11 +125,23 @@ export default function ShoppingCartItem({item}) {
 
     Content = (
       <DivCard>
-        <img height='100px'  src={imagePath} />
-        <p>{itemDetails.itemDesc}</p>
-        <p>{itemDetails.anonPrice}</p>
-        <input value={item.quantity} />
-        <p>{itemDetails.anonPrice * item.quantity}</p>
+        <DivMove>
+          <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+        </DivMove>
+        <DivTitle>
+          <img height='80px'  src={imagePath} />
+          <p>{itemDetails.itemDesc}</p>
+        </DivTitle>
+        <DivQty>
+          <span>
+            <Label>Qty:</Label>
+            <Input value={item.quantity} />
+          </span>
+          <p>{itemDetails.anonPrice}</p>
+        </DivQty>
+        <DivTotalPrice>
+          <p>{itemDetails.anonPrice * item.quantity}</p>
+        </DivTotalPrice>
       </DivCard>
     )
   }
