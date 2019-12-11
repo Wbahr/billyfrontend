@@ -41,7 +41,7 @@ const DivQuoteButton = styled(DivCheckoutButton)`
   background-color: #001b64;
 `
 
-const DivWishlistButton = styled(DivCheckoutButton)`
+const DivShoppinglistButton = styled(DivCheckoutButton)`
   background-color: white;
   color: #001b64;
   border: 2px solid #001b64;
@@ -82,9 +82,9 @@ export default function SubtotalBox() {
       <DivQuoteButton>
         <p>Create a Quote</p>
       </DivQuoteButton>
-      <DivWishlistButton>
-        <p>Add to Wishlist</p>
-      </DivWishlistButton>
+      <DivShoppinglistButton>
+        <p>Add to Shopping List</p>
+      </DivShoppinglistButton>
     </Div>
   )
 }
