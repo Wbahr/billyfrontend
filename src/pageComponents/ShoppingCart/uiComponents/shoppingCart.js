@@ -59,7 +59,7 @@ export default function ShoppingCart() {
         <H3>Shopping Cart</H3>
         <DivShare>
           <Ashare>Share</Ashare>
-          <FontAwesomeIcon icon="share" color="black"/>
+          <FontAwesomeIcon icon="share" color="grey"/>
         </DivShare>
       </Div>
       {ShoppingCartItems}

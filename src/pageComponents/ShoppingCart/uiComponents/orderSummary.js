@@ -22,16 +22,24 @@ const Div = styled.div`
 const DivCheckoutButton = styled.div`
   display: flex;
   align-items: center;
-  background-color: black;
+  justify-content: center;
+  background-color: #db1633;
   color: white;
   padding: 8px 16px;
   cursor: pointer;
+  width: 250px;
+  margin: 4px 0;
+  box-shadow: 1px 1px 2px #000;
   p {
     margin: 0;
     margin-left: 8px;
     font-size: 18px;
     font-weight: 600;
   }
+`
+
+const DivQuoteButton = styled(DivCheckoutButton)`
+  background-color: #001b64;
 `
 
 const H5 = styled.h5`
@@ -57,18 +65,6 @@ const DivOrderTotalCol = styled.div`
   flex-direction: column;
 `
 
-const DivHelp= styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 350px;
-  height: 200px;
-  margin-top: 32px;
-  margin-left: auto;
-  padding: 16px;
-  align-items: flex-end;
-  background-color: whitesmoke;
-`
-
 export default function OrderSummary() {
   return(
     <>
@@ -83,10 +79,10 @@ export default function OrderSummary() {
           <FontAwesomeIcon icon="lock" color="white"/>
           <p>Start Secure Checkout</p>
         </DivCheckoutButton>
+        <DivQuoteButton>
+          <p>Create a Quote</p>
+        </DivQuoteButton>
       </Div>
-      <DivHelp>
-        <p>Need Help?</p>
-      </DivHelp>
     </>
   )
 }
