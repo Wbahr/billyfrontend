@@ -10,6 +10,7 @@ import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import LocationsModal from './uiComponents/locationsModal'
 import DetailsModal from './uiComponents/detailsModal'
+import AddedToCartModal from './uiComponents/addedToCartModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -92,6 +93,7 @@ export default function SearchResultsPage(props) {
   const [isReplacingResults, setIsReplacingResults] = useState(false)
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
+  const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
   const [modalItem, setModalItem] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
@@ -297,6 +299,14 @@ export default function SearchResultsPage(props) {
     setModalItem(null)
   }
 
+  function handleAddedToCart(){
+    setShowAddedToCartModal(true)
+  }
+
+  function handleAddedToCartModal(){
+    setShowAddedToCartModal(false)
+  }
+
   function removeParentChildren(){
     setParentCategory('')
     setChildCategory('')
@@ -312,6 +322,7 @@ export default function SearchResultsPage(props) {
         showDetailsModal={showDetailsModal}
         toggleDetailsModal={(freqno)=>{handleShowDetailsModal(freqno)}}
         toggleLocationsModal={(freqno)=>{handleShowLocationsModal(freqno)}}
+        addedToCart={()=>{handleAddedToCart()}}
       />
     )
   })
@@ -337,6 +348,10 @@ export default function SearchResultsPage(props) {
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
         invMastUid={modalItem}
+      />
+      <AddedToCartModal 
+        open={showShowAddedToCartModal}
+        hideAddedToCartModal={handleAddedToCartModal}
       />
       <div>
         <CategoryFilter 

@@ -170,7 +170,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal}) {
+export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
   const mutatedItemId = mutateItemId(result.item_id) 
 
@@ -182,12 +182,6 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
   function handleSetQuantity(quantity){
     if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
       setQuantity(quantity)
-    }
-  }
-
-  function handleAddToCart() {
-    if (quantity.length > 0){
-    // addToCart(quantity, frecno)
     }
   }
 
@@ -237,7 +231,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
                     'requestedShipDate': null
-                  }), setQuantity(1)
+                  }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}
             </Context.Consumer>
