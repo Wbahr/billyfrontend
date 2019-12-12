@@ -1,5 +1,42 @@
 import React from 'react'
 import Context from './context'
+import { useLazyQuery } from '@apollo/react-hooks'
+
+
+const GET_ITEM_BY_ID = gql`
+  query ItemById($itemId: ID){
+    itemDetails(invMastUid: $itemId) {
+      anonPrice
+      assembly
+      availability
+      availabilityMessage
+      invMastUid
+      itemCode
+      itemDesc
+      listPrice
+      mfgPartNo
+      modelCode
+      p21ItemDesc
+      p21NonWeb
+      tariff
+      unitSizeMultiple
+      image {
+        path
+        sequence
+        type
+      }
+    }
+  }
+`
+
+const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_BY_ID, {
+  variables: { itemId },
+  onCompleted: result => {
+    return(
+      result.itemDetails
+    )
+  }
+})
 
 class Provider extends React.Component {
   state = {
@@ -46,8 +83,7 @@ class Provider extends React.Component {
   }
 
   handleAddItem(item){
-    let newDisplayItem 
-    
+    let newDisplayItem = performItemDetailSearch(item.freqno)
     this.setState({shoppingCart: [...this.state.shoppingCart, item], shoppingCartDisplay: [...this.state.shoppingCartDisplay, newDisplayItem]}, ()=> this.updateShoppingCart())
   }
 
