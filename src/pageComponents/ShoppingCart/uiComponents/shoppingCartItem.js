@@ -32,6 +32,7 @@ const DivTitle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  // justify-content: center;
   height: 100%;
   flex-grow: 99;
   p {
@@ -74,6 +75,11 @@ const Input = styled.input`
   width: 50px;
   height: 25px;
   margin-left: 4px;
+`
+
+const P2 = styled.p`
+  color: grey;
+  font-size: 12px !important;
 `
 
 const GET_ITEM_BY_ID = gql`
@@ -142,7 +148,7 @@ export default function ShoppingCartItem({item}) {
         </DivImg>
         <DivTitle>
           <p>{itemDetails.itemDesc}</p>
-          <p>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}}</p>
+          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
         </DivTitle>
         <DivQty>
           <span>
