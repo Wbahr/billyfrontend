@@ -23,11 +23,56 @@ class Provider extends React.Component {
         'requestedShipDate': null
       }
     ],
-    shoppingCartDisplay: []
+    shoppingCartDisplay: [
+      {
+        'freqno': 1845077,
+        'quantity': 2,
+        'itemNotes': '',
+        'requestedShipDate': null
+      },
+      {
+        'freqno': 1847612,
+        'quantity': 4,
+        'itemNotes': '',
+        'requestedShipDate': null
+      },
+      {
+        'freqno': 1055269,
+        'quantity': 1,
+        'itemNotes': '',
+        'requestedShipDate': null
+      }
+    ]
+  }
+
+  handleAddItem(item){
+    let newDisplayItem 
+    
+    this.setState({shoppingCart: [...this.state.shoppingCart, item], shoppingCartDisplay: [...this.state.shoppingCartDisplay, newDisplayItem]}, ()=> this.updateShoppingCart())
+  }
+
+  handleMoveItem(itemLocation, newLocation){
+    let mutatedShoppingCart
+    let mutatedShoppingCartDisplay
+    this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  }
+
+  handleRemoveItem(itemLocation){
+    let mutatedCart = [...this.state.shoppingCart].splice(itemLocation, 1)
+    let mutatedShoppingCartDisplay = [...this.state.shoppingCartDisplay].splice(itemLocation, 1)
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+  }
+
+  handleSplitItem(itemLocation, splitInformation){
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  }
+
+  handleUpdateItem(itemLocation, updateInformation){
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
   updateShoppingCart = () => {
-
+    // this.state.shoppingCart
   }
 
   render() {
@@ -37,26 +82,22 @@ class Provider extends React.Component {
           cart: this.state.shoppingCart,
           cartDisplay: this.state.shoppingCartDisplay,
           addItem: (item) => {
-            this.setState({shoppingCart: [...this.state.shoppingCart, item]}, ()=> this.updateShoppingCart())// item is an item object
+            this.handleAddItem(item)
           },
           moveItem: (itemLocation, newLocation)=>{
-
-            this.setState({shoppingCart:[...mutatedCart]}, ()=> this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+            this.handleMoveItem(itemLocation, newLocation)
           },
           removeItem: (itemLocation) => {
-            let mutatedCart = [...this.state.shoppingCart].splice(itemLocation, 1)
-            this.setState({shoppingCart:[...mutatedCart]}, ()=> this.updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+            this.handleRemoveItem(itemLocation)
           },
           splitItem: (itemLocation, splitInformation)=>{
-
-            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+            this.handleSplitItem(itemLocation, splitInformation)
           },
           updateItem: (itemLocation, updateInformation)=>{
-
-            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+            handleUpdateItem(itemLocation, updateInformation)
           },
           emptyCart: () => {
-            this.setState({shoppingCart: []}, ()=>updateShoppingCart())
+            this.setState({shoppingCart: [], shoppingCartDisplay:[]}, () => updateShoppingCart())
           }
         }}
       >
