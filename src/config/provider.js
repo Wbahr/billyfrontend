@@ -64,11 +64,11 @@ class Provider extends React.Component {
   }
 
   handleSplitItem(itemLocation, splitInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
   handleUpdateItem(itemLocation, updateInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
   updateShoppingCart = () => {
@@ -94,10 +94,10 @@ class Provider extends React.Component {
             this.handleSplitItem(itemLocation, splitInformation)
           },
           updateItem: (itemLocation, updateInformation)=>{
-            handleUpdateItem(itemLocation, updateInformation)
+            this.handleUpdateItem(itemLocation, updateInformation)
           },
           emptyCart: () => {
-            this.setState({shoppingCart: [], shoppingCartDisplay:[]}, () => updateShoppingCart())
+            this.setState({shoppingCart: [], shoppingCartDisplay:[]}, () => this.updateShoppingCart())
           }
         }}
       >
