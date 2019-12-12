@@ -37,15 +37,15 @@ class Provider extends React.Component {
           cart: this.state.shoppingCart,
           cartDisplay: this.state.shoppingCartDisplay,
           addItem: (item) => {
-            this.setState({shoppingCart: [...this.state.shoppingCart, item]}, ()=>updateShoppingCart())// item is an item object
+            this.setState({shoppingCart: [...this.state.shoppingCart, item]}, ()=> this.updateShoppingCart())// item is an item object
           },
           moveItem: (itemLocation, newLocation)=>{
 
-            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+            this.setState({shoppingCart:[...mutatedCart]}, ()=> this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
           },
           removeItem: (itemLocation) => {
             let mutatedCart = [...this.state.shoppingCart].splice(itemLocation, 1)
-            this.setState({shoppingCart:[...mutatedCart]}, ()=>updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+            this.setState({shoppingCart:[...mutatedCart]}, ()=> this.updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
           },
           splitItem: (itemLocation, splitInformation)=>{
 
