@@ -6,6 +6,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import Context from '../../../config/context'
 
 const DivContainer = styled.div`
   display: flex;
@@ -127,7 +128,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-export default function ShoppingCartItem({item}) {
+export default function ShoppingCartItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.freqno,10)
 
@@ -186,9 +187,13 @@ export default function ShoppingCartItem({item}) {
             <DivTotalPrice>
               <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
             </DivTotalPrice>
-            <DivRemove>
-              <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-            </DivRemove>
+            <Context.Consumer>
+              {({removeItem}) => (
+                <DivRemove onClick={()=>removeItem(index)}>
+                  <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                </DivRemove>
+              )}
+            </Context.Consumer>
           </DivItemContent>
         </DivItemContentContainer>
       </DivCard>

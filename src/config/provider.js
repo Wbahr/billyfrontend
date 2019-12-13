@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Context from './context'
 import gql from 'graphql-tag'
 import { useLazyQuery } from '@apollo/react-hooks'
@@ -29,102 +29,69 @@ const GET_ITEM_BY_ID = gql`
   }
 `
 
-// const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_BY_ID, {
-//   variables: { itemId },
-//   onCompleted: result => {
-//     return(
-//       result.itemDetails
-//     )
-//   }
-// })
 
-class Provider extends React.Component {
-  state = {
-    shoppingCart: [
-      {
-        'freqno': 1845077,
-        'quantity': 2,
-        'itemNotes': '',
-        'requestedShipDate': null
-      },
-      {
-        'freqno': 1847612,
-        'quantity': 4,
-        'itemNotes': '',
-        'requestedShipDate': null
-      },
-      {
-        'freqno': 1055269,
-        'quantity': 1,
-        'itemNotes': '',
-        'requestedShipDate': null
-      }
-    ],
-    shoppingCartDisplay: [
-      {
-        'freqno': 1845077,
-        'quantity': 2,
-        'itemNotes': '',
-        'requestedShipDate': null
-      },
-      {
-        'freqno': 1847612,
-        'quantity': 4,
-        'itemNotes': '',
-        'requestedShipDate': null
-      },
-      {
-        'freqno': 1055269,
-        'quantity': 1,
-        'itemNotes': '',
-        'requestedShipDate': null
-      }
-    ]
+export default function Provider(props) {
+  const [shoppingCart, setShoppingCart] = useState([])
+  const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
+
+  const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_BY_ID, {
+    onCompleted: result => {
+      return(
+        result.itemDetails
+      )
+    }
+  })
+
+  function handleAddItem (item){
+    // let newDisplayItem = performItemDetailSearch({ variables: { itemId: item.freqno } })
+    setShoppingCart([...shoppingCart, item])
+    // setShoppingCartDisplay([...shoppingCartDisplay, newDisplayItem])
+    updateShoppingCart()
   }
 
-  handleAddItem(item){
-    let newDisplayItem = performItemDetailSearch(item.freqno)
-    this.setState({shoppingCart: [...this.state.shoppingCart, item], shoppingCartDisplay: [...this.state.shoppingCartDisplay, newDisplayItem]}, ()=> this.updateShoppingCart())
+  function handleRemoveItem(itemLocation){
+    console.log('itemLocation',itemLocation)
+    console.log('shoppingCart before',shoppingCart)
+    let mutatedCart = shoppingCart
+    mutatedCart.splice(itemLocation, 1)
+    // let mutatedShoppingCartDisplay = [...shoppingCartDisplay].splice(itemLocation, 1)
+    // setShoppingCartDisplay(...mutatedShoppingCartDisplay)
+    console.log('shoppingCart after',mutatedCart)
+    setShoppingCart([...mutatedCart])
+    updateShoppingCart()
   }
 
-  handleMoveItem(itemLocation, newLocation){
+  function handleMoveItem(itemLocation, newLocation){
     let mutatedShoppingCart
     let mutatedShoppingCartDisplay
-    this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
-  handleRemoveItem(itemLocation){
-    let mutatedCart = [...this.state.shoppingCart].splice(itemLocation, 1)
-    let mutatedShoppingCartDisplay = [...this.state.shoppingCartDisplay].splice(itemLocation, 1)
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation is the integer position of an item to be removed from shoppingCart Context
+  function handleSplitItem(itemLocation, splitInformation){
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
-  handleSplitItem(itemLocation, splitInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  function handleUpdateItem(itemLocation, updateInformation){
+    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
-  handleUpdateItem(itemLocation, updateInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => this.updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  function updateShoppingCart() {
+    console.log('shoppingCart', shoppingCart)
   }
 
-  updateShoppingCart = () => {
-    // this.state.shoppingCart
-  }
-
-  render() {
     return (
       <Context.Provider
         value={{
-          cart: this.state.shoppingCart,
-          cartDisplay: this.state.shoppingCartDisplay,
+          cart: shoppingCart,
+          cartDisplay: shoppingCartDisplay,
           addItem: (item) => {
-            this.handleAddItem(item)
+            handleAddItem(item)
           },
           moveItem: (itemLocation, newLocation)=>{
-            this.handleMoveItem(itemLocation, newLocation)
+            handleMoveItem(itemLocation, newLocation)
           },
           removeItem: (itemLocation) => {
-            this.handleRemoveItem(itemLocation)
+            handleRemoveItem(itemLocation)
           },
           splitItem: (itemLocation, splitInformation)=>{
             this.handleSplitItem(itemLocation, splitInformation)
@@ -133,14 +100,12 @@ class Provider extends React.Component {
             this.handleUpdateItem(itemLocation, updateInformation)
           },
           emptyCart: () => {
-            this.setState({shoppingCart: [], shoppingCartDisplay:[]}, () => this.updateShoppingCart())
+            setState({shoppingCart: [], shoppingCartDisplay:[]}, () => updateShoppingCart())
           }
         }}
       >
-        {this.props.children}
+        {props.children}
       </Context.Provider>
     )
-  }
 }
 
-export default Provider

@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const Div = styled.div`
   display: flex;
@@ -58,12 +59,15 @@ const DivOrderTotalCol = styled.div`
 const ShoppingCartItems = (
     <Context.Consumer>
     {({cart, emptyCart}) => (
-      cart.map((item)=>{
+      cart.map((item, index)=>{
         return(
-          <ShoppingCartItem
-            item={item}
-            emptyCart={emptyCart}
-          />
+          // <Draggable>
+            <ShoppingCartItem
+              item={item}
+              emptyCart={emptyCart}
+              index={index}
+            />
+          // </Draggable>
         )
       })
     )}
@@ -95,7 +99,11 @@ export default function ShoppingCart() {
           </DivShare>
         </DivRow>
       </Div>
-      {ShoppingCartItems}
+      {/* <DragDropContext> */}
+        {/* <Droppable> */}
+          {ShoppingCartItems}
+        {/* </Droppable> */}
+      {/* </DragDropContext> */}
     </>
   )
 }
