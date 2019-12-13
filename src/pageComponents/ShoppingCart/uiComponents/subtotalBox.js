@@ -83,7 +83,7 @@ export default function SubtotalBox() {
         <p>Create a Quote</p>
       </DivQuoteButton>
       <DivShoppinglistButton>
-        <p>Add to Shopping List</p>
+        <p>Save to Shopping List</p>
       </DivShoppinglistButton>
     </Div>
   )

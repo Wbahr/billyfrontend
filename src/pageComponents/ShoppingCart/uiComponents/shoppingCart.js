@@ -38,6 +38,11 @@ const Ashare = styled.a`
 const DivShare = styled.div`
   cursor: pointer;
   margin-right: 4px;
+  align-self: flex-end;
+`
+
+const DivSave = styled(DivShare)`
+  margin-right: 16px;
 `
 
 const DivShoppingCartCol = styled.div`
