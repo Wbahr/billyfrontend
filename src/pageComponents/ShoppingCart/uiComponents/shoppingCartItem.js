@@ -160,6 +160,7 @@ export default function ShoppingCartItem({item}) {
         <DivTotalPrice>
           <p>{itemDetails.anonPrice * item.quantity}</p>
         </DivTotalPrice>
+        <FontAwesomeIcon icon="trash" color="lightgrey"/>
       </DivCard>
     )
   }
