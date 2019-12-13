@@ -38,6 +38,11 @@ const Ashare = styled.a`
 const DivShare = styled.div`
   cursor: pointer;
   margin-right: 4px;
+  align-self: flex-end;
+`
+
+const DivSave = styled(DivShare)`
+  margin-right: 16px;
 `
 
 const DivShoppingCartCol = styled.div`
@@ -79,10 +84,16 @@ export default function ShoppingCart() {
             )
           }}
         </Context.Consumer>
-        <DivShare>
-          <Ashare>Share</Ashare>
-          <FontAwesomeIcon icon="share" color="grey"/>
-        </DivShare>
+        <DivRow>
+          <DivSave>
+            <Ashare>Save Cart</Ashare>
+            <FontAwesomeIcon icon="save" color="grey"/>
+          </DivSave>
+          <DivShare>
+            <Ashare>Share</Ashare>
+            <FontAwesomeIcon icon="share" color="grey"/>
+          </DivShare>
+        </DivRow>
       </Div>
       {ShoppingCartItems}
     </>
