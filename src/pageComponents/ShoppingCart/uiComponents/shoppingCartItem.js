@@ -7,6 +7,8 @@ import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const DivContainer = styled.div`
   display: flex;
@@ -15,6 +17,11 @@ const DivContainer = styled.div`
   padding: 8px 0;
   margin: 8px 0;
   height: 100px;
+`
+
+const DivRow = styled.div`
+  display: flex;
+  margin-bottom: 8px;
 `
 
 const DivCard = styled.div`
@@ -107,6 +114,11 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
+const InputNotes = styled.input`
+  width: 300px;
+  font-size: 12px;
+`
+
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
         itemDetails(invMastUid: $itemId) {
@@ -130,7 +142,8 @@ const GET_ITEM_BY_ID = gql`
 
 export default function ShoppingCartItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
-  const itemId = parseInt(item.freqno,10)
+  const itemId = parseInt(item.frecno,10)
+  const [date, setDate] = useState(Date.now())
 
   const { 
     loading, 
@@ -176,13 +189,21 @@ export default function ShoppingCartItem({item, index}) {
             <DivTitle>
               <p>{itemDetails.itemDesc}</p>
               <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+              <InputNotes placeholder='Notes'></InputNotes>
             </DivTitle>
             <DivQty>
-              <span>
+              <DivRow>
                 <Label>Qty:</Label>
                 <Input value={item.quantity} />
-              </span>
-              <p>{formatCurrency(itemDetails.anonPrice)}</p>
+                <p>{formatCurrency(itemDetails.anonPrice)}</p>
+              </DivRow>
+              <DivRow>
+                <FontAwesomeIcon icon="calendar" color="grey"/> 
+                <DatePicker
+                  selected={date}
+                  onChange={(selectedDate)=>setDate(selectedDate)}
+                />
+              </DivRow>
             </DivQty>
             <DivTotalPrice>
               <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>

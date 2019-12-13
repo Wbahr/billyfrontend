@@ -227,7 +227,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
               {({addItem}) => (
                 <ButtonRed onClick={()=>{
                   addItem({
-                    'freqno': result.frecno,
+                    'frecno': result.frecno,
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
                     'requestedShipDate': null
