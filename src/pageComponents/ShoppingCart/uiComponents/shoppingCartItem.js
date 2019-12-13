@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -19,6 +20,25 @@ const DivCard = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+`
+
+const DivItemContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`
+
+const DivItemContent = styled.div`
+  display: flex;
+  width: 100%;
+`
+
+const DivRemove = styled.div`
+  cursor: pointer;
+  display: flex;
+  width: auto;
+  margin: auto 12px;
+  align-items: center;
 `
 
 const DivMove = styled.div`
@@ -53,16 +73,20 @@ const DivQty = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 16px;
+  p {
+    margin: 0;
+  }
 `
 
 const DivTotalPrice = styled.div`
-  align-text: right;
+  display: flex;
   width: 150px;
+  align-items: center;
+  justify-items: flex-end;
   p {
     text-align: right;
-    margin-right: 16px;
     font-size: 18px;
+    margin: 0 20px 0 auto;
   }
 `
 
@@ -146,21 +170,27 @@ export default function ShoppingCartItem({item}) {
         <DivImg>
           <Img height='80px'  src={imagePath} />
         </DivImg>
-        <DivTitle>
-          <p>{itemDetails.itemDesc}</p>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
-        </DivTitle>
-        <DivQty>
-          <span>
-            <Label>Qty:</Label>
-            <Input value={item.quantity} />
-          </span>
-          <p>{itemDetails.anonPrice}</p>
-        </DivQty>
-        <DivTotalPrice>
-          <p>{itemDetails.anonPrice * item.quantity}</p>
-        </DivTotalPrice>
-        <FontAwesomeIcon icon="trash" color="lightgrey"/>
+        <DivItemContentContainer>
+          <DivItemContent>
+            <DivTitle>
+              <p>{itemDetails.itemDesc}</p>
+              <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+            </DivTitle>
+            <DivQty>
+              <span>
+                <Label>Qty:</Label>
+                <Input value={item.quantity} />
+              </span>
+              <p>{formatCurrency(itemDetails.anonPrice)}</p>
+            </DivQty>
+            <DivTotalPrice>
+              <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
+            </DivTotalPrice>
+            <DivRemove>
+              <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+            </DivRemove>
+          </DivItemContent>
+        </DivItemContentContainer>
       </DivCard>
     )
   }

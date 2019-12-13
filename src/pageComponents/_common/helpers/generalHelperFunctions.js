@@ -13,3 +13,9 @@ export function requiredField(value) {
   }
   return valid
 }
+
+export function formatCurrency(number){
+  let formattedCurrency = number.toFixed(2)
+  formattedCurrency = '$' + formattedCurrency
+  return formattedCurrency
+}
