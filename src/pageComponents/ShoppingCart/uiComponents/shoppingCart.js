@@ -87,7 +87,7 @@ export default function ShoppingCart() {
         <DivRow>
           <DivSave>
             <Ashare>Save Cart</Ashare>
-            <FontAwesomeIcon icon="save" color="grey"/>
+            <FontAwesomeIcon icon="save" color="grey"/>            
           </DivSave>
           <DivShare>
             <Ashare>Share</Ashare>
