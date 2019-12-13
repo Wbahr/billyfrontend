@@ -6,20 +6,12 @@ import Switch from './config/switch'
 import { createBrowserHistory } from "history"
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-<<<<<<< Updated upstream
-import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock} from '@fortawesome/free-solid-svg-icons'
-=======
 import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock, faSave, faTimesCircle} from '@fortawesome/free-solid-svg-icons'
->>>>>>> Stashed changes
 import { ApolloProvider } from "@apollo/react-hooks";
 import ApolloClient from 'apollo-boost'
 import ContextProvider from './config/provider'
 
-<<<<<<< Updated upstream
-library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock)
-=======
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock, faSave, faTimesCircle)
->>>>>>> Stashed changes
 
 const customHistory = createBrowserHistory();
 // import MainScreen from './containerComponents/mainScreen'

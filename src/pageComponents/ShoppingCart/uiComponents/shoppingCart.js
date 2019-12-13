@@ -79,12 +79,6 @@ export default function ShoppingCart() {
             )
           }}
         </Context.Consumer>
-<<<<<<< Updated upstream
-        <DivShare>
-          <Ashare>Share</Ashare>
-          <FontAwesomeIcon icon="share" color="grey"/>
-        </DivShare>
-=======
         <DivRow>
           <DivSave>
             <Ashare>Save Cart</Ashare>
@@ -95,7 +89,6 @@ export default function ShoppingCart() {
             <FontAwesomeIcon icon="share" color="grey"/>
           </DivShare>
         </DivRow>
->>>>>>> Stashed changes
       </Div>
       {ShoppingCartItems}
     </>
