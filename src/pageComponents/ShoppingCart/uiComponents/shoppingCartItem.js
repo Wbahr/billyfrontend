@@ -90,6 +90,12 @@ const DivCol2 = styled.div`
   }
 `
 
+const DivCol3 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`
+
 const Img = styled.img`
   margin-right: 4px;
 `
@@ -227,21 +233,19 @@ export default function ShoppingCartItem({item, index}) {
             </DivSplitLine>
           </DivRow>
         </DivCol2>
-            <DivQty>
-            <DivItem>
-              <Label>Qty:</Label>
-                <span>
-                  <Input value={item.quantity} />
-                  {formatCurrency(itemDetails.anonPrice)}
-                </span>
-            </DivItem>
-            <DivItem>
-              <Label>Item Notes:</Label>
-              <InputNotes placeholder='Type item notes here'></InputNotes>
-            </DivItem>
-              <DivRow>
-              </DivRow>
-            </DivQty>
+        <DivCol3>
+          <DivItem>
+            <Label>Qty:</Label>
+              <span>
+                <Input value={item.quantity} />
+                {formatCurrency(itemDetails.anonPrice)}
+              </span>
+          </DivItem>
+          <DivItem>
+            <Label>Item Notes:</Label>
+            <InputNotes placeholder='Type item notes here'></InputNotes>
+          </DivItem>
+        </DivCol3>
             <DivTotalPrice>
               <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
             </DivTotalPrice>
