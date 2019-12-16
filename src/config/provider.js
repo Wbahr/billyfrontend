@@ -64,15 +64,21 @@ export default function Provider(props) {
   function handleMoveItem(itemLocation, newLocation){
     let mutatedShoppingCart
     let mutatedShoppingCartDisplay
-    this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    // this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
   function handleSplitItem(itemLocation, splitInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
   function handleUpdateItem(itemLocation, updateInformation){
-    this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  }
+
+  function handleEmptyCart(){
+    setShoppingCart([])
+    setShoppingCartDisplay([])
+    updateShoppingCart()
   }
 
   function updateShoppingCart() {
@@ -87,11 +93,11 @@ export default function Provider(props) {
           addItem: (item) => {
             handleAddItem(item)
           },
-          moveItem: (itemLocation, newLocation)=>{
-            handleMoveItem(itemLocation, newLocation)
-          },
           removeItem: (itemLocation) => {
             handleRemoveItem(itemLocation)
+          },
+          moveItem: (itemLocation, newLocation)=>{
+            handleMoveItem(itemLocation, newLocation)
           },
           splitItem: (itemLocation, splitInformation)=>{
             this.handleSplitItem(itemLocation, splitInformation)
@@ -100,7 +106,7 @@ export default function Provider(props) {
             this.handleUpdateItem(itemLocation, updateInformation)
           },
           emptyCart: () => {
-            setState({shoppingCart: [], shoppingCartDisplay:[]}, () => updateShoppingCart())
+            handleEmptyCart()
           }
         }}
       >

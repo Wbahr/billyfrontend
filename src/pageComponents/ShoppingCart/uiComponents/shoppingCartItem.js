@@ -49,6 +49,13 @@ const DivRemove = styled.div`
   align-items: center;
 `
 
+const DivDivide = styled(DivRemove)`
+  padding: 2px;
+  background-color: #328EFC;
+  border-radius: 5px;
+  opacity: .5;
+`
+
 const DivMove = styled.div`
   display: flex;
   height: 100%;
@@ -198,6 +205,7 @@ export default function ShoppingCartItem({item, index}) {
                 <p>{formatCurrency(itemDetails.anonPrice)}</p>
               </DivRow>
               <DivRow>
+                <Label>Requested Shipment Date:</Label>
                 <FontAwesomeIcon icon="calendar" color="grey"/> 
                 <DatePicker
                   selected={date}
@@ -209,10 +217,15 @@ export default function ShoppingCartItem({item, index}) {
               <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
             </DivTotalPrice>
             <Context.Consumer>
-              {({removeItem}) => (
-                <DivRemove onClick={()=>removeItem(index)}>
-                  <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-                </DivRemove>
+              {({removeItem, splitItem}) => (
+                <>
+                  <DivDivide onClick={()=>splitItem(index)}>
+                    <FontAwesomeIcon icon="divide" color="white" alt='divide-item'/>
+                  </DivDivide>
+                  <DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
+                    <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                  </DivRemove>
+                </>
               )}
             </Context.Consumer>
           </DivItemContent>

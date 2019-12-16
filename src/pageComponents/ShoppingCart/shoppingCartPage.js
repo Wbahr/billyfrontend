@@ -17,7 +17,7 @@ const DivContainer = styled.div`
 const DivShoppingCartCol = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 1000px;
 `
 
 const DivOrderTotalCol = styled.div`
