@@ -16,12 +16,17 @@ const DivContainer = styled.div`
   border-bottom: 2px whitesmoke solid;
   padding: 8px 0;
   margin: 8px 0;
-  height: 100px;
+  height: 110px;
 `
 
 const DivRow = styled.div`
   display: flex;
   margin-bottom: 8px;
+`
+
+const DivItem = styled.div`
+  display: flex;
+  flex-direction: column;
 `
 
 const DivCard = styled.div`
@@ -63,21 +68,21 @@ const DivMove = styled.div`
   padding: 0 16px;
 `
 
-const DivTitle = styled.div`
+const DivCol1 = styled.div`
+  display: flex;
+  width: 100px;
+`
+
+const DivCol2 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  // justify-content: center;
   height: 100%;
   flex-grow: 99;
   p {
     font-size: 16px;
     margin: 0;
   }
-`
-
-const DivImg = styled.div`
-  display: flex;
 `
 
 const Img = styled.img`
@@ -107,7 +112,7 @@ const DivTotalPrice = styled.div`
 
 const Label = styled.label`
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
 `
 
 const Input = styled.input`
@@ -188,48 +193,52 @@ export default function ShoppingCartItem({item, index}) {
         <DivMove>
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
-        <DivImg>
+        <DivCol1>
           <Img height='80px'  src={imagePath} />
-        </DivImg>
-        <DivItemContentContainer>
-          <DivItemContent>
-            <DivTitle>
-              <p>{itemDetails.itemDesc}</p>
-              <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
-              <InputNotes placeholder='Notes'></InputNotes>
-            </DivTitle>
-            <DivQty>
-              <DivRow>
-                <Label>Qty:</Label>
-                <Input value={item.quantity} />
-                <p>{formatCurrency(itemDetails.anonPrice)}</p>
-              </DivRow>
-              <DivRow>
-                <Label>Requested Shipment Date:</Label>
+        </DivCol1>
+        <DivCol2>
+          <p>{itemDetails.itemDesc}</p>
+          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+          <DivRow>
+            <DivItem>
+              <Label>Requested Ship Date:</Label>
+              <span>
                 <FontAwesomeIcon icon="calendar" color="grey"/> 
                 <DatePicker
                   selected={date}
                   onChange={(selectedDate)=>setDate(selectedDate)}
                 />
+              </span>
+            </DivItem>
+            <DivItem>
+              <Label>Qty:</Label>
+                <span>
+                <Input value={item.quantity} />
+                <p>{formatCurrency(itemDetails.anonPrice)}</p>
+              </span>
+            </DivItem>
+          </DivRow>
+        </DivCol2>
+            <DivQty>
+              {/* <InputNotes placeholder='Notes'></InputNotes> */}
+              <DivRow>
+              </DivRow>
+              <DivRow>
+
               </DivRow>
             </DivQty>
             <DivTotalPrice>
               <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
             </DivTotalPrice>
             <Context.Consumer>
-              {({removeItem, splitItem}) => (
+              {({ removeItem }) => (
                 <>
-                  <DivDivide onClick={()=>splitItem(index)}>
-                    <FontAwesomeIcon icon="divide" color="white" alt='divide-item'/>
-                  </DivDivide>
                   <DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
                     <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
                   </DivRemove>
                 </>
               )}
             </Context.Consumer>
-          </DivItemContent>
-        </DivItemContentContainer>
       </DivCard>
     )
   }

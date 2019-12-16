@@ -23,12 +23,12 @@ const apolloClient = new ApolloClient({
 
 
 ReactDOM.render(
-  <ContextProvider>
-    <ApolloProvider client={apolloClient}>
+  <ApolloProvider client={apolloClient}>
+    <ContextProvider>
       <BrowserRouter history={customHistory}>
         <Switch />
       </BrowserRouter>
-    </ApolloProvider>
-  </ContextProvider>
+    </ContextProvider>
+  </ApolloProvider>
   , document.getElementById('index')
 )

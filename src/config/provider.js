@@ -36,6 +36,7 @@ export default function Provider(props) {
 
   const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_BY_ID, {
     onCompleted: result => {
+      console.log('result ', result)
       return(
         result.itemDetails
       )
@@ -43,9 +44,11 @@ export default function Provider(props) {
   })
 
   function handleAddItem (item){
-    // let newDisplayItem = performItemDetailSearch({ variables: { itemId: item.freqno } })
+    performItemDetailSearch({ variables: { itemId: item.frecno } })
+    // .then((newDisplayItem)=>{
+    //   setShoppingCartDisplay([...shoppingCartDisplay, newDisplayItem])
+    // })
     setShoppingCart([...shoppingCart, item])
-    // setShoppingCartDisplay([...shoppingCartDisplay, newDisplayItem])
     updateShoppingCart()
   }
 
@@ -82,7 +85,7 @@ export default function Provider(props) {
   }
 
   function updateShoppingCart() {
-    console.log('shoppingCart', shoppingCart)
+    console.log('display shoppingCart ->', shoppingCartDisplay)
   }
 
     return (
@@ -100,10 +103,10 @@ export default function Provider(props) {
             handleMoveItem(itemLocation, newLocation)
           },
           splitItem: (itemLocation, splitInformation)=>{
-            this.handleSplitItem(itemLocation, splitInformation)
+            handleSplitItem(itemLocation, splitInformation)
           },
           updateItem: (itemLocation, updateInformation)=>{
-            this.handleUpdateItem(itemLocation, updateInformation)
+            handleUpdateItem(itemLocation, updateInformation)
           },
           emptyCart: () => {
             handleEmptyCart()

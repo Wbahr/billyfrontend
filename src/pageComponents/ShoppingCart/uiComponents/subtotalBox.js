@@ -74,7 +74,7 @@ const DivOrderTotalCol = styled.div`
 export default function SubtotalBox() {
   return(
     <Div>
-      <p>Subtotal: $100.00</p>
+      <h5>Subtotal: $100.00</h5>
       <DivCheckoutButton>
         <FontAwesomeIcon icon="lock" color="white"/>
         <p>Start Secure Checkout</p>
