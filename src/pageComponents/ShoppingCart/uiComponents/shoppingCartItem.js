@@ -54,11 +54,16 @@ const DivRemove = styled.div`
   align-items: center;
 `
 
-const DivDivide = styled(DivRemove)`
-  padding: 2px;
+const DivSplitLine = styled(DivRemove)`
+  padding: 6px;
   background-color: #328EFC;
-  border-radius: 5px;
-  opacity: .5;
+  border-radius: 50px;
+  color: white;
+  height: 20px;
+  p {
+    font-size: 12px;
+    padding-left: 8px;
+  }
 `
 
 const DivMove = styled.div`
@@ -76,7 +81,7 @@ const DivCol1 = styled.div`
 const DivCol2 = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
   flex-grow: 99;
   p {
@@ -113,12 +118,18 @@ const DivTotalPrice = styled.div`
 const Label = styled.label`
   margin: 0;
   font-size: 12px;
+  font-style: italic;
 `
 
 const Input = styled.input`
   width: 50px;
   height: 25px;
   margin-left: 4px;
+`
+
+const P1 = styled.p`
+  font-size: 16px;
+  font-weight: 600;
 `
 
 const P2 = styled.p`
@@ -197,7 +208,7 @@ export default function ShoppingCartItem({item, index}) {
           <Img height='80px'  src={imagePath} />
         </DivCol1>
         <DivCol2>
-          <p>{itemDetails.itemDesc}</p>
+          <P1>{itemDetails.itemDesc}</P1>
           <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
           <DivRow>
             <DivItem>
@@ -210,21 +221,25 @@ export default function ShoppingCartItem({item, index}) {
                 />
               </span>
             </DivItem>
-            <DivItem>
-              <Label>Qty:</Label>
-                <span>
-                <Input value={item.quantity} />
-                <p>{formatCurrency(itemDetails.anonPrice)}</p>
-              </span>
-            </DivItem>
+            <DivSplitLine>
+              <FontAwesomeIcon icon="divide" color="white"/>
+              <p>Split Line</p>
+            </DivSplitLine>
           </DivRow>
         </DivCol2>
             <DivQty>
-              {/* <InputNotes placeholder='Notes'></InputNotes> */}
+            <DivItem>
+              <Label>Qty:</Label>
+                <span>
+                  <Input value={item.quantity} />
+                  {formatCurrency(itemDetails.anonPrice)}
+                </span>
+            </DivItem>
+            <DivItem>
+              <Label>Item Notes:</Label>
+              <InputNotes placeholder='Type item notes here'></InputNotes>
+            </DivItem>
               <DivRow>
-              </DivRow>
-              <DivRow>
-
               </DivRow>
             </DivQty>
             <DivTotalPrice>

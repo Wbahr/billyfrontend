@@ -31,7 +31,14 @@ const GET_ITEM_BY_ID = gql`
 
 
 export default function Provider(props) {
-  const [shoppingCart, setShoppingCart] = useState([])
+  const [shoppingCart, setShoppingCart] = useState([
+    {
+      'frecno': 1845068,
+      'quantity': 1,
+      'itemNotes': '',
+      'requestedShipDate': null
+    }
+  ])
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
 
   const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_BY_ID, {
