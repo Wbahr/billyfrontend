@@ -60,9 +60,11 @@ export default function Provider(props) {
 
   const [updateShoppingCart] = useMutation(UPDATE_SHOPPING_CART, {
     onCompleted: result => {
-        let results = result.updateShoppingCart
-        console.log('updateShoppingCart', results)
-        localStorage.setItem("shoppingCartToken", results.token)
+      let results = result.updateShoppingCart
+      console.log('updateShoppingCart', results)
+      localStorage.setItem("shoppingCartToken", results.token)
+      setShoppingCart(results.cartData)
+      setOrderNotes(results.orderNotes)
     }
   })
 
