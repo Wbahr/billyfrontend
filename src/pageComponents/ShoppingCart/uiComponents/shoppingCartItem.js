@@ -225,6 +225,7 @@ export default function ShoppingCartItem({item, index}) {
                 <DatePicker
                   selected={date}
                   onChange={(selectedDate)=>setDate(selectedDate)}
+                  minDate={new Date()}
                 />
               </span>
             </DivItem>
