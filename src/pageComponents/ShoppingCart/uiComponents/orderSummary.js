@@ -103,13 +103,9 @@ export default function OrderSummary() {
           <p>(Calculated at Checkout)</p>
         </DivLineItem>
         <DivLineItem>
-          <p>(Coupon: WINTERSALE)</p>
-          <p>-$50.00</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>remove coupon</p>
-        </DivLineItem>    
-        <p>Add a Coupon Code +</p>
+          <input placeholder='Coupon Code' onChange={(e)=>console.log('-> ', e.target.value)}/>
+          <button>Save</button>
+        </DivLineItem>   
         <p>Total (without tax) $100.00</p>
         <DivButtonContainer>
           <DivCheckoutButton>
