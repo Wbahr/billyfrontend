@@ -41,6 +41,8 @@ const UPDATE_SHOPPING_CART = gql`
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
+  const loadCart = useRef(true)
+  const justLoadedCart = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
@@ -52,38 +54,43 @@ export default function Provider(props) {
       if (_.isNil(shoppingCartToken)){
         handleUpdateShoppingCart(1)
       } else { // If a shopppingCartToken exists, get the existing cart
-        handleUpdateShoppingCart(2)
+        handleUpdateShoppingCart(5)
       }
       didMountRef.current = true
     }
   })
 
+  // Update database if shopping cart or order notes  changes
+  useEffect(() => {
+    if(didMountRef.current && justLoadedCart.current){
+      handleUpdateShoppingCart(2)
+    } else {
+      justLoadedCart.current = false
+    }
+  },[shoppingCart, orderNotes])
+
   const [updateShoppingCart] = useMutation(UPDATE_SHOPPING_CART, {
     onCompleted: result => {
       let results = result.updateShoppingCart
-      console.log('updateShoppingCart', results)
       localStorage.setItem("shoppingCartToken", results.token)
-      setShoppingCart(JSON.parse(results.cartData))
-      setOrderNotes(results.orderNotes)
+      if(loadCart.current){
+        setShoppingCart(JSON.parse(results.cartData))
+        setOrderNotes(results.orderNotes)
+        loadCart.current = false
+        justLoadedCart.current = true
+      }
     }
   })
 
-  const [performItemDetailSearch] = useLazyQuery(GET_ITEM_BY_ID, {
+  const [getItemDetails] = useLazyQuery(GET_ITEM_BY_ID, {
     onCompleted: result => {
-      console.log('result ', result)
-      return(
-        result.itemDetails
-      )
+      console.log('handleAddItem ->', result)
     }
   })
 
   function handleAddItem (item){
-    performItemDetailSearch({ variables: { itemId: item.frecno } })
-    // .then((newDisplayItem)=>{
-    //   setShoppingCartDisplay([...shoppingCartDisplay, newDisplayItem])
-    // })
     setShoppingCart([...shoppingCart, item])
-    handleUpdateShoppingCart(2)
+    getItemDetails({ variables: { itemId: item.frecno } })
   }
 
   function handleRemoveItem(itemLocation){
@@ -92,35 +99,29 @@ export default function Provider(props) {
     // let mutatedShoppingCartDisplay = [...shoppingCartDisplay].splice(itemLocation, 1)
     // setShoppingCartDisplay(...mutatedShoppingCartDisplay)
     setShoppingCart([...mutatedCart])
-    handleUpdateShoppingCart(2)
   }
 
   function handleMoveItem(itemLocation, newLocation){
     let mutatedShoppingCart
     let mutatedShoppingCartDisplay
     // this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
-    handleUpdateShoppingCart(2)
   }
 
   function handleSplitItem(itemLocation, splitInformation){
     // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
-    handleUpdateShoppingCart(2)
   }
 
   function handleUpdateItem(itemLocation, updateInformation){
     // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
-    handleUpdateShoppingCart(2)
   }
 
   function handleEmptyCart(){
     setShoppingCart([])
     setShoppingCartDisplay([])
-    handleUpdateShoppingCart(2)
   }
 
   function handleSetOrderNotes(orderNotes){
     setOrderNotes(orderNotes)
-    handleUpdateShoppingCart(2)
   }
 
   function handleUpdateShoppingCart(action) {
