@@ -60,6 +60,7 @@ const DivSplitLine = styled(DivRemove)`
   border-radius: 50px;
   color: white;
   height: 20px;
+  box-shadow: 1px 1px 2px #000;
   p {
     font-size: 12px;
     padding-left: 8px;
