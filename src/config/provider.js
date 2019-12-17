@@ -50,9 +50,9 @@ export default function Provider(props) {
       let shoppingCartToken = localStorage.getItem("shoppingCartToken")
       // If the user doesn't have a shopping cart, create one
       if (_.isNil(shoppingCartToken)){
-        updateShoppingCart(1)
+        handleUpdateShoppingCart(1)
       } else { // If a shopppingCartToken exists, get the existing cart
-        updateShoppingCart(2)
+        handleUpdateShoppingCart(2)
       }
       didMountRef.current = true
     }
@@ -63,7 +63,7 @@ export default function Provider(props) {
       let results = result.updateShoppingCart
       console.log('updateShoppingCart', results)
       localStorage.setItem("shoppingCartToken", results.token)
-      setShoppingCart(results.cartData)
+      setShoppingCart(JSON.parse(results.cartData))
       setOrderNotes(results.orderNotes)
     }
   })
@@ -129,14 +129,13 @@ export default function Provider(props) {
     // 2 - Update Cart
     // 3 - Save Cart
     // 4 - Create Shopping List
+    // 5 - Mutation 
     let shoppingCartToken = localStorage.getItem("shoppingCartToken")
     updateShoppingCart({ variables: { cartData: {
-         "cartData": {
-           "token": shoppingCartToken,
-           "action": action,
-           "cart": shoppingCart,
-           "orderNotes": orderNotes
-         }
+        "token": shoppingCartToken,
+        "action": action,
+        "cart": JSON.stringify(shoppingCart),
+        "orderNotes": orderNotes
        }} 
     })
   }
