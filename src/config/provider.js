@@ -73,6 +73,7 @@ export default function Provider(props) {
     onCompleted: result => {
       let results = result.updateShoppingCart
       localStorage.setItem("shoppingCartToken", results.token)
+      console.log('results', results)
       if(loadCart.current){
         setShoppingCart(JSON.parse(results.cartData))
         setOrderNotes(results.orderNotes)
@@ -130,7 +131,7 @@ export default function Provider(props) {
     // 2 - Update Cart
     // 3 - Save Cart
     // 4 - Create Shopping List
-    // 5 - Mutation 
+    // 5 - Get existing cart 
     let shoppingCartToken = localStorage.getItem("shoppingCartToken")
     updateShoppingCart({ variables: { cartData: {
         "token": shoppingCartToken,
@@ -146,6 +147,7 @@ export default function Provider(props) {
         value={{
           cart: shoppingCart,
           cartDisplay: shoppingCartDisplay,
+          orderNotes: orderNotes,
           addItem: (item) => {
             handleAddItem(item)
           },

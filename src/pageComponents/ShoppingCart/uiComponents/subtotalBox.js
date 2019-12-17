@@ -82,7 +82,7 @@ export default function SubtotalBox() {
   return(
     <Container>
       <Context.Consumer>
-        {({ setOrderNotes }) => (
+        {({ setOrderNotes, orderNotes }) => (
           <DebounceInput
             element="textarea"
             minLength={2}
@@ -90,6 +90,7 @@ export default function SubtotalBox() {
             onChange={e => setOrderNotes(e.target.value)} 
             placeholder='Type Order Notes here'
             style={{'width': '600px'}}
+            value={orderNotes}
           />
         )}
       </Context.Consumer>
