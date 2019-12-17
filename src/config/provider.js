@@ -118,6 +118,11 @@ export default function Provider(props) {
     handleUpdateShoppingCart(2)
   }
 
+  function handleSetOrderNotes(orderNotes){
+    setOrderNotes(orderNotes)
+    handleUpdateShoppingCart(2)
+  }
+
   function handleUpdateShoppingCart(action) {
     // Cart Actions
     // 1 - Create Cart
@@ -162,8 +167,8 @@ export default function Provider(props) {
           saveCart: ()=> {
             handleUpdateShoppingCart(3)
           },
-          setOrderNotes: (e) => {
-            setOrderNotes(e.target.value)
+          setOrderNotes: (orderNotes) => {
+            handleSetOrderNotes(orderNotes)
           }
         }}
       >

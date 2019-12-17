@@ -4,9 +4,16 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag'
-import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {DebounceInput} from 'react-debounce-input'
+import Context from '../../../config/context'
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 8px;
+`
 
 const Div = styled.div`
   display: flex;
@@ -73,18 +80,33 @@ const DivOrderTotalCol = styled.div`
 
 export default function SubtotalBox() {
   return(
-    <Div>
-      <h5>Subtotal: $100.00</h5>
-      <DivCheckoutButton>
-        <FontAwesomeIcon icon="lock" color="white"/>
-        <p>Start Secure Checkout</p>
-      </DivCheckoutButton>
-      <DivQuoteButton>
-        <p>Create a Quote</p>
-      </DivQuoteButton>
-      <DivShoppinglistButton>
-        <p>Save to Shopping List</p>
-      </DivShoppinglistButton>
-    </Div>
+    <Container>
+      <Context.Consumer>
+        {({ setOrderNotes }) => (
+          <DebounceInput
+            element="textarea"
+            minLength={2}
+            debounceTimeout={300}
+            onChange={e => setOrderNotes(e.target.value)} 
+            placeholder='Type Order Notes here'
+            style={{'width': '600px'}}
+          />
+        )}
+      </Context.Consumer>
+
+      <Div>
+        <h5>Subtotal: $100.00</h5>
+        <DivCheckoutButton>
+          <FontAwesomeIcon icon="lock" color="white"/>
+          <p>Start Secure Checkout</p>
+        </DivCheckoutButton>
+        <DivQuoteButton>
+          <p>Create a Quote</p>
+        </DivQuoteButton>
+        <DivShoppinglistButton>
+          <p>Save to Shopping List</p>
+        </DivShoppinglistButton>
+      </Div>
+    </Container>
   )
 }
