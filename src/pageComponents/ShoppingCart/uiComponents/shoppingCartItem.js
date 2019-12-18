@@ -226,7 +226,7 @@ export default function ShoppingCartItem({item, index}) {
                 <Context.Consumer>
                   {({ updateItem, cart }) => (
                     <DatePicker
-                      selected={cart[index].requestedShipDate}
+                      selected={new Date(cart[index].requestedShipDate)}
                       onChange={(selectedDate)=>updateItem(index, 'date', selectedDate)}
                       minDate={new Date()}
                     />
