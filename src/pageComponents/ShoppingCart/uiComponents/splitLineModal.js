@@ -76,7 +76,7 @@ export default function SplitLineModal({open, index, hideSplitLineModal}) {
     <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick>
       <p>split line</p>
       <p>Line Count: </p><input value={lineCount} onChange={(e)=> setLineCount(e.target.value)}/>
-      <p>Line Quantity: </p><input value={lineQuantity} onChange={(e)=> setLineQuantity(e.target.value)}/>
+      <p>Quantity per Line: </p><input value={lineQuantity} onChange={(e)=> setLineQuantity(e.target.value)}/>
       <Context.Consumer>
         {({splitItem}) => (
           <button onClick={()=>{
