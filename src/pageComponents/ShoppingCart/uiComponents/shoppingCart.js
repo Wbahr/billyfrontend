@@ -56,24 +56,26 @@ const DivOrderTotalCol = styled.div`
   flex-direction: column;
 `
 
-const ShoppingCartItems = (
+
+export default function ShoppingCart({showSplitLineModal}) {
+  const ShoppingCartItems = (
     <Context.Consumer>
-    {({cart, emptyCart}) => (
-      cart.map((item, index)=>{
-        return(
-          // <Draggable>
-            <ShoppingCartItem
-              item={item}
-              emptyCart={emptyCart}
-              index={index}
-            />
-          // </Draggable>
-        )
-      })
-    )}
-  </Context.Consumer>
-)
-export default function ShoppingCart() {
+      {({cart, emptyCart}) => (
+        cart.map((item, index)=>{
+          return(
+            // <Draggable>
+              <ShoppingCartItem
+                item={item}
+                emptyCart={emptyCart}
+                index={index}
+                showSplitLineModal={showSplitLineModal}
+              />
+            // </Draggable>
+          )
+        })
+      )}
+    </Context.Consumer>
+  )
 
   return(
     <>

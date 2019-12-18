@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import ShoppingCart from './uiComponents/shoppingCart'
 import SubtotalBox from './uiComponents/subtotalBox'
 import OrderSummary from './uiComponents/orderSummary'
+import SplitLineModal from './uiComponents/splitLineModal'
 
 const DivContainer = styled.div`
   display: flex;
@@ -27,11 +28,29 @@ const DivOrderTotalCol = styled.div`
 `
 
 export default function ShoppingCartPage() {
+  const [showSplitLineModal, setShowSplitLineModal] = useState(false)
+  const [index, setIndex] = useState(null)
+
+  function handleShowSplitLineModal(index){
+    setIndex(index)
+    setShowSplitLineModal(true)
+  }
+
+  function handleHideSplitLineModal(){
+    setShowSplitLineModal(false)
+  }
 
   return(
     <DivContainer>
+      <SplitLineModal 
+        open={showSplitLineModal} 
+        hideSplitLineModal={handleHideSplitLineModal}
+        index={index}
+      />
       <DivShoppingCartCol>
-        <ShoppingCart/>
+        <ShoppingCart
+          showSplitLineModal={handleShowSplitLineModal}
+        />
         <SubtotalBox/>
       </DivShoppingCartCol>
       <DivOrderTotalCol>

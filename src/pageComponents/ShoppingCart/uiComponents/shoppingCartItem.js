@@ -171,7 +171,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-export default function ShoppingCartItem({item, index}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
   const [date, setDate] = useState(Date.now())
@@ -234,7 +234,7 @@ export default function ShoppingCartItem({item, index}) {
                 </Context.Consumer>
               </span>
             </DivItem>
-            <DivSplitLine>
+            <DivSplitLine onClick={()=>showSplitLineModal(index)}>
               <FontAwesomeIcon icon="divide" color="white"/>
               <p>Split Line</p>
             </DivSplitLine>
@@ -250,12 +250,12 @@ export default function ShoppingCartItem({item, index}) {
                       minLength={1}
                       debounceTimeout={300}
                       onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
-                      style={{'width': '100px'}}
+                      style={{'width': '50px'}}
                       value={cart[index].quantity}
                     />
                   )}
                 </Context.Consumer>
-                {formatCurrency(itemDetails.anonPrice)}
+                {formatCurrency(itemDetails.anonPrice)}/each
               </span>
           </DivItem>
           <DivItem>
@@ -272,7 +272,6 @@ export default function ShoppingCartItem({item, index}) {
                     />
                   )}
             </Context.Consumer>
-            {/* <InputNotes placeholder='Type item notes here'></InputNotes> */}
           </DivItem>
         </DivCol3>
             <DivTotalPrice>

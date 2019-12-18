@@ -103,13 +103,24 @@ export default function Provider(props) {
   }
 
   function handleMoveItem(itemLocation, newLocation){
-    let mutatedShoppingCart
-    let mutatedShoppingCartDisplay
-    // this.setState({shoppingCart:[...mutatedShoppingCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+    console.log('handleMoveItem')
   }
 
-  function handleSplitItem(itemLocation, splitInformation){
-    // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  function handleSplitItem(index, lineCount, lineQuantity){
+    let splitItem = {
+      'frecno': shoppingCart[index].frecno,
+      'quantity': parseInt(lineQuantity, 10),
+      'itemNotes': shoppingCart[index].itemNotes,
+      'requestedShipDate': shoppingCart[index].requestedShipDate
+    }
+    let splitItems = []
+    for (let i = 0; i < lineCount ;i++){
+      splitItems.push(splitItem)
+    }
+    let frontCart = shoppingCart.slice(0,index) // returns cart item before split item
+    let backCart = shoppingCart.slice(index + 1) // returns cart item after split item
+
+    setShoppingCart([...frontCart ,...splitItems,...backCart])
   }
 
   function handleUpdateItem(index, type, value){
@@ -174,8 +185,8 @@ export default function Provider(props) {
           moveItem: (itemLocation, newLocation)=>{
             handleMoveItem(itemLocation, newLocation)
           },
-          splitItem: (itemLocation, splitInformation)=>{
-            handleSplitItem(itemLocation, splitInformation)
+          splitItem: (index,lineCount,lineQuantity)=>{
+            handleSplitItem(index,lineCount,lineQuantity)
           },
           updateItem: (index, type, value)=>{
             handleUpdateItem(index, type, value)
