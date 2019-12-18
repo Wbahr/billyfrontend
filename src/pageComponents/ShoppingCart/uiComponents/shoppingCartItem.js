@@ -9,6 +9,7 @@ import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import DebounceInput from 'react-debounce-input'
 
 const DivContainer = styled.div`
   display: flex;
@@ -222,11 +223,15 @@ export default function ShoppingCartItem({item, index}) {
               <Label>Requested Ship Date:</Label>
               <span>
                 <FontAwesomeIcon icon="calendar" color="grey"/> 
-                <DatePicker
-                  selected={date}
-                  onChange={(selectedDate)=>setDate(selectedDate)}
-                  minDate={new Date()}
-                />
+                <Context.Consumer>
+                  {({ updateItem, cart }) => (
+                    <DatePicker
+                      selected={cart[index].requestedShipDate}
+                      onChange={(selectedDate)=>updateItem(index, 'date', selectedDate)}
+                      minDate={new Date()}
+                    />
+                  )}
+                </Context.Consumer>
               </span>
             </DivItem>
             <DivSplitLine>
@@ -239,13 +244,35 @@ export default function ShoppingCartItem({item, index}) {
           <DivItem>
             <Label>Qty:</Label>
               <span>
-                <Input value={item.quantity} />
+                <Context.Consumer>
+                  {({ updateItem, cart }) => (
+                    <DebounceInput
+                      minLength={1}
+                      debounceTimeout={300}
+                      onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
+                      style={{'width': '100px'}}
+                      value={cart[index].quantity}
+                    />
+                  )}
+                </Context.Consumer>
                 {formatCurrency(itemDetails.anonPrice)}
               </span>
           </DivItem>
           <DivItem>
             <Label>Item Notes:</Label>
-            <InputNotes placeholder='Type item notes here'></InputNotes>
+            <Context.Consumer>
+                  {({ updateItem, cart }) => (
+                    <DebounceInput
+                      placeholder='Type item notes here'
+                      minLength={0}
+                      debounceTimeout={300}
+                      onChange={(e) => updateItem(index, 'notes', e.target.value)} 
+                      style={{'width': '300px'}}
+                      value={cart[index].itemNotes}
+                    />
+                  )}
+            </Context.Consumer>
+            {/* <InputNotes placeholder='Type item notes here'></InputNotes> */}
           </DivItem>
         </DivCol3>
             <DivTotalPrice>

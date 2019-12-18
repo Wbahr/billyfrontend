@@ -112,8 +112,25 @@ export default function Provider(props) {
     // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
   }
 
-  function handleUpdateItem(itemLocation, updateInformation){
-    // this.setState({shoppingCart:[...mutatedCart], shoppingCartDisplay: [...mutatedShoppingCartDisplay]}, () => updateShoppingCart()) // itemLocation, newLocation is the integer position of an item to be removed from shoppingCart Context
+  function handleUpdateItem(index, type, value){
+    let mutatedCart
+    switch(type){
+      case 'quantity':
+        mutatedCart = shoppingCart
+        mutatedCart[index].quantity = parseInt(value, 10)
+        setShoppingCart([...mutatedCart])
+        break
+      case 'notes':
+        mutatedCart = shoppingCart
+        mutatedCart[index].itemNotes = value
+        setShoppingCart([...mutatedCart])
+        break
+      case 'date':
+        mutatedCart = shoppingCart
+        mutatedCart[index].requestedShipDate = value
+        setShoppingCart([...mutatedCart])
+        break
+    }
   }
 
   function handleEmptyCart(){
@@ -160,8 +177,8 @@ export default function Provider(props) {
           splitItem: (itemLocation, splitInformation)=>{
             handleSplitItem(itemLocation, splitInformation)
           },
-          updateItem: (itemLocation, updateInformation)=>{
-            handleUpdateItem(itemLocation, updateInformation)
+          updateItem: (index, type, value)=>{
+            handleUpdateItem(index, type, value)
           },
           emptyCart: () => {
             handleEmptyCart()
