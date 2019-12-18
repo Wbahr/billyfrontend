@@ -36,6 +36,10 @@ const Ashare = styled.a`
   margin-right: 4px
 `
 
+const AshareBlue = styled(Ashare)`
+  color: #328EFC !important;
+`
+
 const DivShare = styled.div`
   cursor: pointer;
   margin-right: 4px;
@@ -94,7 +98,7 @@ export default function ShoppingCart({showSplitLineModal}) {
           <Context.Consumer>
             {({saveCart}) => {
               return(
-                <DivSave onClick={()=>saveCart()}>
+                <DivSave onClick={()=>{saveCart(), clickedSave()}}>
                   <Ashare>Save Cart</Ashare>
                   <FontAwesomeIcon icon="save" color="grey"/>            
                 </DivSave>

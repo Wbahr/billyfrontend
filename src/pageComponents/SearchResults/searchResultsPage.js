@@ -11,6 +11,7 @@ import CategoryFilter from './uiComponents/categoryFilter'
 import LocationsModal from './uiComponents/locationsModal'
 import DetailsModal from './uiComponents/detailsModal'
 import AddedToCartModal from './uiComponents/addedToCartModal'
+import AddedModal from './uiComponents/addedModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
@@ -96,6 +97,7 @@ export default function SearchResultsPage(props) {
   const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
   const [modalItem, setModalItem] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
+  const [showAddedModal, setShowAddedModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
   const [newAttributeCategories, setNewAttributeCategories] = useState([]);
   const [isSetNewCategories, setIsSetNewCategories] = useState(false);
@@ -339,6 +341,12 @@ export default function SearchResultsPage(props) {
 
   return(
     <DivContainer>
+      <AddedModal 
+        open={showShowAddedToCartModal} 
+        text={'Added to Cart!'} 
+        onClose={handleAddedToCartModal}
+        timeout={900}
+      />
       <LocationsModal 
         open={showLocationsModal} 
         hideLocationsModal={handleHideLocationsModal}
@@ -348,10 +356,6 @@ export default function SearchResultsPage(props) {
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
         invMastUid={modalItem}
-      />
-      <AddedToCartModal 
-        open={showShowAddedToCartModal}
-        hideAddedToCartModal={handleAddedToCartModal}
       />
       <div>
         <CategoryFilter 

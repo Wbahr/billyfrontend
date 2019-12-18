@@ -8,7 +8,6 @@ import SuggestedSearch from './uiComponents/suggestedSearch'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
 
-
 const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,6 +19,9 @@ const ContentScreenContainer = styled.div`
 `
 
 class HomePage extends React.Component {
+  state = {
+    open: false
+  }
 
   render(){
     return(
@@ -27,6 +29,7 @@ class HomePage extends React.Component {
         {/* <SuggestedSearch /> */}
         <Banner/>
         <ContentScreenContainer>
+          <button onClick={()=>{this.setState({open: true})}}>Testing</button>
           <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
         </ContentScreenContainer>

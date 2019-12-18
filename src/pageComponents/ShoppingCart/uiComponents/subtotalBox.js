@@ -8,7 +8,7 @@ import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {DebounceInput} from 'react-debounce-input'
 import Context from '../../../config/context'
-
+import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -79,6 +79,7 @@ const DivOrderTotalCol = styled.div`
 
 
 export default function SubtotalBox() {
+  const [price, setPrice] = useState(0)
   return(
     <Container>
       <Context.Consumer>

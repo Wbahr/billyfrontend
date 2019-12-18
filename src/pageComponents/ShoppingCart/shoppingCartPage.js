@@ -25,6 +25,9 @@ const DivOrderTotalCol = styled.div`
   display: flex;
   flex-direction: column;
   width: 400px;
+  @media(max-width: 1400px) {
+    display: none;
+  }
 `
 
 export default function ShoppingCartPage() {
