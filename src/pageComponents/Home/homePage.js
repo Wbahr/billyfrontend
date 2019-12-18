@@ -19,9 +19,6 @@ const ContentScreenContainer = styled.div`
 `
 
 class HomePage extends React.Component {
-  state = {
-    open: false
-  }
 
   render(){
     return(
@@ -29,7 +26,6 @@ class HomePage extends React.Component {
         {/* <SuggestedSearch /> */}
         <Banner/>
         <ContentScreenContainer>
-          <button onClick={()=>{this.setState({open: true})}}>Testing</button>
           <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
         </ContentScreenContainer>
