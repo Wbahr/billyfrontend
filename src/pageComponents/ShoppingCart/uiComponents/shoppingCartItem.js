@@ -36,6 +36,13 @@ const DivCard = styled.div`
   width: 100%;
 `
 
+const DivQuantity = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`
+
 const DivItemContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,8 +91,9 @@ const DivCol2 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 300px;
   height: 100%;
-  flex-grow: 99;
+  margin-right: 50px;
   p {
     font-size: 16px;
     margin: 0;
@@ -96,6 +104,7 @@ const DivCol3 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  flex-grow: 99;
 `
 
 const Img = styled.img`
@@ -127,6 +136,10 @@ const Label = styled.label`
   margin: 0;
   font-size: 12px;
   font-style: italic;
+`
+
+const Peach = styled.p`
+  margin: 0;
 `
 
 const Input = styled.input`
@@ -256,40 +269,46 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           </DivRow>
         </DivCol2>
         <DivCol3>
-          <DivItem>
-            <Label>Qty:</Label>
-              <span>
-                <Context.Consumer>
-                  {({ updateItem, cart }) => (
-                    <input
-                      onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
-                      style={{'width': '50px'}}
-                      value={cart[index].quantity}
-                    />
-                  )}
-                </Context.Consumer>
-                {formatCurrency(itemDetails.anonPrice)}/each
-              </span>
-          </DivItem>
-          <DivItem>
-            <Label>Item Notes:</Label>
-            <Context.Consumer>
-                  {({ updateItem, cart }) => (
-                    <DebounceInput
-                      placeholder='Type item notes here'
-                      minLength={0}
-                      debounceTimeout={300}
-                      onChange={(e) => updateItem(index, 'notes', e.target.value)} 
-                      style={{'width': '300px'}}
-                      value={cart[index].itemNotes}
-                    />
-                  )}
-            </Context.Consumer>
-          </DivItem>
+          <DivQuantity>
+            <DivItem>
+              <Label>Qty:</Label>
+                  <Context.Consumer>
+                    {({ updateItem, cart }) => (
+                      <input
+                        onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
+                        style={{'width': '50px'}}
+                        value={cart[index].quantity}
+                      />
+                    )}
+                  </Context.Consumer>
+            </DivItem>
+            <DivItem>
+              <Peach>{formatCurrency(itemDetails.anonPrice)}/each</Peach>
+            </DivItem>
+            <DivItem>
+              <DivTotalPrice>
+                <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
+              </DivTotalPrice>
+            </DivItem>
+          </DivQuantity>
+          <DivQuantity>
+            <DivItem>
+              <Label>Item Notes:</Label>
+              <Context.Consumer>
+                    {({ updateItem, cart }) => (
+                      <DebounceInput
+                        placeholder='Type item notes here'
+                        minLength={0}
+                        debounceTimeout={300}
+                        onChange={(e) => updateItem(index, 'notes', e.target.value)} 
+                        style={{'width': '300px'}}
+                        value={cart[index].itemNotes}
+                      />
+                    )}
+              </Context.Consumer>
+            </DivItem>
+          </DivQuantity>
         </DivCol3>
-            <DivTotalPrice>
-              <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
-            </DivTotalPrice>
             <Context.Consumer>
               {({ removeItem }) => (
                 <>
