@@ -15,7 +15,7 @@ const DivContainer = styled.div`
   display: flex;
   border-top: 2px whitesmoke solid;
   border-bottom: 2px whitesmoke solid;
-  padding: 8px 0;
+  padding: 8px 16px;
   margin: 8px 0;
   height: 120px;
 `
@@ -41,6 +41,18 @@ const DivQuantity = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`
+
+const DivDivide = styled.div`
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  background-color: #328EFC;
+  border-radius: 50px;
+  height: 20px;
+  width: 20px;
+  opacity: 0.5;
 `
 
 const DivItemContentContainer = styled.div`
@@ -76,10 +88,11 @@ const DivSplitLine = styled(DivRemove)`
 `
 
 const DivMove = styled.div`
+  cursor: move;
   display: flex;
   height: 100%;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 12px;
 `
 
 const DivCol1 = styled.div`
@@ -108,7 +121,7 @@ const DivCol3 = styled.div`
 `
 
 const Img = styled.img`
-  margin-right: 4px;
+  margin: 0 4px;
 `
 
 const DivQty = styled.div`
@@ -127,8 +140,9 @@ const DivTotalPrice = styled.div`
   justify-items: flex-end;
   p {
     text-align: right;
-    font-size: 18px;
+    font-size: 20px;
     margin: 0 20px 0 auto;
+    font-weight: 600;
   }
 `
 
@@ -239,6 +253,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
         <DivMove>
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
+        {/* <DivMove>
+          <DivDivide onClick={()=>showSplitLineModal(index)}>
+            <FontAwesomeIcon icon="divide" color="white"/>
+          </DivDivide>
+        </DivMove> */}
         <DivCol1>
           <Img height='80px'  src={imagePath} />
         </DivCol1>
@@ -246,7 +265,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           <P1>{itemDetails.itemDesc}</P1>
           <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
           <DivRow>
-            <DivItem>
+            {/* <DivItem>
               <Label>Requested Ship Date:</Label>
               <span>
                 <FontAwesomeIcon icon="calendar" color="grey"/> 
@@ -261,11 +280,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
                   )}
                 </Context.Consumer>
               </span>
-            </DivItem>
-            <DivSplitLine onClick={()=>showSplitLineModal(index)}>
-              <FontAwesomeIcon icon="divide" color="white"/>
-              <p>Split Line</p>
-            </DivSplitLine>
+            </DivItem> */}
           </DivRow>
         </DivCol2>
         <DivCol3>
