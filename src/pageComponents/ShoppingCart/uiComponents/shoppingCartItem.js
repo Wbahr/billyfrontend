@@ -17,12 +17,12 @@ const DivContainer = styled.div`
   border-bottom: 2px whitesmoke solid;
   padding: 8px 0;
   margin: 8px 0;
-  height: 110px;
+  height: 120px;
 `
 
 const DivRow = styled.div`
   display: flex;
-  margin-bottom: 8px;
+  margin-top: 8px;
 `
 
 const DivItem = styled.div`
