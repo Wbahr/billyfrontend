@@ -105,15 +105,14 @@ export default function Provider(props) {
   }
 
   function handleSplitItem(index, lineCount, lineQuantity){
-    let splitItem = {
-      'frecno': shoppingCart[index].frecno,
-      'quantity': parseInt(lineQuantity, 10),
-      'itemNotes': shoppingCart[index].itemNotes,
-      'requestedShipDate': shoppingCart[index].requestedShipDate
-    }
     let splitItems = []
     for (let i = 0; i < lineCount ;i++){
-      splitItems.push(splitItem)
+      splitItems.push({
+        'frecno': shoppingCart[index].frecno,
+        'quantity': parseInt(lineQuantity, 10),
+        'itemNotes': shoppingCart[index].itemNotes,
+        'requestedShipDate': shoppingCart[index].requestedShipDate
+      })
     }
     let frontCart = shoppingCart.slice(0,index) // returns cart item before split item
     let backCart = shoppingCart.slice(index + 1) // returns cart item after split item
