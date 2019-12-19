@@ -127,9 +127,15 @@ export default function Provider(props) {
     let mutatedCart
     switch(type){
       case 'quantity':
-        mutatedCart = shoppingCart
-        mutatedCart[index].quantity = parseInt(value, 10)
-        setShoppingCart([...mutatedCart])
+        if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
+          mutatedCart = shoppingCart
+          let mutatedValue = ''
+          if(!isNaN(value)  && value.length > 0){
+            mutatedValue = parseInt(value, 10)
+          }
+          mutatedCart[index].quantity = mutatedValue
+          setShoppingCart([...mutatedCart])
+        }
         break
       case 'notes':
         mutatedCart = shoppingCart

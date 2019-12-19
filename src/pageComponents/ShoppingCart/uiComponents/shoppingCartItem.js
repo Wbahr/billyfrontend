@@ -246,9 +246,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
               <span>
                 <Context.Consumer>
                   {({ updateItem, cart }) => (
-                    <DebounceInput
-                      minLength={1}
-                      debounceTimeout={300}
+                    <input
                       onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
                       style={{'width': '50px'}}
                       value={cart[index].quantity}
