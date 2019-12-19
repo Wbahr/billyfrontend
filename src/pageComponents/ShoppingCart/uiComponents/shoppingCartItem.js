@@ -150,6 +150,15 @@ const InputNotes = styled.input`
   font-size: 12px;
 `
 
+const CustomDatePicker = styled.button`
+  display: flex;
+  justify-content: center;
+  width: 110px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  margin: 0 8px;
+`
+
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
         itemDetails(invMastUid: $itemId) {
@@ -207,6 +216,12 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    const CustomDatePickerComponent = ({ value, onClick }) => (
+      <CustomDatePicker onClick={onClick}>
+        {value}
+      </CustomDatePicker>
+    )
+
     Content = (
       <DivCard>
         <DivMove>
@@ -229,6 +244,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
                       selected={new Date(cart[index].requestedShipDate)}
                       onChange={(selectedDate)=>updateItem(index, 'date', selectedDate)}
                       minDate={new Date()}
+                      customInput={<CustomDatePickerComponent />}
                     />
                   )}
                 </Context.Consumer>
