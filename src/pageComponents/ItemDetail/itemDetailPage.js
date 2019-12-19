@@ -46,7 +46,7 @@ const GET_ITEM_BY_ID = gql`
                 sequence
                 text
                 type
-                uid
+                id
               }
               image {
                 createDate
@@ -57,7 +57,7 @@ const GET_ITEM_BY_ID = gql`
                 path
                 sequence
                 type
-                uid
+                id
               }
               itemAssociationInvMastU {
                 associatedInvMastUid
@@ -68,7 +68,7 @@ const GET_ITEM_BY_ID = gql`
                 modifiedBy
                 quantity
                 type
-                uid
+                id
               }
               itemAssociationAssociatedInvMastU {
                 associatedInvMastUid
@@ -79,7 +79,7 @@ const GET_ITEM_BY_ID = gql`
                 modifiedBy
                 quantity
                 type
-                uid
+                id
               }
               itemLink {
                 audienceType
@@ -93,10 +93,10 @@ const GET_ITEM_BY_ID = gql`
                 sequence
                 thumbnail
                 title
-                uid
+                id
               }
               techSpec {
-                attributeCategoryId
+                attributeId
                 createDate
                 createdBy
                 invMastUid
@@ -104,7 +104,7 @@ const GET_ITEM_BY_ID = gql`
                 modifiedBy
                 name
                 sequence
-                uid
+                id
                 value
               }
         }
@@ -301,6 +301,7 @@ export default function ItemDetailPage({history}){
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
 
+  itemId = parseInt(itemId,10)
   const { 
     loading, 
     error, 

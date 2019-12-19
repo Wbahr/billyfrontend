@@ -12,6 +12,7 @@ import Login from '../pageComponents/Login/loginPage'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
 
 function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -65,6 +66,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
+        <WrapperRoute exact path='/viewCart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
   }

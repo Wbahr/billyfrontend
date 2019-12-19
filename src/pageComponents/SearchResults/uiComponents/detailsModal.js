@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loader from '../../_common/loader'
+import Context from '../../../config/context'
 
 const Div = styled.div`
   display: flex;
@@ -164,6 +165,12 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     }
   })
 
+  function handleSetQuantity(quantity){
+    if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
+      setQuantity(quantity)
+    }
+  }
+
   if(open && !_.isNil(invMastUid) && !searchSent.current){
     searchSent.current = true
     performItemDetailSearch()
@@ -214,7 +221,18 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
               </DivRow>
               <DivRow>
                 <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
-                <ButtonRed>Add to Cart</ButtonRed>
+                <Context.Consumer>
+                  {({addItem}) => (
+                    <ButtonRed onClick={()=>{
+                      addItem({
+                        'frecno': invMastUid,
+                        'quantity': parseInt(quantity, 10),
+                        'itemNotes': '',
+                        'requestedShipDate': new Date()
+                      }), hideDetailsModal(), setQuantity(1)
+                      }}>Add to Cart</ButtonRed>
+                  )}
+                </Context.Consumer>
               </DivRow>
             </DivRow>
             <DivRow>

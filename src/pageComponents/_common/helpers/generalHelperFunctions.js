@@ -13,3 +13,14 @@ export function requiredField(value) {
   }
   return valid
 }
+
+export function formatCurrency(number){
+  let formattedCurrency
+  if(isNaN(number)){
+    formattedCurrency = 'NaN'
+  } else {
+    formattedCurrency = number.toFixed(2)
+    formattedCurrency = '$' + formattedCurrency
+  }
+  return formattedCurrency
+}

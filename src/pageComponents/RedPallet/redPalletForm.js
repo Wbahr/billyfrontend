@@ -173,7 +173,7 @@ const DivSubmitContainer = styled.div`
 `
 
 const validate = (values) => {
-  console.log('values',JSON.stringify(values))
+  // console.log('values',JSON.stringify(values))
 }
 
 const cleanPhoneNumber = (phonenum) => {

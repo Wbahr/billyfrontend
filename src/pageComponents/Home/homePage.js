@@ -8,7 +8,6 @@ import SuggestedSearch from './uiComponents/suggestedSearch'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
 
-
 const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
