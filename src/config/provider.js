@@ -73,7 +73,6 @@ export default function Provider(props) {
     onCompleted: result => {
       let results = result.updateShoppingCart
       localStorage.setItem("shoppingCartToken", results.token)
-      console.log('results', results)
       if(loadCart.current){
         setShoppingCart(JSON.parse(results.cartData))
         setOrderNotes(results.orderNotes)
@@ -85,7 +84,6 @@ export default function Provider(props) {
 
   const [getItemDetails] = useLazyQuery(GET_ITEM_BY_ID, {
     onCompleted: result => {
-      console.log('handleAddItem ->', result)
     }
   })
 

@@ -205,7 +205,6 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
     Content = (<p>{item.freqno}</p>)
   } else {
     let imagePath
-    console.log('items details', itemDetails)
     let resultImage = _.get(itemDetails,`image[0].path`,null)
     if (_.isNil(resultImage)){
       imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'

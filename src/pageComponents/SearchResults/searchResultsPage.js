@@ -244,7 +244,6 @@ export default function SearchResultsPage(props) {
   }
 
   function handleUpdatedCategoryToggle(categoryType, selectedCategory){
-    console.log('selectedCategory', selectedCategory)
     if(categoryType === 'parent'){
       setParentCategory(selectedCategory)
     } else {
