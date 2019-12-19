@@ -23,12 +23,12 @@ const GET_CATEGORY_SEARCH = gql`
       name
       nameForUrl
       parentId
-      uid
+      id
       children {
         name
         nameForUrl
         parentId
-        uid
+        id
       }
     }
   }
