@@ -25,6 +25,8 @@ const NewsletterLabel = styled.label`
 const NewsletterInput = styled.input`
   height: 35px;
   width: 300px;
+  font-weight: 600;
+  color: rgb(33, 37, 41);
   border: 0;
   margin: 0 12px;
   padding: 4px 12px;
@@ -161,35 +163,35 @@ export default function FooterComponent() {
           </DivAirline>
           <DivMenu>
             <Head>Products</Head>
-            <Item>Grapes</Item>
-            <Item>Toast</Item>
-            <Item>Salmon</Item>
-            <Item>Fried Eggs</Item>
-            <Item>Salad</Item>
-            <Item>Tomatoes</Item>
-            <Item>Potatoes</Item>
+            <Item>Valves</Item>
+            <Item>Hydraulics</Item>
+            <Item>Gears</Item>
+            <Item>Tubing</Item>
+            <Item>Pumps</Item>
+            <Item>Aluminum Framing</Item>
+            <Item>Controls</Item>
           </DivMenu>
 
           <DivMenu>
             <Head>Products</Head>
-            <Item>Grapes</Item>
-            <Item>Toast</Item>
-            <Item>Salmon</Item>
-            <Item>Fried Eggs</Item>
-            <Item>Salad</Item>
-            <Item>Tomatoes</Item>
-            <Item>Potatoes</Item>
+            <Item>Valves</Item>
+            <Item>Hydraulics</Item>
+            <Item>Gears</Item>
+            <Item>Tubing</Item>
+            <Item>Pumps</Item>
+            <Item>Aluminum Framing</Item>
+            <Item>Controls</Item>
           </DivMenu>
 
           <DivMenu>
             <Head>Products</Head>
-            <Item>Grapes</Item>
-            <Item>Toast</Item>
-            <Item>Salmon</Item>
-            <Item>Fried Eggs</Item>
-            <Item>Salad</Item>
-            <Item>Tomatoes</Item>
-            <Item>Potatoes</Item>
+            <Item>Valves</Item>
+            <Item>Hydraulics</Item>
+            <Item>Gears</Item>
+            <Item>Tubing</Item>
+            <Item>Pumps</Item>
+            <Item>Aluminum Framing</Item>
+            <Item>Controls</Item>
           </DivMenu>
 
           <DivSocial>
