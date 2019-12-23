@@ -144,7 +144,7 @@ export default function FooterComponent() {
   return(
     <>
       <Newsletter>
-        <NewsletterLabel>Subscribe to Airline Insiders</NewsletterLabel><NewsletterInput /><NewsletterButton>Subscribe</NewsletterButton>
+        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput /><NewsletterButton>Subscribe</NewsletterButton>
       </Newsletter>
       <ContainerTop>
         <ContentContainer>
