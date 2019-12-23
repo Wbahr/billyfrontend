@@ -4,8 +4,39 @@ import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Newsletter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end
   background-color: black;
   height: 70px;
+  background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) ), url("https://www.airlinehyd.com/customer/aihyco/images/Headers/Basic_Background.png");
+  background-color: black;
+  box-shadow: inset 0px 1px 2px black;
+  padding-right: 350px;
+`
+
+const NewsletterLabel = styled.label`
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+`
+
+const NewsletterInput = styled.input`
+  height: 35px;
+  width: 300px;
+  border: 0;
+  margin: 0 12px;
+  padding: 4px 12px;
+`
+
+const NewsletterButton = styled.button`
+  height: 35px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  background-color: black;
+  border: 0;  
 `
 
 const ContainerTop = styled.div`
@@ -19,7 +50,6 @@ const ContainerTop = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
   width: 1000px;
   margin: 0 auto;
@@ -35,17 +65,45 @@ const Container = styled.div`
 
 const DivSocial = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 500px;
+`
+
+const DivSocialIcons = styled.div`
+  display: flex;
   justify-content: space-between;
-  width: 150px;
+  width: 170px;
   height: 30px;
 `
 
 const DivAirline = styled.div`
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  justify-content: space-between;
   width: 500px;
+  margin-right: 50px;
+`
+
+const DivMenu = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 200px; 
+  margin: 8px 32px;
+`
+const Head = styled.p`
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+  margin: 0;
+`
+
+const Item = styled.p`
+  font-size: 12px;
+  font-weight: 300;
+  color: grey;
+  margin: 0;
+  margin-left: 4px;
+  line-height: 1.5;
 `
 
 const ADim = styled.a`
@@ -72,22 +130,21 @@ const P = styled.p`
 const DivRow = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 9px;
 `
 
 const ACallUs = styled.a`
-  height: 100%;
   font-size: 20px;
   font-weight: 600;
   margin: 0 0 0 8px;
 `
 
 export default function FooterComponent() {
-  
+
   return(
     <>
       <Newsletter>
-
+        <NewsletterLabel>Subscribe to Airline Insiders</NewsletterLabel><NewsletterInput /><NewsletterButton>Subscribe</NewsletterButton>
       </Newsletter>
       <ContainerTop>
         <ContentContainer>
@@ -102,12 +159,46 @@ export default function FooterComponent() {
             <DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow>
             <DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
           </DivAirline>
+          <DivMenu>
+            <Head>Products</Head>
+            <Item>Grapes</Item>
+            <Item>Toast</Item>
+            <Item>Salmon</Item>
+            <Item>Fried Eggs</Item>
+            <Item>Salad</Item>
+            <Item>Tomatoes</Item>
+            <Item>Potatoes</Item>
+          </DivMenu>
+
+          <DivMenu>
+            <Head>Products</Head>
+            <Item>Grapes</Item>
+            <Item>Toast</Item>
+            <Item>Salmon</Item>
+            <Item>Fried Eggs</Item>
+            <Item>Salad</Item>
+            <Item>Tomatoes</Item>
+            <Item>Potatoes</Item>
+          </DivMenu>
+
+          <DivMenu>
+            <Head>Products</Head>
+            <Item>Grapes</Item>
+            <Item>Toast</Item>
+            <Item>Salmon</Item>
+            <Item>Fried Eggs</Item>
+            <Item>Salad</Item>
+            <Item>Tomatoes</Item>
+            <Item>Potatoes</Item>
+          </DivMenu>
 
           <DivSocial>
-            <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
-            <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
-            <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
-            <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
+            <DivSocialIcons>
+              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
+            </DivSocialIcons>
           </DivSocial>
         </ContentContainer>
       </ContainerTop>
