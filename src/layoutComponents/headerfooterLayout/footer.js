@@ -16,6 +16,7 @@ const Newsletter = styled.div`
 `
 
 const NewsletterLabel = styled.label`
+  font-family: ProximaBold;
   font-size: 18px;
   font-weight: 700;
   color: white;
@@ -31,9 +32,13 @@ const NewsletterInput = styled.input`
   margin: 0 12px;
   padding: 4px 12px;
   text-transform: uppercase;
+  ::placeholder {
+    text-transform: none;
+  }
 `
 
 const NewsletterButton = styled.button`
+  font-family: ProximaBold;
   height: 35px;
   color: white;
   font-size: 18px;
@@ -147,7 +152,7 @@ export default function FooterComponent() {
   return(
     <>
       <Newsletter>
-        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput /><NewsletterButton>Subscribe</NewsletterButton>
+        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><NewsletterButton>Subscribe</NewsletterButton>
       </Newsletter>
       <ContainerTop>
         <ContentContainer>

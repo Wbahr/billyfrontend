@@ -51,7 +51,11 @@ class App extends React.Component {
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
+        {/* my account section */}
         <WrapperRoute exact path='/account' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/dashboard' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/orders' component={Home} layout={HeaderFooterLayout}/>
+
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
@@ -66,7 +70,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/viewCart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/view-cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
   }

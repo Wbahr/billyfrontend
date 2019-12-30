@@ -93,7 +93,7 @@ export default function ShopOurProducts(props) {
       <div>
         <div>
           <SectionHeader
-            text='My Account'
+            text='Categories'
           />
         </div>
         <Div>

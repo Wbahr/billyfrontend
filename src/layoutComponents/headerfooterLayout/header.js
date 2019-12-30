@@ -153,7 +153,7 @@ export default function HeaderComponent(props) {
             <A>|</A>
             <Context.Consumer>
               {({cart}) => (
-                  <Link to='/viewCart' style={{ textDecoration: 'none' }}>
+                  <Link to='/view-cart' style={{ textDecoration: 'none' }}>
                     <A>Cart({cart.length})</A>
                   </Link>
               )}
