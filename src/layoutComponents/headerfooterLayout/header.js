@@ -122,7 +122,7 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
-  let isSignedIn = false
+  let isSignedIn = true
   let isAnonmyous = false
   let itemsInCart = 4
 
@@ -149,7 +149,7 @@ export default function HeaderComponent(props) {
             </Div>
             { isSignedIn ? <A onClick={()=>{handleSignOut()}}>Sign Out</A> : <A onClick={()=>props.history.push('/login')}>Sign In</A> }
             <A>|</A>
-            { isSignedIn ? <A onClick={()=>props.history.push('/account')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
+            { isSignedIn ? <A onClick={()=>props.history.push('/account/dashboard')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
             <A>|</A>
             <Context.Consumer>
               {({cart}) => (

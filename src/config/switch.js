@@ -6,6 +6,7 @@ import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/h
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
+import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
@@ -52,9 +53,9 @@ class App extends React.Component {
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
         {/* my account section */}
-        <WrapperRoute exact path='/account' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/dashboard' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/orders' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account' component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/orders' component={AccountDashboard} layout={HeaderFooterLayout}/>
 
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
