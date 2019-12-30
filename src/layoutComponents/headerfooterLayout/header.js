@@ -63,7 +63,7 @@ const NavItem =styled.a`
 
 const InputSearch = styled.input`
   width: 300px;
-  height: 30px;
+  height: 40px;
   font-size: 14px;
   border-color: #dadada;
   border-top: 1px #dadada solid;
@@ -71,19 +71,20 @@ const InputSearch = styled.input`
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
   padding: 0 4px;
-  box-shadow: inset 0px 2px 3px #c1c1c1;
-  border-radius: 3px 0 0 3px;
+  box-shadow: inset 0px 1px 1px #c1c1c1;
+  // border-radius: 3px 0 0 3px;
 `
 
 const ButtonSearch = styled.button`
-  width: 70px;
-  height: 30px;
-  background-color: rgb(219, 22, 51);
+  width: 50px;
+  height: 40px;
+  background-color: white;
   color: white;
   font-weight: 500;
   border: 0;
-  border-radius: 0 3px 3px 0;
-  box-shadow: inset 0px 2px 3px #7f0c1d;
+  // border-radius: 0 3px 3px 0;
+  // box-shadow: inset 0px 2px 3px #7f0c1d;
+  box-shadow: inset 0px 1px 1px #c1c1c1;
   font-size: 14px;
 `
 
@@ -190,7 +191,9 @@ export default function HeaderComponent(props) {
           </LinkContainer>
           <Div>
             <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
-            <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
+            <ButtonSearch onClick={handleSearch}>
+              <FontAwesomeIcon icon="search" color="#007bff" size="lg"/>
+            </ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
