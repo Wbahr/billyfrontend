@@ -64,13 +64,13 @@ const NavItem =styled.a`
 const InputSearch = styled.input`
   width: 350px;
   height: 40px;
-  font-size: 14px;
+  font-size: 16px;
   border-color: #dadada;
   border-top: 1px #dadada solid;
   border-left: 1px #dadada solid;
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
-  padding: 0 8px;
+  padding: 0 12px;
   box-shadow: inset 0px 1px 1px #c1c1c1;
 `
 
