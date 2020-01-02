@@ -10,7 +10,7 @@ const DivContainer = styled.div`
   height: 140px;
   cursor: pointer;
   margin: 0 16px 16px 16px;
-  background-image: url('');
+  background-image: url('https://www.airlinehyd.com/customer/aihyco/images/Home/CategoryBackground.jpg');
   background-color: grey;
   font-family: ProximaBold;
   font-size: 20px;

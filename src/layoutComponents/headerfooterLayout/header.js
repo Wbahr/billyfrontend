@@ -86,6 +86,7 @@ const ButtonSearch = styled.button`
   font-weight: 500;
   border: 0;
   font-size: 14px;
+  border-radius: 0 5px 5px 0;
 `
 
 const Div = styled.div`
