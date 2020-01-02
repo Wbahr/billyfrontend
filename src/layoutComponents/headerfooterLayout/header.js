@@ -71,19 +71,20 @@ const InputSearch = styled.input`
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
   padding: 0 12px;
-  box-shadow: inset 0px 1px 1px #c1c1c1;
+  &:focus{
+    border-top: 1px #b4b4b4 solid;
+    border-left: 1px #b4b4b4 solid;
+    border-bottom: 1px #b4b4b4 solid;
+  }
 `
 
 const ButtonSearch = styled.button`
   width: 50px;
   height: 40px;
-  background-image: linear-gradient(#950f23, #DB1633);
+  background-image: linear-gradient(to top left, #950f23, #DB1633);
   color: white;
   font-weight: 500;
   border: 0;
-  // border-radius: 0 3px 3px 0;
-  // box-shadow: inset 0px 2px 3px #7f0c1d;
-  box-shadow: inset 0px 1px 1px #c1c1c1;
   font-size: 14px;
 `
 
