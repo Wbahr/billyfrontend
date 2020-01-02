@@ -30,6 +30,7 @@ const DivCheckoutButton = styled.div`
   align-items: center;
   justify-content: center;
   background-color: #db1633;
+  background-image: linear-gradient(to top left, #950f23, #DB1633);
   color: white;
   padding: 8px 16px;
   cursor: pointer;
@@ -45,10 +46,12 @@ const DivCheckoutButton = styled.div`
 `
 
 const DivQuoteButton = styled(DivCheckoutButton)`
+  background-image: none;
   background-color: #535353;
 `
 
 const DivShoppinglistButton = styled(DivCheckoutButton)`
+  background-image: none;
   background-color: white;
   color: #535353;
   border: 2px solid #535353;
