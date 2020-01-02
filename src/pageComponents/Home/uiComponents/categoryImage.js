@@ -3,32 +3,17 @@ import styled from 'styled-components'
 import _ from 'lodash'
 
 const DivContainer = styled.div`
-  position: relative;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 140px;
   cursor: pointer;
   margin: 0 16px 16px 16px;
-`
-
-const DivImgWrapper = styled.div`
-  width: 165px;
-  height: 140px;
-`
-
-const DivLense = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transform: translate(0%, -100%);
-  background-image: linear-gradient(transparent, black);
-  opacity: .8;
-  &:hover{
-    background-image: linear-gradient(transparent, #0056b3);
-  }
-`
-
-const DivText = styled.div`
-  position: absolute;
-  transform: translate(50%, -300%);
+  background-image: url('');
+  background-color: grey;
+  font-family: ProximaBold;
+  font-size: 20px;
   color: white;
 `
 
@@ -43,13 +28,7 @@ export default function CategoryImage({text,src,history}) {
   let urlText = convertText(text)
   return(
     <DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>
-      <DivImgWrapper>
-        <img src={src} width='165px' height='140px'/>
-      </DivImgWrapper>
-      <DivLense />
-      <DivText>
-        {text}
-      </DivText>
+      {text}
     </DivContainer>
   )
 }

@@ -108,7 +108,7 @@ export default function OrderSummary() {
         </DivLineItem>   
         <p>Total (without tax) $100.00</p>
         <DivButtonContainer>
-          <DivCheckoutButton>
+          <DivCheckoutButton onClick={(e)=>console.log('-> ', e.target.value)}>
             <FontAwesomeIcon icon="lock" color="white"/>
             <p>Start Secure Checkout</p>
           </DivCheckoutButton>

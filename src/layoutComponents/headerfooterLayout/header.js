@@ -62,7 +62,7 @@ const NavItem =styled.a`
 `
 
 const InputSearch = styled.input`
-  width: 300px;
+  width: 350px;
   height: 40px;
   font-size: 14px;
   border-color: #dadada;
@@ -70,15 +70,14 @@ const InputSearch = styled.input`
   border-left: 1px #dadada solid;
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
-  padding: 0 4px;
+  padding: 0 8px;
   box-shadow: inset 0px 1px 1px #c1c1c1;
-  // border-radius: 3px 0 0 3px;
 `
 
 const ButtonSearch = styled.button`
   width: 50px;
   height: 40px;
-  background-color: white;
+  background-image: linear-gradient(#950f23, #DB1633);
   color: white;
   font-weight: 500;
   border: 0;
@@ -124,7 +123,6 @@ export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
   let isSignedIn = true
   let isAnonmyous = false
-  let itemsInCart = 4
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonce=${new Date().getTime()}`)
@@ -153,7 +151,7 @@ export default function HeaderComponent(props) {
             <A>|</A>
             <Context.Consumer>
               {({cart}) => (
-                  <Link to='/view-cart' style={{ textDecoration: 'none' }}>
+                  <Link to='/cart' style={{ textDecoration: 'none' }}>
                     <A>Cart({cart.length})</A>
                   </Link>
               )}
@@ -192,7 +190,7 @@ export default function HeaderComponent(props) {
           <Div>
             <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>
-              <FontAwesomeIcon icon="search" color="#007bff" size="lg"/>
+              <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg"/>
             </ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}

@@ -75,7 +75,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/view-cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
   }
