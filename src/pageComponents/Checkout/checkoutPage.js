@@ -53,8 +53,15 @@ const H3 = styled.h3`
   margin: 0 0 2px 4px;
 `
 
+const Pstep = styled.span`
+  font-family: ProximaBold;
+  text-transform: uppercase;
+  font-size: 20px;
+`
+
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
+  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
 
   return(
     <DivContainer>
@@ -62,11 +69,14 @@ export default function CheckoutPage({history}) {
         <Div>
           <DivRow>
             <H3>Checkout</H3>
+            <Pstep>({stepLabel[currentStep]})</Pstep>
           </DivRow>
         </Div>
         <CheckoutWizard step={currentStep} />
-        <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>
-        <button onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>
+        {currentStep > 0 && <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
+        {currentStep < (stepLabel.length - 1) && <button onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>}
+        {currentStep === (stepLabel.length - 1) && <button onClick={()=>{console.log('confirm')}}>Submit</button>}
+
       </DivCheckoutCol>
       <DivOrderTotalCol>
         {/* <OrderSummary/> */}

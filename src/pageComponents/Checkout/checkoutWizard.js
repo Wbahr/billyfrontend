@@ -6,44 +6,39 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik} from 'formik'
+import {ShippingScheduleForm, defaultValues as DefaultShippingScheduleValues} from './wizardSteps/shippingScheduleForm'
+import {ShipToForm, defaultValues as DefaultShipToValues} from './wizardSteps/shipToForm'
+import {BillingInfoForm, defaultValues as DefaultBillToValues} from './wizardSteps/billingInfoForm'
 
 
 export default function CheckoutWizard({step}) {
-  const ContactForm = ({
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    values,
-    errors,
-  }) => (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        onChange={handleChange}
-        onBlur={handleBlur}
-        value={values.name}
-        name="name"
-      />
-      {errors.name && <div>{errors.name}</div>}
-      <button type="submit">Submit</button>
-    </form>
-  )
-
   switch(step){
+    case 0:
+      return(
+        <Formik 
+          initialValues={DefaultShippingScheduleValues}
+          component={ShippingScheduleForm} 
+        />
+      )
     case 1:
       return(
-        <Formik component={ContactForm} />
+        <Formik 
+          initialValues={DefaultShipToValues}
+          component={ShipToForm} 
+        />
       )
     case 2:
       return(
-        <Formik component={ContactForm} />
+        <Formik 
+          initialValues={DefaultBillToValues}
+          component={BillingInfoForm} 
+        />
       )
     default: 
       return(
-        <Formik component={ContactForm} />
+        <p>ah</p>
       )
   }
-
 }
 
 CheckoutWizard.propTypes = {
