@@ -81,7 +81,7 @@ const DivOrderTotalCol = styled.div`
 `
 
 
-export default function SubtotalBox() {
+export default function SubtotalBox({history}) {
   const [price, setPrice] = useState(0)
   return(
     <Container>
@@ -101,7 +101,7 @@ export default function SubtotalBox() {
 
       <Div>
         <h5>Subtotal: $100.00</h5>
-        <DivCheckoutButton>
+        <DivCheckoutButton onClick={()=>history.push('/checkout')}>
           <FontAwesomeIcon icon="lock" color="white"/>
           <p>Start Secure Checkout</p>
         </DivCheckoutButton>

@@ -30,7 +30,7 @@ const DivOrderTotalCol = styled.div`
   }
 `
 
-export default function ShoppingCartPage() {
+export default function ShoppingCartPage(props) {
   const [showSplitLineModal, setShowSplitLineModal] = useState(false)
   const [index, setIndex] = useState(null)
 
@@ -54,10 +54,14 @@ export default function ShoppingCartPage() {
         <ShoppingCart
           showSplitLineModal={handleShowSplitLineModal}
         />
-        <SubtotalBox/>
+        <SubtotalBox
+          history={props.history}
+        />
       </DivShoppingCartCol>
       <DivOrderTotalCol>
-        <OrderSummary/>
+        <OrderSummary
+          history={props.history}
+        />
       </DivOrderTotalCol>
     </DivContainer>
   )

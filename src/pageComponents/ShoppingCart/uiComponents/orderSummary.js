@@ -21,6 +21,8 @@ const Div = styled.div`
 
 const H4 = styled.h4`
   width: 100%;
+  font-family: ProximaBold;
+  text-transform: uppercase;
   padding-left: 4px;
   border-bottom: 1px solid darkgrey;
 `
@@ -88,7 +90,7 @@ const DivOrderTotalCol = styled.div`
   flex-direction: column;
 `
 
-export default function OrderSummary() {
+export default function OrderSummary({history}) {
   return(
     <>
       <Div>
@@ -111,7 +113,7 @@ export default function OrderSummary() {
         </DivLineItem>   
         <p>Total (without tax) $100.00</p>
         <DivButtonContainer>
-          <DivCheckoutButton onClick={(e)=>console.log('-> ', e.target.value)}>
+          <DivCheckoutButton onClick={()=>history.push('/checkout')}>
             <FontAwesomeIcon icon="lock" color="white"/>
             <p>Start Secure Checkout</p>
           </DivCheckoutButton>

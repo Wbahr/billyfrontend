@@ -7,6 +7,7 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
 import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
+import Checkout from '../pageComponents/Checkout/checkoutPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
@@ -52,17 +53,15 @@ class App extends React.Component {
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
-
         <WrapperRoute exact path='/account' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/orders' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/payment-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/shipping-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/wishlists' component={AccountDashboard} layout={HeaderFooterLayout}/>
-
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/checkout' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
