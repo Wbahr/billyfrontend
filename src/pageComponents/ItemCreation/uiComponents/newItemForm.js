@@ -116,7 +116,7 @@ const NewItem = () => (
     <H4>for internal new items</H4>
     <Formik
       initialValues={{  itemID: 'b', itemDescription: 'c', defaultSalesDis: 'd', defaultPurchaseDis: 'e', 
-      supplierID: 'f', DivisionID: 'g',  UOM: 'EA', baseUnit: 'h', locationID: '2100', productGroupID: 'j',
+      supplierID: 'f', DivisionID: 'f',  UOM: 'EA', baseUnit: 'h', locationID: '2100', productGroupID: 'j',
         taxGroupID: 'ALL', replenishmentLoc: 'k', replenishmentMethod: 'l', glAccountNo: 'm', averageLeadTime: 'n', primarySupplier: 'o'}}
       validate={values => {
         let errors = {};
@@ -186,7 +186,7 @@ const NewItem = () => (
                   <option value="other2">other2</option>
                   <option value="other3">other3</option>
               </Field>
-              <FormikInput label="Supplier ID" type="text" name="supplierID" />
+              <FormikInput label="Supplier ID" type="text" name="supplierID" onChange="form.setFieldValue('supplierID', e.target.value), form.setFieldValue('DivisionID', e.target.value)" />
               <FormikInput label="Division ID" type="text" name="DivisionID" disabled="true" />
               <FormikInput label="Base Unit" type="text" name="UOM" disabled="true" />
           
