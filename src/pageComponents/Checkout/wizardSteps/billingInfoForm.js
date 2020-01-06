@@ -9,18 +9,21 @@ export const BillingInfoForm = ({
   errors,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field name="name" placeholder="Contact Name" />
-    <Field name="address1" placeholder="Address 1" />
-    <Field name="address2" placeholder="Address 2" />
-    <Field name="city" placeholder="City" />
-    <Field name="state" placeholder="State" />
-    <Field name="zip" placeholder="Zip" />    
-    <Field name="county" placeholder="Country" />
+    <Field name="billing.name" placeholder="Contact Name" />
+    <Field name="billing.address1" placeholder="Address 1" />
+    <Field name="billing.address2" placeholder="Address 2" />
+    <Field name="billing.city" placeholder="City" />
+    <Field name="billing.state" placeholder="State" />
+    <Field name="billing.zip" placeholder="Zip" />    
+    <Field name="billing.county" placeholder="Country" />
     {errors.name && <div>{errors.name}</div>}
     <button type="submit">Submit</button>
+
   </form>
 )
 
 export const defaultValues = {
-  name: 'test bob'
+  billing: {
+    name: 'test bob'
+  }
 }

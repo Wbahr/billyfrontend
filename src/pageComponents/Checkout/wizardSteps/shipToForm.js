@@ -9,18 +9,21 @@ export const ShipToForm = ({
   errors,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field name="name" placeholder="Contact Name" />
-    <Field name="address1" placeholder="Address 1" />
-    <Field name="address2" placeholder="Address 2" />
-    <Field name="city" placeholder="City" />
-    <Field name="state" placeholder="State" />
-    <Field name="zip" placeholder="Zip" />    
-    <Field name="county" placeholder="Country" />
+    <Field name="shipto.name" placeholder="Contact Name" />
+    <Field name="shipto.address1" placeholder="Address 1" />
+    <Field name="shipto.address2" placeholder="Address 2" />
+    <Field name="shipto.city" placeholder="City" />
+    <Field name="shipto.state" placeholder="State" />
+    <Field name="shipto.zip" placeholder="Zip" />    
+    <Field name="shipto.county" placeholder="Country" />
     {errors.name && <div>{errors.name}</div>}
     <button type="submit">Submit</button>
+
   </form>
 )
 
 export const defaultValues = {
-  name: 'test bob'
+  shipto: {
+    name: 'shipping name'
+  }
 }

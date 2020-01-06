@@ -9,15 +9,21 @@ import {Formik} from 'formik'
 import {ShippingScheduleForm, defaultValues as DefaultShippingScheduleValues} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm, defaultValues as DefaultShipToValues} from './wizardSteps/shipToForm'
 import {BillingInfoForm, defaultValues as DefaultBillToValues} from './wizardSteps/billingInfoForm'
+import ConfirmationScreen from './wizardSteps/confirmationScreen'
 
 
 export default function CheckoutWizard({step}) {
+  const [checkValues, setCheckValues] = useState({})
+
   switch(step){
     case 0:
       return(
         <Formik 
           initialValues={DefaultShippingScheduleValues}
           component={ShippingScheduleForm} 
+          onSubmit={values => {
+            console.log(values)
+          }}
         />
       )
     case 1:
@@ -25,6 +31,9 @@ export default function CheckoutWizard({step}) {
         <Formik 
           initialValues={DefaultShipToValues}
           component={ShipToForm} 
+          onSubmit={values => {
+            console.log(values)
+          }}
         />
       )
     case 2:
@@ -32,7 +41,14 @@ export default function CheckoutWizard({step}) {
         <Formik 
           initialValues={DefaultBillToValues}
           component={BillingInfoForm} 
+          onSubmit={values => {
+            console.log(values)
+          }}
         />
+      )
+    case 3:
+      return(
+        <ConfirmationScreen />
       )
     default: 
       return(

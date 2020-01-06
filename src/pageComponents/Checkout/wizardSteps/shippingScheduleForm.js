@@ -9,18 +9,38 @@ export const ShippingScheduleForm = ({
   errors,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field name="name" placeholder="Contact Name" />
-    <Field name="address1" placeholder="Address 1" />
-    <Field name="address2" placeholder="Address 2" />
-    <Field name="city" placeholder="City" />
-    <Field name="state" placeholder="State" />
-    <Field name="zip" placeholder="Zip" />    
-    <Field name="county" placeholder="Country" />
-    {errors.name && <div>{errors.name}</div>}
+    <label>How do you want your order to ship?</label>
+    <Field as="select" name="schedule.packing_basis">
+      <option value="0">Complete</option>
+      <option value="1">When Ready</option>
+      <option value="2">By Line</option>
+    </Field>
+    {values.schedule.packing_basis === "0" && <p>Your order will ship complete with all parts.</p>}
+    {values.schedule.packing_basis === "1" && <p>Your order will ship in increments as items become ready.</p>}
+    {values.schedule.packing_basis === "2" && <p>Please specify dates below (by line) when you want each part to ship.</p>}
+    {/* {values.schedule.packing_basis === "2" &&
+      <FieldArray
+        name="schedule.requested_dates"
+        render={arrayHelpers => (
+          <div>
+            {(values.friends && values.friends.length > 0) && (
+              values.friends.map((friend, index) => (
+                <div key={index}>
+                  <Field name={`schedule.requested_dates.${index}`} />
+                </div>
+              ))
+            )}
+          </div>
+        )}
+      />
+    } */}
     <button type="submit">Submit</button>
   </form>
 )
 
 export const defaultValues = {
-  name: 'test bob'
+  schedule: {
+    packing_basis: "0",
+    requested_dates: []
+  }
 }

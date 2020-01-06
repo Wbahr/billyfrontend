@@ -59,6 +59,11 @@ const Pstep = styled.span`
   font-size: 20px;
 `
 
+const DivNavigation = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
@@ -73,10 +78,12 @@ export default function CheckoutPage({history}) {
           </DivRow>
         </Div>
         <CheckoutWizard step={currentStep} />
-        {currentStep > 0 && <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
-        {currentStep < (stepLabel.length - 1) && <button onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>}
-        {currentStep === (stepLabel.length - 1) && <button onClick={()=>{console.log('confirm')}}>Submit</button>}
-
+        <DivNavigation>
+          {currentStep === 0 && <button onClick={()=>history.push('/cart')}>Back to Cart</button>}
+          {currentStep > 0 && <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
+          {currentStep < (stepLabel.length - 1) && <button onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>}
+          {currentStep === (stepLabel.length - 1) && <button onClick={()=>{console.log('confirm')}}>Submit</button>}
+        </DivNavigation>
       </DivCheckoutCol>
       <DivOrderTotalCol>
         {/* <OrderSummary/> */}
