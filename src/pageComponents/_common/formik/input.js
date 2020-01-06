@@ -47,7 +47,7 @@ export default function Input({
               meta,
             }) => (
               <>
-              <MainInput type={type} disabled={disabled} placeholder={placeholder} {...field} />
+              <MainInput type={type} disabled={disabled} placeholder={placeholder} onChange={e => {console.log('DivisionID', e.target.value)}} {...field} />
               {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
               </>
             )}
@@ -61,7 +61,7 @@ Input.propTypes = {
   type: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
 }
 
 Input.defaultProps = {
