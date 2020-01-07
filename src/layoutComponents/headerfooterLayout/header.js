@@ -123,7 +123,7 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
-  let isSignedIn = true
+  let isSignedIn = false
   let isAnonmyous = false
 
   function handleSearch() {

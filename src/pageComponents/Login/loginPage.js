@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -66,16 +67,55 @@ const Button = styled.button`
   }
 `
 
+const QUERY_LOGIN = gql`
+  query SubmitLogin($loginInfo: LoginInputGraphType){
+    submitLogin(login: $loginInfo){
+      success
+      message
+      isPasswordReset
+      authorizationInfo{
+        token
+        role
+        permissions,
+        limits {
+          limitType
+          limitValue
+        }
+        userInfo {
+          firstName
+          lastName
+          companyName
+        }
+      }
+    }
+  }
+`
+
 export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [forgotPassword, setforgotPassword] = useState(false)
 
-  useEffect(() => {
-  },[email, password])
+  // useEffect(() => {
+  // },[email, password])
+
+  const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
+    onCompleted: data => {
+      console.log('executeLogIn', data)
+    }
+  })
 
   function handleSignin(){
-    console.log('signing in')
+    executeLogIn(
+      {
+        variables: {
+          "loginInfo": {
+            "loginId": email,
+            "password": password
+          }
+        }
+      }
+    )
   }
 
   function setToken() {
