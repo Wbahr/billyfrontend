@@ -6,6 +6,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 // import OrderSummary from './uiComponents/orderSummary'
 import CheckoutWizard from './checkoutWizard'
+import Context from '../../config/context'
 
 const DivContainer = styled.div`
   display: flex;
@@ -77,7 +78,9 @@ export default function CheckoutPage({history}) {
             <Pstep>({stepLabel[currentStep]})</Pstep>
           </DivRow>
         </Div>
-        <CheckoutWizard step={currentStep} />
+        <Context.Consumer>
+          {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
+        </Context.Consumer>
         <DivNavigation>
           {currentStep === 0 && <button onClick={()=>history.push('/cart')}>Back to Cart</button>}
           {currentStep > 0 && <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}

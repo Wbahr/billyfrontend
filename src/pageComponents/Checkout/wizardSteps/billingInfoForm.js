@@ -28,7 +28,6 @@ export const BillingInfoForm = ({
     <Field name="billing.phone" placeholder="Phone" />
     {errors.name && <div>{errors.name}</div>}
     <button type="submit">Submit</button>
-
   </form>
 )
 
