@@ -95,41 +95,54 @@ export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [forgotPassword, setforgotPassword] = useState(false)
-
-  // useEffect(() => {
-  // },[email, password])
+  const [errorMessage, setErrorMessage] = useState('')
 
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
       console.log('executeLogIn', data)
+      let requestData = data.submitLogin
+      if(requestData.success){
+        setErrorMessage('')
+        localStorage.setItem('BearerToken', requestData.authorizationInfo.token)
+        if(requestData.isPasswordReset){
+
+        } else {
+
+        }
+      } else {
+        setErrorMessage(requestData.message)
+      }
     }
   })
 
   function handleSignin(){
-    executeLogIn(
-      {
-        variables: {
-          "loginInfo": {
-            "loginId": email,
-            "password": password
+    if(email.length === 0 || password.length === 0) {
+      setErrorMessage('Email and Password Required')
+    } else {
+      executeLogIn(
+        {
+          variables: {
+            "loginInfo": {
+              "loginId": email,
+              "password": password
+            }
           }
         }
-      }
-    )
-  }
-
-  function setToken() {
-    console.log('setting token')
+      )
+    }
   }
 
   function handleForgotPassword(){
     console.log('forgot password')
+    // history.push('/forgot-password')
   }
 
   return(
     <LoginPageContainer>
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
+      <p>{errorMessage}</p>
+      {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label for='email'>Email Address</Label>
         <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
@@ -138,7 +151,7 @@ export default function LoginPage({history}) {
         <Label for='password'>Password</Label>
         <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
       </DivInput>
-      <Button onClick={()=>handleSignin()}>Sign In</Button>
+      <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
       <A onClick={()=>handleForgotPassword()}>Forgot your Password?</A>
       <A onClick={()=> history.push('/signup')}>Create an Account</A>
 
