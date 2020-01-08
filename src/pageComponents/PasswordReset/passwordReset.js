@@ -78,6 +78,7 @@ const MUTATION_PASSWORD_RESET = gql`
 `
 
 export default function PasswordResetPage({history}) {
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -108,7 +109,7 @@ export default function PasswordResetPage({history}) {
           variables: {
             "passwordInfo": {
               "token": passwordToken,
-              "username": null,
+              "username": username,
               "newPassword": password
             }
           }
@@ -119,16 +120,20 @@ export default function PasswordResetPage({history}) {
 
   return(
     <PasswordResetPageContainer>
-      <PasswordResetModal 
+      {/* <PasswordResetModal 
         open={showSplitLineModal} 
         hideSplitLineModal={handleHideSplitLineModal}
         index={index}
-      />
+      /> */}
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Password Reset</P>
       {errorMessage.length > 0  && <p>{errorMessage}</p>}
       {infoMessage.length > 0  && <p>{infoMessage}</p>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
+      <DivInput>
+        <Label for='username'>Username</Label>
+        <Input id='username' onChange={(e)=>setUsername(e.target.value)} value={username}/>
+      </DivInput>
       <DivInput>
         <Label for='password'>Password</Label>
         <Input id='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
