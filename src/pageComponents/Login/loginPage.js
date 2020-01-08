@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import Context from '../../config/context'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -98,6 +99,8 @@ export default function LoginPage({history}) {
   const [infoMessage, setInfoMessage] = useState('')
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
 
+  const context = useContext(Context);
+
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
       console.log('executeLogIn', data)
@@ -111,7 +114,7 @@ export default function LoginPage({history}) {
         } else {
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-          
+          context.loginUser(requestData.authorizationInfo.userInfo)
           history.push('/')
         }
       } else {
