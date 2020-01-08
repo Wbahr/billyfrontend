@@ -110,7 +110,9 @@ export default function LoginPage({history}) {
           setPassword('')
         } else {
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
-          localStorage.setItem('userInfo', requestData.authorizationInfo.userInfo)
+          localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
+          
+          history.push('/')
         }
       } else {
         setErrorMessage(requestData.message)

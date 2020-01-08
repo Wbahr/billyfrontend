@@ -123,15 +123,9 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
-  let isSignedIn = false
-  let isAnonmyous = false
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonce=${new Date().getTime()}`)
-  }
-
-  function handleSignOut(){
-    console.log('signing out...')
   }
 
   return(
@@ -139,17 +133,40 @@ export default function HeaderComponent(props) {
       <NavTop>
         <NavBottomContainer>
           <div>
-            { (isSignedIn && !isAnonmyous) && <Puser>Hello, Bobby Panczer (Airline Hydraulics)</Puser>} 
-            { (isSignedIn && isAnonmyous) && <PeUser>Hello, Zach Linsell (Airline Hydraulics) [Emulating]</PeUser>}
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && true){
+                  return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName})</Puser>)
+                } else if (!_.isNil(userInfo) && false) {
+                  return(<PeUser>`Hello, ${userInfo.firstName} ${userInfo.lastName} (${userInfo.companyName}) [Emulating]`</PeUser>)
+                }
+              }}        
+            </Context.Consumer>
           </div>
           <Div>
             <Div>
               <FontAwesomeIcon icon="phone-alt" color="white"/>        
               <Aphone href="tel:+18009997378">800-999-7378</Aphone>
             </Div>
-            { isSignedIn ? <A onClick={()=>{handleSignOut()}}>Sign Out</A> : <A onClick={()=>props.history.push('/login')}>Sign In</A> }
+            <Context.Consumer>
+              {({userInfo, logoutUser}) => {
+                if (!_.isNil(userInfo)){
+                  return(<A onClick={()=>{logoutUser()}}>Sign Out</A>)
+                } else {
+                  return(<A onClick={()=>props.history.push('/login')}>Sign In</A> )
+                }
+              }}        
+            </Context.Consumer>
             <A>|</A>
-            { isSignedIn ? <A onClick={()=>props.history.push('/account/dashboard')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo)){
+                  return(<A onClick={()=>props.history.push('/account/dashboard')}>My Account</A>)
+                } else {
+                  return(<A onClick={()=>props.history.push('/signup')}>Create Account</A>)
+                }
+              }}        
+            </Context.Consumer>
             <A>|</A>
             <Context.Consumer>
               {({cart}) => (
