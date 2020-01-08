@@ -46,6 +46,7 @@ export default function Provider(props) {
   const [shoppingCart, setShoppingCart] = useState([])
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
+  const [userInfo, setUserInfo] = useState({"firstName":"Shannon","lastName":"Rush","companyName":"Dolomite Products Inc.","role":"CustomerContact","permissions":[],"limits":[],"__typename":"LoginUserInfoGraphType"})
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -86,6 +87,12 @@ export default function Provider(props) {
     onCompleted: result => {
     }
   })
+
+  function handleLogout(){
+    setUserInfo(null)
+    localStorage.removeItem('userInfo') 
+    localStorage.removeItem('apiToken') 
+  }
 
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
@@ -176,6 +183,10 @@ export default function Provider(props) {
     return (
       <Context.Provider
         value={{
+          userInfo: userInfo,
+          logoutUser: ()=>{
+            handleLogout()
+          },
           cart: shoppingCart,
           cartDisplay: shoppingCartDisplay,
           orderNotes: orderNotes,
