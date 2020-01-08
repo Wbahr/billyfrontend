@@ -119,6 +119,11 @@ export default function PasswordResetPage({history}) {
 
   return(
     <PasswordResetPageContainer>
+      <PasswordResetModal 
+        open={showSplitLineModal} 
+        hideSplitLineModal={handleHideSplitLineModal}
+        index={index}
+      />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Password Reset</P>
       {errorMessage.length > 0  && <p>{errorMessage}</p>}

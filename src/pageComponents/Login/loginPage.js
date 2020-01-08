@@ -96,6 +96,7 @@ export default function LoginPage({history}) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [infoMessage, setInfoMessage] = useState('')
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
 
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
