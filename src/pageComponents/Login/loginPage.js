@@ -4,6 +4,7 @@ import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
+import PasswordResetModal from '../_common/modals/resetPasswordModal'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -97,7 +98,7 @@ export default function LoginPage({history}) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [infoMessage, setInfoMessage] = useState('')
-  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
   const context = useContext(Context);
 
@@ -141,20 +142,19 @@ export default function LoginPage({history}) {
     }
   }
 
-  function handleForgotPassword(){
-    console.log('forgot password')
-    // history.push('/forgot-password')
-  }
-
   return(
     <LoginPageContainer>
+      <PasswordResetModal 
+        open={showPasswordResetModal} 
+        hideModal={()=>{setShowPasswordResetModal(false)}}
+      />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
       {errorMessage.length > 0  && <p>{errorMessage}</p>}
       {infoMessage.length > 0  && <p>{infoMessage}</p>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
-        <Label for='email'>Email Address</Label>
+        <Label for='email'>Username or Email</Label>
         <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
       </DivInput>
       <DivInput>
@@ -162,7 +162,7 @@ export default function LoginPage({history}) {
         <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
       </DivInput>
       <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
-      <A onClick={()=>handleForgotPassword()}>Forgot your Password?</A>
+      <A onClick={()=>setShowPasswordResetModal(true)}>Forgot your Password?</A>
       <A onClick={()=> history.push('/signup')}>Create an Account</A>
 
     </LoginPageContainer>

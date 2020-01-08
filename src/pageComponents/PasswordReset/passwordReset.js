@@ -4,6 +4,7 @@ import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useParams } from 'react-router-dom'
+import PasswordResetModal from '../_common/modals/resetPasswordModal'
 
 const PasswordResetPageContainer = styled.div`
   display: flex;
@@ -83,7 +84,9 @@ export default function PasswordResetPage({history}) {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [infoMessage, setInfoMessage] = useState('')
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
   let { passwordToken } = useParams()
+
 
   const [executePasswordReset, { loading, error, data }] = useMutation(MUTATION_PASSWORD_RESET, {
     onCompleted: data => {
@@ -120,11 +123,10 @@ export default function PasswordResetPage({history}) {
 
   return(
     <PasswordResetPageContainer>
-      {/* <PasswordResetModal 
-        open={showSplitLineModal} 
-        hideSplitLineModal={handleHideSplitLineModal}
-        index={index}
-      /> */}
+      <PasswordResetModal 
+        open={showPasswordResetModal} 
+        hideModal={()=>{setShowPasswordResetModal(false)}}
+      />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Password Reset</P>
       {errorMessage.length > 0  && <p>{errorMessage}</p>}
