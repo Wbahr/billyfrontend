@@ -103,7 +103,7 @@ export default function LoginPage({history}) {
       let requestData = data.submitLogin
       if(requestData.success){
         setErrorMessage('')
-        localStorage.setItem('BearerToken', requestData.authorizationInfo.token)
+        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         if(requestData.isPasswordReset){
 
         } else {
@@ -111,6 +111,7 @@ export default function LoginPage({history}) {
         }
       } else {
         setErrorMessage(requestData.message)
+        setPassword('')
       }
     }
   })
