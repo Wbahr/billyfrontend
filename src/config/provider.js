@@ -87,6 +87,14 @@ export default function Provider(props) {
     }
   })
 
+  function handleLogout(){
+    setUserInfo(null)
+    localStorage.removeItem('userInfo') 
+    localStorage.removeItem('apiToken') 
+    localStorage.removeItem('shoppingCartToken')
+    handleEmptyCart()
+  }
+
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
     getItemDetails({ variables: { itemId: item.frecno } })
