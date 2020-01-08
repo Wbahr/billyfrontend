@@ -84,6 +84,7 @@ export default function PasswordResetPage({history}) {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [infoMessage, setInfoMessage] = useState('')
+  const [showResendToken, setShowResendToken] = useState(false)
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
   let { passwordToken } = useParams()
 
@@ -93,10 +94,14 @@ export default function PasswordResetPage({history}) {
       console.log('executePasswordReset', data)
       let responseData = data.submitPasswordReset
       if(responseData.success){
+        setUsername('')
+        setShowResendToken('')
+        setErrorMessage('')
         setInfoMessage(responseData.message)
-        setTimeout(()=>{history.push('/login'), 1500})
+        setTimeout(()=>{history.push('/login')}, 1500)
       } else {
         setErrorMessage(responseData.message)
+        setShowResendToken(true)
         setPassword('')
         setConfirmPassword('')
       }
@@ -131,6 +136,7 @@ export default function PasswordResetPage({history}) {
       <P>Airline Hydraulics Password Reset</P>
       {errorMessage.length > 0  && <p>{errorMessage}</p>}
       {infoMessage.length > 0  && <p>{infoMessage}</p>}
+      {showResendToken && <A onClick={()=>{setShowPasswordResetModal(true)}}>Token Expired? Click here to send a new one</A>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label for='username'>Username</Label>
