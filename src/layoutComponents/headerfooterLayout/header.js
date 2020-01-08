@@ -62,29 +62,31 @@ const NavItem =styled.a`
 `
 
 const InputSearch = styled.input`
-  width: 300px;
-  height: 30px;
-  font-size: 14px;
+  width: 350px;
+  height: 40px;
+  font-size: 16px;
   border-color: #dadada;
   border-top: 1px #dadada solid;
   border-left: 1px #dadada solid;
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
-  padding: 0 4px;
-  box-shadow: inset 0px 2px 3px #c1c1c1;
-  border-radius: 3px 0 0 3px;
+  padding: 0 12px;
+  &:focus{
+    border-top: 1px #b4b4b4 solid;
+    border-left: 1px #b4b4b4 solid;
+    border-bottom: 1px #b4b4b4 solid;
+  }
 `
 
 const ButtonSearch = styled.button`
-  width: 70px;
-  height: 30px;
-  background-color: rgb(219, 22, 51);
+  width: 50px;
+  height: 40px;
+  background-image: linear-gradient(to top left, #950f23, #DB1633);
   color: white;
   font-weight: 500;
   border: 0;
-  border-radius: 0 3px 3px 0;
-  box-shadow: inset 0px 2px 3px #7f0c1d;
   font-size: 14px;
+  border-radius: 0 5px 5px 0;
 `
 
 const Div = styled.div`
@@ -121,16 +123,9 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
-  let isSignedIn = false
-  let isAnonmyous = false
-  let itemsInCart = 4
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonce=${new Date().getTime()}`)
-  }
-
-  function handleSignOut(){
-    console.log('signing out...')
   }
 
   return(
@@ -138,21 +133,44 @@ export default function HeaderComponent(props) {
       <NavTop>
         <NavBottomContainer>
           <div>
-            { (isSignedIn && !isAnonmyous) && <Puser>Hello, Bobby Panczer (Airline Hydraulics)</Puser>} 
-            { (isSignedIn && isAnonmyous) && <PeUser>Hello, Zach Linsell (Airline Hydraulics) [Emulating]</PeUser>}
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && true){
+                  return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName})</Puser>)
+                } else if (!_.isNil(userInfo) && false) {
+                  return(<PeUser>`Hello, ${userInfo.firstName} ${userInfo.lastName} (${userInfo.companyName}) [Emulating]`</PeUser>)
+                }
+              }}        
+            </Context.Consumer>
           </div>
           <Div>
             <Div>
               <FontAwesomeIcon icon="phone-alt" color="white"/>        
               <Aphone href="tel:+18009997378">800-999-7378</Aphone>
             </Div>
-            { isSignedIn ? <A onClick={()=>{handleSignOut()}}>Sign Out</A> : <A onClick={()=>props.history.push('/login')}>Sign In</A> }
+            <Context.Consumer>
+              {({userInfo, logoutUser}) => {
+                if (!_.isNil(userInfo)){
+                  return(<A onClick={()=>{logoutUser()}}>Sign Out</A>)
+                } else {
+                  return(<A onClick={()=>props.history.push('/login')}>Sign In</A> )
+                }
+              }}        
+            </Context.Consumer>
             <A>|</A>
-            { isSignedIn ? <A onClick={()=>props.history.push('/account')}>My Account</A> : <A onClick={()=>props.history.push('/signup')}>Create Account</A> }
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo)){
+                  return(<A onClick={()=>props.history.push('/account/dashboard')}>My Account</A>)
+                } else {
+                  return(<A onClick={()=>props.history.push('/signup')}>Create Account</A>)
+                }
+              }}        
+            </Context.Consumer>
             <A>|</A>
             <Context.Consumer>
               {({cart}) => (
-                  <Link to='/viewCart' style={{ textDecoration: 'none' }}>
+                  <Link to='/cart' style={{ textDecoration: 'none' }}>
                     <A>Cart({cart.length})</A>
                   </Link>
               )}
@@ -190,7 +208,9 @@ export default function HeaderComponent(props) {
           </LinkContainer>
           <Div>
             <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
-            <ButtonSearch onClick={handleSearch}>Search</ButtonSearch>
+            <ButtonSearch onClick={handleSearch}>
+              <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg"/>
+            </ButtonSearch>
           </Div>
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>

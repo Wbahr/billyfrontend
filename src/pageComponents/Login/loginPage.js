@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -66,30 +67,89 @@ const Button = styled.button`
   }
 `
 
+const QUERY_LOGIN = gql`
+  query SubmitLogin($loginInfo: LoginInputGraphType){
+    submitLogin(login: $loginInfo){
+      success
+      message
+      isPasswordReset
+      authorizationInfo{
+        token
+        userInfo {
+          firstName
+          lastName
+          companyName
+          role
+          permissions
+          limits {
+            limitType
+            limitValue
+          }
+        }
+      }
+    }
+  }
+`
+
 export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [forgotPassword, setforgotPassword] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [infoMessage, setInfoMessage] = useState('')
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
 
-  useEffect(() => {
-  },[email, password])
+  const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
+    onCompleted: data => {
+      console.log('executeLogIn', data)
+      let requestData = data.submitLogin
+      if(requestData.success){
+        // Need to reset password
+        if(requestData.isPasswordReset){
+          setErrorMessage('')
+          setInfoMessage(requestData.message)
+          setPassword('')
+        } else {
+          localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+          localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
+          
+          history.push('/')
+        }
+      } else {
+        setErrorMessage(requestData.message)
+        setPassword('')
+      }
+    }
+  })
 
   function handleSignin(){
-    console.log('signing in')
-  }
-
-  function setToken() {
-    console.log('setting token')
+    if(email.length === 0 || password.length === 0) {
+      setErrorMessage('Email and Password Required')
+    } else {
+      executeLogIn(
+        {
+          variables: {
+            "loginInfo": {
+              "loginId": email,
+              "password": password
+            }
+          }
+        }
+      )
+    }
   }
 
   function handleForgotPassword(){
     console.log('forgot password')
+    // history.push('/forgot-password')
   }
 
   return(
     <LoginPageContainer>
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
+      {errorMessage.length > 0  && <p>{errorMessage}</p>}
+      {infoMessage.length > 0  && <p>{infoMessage}</p>}
+      {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label for='email'>Email Address</Label>
         <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
@@ -98,7 +158,7 @@ export default function LoginPage({history}) {
         <Label for='password'>Password</Label>
         <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
       </DivInput>
-      <Button onClick={()=>handleSignin()}>Sign In</Button>
+      <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
       <A onClick={()=>handleForgotPassword()}>Forgot your Password?</A>
       <A onClick={()=> history.push('/signup')}>Create an Account</A>
 

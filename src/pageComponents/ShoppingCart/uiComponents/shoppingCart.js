@@ -26,6 +26,8 @@ const DivRow = styled.div`
 `
 
 const H3 = styled.h3`
+  font-family: ProximaBold;
+  text-transform: uppercase;
   margin: 0 0 2px 4px;
 `
 

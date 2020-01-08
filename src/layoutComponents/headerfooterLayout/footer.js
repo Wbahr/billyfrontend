@@ -16,6 +16,7 @@ const Newsletter = styled.div`
 `
 
 const NewsletterLabel = styled.label`
+  font-family: ProximaBold;
   font-size: 18px;
   font-weight: 700;
   color: white;
@@ -30,9 +31,14 @@ const NewsletterInput = styled.input`
   border: 0;
   margin: 0 12px;
   padding: 4px 12px;
+  text-transform: uppercase;
+  ::placeholder {
+    text-transform: none;
+  }
 `
 
 const NewsletterButton = styled.button`
+  font-family: ProximaBold;
   height: 35px;
   color: white;
   font-size: 18px;
@@ -95,7 +101,7 @@ const DivMenu = styled.div`
 const Head = styled.p`
   font-size: 16px;
   font-weight: 700;
-  color: black;
+  color: rgb(33, 37, 41);
   margin: 0;
 `
 
@@ -146,7 +152,7 @@ export default function FooterComponent() {
   return(
     <>
       <Newsletter>
-        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput /><NewsletterButton>Subscribe</NewsletterButton>
+        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><NewsletterButton>Subscribe</NewsletterButton>
       </Newsletter>
       <ContainerTop>
         <ContentContainer>
@@ -157,8 +163,8 @@ export default function FooterComponent() {
               </div>
               <ACallUs href="tel:1-800-999-7378">800-999-7378</ACallUs>
             </DivRow>
-            <DivRow><FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/><P>3557 Progress Drive, Bensalem, PA 19020</P></DivRow>
-            <DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow>
+            <a target='_blank' href='https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020'><DivRow><FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/><P>3557 Progress Drive, Bensalem, PA 19020</P></DivRow></a>
+            <a href='tel:215-638-4700'><DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow></a>
             <DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
           </DivAirline>
           <DivMenu>
@@ -196,9 +202,9 @@ export default function FooterComponent() {
 
           <DivSocial>
             <DivSocialIcons>
-              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
-              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
-              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://www.facebook.com/Airlinehyd/"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://www.linkedin.com/company/airline-hydraulics-corporation"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
+              <ADim target="_blank" href="https://twitter.com/AirlineHyd"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
               <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
             </DivSocialIcons>
           </DivSocial>

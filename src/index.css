@@ -2,3 +2,18 @@
   font-family: 'helvetica-neue-light';
   src: url('./styles/HelveticaNeue-Light.otf') format('otf');
 }
+
+@font-face {
+  font-family: 'Proxima';
+  src: url('./styles/ProximaNova-Regular.otf') format('otf'),
+  url('./styles/ProximaNova-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'ProximaBold';
+  src: url('./styles/ProximaNova-Semibold.woff2') format('woff2');
+  font-style: normal;
+  font-weight: normal;
+}
