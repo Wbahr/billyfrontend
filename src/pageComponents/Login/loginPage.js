@@ -75,16 +75,16 @@ const QUERY_LOGIN = gql`
       isPasswordReset
       authorizationInfo{
         token
-        role
-        permissions,
-        limits {
-          limitType
-          limitValue
-        }
         userInfo {
           firstName
           lastName
           companyName
+          role
+          permissions
+          limits {
+            limitType
+            limitValue
+          }
         }
       }
     }
@@ -94,20 +94,22 @@ const QUERY_LOGIN = gql`
 export default function LoginPage({history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [forgotPassword, setforgotPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [infoMessage, setInfoMessage] = useState('')
 
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
       console.log('executeLogIn', data)
       let requestData = data.submitLogin
       if(requestData.success){
-        setErrorMessage('')
-        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+        // Need to reset password
         if(requestData.isPasswordReset){
-
+          setErrorMessage('')
+          setInfoMessage(requestData.message)
+          setPassword('')
         } else {
-
+          localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+          localStorage.setItem('userInfo', requestData.authorizationInfo.userInfo)
         }
       } else {
         setErrorMessage(requestData.message)
@@ -142,7 +144,8 @@ export default function LoginPage({history}) {
     <LoginPageContainer>
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
-      <p>{errorMessage}</p>
+      {errorMessage.length > 0  && <p>{errorMessage}</p>}
+      {infoMessage.length > 0  && <p>{infoMessage}</p>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label for='email'>Email Address</Label>

@@ -176,6 +176,7 @@ export default function Provider(props) {
     return (
       <Context.Provider
         value={{
+          
           cart: shoppingCart,
           cartDisplay: shoppingCartDisplay,
           orderNotes: orderNotes,
