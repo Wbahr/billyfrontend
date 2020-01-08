@@ -38,6 +38,7 @@ const Ashare = styled.a`
 
 const AshareBlue = styled(Ashare)`
   color: #328EFC !important;
+  font-weight: 500;
 `
 
 const DivShare = styled.div`
@@ -62,6 +63,14 @@ const DivOrderTotalCol = styled.div`
 
 
 export default function ShoppingCart({showSplitLineModal}) {
+  const [savedCart, setSavedCart] = useState(false)
+
+  useEffect(() => {
+    if(savedCart){
+      setTimeout(()=>setSavedCart(false), 1000)
+    }
+  },[savedCart])
+
   const ShoppingCartItems = (
     <Context.Consumer>
       {({cart, emptyCart}) => (
@@ -98,9 +107,9 @@ export default function ShoppingCart({showSplitLineModal}) {
           <Context.Consumer>
             {({saveCart}) => {
               return(
-                <DivSave onClick={()=>{saveCart(), clickedSave()}}>
-                  <Ashare>Save Cart</Ashare>
-                  <FontAwesomeIcon icon="save" color="grey"/>            
+                <DivSave onClick={()=>{saveCart(), setSavedCart(true)}}>
+                  {savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
+                  {savedCart ? <FontAwesomeIcon icon="save" color="#328EFC"/>   : <FontAwesomeIcon icon="save" color="grey"/>  }
                 </DivSave>
               )
             }}

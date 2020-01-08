@@ -75,16 +75,15 @@ const DivRemove = styled.div`
 `
 
 const DivSplitLine = styled(DivRemove)`
-  padding: 6px;
-  background-color: #328EFC;
+  // padding: 6px;
+  // border: 1px solid #328EFC;
+  margin: 0;
   border-radius: 50px;
-  color: white;
+  color: #328EFC;
   height: 20px;
-  box-shadow: 1px 1px 2px #000;
-  p {
-    font-size: 12px;
-    padding-left: 8px;
-  }
+  font-size: 12px;
+  // padding-left: 8px;
+  font-weight: 600;
 `
 
 const DivMove = styled.div`
@@ -172,6 +171,11 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
+const P3 = styled.p`
+  color: black;
+  font-size: 12px !important;
+`
+
 const InputNotes = styled.input`
   width: 300px;
   font-size: 12px;
@@ -198,6 +202,8 @@ const GET_ITEM_BY_ID = gql`
             modelCode
             tariff
             unitSizeMultiple
+            availability
+            availabilityMessage
             image {
               path
               sequence
@@ -265,22 +271,10 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           <P1>{itemDetails.itemDesc}</P1>
           <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
           <DivRow>
-            {/* <DivItem>
-              <Label>Requested Ship Date:</Label>
-              <span>
-                <FontAwesomeIcon icon="calendar" color="grey"/> 
-                <Context.Consumer>
-                  {({ updateItem, cart }) => (
-                    <DatePicker
-                      selected={new Date(cart[index].requestedShipDate)}
-                      onChange={(selectedDate)=>updateItem(index, 'date', selectedDate)}
-                      minDate={new Date()}
-                      customInput={<CustomDatePickerComponent />}
-                    />
-                  )}
-                </Context.Consumer>
-              </span>
-            </DivItem> */}
+            <P3>Availability: {itemDetails.availability} | {itemDetails.availabilityMessage}</P3>
+          </DivRow>
+          <DivRow>
+            <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
