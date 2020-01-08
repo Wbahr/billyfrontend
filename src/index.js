@@ -18,25 +18,37 @@ library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRi
 
 const customHistory = createBrowserHistory()
 
-const httpLink = createHttpLink({
-  uri: `${process.env.API_URL}/graphql`
-})
+// const httpLink = createHttpLink({
+//   uri: `${process.env.API_URL}/graphql`
+// })
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('apiToken')
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : null
-    }
-  }
-})
+// const authLink = setContext((_, { headers }) => {
+//   // get the authentication token from local storage if it exists
+//   const token = localStorage.getItem('apiToken')
+//   // return the headers to the context so httpLink can read them
+//   return {
+//     headers: {
+//       ...headers,
+//       authorization: token ? `Bearer ${token}` : null
+//     }
+//   }
+// })
+
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache()
+// })
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  uri: '/graphql',
+  request: (operation) => {
+    const token = localStorage.getItem('apiToken')
+      operation.setContext({
+        headers: {
+          authorization: token ? `Bearer ${token}` : null
+        }
+      })
+  }
 })
 
 ReactDOM.render(
