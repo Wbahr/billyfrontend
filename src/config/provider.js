@@ -46,7 +46,7 @@ export default function Provider(props) {
   const [shoppingCart, setShoppingCart] = useState([])
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
-  const [userInfo, setUserInfo] = useState({"firstName":"Shannon","lastName":"Rush","companyName":"Dolomite Products Inc.","role":"CustomerContact","permissions":[],"limits":[],"__typename":"LoginUserInfoGraphType"})
+  const [userInfo, setUserInfo] = useState(null)
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -186,6 +186,9 @@ export default function Provider(props) {
       <Context.Provider
         value={{
           userInfo: userInfo,
+          loginUser: (userInformation)=>{
+            setUserInfo(userInformation)
+          },
           logoutUser: ()=>{
             handleLogout()
           },
