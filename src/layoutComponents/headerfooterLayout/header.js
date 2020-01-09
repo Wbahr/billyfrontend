@@ -136,9 +136,9 @@ export default function HeaderComponent(props) {
             <Context.Consumer>
               {({userInfo}) => {
                 if (!_.isNil(userInfo) && true){
-                  return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - 111111)</Puser>)
+                  return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser>)
                 } else if (!_.isNil(userInfo) && false) {
-                  return(<PeUser>`Hello, ${userInfo.firstName} ${userInfo.lastName} (${userInfo.companyName}) [Emulating]`</PeUser>)
+                  return(<PeUser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId}) [Emulating]</PeUser>)
                 }
               }}        
             </Context.Consumer>

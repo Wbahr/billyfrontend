@@ -81,6 +81,7 @@ const QUERY_LOGIN = gql`
           firstName
           lastName
           companyName
+          companyId
           role
           permissions
           limits {
