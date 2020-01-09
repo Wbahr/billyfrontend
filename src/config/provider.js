@@ -94,6 +94,7 @@ export default function Provider(props) {
     localStorage.removeItem('apiToken') 
     localStorage.removeItem('shoppingCartToken')
     handleEmptyCart()
+    props.children.props.history.push('/')
   }
 
   function handleAddItem (item){
