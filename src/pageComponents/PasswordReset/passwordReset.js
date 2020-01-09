@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { useParams } from 'react-router-dom'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
+import PasswordRequirements from './uiComponents/passwordRequirements'
 
 const PasswordResetPageContainer = styled.div`
   display: flex;
@@ -86,6 +87,7 @@ export default function PasswordResetPage({history}) {
   const [infoMessage, setInfoMessage] = useState('')
   const [showResendToken, setShowResendToken] = useState(false)
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
+  const [passwordIsValid, setPasswordIsValid] = useState(false)
   let { passwordToken } = useParams()
 
 
@@ -144,13 +146,18 @@ export default function PasswordResetPage({history}) {
       </DivInput>
       <DivInput>
         <Label for='password'>Password</Label>
-        <Input id='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
+        <Input id='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ""))}} value={password}/>
       </DivInput>
       <DivInput>
         <Label for='confirm_password'>Confirm Password</Label>
-        <Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value)} value={confirmPassword}/>
+        <Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ""))} value={confirmPassword}/>
       </DivInput>
-      <Button disabled={loading} onClick={()=>handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
+      <PasswordRequirements
+        password={password}
+        confirmPassword={confirmPassword} 
+        isValidPassword={(isValid)=>setPasswordIsValid(isValid)}
+      />
+      <Button disabled={loading || !passwordIsValid} onClick={()=>handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
       <A onClick={()=> history.push('/signup')}>Create an Account</A>
     </PasswordResetPageContainer>
   )

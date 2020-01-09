@@ -20,14 +20,14 @@ const Div0 = styled.div`
   margin: 10px;
   background-color: grey;
   width: 600px;
-  height: 510px;
+  height: 320px;
 `
 
 const Div1 = styled.div`
   margin: 10px;
   background-color: grey;
-  width: 600px;
-  height: 340px;
+  width: 290px;
+  height: 150px;
 `
 
 const Div2 = styled.div`
@@ -36,7 +36,9 @@ const Div2 = styled.div`
   width: 600px;
   height: 150px;
 `
-
+const Row = styled.div`
+  display: flex;
+`
 class Banner extends React.Component {
 
   render(){
@@ -47,7 +49,10 @@ class Banner extends React.Component {
         </Col>
         <Col>
           <Div2/> 
-          <Div1/> 
+          <Row>
+            <Div1/> 
+            <Div1/> 
+          </Row>
         </Col>
       </BannerContainer>
     )
