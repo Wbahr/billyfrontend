@@ -216,7 +216,6 @@ const GET_ITEM_BY_ID = gql`
 export default function ShoppingCartItem({item, index, showSplitLineModal}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
-  const [date, setDate] = useState(Date.now())
 
   const { 
     loading, 
@@ -271,7 +270,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           <P1>{itemDetails.itemDesc}</P1>
           <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
           <DivRow>
-            <P3>Availability: {itemDetails.availability} | {itemDetails.availabilityMessage}</P3>
+            <Context.Consumer>
+              {({ updateItem, cart }) => (
+                <P3>Availability: {itemDetails.availability} {(cart[index].quantity > itemDetails.availability)&& '| '  + itemDetails.availabilityMessage }</P3>
+              )}
+            </Context.Consumer>
           </DivRow>
           <DivRow>
             <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
