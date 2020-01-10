@@ -5,6 +5,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
+import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -151,8 +152,8 @@ export default function LoginPage({history}) {
       />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
-      {errorMessage.length > 0  && <p>{errorMessage}</p>}
-      {infoMessage.length > 0  && <p>{infoMessage}</p>}
+      {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
+      {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label for='email'>Username or Email</Label>

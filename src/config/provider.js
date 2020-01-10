@@ -3,32 +3,6 @@ import Context from './context'
 import gql from 'graphql-tag'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 
-const GET_ITEM_BY_ID = gql`
-  query ItemById($itemId: ID){
-    itemDetails(invMastUid: $itemId) {
-      anonPrice
-      assembly
-      availability
-      availabilityMessage
-      invMastUid
-      itemCode
-      itemDesc
-      listPrice
-      mfgPartNo
-      modelCode
-      p21ItemDesc
-      p21NonWeb
-      tariff
-      unitSizeMultiple
-      image {
-        path
-        sequence
-        type
-      }
-    }
-  }
-`
-
 const UPDATE_SHOPPING_CART = gql`
   mutation UpdateShoppingCart($cartData: ShoppingCartUpdateInputGraphType) {
     updateShoppingCart(cartUpdate: $cartData) {
@@ -47,6 +21,7 @@ export default function Provider(props) {
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
+  const [emulatedUserInfo, setEmulatedUserInfo] = useState(null)
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -58,6 +33,12 @@ export default function Provider(props) {
         handleUpdateShoppingCart(5)
       }
       didMountRef.current = true
+      // If userInfo in local storage, update Context
+      let userInfo = localStorage.getItem("userInfo")
+      setUserInfo(JSON.parse(userInfo))
+      // If emulatedUserInfo in local storage, update Context
+      let emulatedUserInfo = localStorage.getItem("emulatedUserInfo")
+      setEmulatedUserInfo(JSON.parse(emulatedUserInfo))
     }
   })
 
@@ -83,10 +64,16 @@ export default function Provider(props) {
     }
   })
 
-  const [getItemDetails] = useLazyQuery(GET_ITEM_BY_ID, {
-    onCompleted: result => {
-    }
-  })
+  function handleStartEmulation(emulatedUserInformation){
+    localStorage.setItem('emulatedUserInfo', JSON.stringify(emulatedUserInformation)) 
+    setEmulatedUserInfo(emulatedUserInformation)
+  }
+
+  function handleCancelEmulation(){
+    localStorage.removeItem('emulatedUserInfo') 
+    setEmulatedUserInfo(null)
+  }
+
 
   function handleLogout(){
     setUserInfo(null)
@@ -105,8 +92,6 @@ export default function Provider(props) {
   function handleRemoveItem(itemLocation){
     let mutatedCart = shoppingCart
     mutatedCart.splice(itemLocation, 1)
-    // let mutatedShoppingCartDisplay = [...shoppingCartDisplay].splice(itemLocation, 1)
-    // setShoppingCartDisplay(...mutatedShoppingCartDisplay)
     setShoppingCart([...mutatedCart])
   }
 
@@ -186,6 +171,13 @@ export default function Provider(props) {
     return (
       <Context.Provider
         value={{
+          emulatedUserInfo: emulatedUserInfo,
+          setEmulatedUserInfo: (emulatedUserInformation)=>{
+            handleStartEmulation(emulatedUserInformation)
+          },
+          removeEmulatedUserInfo: ()=>{
+            handleCancelEmulation()
+          },
           userInfo: userInfo,
           loginUser: (userInformation)=>{
             setUserInfo(userInformation)
@@ -226,4 +218,3 @@ export default function Provider(props) {
       </Context.Provider>
     )
 }
-
