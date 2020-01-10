@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
 import Context from '../../config/context'
+import ImpersonationSearch from './impersonationSearch'
 
 const DivSticky = styled.div`
 `
@@ -64,7 +65,7 @@ const NavItem =styled.a`
 const InputSearch = styled.input`
   width: 350px;
   height: 40px;
-  font-size: 16px;
+  font-size: 15px;
   border-color: #dadada;
   border-top: 1px #dadada solid;
   border-left: 1px #dadada solid;
@@ -89,11 +90,21 @@ const ButtonSearch = styled.button`
   border-radius: 0 5px 5px 0;
 `
 
+const ButtonSearchType = styled.button`
+  width: 40px;
+  height: 40px;
+  background-image: linear-gradient(to top left, #404040, #272727);
+  color: white;
+  font-weight: 500;
+  border: 0;
+  font-size: 14px;
+`
+
 const Div = styled.div`
   display: flex;
 `
 
-const Puser = styled.p`
+const Puser = styled.div`
   background-color: #404040;
   color: #f3f3f3;
   font-size: 11px;
@@ -123,6 +134,7 @@ const Aphone = styled(A)`
 
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
+  const [searchAsCustomer, setSearchAsCustomer] = useState(false)
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonce=${new Date().getTime()}`)
@@ -135,10 +147,10 @@ export default function HeaderComponent(props) {
           <div>
             <Context.Consumer>
               {({userInfo, impersonatedCompanyInfo}) => {
-                if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
-                  return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser>)
-                } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                  return(<PeUser>[Emulating] ({impersonatedCompanyInfo.companyName} - {impersonatedCompanyInfo.companyId})</PeUser>)
+                if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)){
+                  return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+                } else if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> [Impersonating] Airline - 112123123</PeUser><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
@@ -207,7 +219,10 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <InputSearch value={searchTerm} placeholder="Search by Part # or Keyword" onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
+            <ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
+              {searchAsCustomer ? <div style={{color: 'white'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
+            </ButtonSearchType>
+            <InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>
               <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg"/>
             </ButtonSearch>
