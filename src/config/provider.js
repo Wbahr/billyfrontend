@@ -21,7 +21,7 @@ export default function Provider(props) {
   const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
-  const [emulatedUserInfo, setEmulatedUserInfo] = useState(null)
+  const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -36,9 +36,9 @@ export default function Provider(props) {
       // If userInfo in local storage, update Context
       let userInfo = localStorage.getItem("userInfo")
       setUserInfo(JSON.parse(userInfo))
-      // If emulatedUserInfo in local storage, update Context
-      let emulatedUserInfo = localStorage.getItem("emulatedUserInfo")
-      setEmulatedUserInfo(JSON.parse(emulatedUserInfo))
+      // If imperonsatedCompanyInfo in local storage, update Context
+      let impersonatedCompanyInfo = localStorage.getItem("impersonatedCompanyInfo")
+      setImpersonatedCompanyInfo(JSON.parse(impersonatedCompanyInfo))
     }
   })
 
@@ -64,14 +64,14 @@ export default function Provider(props) {
     }
   })
 
-  function handleStartEmulation(emulatedUserInformation){
-    localStorage.setItem('emulatedUserInfo', JSON.stringify(emulatedUserInformation)) 
-    setEmulatedUserInfo(emulatedUserInformation)
+  function handleStartImpersonation(impersonatedCompanyInformation){
+    localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(impersonatedCompanyInformation)) 
+    setImpersonatedCompanyInfo(impersonatedCompanyInformation)
   }
 
-  function handleCancelEmulation(){
-    localStorage.removeItem('emulatedUserInfo') 
-    setEmulatedUserInfo(null)
+  function handleCancelImpersonation(){
+    localStorage.removeItem('impersonatedCompanyInformation') 
+    setImpersonatedCompanyInfo(null)
   }
 
 
@@ -171,12 +171,12 @@ export default function Provider(props) {
     return (
       <Context.Provider
         value={{
-          emulatedUserInfo: emulatedUserInfo,
-          setEmulatedUserInfo: (emulatedUserInformation)=>{
-            handleStartEmulation(emulatedUserInformation)
+          impersonatedCompanyInfo: impersonatedCompanyInfo,
+          setImpersonatedCompanyInfo: (impersonatedCompanyInformation)=>{
+            handleStartImpersonation(impersonatedCompanyInformation)
           },
-          removeEmulatedUserInfo: ()=>{
-            handleCancelEmulation()
+          removeImpersonatedCompanyInfo: ()=>{
+            handleCancelImpersonation()
           },
           userInfo: userInfo,
           loginUser: (userInformation)=>{

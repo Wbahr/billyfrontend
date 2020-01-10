@@ -134,11 +134,11 @@ export default function HeaderComponent(props) {
         <NavBottomContainer>
           <div>
             <Context.Consumer>
-              {({userInfo, emulatedUserInfo}) => {
-                if (!_.isNil(userInfo) && _.isNil(emulatedUserInfo)){
+              {({userInfo, impersonatedCompanyInfo}) => {
+                if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
                   return(<Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser>)
-                } else if (!_.isNil(userInfo) && !_.isNil(emulatedUserInfo)) {
-                  return(<PeUser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId}) [Emulating]</PeUser>)
+                } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
+                  return(<PeUser>[Emulating] ({impersonatedCompanyInfo.companyName} - {impersonatedCompanyInfo.companyId})</PeUser>)
                 }
               }}        
             </Context.Consumer>
