@@ -17,9 +17,10 @@ export function requiredField(value) {
 export function formatCurrency(number){
   let formattedCurrency
   if(isNaN(number)){
-    formattedCurrency = 'NaN'
+    formattedCurrency = '--'
   } else {
-    formattedCurrency = number.toFixed(2)
+    console.log('nubme', typeof number)
+    formattedCurrency = Number(number).toFixed(2)
     formattedCurrency = '$' + formattedCurrency
   }
   return formattedCurrency
