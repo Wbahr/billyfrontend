@@ -62,7 +62,7 @@ const NavItem =styled.a`
 `
 
 const InputSearch = styled.input`
-  width: 350px;
+  width: 365px;
   height: 40px;
   font-size: 16px;
   border-color: #dadada;
