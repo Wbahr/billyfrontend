@@ -22,7 +22,7 @@ export default function ResetPasswordModal({open, hideModal}) {
     onCompleted: data => {
       let requestData = data.requestPasswordReset
       if(requestData.success){
-        setMessage(`A reset password email has been to the email associated with your account. If you don't receive an email in 5 minutes, please contact us.`)
+        setMessage(`We are sending instructions to reset your password. If you do not receive an email,  please check your spam folder and call us at 1-800-999-7378.`)
         setTimeout(()=>{handleClose(), history.push('/login')}, 5000)
       } else {
         setMessage(`An error has occured. Please check your email/username and try again or contact us.`)
@@ -53,7 +53,7 @@ export default function ResetPasswordModal({open, hideModal}) {
     <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick>
       <p>Reset Password</p>
       {message && <p>{message}</p>}
-      <p>Username or Email: </p><input value={username} onChange={(e)=> setUsername(e.target.value)}/>
+      <p>Username / Email: </p><input value={username} onChange={(e)=> setUsername(e.target.value)}/>
       <button onClick={()=>{handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
     </Popup>
   )
