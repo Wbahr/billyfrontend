@@ -86,8 +86,6 @@ export default function SubtotalBox({history}) {
   const [price, setPrice] = useState(0)
   const context = useContext(Context)
 
-  console.log('cart', context)
-
   return(
     <Container>
       <Context.Consumer>

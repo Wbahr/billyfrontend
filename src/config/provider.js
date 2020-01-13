@@ -77,19 +77,13 @@ export default function Provider(props) {
     onCompleted: result => {
       let results = result.updateShoppingCart
       localStorage.setItem("shoppingCartToken", results.token)
+      setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
       if(loadCart.current){
         setShoppingCart(JSON.parse(results.cartData))
-        console.log('cart', results)
-        setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
         setOrderNotes(results.orderNotes)
         loadCart.current = false
         justLoadedCart.current = true
       }
-    }
-  })
-
-  const [getItemDetails] = useLazyQuery(GET_ITEM_BY_ID, {
-    onCompleted: result => {
     }
   })
 

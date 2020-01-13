@@ -17,7 +17,7 @@ const DivContainer = styled.div`
   border-bottom: 2px whitesmoke solid;
   padding: 8px 16px;
   margin: 8px 0;
-  height: 120px;
+  height: 135px;
 `
 
 const DivRow = styled.div`
@@ -299,7 +299,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
             </DivItem>
             <DivItem>
               <DivTotalPrice>
-                <p>{formatCurrency(itemDetails.anonPrice * item.quantity)}</p>
+                <p>{formatCurrency((itemDetails.anonPrice).toFixed(2) * item.quantity)}</p>
               </DivTotalPrice>
             </DivItem>
           </DivQuantity>

@@ -19,7 +19,6 @@ export function formatCurrency(number){
   if(isNaN(number)){
     formattedCurrency = '--'
   } else {
-    console.log('nubme', typeof number)
     formattedCurrency = Number(number).toFixed(2)
     formattedCurrency = '$' + formattedCurrency
   }
