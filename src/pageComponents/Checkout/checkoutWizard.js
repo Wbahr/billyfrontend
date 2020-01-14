@@ -11,6 +11,12 @@ import {ShipToForm, defaultValues as DefaultShipToValues} from './wizardSteps/sh
 import {BillingInfoForm, defaultValues as DefaultBillToValues} from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 
+const Container = styled.div`
+  margin: 20px;
+  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  height: 100%;
+`
 
 export default function CheckoutWizard({step, shoppingCart}) {
   const [checkValues, setCheckValues] = useState({})
@@ -18,28 +24,35 @@ export default function CheckoutWizard({step, shoppingCart}) {
   switch(step){
     case 0:
       return(
-        <Formik 
-          initialValues={DefaultShippingScheduleValues}
-          component={ShippingScheduleForm} 
-          onSubmit={values => {console.log(values)}}
-          shoppingCart={shoppingCart}
-        />
+        <Container>
+          <Formik 
+            initialValues={DefaultShippingScheduleValues}
+            component={ShippingScheduleForm} 
+            onSubmit={values => {console.log(values)}}
+            shoppingCart={shoppingCart}
+          />
+        </Container>
       )
     case 1:
       return(
-        <Formik 
-          initialValues={DefaultShipToValues}
-          component={ShipToForm} 
-          onSubmit={values => {console.log(values)}}
-        />
+        <Container>
+          <Formik 
+            initialValues={DefaultShipToValues}
+            component={ShipToForm} 
+            onSubmit={values => {console.log(values)}}
+          />
+        </Container>
+
       )
     case 2:
       return(
-        <Formik 
-          initialValues={DefaultBillToValues}
-          component={BillingInfoForm} 
-          onSubmit={values => {console.log(values)}}
-        />
+        <Container>
+          <Formik 
+            initialValues={DefaultBillToValues}
+            component={BillingInfoForm} 
+            onSubmit={values => {console.log(values)}}
+          />
+        </Container>
       )
     case 3:
       return(
