@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const Div = styled.div`
   display: flex;
@@ -63,7 +63,8 @@ const DivOrderTotalCol = styled.div`
 
 export default function ShoppingCart({showSplitLineModal}) {
   const [savedCart, setSavedCart] = useState(false)
-
+  const context = useContext(Context)
+  
   useEffect(() => {
     if(savedCart){
       setTimeout(()=>setSavedCart(false), 1000)
@@ -75,19 +76,36 @@ export default function ShoppingCart({showSplitLineModal}) {
       {({cart, emptyCart}) => (
         cart.map((item, index)=>{
           return(
-            // <Draggable>
-              <ShoppingCartItem
-                item={item}
-                emptyCart={emptyCart}
-                index={index}
-                showSplitLineModal={showSplitLineModal}
-              />
-            // </Draggable>
+            <Draggable key={index} draggableId={String(index)} index={index}>
+              {(provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                >
+                  <ShoppingCartItem
+                    item={item}
+                    emptyCart={emptyCart}
+                    index={index}
+                    showSplitLineModal={showSplitLineModal}
+                  />
+                </div>
+              )}
+            </Draggable>
           )
         })
       )}
     </Context.Consumer>
   )
+
+  function onDragEnd(result) {
+    // if dropped outside the list
+    if (!result.destination) {
+      return
+    } else {
+      context.moveItem(result.source.index, result.destination.index)
+    }
+  }
 
   return(
     <>
@@ -119,11 +137,18 @@ export default function ShoppingCart({showSplitLineModal}) {
           </DivShare>
         </DivRow>
       </Div>
-      {/* <DragDropContext> */}
-        {/* <Droppable> */}
+      <DragDropContext onDragEnd={(result)=>onDragEnd(result)}>
+        <Droppable  droppableId="droppable">
+        {(provided, snapshot) => (
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+          >
           {ShoppingCartItems}
-        {/* </Droppable> */}
-      {/* </DragDropContext> */}
+          </div>
+        )}
+        </Droppable>
+      </DragDropContext>
     </>
   )
 }

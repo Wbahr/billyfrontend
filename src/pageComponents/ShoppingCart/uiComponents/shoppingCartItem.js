@@ -18,6 +18,7 @@ const DivContainer = styled.div`
   padding: 8px 16px;
   margin: 8px 0;
   height: 135px;
+  background-color: white;
 `
 
 const DivRow = styled.div`
@@ -247,11 +248,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
-    const CustomDatePickerComponent = ({ value, onClick }) => (
-      <CustomDatePicker onClick={onClick}>
-        {value}
-      </CustomDatePicker>
-    )
+    // const CustomDatePickerComponent = ({ value, onClick }) => (
+    //   <CustomDatePicker onClick={onClick}>
+    //     {value}
+    //   </CustomDatePicker>
+    // )
 
     Content = (
       <DivCard>
