@@ -89,7 +89,7 @@ export default function CheckoutPage({history}) {
         <DivNavigation>
           {currentStep === 0 && <button onClick={()=>history.push('/cart')}>Back to Cart</button>}
           {currentStep > 0 && <button disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
-          {currentStep < (stepLabel.length - 1) && <button disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>}
+          {currentStep < (stepLabel.length - 1) && <button disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</button>}
           {currentStep === (stepLabel.length - 1) && <button disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</button>}
         </DivNavigation>
       </DivCheckoutCol>

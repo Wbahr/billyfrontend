@@ -1,5 +1,12 @@
 import React from 'react'
 import { Field } from 'formik'
+import FormikInput from '../../_common/formik/input_v2'
+import styled from 'styled-components'
+
+const WrapForm = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
 
 export const BillingInfoForm = ({
   handleSubmit,
@@ -9,25 +16,27 @@ export const BillingInfoForm = ({
   errors,
 }) => (
   <form onSubmit={handleSubmit}>
-    <Field as="select" name="shipto.payment_method">
-      <option value="credit_card">Credit Card</option>
-      <option value="invoice">Invoice</option>
-    </Field>
-    <Field name="billing.po" placeholder="PO Number" />
-    <Field name="billing.company_id" placeholder="Company ID" />
-    <Field name="billing.company_name" placeholder="Company Name" />
-    <Field name="billing.first_name" placeholder="First Name" />
-    <Field name="billing.last_name" placeholder="Last Name" />
-    <Field name="billing.address1" placeholder="Address 1" />
-    <Field name="billing.address2" placeholder="Address 2" />
-    <Field name="billing.city" placeholder="City" />
-    <Field name="billing.state" placeholder="State" />
-    <Field name="billing.zip" placeholder="Zip" />    
-    <Field name="billing.county" placeholder="Country" />
-    <Field name="billing.email" placeholder="Email" />    
-    <Field name="billing.phone" placeholder="Phone" />
-    {errors.name && <div>{errors.name}</div>}
-    <button type="submit">Submit</button>
+    <WrapForm>
+      <FormikInput label="PO" name="billing.po" />
+      <FormikInput type="hidden" name="billing.company_id" />
+      <FormikInput label="Company Name" name="billing.company_name" />
+      <FormikInput label="First Name" name="billing.first_name" />
+      <FormikInput label="Last Name" name="billing.last_name" />
+      <FormikInput label="Address 1" name="billing.address1" size="lg"/>
+      <FormikInput label="Address 2" name="billing.address2" size="lg"/>
+      <FormikInput label="City" name="billing.city" />
+      <FormikInput label="State" name="billing.state" />
+      <FormikInput label="Zip" name="billing.zip" />    
+      <FormikInput label="County" name="billing.county" />
+      <FormikInput label="Email" name="billing.email" />    
+      <FormikInput label="Phone" name="billing.phone" />
+      {errors.name && <div>{errors.name}</div>}
+      <button type="submit">Submit</button>
+          {/* <Field as="select" name="shipto.payment_method">
+        <option value="credit_card">Credit Card</option>
+        <option value="invoice">Invoice</option>
+      </Field> */}
+    </WrapForm>
   </form>
 )
 
