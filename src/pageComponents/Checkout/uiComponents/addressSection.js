@@ -30,15 +30,15 @@ class AddressSection extends React.Component {
     return(
       <DivSection>
         <h2>Billing Address</h2>
-          <label for="address_line1">Address 1</label>
+          <label htmlFor="address_line1">Address 1</label>
           <input id="address_line1" onChange={this.handleFieldChange} value={address1} placeholder="Address 1"></input>
-          <label for="address_line2">Address 2</label>
+          <label htmlFor="address_line2">Address 2</label>
           <input id="address_line2" onChange={this.handleFieldChange} value={address2} placeholder="Address 2"></input>
-          <label for="address_city">City</label>
+          <label htmlFor="address_city">City</label>
           <input id="address_city" onChange={this.handleFieldChange} value={city} placeholder="City"></input>
-          <label for="address_state">State</label>
+          <label htmlFor="address_state">State</label>
           <input id="address_state" onChange={this.handleFieldChange} value={state} placeholder="State"></input>
-          <label for="address_zip">Zip</label>
+          <label htmlFor="address_zip">Zip</label>
           <input id="address_zip" onChange={this.handleFieldChange} value={zip} placeholder="Zip"></input>
       </DivSection>
 		)

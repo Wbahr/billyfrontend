@@ -15,7 +15,7 @@ export const BillingInfoForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} autoComplete="off">
     <WrapForm>
       <FormikInput label="PO" name="billing.po" />
       <FormikInput type="hidden" name="billing.company_id" />
@@ -31,7 +31,6 @@ export const BillingInfoForm = ({
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
       {errors.name && <div>{errors.name}</div>}
-      <button type="submit">Submit</button>
           {/* <Field as="select" name="shipto.payment_method">
         <option value="credit_card">Credit Card</option>
         <option value="invoice">Invoice</option>

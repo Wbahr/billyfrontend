@@ -7,6 +7,8 @@ import gql from 'graphql-tag';
 // import OrderSummary from './uiComponents/orderSummary'
 import CheckoutWizard from './checkoutWizard'
 import Context from '../../config/context'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 
 const DivContainer = styled.div`
   display: flex;
@@ -18,7 +20,10 @@ const DivContainer = styled.div`
 const DivCheckoutCol = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 920px;
+  @media(max-width: 1000px) {
+    width: 100%;
+  }
 `
 
 const DivOrderTotalCol = styled.div`
@@ -33,13 +38,13 @@ const DivOrderTotalCol = styled.div`
 const Div = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px grey solid;
-  margin-top: 24px;
 `
 
 const DivRow = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-bottom;
+  margin: 0 20px 0 20px;
   p {
     cursor: pointer;
     color: grey;
@@ -52,6 +57,7 @@ const DivRow = styled.div`
 const H3 = styled.h3`
   font-family: ProximaBold;
   text-transform: uppercase;
+  padding-left: 8px;
   margin: 0 0 2px 4px;
 `
 
@@ -79,18 +85,18 @@ export default function CheckoutPage({history}) {
       <DivCheckoutCol>
         <Div>
           <DivRow>
+            <FontAwesomeIcon icon="lock" />
             <H3>Checkout</H3>
-            <Pstep>({stepLabel[currentStep]})</Pstep>
           </DivRow>
         </Div>
         <Context.Consumer>
-          {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
+          {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} stepName={stepLabel[currentStep]}/>)}
         </Context.Consumer>
         <DivNavigation>
-          {currentStep === 0 && <button onClick={()=>history.push('/cart')}>Back to Cart</button>}
-          {currentStep > 0 && <button disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
-          {currentStep < (stepLabel.length - 1) && <button disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</button>}
-          {currentStep === (stepLabel.length - 1) && <button disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</button>}
+          {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
+          {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
+          {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
+          {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</ButtonRed>}
         </DivNavigation>
       </DivCheckoutCol>
       <DivOrderTotalCol>

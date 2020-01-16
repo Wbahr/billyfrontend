@@ -63,7 +63,7 @@ const NavItem =styled.a`
 `
 
 const InputSearch = styled.input`
-  width: 350px;
+  width: 360px;
   height: 40px;
   font-size: 15px;
   border-color: #dadada;
@@ -71,7 +71,7 @@ const InputSearch = styled.input`
   border-left: 1px #dadada solid;
   border-bottom: 1px #e7e7e7 solid;
   border-right: 0px;
-  padding: 0 12px;
+  padding: 0 8px;
   &:focus{
     border-top: 1px #b4b4b4 solid;
     border-left: 1px #b4b4b4 solid;
@@ -150,7 +150,7 @@ export default function HeaderComponent(props) {
                 if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)){
                   return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
                 } else if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> [Impersonating] Airline - 112123123</PeUser><ImpersonationSearch /></Div>)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> Airline - 112123123 [Impersonating]</PeUser><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>

@@ -142,15 +142,15 @@ export default function PasswordResetPage({history}) {
       {showResendToken && <A onClick={()=>{setShowPasswordResetModal(true)}}>Token Expired? Click here to send a new one</A>}
       {error && <ErrorAlert>An unexpected error has occured. Please try again or contact us.</ErrorAlert>}
       <DivInput>
-        <Label for='username'>Username</Label>
+        <Label htmlFor='username'>Username</Label>
         <Input id='username' onChange={(e)=>setUsername(e.target.value)} value={username}/>
       </DivInput>
       <DivInput>
-        <Label for='password'>Password</Label>
+        <Label htmlFor='password'>Password</Label>
         <Input id='password' type='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ""))}} value={password}/>
       </DivInput>
       <DivInput>
-        <Label for='confirm_password'>Confirm Password</Label>
+        <Label htmlFor='confirm_password'>Confirm Password</Label>
         <Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ""))} value={confirmPassword}/>
       </DivInput>
       <PasswordRequirements

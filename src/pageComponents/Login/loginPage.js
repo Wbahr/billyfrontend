@@ -156,11 +156,11 @@ export default function LoginPage({history}) {
       {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
-        <Label for='email'>Username or Email</Label>
+        <Label htmlFor='email'>Username or Email</Label>
         <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
       </DivInput>
       <DivInput>
-        <Label for='password'>Password</Label>
+        <Label htmlFor='password'>Password</Label>
         <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
       </DivInput>
       <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>

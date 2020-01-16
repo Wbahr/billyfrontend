@@ -16,15 +16,24 @@ const Container = styled.div`
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 18px;
   height: 100%;
+  border: 1px solid whitesmoke;
+  padding: 5px 20px;
 `
 
-export default function CheckoutWizard({step, shoppingCart}) {
+const Pformheader = styled.p`
+  margin: 0;
+  font-family: ProximaBold;
+  text-transform: uppercase;
+`
+
+export default function CheckoutWizard({step, shoppingCart, stepName}) {
   const [checkValues, setCheckValues] = useState({})
 
   switch(step){
     case 0:
       return(
         <Container>
+          <Pformheader>{stepName}</Pformheader>
           <Formik 
             initialValues={DefaultShippingScheduleValues}
             component={ShippingScheduleForm} 
@@ -36,6 +45,7 @@ export default function CheckoutWizard({step, shoppingCart}) {
     case 1:
       return(
         <Container>
+          <Pformheader>{stepName}</Pformheader>
           <Formik 
             initialValues={DefaultShipToValues}
             component={ShipToForm} 
@@ -47,6 +57,7 @@ export default function CheckoutWizard({step, shoppingCart}) {
     case 2:
       return(
         <Container>
+          <Pformheader>{stepName}</Pformheader>
           <Formik 
             initialValues={DefaultBillToValues}
             component={BillingInfoForm} 

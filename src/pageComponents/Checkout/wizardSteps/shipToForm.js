@@ -15,7 +15,7 @@ export const ShipToForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <form onSubmit={handleSubmit} autoComplete="off">
     <WrapForm>
       {/* <Field as="select" name="shipto.saved_address">
         <option value="1">Yes</option>

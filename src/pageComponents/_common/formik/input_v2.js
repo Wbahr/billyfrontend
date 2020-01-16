@@ -67,7 +67,7 @@ export default function Input({
   if(type !== "hidden"){
     return(
       <DivContainer>
-      {label && <Label for={label}>{`${label}`}</Label>}        
+      {label && <Label htmlFor={label}>{`${label}`}</Label>}        
       <Field name={name}>
             {({
               field,

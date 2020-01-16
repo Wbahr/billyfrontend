@@ -36,7 +36,7 @@ class Input extends React.Component {
 
 		return(
 			<DivContainer>
-				{label && <Label for={label}>{`${label}:`}</Label>}
+				{label && <Label htmlFor={label}>{`${label}:`}</Label>}
 				<P>{value}</P>
 			</DivContainer>
 		)
