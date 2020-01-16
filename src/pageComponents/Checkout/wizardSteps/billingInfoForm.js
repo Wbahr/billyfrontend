@@ -2,10 +2,20 @@ import React from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
+import { CardElement } from 'react-stripe-elements'
 
 const WrapForm = styled.div`
   display: flex;
   flex-wrap: wrap;
+`
+
+const FormRow = styled.div`
+  display: flex;
+  margin-top: 24px;
+  width: 100%;
+  label {
+    margin: 0 16px;
+  }
 `
 
 export const BillingInfoForm = ({
@@ -17,6 +27,18 @@ export const BillingInfoForm = ({
 }) => (
   <form onSubmit={handleSubmit} autoComplete="off">
     <WrapForm>
+      <FormRow>
+        <label htmlFor="payment_method">Payment Method</label>
+        <Field id="payment_method" name="billing.payment_method">
+          {({ field, form, meta }) => (
+            <>
+              <input type="radio" {...field} value="credit_card"/>Credit Card <br/>
+              <input type="radio" {...field} value="invoice"/>Invoice
+            </>
+          )}
+        </Field>
+      </FormRow>
+      {values.payment_method === "credit_card" && <CardElement />}
       <FormikInput label="PO" name="billing.po" />
       <FormikInput type="hidden" name="billing.company_id" />
       <FormikInput label="Company Name" name="billing.company_name" />
@@ -31,16 +53,13 @@ export const BillingInfoForm = ({
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
       {errors.name && <div>{errors.name}</div>}
-          {/* <Field as="select" name="shipto.payment_method">
-        <option value="credit_card">Credit Card</option>
-        <option value="invoice">Invoice</option>
-      </Field> */}
     </WrapForm>
   </form>
 )
 
 export const defaultValues = {
   billing: {
-    name: 'test bob'
+    name: 'test bob',
+    payment_method: 'credit_card'
   }
 }

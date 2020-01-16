@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import queryString from 'query-string'
@@ -10,6 +10,7 @@ import {ShippingScheduleForm, defaultValues as DefaultShippingScheduleValues} fr
 import {ShipToForm, defaultValues as DefaultShipToValues} from './wizardSteps/shipToForm'
 import {BillingInfoForm, defaultValues as DefaultBillToValues} from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
+import Context from '../../config/context'
 
 const Container = styled.div`
   margin: 20px;
@@ -28,17 +29,16 @@ const Pformheader = styled.p`
 
 export default function CheckoutWizard({step, shoppingCart, stepName}) {
   const [checkValues, setCheckValues] = useState({})
-
+  const shoppingCartObj = {'shoppingCart': shoppingCart}
   switch(step){
     case 0:
       return(
         <Container>
           <Pformheader>{stepName}</Pformheader>
           <Formik 
-            initialValues={DefaultShippingScheduleValues}
+            initialValues={{...DefaultShippingScheduleValues, ...shoppingCartObj}}
             component={ShippingScheduleForm} 
             onSubmit={values => {console.log(values)}}
-            shoppingCart={shoppingCart}
           />
         </Container>
       )

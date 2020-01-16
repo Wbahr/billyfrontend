@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -91,6 +91,8 @@ const DivOrderTotalCol = styled.div`
 `
 
 export default function OrderSummary({history}) {
+  const context = useContext(Context)
+  
   return(
     <>
       <Div>
@@ -112,15 +114,17 @@ export default function OrderSummary({history}) {
           <button>Save</button>
         </DivLineItem>   
         <p>Total (without tax) $100.00</p>
-        <DivButtonContainer>
-          <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-            <FontAwesomeIcon icon="lock" color="white"/>
-            <p>Start Secure Checkout</p>
-          </DivCheckoutButton>
-          <DivQuoteButton>
-            <p>Create a Quote</p>
-          </DivQuoteButton>
-        </DivButtonContainer>
+        {context.cart.length > -1 &&
+          <DivButtonContainer>
+            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+              <FontAwesomeIcon icon="lock" color="white"/>
+              <p>Start Secure Checkout</p>
+            </DivCheckoutButton>
+            <DivQuoteButton>
+              <p>Create a Quote</p>
+            </DivQuoteButton>
+          </DivButtonContainer>
+        }
       </Div>
     </>
   )

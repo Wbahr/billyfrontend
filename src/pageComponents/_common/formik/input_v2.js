@@ -20,6 +20,7 @@ const MainInput = styled.input`
   border: 1px solid #e1e1e1;  
   :focus{
     border: 1px solid #007bff;  
+    outline: none;
   }
   ::placeholder {
     color: grey;

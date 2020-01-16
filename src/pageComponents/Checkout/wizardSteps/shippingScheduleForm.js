@@ -28,7 +28,7 @@ export const ShippingScheduleForm = ({
   handleChange,
   handleBlur,
   values,
-  errors,
+  errors
 }) => (
   <form onSubmit={handleSubmit} autoComplete="off">
     <FormRow>
@@ -42,23 +42,10 @@ export const ShippingScheduleForm = ({
     </FormRow>
     {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete with all parts.</Pinfo>}
     {values.schedule.packing_basis === "2" && <Pinfo>Your order will ship in increments as items become ready.</Pinfo>}
-    {values.schedule.packing_basis === "3" && <Pinfo>Please specify dates below (by line) when you want each part to ship.</Pinfo>}
-    {/* {values.schedule.packing_basis === "2" &&
-      <FieldArray
-        name="schedule.requested_dates"
-        render={arrayHelpers => (
-          <div>
-            {(values.friends && values.friends.length > 0) && (
-              values.friends.map((friend, index) => (
-                <div key={index}>
-                  <Field name={`schedule.requested_dates.${index}`} />
-                </div>
-              ))
-            )}
-          </div>
-        )}
-      />
-    } */}
+    {values.schedule.packing_basis === "3" && <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>}
+    {values.schedule.packing_basis === "3" &&
+      console.log('cart', values)
+    }
     <FormRow>
       <label>Disposition</label>
       <Field as="select" name="schedule.disposition">
