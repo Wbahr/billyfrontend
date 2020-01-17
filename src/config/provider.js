@@ -88,7 +88,7 @@ export default function Provider(props) {
       // If userInfo in local storage, update Context
       let userInfo = localStorage.getItem("userInfo")
       setUserInfo(JSON.parse(userInfo))
-      // If imperonsatedCompanyInfo in local storage, update Context
+      // If impersonsatedCompanyInfo in local storage, update Context
       let impersonatedCompanyInfo = localStorage.getItem("impersonatedCompanyInfo")
       setImpersonatedCompanyInfo(JSON.parse(impersonatedCompanyInfo))
     }

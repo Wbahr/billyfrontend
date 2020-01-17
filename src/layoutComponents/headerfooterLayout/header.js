@@ -94,6 +94,7 @@ const ButtonSearchType = styled.button`
   width: 40px;
   height: 40px;
   background-image: linear-gradient(to top left, #404040, #272727);
+  border-radius: 3px 0px 0 3px;
   color: white;
   font-weight: 500;
   border: 0;
@@ -146,11 +147,15 @@ export default function HeaderComponent(props) {
         <NavBottomContainer>
           <div>
             <Context.Consumer>
-              {({userInfo, impersonatedCompanyInfo}) => {
+              {({userInfo, impersonatedCompanyInfo, cancelImpersonation}) => {
                 if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
-                  return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+                  if(userInfo.role === "AirlineEmployee"){
+                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+                  } else {
+                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
+                  }
                 } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><ImpersonationSearch /></Div>)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><div onClick={()=>cancelImpersonation()}>X</div><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
@@ -219,9 +224,17 @@ export default function HeaderComponent(props) {
             </Link>
           </LinkContainer>
           <Div>
-            <ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
-              {searchAsCustomer ? <div style={{color: 'limegreen'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
-            </ButtonSearchType>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if(userInfo && userInfo.role === "AirlineEmployee"){
+                  return(
+                    <ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
+                      {searchAsCustomer ? <div style={{color: 'limegreen'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
+                    </ButtonSearchType>
+                  )
+                }
+              }}
+            </Context.Consumer>
             <InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>
               <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg"/>
