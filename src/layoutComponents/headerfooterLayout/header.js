@@ -155,7 +155,7 @@ export default function HeaderComponent(props) {
                     return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
                   }
                 } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><div onClick={()=>cancelImpersonation()}>X</div><ImpersonationSearch /></Div>)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><div onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" /></div><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
