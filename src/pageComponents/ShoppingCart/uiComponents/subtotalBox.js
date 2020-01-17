@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext} from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -104,16 +104,20 @@ export default function SubtotalBox({history}) {
 
       <Div>
         <h5>Subtotal: {formatCurrency(context.cartPricing.subTotal)}</h5>
-        <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-          <FontAwesomeIcon icon="lock" color="white"/>
-          <p>Start Secure Checkout</p>
-        </DivCheckoutButton>
-        <DivQuoteButton>
-          <p>Create a Quote</p>
-        </DivQuoteButton>
-        <DivShoppinglistButton>
-          <p>Save to Shopping List</p>
-        </DivShoppinglistButton>
+        { context.cart.length > 0 &&
+          <>
+            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+              <FontAwesomeIcon icon="lock" color="white"/>
+              <p>Start Secure Checkout</p>
+            </DivCheckoutButton>
+            <DivQuoteButton>
+              <p>Create a Quote</p>
+            </DivQuoteButton>
+            <DivShoppinglistButton>
+              <p>Save to Shopping List</p>
+            </DivShoppinglistButton>
+         </>
+        }
       </Div>
     </Container>
   )

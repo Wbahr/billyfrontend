@@ -119,15 +119,18 @@ export default function OrderSummary({history}) {
           <button>Apply</button>
         </DivLineItem>   
         <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
-        <DivButtonContainer>
-          <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-            <FontAwesomeIcon icon="lock" color="white"/>
-            <p>Start Secure Checkout</p>
-          </DivCheckoutButton>
-          <DivQuoteButton>
-            <p>Create a Quote</p>
-          </DivQuoteButton>
-        </DivButtonContainer>
+        {context.cart.length > -1 &&
+          <DivButtonContainer>
+            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+              <FontAwesomeIcon icon="lock" color="white"/>
+              <p>Start Secure Checkout</p>
+            </DivCheckoutButton>
+            <DivQuoteButton>
+              <p>Create a Quote</p>
+            </DivQuoteButton>
+          </DivButtonContainer>
+        }
+
       </Div>
     </>
   )

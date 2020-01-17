@@ -35,9 +35,9 @@ class CardSection extends React.Component {
     return(
       <DivSection>
         <h2>Credit Card Info</h2>
-          <label for="name">Cardholder Full Name</label>
+          <label htmlFor="name">Cardholder Full Name</label>
           <input id="name" onChange={this.handleFieldChange} value={name} placeholder="Cardholder Name"></input>
-          <label for="card-element">Credit or debit card</label>
+          <label htmlFor="card-element">Credit or debit card</label>
           <div id="card-element">
             <DivStripeCard>
               <CardElement />

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import styled from "styled-components"
-import FormikInput from '../../_common/formik/input'
+import FormikInput from '../../_common/formik/input_v2'
 
 const ButtonRed = styled.button`
   background-color: rgb(219, 22, 51);

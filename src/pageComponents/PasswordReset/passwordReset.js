@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import { useParams } from 'react-router-dom'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
 import PasswordRequirements from './uiComponents/passwordRequirements'
+import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 
 const PasswordResetPageContainer = styled.div`
   display: flex;
@@ -136,20 +137,20 @@ export default function PasswordResetPage({history}) {
       />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Password Reset</P>
-      {errorMessage.length > 0  && <p>{errorMessage}</p>}
-      {infoMessage.length > 0  && <p>{infoMessage}</p>}
+      {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
+      {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
       {showResendToken && <A onClick={()=>{setShowPasswordResetModal(true)}}>Token Expired? Click here to send a new one</A>}
-      {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
+      {error && <ErrorAlert>An unexpected error has occured. Please try again or contact us.</ErrorAlert>}
       <DivInput>
-        <Label for='username'>Username</Label>
+        <Label htmlFor='username'>Username</Label>
         <Input id='username' onChange={(e)=>setUsername(e.target.value)} value={username}/>
       </DivInput>
       <DivInput>
-        <Label for='password'>Password</Label>
-        <Input id='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ""))}} value={password}/>
+        <Label htmlFor='password'>Password</Label>
+        <Input id='password' type='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ""))}} value={password}/>
       </DivInput>
       <DivInput>
-        <Label for='confirm_password'>Confirm Password</Label>
+        <Label htmlFor='confirm_password'>Confirm Password</Label>
         <Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ""))} value={confirmPassword}/>
       </DivInput>
       <PasswordRequirements

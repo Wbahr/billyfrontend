@@ -3,32 +3,6 @@ import Context from './context'
 import gql from 'graphql-tag'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 
-const GET_ITEM_BY_ID = gql`
-  query ItemById($itemId: ID){
-    itemDetails(invMastUid: $itemId) {
-      anonPrice
-      assembly
-      availability
-      availabilityMessage
-      invMastUid
-      itemCode
-      itemDesc
-      listPrice
-      mfgPartNo
-      modelCode
-      p21ItemDesc
-      p21NonWeb
-      tariff
-      unitSizeMultiple
-      image {
-        path
-        sequence
-        type
-      }
-    }
-  }
-`
-
 const UPDATE_SHOPPING_CART = gql`
   mutation UpdateShoppingCart($cartData: ShoppingCartUpdateInputGraphType) {
     updateShoppingCart(cartUpdate: $cartData) {
@@ -40,6 +14,58 @@ const UPDATE_SHOPPING_CART = gql`
     }
   }
 `
+const BEGIN_IMPERSONATION = gql`
+  query BeginImpersonation ($customerId: Int){
+    impersonationBegin(customerId: $customerId){
+      success
+      message
+      authorizationInfo{
+        token
+        userInfo{
+          companyId
+          companyName
+          firstName
+          lastName
+          role
+          permissions
+          limits{
+            limitType
+            limitValue
+          }
+        }
+        impersonationUserInfo{
+          customerId
+          customerName
+        }
+      }
+    }
+  }
+`
+
+const END_IMPERSONATION = gql`
+  query EndImpersonation{
+    impersonationEnd{
+      success
+      message
+      authorizationInfo{
+        token
+        userInfo{
+          companyId
+          companyName
+          firstName
+          lastName
+          role
+          permissions
+          limits{
+            limitType
+            limitValue
+          }
+        }
+      }
+    }
+  }
+`
+
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
@@ -48,6 +74,7 @@ export default function Provider(props) {
   const [shoppingCart, setShoppingCart] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
+  const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
   const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
   const [shoppingCartPricing, setShoppingCartPricing] = useState({'subTotal': '--', 'tariff': '--'})
 
@@ -61,6 +88,12 @@ export default function Provider(props) {
         handleUpdateShoppingCart(5)
       }
       didMountRef.current = true
+      // If userInfo in local storage, update Context
+      let userInfo = localStorage.getItem("userInfo")
+      setUserInfo(JSON.parse(userInfo))
+      // If impersonsatedCompanyInfo in local storage, update Context
+      let impersonatedCompanyInfo = localStorage.getItem("impersonatedCompanyInfo")
+      setImpersonatedCompanyInfo(JSON.parse(impersonatedCompanyInfo))
     }
   })
 
@@ -87,7 +120,37 @@ export default function Provider(props) {
     }
   })
 
-  function resetTopAlert(){
+  const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
+    onCompleted: data => {
+      let requestData = data.impersonationBegin
+      if(requestData.success){
+        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
+        localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
+        setUserInfo(requestData.userInfo)
+        setImpersonatedCompanyInfo(requestData.impersonationUserInfo)
+      } else {
+        setErrorMessage(requestData.message)
+      }
+    }
+  })
+
+  const [handleCancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
+    onCompleted: data => {
+      let requestData = data.impersonationBegin
+      if(requestData.success){
+        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
+        localStorage.removeItem('impersonatedCompanyInformation') 
+        setUserInfo(requestData.userInfo)
+        setImpersonatedCompanyInfo(null)
+      } else {
+        setErrorMessage(requestData.message)
+      }
+    }
+  }
+  
+   function resetTopAlert(){
     let alertObj = {
       'show': false,
       'message': ''
@@ -207,6 +270,12 @@ export default function Provider(props) {
     return (
       <Context.Provider
         value={{
+          impersonatedCompanyInfo: impersonatedCompanyInfo,
+          startImpersonation: (customerId)=>{
+            handleStartImpersonation(customerId)
+          },
+          cancelImpersonation: ()=>{
+            handleCancelImpersonation()
           topAlert: topAlert,
           removeTopAlert: ()=>{
             resetTopAlert()
@@ -251,4 +320,3 @@ export default function Provider(props) {
       </Context.Provider>
     )
 }
-
