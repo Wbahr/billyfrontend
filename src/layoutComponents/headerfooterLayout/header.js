@@ -150,7 +150,7 @@ export default function HeaderComponent(props) {
                 if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)){
                   return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
                 } else if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> Airline - 112123123 [Impersonating]</PeUser><ImpersonationSearch /></Div>)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> Airline - 1121231 [Impersonating]</PeUser><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
@@ -220,7 +220,7 @@ export default function HeaderComponent(props) {
           </LinkContainer>
           <Div>
             <ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
-              {searchAsCustomer ? <div style={{color: 'white'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
+              {searchAsCustomer ? <div style={{color: 'limegreen'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
             </ButtonSearchType>
             <InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
             <ButtonSearch onClick={handleSearch}>

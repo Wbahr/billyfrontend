@@ -12,6 +12,58 @@ const UPDATE_SHOPPING_CART = gql`
     }
   }
 `
+const BEGIN_IMPERSONATION = gql`
+  query BeginImpersonation ($customerId: Int){
+    impersonationBegin(customerId: $customerId){
+      success
+      message
+      authorizationInfo{
+        token
+        userInfo{
+          companyId
+          companyName
+          firstName
+          lastName
+          role
+          permissions
+          limits{
+            limitType
+            limitValue
+          }
+        }
+        impersonationUserInfo{
+          customerId
+          customerName
+        }
+      }
+    }
+  }
+`
+
+const END_IMPERSONATION = gql`
+  query EndImpersonation{
+    impersonationEnd{
+      success
+      message
+      authorizationInfo{
+        token
+        userInfo{
+          companyId
+          companyName
+          firstName
+          lastName
+          role
+          permissions
+          limits{
+            limitType
+            limitValue
+          }
+        }
+      }
+    }
+  }
+`
+
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
@@ -64,16 +116,35 @@ export default function Provider(props) {
     }
   })
 
-  function handleStartImpersonation(impersonatedCompanyInformation){
-    localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(impersonatedCompanyInformation)) 
-    setImpersonatedCompanyInfo(impersonatedCompanyInformation)
-  }
+  const [handleStartImpersonation, { loading, error, data }] = useLazyQuery(BEGIN_IMPERSONATION, {
+    onCompleted: data => {
+      let requestData = data.impersonationBegin
+      if(requestData.success){
+        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
+        localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
+        setUserInfo(requestData.userInfo)
+        setImpersonatedCompanyInfo(requestData.impersonationUserInfo)
+      } else {
+        setErrorMessage(requestData.message)
+      }
+    }
+  })
 
-  function handleCancelImpersonation(){
-    localStorage.removeItem('impersonatedCompanyInformation') 
-    setImpersonatedCompanyInfo(null)
-  }
-
+  const [handleCancelImpersonation, { loading, error, data }] = useLazyQuery(END_IMPERSONATION, {
+    onCompleted: data => {
+      let requestData = data.impersonationBegin
+      if(requestData.success){
+        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
+        localStorage.removeItem('impersonatedCompanyInformation') 
+        setUserInfo(requestData.userInfo)
+        setImpersonatedCompanyInfo(null)
+      } else {
+        setErrorMessage(requestData.message)
+      }
+    }
+  })
 
   function handleLogout(){
     setUserInfo(null)
@@ -172,10 +243,10 @@ export default function Provider(props) {
       <Context.Provider
         value={{
           impersonatedCompanyInfo: impersonatedCompanyInfo,
-          setImpersonatedCompanyInfo: (impersonatedCompanyInformation)=>{
-            handleStartImpersonation(impersonatedCompanyInformation)
+          startImpersonation: (customerId)=>{
+            handleStartImpersonation(customerId)
           },
-          removeImpersonatedCompanyInfo: ()=>{
+          cancelImpersonation: ()=>{
             handleCancelImpersonation()
           },
           userInfo: userInfo,

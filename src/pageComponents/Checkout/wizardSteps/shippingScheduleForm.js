@@ -23,6 +23,13 @@ const Pinfo = styled.p`
   margin: 8px 16px 0 16px;
 `
 
+const FormikSelect = styled.select`
+  // height: 40px;
+  :focus{
+    outline: none;
+  }
+`
+
 export const ShippingScheduleForm = ({
   handleSubmit,
   handleChange,
@@ -33,11 +40,15 @@ export const ShippingScheduleForm = ({
   <form onSubmit={handleSubmit} autoComplete="off">
     <FormRow>
       <label>How do you want your order to ship?</label>
-      <Field as="select" name="schedule.packing_basis">
-        <option value="0" disabled selected>Select an Option</option>
-        <option value="1">Complete</option>
-        <option value="2">When Ready</option>
-        <option value="3">By Line</option>
+      <Field name="schedule.packing_basis">
+        {({ field, form, meta }) => (
+            <FormikSelect {...field}>
+              <option value="0" disabled selected>Select an Option</option>
+              <option value="1">Complete</option>
+              <option value="2">When Ready</option>
+              <option value="3">By Line</option>
+            </FormikSelect>
+        )}
       </Field>
     </FormRow>
     {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete with all parts.</Pinfo>}

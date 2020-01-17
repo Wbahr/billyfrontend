@@ -25,8 +25,8 @@ export const ShipToForm = ({
       <FormikInput type="hidden" name="shipto.contact_id" />
       <FormikInput label="Ship To Name" name="shipto.ship_to_name" />
       <FormikInput type="hidden" name="shipto.ship_to_id" />
-      <FormikInput label="Address 1" name="shipto.address1" size="lg"/>
-      <FormikInput label="Address 2" name="shipto.address2" size="lg"/>
+      <FormikInput label="Address 1" name="shipto.address1" width="600px"/>
+      <FormikInput label="Address 2" name="shipto.address2" width="600px"/>
       <FormikInput label="City" name="shipto.city" />
       <FormikInput label="State" name="shipto.state" />
       <FormikInput label="Zip" name="shipto.zip" />    

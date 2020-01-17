@@ -44,8 +44,8 @@ export const BillingInfoForm = ({
       <FormikInput label="Company Name" name="billing.company_name" />
       <FormikInput label="First Name" name="billing.first_name" />
       <FormikInput label="Last Name" name="billing.last_name" />
-      <FormikInput label="Address 1" name="billing.address1" size="lg"/>
-      <FormikInput label="Address 2" name="billing.address2" size="lg"/>
+      <FormikInput label="Address 1" name="billing.address1" width="600px"/>
+      <FormikInput label="Address 2" name="billing.address2" width="600px"/>
       <FormikInput label="City" name="billing.city" />
       <FormikInput label="State" name="billing.state" />
       <FormikInput label="Zip" name="billing.zip" />    
@@ -54,6 +54,7 @@ export const BillingInfoForm = ({
       <FormikInput label="Phone" name="billing.phone" />
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
+    <button type="submit">print</button>
   </form>
 )
 
