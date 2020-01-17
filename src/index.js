@@ -13,6 +13,7 @@ import ApolloClient from 'apollo-boost'
 import ContextProvider from './config/provider'
 import 'index.css'
 
+
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faFacebookF, faLinkedinIn, faTwitter, faYoutube, faMapPin, faFax, faSearch, faUserCircle, faTimes)
 
 const customHistory = createBrowserHistory()

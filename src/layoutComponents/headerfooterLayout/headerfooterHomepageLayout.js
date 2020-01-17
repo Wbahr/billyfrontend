@@ -14,6 +14,7 @@ const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  // margin-top: 110px
   // max-width: 1200px;
   // margin: 28px auto;
   align-items: flex-start;

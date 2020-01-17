@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 
 const Div = styled.div`
   display: flex;
@@ -17,6 +18,9 @@ const Div = styled.div`
   padding: 16px;
   align-items: flex-end;
   background-color: whitesmoke;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 125px;
 `
 
 const H4 = styled.h4`
@@ -91,29 +95,30 @@ const DivOrderTotalCol = styled.div`
 `
 
 export default function OrderSummary({history}) {
+  const [couponCode, setCouponCode] = useState('')
   const context = useContext(Context)
-  
+
   return(
     <>
       <Div>
         <H4>Order Summary</H4>
         <DivLineItem>
           <p>Subtotal</p>
-          <p>$100.00</p>
+          <p>{formatCurrency(context.cartPricing.subTotal)}</p>
         </DivLineItem>
         <DivLineItem>
           <p>Tariff</p>
-          <p>--</p>
+          <p>{formatCurrency(context.cartPricing.tariff)}</p>
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
           <p>(Calculated at Checkout)</p>
         </DivLineItem>
         <DivLineItem>
-          <input placeholder='Coupon Code' onChange={(e)=>console.log('-> ', e.target.value)}/>
-          <button>Save</button>
+          <input placeholder='Coupon Code' value={couponCode} onChange={(e)=>setCouponCode(e.target.value)}/>
+          <button>Apply</button>
         </DivLineItem>   
-        <p>Total (without tax) $100.00</p>
+        <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         {context.cart.length > -1 &&
           <DivButtonContainer>
             <DivCheckoutButton onClick={()=>history.push('/checkout')}>
@@ -125,6 +130,7 @@ export default function OrderSummary({history}) {
             </DivQuoteButton>
           </DivButtonContainer>
         }
+
       </Div>
     </>
   )

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {DebounceInput} from 'react-debounce-input'
 import Context from '../../../config/context'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -84,7 +85,7 @@ const DivOrderTotalCol = styled.div`
 export default function SubtotalBox({history}) {
   const [price, setPrice] = useState(0)
   const context = useContext(Context)
-  
+
   return(
     <Container>
       <Context.Consumer>
@@ -102,22 +103,21 @@ export default function SubtotalBox({history}) {
       </Context.Consumer>
 
       <Div>
-        <h5>Subtotal: $100.00</h5>
+        <h5>Subtotal: {formatCurrency(context.cartPricing.subTotal)}</h5>
         { context.cart.length > 0 &&
-        <>
-          <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-            <FontAwesomeIcon icon="lock" color="white"/>
-            <p>Start Secure Checkout</p>
-          </DivCheckoutButton>
-          <DivQuoteButton>
-            <p>Create a Quote</p>
-          </DivQuoteButton>
-          <DivShoppinglistButton>
-            <p>Save to Shopping List</p>
-          </DivShoppinglistButton>
-        </>
+          <>
+            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+              <FontAwesomeIcon icon="lock" color="white"/>
+              <p>Start Secure Checkout</p>
+            </DivCheckoutButton>
+            <DivQuoteButton>
+              <p>Create a Quote</p>
+            </DivQuoteButton>
+            <DivShoppinglistButton>
+              <p>Save to Shopping List</p>
+            </DivShoppinglistButton>
+         </>
         }
-
       </Div>
     </Container>
   )

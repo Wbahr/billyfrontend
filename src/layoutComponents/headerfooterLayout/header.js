@@ -3,23 +3,27 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
+import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
-
-const DivSticky = styled.div`
-`
 
 const NavTop = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
   height: 40px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   background-color: #535353;
   justify-content: center;
 `
 
 const NavBottom = styled.div`
   display: flex;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 40px;
   margin: 0 auto;
   width: 100%;
   height: 70px;
@@ -105,13 +109,16 @@ const Div = styled.div`
   display: flex;
 `
 
-const Puser = styled.div`
-  background-color: #404040;
+
+const Puser = styled.p`
+  // background-color: #404040;
+  background-image: linear-gradient(to top left, #404040, #333);
   color: #f3f3f3;
   font-size: 11px;
   margin: 0;
   padding: 4px 8px;
   border-radius: 30px;
+  font-weight: 600;
 `
 
 const PeUser = styled(Puser)`
@@ -142,7 +149,17 @@ export default function HeaderComponent(props) {
   }
 
   return(
-    <DivSticky>
+    <>
+      <Context.Consumer>
+      {({topAlert,removeTopAlert}) => {
+        if(topAlert.show) {
+          return(<TopAlert 
+            message={topAlert.message}
+            close={()=>removeTopAlert()}
+          />)
+        }
+      }}        
+      </Context.Consumer>
       <NavTop>
         <NavBottomContainer>
           <div>
@@ -243,6 +260,6 @@ export default function HeaderComponent(props) {
           {/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
         </NavBottomContainer>
       </NavBottom>
-    </DivSticky>
+    </>
   )
 }

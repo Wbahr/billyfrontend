@@ -55,7 +55,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account/orders' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/payment-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/shipping-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>

@@ -9,6 +9,8 @@ const UPDATE_SHOPPING_CART = gql`
       token
       cartData
       orderNotes
+      subtotal
+      tariff
     }
   }
 `
@@ -70,10 +72,11 @@ export default function Provider(props) {
   const loadCart = useRef(true)
   const justLoadedCart = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
-  const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
   const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
+  const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
+  const [shoppingCartPricing, setShoppingCartPricing] = useState({'subTotal': '--', 'tariff': '--'})
 
   useEffect(() => {
     if (!didMountRef.current) {
@@ -107,6 +110,7 @@ export default function Provider(props) {
     onCompleted: result => {
       let results = result.updateShoppingCart
       localStorage.setItem("shoppingCartToken", results.token)
+      setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
       if(loadCart.current){
         setShoppingCart(JSON.parse(results.cartData))
         setOrderNotes(results.orderNotes)
@@ -144,15 +148,40 @@ export default function Provider(props) {
         setErrorMessage(requestData.message)
       }
     }
-  })
+  }
+  
+   function resetTopAlert(){
+    let alertObj = {
+      'show': false,
+      'message': ''
+    }
+    setTopAlert(alertObj)
+  }
+
+  function handleLogin(userInformation) {
+    setUserInfo(userInformation)
+    let alertObj = {
+      'show': true,
+      'message': 'You have been successfully logged in.'
+    }
+    setTopAlert(alertObj)
+    window.setTimeout(()=>{resetTopAlert()}, 3000)
+  }
 
   function handleLogout(){
+
     setUserInfo(null)
     localStorage.removeItem('userInfo') 
     localStorage.removeItem('apiToken') 
     localStorage.removeItem('shoppingCartToken')
     handleEmptyCart()
     props.children.props.history.push('/')
+    let alertObj = {
+      'show': true,
+      'message': 'You have been logged out.'
+    }
+    setTopAlert(alertObj)
+    window.setTimeout(()=>{resetTopAlert()}, 3500)
   }
 
   function handleAddItem (item){
@@ -215,7 +244,6 @@ export default function Provider(props) {
 
   function handleEmptyCart(){
     setShoppingCart([])
-    setShoppingCartDisplay([])
   }
 
   function handleSetOrderNotes(orderNotes){
@@ -248,16 +276,19 @@ export default function Provider(props) {
           },
           cancelImpersonation: ()=>{
             handleCancelImpersonation()
+          topAlert: topAlert,
+          removeTopAlert: ()=>{
+            resetTopAlert()
           },
           userInfo: userInfo,
           loginUser: (userInformation)=>{
-            setUserInfo(userInformation)
+            handleLogin(userInformation)
           },
           logoutUser: ()=>{
             handleLogout()
           },
           cart: shoppingCart,
-          cartDisplay: shoppingCartDisplay,
+          cartPricing: shoppingCartPricing,
           orderNotes: orderNotes,
           addItem: (item) => {
             handleAddItem(item)
