@@ -147,10 +147,10 @@ export default function HeaderComponent(props) {
           <div>
             <Context.Consumer>
               {({userInfo, impersonatedCompanyInfo}) => {
-                if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)){
+                if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
                   return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
-                } else if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> Airline - 1121231 [Impersonating]</PeUser><ImpersonationSearch /></Div>)
+                } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>

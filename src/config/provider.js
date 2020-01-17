@@ -116,7 +116,7 @@ export default function Provider(props) {
     }
   })
 
-  const [handleStartImpersonation, { loading, error, data }] = useLazyQuery(BEGIN_IMPERSONATION, {
+  const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){
@@ -131,7 +131,7 @@ export default function Provider(props) {
     }
   })
 
-  const [handleCancelImpersonation, { loading, error, data }] = useLazyQuery(END_IMPERSONATION, {
+  const [handleCancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Context from '../../config/context'
 
 const Div = styled.div`
   display: flex;
@@ -27,12 +28,14 @@ const Input = styled.input`
 export default function ImpersonationSearchComponent(props) {
   const [impersonationTerm, setImpersonationTerm] = useState('')
 
+  const context = useContext(Context)
+
   return(
     <>
-    <Input placeholder="Search by Customer Name or #" value={impersonationTerm} onChange={e=>{setImpersonationTerm(e.target.value)}}></Input>
-    <Div>
-      <FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
-    </Div>
+      <Input placeholder="Search by Customer Name or #" value={impersonationTerm} onChange={e=>{setImpersonationTerm(e.target.value)}}></Input>
+      <Div onClick={()=>context.startImpersonation(impersonationTerm)}>
+        <FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
+      </Div>
     </>
   )
 }
