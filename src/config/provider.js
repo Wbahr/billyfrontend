@@ -138,6 +138,12 @@ export default function Provider(props) {
         newUser.current = true
         setUserInfo(requestData.authorizationInfo.userInfo)
         setImpersonatedCompanyInfo(requestData.authorizationInfo.impersonationUserInfo)
+        let alertObj = {
+          'show': true,
+          'message': 'You are now impersonating a customer'
+        }
+        setTopAlert(alertObj)
+        window.setTimeout(()=>{resetTopAlert()}, 3000)
       }
     }
   })
