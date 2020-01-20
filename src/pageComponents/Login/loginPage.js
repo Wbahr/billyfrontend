@@ -95,7 +95,7 @@ const QUERY_LOGIN = gql`
   }
 `
 
-export default function LoginPage({history}) {
+export default function LoginPage(props, {history}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -118,7 +118,13 @@ export default function LoginPage({history}) {
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
           context.loginUser(requestData.authorizationInfo.userInfo)
-          history.push('/')
+          let urlParams = new URLSearchParams(props.location.search)
+          let redirect = urlParams.get('next')
+          if(redirect){
+            history.push(redirect)
+          } else {
+            history.push('/')
+          }
         }
       } else {
         setErrorMessage(requestData.message)
