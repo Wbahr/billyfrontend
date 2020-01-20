@@ -95,7 +95,7 @@ const QUERY_LOGIN = gql`
   }
 `
 
-export default function LoginPage(props, {history}) {
+export default function LoginPage(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -103,7 +103,8 @@ export default function LoginPage(props, {history}) {
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
   const context = useContext(Context);
-
+  const history = props.history
+  
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
       console.log('executeLogIn', data)
