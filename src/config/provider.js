@@ -99,7 +99,7 @@ export default function Provider(props) {
 
   // Update database if shopping cart or order notes  changes
   useEffect(() => {
-    if(didMountRef.current && justLoadedCart.current){
+    if(didMountRef.current && justLoadedCart.current && shoppingCart.length > 0){
       handleUpdateShoppingCart(2)
     } else {
       justLoadedCart.current = false
@@ -107,6 +107,7 @@ export default function Provider(props) {
   },[shoppingCart, orderNotes])
 
   const [updateShoppingCart] = useMutation(UPDATE_SHOPPING_CART, {
+    fetchPolicy: 'no-cache',
     onCompleted: result => {
       let results = result.updateShoppingCart
       localStorage.setItem("shoppingCartToken", results.token)
@@ -129,8 +130,6 @@ export default function Provider(props) {
         localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
         setUserInfo(requestData.userInfo)
         setImpersonatedCompanyInfo(requestData.impersonationUserInfo)
-      } else {
-        setErrorMessage(requestData.message)
       }
     }
   })

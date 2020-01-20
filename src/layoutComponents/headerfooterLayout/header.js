@@ -111,7 +111,6 @@ const Div = styled.div`
 
 
 const Puser = styled.p`
-  // background-color: #404040;
   background-image: linear-gradient(to top left, #404040, #333);
   color: #f3f3f3;
   font-size: 11px;
@@ -167,7 +166,7 @@ export default function HeaderComponent(props) {
               {({userInfo, impersonatedCompanyInfo, cancelImpersonation}) => {
                 if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
                   if(userInfo.role === "AirlineEmployee"){
-                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} (Airline)</Puser><ImpersonationSearch /></Div>)
                   } else {
                     return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
                   }
