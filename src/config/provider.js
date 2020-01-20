@@ -148,7 +148,7 @@ export default function Provider(props) {
         setErrorMessage(requestData.message)
       }
     }
-  }
+  })
   
    function resetTopAlert(){
     let alertObj = {
@@ -276,6 +276,7 @@ export default function Provider(props) {
           },
           cancelImpersonation: ()=>{
             handleCancelImpersonation()
+          },
           topAlert: topAlert,
           removeTopAlert: ()=>{
             resetTopAlert()
