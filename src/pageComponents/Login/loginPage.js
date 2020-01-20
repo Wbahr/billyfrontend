@@ -104,10 +104,9 @@ export default function LoginPage(props) {
 
   const context = useContext(Context);
   const history = props.history
-  
+
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
-      console.log('executeLogIn', data)
       let requestData = data.submitLogin
       if(requestData.success){
         // Need to reset password

@@ -22,7 +22,7 @@ export default function ResetPasswordModal({open, hideModal}) {
     onCompleted: data => {
       let requestData = data.requestPasswordReset
       if(requestData.success){
-        setMessage(`We are sending instructions to reset your password. If you do not receive an email,  please check your spam folder and call us at 1-800-999-7378.`)
+        setMessage(requestData.message)
         setTimeout(()=>{handleClose(), history.push('/login')}, 5000)
       } else {
         setMessage(`An error has occured. Please check your email/username and try again or contact us.`)
