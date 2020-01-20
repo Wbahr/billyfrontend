@@ -17,15 +17,18 @@ import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
+import Auth from './auth'
 
-function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
+function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
     <Route
       {...otherProps}
       render={routeProps => (
-        <LayoutWrapperComponent {...routeProps}>
-          <Component {...routeProps} />
-        </LayoutWrapperComponent>
+        <Auth authRequired={auth || false} {...routeProps}>
+          <LayoutWrapperComponent {...routeProps}>
+            <Component {...routeProps} />
+          </LayoutWrapperComponent>
+        </Auth>
       )}
     />
   );
@@ -54,12 +57,12 @@ class App extends React.Component {
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/account/orders' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/payment-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/shipping-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/wishlists' component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/dashboard' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/account/orders' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/payment-preferences' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/shipping-preferences' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/wishlists' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
