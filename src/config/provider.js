@@ -36,6 +36,7 @@ const BEGIN_IMPERSONATION = gql`
         impersonationUserInfo{
           customerId
           customerName
+          customerIdP21
         }
       }
     }
@@ -268,7 +269,7 @@ export default function Provider(props) {
     // 1 - Create Cart
     // 2 - Update Cart
     // 3 - Save Cart
-    // 4 - Create Shopping List
+    // 4 - Merge Cart
     // 5 - Get existing cart 
     let shoppingCartToken = localStorage.getItem("shoppingCartToken")
     updateShoppingCart({ variables: { cartData: {

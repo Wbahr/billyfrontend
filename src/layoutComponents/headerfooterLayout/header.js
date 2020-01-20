@@ -171,13 +171,12 @@ export default function HeaderComponent(props) {
               {({userInfo, impersonatedCompanyInfo, cancelImpersonation}) => {
                 if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
                   if(userInfo.role === "AirlineEmployee"){
-                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} (Airline)</Puser><ImpersonationSearch /></Div>)
+                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} (Airline Employee)</Puser><ImpersonationSearch /></Div>)
                   } else {
                     return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
                   }
                 } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                  console.log('haha', impersonatedCompanyInfo)
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
