@@ -71,7 +71,7 @@ export default function Provider(props) {
   const didMountRef = useRef(false);
   const loadCart = useRef(true)
   const justLoadedCart = useRef(false)
-  const newLoggedOutUser = useRef(false)
+  const newUser = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
@@ -93,7 +93,7 @@ export default function Provider(props) {
       let userInfo = localStorage.getItem("userInfo")
       setUserInfo(JSON.parse(userInfo))
       // If impersonsatedCompanyInfo in local storage, update Context
-      let impersonatedCompanyInfo = localStorage.getItem("impersonatedCompanyInfo")
+      let impersonatedCompanyInfo = localStorage.getItem("impersonatedCompanyInformation")
       setImpersonatedCompanyInfo(JSON.parse(impersonatedCompanyInfo))
     }
   })
@@ -101,8 +101,8 @@ export default function Provider(props) {
   // Update database if shopping cart or order notes  changes
   useEffect(() => {
     if(didMountRef.current && justLoadedCart.current){
-      if (newLoggedOutUser.current) {
-        newLoggedOutUser.current = false
+      if (newUser.current) {
+        newUser.current = false
         handleUpdateShoppingCart(1)
       } else {
         handleUpdateShoppingCart(2)
@@ -134,20 +134,22 @@ export default function Provider(props) {
         localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
         localStorage.setItem('impersonatedCompanyInformation', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
-        setUserInfo(requestData.userInfo)
-        setImpersonatedCompanyInfo(requestData.impersonationUserInfo)
+        localStorage.removeItem('shoppingCartToken')
+        newUser.current = true
+        setUserInfo(requestData.authorizationInfo.userInfo)
+        setImpersonatedCompanyInfo(requestData.authorizationInfo.impersonationUserInfo)
       }
     }
   })
 
   const [handleCancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
     onCompleted: data => {
-      let requestData = data.impersonationBegin
+      let requestData = data.impersonationEnd
       if(requestData.success){
         localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
         localStorage.removeItem('impersonatedCompanyInformation') 
-        setUserInfo(requestData.userInfo)
+        setUserInfo(requestData.authorizationInfo.userInfo)
         setImpersonatedCompanyInfo(null)
       } else {
         setErrorMessage(requestData.message)
@@ -178,7 +180,7 @@ export default function Provider(props) {
     localStorage.removeItem('userInfo') 
     localStorage.removeItem('apiToken') 
     localStorage.removeItem('shoppingCartToken')
-    newLoggedOutUser.current = true
+    newUser.current = true
     handleEmptyCart()
     props.children.props.history.push('/')
     let alertObj = {
@@ -277,7 +279,10 @@ export default function Provider(props) {
         value={{
           impersonatedCompanyInfo: impersonatedCompanyInfo,
           startImpersonation: (customerId)=>{
-            handleStartImpersonation(customerId)
+            handleStartImpersonation({ variables: {
+              "customerId": customerId
+            }
+          })
           },
           cancelImpersonation: ()=>{
             handleCancelImpersonation()

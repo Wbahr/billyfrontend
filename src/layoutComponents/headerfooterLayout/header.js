@@ -139,6 +139,11 @@ const Aphone = styled(A)`
   color: white;
 `
 
+const DivCancelImpersonation = styled.div`
+  cursor: pointer;
+  margin: 0 8px;
+`
+
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchAsCustomer, setSearchAsCustomer] = useState(false)
@@ -171,7 +176,8 @@ export default function HeaderComponent(props) {
                     return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
                   }
                 } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><div onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" /></div><ImpersonationSearch /></Div>)
+                  console.log('haha', impersonatedCompanyInfo)
+                  return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerId} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
                 }
               }}        
             </Context.Consumer>
