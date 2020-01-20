@@ -120,7 +120,7 @@ export default function LoginPage(props, {history}) {
           context.loginUser(requestData.authorizationInfo.userInfo)
           let urlParams = new URLSearchParams(props.location.search)
           let redirect = urlParams.get('next')
-          if(redirect){
+          if(!_.isNil(redirect)){
             history.push(redirect)
           } else {
             history.push('/')
