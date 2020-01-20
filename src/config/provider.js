@@ -71,6 +71,7 @@ export default function Provider(props) {
   const didMountRef = useRef(false);
   const loadCart = useRef(true)
   const justLoadedCart = useRef(false)
+  const newLoggedOutUser = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
@@ -99,8 +100,13 @@ export default function Provider(props) {
 
   // Update database if shopping cart or order notes  changes
   useEffect(() => {
-    if(didMountRef.current && justLoadedCart.current && shoppingCart.length > 0){
-      handleUpdateShoppingCart(2)
+    if(didMountRef.current && justLoadedCart.current){
+      if (newLoggedOutUser.current) {
+        newLoggedOutUser.current = false
+        handleUpdateShoppingCart(1)
+      } else {
+        handleUpdateShoppingCart(2)
+      }
     } else {
       justLoadedCart.current = false
     }
@@ -168,11 +174,11 @@ export default function Provider(props) {
   }
 
   function handleLogout(){
-
     setUserInfo(null)
     localStorage.removeItem('userInfo') 
     localStorage.removeItem('apiToken') 
     localStorage.removeItem('shoppingCartToken')
+    newLoggedOutUser.current = true
     handleEmptyCart()
     props.children.props.history.push('/')
     let alertObj = {
