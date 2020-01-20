@@ -157,11 +157,11 @@ export default function LoginPage({history}) {
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
         <Label htmlFor='email'>Username or Email</Label>
-        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
+        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
       </DivInput>
       <DivInput>
         <Label htmlFor='password'>Password</Label>
-        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
+        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
       </DivInput>
       <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
       <A onClick={()=>setShowPasswordResetModal(true)}>Forgot your Password?</A>
