@@ -12,58 +12,38 @@ import {BillingInfoForm, defaultValues as DefaultBillToValues} from './wizardSte
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import Context from '../../config/context'
 
-const Container = styled.div`
-  margin: 20px;
-  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
-  font-size: 18px;
-  height: 100%;
-  border: 1px solid whitesmoke;
-  padding: 5px 20px;
-`
-
-const Pformheader = styled.p`
-  margin: 0;
-  font-family: ProximaBold;
-  text-transform: uppercase;
-`
-
-export default function CheckoutWizard({step, shoppingCart, stepName}) {
+export default function CheckoutWizard({step, shoppingCart}) {
   const [checkValues, setCheckValues] = useState({})
   const shoppingCartObj = {'shoppingCart': shoppingCart}
+
   switch(step){
     case 0:
-      return(
-        <Container>
-          <Pformheader>{stepName}</Pformheader>
+      if (shoppingCart.length > 0) {
+        return(
           <Formik 
             initialValues={{...DefaultShippingScheduleValues, ...shoppingCartObj}}
             component={ShippingScheduleForm} 
             onSubmit={values => {console.log(values)}}
           />
-        </Container>
-      )
+        )
+      } else {
+        return null
+      }
     case 1:
       return(
-        <Container>
-          <Pformheader>{stepName}</Pformheader>
           <Formik 
             initialValues={DefaultShipToValues}
             component={ShipToForm} 
             onSubmit={values => {console.log(values)}}
           />
-        </Container>
-
       )
     case 2:
       return(
-        <Container>
-          <Pformheader>{stepName}</Pformheader>
           <Formik 
             initialValues={DefaultBillToValues}
             component={BillingInfoForm} 
             onSubmit={values => {console.log(values)}}
           />
-        </Container>
       )
     case 3:
       return(

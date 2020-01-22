@@ -72,12 +72,26 @@ const DivNavigation = styled.div`
   justify-content: space-between;
 `
 
+const Container = styled.div`
+  margin: 20px;
+  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  height: 100%;
+  border: 1px solid whitesmoke;
+  padding: 5px 20px;
+`
+
+const Pformheader = styled.p`
+  margin: 0;
+  font-family: ProximaBold;
+  text-transform: uppercase;
+`
+
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
   const [disablePrevious, setDisablePrevious] = useState(false)
   const [disableNext, setDisableNext] = useState(false)
   const [disableSubmit, setDisableSubmit] = useState(false)
-
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
 
   return(
@@ -89,9 +103,12 @@ export default function CheckoutPage({history}) {
             <H3>Checkout</H3>
           </DivRow>
         </Div>
-        <Context.Consumer>
-          {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} stepName={stepLabel[currentStep]}/>)}
-        </Context.Consumer>
+        <Container>
+          <Pformheader>{stepLabel[currentStep]}</Pformheader>
+          <Context.Consumer>
+            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
+          </Context.Consumer>
+        </Container>
         <DivNavigation>
           {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
           {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}

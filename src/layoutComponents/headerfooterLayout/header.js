@@ -17,6 +17,7 @@ const NavTop = styled.div`
   top: 0;
   background-color: #535353;
   justify-content: center;
+  z-index: 89;
 `
 
 const NavBottom = styled.div`
@@ -30,6 +31,7 @@ const NavBottom = styled.div`
   background-color: white;
   justify-content: center;
   box-shadow: 0px 3px 4px #dadada;
+  // z-index: 89;
 `
 
 const LinkContainer = styled.div`

@@ -247,22 +247,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
-    const CustomDatePickerComponent = ({ value, onClick }) => (
-      <CustomDatePicker onClick={onClick}>
-        {value}
-      </CustomDatePicker>
-    )
-
     Content = (
       <DivCard>
         <DivMove>
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
-        {/* <DivMove>
-          <DivDivide onClick={()=>showSplitLineModal(index)}>
-            <FontAwesomeIcon icon="divide" color="white"/>
-          </DivDivide>
-        </DivMove> */}
         <DivCol1>
           <Img height='80px'  src={imagePath} />
         </DivCol1>

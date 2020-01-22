@@ -16,7 +16,7 @@ const Label = styled.label`
   font-weight: 400;
   padding-left: 4px;
   margin-bottom: -11px;
-  z-index: 99;
+  z-index: 2;
   background-color:white;
   width: max-content;
   padding: 2px;
@@ -54,19 +54,18 @@ export default function Input({type, disabled, name, label, placeholder, onChang
       <DivContainer>
       {label && <Label htmlFor={label}>{`${label}`}</Label>}        
       <Field name={name}>
-            {({
-              field,
-              form,
-              form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-              meta,
-            }) => (
-                  <>
-                    <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={(e)=>{eval(onChange)}} />
-                    {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
-                  </>
-                )
-            }
-          }
+        {({
+          field,
+          form,
+          form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+          meta,
+        }) => (
+              <>
+                <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={(e)=>{eval(onChange)}} />
+                {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
+              </>
+            )
+        }
       </Field>
     </DivContainer>
     )

@@ -17,10 +17,10 @@ export const ShipToForm = ({
 }) => (
   <form onSubmit={handleSubmit} autoComplete="off">
     <WrapForm>
-      {/* <Field as="select" name="shipto.saved_address">
+      <Field as="select" name="shipto.saved_address">
         <option value="1">Yes</option>
         <option value="0">No</option>
-      </Field> */}
+      </Field>
       <FormikInput label="Contact Name" name="shipto.contact_name" />
       <FormikInput type="hidden" name="shipto.contact_id" />
       <FormikInput label="Ship To Name" name="shipto.ship_to_name" />
@@ -33,15 +33,16 @@ export const ShipToForm = ({
       <FormikInput label="Country" name="shipto.county" />
       <FormikInput label="Carrier" name="shipto.carrier_name" />
       <FormikInput type="hidden" name="shipto.carrier_id" />
-      {/* <Field as="select" name="shipto.is_collect">
+      <Field as="select" name="shipto.is_collect">
         <option value="0">No</option>
         <option value="1">Yes</option>
-      </Field> */}
+      </Field>
       <FormikInput label="Collect Number" name="shipto.collect_number" />
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
+    <button type="submit">print</button>
   </form>
 )
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Field } from 'formik'
+import ShippingScheduleLine from '../uiComponents/scheduleLine'
 
 const FormRow = styled.div`
   display: flex;
@@ -30,6 +31,19 @@ const FormikSelect = styled.select`
   }
 `
 
+const DivScheduleHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 36px;
+  margin: 24px 0 12px 0;
+  border-bottom: 2px whitesmoke solid;
+  p {
+    font-family: Proxima;
+    font-style: italic;
+    margin: 0;
+  }
+`
+
 export const ShippingScheduleForm = ({
   handleSubmit,
   handleChange,
@@ -53,9 +67,16 @@ export const ShippingScheduleForm = ({
     </FormRow>
     {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete with all parts.</Pinfo>}
     {values.schedule.packing_basis === "2" && <Pinfo>Your order will ship in increments as items become ready.</Pinfo>}
-    {values.schedule.packing_basis === "3" && <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>}
+    {values.schedule.packing_basis === "3" && (
+      <>
+        <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
+        <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
+      </>
+    )}
     {values.schedule.packing_basis === "3" &&
-      console.log('cart', values)
+      values.shoppingCart.map(item => 
+        <ShippingScheduleLine item={item} />
+      )
     }
     <FormRow>
       <label>Disposition</label>
