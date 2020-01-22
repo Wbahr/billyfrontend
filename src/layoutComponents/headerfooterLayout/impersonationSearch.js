@@ -47,11 +47,11 @@ const DebounceInputStyle = {
   'width': '225px',
   'height': '25px',
   'border': 'none',
-  'background-color': 'white',
-  'font-size': '11px',
-  'margin-left': '20px',
+  'backgroundColor': 'white',
+  'fontSize': '11px',
+  'marginLeft': '20px',
   'padding': '4px 16px',
-  'border-radius': '30px 0 0 30px'
+  'borderRadius': '30px 0 0 30px'
 }
 
 const IMPERSONATION_SEARCH = gql`

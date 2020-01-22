@@ -52,7 +52,7 @@ const NavBottomContainer = styled.div`
   align-items: center;
 `
 
-const NavItem =styled.a`
+const NavItem =styled.div`
   display: block;
   cursor: pointer;
   color: black !important;
