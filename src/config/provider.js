@@ -144,7 +144,7 @@ export default function Provider(props) {
           'message': 'You are now impersonating a customer'
         }
         setTopAlert(alertObj)
-        window.setTimeout(()=>{resetTopAlert()}, 3000)
+        window.setTimeout(()=>{resetTopAlert()}, 2000)
       }
     }
   })
@@ -174,6 +174,8 @@ export default function Provider(props) {
 
   function handleLogin(userInformation) {
     setUserInfo(userInformation)
+    loadCart.current = true
+    handleUpdateShoppingCart(4)
     let alertObj = {
       'show': true,
       'message': 'You have been successfully logged in.'
