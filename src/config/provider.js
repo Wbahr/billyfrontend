@@ -129,6 +129,7 @@ export default function Provider(props) {
   })
 
   const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){
@@ -150,6 +151,7 @@ export default function Provider(props) {
   })
 
   const [handleCancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
       let requestData = data.impersonationEnd
       if(requestData.success){
