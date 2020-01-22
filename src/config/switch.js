@@ -17,7 +17,9 @@ import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
+// Supporting Components
 import Auth from './auth'
+import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
 
 function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
@@ -80,6 +82,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
   }
