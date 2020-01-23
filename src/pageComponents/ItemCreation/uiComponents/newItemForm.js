@@ -1,20 +1,21 @@
 // Render Prop
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styled from "styled-components"
+import CategoryImage from './categoryImage'
 import FormikInput from '../../_common/formik/input'
 
 class NameForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', isFormHidden: true};
+    this.state = { value: '', isFormHidden: true };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   handleSubmit(event) {
@@ -25,8 +26,7 @@ class NameForm extends React.Component {
 
 function searchItem(e) {
   e.preventDefault();
-  //var element = document.getElementsByClassName(DivDisabler);
-  
+
   console.log('Item is being searched placeholder.');
 }
 
@@ -67,8 +67,7 @@ const DivCenter = styled.div`
   justify-content: center;
 `
 
-const DivDisabler = styled.div`
-<!--display:none;-->
+const HiddenDiv = styled.div`
   `
 
 const H2 = styled.h2`
@@ -76,6 +75,12 @@ const H2 = styled.h2`
   text-align: center;
   font-size: 20px;
   margin: 0;
+`
+
+const DivContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
 `
 
 const H4 = styled.h4`
@@ -110,14 +115,30 @@ const H3 = styled.h3`
   color: black;
 `
 
-const NewItem = () => (
-  <div>
+
+const NewItem = () => {
+  const [paragraphVisible, setParagraphVisible, formVisiable] = useState(false)
+
+  const [title, setTitle] = useState("Begin item creation");
+  var toggleVisibility = () => {
+    setParagraphVisible(!paragraphVisible)
+
+  }
+
+  var toggleVisibilityForm = () => {
+    var mee = this;
+    setParagraphVisible(!formVisiable)
+  }
+
+  return <div>
     <H2>Item Creation</H2>
     <H4>for internal new items</H4>
     <Formik
-      initialValues={{  itemID: 'b', itemDescription: 'c', defaultSalesDis: 'd', defaultPurchaseDis: 'e', 
-      supplierID: 'f', DivisionID: 'f',  UOM: 'EA', baseUnit: 'h', locationID: '2100', productGroupID: 'j',
-        taxGroupID: 'ALL', replenishmentLoc: 'k', replenishmentMethod: 'l', glAccountNo: 'm', averageLeadTime: 'n', primarySupplier: 'o'}}
+      initialValues={{
+        itemID: 'kq2', itemDescription: 'a', defaultSalesDis: 'D', defaultPurchaseDis: 'C',
+        supplierID: 'd', DivisionID: 'type in Supplier', UOM: 'EA', baseUnit: 'h', locationID: '2100', productGroupID: '1000',
+        taxGroupID: 'ALL', replenishmentLoc: '2100', replenishmentMethod: 'UpTo', glAccountNo: 'f', averageLeadTime: '30', primarySupplier: 'type in Supplier'
+      }}
       validate={values => {
         let errors = {};
         /*if (!values.email) {
@@ -126,10 +147,22 @@ const NewItem = () => (
         {
           errors.defaultSalesDis = 'Invalid email address';
         }*/
-        if(!values.defaultSalesDis) {
-          errors.defaultSalesDis = 'Required';
+        if (!values.itemID) {
+          errors.itemID = 'Required';
+        } else if (!/^[A-Z0-9._%+-]{2,5}$/i.test(values.itemID)) {
+          errors.itemID = 'Please enter less than 40 characters and exclude {*,"}';
         }
-        if(!values.itemName) {
+        if (!values.defaultSalesDis) {
+          errors.defaultSalesDis = 'Required';
+        } else if (!/^[A-Z0-9._%+-]{2,10}$/i.test(values.defaultSalesDis)) {
+          errors.defaultSalesDis = 'Too long!';
+        }
+        if (!values.productGroupID) {
+          errors.productGroupID = 'Required';
+        } else if (!/^[0-9]{4,4}$/i.test(values.productGroupID)) {
+          errors.productGroupID = 'Enter a valid ProductGroupID';
+        }
+        /*if(!values.itemName) {
           errors.itemName = 'Required';
         }
         if(!values.itemID) {
@@ -141,9 +174,9 @@ const NewItem = () => (
         if(!values.supplierID) {
           errors.supplierID = 'Required';
         } 
-        if(!values.DivisionID) {
+        /*if(!values.DivisionID) {
           errors.DivisionID = 'Required';
-        } /*else if (values.password && values.verifyPassword && (values.password !== values.verifyPassword)) {
+        } else if (values.password && values.verifyPassword && (values.password !== values.verifyPassword)) {
           errors.password = 'Passwords do not match';
         }*/
         return errors;
@@ -158,62 +191,128 @@ const NewItem = () => (
       {({ isSubmitting }) => (
         <Form>
           <DivFormContainer>
-            <FormikInput label="Search Item ID" type="text" name="itemIDSearch"/>
+            <FormikInput label="Enter Item ID" type="text" name="itemIDSearch" onChange="form.setFieldValue('itemIDSearch', e.target.value), form.setFieldValue('itemID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)" />
           </DivFormContainer>
           <DivFormContainer>
-            <FormikInput label="Search Item Description" type="text" name="itemDescSearch"/>
+            <label for="SupplierIDSearch">Supplier:</label>
+            <Field name="SupplierIDSearch">
+                      {({
+                        field,
+                        form,
+                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+                        meta,
+                      }) => (
+                          <select{...field} onChange={(e) => {form.setFieldValue('supplierID', e.target.value), form.setFieldValue('UOM', e.target.value), form.setFieldValue('DivisionID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)}}>
+                            <option value="Parker" >Parker</option>
+                            <option value="SMC"> SMC</option>
+                            <option value="Phoenix">Phoenix</option>
+                            <option value="Schmersal">Schmersal</option>
+                            <option value="More to be loaded from P21">More to be loaded from P21</option>
+                          </select>
+                        )
+                      }
+                    </Field>
+
           </DivFormContainer>
+
           <DivCenter>
-          <ButtonBlue onClick={searchItem}>Search by ID/Description</ButtonBlue>
+            <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue>
           </DivCenter>
-          <DivInputContainer>
-            <H3>TEST</H3>
-          </DivInputContainer>
+
+          {
+            //paragraphVisible ? <p>Can you see me?</p> : null
+            paragraphVisible &&
+            <HiddenDiv>
+              <hr></hr>
+              <br></br>
+              <H3>Search results placeholder</H3>
+              <DivContainer>
+                <CategoryImage
+                  text='Item Result 1'
+                  src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
+                  history={history}
+                />
+              </DivContainer>
+              <DivContainer>
+                <CategoryImage
+                  text='Item Result 2'
+                  src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
+                  history={history}
+                />
+              </DivContainer>
+              <DivContainer>
+                <CategoryImage
+                  text='Item Result 3'
+                  src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
+                  history={history}
+                />
+              </DivContainer>
+              <br></br>
+              <hr></hr>
+              <ButtonBlue onClick={(e) => { toggleVisibilityForm() }} type="button">That's not what I'm looking for</ButtonBlue>
+              {
+                formVisiable && <h3>TEST!!</h3>
+              }
+              <br /><br /><br />
+              <DivFormContainer>
+                <DivInputContainer>
+                  <H3>Item & Group Information 1/2</H3>
+                  <FormikInput label="Item ID (mirrors top Item ID)" type="text" name="itemID" onChange="form.setFieldValue('itemID', e.target.value)" disabled="true" />
+                  <FormikInput label="Item Description" type="text" name="itemDescription" onChange="form.setFieldValue('itemDescription', e.target.value)" />
+                  <FormikInput label="Default Sales Discount Group (remove later)" type="text" name="defaultSalesDis" onChange="form.setFieldValue('defaultSalesDis', e.target.value)" />
+                  <FormikInput label="Default Purchase Discount Group (remove later)" type="text" name="defaultPurchaseDis" onChange="form.setFieldValue('defaultPurchaseDis', e.target.value)" />
+                  <label for="UOMform">Unit of measure:</label>
+                    <Field name="UOM">
+                      {({
+                        field,
+                        form,
+                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+                        meta,
+                      }) => (
+                          <select{...field} onChange={(e) => {form.setFieldValue('baseUnit', e.target.value), form.setFieldValue('UOM', e.target.value)}}>
+                            <option value="selectOne" >Select one</option>
+                            <option value="EA"> EA</option>
+                            <option value="CS">CS</option>
+                            <option value="Pack">Pack</option>
+                            <option value="other3">other3</option>
+                          </select>
+                        )
+                      }
+                    </Field>
+                  <FormikInput label="Supplier ID (mirror top, remove later)" type="text" name="supplierID" onChange="form.setFieldValue('supplierID', e.target.value), form.setFieldValue('DivisionID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)"  disabled="true"/>
+                  <FormikInput label="Division ID (remove later, mirrors supplier DDL)" type="text" name="DivisionID" disabled="true" />
+                  <FormikInput label="Base Unit (remove later)" type="text" name="baseUnit" disabled="true" />
 
 
-        <DivDisabler>
-          <DivFormContainer>
-            <DivInputContainer>
-              <H3>Item & Group Information 1/3</H3>
-              <FormikInput label="Item ID" type="text" name="itemID" />
-              <FormikInput label="Item Description"type="text" name="itemDescription" />
-              <FormikInput label="Default Sales Discount Group" type="text" name="defaultSalesDis" />
-              <FormikInput label="Default Purchase Discount Group" type="text" name="defaultPurchaseDis" />
-              <label for="UOMform">Unit of measure:</label>
-              <Field as="select" id="UOMform" name="UOM">
-                  <option value="EA">EA</option>
-                  <option value="other1">other1</option>
-                  <option value="other2">other2</option>
-                  <option value="other3">other3</option>
-              </Field>
-              <FormikInput label="Supplier ID" type="text" name="supplierID" onChange="form.setFieldValue('supplierID', e.target.value), form.setFieldValue('DivisionID', e.target.value)" />
-              <FormikInput label="Division ID" type="text" name="DivisionID" disabled="true" />
-              <FormikInput label="Base Unit" type="text" name="UOM" disabled="true" />
-          
-            </DivInputContainer>
-            <DivInputContainerDark>
-              <H3>Item & Group Information 2/3</H3>
-              
-              <FormikInput label="Location ID" type="text" name="locationID" />
-              <FormikInput label="Product Group ID" type="text" name="productGroupID" />
-              <FormikInput label="Tax Group ID"type="text" name="taxGroupID" disabled="true" />
-              <FormikInput label="Replenishment Location" type="text" name="replenishmentLoc" />
-              <FormikInput label="Replenishment Method" type="text" name="replenishmentMethod" />
-              <FormikInput label="GL Account Number" type="text" name="glAccountNo" />
-              <FormikInput label="Average Lead Time" type="text" name="averageLeadTime" />
-              <FormikInput label="Primary Supplier" type="text" name="primarySupplier" />
-            </DivInputContainerDark>
-          </DivFormContainer>
-          <DivCenter>
-            <ButtonRed type="submit" disabled={isSubmitting}>
-              Register Item
+                </DivInputContainer>
+                <DivInputContainerDark>
+                  <H3>Item & Group Information 2/2</H3>
+
+                  <FormikInput label="Location ID (remove later)" type="text" name="locationID" onChange="form.setFieldValue('locationID', e.target.value)" disabled="true" />
+                  <FormikInput label="Product Group ID" type="text" name="productGroupID" onChange="form.setFieldValue('productGroupID', e.target.value)" />
+                  <FormikInput label="Tax Group ID (remove later)" type="text" name="taxGroupID" disabled="true" onChange="form.setFieldValue('taxGroupID', e.target.value)" disabled="true" />
+                  <FormikInput label="Replenishment Location (remove later)" type="text" name="replenishmentLoc" disabled="true" onChange="form.setFieldValue('replenishmentLoc', e.target.value)" disabled="true" />
+                  <FormikInput label="Replenishment Method" type="text" name="replenishmentMethod" onChange="form.setFieldValue('replenishmentMethod', e.target.value)" />
+                  <FormikInput label="GL Account Number (remove later)" type="text" name="glAccountNo" onChange="form.setFieldValue('glAccountNo', e.target.value)" disabled="true" />
+                  <FormikInput label="Average Lead Time (remove later)" type="text" name="averageLeadTime" onChange="form.setFieldValue('averageLeadTime', e.target.value)" disabled="true" />
+                  <FormikInput label="Primary Supplier (remove later, mirrors supplier DDL)" type="text" name="primarySupplier" disabled="true" />
+                </DivInputContainerDark>
+
+              </DivFormContainer>
+              <DivCenter>
+                <ButtonRed type="submit" disabled={isSubmitting}>
+                  Register Item
             </ButtonRed>
-          </DivCenter>
-          </DivDisabler>
+              </DivCenter>
+            </HiddenDiv>
+          }
+
+
+
         </Form>
       )}
     </Formik>
   </div>
-);
+};
 
 export default NewItem;
