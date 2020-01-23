@@ -123,10 +123,9 @@ const GET_ITEM_BY_ID = gql`
 const DatePickerField = ({ name, value, onChange }) => {
   return (
       <DatePicker
-          selected={(value && new Date(value)) || null}
-          onChange={val => {
-              onChange(name, val)
-          }}
+        minDate={new Date()}
+        selected={(value && new Date(value)) || null}
+        onChange={val => { onChange(name, val) }}
       />
   )
 }

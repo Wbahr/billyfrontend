@@ -204,7 +204,7 @@ export default function Provider(props) {
 
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
-    getItemDetails({ variables: { itemId: item.frecno } })
+    // getItemDetails({ variables: { itemId: item.frecno } })
   }
 
   function handleRemoveItem(itemLocation){
