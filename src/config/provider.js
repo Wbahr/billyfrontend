@@ -92,9 +92,7 @@ export default function Provider(props) {
       let shoppingCartToken = localStorage.getItem("shoppingCartToken")
 
       // If the user isn't logged in, create a shopping cart
-      if (_.isNil(shoppingCartToken)){
-        handleUpdateShoppingCart(1)
-      } else {
+      if (!_.isNil(shoppingCartToken)){
         handleUpdateShoppingCart(5)
       }
       // Set Component Mounted = TRUE
@@ -107,12 +105,7 @@ export default function Provider(props) {
   // This is the only place to set prevToken
   useEffect(()=> {
     if(didMountRef.current) {
-      if(!_.isNil(prevToken) && _.isNil(token)){
-        console.log('the user logged out')
-        // Create a cart
-        handleUpdateShoppingCart(1)
-                // If an (api) token is NULL and (api) prevToken is NOT NULL, the user logged out
-      } else if (_.isNil(prevToken) && !_.isNil(token)) {
+      if (_.isNil(prevToken) && !_.isNil(token)) {
         console.log('the user just logged in from Anon', token, prevToken)
         // If an (api) prevToken is NULL but (api) token is not NULL, the user just logged in from Anon
         // Merge Anon cart with logged in user's cart
@@ -133,7 +126,13 @@ export default function Provider(props) {
     console.log('loadingCart', loadingCart.current)
     console.log('tokens equal', prevToken === token)
     if(didMountRef.current && !loadingCart.current && prevToken === token){
-      handleUpdateShoppingCart(2)
+      let shoppingCartToken = localStorage.getItem("shoppingCartToken")
+      if (_.isNil(shoppingCartToken) && shoppingCart.length > 0) {
+        console.log('creating cart from shoppingCart update')
+        handleUpdateShoppingCart(1)
+      } else {
+        handleUpdateShoppingCart(2)
+      }
     }
   },[shoppingCart, orderNotes])
 
@@ -141,19 +140,24 @@ export default function Provider(props) {
     fetchPolicy: 'no-cache',
     onCompleted: result => {
       let results = result.updateShoppingCart
-      setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
-      // If we are merging or loading an existing cart, the server will have the cart we need, so we need to load it
-      console.log('updateShoppingCart', cartAction)
-      if (cartAction === 4 || cartAction === 5) {
-        localStorage.setItem("shoppingCartToken", results.token)
-        setShoppingCart(JSON.parse(results.cartData))
-        setOrderNotes(results.orderNotes)
-      // If a new cart was just created, set a token in local storage
-      } else if (cartAction === 1) {
-        console.log('set token action 1')
-        localStorage.setItem("shoppingCartToken", results.token)
+      console.log('Bobby',result)
+      if (!_.isNil(results.token)) {
+        setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
+        // If we are merging or loading an existing cart, the server will have the cart we need, so we need to load it
+        console.log('updateShoppingCart', cartAction)
+        if (cartAction === 4 || cartAction === 5) {
+          localStorage.setItem("shoppingCartToken", results.token)
+          setShoppingCart(JSON.parse(results.cartData))
+          setOrderNotes(results.orderNotes)
+        // If a new cart was just created, set a token in local storage
+        } else if (cartAction === 1) {
+          console.log('set token action 1')
+          localStorage.setItem("shoppingCartToken", results.token)
+        }
+        loadingCart.current = false
+      } else if (_.isNil(results.token) && !_.isNil(impersonatedCompanyInfo)) {
+        handleUpdateShoppingCart(1)
       }
-      loadingCart.current = false
     }
   })
 
@@ -162,6 +166,7 @@ export default function Provider(props) {
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){
+        console.log('data', data)
         localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
         localStorage.setItem('imperInfo', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
@@ -238,7 +243,6 @@ export default function Provider(props) {
 
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
-    // getItemDetails({ variables: { itemId: item.frecno } })
   }
 
   function handleRemoveItem(itemLocation){
@@ -330,10 +334,11 @@ export default function Provider(props) {
           impersonatedCompanyInfo: impersonatedCompanyInfo,
           startImpersonation: (customerId)=>{
             // If the customer is currently impersonating, cancel that impersonation before starting a new impersonation
-            handleStartImpersonation({ variables: {
-              "customerId": customerId
+            if (!_.isNil(impersonatedCompanyInfo)) {
+              handleStartImpersonation({ variables: { "customerId": customerId }})
+            } else {
+              handleStartImpersonation({ variables: { "customerId": customerId }})
             }
-          })
           },
           cancelImpersonation: ()=>{
             handleCancelImpersonation()
