@@ -78,14 +78,14 @@ export const ShippingScheduleForm = ({
         <ShippingScheduleLine item={item} />
       )
     }
-    <FormRow>
+    {/* <FormRow>
       <label>Disposition</label>
       <Field as="select" name="schedule.disposition">
         <option value="0" disabled selected>Select a Disposition</option>
         <option value="1">Backorder</option>
         <option value="2">Drop Ship</option>
       </Field>
-    </FormRow>
+    </FormRow> */}
   </form>
 )
 

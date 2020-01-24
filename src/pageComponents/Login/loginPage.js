@@ -117,7 +117,7 @@ export default function LoginPage(props) {
         } else {
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-          context.loginUser(requestData.authorizationInfo.userInfo)
+          context.loginUser(requestData.authorizationInfo.userInfo, requestData.authorizationInfo.token)
           let urlParams = new URLSearchParams(props.location.search)
           let redirect = urlParams.get('next')
           if(!_.isNil(redirect)){
