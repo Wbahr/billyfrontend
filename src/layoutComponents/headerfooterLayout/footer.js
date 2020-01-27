@@ -168,8 +168,8 @@ export default function FooterComponent() {
             <DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
           </DivAirline>
           <DivMenu>
-            <Head>Products</Head>
-            <Item>Valves</Item>
+            <Head>Featured Brands</Head>
+            <Item>SMC</Item>
             <Item>Hydraulics</Item>
             <Item>Gears</Item>
             <Item>Tubing</Item>
