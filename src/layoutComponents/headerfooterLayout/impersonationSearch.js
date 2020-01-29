@@ -83,8 +83,7 @@ export default function ImpersonationSearchComponent(props) {
   }
 
   function handleBlur() {
-    setTimeout(() => {setSearchResult([])}, 200);
-    setImpersonationTerm('')
+    setTimeout(() => {setSearchResult([]), setImpersonationTerm('')}, 200)
   }
 
   useEffect(() => {

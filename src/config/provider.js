@@ -333,12 +333,7 @@ export default function Provider(props) {
         value={{
           impersonatedCompanyInfo: impersonatedCompanyInfo,
           startImpersonation: (customerId)=>{
-            // If the customer is currently impersonating, cancel that impersonation before starting a new impersonation
-            if (!_.isNil(impersonatedCompanyInfo)) {
-              handleStartImpersonation({ variables: { "customerId": customerId }})
-            } else {
-              handleStartImpersonation({ variables: { "customerId": customerId }})
-            }
+            handleStartImpersonation({ variables: { "customerId": customerId }})
           },
           cancelImpersonation: ()=>{
             handleCancelImpersonation()
