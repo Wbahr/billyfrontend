@@ -16,6 +16,7 @@ import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+// import Skeleton from 'react-loading-skeleton';
 
 const DivContainer = styled.div`
   display: flex;
@@ -403,6 +404,7 @@ export default function SearchResultsPage(props) {
           <DivSearchResultsContainer>
             {(searchResults.length === 0 && isSearching) && <Loader/>}
             {SearchResults}
+            {/* {(searchResults.length !== 0 && infiniteScrollHasMore) && <Skeleton count={4} width="320px" height="350px"/>} */}
           </DivSearchResultsContainer>
         </InfiniteScroll>
       </ResultsContainer>
