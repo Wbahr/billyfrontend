@@ -122,16 +122,15 @@ export default function SearchResultsPage(props) {
   })
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
       var itemSearchResult = data.itemSearch
-
       //If the number of retrieved results equals the requesting page size,
       //then enable the scroller to possibly load more.
       const search = queryString.parse(location.search)
       if(itemSearchResult.result.length == search.resultSize){
         setInfiniteScrollHasMore(true)
       }
-
       setSearchNonce(search.nonce)
       setNewAttributeCategories(itemSearchResult.attributeCategories)
       setBrands(_.get(itemSearchResult,`brands`,[]))
