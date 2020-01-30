@@ -4,6 +4,18 @@ import { Formik, Form, Field } from 'formik';
 import styled from "styled-components"
 import CategoryImage from './categoryImage'
 import FormikInput from '../../_common/formik/input'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
+
+const QUERY_ITEM_SEARCH = gql`
+  query GetSuppliers{
+    getAirlineSuppliers{
+      id
+      name
+    }
+  }
+`
 
 class NameForm extends React.Component {
   constructor(props) {
@@ -129,6 +141,12 @@ const NewItem = () => {
     var mee = this;
     setParagraphVisible(!formVisiable)
   }
+
+  const { loading, error, data } = useQuery(QUERY_ITEM_SEARCH, {
+    onCompleted: data => {
+        
+    }
+  })
 
   return <div>
     <H2>Item Creation</H2>
