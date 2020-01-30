@@ -16,7 +16,7 @@ import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-// import Skeleton from 'react-loading-skeleton';
+import  SkeletonItem from './uiComponents/skeletonItem';
 
 const DivContainer = styled.div`
   display: flex;
@@ -105,6 +105,7 @@ export default function SearchResultsPage(props) {
   const [searchNonce, setSearchNonce] = useState(0);
   const [parentCategory, setParentCategory] = useState('');
   const [childCategory, setChildCategory] = useState('');
+  const [ottoFindPart, setOttoFindPart] = useState(false)
 
   // Set search defaults for categories. This occurs before the first search is executed
   useEffect(() => {
@@ -163,6 +164,7 @@ export default function SearchResultsPage(props) {
 
       if (searchOld.searchTerm !== searchNew.searchTerm || searchOld.sortType !== searchNew.sortType){
         setSearchResults([])
+        setOttoFindPart(false)
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
@@ -192,21 +194,35 @@ export default function SearchResultsPage(props) {
   // Execute additional search
   useEffect(() => {
     setSearchResults([])
+    setOttoFindPart(false)
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
   }, [checkedAttributeFilters, checkedBrandFilters, parentCategory, childCategory])
+
+  useEffect(()=> {
+    if (ottoFindPart) {
+      drift.api.startInteraction({ interactionId: 126679 });
+    } else {
+      drift.api.hideChat()
+    }
+  }, [ottoFindPart])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
 
     if(isReplacingResults){
       setSearchResults([...additionalSearchResults])
+      setOttoFindPart(false)
     } else{
+      if (searchResults.length >= 48) {
+        setOttoFindPart(true)
+      }
       setSearchResults([...searchResults, ...additionalSearchResults])
     }
     
     setTotalResults(itemSearchData.count)
+
   }
 
   function handleUpdateResults(updateObj){
@@ -398,12 +414,24 @@ export default function SearchResultsPage(props) {
               setCurrentPage(currentPage + 1)
             }}
             hasMore={infiniteScrollHasMore}
-            loader={<Loader/>}
+            threshold={2200}
         >
-          <DivSearchResultsContainer>
-            {(searchResults.length === 0 && isSearching) && <Loader/>}
+          <DivSearchResultsContainer>          
             {SearchResults}
-            {/* {(searchResults.length !== 0 && infiniteScrollHasMore) && <Skeleton count={4} width="320px" height="350px"/>} */}
+            <>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+              <SkeletonItem/>
+            </>
           </DivSearchResultsContainer>
         </InfiniteScroll>
       </ResultsContainer>
