@@ -2,13 +2,12 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styled from "styled-components"
-import CategoryImage from './categoryImage'
 import FormikInput from '../../_common/formik/input'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 
-const QUERY_ITEM_SEARCH = gql`
+const QUERY_SUPPLIER_LIST = gql`
   query GetSuppliers{
     getAirlineSuppliers{
       id
@@ -34,12 +33,6 @@ class NameForm extends React.Component {
     alert('This should not pop up: ' + this.state.value);
     event.preventDefault();
   }
-}
-
-function searchItem(e) {
-  e.preventDefault();
-
-  console.log('Item is being searched placeholder.');
 }
 
 const ButtonRed = styled.button`
@@ -142,9 +135,11 @@ const NewItem = () => {
     setParagraphVisible(!formVisiable)
   }
 
-  const { loading, error, data } = useQuery(QUERY_ITEM_SEARCH, {
+  const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
+
+  const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
-        
+
     }
   })
 
@@ -208,34 +203,12 @@ const NewItem = () => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <DivFormContainer>
-            <FormikInput label="Enter Item ID" type="text" name="itemIDSearch" onChange="form.setFieldValue('itemIDSearch', e.target.value), form.setFieldValue('itemID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)" />
-          </DivFormContainer>
-          <DivFormContainer>
-            <label for="SupplierIDSearch">Supplier:</label>
-            <Field name="SupplierIDSearch">
-                      {({
-                        field,
-                        form,
-                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-                        meta,
-                      }) => (
-                          <select{...field} onChange={(e) => {form.setFieldValue('supplierID', e.target.value), form.setFieldValue('UOM', e.target.value), form.setFieldValue('DivisionID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)}}>
-                            <option value="Parker" >Parker</option>
-                            <option value="SMC"> SMC</option>
-                            <option value="Phoenix">Phoenix</option>
-                            <option value="Schmersal">Schmersal</option>
-                            <option value="More to be loaded from P21">More to be loaded from P21</option>
-                          </select>
-                        )
-                      }
-                    </Field>
+          
 
-          </DivFormContainer>
-
-          <DivCenter>
+          
+          {/*<DivCenter>
             <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue>
-          </DivCenter>
+          </DivCenter>*/}
 
           {
             //paragraphVisible ? <p>Can you see me?</p> : null

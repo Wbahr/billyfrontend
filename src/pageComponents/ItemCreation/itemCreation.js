@@ -1,14 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import FeaturedManufacturers from './uiComponents/featuredManufacturers'
-import ShopOurProducts from './uiComponents/shopOurProducts'
-import Banner from './uiComponents/banner'
-import SuggestedSearch from './uiComponents/suggestedSearch'
-import NewItem from './uiComponents/newItemForm'
-import ResultsSearch from './uiComponents/resultsSearch'
-// import ContentScreen from '../../containerComponents/contentScreen'
-// import ItemResult from './uiComponents/itemResult'
-// import ResultsSearch from './uiComponents/resultsSearch'
+import NewItemForm from './uiComponents/newItemForm'
+//import Autocomplete from '@material-ui/lab/Autocomplete';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
+
+
+const QUERY_SUPPLIER_LIST = gql`
+  query GetSuppliers{
+    getAirlineSuppliers{
+      id
+      name
+    }
+  }
+`
+
 
 
 const ContentScreenContainer = styled.div`
@@ -21,26 +27,45 @@ const ContentScreenContainer = styled.div`
   flex-grow: 99;
 `
 
-class HomePage extends React.Component {
 
-  render(){
-    return(
-      <>
-        {/* <SuggestedSearch /> */}
+export default function ItemCreationPage() {
+  const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
+  const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
+  const [showNewItemForm, setShowNewItemForm] = useState(false) 
+  const [selectedSupplier, setSelectedSupplier] = useState(null) //Supplier ID or name, not sure yet
 
-        <ContentScreenContainer>
+  const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
+    onCompleted: data => {
+      setSupplierList(data.getAirlineSuppliers)
+      console.log(data.getAirlineSuppliers)
+    }
+  })
 
-        <NewItem/>
-
-
-        
-        
-        
-        </ContentScreenContainer>
-      </>
-    )
+  function searchItems(){
+    console.log(searchTerm, selectedSupplier)
   }
-}
 
-export default HomePage
-//hello world
+  return(
+    <>
+      <ContentScreenContainer>
+        <input type="text" value={searchTerm} onChange={e=>setSearchTerm(e.target.value)}></input>
+        <button onClick={()=>searchItems()}>Search Items to begin creation</button>
+
+        {/* <Autocomplete
+          id="supplier-select"
+          options={supplierList}
+          getOptionLabel={option => option.name}
+          style={{ width: 300 }}
+          renderInput={params => (
+            <TextField {...params} label="Combo box" variant="outlined" fullWidth />
+          )}
+        /> */}
+
+
+        <button onClick={()=>setShowNewItemForm(true)}>Show the actual item creation form</button>
+        {showNewItemForm && <NewItemForm/>}
+
+      </ContentScreenContainer>
+    </>
+  )
+}
