@@ -270,7 +270,7 @@ export default function SearchResultsPage(props) {
   function loadFunc(isNewSearch){
     const search = queryString.parse(location.search)
 
-    var resultSize = search.resultSize ? parseInt(search.resultSize) : 25
+    var resultSize = searchResults.length === 0 ? parseInt(search.resultSize) : 24
     
     setSearching(true)
     performItemSearch({
@@ -414,7 +414,7 @@ export default function SearchResultsPage(props) {
               setCurrentPage(currentPage + 1)
             }}
             hasMore={infiniteScrollHasMore}
-            threshold={2200}
+            threshold={3000}
         >
           <DivSearchResultsContainer>          
             {SearchResults}
