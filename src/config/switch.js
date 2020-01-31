@@ -67,6 +67,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/account/shipping-preferences' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/wishlists' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
