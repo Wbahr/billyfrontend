@@ -152,7 +152,7 @@ query ItemById($invMastUid: ID){
 }
 `
 
-export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
+export default function DetailsModal({open, hideDetailsModal, invMastUid}) {
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const searchSent = useRef(false); 
@@ -171,6 +171,12 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     }
   }
 
+  function handleCloseModal(){
+    setItem(null)
+    setQuantity(1)
+    hideDetailsModal()
+  }
+
   if(open && !_.isNil(invMastUid) && !searchSent.current){
     searchSent.current = true
     performItemDetailSearch()
@@ -187,7 +193,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
         <Loader/>
       </Div>
     )
-  } else {
+  } else if (open) {
     let imagePath
     for (let i=0; i < item.image.length; i++){
       let currentImage = item.image[i]
@@ -229,7 +235,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
                         'quantity': parseInt(quantity, 10),
                         'itemNotes': '',
                         'requestedShipDate': new Date()
-                      }), hideDetailsModal(), setQuantity(1)
+                      }), handleCloseModal()
                       }}>Add to Cart</ButtonRed>
                   )}
                 </Context.Consumer>
@@ -255,7 +261,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     )
   }
     return(
-      <Popup open={open} onClose={()=>hideDetailsModal()} closeOnDocumentClick>
+      <Popup open={open} onClose={()=>{handleCloseModal()}} closeOnDocumentClick>
         {PopupContent}
       </Popup>
     )

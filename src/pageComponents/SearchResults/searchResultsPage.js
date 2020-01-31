@@ -96,7 +96,8 @@ export default function SearchResultsPage(props) {
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-  const [modalItem, setModalItem] = useState(null)
+  const [locationsModalItem, setLocationsModalItem] = useState(null)
+  const [detailsModalItem, setDetailsModalItem] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [showAddedModal, setShowAddedModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
@@ -201,10 +202,12 @@ export default function SearchResultsPage(props) {
   }, [checkedAttributeFilters, checkedBrandFilters, parentCategory, childCategory])
 
   useEffect(()=> {
-    if (ottoFindPart) {
-      drift.api.startInteraction({ interactionId: 126679 });
-    } else {
-      drift.api.hideChat()
+    if (!_.isNil(drift.api)){
+      if (ottoFindPart) {
+        drift.api.startInteraction({ interactionId: 126679 });
+      } else {
+        drift.api.hideChat()
+      }
     }
   }, [ottoFindPart])
 
@@ -298,22 +301,22 @@ export default function SearchResultsPage(props) {
 
   function handleShowLocationsModal(freqno){
     setShowLocationsModal(true)
-    setModalItem(freqno)
+    setLocationsModalItem(freqno)
   }
 
   function handleHideLocationsModal(){
     setShowLocationsModal(false)
-    setModalItem(null)
+    setLocationsModalItem(null)
   }
 
   function handleShowDetailsModal(freqno){
     setShowDetailsModal(true)
-    setModalItem(freqno)
+    setDetailsModalItem(freqno)
   }
 
   function handleHideDetailsModal(){
     setShowDetailsModal(false)
-    setModalItem(null)
+    setDetailsModalItem(null)
   }
 
   function handleAddedToCart(){
@@ -365,12 +368,12 @@ export default function SearchResultsPage(props) {
       <LocationsModal 
         open={showLocationsModal} 
         hideLocationsModal={handleHideLocationsModal}
-        invMastUid={modalItem}
+        invMastUid={locationsModalItem}
       />
       <DetailsModal 
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
-        invMastUid={modalItem}
+        invMastUid={detailsModalItem}
       />
       <div>
         <CategoryFilter 
