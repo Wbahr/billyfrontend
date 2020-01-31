@@ -98,6 +98,7 @@ export default function SearchResultsPage(props) {
   const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
   const [locationsModalItem, setLocationsModalItem] = useState(null)
   const [detailsModalItem, setDetailsModalItem] = useState(null)
+  const [detailsModalItemCode, setDetailsModalItemCode] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [showAddedModal, setShowAddedModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
@@ -309,14 +310,17 @@ export default function SearchResultsPage(props) {
     setLocationsModalItem(null)
   }
 
-  function handleShowDetailsModal(freqno){
+  function handleShowDetailsModal(freqno, itemCode){
+    console.log('freqno, itemCode',freqno, itemCode)
     setShowDetailsModal(true)
     setDetailsModalItem(freqno)
+    setDetailsModalItemCode(itemCode)
   }
 
   function handleHideDetailsModal(){
     setShowDetailsModal(false)
     setDetailsModalItem(null)
+    setDetailsModalItemCode(null)
   }
 
   function handleAddedToCart(){
@@ -340,7 +344,7 @@ export default function SearchResultsPage(props) {
         updateResults={handleUpdateResults} 
         history={props.history}
         showDetailsModal={showDetailsModal}
-        toggleDetailsModal={(freqno)=>{handleShowDetailsModal(freqno)}}
+        toggleDetailsModal={(freqno, itemCode)=>{handleShowDetailsModal(freqno, itemCode)}}
         toggleLocationsModal={(freqno)=>{handleShowLocationsModal(freqno)}}
         addedToCart={()=>{handleAddedToCart()}}
       />
@@ -374,6 +378,7 @@ export default function SearchResultsPage(props) {
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
         invMastUid={detailsModalItem}
+        history={props.history}
       />
       <div>
         <CategoryFilter 
