@@ -59,7 +59,7 @@ const ContainerTop = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1000px;
+  width: 1100px;
   margin: 0 auto;
 `
 
@@ -87,8 +87,8 @@ const DivSocialIcons = styled.div`
 const DivAirline = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
-  margin-right: 50px;
+  width: 620px;
+  margin-right: 30px;
 `
 
 const DivMenu = styled.div`
