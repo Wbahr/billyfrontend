@@ -122,20 +122,20 @@ const H3 = styled.h3`
 
 
 const NewItem = () => {
-  const [paragraphVisible, setParagraphVisible, formVisiable] = useState(false)
+  // const [paragraphVisible, setParagraphVisible, formVisiable] = useState(false)
 
-  const [title, setTitle] = useState("Begin item creation");
-  var toggleVisibility = () => {
-    setParagraphVisible(!paragraphVisible)
+  // const [title, setTitle] = useState("Begin item creation");
+  // var toggleVisibility = () => {
+  //   setParagraphVisible(!paragraphVisible)
 
-  }
+  // }
 
-  var toggleVisibilityForm = () => {
-    var mee = this;
-    setParagraphVisible(!formVisiable)
-  }
+  // var toggleVisibilityForm = () => {
+  //   var mee = this;
+  //   setParagraphVisible(!formVisiable)
+  // }
 
-  const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
+  // const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
@@ -204,20 +204,34 @@ const NewItem = () => {
       {({ isSubmitting }) => (
         <Form>
           
-
+          {/* <Field name="SupplierIDSearch">
+                      {({
+                        field,
+                        form,
+                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+                        meta,
+                      }) => (
+                          <select{...field} onChange={(e) => {form.setFieldValue('supplierID', e.target.value), form.setFieldValue('UOM', e.target.value), form.setFieldValue('DivisionID', e.target.value), form.setFieldValue('primarySupplier', e.target.value)}}>
+                            <option value="Parker" >Parker</option>
+                            <option value="SMC"> SMC</option>
+                            <option value="Phoenix">Phoenix</option>
+                            <option value="Schmersal">Schmersal</option>
+                            <option value="More to be loaded from P21">More to be loaded from P21</option>
+                          </select>
+                        )
+                      }
+                    </Field> */}
           
           {/*<DivCenter>
             <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue>
           </DivCenter>*/}
 
-          {
-            //paragraphVisible ? <p>Can you see me?</p> : null
-            paragraphVisible &&
+          
             <HiddenDiv>
               <hr></hr>
               <br></br>
               <H3>Search results placeholder</H3>
-              <DivContainer>
+              {/* <DivContainer>
                 <CategoryImage
                   text='Item Result 1'
                   src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
@@ -237,13 +251,13 @@ const NewItem = () => {
                   src='https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg'
                   history={history}
                 />
-              </DivContainer>
+              </DivContainer> */}
               <br></br>
               <hr></hr>
-              <ButtonBlue onClick={(e) => { toggleVisibilityForm() }} type="button">That's not what I'm looking for</ButtonBlue>
+              {/* <ButtonBlue onClick={(e) => { toggleVisibilityForm() }} type="button">That's not what I'm looking for</ButtonBlue>
               {
                 formVisiable && <h3>TEST!!</h3>
-              }
+              } */}
               <br /><br /><br />
               <DivFormContainer>
                 <DivInputContainer>
@@ -296,7 +310,7 @@ const NewItem = () => {
             </ButtonRed>
               </DivCenter>
             </HiddenDiv>
-          }
+          
 
 
 
