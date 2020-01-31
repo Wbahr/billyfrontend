@@ -249,7 +249,7 @@ export default function HeaderComponent(props) {
           <Div>
             <Context.Consumer>
               {({userInfo}) => {
-                if(userInfo && userInfo.role === "AirlineEmployee"){
+                if(userInfo && (userInfo.role === "AirlineEmployee" || userInfo.role === "Impersonator")){
                   return(
                     <ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
                       {searchAsCustomer ? <div style={{color: 'limegreen'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
