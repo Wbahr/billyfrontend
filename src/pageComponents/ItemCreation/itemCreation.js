@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
-//import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+//import Images from './Images';
 import gql from 'graphql-tag';
 
 
@@ -27,11 +29,24 @@ const ContentScreenContainer = styled.div`
   flex-grow: 99;
 `
 
+const SearchResultsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  float: left;
+  padding: 5px;
+  margin: 28px 14px;
+  height: auto;
+`
+const SearchResultWrapper = styled.div`
+
+`
+
 
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
   const [showNewItemForm, setShowNewItemForm] = useState(false) 
+  const [showSearchedItems, setShowSearchedItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState(null) //Supplier ID or name, not sure yet
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
@@ -49,8 +64,11 @@ export default function ItemCreationPage() {
     <>
       <ContentScreenContainer>
         <input type="text" value={searchTerm} onChange={e=>setSearchTerm(e.target.value)}></input>
-        <button onClick={()=>searchItems()}>Search Items to begin creation</button>
+        
 
+
+                {/* <SearchResultsContainer src="https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg"></SearchResultsContainer> */}
+                
         {/* <Autocomplete
           id="supplier-select"
           options={supplierList}
@@ -66,6 +84,24 @@ export default function ItemCreationPage() {
         {showNewItemForm && <NewItemForm/>}
 
       </ContentScreenContainer>
+
+      <button onClick={()=>searchItems()}>Check Console here</button>
+      <button onClick={()=>setShowSearchedItems(true)}>Search Items to begin creation</button>
+      {showSearchedItems && <SearchResultWrapper>
+        <SearchResultsContainer>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2P-23_l.jpg" width="200" height="200" margin="28px 14px" alt="Image Placeholder" ></img>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2L23-M5N_l.jpg" width="200" height="200" margin="28px 14px" alt="Image Placeholder" ></img>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2L23-M5N_l.jpg" width="200" height="200" margin="28px 14px" alt="Image Placeholder" ></img>
+        </SearchResultsContainer>
+        <SearchResultsContainer>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2H23-M5N_l.jpg" width="200" height="200" float="left" alt="Image Placeholder" ></img>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2TY10-12A_l.jpg" width="200" height="200" float="left" alt="Image Placeholder" ></img>
+          <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2H23-M5N_l.jpg" width="200" height="200" float="left" alt="Image Placeholder" ></img>
+        </SearchResultsContainer>
+      </SearchResultWrapper>}
+      
+      
+
     </>
   )
 }
