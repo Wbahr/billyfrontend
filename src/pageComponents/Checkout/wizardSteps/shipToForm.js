@@ -15,7 +15,7 @@ export const ShipToForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit} autoComplete="off">
+  <form onSubmit={handleSubmit}>
     <WrapForm>
       <Field as="select" name="shipto.saved_address">
         <option value="1">Yes</option>
@@ -33,6 +33,7 @@ export const ShipToForm = ({
       <FormikInput label="Country" name="shipto.county" />
       <FormikInput label="Carrier" name="shipto.carrier_name" />
       <FormikInput type="hidden" name="shipto.carrier_id" />
+      <label>Ship Collect</label>
       <Field as="select" name="shipto.is_collect">
         <option value="0">No</option>
         <option value="1">Yes</option>
@@ -48,6 +49,6 @@ export const ShipToForm = ({
 
 export const defaultValues = {
   shipto: {
-    name: 'shipping name'
+    contact_name: 'shipping name'
   }
 }

@@ -9,6 +9,7 @@ import CheckoutWizard from './checkoutWizard'
 import Context from '../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
+import CheckoutProgress from './uiComponents/checkoutProgress'
 
 const DivContainer = styled.div`
   display: flex;
@@ -92,8 +93,11 @@ export default function CheckoutPage({history}) {
   const [disablePrevious, setDisablePrevious] = useState(false)
   const [disableNext, setDisableNext] = useState(false)
   const [disableSubmit, setDisableSubmit] = useState(false)
-  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
+  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
 
+  function handleMoveStep(requestedStep){
+    setCurrentStep(requestedStep)
+  }
   return(
     <DivContainer>
       <DivCheckoutCol>
@@ -101,6 +105,7 @@ export default function CheckoutPage({history}) {
           <DivRow>
             <FontAwesomeIcon icon="lock" />
             <H3>Checkout</H3>
+            <CheckoutProgress stepLabels={stepLabel} step={currentStep} clickMoveToStep={(index)=>handleMoveStep(index)}/>
           </DivRow>
         </Div>
         <Container>

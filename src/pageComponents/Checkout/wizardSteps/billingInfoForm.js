@@ -25,15 +25,15 @@ export const BillingInfoForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit} autoComplete="off">
+  <form onSubmit={handleSubmit}>
     <WrapForm>
       <FormRow>
         <label htmlFor="payment_method">Payment Method</label>
         <Field id="payment_method" name="billing.payment_method">
           {({ field, form, meta }) => (
             <>
+              <input type="radio" {...field} value="purchase_order" checked/>Purchase Order
               <input type="radio" {...field} value="credit_card"/>Credit Card <br/>
-              <input type="radio" {...field} value="invoice"/>Invoice
             </>
           )}
         </Field>
@@ -52,7 +52,6 @@ export const BillingInfoForm = ({
       <FormikInput label="County" name="billing.county" />
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
-      {errors.name && <div>{errors.name}</div>}
     </WrapForm>
     <button type="submit">print</button>
   </form>
@@ -60,7 +59,8 @@ export const BillingInfoForm = ({
 
 export const defaultValues = {
   billing: {
-    name: 'test bob',
-    payment_method: 'credit_card'
+    first_name: 'Bob',
+    last_name: 'Test',
+    payment_method: 'purchase_order'
   }
 }

@@ -51,7 +51,7 @@ export const ShippingScheduleForm = ({
   values,
   errors
 }) => (
-  <form onSubmit={handleSubmit} autoComplete="off">
+  <form onSubmit={handleSubmit}>
     <FormRow>
       <label>How do you want your order to ship?</label>
       <Field name="schedule.packing_basis">
@@ -75,7 +75,7 @@ export const ShippingScheduleForm = ({
         <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
       </>
     )}
-    {values.schedule.packing_basis === "3" &&
+    {values.schedule.packing_basis === "4" &&
       values.shoppingCart.map(item => 
         <ShippingScheduleLine item={item} />
       )

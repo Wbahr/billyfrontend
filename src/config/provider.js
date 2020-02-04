@@ -11,6 +11,10 @@ const UPDATE_SHOPPING_CART = gql`
       orderNotes
       subtotal
       tariff
+      cartItems{
+        frecno
+        itemTotalPrice
+      }
     }
   }
 `
