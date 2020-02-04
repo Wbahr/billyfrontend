@@ -188,7 +188,9 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
       }
     },
     onCompleted: data => {
-      setUnitPrice(data.getItemPrices[0].totalPrice)
+      if (!_.isNil(data.getItemPrices[0])) {
+        setUnitPrice(data.getItemPrices[0].totalPrice)
+      }
     }
   })
 
@@ -210,7 +212,7 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
     return(mutatedItemId)
   }
 
-  if(open && !_.isNil(invMastUid) && !searchSent.current){
+  if(open && !_.isNil(invMastUid) && !_.isNil(itemCode) && !searchSent.current){
     searchSent.current = true
     performItemDetailSearch()
     performPriceLookup()

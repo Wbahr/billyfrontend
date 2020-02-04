@@ -173,7 +173,6 @@ const Img = styled.img`
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
   const mutatedItemId = mutateItemId(result.item_id) 
-  console.log('resultss', result)
   function mutateItemId(itemId){
     let mutatedItemId = itemId.replace(/\s/g, '-')
     return(mutatedItemId)

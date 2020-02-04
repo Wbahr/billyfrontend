@@ -312,9 +312,9 @@ export default function SearchResultsPage(props) {
 
   function handleShowDetailsModal(freqno, itemCode){
     console.log('freqno, itemCode',freqno, itemCode)
-    setShowDetailsModal(true)
     setDetailsModalItem(freqno)
     setDetailsModalItemCode(itemCode)
+    setShowDetailsModal(true)
   }
 
   function handleHideDetailsModal(){
@@ -378,6 +378,7 @@ export default function SearchResultsPage(props) {
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
         invMastUid={detailsModalItem}
+        itemCode={detailsModalItemCode}
         history={props.history}
       />
       <div>
