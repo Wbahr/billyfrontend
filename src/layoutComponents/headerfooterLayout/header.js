@@ -173,7 +173,7 @@ export default function HeaderComponent(props) {
               {({userInfo, impersonatedCompanyInfo, cancelImpersonation}) => {
                 if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
                   if(userInfo.role === "AirlineEmployee"){
-                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} (Airline Employee)</Puser><ImpersonationSearch /></Div>)
+                    return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
                   } else {
                     return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
                   }
