@@ -58,16 +58,18 @@ export const ShippingScheduleForm = ({
         {({ field, form, meta }) => (
             <FormikSelect {...field}>
               <option value="0" disabled selected>Select an Option</option>
-              <option value="1">Complete</option>
-              <option value="2">When Ready</option>
-              <option value="3">By Line</option>
+              <option value="1">Ship Complete</option>
+              <option value="2">Ship in Two Shipments</option>
+              <option value="3">Ship when Ready</option>
+              <option value="4">Schedule by Line</option>
             </FormikSelect>
         )}
       </Field>
     </FormRow>
-    {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete with all parts.</Pinfo>}
-    {values.schedule.packing_basis === "2" && <Pinfo>Your order will ship in increments as items become ready.</Pinfo>}
-    {values.schedule.packing_basis === "3" && (
+    {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
+    {values.schedule.packing_basis === "2" && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
+    {values.schedule.packing_basis === "3" && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
+    {values.schedule.packing_basis === "4" && (
       <>
         <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
         <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
