@@ -115,7 +115,7 @@ const ButtonBlack = styled.button`
 
 const GET_ITEM_DETAILS = gql`
 query ItemById($invMastUid: ID){
-    itemDetails(invMastUid: $invMastUid) {
+  itemDetails(invMastUid: $invMastUid) {
         anonPrice
         assembly
         availability
@@ -152,16 +152,45 @@ query ItemById($invMastUid: ID){
 }
 `
 
-export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
+const GET_ITEM_PRICE = gql`
+query ItemSearch($item: ItemPriceRequestInputGraphType){
+  getItemPrices(items: $item){
+    itemCode
+    quantity
+    totalPrice
+  }
+}
+`
+
+export default function DetailsModal({open, hideDetailsModal, invMastUid, history, itemCode}) {
   const [item, setItem] = useState(null)
+  const [unitPrice, setUnitPrice] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const searchSent = useRef(false); 
 
-  const [performItemDetailSearch, {loading, error, data }] = useLazyQuery(GET_ITEM_DETAILS, {
+  const [performItemDetailSearch] = useLazyQuery(GET_ITEM_DETAILS, {
     variables: { invMastUid },
     onCompleted: data => {
       console.log('data', data.itemDetails)
       setItem(data.itemDetails)
+    }
+  })
+
+  const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
+    variables: {	
+      "item": {
+        "itemsAndQuantities": [
+          {
+            "itemCode": itemCode,
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    onCompleted: data => {
+      if (!_.isNil(data.getItemPrices[0])) {
+        setUnitPrice(data.getItemPrices[0].totalPrice)
+      }
     }
   })
 
@@ -171,9 +200,22 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     }
   }
 
-  if(open && !_.isNil(invMastUid) && !searchSent.current){
+  function handleCloseModal(){
+    setItem(null)
+    setUnitPrice(null)
+    setQuantity(1)
+    hideDetailsModal()
+  }
+
+  function mutateItemId(itemId){
+    let mutatedItemId = itemId.replace(/\s/g, '-')
+    return(mutatedItemId)
+  }
+
+  if(open && !_.isNil(invMastUid) && !_.isNil(itemCode) && !searchSent.current){
     searchSent.current = true
     performItemDetailSearch()
+    performPriceLookup()
   } else if (!open && searchSent.current || !open && !_.isNil(item)) {
     searchSent.current = false
     setItem(null)
@@ -187,7 +229,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
         <Loader/>
       </Div>
     )
-  } else {
+  } else if (open) {
     let imagePath
     for (let i=0; i < item.image.length; i++){
       let currentImage = item.image[i]
@@ -203,13 +245,14 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
       imageFile = imageFile.slice(0, -5) + 'l.jpg'
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
+    const mutatedItemId = mutateItemId(item.itemCode) 
     PopupContent =(
       <DivContainer>
         <DivColRow>
           <DivCol1>
             <DivImg>
               <img src={imagePath}/>
-              <ButtonBlack>View More Details</ButtonBlack>
+              <ButtonBlack onClick={()=>{history.push(`/product/${mutatedItemId}/${invMastUid}`)}}>View More Details</ButtonBlack>
             </DivImg>
           </DivCol1>
           <DivCol2>
@@ -217,7 +260,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
             <p>{item.extendedDesc}</p>
             <DivRow>
               <DivRow>
-                <p>{`$${item.anonPrice.toFixed(2)}`}</p><p> /each</p>
+                <p>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</p><p> /each</p>
               </DivRow>
               <DivRow>
                 <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
@@ -229,14 +272,14 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
                         'quantity': parseInt(quantity, 10),
                         'itemNotes': '',
                         'requestedShipDate': new Date()
-                      }), hideDetailsModal(), setQuantity(1)
+                      }), handleCloseModal()
                       }}>Add to Cart</ButtonRed>
                   )}
                 </Context.Consumer>
               </DivRow>
             </DivRow>
             <DivRow>
-              <p>Availability: {item.listPrice}</p>
+              <p>Availability: {item.availability}</p>
               <p>{item.availabilityMessage}</p>
             </DivRow>
             <TABLE>
@@ -255,7 +298,7 @@ export default function LocationsModal({open, hideDetailsModal, invMastUid}) {
     )
   }
     return(
-      <Popup open={open} onClose={()=>hideDetailsModal()} closeOnDocumentClick>
+      <Popup open={open} onClose={()=>{handleCloseModal()}} closeOnDocumentClick>
         {PopupContent}
       </Popup>
     )

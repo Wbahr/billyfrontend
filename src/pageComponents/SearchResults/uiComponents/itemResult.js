@@ -173,7 +173,6 @@ const Img = styled.img`
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
   const mutatedItemId = mutateItemId(result.item_id) 
-
   function mutateItemId(itemId){
     let mutatedItemId = itemId.replace(/\s/g, '-')
     return(mutatedItemId)
@@ -201,7 +200,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           <DivPartImg>
             <Img src={imagePath}/>
           </DivPartImg>
-          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno)}}>Quick Look</ButtonBlack>
+          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno, result.item_id)}}>Quick Look</ButtonBlack>
           <DivPartDetails>
             <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
           </DivPartDetails>

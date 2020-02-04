@@ -7,6 +7,7 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
 import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
+import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
@@ -65,6 +66,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/account/payment-preferences' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/shipping-preferences' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/wishlists' auth component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
