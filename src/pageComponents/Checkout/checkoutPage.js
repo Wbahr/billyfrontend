@@ -98,6 +98,12 @@ export default function CheckoutPage({history}) {
   function handleMoveStep(requestedStep){
     setCurrentStep(requestedStep)
   }
+
+  function handleCheckoutSubmit(formValues){
+    let mutatedFormValues = formValues
+    console.log('mutatedFormValues', mutatedFormValues)
+  }
+  
   return(
     <DivContainer>
       <DivCheckoutCol>
@@ -111,7 +117,7 @@ export default function CheckoutPage({history}) {
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
-            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
+            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} checkoutSubmit={(values)=>{handleCheckoutSubmit(values)}} />)}
           </Context.Consumer>
         </Container>
         <DivNavigation>

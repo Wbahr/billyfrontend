@@ -51,7 +51,6 @@ export const ShippingScheduleForm = ({
   values,
   errors
 }) => (
-  console.log('* ShippingScheduleForm'),
   <>
     <FormRow>
       <label>How do you want your order to ship?</label>

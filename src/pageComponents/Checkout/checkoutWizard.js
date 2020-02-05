@@ -6,13 +6,14 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik} from 'formik'
+import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
 import {BillingInfoForm} from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 
-export default function CheckoutWizard({step, shoppingCart}) {
+export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const [checkValues, setCheckValues] = useState({})
   const shoppingCartObj = {'shoppingCart': shoppingCart}
 
@@ -41,7 +42,7 @@ export default function CheckoutWizard({step, shoppingCart}) {
     <Formik 
       initialValues={initValues}
       // component={FormStep} 
-      onSubmit={values => {console.log(values)}}
+      onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (
         <form onSubmit={formikProps.handleSubmit} {...formikProps}>
@@ -95,7 +96,6 @@ export const initValues = {
     country: 'us',
     phone: '',
     email: ''
-
   }
 }
 
