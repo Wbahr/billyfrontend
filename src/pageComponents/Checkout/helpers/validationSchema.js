@@ -40,6 +40,7 @@ export const shipToSchema = object({
     .max(10)
     .required(), 
   phone: string()
+    .min(10)
     .required(),
   email: string()
     .email()
@@ -80,6 +81,7 @@ export const billToSchema = object({
     .max(10)
     .required(), 
   phone: string()
+    .min(10)
     .required(),
   email: string()
     .email()

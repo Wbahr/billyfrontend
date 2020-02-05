@@ -17,6 +17,51 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const [checkValues, setCheckValues] = useState({})
   const shoppingCartObj = {'shoppingCart': shoppingCart}
 
+  const initValues = {
+    schedule: {
+      packing_basis: "0",
+      requested_dates: []
+    },
+    shipto: {
+      ship_to_id: '',
+      contact_name_first: '',
+      contact_name_last: '',
+      contact_id: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      province: '',
+      zip: '',
+      country: 'us',
+      carrier_name: '',
+      carrier_id: '',
+      is_collect: '0',
+      collect_number: '',
+      phone: '',
+      email: ''
+    },
+    billing: {
+      first_name: '',
+      last_name: '',
+      payment_method: '0',
+      po: '',
+      company_id: '',
+      contact_name_first: '',
+      contact_name_last: '',
+      contact_id: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      province: '',
+      zip: '',
+      country: 'us',
+      phone: '',
+      email: ''
+    }
+  }
+
   let FormStep
   switch(step){
     case 0:
@@ -37,11 +82,9 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       FormStep = ConfirmationScreen
       break
   }
-
   return(
     <Formik 
-      initialValues={initValues}
-      // component={FormStep} 
+      initialValues={{...initValues, ...shoppingCartObj}}
       onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (
@@ -52,51 +95,6 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       )}
     </Formik>
   )
-}
-
-export const initValues = {
-  schedule: {
-    packing_basis: "0",
-    requested_dates: []
-  },
-  shipto: {
-    ship_to_id: '',
-    contact_name_first: '',
-    contact_name_last: '',
-    contact_id: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    province: '',
-    zip: '',
-    country: 'us',
-    carrier_name: '',
-    carrier_id: '',
-    is_collect: '0',
-    collect_number: '',
-    phone: '',
-    email: ''
-  },
-  billing: {
-    first_name: '',
-    last_name: '',
-    payment_method: '0',
-    po: '',
-    company_id: '',
-    contact_name_first: '',
-    contact_name_last: '',
-    contact_id: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    province: '',
-    zip: '',
-    country: 'us',
-    phone: '',
-    email: ''
-  }
 }
 
 CheckoutWizard.propTypes = {

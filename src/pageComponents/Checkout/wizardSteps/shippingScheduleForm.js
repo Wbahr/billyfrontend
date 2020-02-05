@@ -56,13 +56,13 @@ export const ShippingScheduleForm = ({
       <label>How do you want your order to ship?</label>
       <Field name="schedule.packing_basis">
         {({ field, form, meta }) => (
-            <FormikSelect {...field}>
-              <option value="0" disabled selected>Select an Option</option>
-              <option value="1">Ship Complete</option>
-              <option value="2">Ship in Two Shipments</option>
-              <option value="3">Ship when Ready</option>
-              <option value="4">Schedule by Line</option>
-            </FormikSelect>
+          <FormikSelect {...field}>
+            <option value="0" disabled selected>Select an Option</option>
+            <option value="1">Ship Complete</option>
+            <option value="2">Ship in Two Shipments</option>
+            <option value="3">Ship when Ready</option>
+            <option value="4">Schedule by Line</option>
+          </FormikSelect>
         )}
       </Field>
     </FormRow>
@@ -80,13 +80,5 @@ export const ShippingScheduleForm = ({
         <ShippingScheduleLine item={item} />
       )
     }
-    {/* <FormRow>
-      <label>Disposition</label>
-      <Field as="select" name="schedule.disposition">
-        <option value="0" disabled selected>Select a Disposition</option>
-        <option value="1">Backorder</option>
-        <option value="2">Drop Ship</option>
-      </Field>
-    </FormRow> */}
     </>
 )
