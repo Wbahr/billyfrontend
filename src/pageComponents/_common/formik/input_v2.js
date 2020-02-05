@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field, ErrorMessage } from 'formik'
+import { Field as FormikField, ErrorMessage } from 'formik'
 
 const DivContainer = styled.div`
   display flex;
@@ -30,48 +30,34 @@ const DivError = styled.div`
   padding-left: 8px;
 `
 
-export default function Input({type, disabled, name, label, placeholder, onChange, width}){
-  const MainInput = styled.input`
-    width: ${width || "400px"};
-    height: 40px;
-    padding: 0 8px;
-    color: #303030;
-    font-size: 16px;
-    border-radius: 1px;
-    border: 1px solid #e1e1e1;  
-    :focus{
-      border: 1px solid #007bff;  
-      outline: none;
-    }
-    ::placeholder {
-      color: grey;
-      font-size: 14px;
-    }
-  `
- 
+const MainInput = styled(FormikField)`
+  height: 40px;
+  padding: 0 8px;
+  color: #303030;
+  font-size: 16px;
+  border-radius: 1px;
+  border: 1px solid #e1e1e1;  
+  :focus{
+    border: 1px solid #007bff;  
+    outline: none;
+  }
+  ::placeholder {
+    color: grey;
+    font-size: 14px;
+  }
+`
+
+export default function Input({type, disabled, name, label, placeholder, width}){
   if(type !== "hidden"){
     return(
       <DivContainer>
       {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-      <Field name={name}>
-        {({
-          field,
-          form,
-          form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-          meta,
-        }) => (
-              <>
-                <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={(e)=>{eval(onChange)}} />
-                {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
-              </>
-            )
-        }
-      </Field>
+      <MainInput type="text" name={name} placeholder={placeholder} disabled={disabled} style={{width: width || "400px"}}/>
     </DivContainer>
     )
   } else {
     return(
-      <Field type={type} name={name} />
+      <FormikField type={type} name={name} />
     )
   }
 }

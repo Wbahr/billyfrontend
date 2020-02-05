@@ -18,6 +18,13 @@ const FormRow = styled.div`
   }
 `
 
+const FormikSelect = styled.select`
+  // height: 40px;
+  :focus{
+    outline: none;
+  }
+`
+
 export const BillingInfoForm = ({
   handleSubmit,
   handleChange,
@@ -25,21 +32,21 @@ export const BillingInfoForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit}>
     <WrapForm>
       <FormRow>
-        <label htmlFor="payment_method">Payment Method</label>
-        <Field id="payment_method" name="billing.payment_method">
+        <label htmlFor="payment_method">How would you like to pay?</label>
+          <Field name="billing.payment_method">
           {({ field, form, meta }) => (
-            <>
-              <input type="radio" {...field} value="purchase_order" checked/>Purchase Order
-              <input type="radio" {...field} value="credit_card"/>Credit Card <br/>
-            </>
+            <FormikSelect {...field}>
+              <option value="0" disabled selected>Select a Payment Method</option>
+              <option value="purchase_order">Purchase Order</option>
+              <option value="credit_card">Credit Card</option>
+            </FormikSelect>
           )}
         </Field>
       </FormRow>
       {values.payment_method === "credit_card" && <CardElement />}
-      <FormikInput label="PO" name="billing.po" />
+      <FormikInput label="PO Number" name="billing.po" />
       <FormikInput type="hidden" name="billing.company_id" />
       <FormikInput label="Company Name" name="billing.company_name" />
       <FormikInput label="First Name" name="billing.first_name" />
@@ -53,14 +60,4 @@ export const BillingInfoForm = ({
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
     </WrapForm>
-    <button type="submit">print</button>
-  </form>
 )
-
-export const defaultValues = {
-  billing: {
-    first_name: 'Bob',
-    last_name: 'Test',
-    payment_method: 'purchase_order'
-  }
-}

@@ -51,7 +51,8 @@ export const ShippingScheduleForm = ({
   values,
   errors
 }) => (
-  <form onSubmit={handleSubmit}>
+  console.log('* ShippingScheduleForm'),
+  <>
     <FormRow>
       <label>How do you want your order to ship?</label>
       <Field name="schedule.packing_basis">
@@ -88,12 +89,5 @@ export const ShippingScheduleForm = ({
         <option value="2">Drop Ship</option>
       </Field>
     </FormRow> */}
-  </form>
+    </>
 )
-
-export const defaultValues = {
-  schedule: {
-    packing_basis: "0",
-    requested_dates: []
-  }
-}
