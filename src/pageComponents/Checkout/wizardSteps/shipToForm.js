@@ -57,6 +57,7 @@ export const ShipToForm = ({
           <Field name="shipto.state">
             {({ field, form, meta }) => (
               <FormikSelect {...field}>
+                <option value="0" selected>Select a State</option>
                 {StateList.map((state)=>(<option value={state.abbreviation}>{state.name}</option>))}
               </FormikSelect>
             )}
@@ -69,6 +70,7 @@ export const ShipToForm = ({
           <Field name="shipto.province">
             {({ field, form, meta }) => (
               <FormikSelect {...field}>
+                <option value="0" selected>Select a Province</option>
                 {CanadianProvinceList.map((province)=>(<option value={province.abbreviation}>{province.name}</option>))}
               </FormikSelect>
             )}

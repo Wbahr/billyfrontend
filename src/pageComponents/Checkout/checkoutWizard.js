@@ -80,7 +80,26 @@ export const initValues = {
   billing: {
     first_name: '',
     last_name: '',
-    payment_method: '0'
+    payment_method: '0',
+    po: '',
+    company_id: '',
+    contact_name_first: '',
+    contact_name_last: '',
+    contact_id: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    province: '',
+    zip: '',
+    country: 'us',
+    carrier_name: '',
+    carrier_id: '',
+    is_collect: '0',
+    collect_number: '',
+    phone: '',
+    email: ''
+
   }
 }
 
