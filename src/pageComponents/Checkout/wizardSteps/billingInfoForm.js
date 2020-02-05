@@ -48,7 +48,7 @@ export const BillingInfoForm = ({
       {values.payment_method === "credit_card" && <CardElement />}
       <FormikInput label="PO Number" name="billing.po" />
       <FormikInput type="hidden" name="billing.company_id" />
-      <FormikInput label="Company Name" name="billing.company_name" />
+      <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
       <FormikInput label="First Name" name="billing.first_name" />
       <FormikInput label="Last Name" name="billing.last_name" />
       <FormikInput label="Address 1" name="billing.address1" width="600px"/>
