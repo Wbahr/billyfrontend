@@ -93,10 +93,6 @@ export const initValues = {
     province: '',
     zip: '',
     country: 'us',
-    carrier_name: '',
-    carrier_id: '',
-    is_collect: '0',
-    collect_number: '',
     phone: '',
     email: ''
 
