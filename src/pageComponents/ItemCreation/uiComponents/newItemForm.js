@@ -228,9 +228,6 @@ const NewItem = () => {
 
           
             <HiddenDiv>
-              <hr></hr>
-              <br></br>
-              <H3>Search results placeholder</H3>
               {/* <DivContainer>
                 <CategoryImage
                   text='Item Result 1'

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Select from 'react-dropdown-select';
+import Select from 'react-select';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 //import Images from './Images';
 import gql from 'graphql-tag';
@@ -80,8 +80,8 @@ export default function ItemCreationPage() {
   const [showMoreItems, setShowMoreItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState(null) //Supplier ID or name, not sure yet
   const [title, setTitle] = useState("Begin item creation");
-  const [values, setValues] = useState(["Drop Down Value 1", "Drop Down Value 2"])
-  const [options] = useState(["Drop Down Option 1", "Drop Down Option 2"])
+  const [selectedOption, setSelectedOption] = useState()
+  const options = [{ value: 'chocolate', label: 'Chocolate' }, { value: 'strawberry', label: 'Strawberry' }, { value: 'vanilla', label: 'Vanilla' }]
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
@@ -93,6 +93,11 @@ export default function ItemCreationPage() {
   function searchItems() {
     console.log(searchTerm, selectedSupplier)
   }
+
+  function handleChange(newSelection){
+    setSelectedOption(newSelection)
+  }
+
 
   let searchResultItems = []
   searchResults.map((element) => {
@@ -123,21 +128,14 @@ export default function ItemCreationPage() {
               <option value="moreSoon">More to be loaded from P21</option>
             </select>
           </DivSpacer>
-          {/* <Select options={options} onChange={(values) => this.setValues(values)} /> */}
-        </DivSearchInputWrapper>
-        {/* <DivSpacer>
-          <label for="supplierNameSearch">Supplier Name:</label>
-          <Autocomplete
-            id="supplier-select"
-            name="supplierNameSearch"
-            options={supplierList}
-            getOptionLabel={option => option.name}
-            style={{ width: 300 }}
-            renderInput={params => (
-              <TextField {...params} label="Combo box" variant="outlined" fullWidth />
-            )}
+
+          <Select
+            value={selectedOption}
+            onChange={handleChange}
+            options={options}
           />
-        </DivSpacer> */}
+          
+        </DivSearchInputWrapper>
 
 
 
