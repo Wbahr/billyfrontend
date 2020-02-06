@@ -11,12 +11,13 @@ const CustomSelectComponent = ({
   field,
   form: { touched, errors, setFieldValue },
   options,
+  width,
   ...props
 }) => {
 
   return (
-    <div>
-      <label htmlFor={field.name}>{props.label}</label>
+    <div style={{width: width || '300px'}}>
+      {/* <label htmlFor={field.name}>{props.label}</label> */}
       <Select
         {...field}
         {...props}

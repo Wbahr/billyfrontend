@@ -6,6 +6,7 @@ import SelectField from '../../_common/formik/select'
 
 const FormRow = styled.div`
   display: flex;
+  width: 100%;
   margin-top: 24px;
   label {
     margin: 0 16px;
@@ -61,8 +62,14 @@ export const ShippingScheduleForm = ({
 }) => (
   <>
     <FormRow>
-      <label>How do you want your order to ship?</label>
-      <Field name="schedule.packing_basis" component={SelectField} options={packingBasis} />      
+      <label htmlFor="schedule.packing_basis">How do you want your order to ship?</label>
+      <div style={{flexGrow: 99}}>
+        <Field 
+          name="schedule.packing_basis" 
+          component={SelectField} 
+          options={packingBasis} 
+        /> 
+      </div>
     </FormRow>
     {values.schedule.packing_basis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
     {values.schedule.packing_basis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
