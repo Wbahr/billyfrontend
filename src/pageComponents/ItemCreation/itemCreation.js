@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Select from 'react-dropdown-select';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 //import Images from './Images';
 import gql from 'graphql-tag';
@@ -59,16 +60,13 @@ const SearchResultsContainer = styled.div`
   margin: 28px auto;
   max-width: 1200px;
   height: auto;
+  justify-content: center;
 `
 const DivSearchInputWrapper = styled.div`
   width: 500px;
 `
 
 const SearchResultWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center:
-  justify-content: center;
 
 `
 
@@ -76,11 +74,14 @@ const SearchResultWrapper = styled.div`
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
-  const [searchResults, setSearchResults] = useState([{},{}, {}, {}, {},{},{}, {}, {}, {}])
+  const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
   const [showMoreItems, setShowMoreItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState(null) //Supplier ID or name, not sure yet
+  const [title, setTitle] = useState("Begin item creation");
+  const [values, setValues] = useState(["Drop Down Value 1", "Drop Down Value 2"])
+  const [options] = useState(["Drop Down Option 1", "Drop Down Option 2"])
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
@@ -115,13 +116,14 @@ export default function ItemCreationPage() {
           <DivSpacer>
             <label for="supplierNameSearch">Supplier Name:</label>
             <select name="supplierNameSearch">
-              <option value="Parker">Parker</option>
               <option value="SMC">SMC</option>
+              <option value="Parker">Parker</option>
               <option value="Phoenix">Phoenix</option>
               <option value="Schmersal">Schmersal</option>
               <option value="moreSoon">More to be loaded from P21</option>
             </select>
           </DivSpacer>
+          {/* <Select options={options} onChange={(values) => this.setValues(values)} /> */}
         </DivSearchInputWrapper>
         {/* <DivSpacer>
           <label for="supplierNameSearch">Supplier Name:</label>
@@ -140,7 +142,8 @@ export default function ItemCreationPage() {
 
 
         {/* <button onClick={() => searchItems()}>Check Console here</button> */}
-        <button onClick={() => setShowSearchedItems(true)}>Search Items to begin creation</button>
+        {/* <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue> */}
+        <button onClick={(e) => {setShowSearchedItems(true), setTitle("Update item creation")}}>{title}</button>
         {showSearchedItems && <SearchResultWrapper>
           <SearchResultsContainer>
 
@@ -165,7 +168,7 @@ export default function ItemCreationPage() {
 
 
 
-          <button onClick={() => setShowMoreItems(true)}>I want more items</button>
+        <button onClick={() => setShowMoreItems(true)}>I want more items</button> {/*need to know endpoint on how search is being done*/}
           <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
         </SearchResultWrapper>
 

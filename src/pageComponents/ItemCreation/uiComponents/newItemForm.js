@@ -148,7 +148,7 @@ const NewItem = () => {
     <H4>for internal new items</H4>
     <Formik
       initialValues={{
-        itemID: 'kq2', itemDescription: 'a', defaultSalesDis: 'D', defaultPurchaseDis: 'C',
+        itemID: 'SMC kq2', itemDescription: 'a', defaultSalesDis: 'D', defaultPurchaseDis: 'C',
         supplierID: 'd', DivisionID: 'type in Supplier', UOM: 'EA', baseUnit: 'h', locationID: '2100', productGroupID: '1000',
         taxGroupID: 'ALL', replenishmentLoc: '2100', replenishmentMethod: 'UpTo', glAccountNo: 'f', averageLeadTime: '30', primarySupplier: 'type in Supplier'
       }}
@@ -162,14 +162,14 @@ const NewItem = () => {
         }*/
         if (!values.itemID) {
           errors.itemID = 'Required';
-        } else if (!/^[A-Z0-9._%+-]{2,5}$/i.test(values.itemID)) {
+        } else if (!/^[A-Z0-9._ %+-]{2,40}$/i.test(values.itemID)) {
           errors.itemID = 'Please enter less than 40 characters and exclude {*,"}';
         }
-        if (!values.defaultSalesDis) {
-          errors.defaultSalesDis = 'Required';
-        } else if (!/^[A-Z0-9._%+-]{2,10}$/i.test(values.defaultSalesDis)) {
-          errors.defaultSalesDis = 'Too long!';
-        }
+        // if (!values.defaultSalesDis) {
+        //   errors.defaultSalesDis = 'Required';
+        // } else if (!/^[A-Z0-9._%+-]{2,10}$/i.test(values.defaultSalesDis)) {
+        //   errors.defaultSalesDis = 'Too long!';
+        // }
         if (!values.productGroupID) {
           errors.productGroupID = 'Required';
         } else if (!/^[0-9]{4,4}$/i.test(values.productGroupID)) {
