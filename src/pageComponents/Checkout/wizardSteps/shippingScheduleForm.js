@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Field } from 'formik'
 import ShippingScheduleLine from '../uiComponents/scheduleLine'
+import SelectField from '../../_common/formik/select'
 
 const FormRow = styled.div`
   display: flex;
@@ -44,6 +45,13 @@ const DivScheduleHeader = styled.div`
   }
 `
 
+const packingBasis = [
+  {'value': 1, 'label': 'Ship Complete'},
+  {'value': 2, 'label': 'Ship in Two Shipments'},
+  {'value': 3, 'label': 'Ship when Ready'},
+  {'value': 4, 'label': 'Schedule by Line'}
+]
+
 export const ShippingScheduleForm = ({
   handleSubmit,
   handleChange,
@@ -54,28 +62,18 @@ export const ShippingScheduleForm = ({
   <>
     <FormRow>
       <label>How do you want your order to ship?</label>
-      <Field name="schedule.packing_basis">
-        {({ field, form, meta }) => (
-          <FormikSelect {...field}>
-            <option value="0" disabled selected>Select an Option</option>
-            <option value="1">Ship Complete</option>
-            <option value="2">Ship in Two Shipments</option>
-            <option value="3">Ship when Ready</option>
-            <option value="4">Schedule by Line</option>
-          </FormikSelect>
-        )}
-      </Field>
+      <Field name="schedule.packing_basis" component={SelectField} options={packingBasis} />      
     </FormRow>
-    {values.schedule.packing_basis === "1" && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
-    {values.schedule.packing_basis === "2" && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
-    {values.schedule.packing_basis === "3" && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
-    {values.schedule.packing_basis === "4" && (
+    {values.schedule.packing_basis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
+    {values.schedule.packing_basis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
+    {values.schedule.packing_basis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
+    {values.schedule.packing_basis === 4 && (
       <>
         <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
         <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
       </>
     )}
-    {values.schedule.packing_basis === "4" &&
+    {values.schedule.packing_basis === 4 &&
       values.shoppingCart.map(item => 
         <ShippingScheduleLine item={item} />
       )
