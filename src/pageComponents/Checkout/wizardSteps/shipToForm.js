@@ -3,6 +3,7 @@ import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
+import SelectField from '../../_common/formik/select'
 
 const WrapForm = styled.div`
   display: flex;
@@ -31,17 +32,14 @@ export const ShipToForm = ({
     <WrapForm>
       <FormRow>
         <label>Saved Ship To</label>
-        <Field name="shipto.saved_ship_to">
-          {({ field, form, meta }) => (
-            <FormikSelect {...field}>
-              <option value="0" selected>Custom Ship To</option>
-              <option value="1">Ship Complete</option>
-              <option value="2">Ship in Two Shipments</option>
-              <option value="3">Ship when Ready</option>
-              <option value="4">Schedule by Line</option>
-            </FormikSelect>
-          )}
-        </Field>
+        <Field 
+          name="shipto.saved_ship_to" 
+          component={SelectField} 
+          options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
+          getOptionLabel={(option)=>option.label}
+          getOptionValue={(option)=>option.value}
+          width="500px"
+        /> 
       </FormRow>
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" />
       <FormikInput type="hidden" name="shipto.ship_to_id" />
@@ -54,46 +52,53 @@ export const ShipToForm = ({
       {values.shipto.country  === "us" && 
         <>
           <label>Saved Ship To</label>
-          <Field name="shipto.state">
-            {({ field, form, meta }) => (
-              <FormikSelect {...field}>
-                <option value="0" selected>Select a State</option>
-                {StateList.map((state)=>(<option value={state.abbreviation}>{state.name}</option>))}
-              </FormikSelect>
-            )}
-          </Field>
+          <Field 
+            name="shipto.state" 
+            component={SelectField} 
+            options={StateList}
+            placeholder="Select a State"
+            getOptionLabel={(option)=>option.name}
+            getOptionValue={(option)=>option.abbreviation}
+          /> 
         </>
       }
       {values.shipto.country  === "canada" && 
         <>
           <label>Saved Ship To</label>
-          <Field name="shipto.province">
-            {({ field, form, meta }) => (
-              <FormikSelect {...field}>
-                <option value="0" selected>Select a Province</option>
-                {CanadianProvinceList.map((province)=>(<option value={province.abbreviation}>{province.name}</option>))}
-              </FormikSelect>
-            )}
-          </Field>
+          <Field 
+            name="shipto.province" 
+            component={SelectField} 
+            options={CanadianProvinceList}
+            placeholder="Select a Province"
+            getOptionLabel={(option)=>option.name}
+            getOptionValue={(option)=>option.abbreviation}
+          /> 
         </>
       }
       <FormikInput label="Zip" name="shipto.zip" />    
-      <Field name="shipto.country">
-        {({ field, form, meta }) => (
-          <FormikSelect {...field}>
-            <option value="us" selected>United States</option>
-            <option value="canada">Canada</option>
-          </FormikSelect>
-        )}
-      </Field>
+      <Field 
+        name="shipto.country" 
+        component={SelectField} 
+        options={[{'name': 'United States', 'abbreviation': 'us'},{'name': 'Canada', 'abbreviation': 'canada'}]}
+        placeholder="Select a Country"
+        getOptionLabel={(option)=>option.name}
+        getOptionValue={(option)=>option.abbreviation}
+        width="250px"
+        isSearchable={false}
+      /> 
       <FormikInput label="Carrier" name="shipto.carrier_name" />
       <FormikInput type="hidden" name="shipto.carrier_id" />
       <FormRow>
       <label>Ship Collect?</label>
-        <Field as="select" name="shipto.is_collect">
-          <option value="0">No</option>
-          <option value="1">Yes</option>
-        </Field>
+        <Field 
+          name="shipto.is_collect" 
+          component={SelectField} 
+          options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
+          getOptionLabel={(option)=>option.label}
+          getOptionValue={(option)=>option.value}
+          width="100px"
+          isSearchable={false}
+        /> 
         {values.shipto.is_collect  === "1" &&  <FormikInput label="Collect Number" name="shipto.collect_number" />}
       </FormRow>
       <FormikInput label="Phone" name="shipto.phone" />

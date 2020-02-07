@@ -68,6 +68,7 @@ export const ShippingScheduleForm = ({
           name="schedule.packing_basis" 
           component={SelectField} 
           options={packingBasis} 
+          isSearchable={false}
         /> 
       </div>
     </FormRow>

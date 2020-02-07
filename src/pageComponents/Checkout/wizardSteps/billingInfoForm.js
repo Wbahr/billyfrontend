@@ -4,6 +4,7 @@ import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { CardElement } from 'react-stripe-elements'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
+import SelectField from '../../_common/formik/select'
 
 const WrapForm = styled.div`
   display: flex;
@@ -36,15 +37,14 @@ export const BillingInfoForm = ({
     <WrapForm>
       <FormRow>
         <label htmlFor="payment_method">How would you like to pay?</label>
-          <Field name="billing.payment_method">
-          {({ field, form, meta }) => (
-            <FormikSelect {...field}>
-              <option value="0" disabled selected>Select a Payment Method</option>
-              <option value="purchase_order">Purchase Order</option>
-              <option value="credit_card">Credit Card</option>
-            </FormikSelect>
-          )}
-        </Field>
+        <Field 
+          name="billing.payment_method" 
+          component={SelectField} 
+          options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
+          getOptionLabel={(option)=>option.label}
+          getOptionValue={(option)=>option.value}
+          placeholder="Select a Payment Method"
+        /> 
       </FormRow>
       {values.billing.payment_method === "credit_card" && <CardElement />}
       <FormikInput label="PO Number" name="billing.po" />
@@ -58,38 +58,40 @@ export const BillingInfoForm = ({
       {values.billing.country  === "us" && 
         <>
           <label>Saved Ship To</label>
-          <Field name="billing.state">
-            {({ field, form, meta }) => (
-              <FormikSelect {...field}>
-                <option value="0" selected>Select a State</option>
-                {StateList.map((state)=>(<option value={state.abbreviation}>{state.name}</option>))}
-              </FormikSelect>
-            )}
-          </Field>
+          <Field 
+            name="billing.state" 
+            component={SelectField} 
+            options={StateList}
+            placeholder="Select a State"
+            getOptionLabel={(option)=>option.name}
+            getOptionValue={(option)=>option.abbreviation}
+          /> 
         </>
       }
       {values.billing.country  === "canada" && 
         <>
           <label>Saved Ship To</label>
-          <Field name="billing.province">
-            {({ field, form, meta }) => (
-              <FormikSelect {...field}>
-                <option value="0" selected>Select a Province</option>
-                {CanadianProvinceList.map((province)=>(<option value={province.abbreviation}>{province.name}</option>))}
-              </FormikSelect>
-            )}
-          </Field>
+          <Field 
+            name="billing.province" 
+            component={SelectField} 
+            options={CanadianProvinceList}
+            placeholder="Select a Province"
+            getOptionLabel={(option)=>option.name}
+            getOptionValue={(option)=>option.abbreviation}
+          /> 
         </>
       }
       <FormikInput label="Zip" name="billing.zip" />    
-      <Field name="billing.country">
-        {({ field, form, meta }) => (
-          <FormikSelect {...field}>
-            <option value="us" selected>United States</option>
-            <option value="canada">Canada</option>
-          </FormikSelect>
-        )}
-      </Field>
+      <Field 
+        name="billing.country" 
+        component={SelectField} 
+        options={[{'name': 'United States', 'abbreviation': 'us'},{'name': 'Canada', 'abbreviation': 'canada'}]}
+        placeholder="Select a Country"
+        getOptionLabel={(option)=>option.name}
+        getOptionValue={(option)=>option.abbreviation}
+        width="250px"
+        isSearchable={false}
+      /> 
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
     </WrapForm>
