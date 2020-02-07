@@ -83,7 +83,7 @@ const SearchResultWrapper = styled.div`
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
-  const [itemSearchResult, setItemSearchResult] = useState([])
+  const [itemSearchResult, setItemSearchResult] = useState([{}, {}]) //array to hold searched items
   const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
@@ -94,13 +94,14 @@ export default function ItemCreationPage() {
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
       setSupplierList(data.getAirlineSuppliers)
-      console.log(data.getAirlineSuppliers)
+      // console.log(data.getAirlineSuppliers)
     }
   })
 
   const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
-      const itemSearchResult = data.itemSearch
+      // const itemSearchResult = data.itemSearch
+      setItemSearchResult(data.itemSearch)
       console.log(data.itemSearch)
     }
   })
@@ -130,7 +131,7 @@ export default function ItemCreationPage() {
 
 
   let searchResultItems = []
-  searchResults.map((element) => {
+  itemSearchResult.map((element) => {
     searchResultItems.push(
       <DivSearchItemContainer>
         <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2P-23_l.jpg" width="auto" height="200" margin="28px 14px" alt="SMC KQ2P" ></img>
