@@ -18,6 +18,15 @@ const QUERY_SUPPLIER_LIST = gql`
   }
 `
 
+const QUERY_ITEM_SEARCH = gql`
+  query ItemSearch($searchParams: ElasticSearchItemRequest!){
+    itemSearch(searchParams: $searchParams){
+      result
+      count
+    }
+  }
+`
+
 
 
 const ContentScreenContainer = styled.div`
@@ -74,14 +83,13 @@ const SearchResultWrapper = styled.div`
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
+  const [itemSearchResult, setItemSearchResult] = useState([])
   const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
   const [showMoreItems, setShowMoreItems] = useState(false)
-  const [selectedSupplier, setSelectedSupplier] = useState(null) //Supplier ID or name, not sure yet
+  const [selectedSupplier, setSelectedSupplier] = useState()
   const [title, setTitle] = useState("Begin item creation");
-  const [selectedOption, setSelectedOption] = useState()
-  const options = [{ value: 'chocolate', label: 'Chocolate' }, { value: 'strawberry', label: 'Strawberry' }, { value: 'vanilla', label: 'Vanilla' }]
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
@@ -90,12 +98,34 @@ export default function ItemCreationPage() {
     }
   })
 
+  const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    onCompleted: data => {
+      const itemSearchResult = data.itemSearch
+      console.log(data.itemSearch)
+    }
+  })
+
   function searchItems() {
-    console.log(searchTerm, selectedSupplier)
+    performItemSearch({
+      variables: {
+        searchParams: {
+          searchTerm: searchTerm,
+          resultSize: 10,
+          resultPage: 1,
+          sortType: 'relevancy',
+          brandFilters: [],
+          categoryFilter: {
+            'parentCategory': '',
+            'childCategory': ''
+          },
+          attributeFilters:[]
+        }
+      }
+    })
   }
 
   function handleChange(newSelection){
-    setSelectedOption(newSelection)
+    setSelectedSupplier(newSelection)
   }
 
 
@@ -120,20 +150,17 @@ export default function ItemCreationPage() {
           </DivSpacer>
           <DivSpacer>
             <label for="supplierNameSearch">Supplier Name:</label>
-            <select name="supplierNameSearch">
-              <option value="SMC">SMC</option>
-              <option value="Parker">Parker</option>
-              <option value="Phoenix">Phoenix</option>
-              <option value="Schmersal">Schmersal</option>
-              <option value="moreSoon">More to be loaded from P21</option>
-            </select>
+            <Select
+              name="supplierNameSearch"
+              value={selectedSupplier}
+              onChange={handleChange}
+              options={supplierList}
+              getOptionLabel={(option) => option.id + " - " + option.name}
+              getOptionValue={(option) => option.name}
+            />
           </DivSpacer>
 
-          <Select
-            value={selectedOption}
-            onChange={handleChange}
-            options={options}
-          />
+
           
         </DivSearchInputWrapper>
 
@@ -141,7 +168,7 @@ export default function ItemCreationPage() {
 
         {/* <button onClick={() => searchItems()}>Check Console here</button> */}
         {/* <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue> */}
-        <button onClick={(e) => {setShowSearchedItems(true), setTitle("Update item creation")}}>{title}</button>
+        <button onClick={(e) => {setShowSearchedItems(true), setTitle("Update item creation"), searchItems()}}>{title}</button>
         {showSearchedItems && <SearchResultWrapper>
           <SearchResultsContainer>
 
