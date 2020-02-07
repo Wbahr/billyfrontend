@@ -41,8 +41,6 @@ export const ShipToForm = ({
         name="shipto.saved_ship_to" 
         component={SelectField} 
         options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
-        getOptionLabel={(option)=>option.label}
-        getOptionValue={(option)=>option.value}
         width="500px"
         label="Saved Ship To"
       /> 
@@ -61,8 +59,6 @@ export const ShipToForm = ({
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
-            getOptionLabel={(option)=>option.name}
-            getOptionValue={(option)=>option.abbreviation}
             label="State"
           /> 
         </>
@@ -74,8 +70,6 @@ export const ShipToForm = ({
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"
-            getOptionLabel={(option)=>option.name}
-            getOptionValue={(option)=>option.abbreviation}
             label="Province"
           /> 
         </>
@@ -84,10 +78,8 @@ export const ShipToForm = ({
       <Field 
         name="shipto.country" 
         component={SelectField} 
-        options={[{'name': 'United States', 'abbreviation': 'us'},{'name': 'Canada', 'abbreviation': 'canada'}]}
+        options={[{'label': 'United States', 'value': 'us'},{'label': 'Canada', 'value': 'canada'}]}
         placeholder="Select a Country"
-        getOptionLabel={(option)=>option.name}
-        getOptionValue={(option)=>option.abbreviation}
         width="250px"
         isSearchable={false}
         label="Country"
@@ -101,8 +93,6 @@ export const ShipToForm = ({
           name="shipto.is_collect" 
           component={SelectField} 
           options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
-          getOptionLabel={(option)=>option.label}
-          getOptionValue={(option)=>option.value}
           width="100px"
           isSearchable={false}
         /> 
@@ -111,10 +101,8 @@ export const ShipToForm = ({
       <Field 
         name="shipto.carrier_name" 
         component={SelectField} 
-        options={[{'name': 'USPS', 'abbreviation': 'usps'},{'name': 'FedEx', 'abbreviation': 'fedex'}]}
+        options={[{'label': 'USPS', 'value': 'usps'},{'label': 'FedEx', 'value': 'fedex'}]}
         placeholder="Select a Carrier"
-        getOptionLabel={(option)=>option.name}
-        getOptionValue={(option)=>option.abbreviation}
         label="Carrier"
       /> 
       {errors.name && <div>{errors.name}</div>}
