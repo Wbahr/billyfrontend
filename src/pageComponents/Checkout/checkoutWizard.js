@@ -14,13 +14,14 @@ import {BillingInfoForm} from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 
 export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
-  const [checkValues, setCheckValues] = useState({})
   const shoppingCartObj = {'shoppingCart': shoppingCart}
+  let requestedDatesArray = []
+  requestedDatesArray = shoppingCart.map(elem=>requestedDatesArray.push(new Date()))
 
   const initValues = {
     schedule: {
-      packing_basis: "0",
-      requested_dates: []
+      packing_basis: '0',
+      requested_dates: requestedDatesArray
     },
     shipto: {
       ship_to_id: '',

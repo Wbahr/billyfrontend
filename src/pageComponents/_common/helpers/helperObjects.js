@@ -214,17 +214,17 @@ export const StateList = [
 ]
 
 export const CanadianProvinceList = [ 
-  { name: 'Alberta', abbreviation: 'AB' }, 
-  { name: 'British Columbia', abbreviation: 'BC' }, 
-  { name: 'Manitoba', abbreviation: 'MB' }, 
-  { name: 'New Brunswick', abbreviation: 'NB' }, 
-  { name: 'Newfoundland and Labrador', abbreviation: 'NL' }, 
-  { name: 'Northwest Territories', abbreviation: 'NT' }, 
-  { name: 'Nova Scotia', abbreviation: 'NS' }, 
-  { name: 'Nunavut', abbreviation: 'NU' }, 
-  { name: 'Ontario', abbreviation: 'ON' }, 
-  { name: 'Prince Edward Island', abbreviation: 'PE' }, 
-  { name: 'Quebec', abbreviation: 'QC' }, 
-  { name: 'Saskatchewan', abbreviation: 'SK' }, 
-  { name: 'Yukon Territory', abbreviation: 'YT' } 
+  { "label": 'Alberta', "value": 'AB' }, 
+  { "label": 'British Columbia', "value": 'BC' }, 
+  { "label": 'Manitoba', "value": 'MB' }, 
+  { "label": 'New Brunswick', "value": 'NB' }, 
+  { "label": 'Newfoundland and Labrador', "value": 'NL' }, 
+  { "label": 'Northwest Territories', "value": 'NT' }, 
+  { "label": 'Nova Scotia', "value": 'NS' }, 
+  { "label": 'Nunavut', "value": 'NU' }, 
+  { "label": 'Ontario', "value": 'ON' }, 
+  { "label": 'Prince Edward Island', "value": 'PE' }, 
+  { "label": 'Quebec', "value": 'QC' }, 
+  { "label": 'Saskatchewan', "value": 'SK' }, 
+  { "label": 'Yukon Territory', "value": 'YT' } 
 ]

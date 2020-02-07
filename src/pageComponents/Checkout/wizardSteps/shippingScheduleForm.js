@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Field } from 'formik'
+import { Field, FieldArray } from 'formik'
 import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 
@@ -85,9 +85,20 @@ export const ShippingScheduleForm = ({
       </>
     )}
     {values.schedule.packing_basis === 4 &&
-      values.shoppingCart.map(item => 
-        <ShippingScheduleLine item={item} />
-      )
+      <FieldArray
+        name="schedule.requested_dates"
+        render={arrayHelpers => (
+          <div>
+            {(values.shoppingCart && values.shoppingCart.length > 0 && values.schedule.requested_dates && values.schedule.requested_dates.length > 0) ? (
+              values.shoppingCart.map((item, index) => (
+                <ShippingScheduleLine item={item} index={index}/>
+              ))
+            ) : (
+              <p>No Cart Items</p>
+            )}
+          </div>
+        )}
+      />
     }
     </>
 )

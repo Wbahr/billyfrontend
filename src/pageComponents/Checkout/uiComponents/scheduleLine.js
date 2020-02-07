@@ -120,17 +120,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-const DatePickerField = ({ name, value, onChange }) => {
-  return (
-      <DatePicker
-        minDate={new Date()}
-        selected={(value && new Date(value)) || null}
-        onChange={val => { onChange(name, val) }}
-      />
-  )
-}
-
-export default function ShippingScheduleItem({item}) {
+export default function ShippingScheduleItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
 
@@ -181,22 +171,21 @@ export default function ShippingScheduleItem({item}) {
           </DivQuantity>
         </DivCol3>
         <div>
-        <Field name='testing_date'>
+        <Field name={`schedule.requested_dates.${index}`}>
           {({
             field,
             form,
             form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
             meta
-            
           }) => (
                 <DivRow>
                   <DivSpacer>
                     <FontAwesomeIcon icon="calendar" color="lightgrey"/>
                   </DivSpacer>
-                  <DatePickerField
-                    name="testing_date"
-                    value={form.values.testing_date}
-                    onChange={field.setFieldValue}
+                  <DatePicker
+                    minDate={new Date()}
+                    selected={`form.values.schedule.requested_dates.${index}`}
+                    onChange={(value)=>form.setFieldValue(field.name, value)}
                   />
                 </DivRow>
               )
