@@ -23,13 +23,6 @@ const FormRow = styled.div`
   }
 `
 
-const FormikSelect = styled.select`
-  // height: 40px;
-  :focus{
-    outline: none;
-  }
-`
-
 export const BillingInfoForm = ({
   handleSubmit,
   handleChange,

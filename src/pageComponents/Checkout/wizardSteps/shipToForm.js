@@ -10,13 +10,6 @@ const WrapForm = styled.div`
   flex-wrap: wrap;
 `
 
-const FormikSelect = styled.select`
-  // height: 40px;
-  :focus{
-    outline: none;
-  }
-`
-
 const FormRow = styled.div`
   display: flex;
   width: 100%;

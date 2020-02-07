@@ -29,13 +29,6 @@ const Pinfo = styled.p`
   margin: 8px 16px 0 16px;
 `
 
-const FormikSelect = styled.select`
-  // height: 40px;
-  :focus{
-    outline: none;
-  }
-`
-
 const DivScheduleHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -63,6 +56,7 @@ export const ShippingScheduleForm = ({
   values,
   errors
 }) => (
+  console.log('values', values),
   <>
     <FormRow>
       <label htmlFor="schedule.packing_basis">How do you want your order to ship?</label>

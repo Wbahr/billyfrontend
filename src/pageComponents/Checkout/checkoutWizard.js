@@ -16,7 +16,8 @@ import ConfirmationScreen from './wizardSteps/confirmationScreen'
 export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const shoppingCartObj = {'shoppingCart': shoppingCart}
   let requestedDatesArray = []
-  requestedDatesArray = shoppingCart.map(elem=>requestedDatesArray.push(new Date()))
+  const todaysDate = new Date()
+  requestedDatesArray = shoppingCart.map(()=>requestedDatesArray.push('todaysDate'))
 
   const initValues = {
     schedule: {
