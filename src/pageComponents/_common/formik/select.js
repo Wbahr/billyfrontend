@@ -19,6 +19,16 @@ const LabelStyle = {
   marginLeft: '7px'
 }
 
+const SelectStyle = {
+  control: (provided) => ({
+    ...provided,
+    minHeight: '40px',
+    borderRadius: '1px',
+    border: '1px solid #e1e1e1',
+    marginTop: '-4px',
+  }),
+}
+
 const CustomSelectComponent = ({
   field,
   form: { touched, errors, setFieldValue },
@@ -28,7 +38,7 @@ const CustomSelectComponent = ({
 }) => {
 
   return (
-    <div style={{margin: 'auto 0', width: width || '300px'}}>
+    <div style={{margin: 'auto 0', width: width || '300px', padding: '0 8px', height: '71px'}}>
       {props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
       <Select
         {...field}
@@ -37,6 +47,7 @@ const CustomSelectComponent = ({
         value={(options ? options.find(option => option.value === field.value) : '')}
         onChange={option => setFieldValue(field.name, (option).value)}
         width='400px'
+        styles={SelectStyle}
       />
       {touched[field.name] && errors[field.name] && (
         <ErrorMessage>{errors[field.name]}</ErrorMessage>

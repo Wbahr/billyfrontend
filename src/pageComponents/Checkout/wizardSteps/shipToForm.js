@@ -20,7 +20,13 @@ const FormikSelect = styled.select`
 const FormRow = styled.div`
   display: flex;
   width: 100%;
+  margin-top: 24px;
   align-items: center;
+  padding: 0 8px;
+  label {
+    margin: 4px 8px auto 4px;
+    font-style: italic;
+  }
 `
 
 export const ShipToForm = ({
@@ -31,17 +37,15 @@ export const ShipToForm = ({
   errors,
 }) => (
     <WrapForm>
-      <FormRow>
-        <Field 
-          name="shipto.saved_ship_to" 
-          component={SelectField} 
-          options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
-          getOptionLabel={(option)=>option.label}
-          getOptionValue={(option)=>option.value}
-          width="500px"
-          label="Saved Ship To"
-        /> 
-      </FormRow>
+      <Field 
+        name="shipto.saved_ship_to" 
+        component={SelectField} 
+        options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
+        getOptionLabel={(option)=>option.label}
+        getOptionValue={(option)=>option.value}
+        width="500px"
+        label="Saved Ship To"
+      /> 
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" />
       <FormikInput type="hidden" name="shipto.ship_to_id" />
       <FormikInput label="First Name" name="shipto.contact_name_first" />
@@ -88,8 +92,9 @@ export const ShipToForm = ({
         isSearchable={false}
         label="Country"
       /> 
-      <FormikInput label="Carrier" name="shipto.carrier_name" />
-      <FormikInput type="hidden" name="shipto.carrier_id" />
+      <FormikInput label="Phone" name="shipto.phone" />
+      <FormikInput label="Email" name="shipto.email" />
+
       <FormRow>
       <label>Ship Collect?</label>
         <Field 
@@ -101,10 +106,17 @@ export const ShipToForm = ({
           width="100px"
           isSearchable={false}
         /> 
-        {values.shipto.is_collect  === "1" &&  <FormikInput label="Collect Number" name="shipto.collect_number" />}
       </FormRow>
-      <FormikInput label="Phone" name="shipto.phone" />
-      <FormikInput label="Email" name="shipto.email" />
+      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
+      <Field 
+        name="shipto.carrier_name" 
+        component={SelectField} 
+        options={[{'name': 'USPS', 'abbreviation': 'usps'},{'name': 'FedEx', 'abbreviation': 'fedex'}]}
+        placeholder="Select a Carrier"
+        getOptionLabel={(option)=>option.name}
+        getOptionValue={(option)=>option.abbreviation}
+        label="Carrier"
+      /> 
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
 )

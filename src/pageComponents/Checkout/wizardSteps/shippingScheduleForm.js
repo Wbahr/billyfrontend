@@ -9,8 +9,10 @@ const FormRow = styled.div`
   width: 100%;
   margin-top: 24px;
   align-items: center;
+  padding: 0 8px;
   label {
-    margin: 0 16px;
+    margin: 4px 8px auto 4px;
+    font-style: italic;
   }
 `
 
