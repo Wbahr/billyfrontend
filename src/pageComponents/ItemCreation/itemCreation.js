@@ -83,7 +83,7 @@ const SearchResultWrapper = styled.div`
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
-  const [itemSearchResult, setItemSearchResult] = useState([{}, {}]) //array to hold searched items
+  const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
   const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
@@ -101,8 +101,8 @@ export default function ItemCreationPage() {
   const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
     onCompleted: data => {
       // const itemSearchResult = data.itemSearch
-      setItemSearchResult(data.itemSearch)
-      console.log(data.itemSearch)
+      setItemSearchResult(data.itemSearch.result)
+      // console.log(data.itemSearch.result)
     }
   })
 
@@ -134,11 +134,13 @@ export default function ItemCreationPage() {
   itemSearchResult.map((element) => {
     searchResultItems.push(
       <DivSearchItemContainer>
-        <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2P-23_l.jpg" width="auto" height="200" margin="28px 14px" alt="SMC KQ2P" ></img>
-        <p>SMC KQ2P-07</p>
-        <p>SMC KQ2P-07, Inch Size Plugs</p>
+        <img src={"https://www.airlinehyd.com/images/items/"+(element.thumbnail_image_path.split("\\")[8]).replace("_t", "_l")} width="auto" height="200" margin="28px 14px" alt={element.item_id} ></img>
+        <p>{element.item_id}</p>
+        <p>{element.item_desc}</p>
+        
       </DivSearchItemContainer>
     )
+    console.log(element)
   })
 
   return (
