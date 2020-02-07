@@ -20,6 +20,7 @@ const FormikSelect = styled.select`
 const FormRow = styled.div`
   display: flex;
   width: 100%;
+  align-items: center;
 `
 
 export const ShipToForm = ({
@@ -31,7 +32,6 @@ export const ShipToForm = ({
 }) => (
     <WrapForm>
       <FormRow>
-        <label>Saved Ship To</label>
         <Field 
           name="shipto.saved_ship_to" 
           component={SelectField} 
@@ -39,6 +39,7 @@ export const ShipToForm = ({
           getOptionLabel={(option)=>option.label}
           getOptionValue={(option)=>option.value}
           width="500px"
+          label="Saved Ship To"
         /> 
       </FormRow>
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" />
@@ -51,7 +52,6 @@ export const ShipToForm = ({
       <FormikInput label="City" name="shipto.city" />
       {values.shipto.country  === "us" && 
         <>
-          <label>Saved Ship To</label>
           <Field 
             name="shipto.state" 
             component={SelectField} 
@@ -59,12 +59,12 @@ export const ShipToForm = ({
             placeholder="Select a State"
             getOptionLabel={(option)=>option.name}
             getOptionValue={(option)=>option.abbreviation}
+            label="State"
           /> 
         </>
       }
       {values.shipto.country  === "canada" && 
         <>
-          <label>Saved Ship To</label>
           <Field 
             name="shipto.province" 
             component={SelectField} 
@@ -72,6 +72,7 @@ export const ShipToForm = ({
             placeholder="Select a Province"
             getOptionLabel={(option)=>option.name}
             getOptionValue={(option)=>option.abbreviation}
+            label="Province"
           /> 
         </>
       }
@@ -85,6 +86,7 @@ export const ShipToForm = ({
         getOptionValue={(option)=>option.abbreviation}
         width="250px"
         isSearchable={false}
+        label="Country"
       /> 
       <FormikInput label="Carrier" name="shipto.carrier_name" />
       <FormikInput type="hidden" name="shipto.carrier_id" />

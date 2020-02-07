@@ -15,8 +15,7 @@ const Label = styled.label`
   font-size: 14px;
   font-weight: 400;
   padding-left: 4px;
-  margin-bottom: -11px;
-  z-index: 2;
+  margin-bottom: -4px;
   background-color: white;
   width: max-content;
   padding: 2px;
@@ -51,9 +50,9 @@ export default function Input({type, disabled, name, label, placeholder, width})
   if(type !== "hidden"){
     return(
       <DivContainer>
-      {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-      <MainInput type="text" name={name} placeholder={placeholder} disabled={disabled} style={{width: width || "400px"}}/>
-    </DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainInput type="text" name={name} placeholder={placeholder} disabled={disabled} style={{width: width || "400px"}}/>
+      </DivContainer>
     )
   } else {
     return(

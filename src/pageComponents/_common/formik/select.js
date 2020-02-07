@@ -7,6 +7,18 @@ const ErrorMessage = styled.div`
   color: red
 `
 
+const LabelStyle = {
+  color: '#606060',
+  fontSize: '14px',
+  fontWeight: 400,
+  paddingLeft: '4px',
+  marginBottom: '-4px',
+  backgroundColor: 'white',
+  width: 'max-content',
+  padding: '2px',
+  marginLeft: '7px'
+}
+
 const CustomSelectComponent = ({
   field,
   form: { touched, errors, setFieldValue },
@@ -16,8 +28,8 @@ const CustomSelectComponent = ({
 }) => {
 
   return (
-    <div style={{width: width || '300px'}}>
-      {/* <label htmlFor={field.name}>{props.label}</label> */}
+    <div style={{margin: 'auto 0', width: width || '300px'}}>
+      {props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
       <Select
         {...field}
         {...props}

@@ -8,6 +8,7 @@ const FormRow = styled.div`
   display: flex;
   width: 100%;
   margin-top: 24px;
+  align-items: center;
   label {
     margin: 0 16px;
   }

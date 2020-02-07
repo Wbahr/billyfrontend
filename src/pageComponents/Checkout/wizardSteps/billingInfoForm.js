@@ -15,6 +15,7 @@ const FormRow = styled.div`
   display: flex;
   margin-top: 24px;
   width: 100%;
+  align-items: center;
   label {
     margin: 0 16px;
   }
@@ -57,7 +58,6 @@ export const BillingInfoForm = ({
       <FormikInput label="City" name="billing.city" />
       {values.billing.country  === "us" && 
         <>
-          <label>Saved Ship To</label>
           <Field 
             name="billing.state" 
             component={SelectField} 
@@ -65,6 +65,7 @@ export const BillingInfoForm = ({
             placeholder="Select a State"
             getOptionLabel={(option)=>option.name}
             getOptionValue={(option)=>option.abbreviation}
+            label="State"
           /> 
         </>
       }
@@ -78,6 +79,7 @@ export const BillingInfoForm = ({
             placeholder="Select a Province"
             getOptionLabel={(option)=>option.name}
             getOptionValue={(option)=>option.abbreviation}
+            label="Province"
           /> 
         </>
       }
@@ -91,6 +93,7 @@ export const BillingInfoForm = ({
         getOptionValue={(option)=>option.abbreviation}
         width="250px"
         isSearchable={false}
+        label="Country"
       /> 
       <FormikInput label="Email" name="billing.email" />    
       <FormikInput label="Phone" name="billing.phone" />
