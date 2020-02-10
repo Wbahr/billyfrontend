@@ -38,11 +38,24 @@ function BillingInfoForm(props) {
           component={SelectField} 
           options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
           placeholder="Select a Payment Method"
+          isSearchable={false}
         /> 
       </FormRow>
+      {values.billing.payment_method === "credit_card" &&
+        <FormRow>
+        <label htmlFor="card_type">New or Saved Card?</label>
+        <Field 
+          name="billing.card_type" 
+          component={SelectField} 
+          options={[{'label': 'New Card', 'value': 'new_card'},{'label': 'Saved Card', 'value': 'saved_card'}]}
+          isSearchable={false}
+        /> 
+      </FormRow>
+      }
+
       {values.billing.payment_method !== "" &&
         <>
-          {values.billing.payment_method === "credit_card" && <StripePaymentSection stripe={stripe}/>}
+          {(values.billing.payment_method === "credit_card" && values.billing.card_type === "new_card") && <StripePaymentSection stripe={stripe}/>}
           <FormikInput label="PO Number" name="billing.po" />
           <FormikInput type="hidden" name="billing.company_id" />
           <FormikInput label="Company Name" name="billing.company_name" width="500px"/>

@@ -58,7 +58,8 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       zip: '',
       country: 'us',
       phone: '',
-      email: ''
+      email: '',
+      card_type: 'new_card'
     }
   }
 
