@@ -266,7 +266,6 @@ export default function Provider(props) {
         'frecno': shoppingCart[index].frecno,
         'quantity': parseInt(lineQuantity, 10),
         'itemNotes': shoppingCart[index].itemNotes,
-        'requestedShipDate': shoppingCart[index].requestedShipDate
       })
     }
     let frontCart = shoppingCart.slice(0,index) // returns cart item before split item
@@ -292,11 +291,6 @@ export default function Provider(props) {
       case 'notes':
         mutatedCart = shoppingCart
         mutatedCart[index].itemNotes = value
-        setShoppingCart([...mutatedCart])
-        break
-      case 'date':
-        mutatedCart = shoppingCart
-        mutatedCart[index].requestedShipDate = value
         setShoppingCart([...mutatedCart])
         break
     }
