@@ -211,7 +211,7 @@ export default function FooterComponent() {
         </ContentContainer>
       </ContainerTop>
       <Container>
-        <Pcopyright> © Airline Hydraulics Corporation, 2020</Pcopyright> |
+        <Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
         <Pcopyright>Privacy Policy</Pcopyright> |
         <Pcopyright>Terms & Conditions</Pcopyright> |
         <Pcopyright>Legal Disclaimer</Pcopyright> |

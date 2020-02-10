@@ -14,15 +14,12 @@ import {BillingInfoForm} from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 
 export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
-  const shoppingCartObj = {'shoppingCart': shoppingCart}
-  let requestedDatesArray = []
-  const todaysDate = new Date()
-  requestedDatesArray = shoppingCart.map(()=>requestedDatesArray.push('todaysDate'))
-
+  const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
+  
   const initValues = {
     schedule: {
       packing_basis: '0',
-      requested_dates: requestedDatesArray
+      cart_with_dates: shoppingCartAndDatesObj
     },
     shipto: {
       ship_to_id: '',
@@ -86,7 +83,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   }
   return(
     <Formik 
-      initialValues={{...initValues, ...shoppingCartObj}}
+      initialValues={initValues}
       onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (

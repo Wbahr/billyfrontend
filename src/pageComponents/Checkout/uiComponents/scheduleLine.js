@@ -154,6 +154,8 @@ export default function ShippingScheduleItem({item, index}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    
+
     Content = (
       <DivCard>
         <DivCol1>
@@ -171,7 +173,7 @@ export default function ShippingScheduleItem({item, index}) {
           </DivQuantity>
         </DivCol3>
         <div>
-        <Field name={`schedule.requested_dates.${index}`}>
+        <Field name={`schedule.cart_with_dates.${index}.requestedShipDate`}>
           {({
             field,
             form,
@@ -184,7 +186,7 @@ export default function ShippingScheduleItem({item, index}) {
                   </DivSpacer>
                   <DatePicker
                     minDate={new Date()}
-                    selected={`form.values.schedule.requested_dates.${index}`}
+                    selected={Date.parse(field.value)}
                     onChange={(value)=>form.setFieldValue(field.name, value)}
                   />
                 </DivRow>

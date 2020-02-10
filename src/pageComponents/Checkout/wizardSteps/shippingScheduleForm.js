@@ -80,11 +80,11 @@ export const ShippingScheduleForm = ({
     )}
     {values.schedule.packing_basis === 4 &&
       <FieldArray
-        name="schedule.requested_dates"
+        name="schedule.cart_with_dates"
         render={arrayHelpers => (
           <div>
-            {(values.shoppingCart && values.shoppingCart.length > 0 && values.schedule.requested_dates && values.schedule.requested_dates.length > 0) ? (
-              values.shoppingCart.map((item, index) => (
+            {(values.schedule.cart_with_dates && values.schedule.cart_with_dates.length > 0) ? (
+              values.schedule.cart_with_dates.map((item, index) => (
                 <ShippingScheduleLine item={item} index={index}/>
               ))
             ) : (

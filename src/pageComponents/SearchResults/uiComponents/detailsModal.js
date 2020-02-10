@@ -271,7 +271,6 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
                         'frecno': invMastUid,
                         'quantity': parseInt(quantity, 10),
                         'itemNotes': '',
-                        'requestedShipDate': new Date()
                       }), handleCloseModal()
                       }}>Add to Cart</ButtonRed>
                   )}
