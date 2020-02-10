@@ -43,7 +43,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
     billing: {
       first_name: '',
       last_name: '',
-      payment_method: '0',
+      payment_method: '',
       po: '',
       company_id: '',
       contact_name_first: '',

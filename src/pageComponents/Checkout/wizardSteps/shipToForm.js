@@ -90,7 +90,6 @@ export const ShipToForm = ({
           isSearchable={false}
         /> 
       </FormRow>
-      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
       <Field 
         name="shipto.carrier_name" 
         component={SelectField} 
@@ -98,6 +97,7 @@ export const ShipToForm = ({
         placeholder="Select a Carrier"
         label="Carrier"
       /> 
+      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
 )
