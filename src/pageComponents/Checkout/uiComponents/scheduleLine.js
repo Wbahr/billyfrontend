@@ -88,14 +88,14 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-const CustomDatePicker = styled.button`
-  display: flex;
-  justify-content: center;
-  width: 110px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  margin: 0 8px;
-`
+// const CustomDatePicker = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   width: 110px;
+//   background-color: white;
+//   border: 1px solid lightgrey;
+//   margin: 0 8px;
+// `
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
@@ -120,17 +120,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-const DatePickerField = ({ name, value, onChange }) => {
-  return (
-      <DatePicker
-        minDate={new Date()}
-        selected={(value && new Date(value)) || null}
-        onChange={val => { onChange(name, val) }}
-      />
-  )
-}
-
-export default function ShippingScheduleItem({item}) {
+export default function ShippingScheduleItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
 
@@ -164,6 +154,8 @@ export default function ShippingScheduleItem({item}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    
+
     Content = (
       <DivCard>
         <DivCol1>
@@ -181,22 +173,21 @@ export default function ShippingScheduleItem({item}) {
           </DivQuantity>
         </DivCol3>
         <div>
-        <Field name='testing_date'>
+        <Field name={`schedule.cart_with_dates.${index}.requestedShipDate`}>
           {({
             field,
             form,
             form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
             meta
-            
           }) => (
                 <DivRow>
                   <DivSpacer>
                     <FontAwesomeIcon icon="calendar" color="lightgrey"/>
                   </DivSpacer>
-                  <DatePickerField
-                    name="testing_date"
-                    value={form.values.testing_date}
-                    onChange={field.setFieldValue}
+                  <DatePicker
+                    minDate={new Date()}
+                    selected={Date.parse(field.value)}
+                    onChange={(value)=>form.setFieldValue(field.name, value)}
                   />
                 </DivRow>
               )

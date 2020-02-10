@@ -4,11 +4,12 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Context from '../../config/context'
 // import OrderSummary from './uiComponents/orderSummary'
 import CheckoutWizard from './checkoutWizard'
-import Context from '../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
+import CheckoutProgress from './uiComponents/checkoutProgress'
 
 const DivContainer = styled.div`
   display: flex;
@@ -92,8 +93,17 @@ export default function CheckoutPage({history}) {
   const [disablePrevious, setDisablePrevious] = useState(false)
   const [disableNext, setDisableNext] = useState(false)
   const [disableSubmit, setDisableSubmit] = useState(false)
-  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
+  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
 
+  function handleMoveStep(requestedStep){
+    setCurrentStep(requestedStep)
+  }
+
+  function handleCheckoutSubmit(formValues){
+    let mutatedFormValues = formValues
+    console.log('mutatedFormValues', mutatedFormValues)
+  }
+  
   return(
     <DivContainer>
       <DivCheckoutCol>
@@ -101,12 +111,13 @@ export default function CheckoutPage({history}) {
           <DivRow>
             <FontAwesomeIcon icon="lock" />
             <H3>Checkout</H3>
+            <CheckoutProgress stepLabels={stepLabel} step={currentStep} clickMoveToStep={(index)=>handleMoveStep(index)}/>
           </DivRow>
         </Div>
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
-            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
+            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} checkoutSubmit={(values)=>{handleCheckoutSubmit(values)}} />)}
           </Context.Consumer>
         </Container>
         <DivNavigation>

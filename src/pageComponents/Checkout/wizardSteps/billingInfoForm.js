@@ -3,6 +3,8 @@ import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { CardElement } from 'react-stripe-elements'
+import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
+import SelectField from '../../_common/formik/select'
 
 const WrapForm = styled.div`
   display: flex;
@@ -11,10 +13,13 @@ const WrapForm = styled.div`
 
 const FormRow = styled.div`
   display: flex;
-  margin-top: 24px;
   width: 100%;
+  margin-top: 24px;
+  align-items: center;
+  padding: 0 8px;
   label {
-    margin: 0 16px;
+    margin: 4px 8px auto 4px;
+    font-style: italic;
   }
 `
 
@@ -25,42 +30,62 @@ export const BillingInfoForm = ({
   values,
   errors,
 }) => (
-  <form onSubmit={handleSubmit} autoComplete="off">
     <WrapForm>
       <FormRow>
-        <label htmlFor="payment_method">Payment Method</label>
-        <Field id="payment_method" name="billing.payment_method">
-          {({ field, form, meta }) => (
-            <>
-              <input type="radio" {...field} value="credit_card"/>Credit Card <br/>
-              <input type="radio" {...field} value="invoice"/>Invoice
-            </>
-          )}
-        </Field>
+        <label htmlFor="payment_method">How would you like to pay?</label>
+        <Field 
+          name="billing.payment_method" 
+          component={SelectField} 
+          options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
+          placeholder="Select a Payment Method"
+        /> 
       </FormRow>
-      {values.payment_method === "credit_card" && <CardElement />}
-      <FormikInput label="PO" name="billing.po" />
-      <FormikInput type="hidden" name="billing.company_id" />
-      <FormikInput label="Company Name" name="billing.company_name" />
-      <FormikInput label="First Name" name="billing.first_name" />
-      <FormikInput label="Last Name" name="billing.last_name" />
-      <FormikInput label="Address 1" name="billing.address1" width="600px"/>
-      <FormikInput label="Address 2" name="billing.address2" width="600px"/>
-      <FormikInput label="City" name="billing.city" />
-      <FormikInput label="State" name="billing.state" />
-      <FormikInput label="Zip" name="billing.zip" />    
-      <FormikInput label="County" name="billing.county" />
-      <FormikInput label="Email" name="billing.email" />    
-      <FormikInput label="Phone" name="billing.phone" />
-      {errors.name && <div>{errors.name}</div>}
+      {values.billing.payment_method !== "" &&
+        <>
+          {values.billing.payment_method === "credit_card" && <CardElement />}
+          <FormikInput label="PO Number" name="billing.po" />
+          <FormikInput type="hidden" name="billing.company_id" />
+          <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
+          {values.billing.payment_method === "purchase_order" && <FormikInput label="First Name" name="billing.contact_first_name" />}
+          {values.billing.payment_method === "purchase_order" && <FormikInput label="Last Name" name="billing.contact_last_name" />}
+          <FormikInput label="Address 1" name="billing.address1" width="600px"/>
+          <FormikInput label="Address 2" name="billing.address2" width="600px"/>
+          <FormikInput label="City" name="billing.city" />
+          {values.billing.country  === "us" && 
+            <>
+              <Field 
+                name="billing.state" 
+                component={SelectField} 
+                options={StateList}
+                placeholder="Select a State"
+                label="State"
+              /> 
+            </>
+          }
+          {values.billing.country  === "canada" && 
+            <>
+              <Field 
+                name="billing.province" 
+                component={SelectField} 
+                options={CanadianProvinceList}
+                placeholder="Select a Province"
+                label="Province"
+              /> 
+            </>
+          }
+          <FormikInput label="Zip" name="billing.zip" />    
+          <Field 
+            name="billing.country" 
+            component={SelectField} 
+            options={[{'label': 'United States', 'value': 'us'},{'label': 'Canada', 'value': 'canada'}]}
+            placeholder="Select a Country"
+            width="250px"
+            isSearchable={false}
+            label="Country"
+          /> 
+          <FormikInput label={values.billing.payment_method === "purchase_order" ? 'Email Invoice To' : 'Email'} name="billing.email" /> 
+          <FormikInput label="Phone" name="billing.phone" />
+        </>
+      }
     </WrapForm>
-    <button type="submit">print</button>
-  </form>
 )
-
-export const defaultValues = {
-  billing: {
-    name: 'test bob',
-    payment_method: 'credit_card'
-  }
-}
