@@ -84,6 +84,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   return(
     <Formik 
       initialValues={initValues}
+      enableReinitialize={true}
       onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (

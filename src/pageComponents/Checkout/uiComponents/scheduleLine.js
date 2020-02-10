@@ -88,14 +88,14 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-const CustomDatePicker = styled.button`
-  display: flex;
-  justify-content: center;
-  width: 110px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  margin: 0 8px;
-`
+// const CustomDatePicker = styled.button`
+//   display: flex;
+//   justify-content: center;
+//   width: 110px;
+//   background-color: white;
+//   border: 1px solid lightgrey;
+//   margin: 0 8px;
+// `
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){

@@ -4,9 +4,9 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Context from '../../config/context'
 // import OrderSummary from './uiComponents/orderSummary'
 import CheckoutWizard from './checkoutWizard'
-import Context from '../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
