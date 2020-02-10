@@ -11,8 +11,8 @@ import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/fr
 import { ApolloProvider } from '@apollo/react-hooks'
 import ApolloClient from 'apollo-boost'
 import ContextProvider from './config/provider'
+import { StripeProvider } from 'react-stripe-elements'
 import 'index.css'
-
 
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faFacebookF, faLinkedinIn, faTwitter, faYoutube, faMapPin, faFax, faSearch, faUserCircle, faTimes, faUser, faUserPlus)
 
@@ -33,9 +33,11 @@ const client = new ApolloClient({
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ContextProvider>
-      <BrowserRouter history={customHistory}>
-        <Switch />
-      </BrowserRouter>
+      <StripeProvider apiKey={process.env.STRIPE_KEY}>
+        <BrowserRouter history={customHistory}>
+          <Switch />
+        </BrowserRouter>
+      </StripeProvider>
     </ContextProvider>
   </ApolloProvider>
   , document.getElementById('index')
