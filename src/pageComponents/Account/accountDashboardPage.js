@@ -1,8 +1,10 @@
 import React, {useState, useContext} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Context from '../../config/context'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
+import {Elements} from 'react-stripe-elements'
+import PaymentManagementPage from './accountPages/paymentManagement'
+import AccountManagementPage from './accountPages/accountManagement'
 
 const AccountInfoContainer = styled.div`
   display: flex;
@@ -14,28 +16,13 @@ const AccountInfoContainer = styled.div`
 
 export default function AccountDashboard({history}) {
   const [customerType, setCustomerType] = useState('')
-  const context = useContext(Context);
 
   return(
     <div>
       <MyAccountNavbar history={history}/>
       <AccountInfoContainer>
-        <div>
-          <p>Hi {context.userInfo.firstName}</p>
-        </div>
-        <div>
-          <p>Account Info</p>
-          <p>Company: {context.userInfo.companyName} - {context.userInfo.companyId}</p>
-          <p>email: {}</p>
-          <p>password: *****</p>
-        </div>
-        <div>
-          <p>Default Ship To:</p>
-
-        </div>
-        <div>
-          <p>Payment Preferences:</p>
-        </div>
+        <AccountManagementPage/>
+        <Elements><PaymentManagementPage/></Elements>
       </AccountInfoContainer>
     </div>
   )
