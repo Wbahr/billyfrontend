@@ -6,6 +6,8 @@ import MyAccountNavbar from './uiComponents/myAccountNavbar'
 import {Elements} from 'react-stripe-elements'
 import PaymentManagementPage from './accountPages/paymentManagement'
 import AccountManagementPage from './accountPages/accountManagement'
+import ShipToManagementPage from './accountPages/shiptoManagement'
+import ShoppingListManagementPage from './accountPages/shoppingListManagement'
 
 const AccountInfoContainer = styled.div`
   display: flex;
@@ -47,11 +49,11 @@ export default function AccountDashboard({history}) {
     } else if (page === 'user-settings'){
       setPageComponent(<AccountManagementPage/>)
     } else if (page === 'shipping-preferences'){
-      setPageComponent(<AccountManagementPage/>)
+      setPageComponent(<ShipToManagementPage/>)
     } else if (page === 'payment-preferences'){
       setPageComponent(<Elements><PaymentManagementPage/></Elements>)
     } else if (page === 'shopping-lists'){
-      setPageComponent(<AccountManagementPage/>)
+      setPageComponent(<ShoppingListManagementPage/>)
     }
   }, [page])
 
