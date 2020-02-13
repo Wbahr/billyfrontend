@@ -78,10 +78,11 @@ const DivSearchInputWrapper = styled.div`
 const SearchResultWrapper = styled.div`
 
 `
-
+let searchSize = 24
+let loadMoreBtnDisabler = 4;
 
 export default function ItemCreationPage() {
-  const [searchTerm, setSearchTerm] = useState('kq2') //Search term initial value
+  const [searchTerm, setSearchTerm] = useState('') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
   const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
   const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
@@ -90,6 +91,11 @@ export default function ItemCreationPage() {
   const [showMoreItems, setShowMoreItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState()
   const [title, setTitle] = useState("Begin item creation");
+  const [loadMoreDisable, setLoadMoreDisable] = useState(false)
+  const [loadMoreBtnText, setLoadMoreBtnText] = useState("I want more items")
+  // const [searchSize, setSearchSize] = useState(10)
+  
+  const searchSizeExpander = 4
 
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
@@ -106,12 +112,20 @@ export default function ItemCreationPage() {
     }
   })
 
+  const [performMoreItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    onCompleted: data => {
+      // const itemSearchResult = data.itemSearch
+      setItemSearchResult(data.itemSearch.result)
+      // console.log(data.itemSearch.result)
+    }
+  })
+
   function searchItems() {
     performItemSearch({
       variables: {
         searchParams: {
           searchTerm: searchTerm,
-          resultSize: 10,
+          resultSize: 12,
           resultPage: 1,
           sortType: 'relevancy',
           brandFilters: [],
@@ -125,6 +139,36 @@ export default function ItemCreationPage() {
     })
   }
 
+  function moreSearchItems(){
+    performItemSearch({
+      variables: {
+        searchParams: {
+          searchTerm: searchTerm,
+          resultSize: searchSize,
+          resultPage: 1,
+          sortType: 'relevancy',
+          brandFilters: [],
+          categoryFilter: {
+            'parentCategory': '',
+            'childCategory': ''
+          },
+          attributeFilters:[]
+        }
+      }
+    })
+    if(loadMoreBtnDisabler == 1){
+      setLoadMoreDisable(true)
+      setLoadMoreBtnText("Contact Item Master for help.")
+    }
+    else{
+      loadMoreBtnDisabler--
+      setLoadMoreBtnText("I want more items: " + loadMoreBtnDisabler)
+    }
+    // setLoadMoreDisable(true)
+    searchSize = searchSize + 12
+    console.log(searchSize)
+  }
+
   function handleChange(newSelection){
     setSelectedSupplier(newSelection)
   }
@@ -132,9 +176,18 @@ export default function ItemCreationPage() {
 
   let searchResultItems = []
   itemSearchResult.map((element) => {
+    let resultImage = ""
+    if (element.thumbnail_image_path === null)
+    {
+      resultImage = 'https://www.airlinehyd.com/images/no-image.jpg'
+    }
+    else
+    {
+      resultImage = "https://www.airlinehyd.com/images/items/"+(element.thumbnail_image_path.split("\\")[8]).replace("_t", "_l")
+    }
     searchResultItems.push(
       <DivSearchItemContainer>
-        <img src={"https://www.airlinehyd.com/images/items/"+(element.thumbnail_image_path.split("\\")[8]).replace("_t", "_l")} width="auto" height="200" margin="28px 14px" alt={element.item_id} ></img>
+        <img src={resultImage} width="auto" height="150" margin="28px 14px" alt={element.item_id} ></img>
         <p>{element.item_id}</p>
         <p>{element.item_desc}</p>
         
@@ -149,7 +202,7 @@ export default function ItemCreationPage() {
         <DivSearchInputWrapper>
           <DivSpacer>
             <label for="itemIDSearch">Item ID:</label>
-            <input type="text" name="itemIDSearch" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}></input>
+            <input type="text" placeholder="Enter item ID" name="itemIDSearch" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}></input>
           </DivSpacer>
           <DivSpacer>
             <label for="supplierNameSearch">Supplier Name:</label>
@@ -196,7 +249,7 @@ export default function ItemCreationPage() {
 
 
 
-        <button onClick={() => setShowMoreItems(true)}>I want more items</button> {/*need to know endpoint on how search is being done*/}
+          <button disabled={loadMoreDisable} onClick={() => moreSearchItems()}>{loadMoreBtnText}</button> {/*need to know endpoint on how search is being done*/}
           <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
         </SearchResultWrapper>
 
