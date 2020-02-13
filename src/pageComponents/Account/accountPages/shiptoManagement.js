@@ -17,7 +17,8 @@ function ShiptoManagementPage() {
         <Select
           value={defaultShipTo}
           setValue={setDefaultShipTo}
-          options={[{'label': '123 Main Street - Nazareth, PA', 'value': 0},{'label': '999 Green Drive - Washington, NJ', 'value': 1}]}
+          options={[{'label': 'Warehouse 1 - 123 Main Street Nazareth, PA 18064', 'value': 0},{'label': 'Main Manufacturing Facility - 999 Green Drive - Washington, NJ 08865', 'value': 1}]}
+          width='600px'
         />
     </div>
   )
