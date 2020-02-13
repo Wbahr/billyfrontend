@@ -32,39 +32,16 @@ const Pselected = styled.p`
   border-radius: 20px;
 `
 
-export default function MyAccountNavbar({history, page}) {
+export default function MyAccountNavbar({history, page, AccountPages}) {
   const [navbarLinks, setNavbarLinks] = useState([])
-
-  const AccountPages = [
-    {
-      'label': 'Home',
-      'path': '/account/dashboard'
-    },
-    {
-      'label': 'User Settings',
-      'path': '/account/user-settings'
-    },
-    {
-      'label': 'Shipping',
-      'path': '/account/shipping-preferences'
-    },
-    {
-      'label': 'Billing',
-      'path': '/account/payment-preferences'
-    },
-    {
-      'label': 'Shopping Lists',
-      'path': '/account/shopping-lists'
-    }
-  ]
 
   useEffect(() => {
     let tempNavbarLinks = []
     for(let i=0; AccountPages.length > i; i++){
-      if(`/account/${page}` === AccountPages[i].path) {
+      if(page === AccountPages[i].page) {
         tempNavbarLinks.push(<Pselected>{AccountPages[i].label}</Pselected>)
       } else {
-        tempNavbarLinks.push(<p onClick={()=>history.push(`${AccountPages[i].path}`)}>{AccountPages[i].label}</p>)
+        tempNavbarLinks.push(<p onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
       }
     }
     setNavbarLinks(tempNavbarLinks)
@@ -82,4 +59,5 @@ export default function MyAccountNavbar({history, page}) {
 
 MyAccountNavbar.propTypes = {
   history: PropTypes.object.isRequired,
+  page: PropTypes.string.isRequired
 }

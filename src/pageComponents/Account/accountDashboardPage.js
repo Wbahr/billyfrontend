@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -16,15 +16,50 @@ const AccountInfoContainer = styled.div`
 `
 
 export default function AccountDashboard({history}) {
-  const [customerType, setCustomerType] = useState('')
+  const [pageComponent, setPageComponent] = useState()
   let { page } = useParams()
+
+  const AccountPages = [
+    {
+      'label': 'Home',
+      'page': 'dashboard'
+    },
+    {
+      'label': 'User Settings',
+      'page': 'user-settings'
+    },
+    {
+      'label': 'Shipping',
+      'page': 'shipping-preferences'
+    },
+    {
+      'label': 'Billing',
+      'page': 'payment-preferences'
+    },
+    {
+      'label': 'Shopping Lists',
+      'page': 'shopping-lists'
+    }
+  ]
+  useEffect(() => {
+    if(page === 'dashboard'){
+      setPageComponent(<AccountManagementPage/>)
+    } else if (page === 'user-settings'){
+      setPageComponent(<AccountManagementPage/>)
+    } else if (page === 'shipping-preferences'){
+      setPageComponent(<AccountManagementPage/>)
+    } else if (page === 'payment-preferences'){
+      setPageComponent(<Elements><PaymentManagementPage/></Elements>)
+    } else if (page === 'shopping-lists'){
+      setPageComponent(<AccountManagementPage/>)
+    }
+  }, [page])
 
   return(
     <div>
-      <MyAccountNavbar history={history} page={page}/>
-      <AccountInfoContainer>
-        <AccountManagementPage/>
-        <Elements><PaymentManagementPage/></Elements>
+      <MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
+      <AccountInfoContainer>  
+        {pageComponent}      
       </AccountInfoContainer>
     </div>
   )
