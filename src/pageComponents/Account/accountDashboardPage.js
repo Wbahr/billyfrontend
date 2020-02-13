@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
@@ -16,10 +17,11 @@ const AccountInfoContainer = styled.div`
 
 export default function AccountDashboard({history}) {
   const [customerType, setCustomerType] = useState('')
+  let { page } = useParams()
 
   return(
     <div>
-      <MyAccountNavbar history={history}/>
+      <MyAccountNavbar history={history} page={page}/>
       <AccountInfoContainer>
         <AccountManagementPage/>
         <Elements><PaymentManagementPage/></Elements>
