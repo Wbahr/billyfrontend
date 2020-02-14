@@ -28,13 +28,15 @@ export const ShipToForm = ({
   handleBlur,
   values,
   errors,
+  checkoutDropdownDataLabels,
+  checkoutDropdownData
 }) => (
     <WrapForm>
       <Field 
         name="shipto.saved_ship_to" 
         component={SelectField} 
-        options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
-        width="500px"
+        options={checkoutDropdownDataLabels.shiptos}
+        width="800px"
         label="Saved Ship To"
       /> 
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" />
@@ -79,25 +81,6 @@ export const ShipToForm = ({
       /> 
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
-
-      <FormRow>
-      <label>Ship Collect?</label>
-        <Field 
-          name="shipto.is_collect" 
-          component={SelectField} 
-          options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
-          width="100px"
-          isSearchable={false}
-        /> 
-      </FormRow>
-      <Field 
-        name="shipto.carrier_name" 
-        component={SelectField} 
-        options={[{'label': 'USPS', 'value': 'usps'},{'label': 'FedEx', 'value': 'fedex'}]}
-        placeholder="Select a Carrier"
-        label="Carrier"
-      /> 
-      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
 )

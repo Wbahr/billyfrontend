@@ -7,17 +7,77 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik} from 'formik'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
+import {Elements} from 'react-stripe-elements';
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
-import {BillingInfoForm} from './wizardSteps/billingInfoForm'
+import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
+import formatDropdownData from './helpers/formatCheckoutDropdownData'
+
+const GET_CHECKOUT_DATA = gql`
+  query RetrieveCheckoutData {
+    getCheckoutDropdownData{
+      shipToAddresses{
+        id
+        name
+        companyName
+        mailAddress1
+        mailAddress2
+        mailAddress3
+        mailCity
+        mailCountry
+        mailPostalCode
+        mailState
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
+      carriers{
+        freightMultiplier
+        noAutoAllocation
+        otherShippingMethodFlag
+        shippingMethodName
+        shippingMethodUid
+        shippingMethodValue
+        showInListFlag
+      }
+      contacts{
+        id
+        firstName
+        lastName
+      }
+    }
+  }
+`
 
 export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
-  
+  const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
+  const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+
+  const { 
+    loading, 
+    error, 
+    data 
+  } = useQuery(GET_CHECKOUT_DATA, {
+    onCompleted: result => {
+      let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
+      setCheckoutDropdownData(result.getCheckoutDropdownData)
+      setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
+    }
+  })
+
   const initValues = {
     schedule: {
+      carrier_name: '',
+      carrier_id: '',
+      is_collect: '0',
+      collect_number: '',
       packing_basis: '0',
       cart_with_dates: shoppingCartAndDatesObj
     },
@@ -33,10 +93,6 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       province: '',
       zip: '',
       country: 'us',
-      carrier_name: '',
-      carrier_id: '',
-      is_collect: '0',
-      collect_number: '',
       phone: '',
       email: ''
     },
@@ -57,7 +113,8 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       zip: '',
       country: 'us',
       phone: '',
-      email: ''
+      email: '',
+      card_type: 'new_card'
     }
   }
 
@@ -88,10 +145,12 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (
-        <form onSubmit={formikProps.handleSubmit} {...formikProps}>
-          <FormStep {...formikProps}/>
-          <button type="submit">Submit</button>
-        </form>
+        <Elements>
+          <form onSubmit={formikProps.handleSubmit} {...formikProps}>
+            <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
+            <button type="submit">Submit</button>
+          </form>
+        </Elements>
       )}
     </Formik>
   )

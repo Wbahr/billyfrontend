@@ -175,7 +175,6 @@ export default function FooterComponent() {
             <Item>Tubing</Item>
             <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>
-            <Item>Controls</Item>
           </DivMenu>
 
           <DivMenu>
@@ -184,7 +183,6 @@ export default function FooterComponent() {
             <Item>Hydraulics</Item>
             <Item>Gears</Item>
             <Item>Tubing</Item>
-            <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>
             <Item>Controls</Item>
           </DivMenu>
@@ -193,7 +191,6 @@ export default function FooterComponent() {
             <Head>Products</Head>
             <Item>Valves</Item>
             <Item>Hydraulics</Item>
-            <Item>Gears</Item>
             <Item>Tubing</Item>
             <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>

@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Context from '../../config/context'
-// import OrderSummary from './uiComponents/orderSummary'
+import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
 import CheckoutWizard from './checkoutWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
@@ -128,7 +128,7 @@ export default function CheckoutPage({history}) {
         </DivNavigation>
       </DivCheckoutCol>
       <DivOrderTotalCol>
-        {/* <OrderSummary/> */}
+        <CheckoutOrderSummary/>
       </DivOrderTotalCol>
     </DivContainer>
   )
