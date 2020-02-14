@@ -74,6 +74,10 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
 
   const initValues = {
     schedule: {
+      carrier_name: '',
+      carrier_id: '',
+      is_collect: '0',
+      collect_number: '',
       packing_basis: '0',
       cart_with_dates: shoppingCartAndDatesObj
     },
@@ -89,10 +93,6 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       province: '',
       zip: '',
       country: 'us',
-      carrier_name: '',
-      carrier_id: '',
-      is_collect: '0',
-      collect_number: '',
       phone: '',
       email: ''
     },

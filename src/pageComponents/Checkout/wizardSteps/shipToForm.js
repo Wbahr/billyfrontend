@@ -36,7 +36,7 @@ export const ShipToForm = ({
         name="shipto.saved_ship_to" 
         component={SelectField} 
         options={checkoutDropdownDataLabels.shiptos}
-        width="500px"
+        width="800px"
         label="Saved Ship To"
       /> 
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" />
@@ -81,25 +81,6 @@ export const ShipToForm = ({
       /> 
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
-
-      <FormRow>
-      <label>Ship Collect?</label>
-        <Field 
-          name="shipto.is_collect" 
-          component={SelectField} 
-          options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
-          width="100px"
-          isSearchable={false}
-        /> 
-      </FormRow>
-      <Field 
-        name="shipto.carrier_name" 
-        component={SelectField} 
-        options={checkoutDropdownDataLabels.carriers}
-        placeholder="Select a Carrier"
-        label="Carrier"
-      /> 
-      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
 )

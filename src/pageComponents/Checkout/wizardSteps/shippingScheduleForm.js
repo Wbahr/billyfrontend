@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Field, FieldArray } from 'formik'
 import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
+import FormikInput from '../../_common/formik/input_v2'
 
 const FormRow = styled.div`
   display: flex;
@@ -54,10 +55,30 @@ export const ShippingScheduleForm = ({
   handleChange,
   handleBlur,
   values,
-  errors
+  errors,
+  checkoutDropdownDataLabels, 
+  checkoutDropdownData
 }) => (
-  console.log('values', values),
   <>
+
+    <FormRow>
+      <label>Ship Collect?</label>
+      <Field 
+        name="schedule.is_collect" 
+        component={SelectField} 
+        options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
+        width="100px"
+        isSearchable={false}
+      /> 
+    </FormRow>
+    <Field 
+      name="schedule.carrier_name" 
+      component={SelectField} 
+      options={checkoutDropdownDataLabels.carriers}
+      placeholder="Select a Carrier"
+      label="Carrier"
+    /> 
+    {values.schedule.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
     <FormRow>
       <label htmlFor="schedule.packing_basis">How do you want your order to ship?</label>
       <div style={{flexGrow: 99}}>
