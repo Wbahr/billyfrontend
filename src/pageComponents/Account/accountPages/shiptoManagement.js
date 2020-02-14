@@ -6,6 +6,7 @@ import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { Formik, Form, Field } from 'formik'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
+import AddressCard from '../uiComponents/addressCard'
 
 const FormContainer = styled.div`
   display: flex;
@@ -19,17 +20,22 @@ function ShiptoManagementPage() {
   const [defaultShipTo, setDefaultShipTo] = useState(0)
   const [addingNewShipTo, setAddingNewShipTo] = useState(false)
 
+  function handleSetDefault(index){
+    console.log('set default shipping location',index)
+  }
+
+  function handleDeleteLocation(){
+    console.log('delete location')
+  }
+
+  let AddressCards = []
+  //       <AddressCard setDefault={handleSetDefault} location={location}/>
 
   return(
     <>
-      <p>Default Ship To:</p>
-        <Select
-          value={defaultShipTo}
-          setValue={setDefaultShipTo}
-          options={[{'label': 'Warehouse 1 - 123 Main Street Nazareth, PA 18064', 'value': 0},{'label': 'Main Manufacturing Facility - 999 Green Drive - Washington, NJ 08865', 'value': 1}]}
-          width='600px'
-        />
-      {!addingNewShipTo && <p onClick={()=>setAddingNewShipTo(true)}>Add a New Ship To</p>}
+      {/* {AddressCards} */}
+      <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation}/>
+      {!addingNewShipTo && <p onClick={()=>setAddingNewShipTo(true)}>Enter a New Address</p>}
       {addingNewShipTo &&
         <FormContainer>
           <p onClick={()=>setAddingNewShipTo(false)}>Cancel</p>
