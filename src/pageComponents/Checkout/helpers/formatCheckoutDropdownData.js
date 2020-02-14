@@ -10,7 +10,10 @@ export default function formatCheckoutDropdownData(data){
 }
 
 function formatShipToData(data){
-  let mutatedData = []
+  let mutatedData = [{
+    'label': 'Custom Ship To',
+    'value': -1
+  }]
   if(!_.isNil(data)){
     for(let i=0;data.length > i;i++){
       let element = data[i]
