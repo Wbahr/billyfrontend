@@ -11,6 +11,7 @@ import ShoppingListManagementPage from './accountPages/shoppingListManagement'
 
 const AccountInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 1200px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   padding: 20px 40px;
