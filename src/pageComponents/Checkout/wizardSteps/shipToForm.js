@@ -28,12 +28,14 @@ export const ShipToForm = ({
   handleBlur,
   values,
   errors,
+  checkoutDropdownDataLabels,
+  checkoutDropdownData
 }) => (
     <WrapForm>
       <Field 
         name="shipto.saved_ship_to" 
         component={SelectField} 
-        options={[{'label': 'Custom Ship To', 'value': '0'},{'label': 'Test Company - 123 Main Street Nazareth PA', 'value': '1'}]}
+        options={checkoutDropdownDataLabels.shiptos}
         width="500px"
         label="Saved Ship To"
       /> 
@@ -93,7 +95,7 @@ export const ShipToForm = ({
       <Field 
         name="shipto.carrier_name" 
         component={SelectField} 
-        options={[{'label': 'USPS', 'value': 'usps'},{'label': 'FedEx', 'value': 'fedex'}]}
+        options={checkoutDropdownDataLabels.carriers}
         placeholder="Select a Carrier"
         label="Carrier"
       /> 

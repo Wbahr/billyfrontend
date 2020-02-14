@@ -13,13 +13,13 @@ import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
-import gql from 'graphql-tag'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import formatDropdownData from './helpers/formatCheckoutDropdownData'
 
 const GET_CHECKOUT_DATA = gql`
   query RetrieveCheckoutData {
     getCheckoutDropdownData{
       shipToAddresses{
+        id
         name
         companyName
         mailAddress1
@@ -47,7 +47,7 @@ const GET_CHECKOUT_DATA = gql`
         showInListFlag
       }
       contacts{
-          id
+        id
         firstName
         lastName
       }
@@ -57,16 +57,21 @@ const GET_CHECKOUT_DATA = gql`
 
 export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
-  
+  const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
+  const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+
   const { 
     loading, 
     error, 
     data 
   } = useQuery(GET_CHECKOUT_DATA, {
     onCompleted: result => {
-      console.log('CheckoutWizard', result)
+      let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
+      setCheckoutDropdownData(result.getCheckoutDropdownData)
+      setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
     }
   })
+
   const initValues = {
     schedule: {
       packing_basis: '0',
@@ -142,7 +147,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       {formikProps => (
         <Elements>
           <form onSubmit={formikProps.handleSubmit} {...formikProps}>
-            <FormStep {...formikProps} items={items}/>
+            <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
             <button type="submit">Submit</button>
           </form>
         </Elements>
