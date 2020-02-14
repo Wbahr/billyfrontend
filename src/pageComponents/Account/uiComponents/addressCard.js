@@ -1,18 +1,6 @@
 import React, {useState, useContext} from 'react'
 import styled from 'styled-components'
 
-const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 340px;
-  height: 190px;
-  border: 2px solid #DB1633;
-  p {
-    margin: 0;
-    font-size: 14px;
-  }
-`
-
 const DivDefault = styled.div`
   display: flex;
   cursor: pointer;
@@ -27,6 +15,10 @@ const DivDefault = styled.div`
   }
 `
 
+const DivLocation = styled(DivDefault)`
+  background-color: black;
+`
+
 const DivDetails = styled.div`
   margin-left: 20px;
   margin-top: 5px;
@@ -36,10 +28,9 @@ const DivDelete = styled.div`
   flex-grow: 99;
   align-self: flex-end;
   text-align: right;
-  margin-right: 8px;
+  margin-right: 12px;
   p {
     cursor: pointer;
-
   }
 `
 
@@ -47,11 +38,22 @@ const DivRow = styled.div`
   display: flex;
 `
 
-export default function AddressCard({setDefault, deleteLocation, location}) {
-  
+export default function AddressCard({setDefault, deleteLocation, location, defaultLocation}) {
+  const Div = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    height: 190px;
+    border: ${defaultLocation ? '2px solid #DB1633' : '2px solid black'};
+    margin: 0 16px;
+    p {
+      margin: 0;
+      font-size: 14px;
+    }
+  `
   return(
     <Div>
-      <DivDefault><p>Default Shipping Location</p></DivDefault>
+      {defaultLocation ? <DivDefault><p>Default Shipping Location</p></DivDefault> : <DivLocation><p>Set as Default</p></DivLocation>}
       <DivRow>
         <DivDetails>
           <p>Company Name</p>

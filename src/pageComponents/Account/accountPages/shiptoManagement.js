@@ -15,6 +15,11 @@ const FormContainer = styled.div`
   width: 100%;
 `
 
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
 function ShiptoManagementPage() {
   // const context = useContext(Context);
   const [defaultShipTo, setDefaultShipTo] = useState(0)
@@ -34,7 +39,10 @@ function ShiptoManagementPage() {
   return(
     <>
       {/* {AddressCards} */}
-      <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation}/>
+      <CardContainer>
+        <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={true}/>
+        <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={false}/>
+      </CardContainer>
       {!addingNewShipTo && <p onClick={()=>setAddingNewShipTo(true)}>Enter a New Address</p>}
       {addingNewShipTo &&
         <FormContainer>
