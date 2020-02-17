@@ -117,6 +117,8 @@ export function ShipToForm(props) {
       /> 
       <FormikInput label="First Name" name="shipto.contact_name_first" changeFunction={handleContactChange}/>
       <FormikInput label="Last Name" name="shipto.contact_name_last" changeFunction={handleContactChange}/>
+      <FormikInput label="Phone" name="shipto.phone" />
+      <FormikInput label="Email" name="shipto.email" />
       <FormikInput type="hidden" name="shipto.selected_contact_id" />
       <FormikInput label="Address 1" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="Address 2" name="shipto.address2" width="600px" changeFunction={handleSavedAddressChange}/>
@@ -156,8 +158,6 @@ export function ShipToForm(props) {
         label="Country"
         changeFunction={handleCountryChange}
       /> 
-      <FormikInput label="Phone" name="shipto.phone" />
-      <FormikInput label="Email" name="shipto.email" />
       {errors.name && <div>{errors.name}</div>}
     </WrapForm>
   )

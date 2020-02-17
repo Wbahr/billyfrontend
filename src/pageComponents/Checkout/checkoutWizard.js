@@ -14,6 +14,7 @@ import {ShipToForm} from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
+import Context from '../../config/context'
 
 const GET_CHECKOUT_DATA = gql`
   query RetrieveCheckoutData {
@@ -59,6 +60,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
   const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+  const context = useContext(Context)
 
   const { 
     loading, 
@@ -84,8 +86,8 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
     shipto: {
       saved_ship_to: -1,
       selected_ship_to_id: -1,
-      contact_name_first: '',
-      contact_name_last: '',
+      contact_name_first: _.get(context,`userInfo.firstName`,''),
+      contact_name_last: _.get(context,`userInfo.lastName`,''),
       saved_contact: -1,
       selected_contact_id: -1,
       address1: '',
