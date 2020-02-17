@@ -29,9 +29,11 @@ const Label = styled.label`
 export default function StripePaymentSection({stripe}) {
 
   function handleTestCC(){
-    stripe.PaymentMethod.create(type="card").then(function(result) {
-      console.log('stripe test', result)
-    })
+    if(!_.isNil(stripe)){
+      stripe.PaymentMethod.create(type="card").then(function(result) {
+        console.log('stripe test', result)
+      })
+    }
   }
   return(
     <Container>
