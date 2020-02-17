@@ -53,6 +53,7 @@ export function ShipToForm(props) {
       setFieldValue('shipto.company_name', '')
       setFieldValue('shipto.address1', '')
       setFieldValue('shipto.address2', '')
+      setFieldValue('shipto.city', '')
       setFieldValue('shipto.state', '')
       setFieldValue('shipto.zip', '')
     }
