@@ -158,7 +158,24 @@ export function ShipToForm(props) {
         label="Country"
         changeFunction={handleCountryChange}
       /> 
-      {errors.name && <div>{errors.name}</div>}
-    </WrapForm>
+        <FormRow>
+          <label>Ship Collect?</label>
+          <Field 
+            name="shipto.is_collect" 
+            component={SelectField} 
+            options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
+            width="100px"
+            isSearchable={false}
+          /> 
+      </FormRow>
+      <Field 
+        name="shipto.carrier_name" 
+        component={SelectField} 
+        options={checkoutDropdownDataLabels.carriers}
+        placeholder="Select a Carrier"
+        label="Carrier"
+      /> 
+      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
+  </WrapForm>
   )
 }
