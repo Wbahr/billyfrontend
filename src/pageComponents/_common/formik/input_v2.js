@@ -46,12 +46,32 @@ const MainInput = styled(FormikField)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width}){
-  if(type !== "hidden"){
+export default function Input({type, disabled, name, label, placeholder, width, changeFunction}){
+  if(type !== "hidden" && _.isNil(changeFunction)){
     return(
       <DivContainer>
         {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput type="text" name={name} placeholder={placeholder} disabled={disabled} style={{width: width || "400px"}}/>
+        <MainInput 
+          type="text" 
+          name={name} 
+          placeholder={placeholder} 
+          disabled={disabled} 
+          style={{width: width || "400px"}}
+        />
+      </DivContainer>
+    )
+  } else if(type !== "hidden" && !_.isNil(changeFunction)){
+    return(
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainInput 
+          type="text" 
+          name={name} 
+          placeholder={placeholder} 
+          disabled={disabled} 
+          style={{width: width || "400px"}}
+          onChange={(e)=>changeFunction(name, e.target.value)}
+        />
       </DivContainer>
     )
   } else {

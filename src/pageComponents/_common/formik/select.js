@@ -34,9 +34,10 @@ const CustomSelectComponent = ({
   form: { touched, errors, setFieldValue },
   options,
   width,
+  useDefaultChange,
+  changeFunction,
   ...props
 }) => {
-
   return (
     <div style={{margin: 'auto 0', width: width || '300px', padding: '0 8px', height: '71px'}}>
       {props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
@@ -45,7 +46,7 @@ const CustomSelectComponent = ({
         {...props}
         options={options}
         value={(options ? options.find(option => option.value === field.value) : '')}
-        onChange={option => setFieldValue(field.name, (option).value)}
+        onChange={_.isNil(changeFunction) ? option =>{setFieldValue(field.name, (option).value)} : option => changeFunction(field.name, (option).value)}
         width='400px'
         styles={SelectStyle}
       />
