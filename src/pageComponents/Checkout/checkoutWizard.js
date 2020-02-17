@@ -82,10 +82,12 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       cart_with_dates: shoppingCartAndDatesObj
     },
     shipto: {
-      ship_to_id: '',
+      saved_ship_to: -1,
+      selected_ship_to_id: -1,
       contact_name_first: '',
       contact_name_last: '',
-      contact_id: '',
+      saved_contact: -1,
+      selected_contact_id: -1,
       address1: '',
       address2: '',
       city: '',

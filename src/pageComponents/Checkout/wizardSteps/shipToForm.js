@@ -66,6 +66,35 @@ export function ShipToForm(props) {
     setFieldValue('shipto.selected_saved_ship_to', -1)
   }
 
+  function handleCountryChange(name, value){
+    handleSavedAddressChange(name, value)
+    if(value === 'us'){
+      setFieldValue('shipto.province', '')
+    } else if (value === 'canada'){
+      setFieldValue('shipto.state', '')
+    }
+  }
+
+  function handleSavedContactSelectChange(name, value){
+    if(value !== -1){
+      let index = checkoutDropdownData.contacts.findIndex(elem => elem.id === value)
+      setFieldValue(name, value)
+      setFieldValue('shipto.selected_contact_id', checkoutDropdownData.contacts[index].id)
+      setFieldValue('shipto.contact_name_first', checkoutDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.contact_name_last', checkoutDropdownData.contacts[index].lastName)
+    } else {
+      setFieldValue(name, value)
+      setFieldValue('shipto.contact_name_first', '')
+      setFieldValue('shipto.contact_name_last', '')
+    }
+  }
+  
+  function handleContactChange(name, value){
+    setFieldValue(name, value)
+    setFieldValue('shipto.saved_contact', -1)
+    setFieldValue('shipto.selected_contact_id', -1)
+  }
+
   return (
     <WrapForm>
       <Field 
@@ -78,9 +107,17 @@ export function ShipToForm(props) {
       /> 
       <FormikInput type="hidden" name="shipto.selected_saved_ship_to" />
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" changeFunction={handleSavedAddressChange}/>
-      <FormikInput label="First Name" name="shipto.contact_name_first" />
-      <FormikInput label="Last Name" name="shipto.contact_name_last" />
-      <FormikInput type="hidden" name="shipto.contact_id" />
+      <Field 
+        name="shipto.saved_contact" 
+        component={SelectField} 
+        options={checkoutDropdownDataLabels.contacts}
+        width="500px"
+        label="Saved Contacts"
+        changeFunction={handleSavedContactSelectChange}
+      /> 
+      <FormikInput label="First Name" name="shipto.contact_name_first" changeFunction={handleContactChange}/>
+      <FormikInput label="Last Name" name="shipto.contact_name_last" changeFunction={handleContactChange}/>
+      <FormikInput type="hidden" name="shipto.selected_contact_id" />
       <FormikInput label="Address 1" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="Address 2" name="shipto.address2" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="City" name="shipto.city" changeFunction={handleSavedAddressChange}/>
@@ -117,7 +154,7 @@ export function ShipToForm(props) {
         width="250px"
         isSearchable={false}
         label="Country"
-        changeFunction={handleSavedAddressChange}
+        changeFunction={handleCountryChange}
       /> 
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
