@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -22,8 +22,24 @@ const FormRow = styled.div`
 export default function PurchaseOrderSection(props) {
   const {
     values,
-    stripe
+    stripe,
+    setFieldValue,
+    checkoutDropdownData: {
+      customerPhysicalAddress
+    }
   } = props
+  console.log('PurchaseOrderSection', customerPhysicalAddress)
+  useEffect(() => {
+    setFieldValue('billing.company_id', customerPhysicalAddress.id)
+    setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
+    setFieldValue('billing.contact_first_name', customerPhysicalAddress.name)
+    setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
+    setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
+    setFieldValue('billing.city', customerPhysicalAddress.mailCity)
+    setFieldValue('billing.zip', customerPhysicalAddress.mailPostalCode)
+    setFieldValue('billing.state', customerPhysicalAddress.mailState)
+    setFieldValue('billing.country', customerPhysicalAddress.mailCountry.toLowerCase())
+  }, [customerPhysicalAddress])
   return (
     <>
           <FormikInput label="PO Number" name="billing.po" />

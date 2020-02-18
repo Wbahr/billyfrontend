@@ -32,6 +32,7 @@ function BillingInfoForm(props) {
     values,
     stripe
   } = props
+  
   return (
     <WrapForm>
       <FormRow>

@@ -52,6 +52,26 @@ const GET_CHECKOUT_DATA = gql`
         firstName
         lastName
       }
+      termsDescription
+      customerPhysicalAddress{
+        id
+        name
+        companyName
+        mailAddress1
+        mailAddress2
+        mailAddress3
+        mailCity
+        mailCountry
+        mailPostalCode
+        mailState
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
     }
   }
 `
@@ -76,7 +96,6 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
 
   const initValues = {
     schedule: {
-
       packing_basis: '0',
       cart_with_dates: shoppingCartAndDatesObj
     },

@@ -109,9 +109,9 @@ export default function CheckoutOrderSummary({history}) {
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
-          <p>$0.00</p>
+          <p>{formatCurrency(50)}</p>
         </DivLineItem>
-        <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
+        <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(50))}</p>
       </Div>
     </>
   )
