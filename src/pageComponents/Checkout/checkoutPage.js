@@ -70,7 +70,6 @@ const Pstep = styled.span`
 
 const DivNavigation = styled.div`
   display: flex;
-  justify-content: space-between;
 `
 
 const Container = styled.div`
@@ -79,7 +78,7 @@ const Container = styled.div`
   font-size: 18px;
   height: 100%;
   border: 1px solid lightgrey;
-  padding: 5px 20px;
+  padding: 20px;
 `
 
 const Pformheader = styled.p`
@@ -119,13 +118,13 @@ export default function CheckoutPage({history}) {
           <Context.Consumer>
             {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} checkoutSubmit={(values)=>{handleCheckoutSubmit(values)}} />)}
           </Context.Consumer>
+          <DivNavigation>
+            {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
+            {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
+            {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</ButtonRed>}
+          </DivNavigation>
         </Container>
-        <DivNavigation>
-          {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
-          {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
-          {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-          {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</ButtonRed>}
-        </DivNavigation>
       </DivCheckoutCol>
       <DivOrderTotalCol>
         <CheckoutOrderSummary/>
