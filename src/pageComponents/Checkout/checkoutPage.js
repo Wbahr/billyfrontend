@@ -78,7 +78,7 @@ const Container = styled.div`
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 18px;
   height: 100%;
-  border: 1px solid whitesmoke;
+  border: 1px solid lightgrey;
   padding: 5px 20px;
 `
 

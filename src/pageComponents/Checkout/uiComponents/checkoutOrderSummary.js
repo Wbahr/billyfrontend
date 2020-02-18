@@ -11,14 +11,15 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 175px;
+  height: max-content;
   margin-left: auto;
   padding: 16px;
   align-items: flex-end;
-  background-color: whitesmoke;
   position: -webkit-sticky;
   position: sticky;
   top: 125px;
+  margin-top: 85px;
+  border: 1px solid lightgrey;
 `
 
 const H4 = styled.h4`
@@ -26,7 +27,6 @@ const H4 = styled.h4`
   font-family: ProximaBold;
   text-transform: uppercase;
   padding-left: 4px;
-  border-bottom: 1px solid darkgrey;
 `
 
 const DivButtonContainer = styled.div `
@@ -57,10 +57,22 @@ const DivCheckoutButton = styled.div`
 const DivLineItem = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 300px;
+  width: 90%;
   min-width: 250px;
+  align-self: center;
   p {
     margin: 0;
+  }
+`
+
+const DivLineItemTotal = styled(DivLineItem)`
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #001d3d;
+  p {
+    font-size: 18px;
+    font-weight: 600;
   }
 `
 
@@ -111,7 +123,9 @@ export default function CheckoutOrderSummary({history}) {
           <p>Tax</p>
           <p>{formatCurrency(50)}</p>
         </DivLineItem>
-        <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(50))}</p>
+        <DivLineItemTotal>
+          <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(50))}</p>
+        </DivLineItemTotal>
       </Div>
     </>
   )

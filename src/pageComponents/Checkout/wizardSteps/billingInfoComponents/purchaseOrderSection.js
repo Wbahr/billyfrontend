@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import _ from 'lodash'
 import { Field } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -30,60 +31,62 @@ export default function PurchaseOrderSection(props) {
   } = props
   console.log('PurchaseOrderSection', customerPhysicalAddress)
   useEffect(() => {
-    setFieldValue('billing.company_id', customerPhysicalAddress.id)
-    setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
-    setFieldValue('billing.contact_first_name', customerPhysicalAddress.name)
-    setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
-    setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
-    setFieldValue('billing.city', customerPhysicalAddress.mailCity)
-    setFieldValue('billing.zip', customerPhysicalAddress.mailPostalCode)
-    setFieldValue('billing.state', customerPhysicalAddress.mailState)
-    setFieldValue('billing.country', customerPhysicalAddress.mailCountry.toLowerCase())
+    if(!_.isNil(customerPhysicalAddress)){
+      setFieldValue('billing.company_id', customerPhysicalAddress.id)
+      setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
+      setFieldValue('billing.contact_first_name', customerPhysicalAddress.name)
+      setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
+      setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
+      setFieldValue('billing.city', customerPhysicalAddress.mailCity)
+      setFieldValue('billing.zip', customerPhysicalAddress.mailPostalCode)
+      setFieldValue('billing.state', customerPhysicalAddress.mailState)
+      setFieldValue('billing.country', customerPhysicalAddress.mailCountry.toLowerCase())
+    }
   }, [customerPhysicalAddress])
   return (
     <>
-          <FormikInput label="PO Number" name="billing.po" />
-          <FormikInput type="hidden" name="billing.company_id" />
-          <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
-          <FormikInput label="First Name" name="billing.contact_first_name" />
-          <FormikInput label="Last Name" name="billing.contact_last_name" />
-          <FormikInput label="Address 1" name="billing.address1" width="600px"/>
-          <FormikInput label="Address 2" name="billing.address2" width="600px"/>
-          <FormikInput label="City" name="billing.city" />
-          {values.billing.country  === "us" && 
-            <>
-              <Field 
-                name="billing.state" 
-                component={SelectField} 
-                options={StateList}
-                placeholder="Select a State"
-                label="State"
-              /> 
-            </>
-          }
-          {values.billing.country  === "canada" && 
-            <>
-              <Field 
-                name="billing.province" 
-                component={SelectField} 
-                options={CanadianProvinceList}
-                placeholder="Select a Province"
-                label="Province"
-              /> 
-            </>
-          }
-          <FormikInput label="Zip" name="billing.zip" />    
+      <FormikInput label="PO Number" name="billing.po" />
+      <FormikInput type="hidden" name="billing.company_id" />
+      <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
+      <FormikInput label="First Name" name="billing.contact_first_name" />
+      <FormikInput label="Last Name" name="billing.contact_last_name" />
+      <FormikInput label="Address 1" name="billing.address1" width="600px"/>
+      <FormikInput label="Address 2" name="billing.address2" width="600px"/>
+      <FormikInput label="City" name="billing.city" />
+      {values.billing.country  === "us" && 
+        <>
           <Field 
-            name="billing.country" 
+            name="billing.state" 
             component={SelectField} 
-            options={[{'label': 'United States', 'value': 'us'},{'label': 'Canada', 'value': 'canada'}]}
-            placeholder="Select a Country"
-            width="250px"
-            isSearchable={false}
-            label="Country"
+            options={StateList}
+            placeholder="Select a State"
+            label="State"
           /> 
-          <FormikInput label='Email Invoice To' name="billing.email" /> 
-          <FormikInput label="Phone" name="billing.phone" />
+        </>
+      }
+      {values.billing.country  === "canada" && 
+        <>
+          <Field 
+            name="billing.province" 
+            component={SelectField} 
+            options={CanadianProvinceList}
+            placeholder="Select a Province"
+            label="Province"
+          /> 
+        </>
+      }
+      <FormikInput label="Zip" name="billing.zip" />    
+      <Field 
+        name="billing.country" 
+        component={SelectField} 
+        options={[{'label': 'United States', 'value': 'us'},{'label': 'Canada', 'value': 'canada'}]}
+        placeholder="Select a Country"
+        width="250px"
+        isSearchable={false}
+        label="Country"
+      /> 
+      <FormikInput label='Email Invoice To' name="billing.email" /> 
+      <FormikInput label="Phone" name="billing.phone" />
     </>
   )
 }
