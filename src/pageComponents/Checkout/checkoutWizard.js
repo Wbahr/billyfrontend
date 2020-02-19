@@ -5,7 +5,7 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import {Formik} from 'formik'
+import {Formik, useFormikContext} from 'formik'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 import {Elements} from 'react-stripe-elements';
 // Wizard Steps
@@ -76,11 +76,22 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
+export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm}) {
   const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const context = useContext(Context)
+
+  const AutoSubmit = () => {
+    const {
+      values
+    } = useFormikContext()
+    submitForm(values)
+    return(
+      <p>Submitting...</p>
+    )
+  }
+
 
   const { 
     loading, 
@@ -166,13 +177,12 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
     <Formik 
       initialValues={initValues}
       enableReinitialize={true}
-      onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (
         <Elements>
-          <form onSubmit={formikProps.handleSubmit} {...formikProps}>
+          <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
-            <button type="submit">Submit</button>
+            {triggerSubmit && <AutoSubmit/>}
           </form>
         </Elements>
       )}

@@ -93,6 +93,7 @@ export default function CheckoutPage({history}) {
   const [disablePrevious, setDisablePrevious] = useState(false)
   const [disableNext, setDisableNext] = useState(false)
   const [disableSubmit, setDisableSubmit] = useState(false)
+  const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
 
   function handleMoveStep(requestedStep){
@@ -117,13 +118,13 @@ export default function CheckoutPage({history}) {
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
-            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} checkoutSubmit={(values)=>{handleCheckoutSubmit(values)}} />)}
+            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} triggerSubmit={triggerSubmit} submitForm={(formValues)=>handleCheckoutSubmit(formValues)}/>)}
           </Context.Consumer>
           <DivNavigation>
             {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
             {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
             {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{console.log('confirm')}}>Submit</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{setTriggerSubmit(true)}}>Submit</ButtonRed>}
           </DivNavigation>
         </Container>
       </DivCheckoutCol>
