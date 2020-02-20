@@ -77,9 +77,9 @@ const GET_CHECKOUT_DATA = gql`
 `
 
 export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm}) {
-  const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+  const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
   const context = useContext(Context)
 
   const AutoSubmit = () => {
@@ -91,6 +91,14 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       <p>Submitting...</p>
     )
   }
+
+  // Shopping cart was triggering the form the reinitialize, not sure why. This is a fix for it.
+  useEffect(() => {
+    if (shoppingCartAndDatesObj.length === 0) {
+        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
+        setShoppingCartAndDatesObj(recentCart)
+    }
+  },[shoppingCart])
 
 
   const { 
@@ -113,8 +121,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     shipto: {
       saved_ship_to: -1,
       selected_ship_to_id: -1,
-      contact_name_first: _.get(context,`userInfo.firstName`,''),
-      contact_name_last: _.get(context,`userInfo.lastName`,''),
+      contact_name_first: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      contact_name_last: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       saved_contact: -1,
       selected_contact_id: -1,
       address1: '',
@@ -143,8 +151,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       address1: '',
       address2: '',
       city: '',
-      state: '',
-      province: '',
+      stateOrProvince: '',
       zip: '',
       country: 'us',
       phone: '',

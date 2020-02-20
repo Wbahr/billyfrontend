@@ -68,11 +68,7 @@ export function ShipToForm(props) {
 
   function handleCountryChange(name, value){
     handleSavedAddressChange(name, value)
-    if(value === 'us'){
-      setFieldValue('shipto.province', '')
-    } else if (value === 'canada'){
-      setFieldValue('shipto.state', '')
-    }
+    setFieldValue('shipto.stateOrProvince', '')
   }
 
   function handleSavedContactSelectChange(name, value){
@@ -126,7 +122,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "us" && 
         <>
           <Field 
-            name="shipto.state" 
+            name="shipto.stateOrProvince" 
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
@@ -138,7 +134,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "canada" && 
         <>
           <Field 
-            name="shipto.province" 
+            name="shipto.stateOrProvince" 
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"
@@ -158,16 +154,6 @@ export function ShipToForm(props) {
         label="Country"
         changeFunction={handleCountryChange}
       /> 
-        <FormRow>
-          <label>Ship Collect?</label>
-          <Field 
-            name="shipto.is_collect" 
-            component={SelectField} 
-            options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
-            width="100px"
-            isSearchable={false}
-          /> 
-      </FormRow>
       <Field 
         name="shipto.carrier_name" 
         component={SelectField} 
@@ -175,7 +161,17 @@ export function ShipToForm(props) {
         placeholder="Select a Carrier"
         label="Carrier"
       /> 
-      {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
+      <FormRow>
+        <label>Ship Collect?</label>
+        <Field 
+          name="shipto.is_collect" 
+          component={SelectField} 
+          options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
+          width="100px"
+          isSearchable={false}
+        /> 
+    </FormRow>
+    {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
   </WrapForm>
   )
 }
