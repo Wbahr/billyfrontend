@@ -43,7 +43,7 @@ export function ShipToForm(props) {
       setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].mailAddress1)
       setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].mailAddress2)
       setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
-      setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
+      setFieldValue('shipto.state_or_province', checkoutDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
@@ -52,7 +52,7 @@ export function ShipToForm(props) {
       setFieldValue('shipto.address1', '')
       setFieldValue('shipto.address2', '')
       setFieldValue('shipto.city', '')
-      setFieldValue('shipto.stateOrProvince', '')
+      setFieldValue('shipto.state_or_province', '')
       setFieldValue('shipto.zip', '')
     }
   }
@@ -65,7 +65,7 @@ export function ShipToForm(props) {
 
   function handleCountryChange(name, value){
     handleSavedAddressChange(name, value)
-    setFieldValue('shipto.stateOrProvince', '')
+    setFieldValue('shipto.state_or_province', '')
   }
 
   function handleSavedContactSelectChange(name, value){
@@ -115,7 +115,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "us" && 
         <>
           <Field 
-            name="shipto.stateOrProvince" 
+            name="shipto.state_or_province" 
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
@@ -127,7 +127,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "canada" && 
         <>
           <Field 
-            name="shipto.stateOrProvince" 
+            name="shipto.state_or_province" 
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"

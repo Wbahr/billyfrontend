@@ -116,7 +116,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   const initValues = {
     schedule: {
       packing_basis: '0',
-      cart_with_dates: shoppingCartAndDatesObj
+      cart_with_dates: shoppingCartAndDatesObj,
+      shopping_cart_token: localStorage.getItem('shoppingCartToken')
     },
     shipto: {
       saved_ship_to: -1,
@@ -126,7 +127,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       address1: '',
       address2: '',
       city: '',
-      stateOrProvince: '',
+      state_or_province: '',
       zip: '',
       country: 'us',
       phone: '',
@@ -145,7 +146,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       address1: '',
       address2: '',
       city: '',
-      stateOrProvince: '',
+      state_or_province: '',
       zip: '',
       country: 'us',
       phone: '',
