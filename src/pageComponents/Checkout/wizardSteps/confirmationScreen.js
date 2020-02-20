@@ -72,7 +72,7 @@ export default function ConfirmationScreen(props) {
             <p>Email: {shipto.email}</p>
             <p>Carrier Name: {shipto.carrierName}</p>
             <p>Is Collect? {shipto.isCollect === '0' ? 'No' : 'Yes'}</p>
-            {shipto.isCollect === '0' && <p>Collect Number: {shipto.collectNumber}</p>}
+            {shipto.isCollect === '1' && <p>Collect Number: {shipto.collectNumber}</p>}
           </SectionFields>
         </SectionContainerHalf>
         <SectionContainerHalf>
