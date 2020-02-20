@@ -142,8 +142,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     billing: {
       payment_method: '',
       po: '',
-      contact_name_first: '',
-      contact_name_last: '',
+      first_name: '',
+      last_name: '',
       contact_id: '',
       address1: '',
       address2: '',

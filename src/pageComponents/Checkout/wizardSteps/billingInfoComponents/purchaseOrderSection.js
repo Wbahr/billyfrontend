@@ -33,7 +33,7 @@ export default function PurchaseOrderSection(props) {
   useEffect(() => {
     if(!_.isNil(customerPhysicalAddress)){
       setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
-      setFieldValue('billing.contact_first_name', customerPhysicalAddress.name)
+      setFieldValue('billing.first_name', customerPhysicalAddress.name)
       setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
       setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
       setFieldValue('billing.city', customerPhysicalAddress.mailCity)
@@ -46,8 +46,8 @@ export default function PurchaseOrderSection(props) {
     <>
       <FormikInput label="PO Number" name="billing.po" />
       <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
-      <FormikInput label="First Name" name="billing.contact_first_name" />
-      <FormikInput label="Last Name" name="billing.contact_last_name" />
+      <FormikInput label="First Name" name="billing.first_name" />
+      <FormikInput label="Last Name" name="billing.last_name" />
       <FormikInput label="Address 1" name="billing.address1" width="600px"/>
       <FormikInput label="Address 2" name="billing.address2" width="600px"/>
       <FormikInput label="City" name="billing.city" />
