@@ -53,7 +53,7 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep}) {
     color: #535353 !important; 
     font-weight: 500;
     :before {
-      border-color: #55b776 !important;
+      border-color: #007bff !important;
     }
   `
 

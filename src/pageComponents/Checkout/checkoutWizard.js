@@ -5,7 +5,7 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import {Formik} from 'formik'
+import {Formik, useFormikContext} from 'formik'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 import {Elements} from 'react-stripe-elements';
 // Wizard Steps
@@ -14,6 +14,7 @@ import {ShipToForm} from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
+import Context from '../../config/context'
 
 const GET_CHECKOUT_DATA = gql`
   query RetrieveCheckoutData {
@@ -51,14 +52,54 @@ const GET_CHECKOUT_DATA = gql`
         firstName
         lastName
       }
+      termsDescription
+      customerPhysicalAddress{
+        id
+        name
+        companyName
+        mailAddress1
+        mailAddress2
+        mailAddress3
+        mailCity
+        mailCountry
+        mailPostalCode
+        mailState
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
     }
   }
 `
 
-export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
-  const shoppingCartAndDatesObj = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
+export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+  const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
+  const context = useContext(Context)
+
+  const AutoSubmit = () => {
+    const {
+      values
+    } = useFormikContext()
+    submitForm(values)
+    return(
+      <p>Submitting...</p>
+    )
+  }
+
+  // Shopping cart was triggering the form the reinitialize, not sure why. This is a fix for it.
+  useEffect(() => {
+    if (shoppingCartAndDatesObj.length === 0) {
+        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
+        setShoppingCartAndDatesObj(recentCart)
+    }
+  },[shoppingCart])
+
 
   const { 
     loading, 
@@ -74,27 +115,26 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
 
   const initValues = {
     schedule: {
-      carrier_name: '',
-      carrier_id: '',
-      is_collect: '0',
-      collect_number: '',
       packing_basis: '0',
       cart_with_dates: shoppingCartAndDatesObj
     },
     shipto: {
-      ship_to_id: '',
-      contact_name_first: '',
-      contact_name_last: '',
-      contact_id: '',
+      saved_ship_to: -1,
+      contact_name_first: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      contact_name_last: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
+      saved_contact: -1,
       address1: '',
       address2: '',
       city: '',
-      state: '',
-      province: '',
+      stateOrProvince: '',
       zip: '',
       country: 'us',
       phone: '',
-      email: ''
+      email: '',
+      carrier_name: '',
+      carrier_id: '',
+      is_collect: '0',
+      collect_number: ''
     },
     billing: {
       first_name: '',
@@ -108,8 +148,7 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       address1: '',
       address2: '',
       city: '',
-      state: '',
-      province: '',
+      stateOrProvince: '',
       zip: '',
       country: 'us',
       phone: '',
@@ -142,13 +181,12 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
     <Formik 
       initialValues={initValues}
       enableReinitialize={true}
-      onSubmit={values => {checkoutSubmit(values)}}
     >
       {formikProps => (
         <Elements>
-          <form onSubmit={formikProps.handleSubmit} {...formikProps}>
+          <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
-            <button type="submit">Submit</button>
+            {triggerSubmit && <AutoSubmit/>}
           </form>
         </Elements>
       )}
