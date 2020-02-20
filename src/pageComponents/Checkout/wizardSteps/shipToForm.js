@@ -38,23 +38,21 @@ export function ShipToForm(props) {
     if(value !== -1){
       let index = checkoutDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.selected_saved_ship_to', checkoutDropdownData.shipToAddresses[index].id)
       setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].mailCountry.toLowerCase())
       setFieldValue('shipto.company_name', checkoutDropdownData.shipToAddresses[index].companyName)
       setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].mailAddress1)
       setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].mailAddress2)
       setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
-      setFieldValue('shipto.state', checkoutDropdownData.shipToAddresses[index].mailState)
+      setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
-      setFieldValue('shipto.selected_saved_ship_to', -1)
       setFieldValue('shipto.country', 'us')
       setFieldValue('shipto.company_name', '')
       setFieldValue('shipto.address1', '')
       setFieldValue('shipto.address2', '')
       setFieldValue('shipto.city', '')
-      setFieldValue('shipto.state', '')
+      setFieldValue('shipto.stateOrProvince', '')
       setFieldValue('shipto.zip', '')
     }
   }
@@ -63,7 +61,6 @@ export function ShipToForm(props) {
   function handleSavedAddressChange(name, value){
     setFieldValue(name, value)
     setFieldValue('shipto.saved_ship_to', -1)
-    setFieldValue('shipto.selected_saved_ship_to', -1)
   }
 
   function handleCountryChange(name, value){
@@ -75,7 +72,6 @@ export function ShipToForm(props) {
     if(value !== -1){
       let index = checkoutDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.selected_contact_id', checkoutDropdownData.contacts[index].id)
       setFieldValue('shipto.contact_name_first', checkoutDropdownData.contacts[index].firstName)
       setFieldValue('shipto.contact_name_last', checkoutDropdownData.contacts[index].lastName)
     } else {
@@ -88,7 +84,6 @@ export function ShipToForm(props) {
   function handleContactChange(name, value){
     setFieldValue(name, value)
     setFieldValue('shipto.saved_contact', -1)
-    setFieldValue('shipto.selected_contact_id', -1)
   }
 
   return (
@@ -101,7 +96,6 @@ export function ShipToForm(props) {
         label="Saved Ship To"
         changeFunction={handleSavedAddressSelectChange}
       /> 
-      <FormikInput type="hidden" name="shipto.selected_saved_ship_to" />
       <FormikInput label="Company Name" name="shipto.company_name" width="500px" changeFunction={handleSavedAddressChange}/>
       <Field 
         name="shipto.saved_contact" 
@@ -115,7 +109,6 @@ export function ShipToForm(props) {
       <FormikInput label="Last Name" name="shipto.contact_name_last" changeFunction={handleContactChange}/>
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
-      <FormikInput type="hidden" name="shipto.selected_contact_id" />
       <FormikInput label="Address 1" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="Address 2" name="shipto.address2" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="City" name="shipto.city" changeFunction={handleSavedAddressChange}/>
