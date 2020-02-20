@@ -82,7 +82,7 @@ export default function SearchResultsPage(props) {
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
-  const [totalResults, setTotalResults] = useState(0)
+  const [totalResults, setTotalResults] = useState('--')
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [brands, setBrands] = useState([])
@@ -427,20 +427,22 @@ export default function SearchResultsPage(props) {
         >
           <DivSearchResultsContainer>          
             {SearchResults}
-            <>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-              <SkeletonItem/>
-            </>
+            {(SearchResults.length < totalResults || totalResults === '--') &&
+              <>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+              </>
+            }
           </DivSearchResultsContainer>
         </InfiniteScroll>
       </ResultsContainer>
