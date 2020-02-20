@@ -164,7 +164,7 @@ export function ShipToForm(props) {
           isSearchable={false}
         /> 
     </FormRow>
-    {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collectNumber" />}
+    {values.shipto.isCollect  === "1" && <FormikInput label="Collect Number" name="shipto.collectNumber" />}
   </WrapForm>
   )
 }
