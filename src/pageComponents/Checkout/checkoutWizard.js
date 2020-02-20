@@ -95,7 +95,9 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   // Shopping cart was triggering the form the reinitialize, not sure why. This is a fix for it.
   useEffect(() => {
     if (shoppingCartAndDatesObj.length === 0) {
-        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: new Date()}))
+        let date = new Date()
+        date.setDate(date.getDate() + 1)
+        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: date}))
         setShoppingCartAndDatesObj(recentCart)
     }
   },[shoppingCart])

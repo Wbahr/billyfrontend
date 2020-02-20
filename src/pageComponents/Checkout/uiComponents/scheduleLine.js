@@ -154,6 +154,9 @@ export default function ShippingScheduleItem({item, index}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    let tomorrowDate = new Date()
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
+
     
 
     Content = (
@@ -185,7 +188,7 @@ export default function ShippingScheduleItem({item, index}) {
                     <FontAwesomeIcon icon="calendar" color="lightgrey"/>
                   </DivSpacer>
                   <DatePicker
-                    minDate={new Date()}
+                    minDate={tomorrowDate}
                     selected={Date.parse(field.value)}
                     onChange={(value)=>form.setFieldValue(field.name, value)}
                   />
