@@ -41,7 +41,10 @@ function formatCarriers(data){
 }
 
 function formatContacts(data){
-  let mutatedData = []
+  let mutatedData = [{
+    'label': 'Custom Contact',
+    'value': -1
+  }]
   if(!_.isNil(data)){
     for(let i=0;data.length > i;i++){
       let element = data[i]

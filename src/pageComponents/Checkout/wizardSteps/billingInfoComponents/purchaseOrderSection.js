@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import _ from 'lodash'
 import { Field } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -22,7 +23,11 @@ const FormRow = styled.div`
 export default function PurchaseOrderSection(props) {
   const {
     values,
-    stripe
+    stripe,
+    setFieldValue,
+    checkoutDropdownData: {
+      customerPhysicalAddress
+    }
   } = props
   
   useEffect(() => {
@@ -83,39 +88,3 @@ export default function PurchaseOrderSection(props) {
     </>
   )
 }
-
-
-{/* return (
-    <>
-          <FormikInput label="PO Number" name="billing.po" />
-          <FormikInput type="hidden" name="billing.company_id" />
-          <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
-          <FormikInput label="First Name" name="billing.contact_first_name" />
-          <FormikInput label="Last Name" name="billing.contact_last_name" />
-          <FormikInput label="Address 1" name="billing.address1" width="600px"/>
-          <FormikInput label="Address 2" name="billing.address2" width="600px"/>
-          <FormikInput label="City" name="billing.city" />
-          {values.billing.country  === "us" && 
-            <>
-              <Field 
-                name="billing.state" 
-                component={SelectField} 
-                options={StateList}
-                placeholder="Select a State"
-                label="State"
-              /> 
-            </>
-          }
-          {values.billing.country  === "canada" && 
-            <>
-              <Field 
-                name="billing.province" 
-                component={SelectField} 
-                options={CanadianProvinceList}
-                placeholder="Select a Province"
-                label="Province"
-              /> 
-            </>
-          }
-          <FormikInput label="Zip" name="billing.zip" />    
-  console.log('PurchaseOrderSection', customerPhysicalAddress) */}
