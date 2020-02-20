@@ -28,10 +28,10 @@ export default function NewCardSection(props) {
       <>
           <StripePaymentSection stripe={stripe}/>
           <FormikInput label="PO Number" name="billing.po" />
-          <FormikInput type="hidden" name="billing.company_id" />
-          <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
-          <FormikInput label="First Name" name="billing.contact_first_name" />
-          <FormikInput label="Last Name" name="billing.contact_last_name" />
+          <FormikInput type="hidden" name="billing.companyId" />
+          <FormikInput label="Company Name" name="billing.companyName" width="500px"/>
+          <FormikInput label="First Name" name="billing.contact_firstName" />
+          <FormikInput label="Last Name" name="billing.contact_lastName" />
           <FormikInput label="Address 1" name="billing.address1" width="600px"/>
           <FormikInput label="Address 2" name="billing.address2" width="600px"/>
           <FormikInput label="City" name="billing.city" />

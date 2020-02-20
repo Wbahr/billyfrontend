@@ -117,43 +117,43 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     schedule: {
-      packing_basis: '0',
-      cart_with_dates: shoppingCartAndDatesObj,
-      shopping_cart_token: localStorage.getItem('shoppingCartToken')
+      packingBasis: '0',
+      cartWithDates: shoppingCartAndDatesObj,
+      shoppingCartToken: localStorage.getItem('shoppingCartToken')
     },
     shipto: {
-      saved_ship_to: -1,
-      contact_name_first: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
-      contact_name_last: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
-      saved_contact: -1,
+      savedShipTo: -1,
+      contactNameFirst: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      contactNameLast: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
+      savedContact: -1,
       address1: '',
       address2: '',
       city: '',
-      state_or_province: '',
+      stateOrProvince: '',
       zip: '',
       country: 'us',
       phone: '',
       email: '',
-      carrier_name: '',
-      carrier_id: '',
-      is_collect: '0',
-      collect_number: ''
+      carrierName: '',
+      carrierId: '',
+      isCollect: '0',
+      collectNumber: ''
     },
     billing: {
-      payment_method: '',
-      purchase_order: '',
-      first_name: '',
-      last_name: '',
-      contact_id: '',
+      paymentMethod: '',
+      purchaseOrder: '',
+      firstName: '',
+      lastName: '',
+      contactId: '',
       address1: '',
       address2: '',
       city: '',
-      state_or_province: '',
+      stateOrProvince: '',
       zip: '',
       country: 'us',
       phone: '',
       email: '',
-      card_type: 'new_card'
+      cardType: 'new_card'
     }
   }
 

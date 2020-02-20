@@ -4,11 +4,21 @@ import queryString from 'query-string'
 import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag'
+import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
+
+const SectionRow = styled.div`
+  display: flew;
+  justify-content: space-between;
+`
 
 const SectionContainer = styled.div`
   border: 1px solid whitesmoke;
   margin: 8px 0;
   padding: 8px 16px;
+`
+
+const SectionContainerHalf = styled(SectionContainer)`
+  width: 49%;
 `
 
 const SectionTitle = styled.p`
@@ -43,60 +53,53 @@ export default function ConfirmationScreen(props) {
       billing
     },
   } = props
-  let CartDates = schedule.cart_with_dates.map((elem)=>{
-    let datestring = elem.requestedShipDate.getMonth() + '/' + elem.requestedShipDate.getDate() + '/' + elem.requestedShipDate.getFullYear()
-    return(
-      <LineItem>
-        <p>Frecno: {elem.frecno}</p>
-        <p>Qty: {elem.quantity}</p>
-        <p>Requested Date: {datestring}</p>
-      </LineItem>
-    )
-  })
+
+  let CartDates = schedule.cartWithDates.map((item, index) => (
+    <ShippingScheduleLineDisplay item={item} index={index}/>
+  ))
+
   return(
     <>
+      <SectionRow>
+        <SectionContainerHalf>
+          <SectionTitle>Ship To</SectionTitle>
+          <SectionFields>
+            <p>{shipto.contactNameFirst} {shipto.contactNameLast}</p>
+            <p>{shipto.address1}</p>
+            <p>{shipto.address2}</p>
+            <p>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'US' : 'Canada'}</p>
+            <p>Phone: {shipto.phone}</p>
+            <p>Email: {shipto.email}</p>
+            <p>Carrier Name: {shipto.carrierName}</p>
+            <p>Is Collect? {shipto.isCollect === '0' ? 'No' : 'Yes'}</p>
+            {shipto.isCollect === '0' && <p>Collect Number: {shipto.collectNumber}</p>}
+          </SectionFields>
+        </SectionContainerHalf>
+        <SectionContainerHalf>
+          <SectionTitle>Bill To</SectionTitle>
+          <SectionFields>
+            <p>{billing.firstName} {billing.lastName}</p>
+            <p>{billing.address1}</p>
+            <p>{billing.address2}</p>
+            <p>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'US' : 'Canada'}</p>
+            <p>Phone: {billing.phone}</p>
+            <p>Email: {billing.email}</p>
+            <p>Payment Method: {billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
+            {billing.paymentMethod === 'credit_card' && <p>Card Type: {billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>}
+            <p>Purchase Order: {billing.purchaseOrder}</p>
+          </SectionFields>
+        </SectionContainerHalf>
+      </SectionRow>
       <SectionContainer>
         <SectionTitle>Shipping Schedule</SectionTitle>
         <SectionFields>
-          <p>Packing Basis:{schedule.packing_basis}</p>
-          {(schedule.cart_with_dates.length > 0 && schedule.packing_basis === 4) && <p>Items</p>}
-          {(schedule.cart_with_dates.length > 0 && schedule.packing_basis === 4) && CartDates}
+          <p>Packing Basis:{schedule.packingBasis}</p>
         </SectionFields>
       </SectionContainer>
       <SectionContainer>
-        <SectionTitle>Ship To</SectionTitle>
+        <SectionTitle>Items</SectionTitle>
         <SectionFields>
-          <p>Contact First Name:{shipto.contact_name_first}</p>
-          <p>Contact Last Name:{shipto.contact_name_last}</p>
-          <p>Address 1:{shipto.address1}</p>
-          <p>Address 2:{shipto.address2}</p>
-          <p>City:{shipto.city}</p>
-          <p>State/Province:{shipto.state_or_province}</p>
-          <p>Zip:{shipto.zip}</p>
-          <p>Country:{shipto.country}</p>
-          <p>Phone:{shipto.phone}</p>
-          <p>Email:{shipto.email}</p>
-          <p>Carrier Name:{shipto.carrier_name}</p>
-          <p>Is Collect? {shipto.is_collect === '0' ? 'No' : 'Yes'}</p>
-          {shipto.is_collect === '0' && <p>{shipto.collect_number}</p>}
-        </SectionFields>
-      </SectionContainer>
-      <SectionContainer>
-        <SectionTitle>Bill To</SectionTitle>
-        <SectionFields>
-          <p>Payment Method:{billing.payment_method}</p>
-          <p>Purchase Order:{billing.purchase_order}</p>
-          <p>First Name:{billing.first_name}</p>
-          <p>Last Name:{billing.last_name}</p>
-          <p>Address 1:{billing.address1}</p>
-          <p>Address 2:{billing.address2}</p>
-          <p>City:{billing.city}</p>
-          <p>State/Province:{billing.state_or_province}</p>
-          <p>Zip:{billing.zip}</p>
-          <p>Country:{billing.country}</p>
-          <p>Phone:{billing.phone}</p>
-          <p>Email:{billing.email}</p>
-          {billing.payment_method === 'credit_card' && <p>Card Type:{billing.card_type === 'new_card' ? 'New Card' : 'Saved Card'}</p>}
+          {CartDates}
         </SectionFields>
       </SectionContainer>
     </>

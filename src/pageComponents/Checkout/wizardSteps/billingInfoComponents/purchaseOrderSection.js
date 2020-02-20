@@ -29,21 +29,21 @@ export default function PurchaseOrderSection(props) {
   
   useEffect(() => {
     if(!_.isNil(customerPhysicalAddress)){
-      setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
+      setFieldValue('billing.companyName', customerPhysicalAddress.companyName)
       setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
       setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
       setFieldValue('billing.city', customerPhysicalAddress.mailCity)
       setFieldValue('billing.zip', customerPhysicalAddress.mailPostalCode)
-      setFieldValue('billing.state', customerPhysicalAddress.mailState)
+      setFieldValue('billing.stateOrProvince', customerPhysicalAddress.mailState)
       setFieldValue('billing.country', customerPhysicalAddress.mailCountry.toLowerCase())
     }
   }, [customerPhysicalAddress])
   return (
     <>
-      <FormikInput label="PO Number" name="billing.purchase_order" />
-      <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
-      <FormikInput label="First Name" name="billing.first_name" />
-      <FormikInput label="Last Name" name="billing.last_name" />
+      <FormikInput label="PO Number" name="billing.purchaseOrder" />
+      <FormikInput label="Company Name" name="billing.companyName" width="500px"/>
+      <FormikInput label="First Name" name="billing.firstName" />
+      <FormikInput label="Last Name" name="billing.lastName" />
       <FormikInput label="Address 1" name="billing.address1" width="600px"/>
       <FormikInput label="Address 2" name="billing.address2" width="600px"/>
       <FormikInput label="City" name="billing.city" />

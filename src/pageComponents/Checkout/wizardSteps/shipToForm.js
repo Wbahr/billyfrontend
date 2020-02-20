@@ -39,20 +39,20 @@ export function ShipToForm(props) {
       let index = checkoutDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
       setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].mailCountry.toLowerCase())
-      setFieldValue('shipto.company_name', checkoutDropdownData.shipToAddresses[index].companyName)
+      setFieldValue('shipto.companyName', checkoutDropdownData.shipToAddresses[index].companyName)
       setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].mailAddress1)
       setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].mailAddress2)
       setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
-      setFieldValue('shipto.state_or_province', checkoutDropdownData.shipToAddresses[index].mailState)
+      setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.country', 'us')
-      setFieldValue('shipto.company_name', '')
+      setFieldValue('shipto.companyName', '')
       setFieldValue('shipto.address1', '')
       setFieldValue('shipto.address2', '')
       setFieldValue('shipto.city', '')
-      setFieldValue('shipto.state_or_province', '')
+      setFieldValue('shipto.stateOrProvince', '')
       setFieldValue('shipto.zip', '')
     }
   }
@@ -60,53 +60,53 @@ export function ShipToForm(props) {
   // Once this field is changed, set selected_saved_ship_to and saved_ship_to to -1 (Since what was automatically loaded was changed)
   function handleSavedAddressChange(name, value){
     setFieldValue(name, value)
-    setFieldValue('shipto.saved_ship_to', -1)
+    setFieldValue('shipto.savedShipTo', -1)
   }
 
   function handleCountryChange(name, value){
     handleSavedAddressChange(name, value)
-    setFieldValue('shipto.state_or_province', '')
+    setFieldValue('shipto.stateOrProvince', '')
   }
 
   function handleSavedContactSelectChange(name, value){
     if(value !== -1){
       let index = checkoutDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.contact_name_first', checkoutDropdownData.contacts[index].firstName)
-      setFieldValue('shipto.contact_name_last', checkoutDropdownData.contacts[index].lastName)
+      setFieldValue('shipto.contactNameFirst', checkoutDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.contactNameLast', checkoutDropdownData.contacts[index].lastName)
     } else {
       setFieldValue(name, value)
-      setFieldValue('shipto.contact_name_first', '')
-      setFieldValue('shipto.contact_name_last', '')
+      setFieldValue('shipto.contactNameFirst', '')
+      setFieldValue('shipto.contactNameLast', '')
     }
   }
   
   function handleContactChange(name, value){
     setFieldValue(name, value)
-    setFieldValue('shipto.saved_contact', -1)
+    setFieldValue('shipto.savedContact', -1)
   }
 
   return (
     <WrapForm>
       <Field 
-        name="shipto.saved_ship_to" 
+        name="shipto.savedShipTo" 
         component={SelectField} 
         options={checkoutDropdownDataLabels.shiptos}
         width="800px"
         label="Saved Ship To"
         changeFunction={handleSavedAddressSelectChange}
       /> 
-      <FormikInput label="Company Name" name="shipto.company_name" width="500px" changeFunction={handleSavedAddressChange}/>
+      <FormikInput label="Company Name" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
       <Field 
-        name="shipto.saved_contact" 
+        name="shipto.savedContact" 
         component={SelectField} 
         options={checkoutDropdownDataLabels.contacts}
         width="500px"
         label="Saved Contacts"
         changeFunction={handleSavedContactSelectChange}
       /> 
-      <FormikInput label="First Name" name="shipto.contact_name_first" changeFunction={handleContactChange}/>
-      <FormikInput label="Last Name" name="shipto.contact_name_last" changeFunction={handleContactChange}/>
+      <FormikInput label="First Name" name="shipto.contactNameFirst" changeFunction={handleContactChange}/>
+      <FormikInput label="Last Name" name="shipto.contactNameLast" changeFunction={handleContactChange}/>
       <FormikInput label="Phone" name="shipto.phone" />
       <FormikInput label="Email" name="shipto.email" />
       <FormikInput label="Address 1" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
@@ -115,7 +115,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "us" && 
         <>
           <Field 
-            name="shipto.state_or_province" 
+            name="shipto.stateOrProvince" 
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
@@ -127,7 +127,7 @@ export function ShipToForm(props) {
       {values.shipto.country  === "canada" && 
         <>
           <Field 
-            name="shipto.state_or_province" 
+            name="shipto.stateOrProvince" 
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"
@@ -148,7 +148,7 @@ export function ShipToForm(props) {
         changeFunction={handleCountryChange}
       /> 
       <Field 
-        name="shipto.carrier_name" 
+        name="shipto.carrierName" 
         component={SelectField} 
         options={checkoutDropdownDataLabels.carriers}
         placeholder="Select a Carrier"
@@ -157,14 +157,14 @@ export function ShipToForm(props) {
       <FormRow>
         <label>Ship Collect?</label>
         <Field 
-          name="shipto.is_collect" 
+          name="shipto.isCollect" 
           component={SelectField} 
           options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
           width="100px"
           isSearchable={false}
         /> 
     </FormRow>
-    {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collect_number" />}
+    {values.shipto.is_collect  === "1" && <FormikInput label="Collect Number" name="shipto.collectNumber" />}
   </WrapForm>
   )
 }

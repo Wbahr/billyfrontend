@@ -61,32 +61,32 @@ export const ShippingScheduleForm = ({
 }) => (
   <>
     <FormRow>
-      <label htmlFor="schedule.packing_basis">How do you want your order to ship?</label>
+      <label htmlFor="schedule.packingBasis">How do you want your order to ship?</label>
       <div style={{flexGrow: 99}}>
         <Field 
-          name="schedule.packing_basis" 
+          name="schedule.packingBasis" 
           component={SelectField} 
           options={packingBasis} 
           isSearchable={false}
         /> 
       </div>
     </FormRow>
-    {values.schedule.packing_basis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
-    {values.schedule.packing_basis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
-    {values.schedule.packing_basis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
-    {values.schedule.packing_basis === 4 && (
+    {values.schedule.packingBasis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
+    {values.schedule.packingBasis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items will ship complete when they all become available.</Pinfo>}
+    {values.schedule.packingBasis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
+    {values.schedule.packingBasis === 4 && (
       <>
         <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
         <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
       </>
     )}
-    {values.schedule.packing_basis === 4 &&
+    {values.schedule.packingBasis === 4 &&
       <FieldArray
-        name="schedule.cart_with_dates"
+        name="schedule.cartWithDates"
         render={arrayHelpers => (
           <div>
-            {(values.schedule.cart_with_dates && values.schedule.cart_with_dates.length > 0) ? (
-              values.schedule.cart_with_dates.map((item, index) => (
+            {(values.schedule.cartWithDates && values.schedule.cartWithDates.length > 0) ? (
+              values.schedule.cartWithDates.map((item, index) => (
                 <ShippingScheduleLine item={item} index={index}/>
               ))
             ) : (
