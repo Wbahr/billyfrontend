@@ -28,9 +28,10 @@ const SectionFields = styled.div`
 
 const LineItem = styled.div`
   display: flex;
-  border-bottom: 1px solid grey;
+  background-color: whitesmoke;
   p {
     margin: 0 4px;
+    padding: 4px 2px;
   }
 `
 
@@ -58,6 +59,7 @@ export default function ConfirmationScreen(props) {
         <SectionTitle>Shipping Schedule</SectionTitle>
         <SectionFields>
           <p>Packing Basis:{schedule.packing_basis}</p>
+          {(schedule.cart_with_dates.length > 0 && schedule.packing_basis === 4) && <p>Items</p>}
           {(schedule.cart_with_dates.length > 0 && schedule.packing_basis === 4) && CartDates}
         </SectionFields>
       </SectionContainer>
