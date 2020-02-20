@@ -112,7 +112,7 @@ export default function OrderSummary({history}) {
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
-          <p>(Calculated at Checkout)</p>
+          <p>(TBD - Calculated at Checkout)</p>
         </DivLineItem>
         <DivLineItem>
           <input placeholder='Coupon Code' value={couponCode} onChange={(e)=>setCouponCode(e.target.value)}/>

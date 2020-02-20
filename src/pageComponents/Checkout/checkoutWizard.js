@@ -97,11 +97,8 @@ export default function CheckoutWizard({step, shoppingCart, checkoutSubmit}) {
       email: ''
     },
     billing: {
-      first_name: '',
-      last_name: '',
       payment_method: '',
       po: '',
-      company_id: '',
       contact_name_first: '',
       contact_name_last: '',
       contact_id: '',
