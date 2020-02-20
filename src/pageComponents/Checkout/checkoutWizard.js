@@ -141,7 +141,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     },
     billing: {
       payment_method: '',
-      po: '',
+      purchase_order: '',
       first_name: '',
       last_name: '',
       contact_id: '',
@@ -197,4 +197,3 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 CheckoutWizard.propTypes = {
   step: PropTypes.number.isRequired
 }
-

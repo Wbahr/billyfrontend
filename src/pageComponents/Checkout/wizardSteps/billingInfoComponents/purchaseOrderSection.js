@@ -2,28 +2,25 @@ import React, {useEffect} from 'react'
 import _ from 'lodash'
 import { Field } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
-import styled from 'styled-components'
-import { injectStripe } from 'react-stripe-elements'
+// import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import SelectField from '../../../_common/formik/select'
-import StripePaymentSection from '../../uiComponents/stripePayment'
 
-const FormRow = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 24px;
-  align-items: center;
-  padding: 0 8px;
-  label {
-    margin: 4px 8px auto 4px;
-    font-style: italic;
-  }
-`
+// const FormRow = styled.div`
+//   display: flex;
+//   width: 100%;
+//   margin-top: 24px;
+//   align-items: center;
+//   padding: 0 8px;
+//   label {
+//     margin: 4px 8px auto 4px;
+//     font-style: italic;
+//   }
+// `
 
 export default function PurchaseOrderSection(props) {
   const {
     values,
-    stripe,
     setFieldValue,
     checkoutDropdownData: {
       customerPhysicalAddress
@@ -33,7 +30,6 @@ export default function PurchaseOrderSection(props) {
   useEffect(() => {
     if(!_.isNil(customerPhysicalAddress)){
       setFieldValue('billing.company_name', customerPhysicalAddress.companyName)
-      setFieldValue('billing.first_name', customerPhysicalAddress.name)
       setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
       setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
       setFieldValue('billing.city', customerPhysicalAddress.mailCity)
@@ -44,7 +40,7 @@ export default function PurchaseOrderSection(props) {
   }, [customerPhysicalAddress])
   return (
     <>
-      <FormikInput label="PO Number" name="billing.po" />
+      <FormikInput label="PO Number" name="billing.purchase_order" />
       <FormikInput label="Company Name" name="billing.company_name" width="500px"/>
       <FormikInput label="First Name" name="billing.first_name" />
       <FormikInput label="Last Name" name="billing.last_name" />
