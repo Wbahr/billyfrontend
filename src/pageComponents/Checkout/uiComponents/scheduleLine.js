@@ -176,7 +176,7 @@ export default function ShippingScheduleItem({item, index}) {
           </DivQuantity>
         </DivCol3>
         <div>
-        <Field name={`schedule.cart_with_dates.${index}.requestedShipDate`}>
+        <Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
           {({
             field,
             form,
