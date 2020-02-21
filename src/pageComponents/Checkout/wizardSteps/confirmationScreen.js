@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/checkoutDropdownData'
 
@@ -24,6 +21,9 @@ const SectionContainerHalf = styled(SectionContainer)`
 
 const DivAddressSection = styled.div`
   margin-bottom: 10px;
+  p {
+    font-size: 16px;
+  }
 `
 
 const SectionTitle = styled.p`
@@ -42,19 +42,20 @@ const SectionFields = styled.div`
   }
 `
 
+const P = styled.p`
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 6px !important;
+`
+
 const Pbold = styled.p`
   font-size: 16px;
   font-weight: 600;
   line-height: 15px;
 `
 
-const LineItem = styled.div`
+const DivTextRow = styled.div`
   display: flex;
-  background-color: whitesmoke;
-  p {
-    margin: 0 4px;
-    padding: 4px 2px;
-  }
 `
 
 export default function ConfirmationScreen(props) {
@@ -91,9 +92,9 @@ export default function ConfirmationScreen(props) {
             </DivAddressSection>
             <p>{shipto.phone}</p>
             <p>{shipto.email}</p>
-            <p>Carrier: {carrierName}</p>
-            <p>Is Collect? {shipto.isCollect === '0' ? 'No' : 'Yes'}</p>
-            {shipto.isCollect === '1' && <p>Collect Number: {shipto.collectNumber}</p>}
+            <DivTextRow><P>Carrier:</P><p>{carrierName}</p></DivTextRow>
+            <DivTextRow><P>Is Collect?</P><p>{shipto.isCollect === '0' ? 'No' : 'Yes'}</p></DivTextRow>
+            {shipto.isCollect === '1' && <DivTextRow><P>Collect Number:</P><p>{shipto.collectNumber}</p></DivTextRow>}
           </SectionFields>
         </SectionContainerHalf>
         <SectionContainerHalf>
@@ -107,16 +108,16 @@ export default function ConfirmationScreen(props) {
             </DivAddressSection>
             <p>{billing.phone}</p>
             <p>{billing.email}</p>
-            <p>Payment Method: {billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
-            {billing.paymentMethod === 'credit_card' && <p>Card Type: {billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>}
-            <p>Purchase Order: {billing.purchaseOrder}</p>
+            <DivTextRow><P>Payment Method:</P><p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p></DivTextRow>
+            {billing.paymentMethod === 'credit_card' && <DivTextRow><P>Card Type:</P><p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p></DivTextRow>}
+            <DivTextRow><P>Purchase Order:</P><p>{billing.purchaseOrder}</p></DivTextRow>
           </SectionFields>
         </SectionContainerHalf>
       </SectionRow>
       <SectionContainer>
         <SectionTitle>Shipping Schedule</SectionTitle>
         <SectionFields>
-          <p>Packing Basis: {packingBasisName}</p>
+        <DivTextRow><P>Packing Basis:</P><p>{packingBasisName}</p></DivTextRow>
         </SectionFields>
       </SectionContainer>
       <SectionContainer>
