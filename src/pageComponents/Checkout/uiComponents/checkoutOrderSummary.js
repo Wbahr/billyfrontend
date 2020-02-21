@@ -123,6 +123,10 @@ export default function CheckoutOrderSummary({history}) {
           <p>Tax</p>
           <p>(TDB)</p>
         </DivLineItem>
+        <DivLineItem>
+          <p>Shipping</p>
+          <p>(TDB)</p>
+        </DivLineItem>
         <DivLineItemTotal>
           <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>

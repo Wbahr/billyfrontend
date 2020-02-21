@@ -5,6 +5,7 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
+import { packingBasis } from '../helpers/checkoutDropdownData'
 
 const SectionRow = styled.div`
   display: flew;
@@ -21,6 +22,10 @@ const SectionContainerHalf = styled(SectionContainer)`
   width: 49%;
 `
 
+const DivAddressSection = styled.div`
+  margin-bottom: 10px;
+`
+
 const SectionTitle = styled.p`
   margin: 0;
   margin-bottom: 4px;
@@ -33,7 +38,14 @@ const SectionFields = styled.div`
     margin: 0;
     margin-bottom: 2px;
     font-size: 14px;
+    line-height: 18px;
   }
+`
+
+const Pbold = styled.p`
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 15px;
 `
 
 const LineItem = styled.div`
@@ -52,11 +64,18 @@ export default function ConfirmationScreen(props) {
       shipto,
       billing
     },
+    checkoutDropdownDataLabels
   } = props
 
   let CartDates = schedule.cartWithDates.map((item, index) => (
     <ShippingScheduleLineDisplay item={item} index={index}/>
   ))
+
+  let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasis)
+  let packingBasisName = packingBasis[packingBasisIndex].label
+
+  let carrierNameIndex = checkoutDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierName)
+  let carrierName = checkoutDropdownDataLabels.carriers[carrierNameIndex].label
 
   return(
     <>
@@ -64,13 +83,15 @@ export default function ConfirmationScreen(props) {
         <SectionContainerHalf>
           <SectionTitle>Ship To</SectionTitle>
           <SectionFields>
-            <p>{shipto.contactNameFirst} {shipto.contactNameLast}</p>
-            <p>{shipto.address1}</p>
-            <p>{shipto.address2}</p>
-            <p>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'US' : 'Canada'}</p>
-            <p>Phone: {shipto.phone}</p>
-            <p>Email: {shipto.email}</p>
-            <p>Carrier Name: {shipto.carrierName}</p>
+            <DivAddressSection>
+              <Pbold>{shipto.contactNameFirst} {shipto.contactNameLast}</Pbold>
+              <Pbold>{shipto.address1}</Pbold>
+              <Pbold>{shipto.address2}</Pbold>
+              <Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+            </DivAddressSection>
+            <p>{shipto.phone}</p>
+            <p>{shipto.email}</p>
+            <p>Carrier: {carrierName}</p>
             <p>Is Collect? {shipto.isCollect === '0' ? 'No' : 'Yes'}</p>
             {shipto.isCollect === '1' && <p>Collect Number: {shipto.collectNumber}</p>}
           </SectionFields>
@@ -78,12 +99,14 @@ export default function ConfirmationScreen(props) {
         <SectionContainerHalf>
           <SectionTitle>Bill To</SectionTitle>
           <SectionFields>
-            <p>{billing.firstName} {billing.lastName}</p>
-            <p>{billing.address1}</p>
-            <p>{billing.address2}</p>
-            <p>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'US' : 'Canada'}</p>
-            <p>Phone: {billing.phone}</p>
-            <p>Email: {billing.email}</p>
+            <DivAddressSection>
+              <Pbold>{billing.firstName} {billing.lastName}</Pbold>
+              <Pbold>{billing.address1}</Pbold>
+              <Pbold>{billing.address2}</Pbold>
+              <Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+            </DivAddressSection>
+            <p>{billing.phone}</p>
+            <p>{billing.email}</p>
             <p>Payment Method: {billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
             {billing.paymentMethod === 'credit_card' && <p>Card Type: {billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>}
             <p>Purchase Order: {billing.purchaseOrder}</p>
@@ -93,7 +116,7 @@ export default function ConfirmationScreen(props) {
       <SectionContainer>
         <SectionTitle>Shipping Schedule</SectionTitle>
         <SectionFields>
-          <p>Packing Basis:{schedule.packingBasis}</p>
+          <p>Packing Basis: {packingBasisName}</p>
         </SectionFields>
       </SectionContainer>
       <SectionContainer>

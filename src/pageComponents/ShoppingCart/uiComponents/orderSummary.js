@@ -115,6 +115,10 @@ export default function OrderSummary({history}) {
           <p>(TBD - Calculated at Checkout)</p>
         </DivLineItem>
         <DivLineItem>
+          <p>Shipping</p>
+          <p>(TBD)</p>
+        </DivLineItem>
+        <DivLineItem>
           <input placeholder='Coupon Code' value={couponCode} onChange={(e)=>setCouponCode(e.target.value)}/>
           <button>Apply</button>
         </DivLineItem>   

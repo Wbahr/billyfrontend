@@ -4,6 +4,7 @@ import { Field, FieldArray } from 'formik'
 import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
+import { packingBasis } from '../helpers/checkoutDropdownData'
 
 const FormRow = styled.div`
   display: flex;
@@ -42,13 +43,6 @@ const DivScheduleHeader = styled.div`
     margin: 0;
   }
 `
-
-const packingBasis = [
-  {'value': 1, 'label': 'Ship Complete'},
-  {'value': 2, 'label': 'Ship in Two Shipments'},
-  {'value': 3, 'label': 'Ship when Ready'},
-  {'value': 4, 'label': 'Schedule by Line'}
-]
 
 export const ShippingScheduleForm = ({
   handleSubmit,

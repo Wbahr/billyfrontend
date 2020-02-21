@@ -50,7 +50,7 @@ export default function PurchaseOrderSection(props) {
       {values.billing.country  === "us" && 
         <>
           <Field 
-            name="billing.state" 
+            name="billing.stateOrProvince" 
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
@@ -61,7 +61,7 @@ export default function PurchaseOrderSection(props) {
       {values.billing.country  === "canada" && 
         <>
           <Field 
-            name="billing.province" 
+            name="billing.stateOrProvince" 
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"

@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -60,7 +61,6 @@ const DivCol2 = styled.div`
 
 const DivCol3 = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   flex-grow: 99;
 `
@@ -72,6 +72,11 @@ const Img = styled.img`
 const Label = styled.label`
   margin: 0;
   font-size: 14px;
+`
+
+const LabelBold = styled(Label)`
+  font-weight: 600;
+  font-size: 16px;
 `
 
 const P1 = styled.p`
@@ -132,6 +137,7 @@ export default function ShippingScheduleItem({item, index}) {
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.itemDetails)) {
+        console.log('result.itemDetails', result.itemDetails)
         setItem(result.itemDetails)
       } else {
         setItem({})
@@ -169,7 +175,17 @@ export default function ShippingScheduleItem({item, index}) {
         <DivCol3>
           <DivQuantity>
             <DivItem>
+              <Label>{formatCurrency(itemDetails.listPrice)}/each</Label>
+            </DivItem>
+          </DivQuantity>
+          <DivQuantity>
+            <DivItem>
               <Label>Qty: {item.quantity}</Label>
+            </DivItem>
+          </DivQuantity>
+          <DivQuantity>
+            <DivItem>
+              <LabelBold>{formatCurrency(Number(item.quantity) * Number(itemDetails.listPrice))}</LabelBold>
             </DivItem>
           </DivQuantity>
         </DivCol3>
