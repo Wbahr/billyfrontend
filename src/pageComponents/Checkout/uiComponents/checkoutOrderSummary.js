@@ -76,34 +76,6 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-const DivQuoteButton = styled(DivCheckoutButton)`
-  background-image: none;
-  background-color: #535353;
-`
-
-const H5 = styled.h5`
-  margin: 0 0 2px 4px;
-`
-
-const Ashare = styled.a`
-  margin-right: 4px
-`
-
-const DivShare = styled.div`
-  cursor: pointer;
-  margin-right: 4px;
-`
-
-const DivShoppingCartCol = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const DivOrderTotalCol = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
 export default function CheckoutOrderSummary({history}) {
   const context = useContext(Context)
 
