@@ -122,10 +122,10 @@ export default function CheckoutPage({history}) {
             {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} triggerSubmit={triggerSubmit} submitForm={(formValues)=>handleCheckoutSubmit(formValues)}/>)}
           </Context.Consumer>
           <DivNavigation>
-            {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}>Back to Cart</ButtonBlack>}
+            {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>  Back to Cart</ButtonBlack>}
             {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
             {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{setTriggerSubmit(true)}}>Submit</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
           </DivNavigation>
         </Container>
       </DivCheckoutCol>
