@@ -44,25 +44,33 @@ const DivScheduleHeader = styled.div`
   }
 `
 
-export const ShippingScheduleForm = ({
-  handleSubmit,
-  handleChange,
-  handleBlur,
-  values,
-  errors
-}) => (
-  <>
-    <FormRow>
-      <label htmlFor="schedule.packingBasis">How do you want your order to ship?*</label>
-      <div style={{flexGrow: 99}}>
-        <Field 
-          name="schedule.packingBasis" 
-          component={SelectField} 
-          options={packingBasis} 
-          isSearchable={false}
-        /> 
-      </div>
-    </FormRow>
+export function ShippingScheduleForm(props){
+  const {
+    values, 
+    setFieldValue
+  } = props
+  
+  function handlePackingBasisChange(name, value){
+    setFieldValue(name, value)
+    let packingBasisIndex = packingBasis.findIndex(elem => elem.value === value)
+    let packingBasisName = packingBasis[packingBasisIndex].apiValue
+    setFieldValue('schedule.packingBasis', packingBasisName)
+  }
+  return(
+    <>
+      <FormRow>
+        <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
+        <div style={{flexGrow: 99}}>
+          <Field 
+            name="schedule.packingBasisName" 
+            component={SelectField} 
+            options={packingBasis} 
+            isSearchable={false}
+            changeFunction={handlePackingBasisChange}
+          /> 
+          <FormikInput type="hidden" name="schedule.packingBasis" />
+        </div>
+      </FormRow>
     {values.schedule.packingBasis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
     {values.schedule.packingBasis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>}
     {values.schedule.packingBasis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
@@ -89,4 +97,5 @@ export const ShippingScheduleForm = ({
       />
     }
     </>
-)
+  )
+}
