@@ -110,7 +110,7 @@ export default function SubtotalBox({history}) {
               <FontAwesomeIcon icon="lock" color="white"/>
               <p>Start Secure Checkout</p>
             </DivCheckoutButton>
-            <DivQuoteButton>
+            <DivQuoteButton onClick={()=>history.push('/quote')}>
               <p>Create a Quote</p>
             </DivQuoteButton>
             <DivShoppinglistButton>
