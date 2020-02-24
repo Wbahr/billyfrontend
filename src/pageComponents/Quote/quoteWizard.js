@@ -10,9 +10,8 @@ import {Elements} from 'react-stripe-elements';
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
-import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
-import formatDropdownData from './helpers/formatCheckoutDropdownData'
+import formatDropdownData from './helpers/formatQuoteDropdownData'
 import Context from '../../config/context'
 
 const GET_CHECKOUT_DATA = gql`
@@ -137,22 +136,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       carrierId: '',
       isCollect: '0',
       collectNumber: ''
-    },
-    billing: {
-      paymentMethod: '',
-      purchaseOrder: '',
-      firstName: '',
-      lastName: '',
-      contactId: '',
-      address1: '',
-      address2: '',
-      city: '',
-      stateOrProvince: '',
-      zip: '',
-      country: 'us',
-      phone: '',
-      email: '',
-      cardType: 'new_card'
     }
   }
 
@@ -170,9 +153,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       FormStep = ShipToForm
       break
     case 2:
-      FormStep = BillingInfoForm
-      break
-    case 3:
       FormStep = ConfirmationScreen
       break
   }
@@ -186,8 +166,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       {formikProps => (
         console.log('errors',formikProps.errors),
         <Elements>
-          <form name="checkoutForm" {...formikProps}>
-            <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
+          <form name="quoteForm" {...formikProps}>
+            <FormStep {...formikProps} quoteDropdownDataLabels={checkoutDropdownDataLabels} quoteDropdownData={checkoutDropdownData}/>
             {triggerSubmit && <AutoSubmit/>}
           </form>
         </Elements>

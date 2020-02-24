@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
+// import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag'
+// import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+// import gql from 'graphql-tag'
 import Context from '../../../config/context'
-import ShoppingCartItem from './shoppingCartItem'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 350px;
+  height: max-content;
   margin-left: auto;
   padding: 16px;
   align-items: flex-end;
   position: -webkit-sticky;
   position: sticky;
   top: 125px;
+  margin-top: 85px;
   border: 1px solid lightgrey;
 `
 
@@ -58,8 +57,9 @@ const DivCheckoutButton = styled.div`
 const DivLineItem = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 300px;
+  width: 90%;
   min-width: 250px;
+  align-self: center;
   p {
     margin: 0;
   }
@@ -76,19 +76,13 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-const DivQuoteButton = styled(DivCheckoutButton)`
-  background-image: none;
-  background-color: #535353;
-`
-
-export default function OrderSummary({history}) {
-  const [couponCode, setCouponCode] = useState('')
+export default function CheckoutOrderSummary({history}) {
   const context = useContext(Context)
 
   return(
     <>
       <Div>
-        <H4>Order Summary</H4>
+        <H4>Quote Summary</H4>
         <DivLineItem>
           <p>Subtotal</p>
           <p>{formatCurrency(context.cartPricing.subTotal)}</p>
@@ -99,31 +93,15 @@ export default function OrderSummary({history}) {
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
-          <p>(TBD - At Checkout)</p>
+          <p>(TDB)</p>
         </DivLineItem>
         <DivLineItem>
           <p>Shipping</p>
-          <p>(TBD)</p>
+          <p>(TDB)</p>
         </DivLineItem>
-        {/* <DivLineItem>
-          <input placeholder='Coupon Code' value={couponCode} onChange={(e)=>setCouponCode(e.target.value)}/>
-          <button>Apply</button>
-        </DivLineItem>    */}
         <DivLineItemTotal>
-          <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
+          <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>
-        {context.cart.length > -1 &&
-          <DivButtonContainer>
-            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-              <FontAwesomeIcon icon="lock" color="white"/>
-              <p>Start Secure Checkout</p>
-            </DivCheckoutButton>
-            <DivQuoteButton onClick={()=>history.push('/quote')}>
-              <p>Create a Quote</p>
-            </DivQuoteButton>
-          </DivButtonContainer>
-        }
-
       </Div>
     </>
   )

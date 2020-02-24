@@ -251,7 +251,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
         <DivCol1>
-          <Img height='80px'  src={imagePath} />
+          <Img max-height='100%' max-width='100%' src={imagePath} />
         </DivCol1>
         <DivCol2>
           <P1>{itemDetails.itemDesc}</P1>

@@ -4,7 +4,7 @@ import { Field, FieldArray } from 'formik'
 import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
-import { packingBasis } from '../helpers/checkoutDropdownData'
+import { packingBasis } from '../helpers/quoteDropdownData'
 
 const FormRow = styled.div`
   display: flex;
@@ -49,9 +49,7 @@ export const ShippingScheduleForm = ({
   handleChange,
   handleBlur,
   values,
-  errors,
-  checkoutDropdownDataLabels, 
-  checkoutDropdownData
+  errors
 }) => (
   <>
     <FormRow>

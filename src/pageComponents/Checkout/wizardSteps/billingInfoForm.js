@@ -36,7 +36,7 @@ function BillingInfoForm(props) {
   return (
     <WrapForm>
       <FormRow>
-        <label htmlFor="paymentMethod">How would you like to pay?</label>
+        <label htmlFor="paymentMethod">How would you like to pay?*</label>
         <Field 
           name="billing.paymentMethod" 
           component={SelectField} 
@@ -47,7 +47,7 @@ function BillingInfoForm(props) {
       </FormRow>
       {values.billing.paymentMethod === "credit_card" &&
         <FormRow>
-        <label htmlFor="card_type">New or Saved Card?</label>
+        <label htmlFor="card_type">New or Saved Card?*</label>
         <Field 
           name="billing.cardType" 
           component={SelectField} 

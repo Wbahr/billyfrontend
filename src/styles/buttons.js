@@ -11,7 +11,7 @@ import styled from 'styled-components'
 //   border-radius: 3px;
 // `
 
-export const ButtonRed = styled.div`
+export const ButtonRed = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,9 +24,17 @@ export const ButtonRed = styled.div`
   font-size: 20px;
   font-family: Proxima;
   font-weight: 600;
+  border: none;
+  &:disabled {
+    cursor: default;
+    background-image: linear-gradient(to top left, grey, darkgrey);
+  }
+  svg {
+    margin-right: 5px;
+  }
 `
 
-export const ButtonBlack = styled.div`
+export const ButtonBlack = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -37,6 +45,7 @@ export const ButtonBlack = styled.div`
   font-size: 20px;
   font-family: Proxima;
   font-weight: 600;
+  border: none;
   svg {
     margin-right: 5px;
   }

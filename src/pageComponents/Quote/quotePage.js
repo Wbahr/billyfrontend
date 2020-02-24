@@ -5,11 +5,11 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
-import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
-import CheckoutWizard from './checkoutWizard'
+import CheckoutOrderSummary from './uiComponents/quoteOrderSummary'
+import QuoteWizard from './quoteWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
-import CheckoutProgress from './uiComponents/checkoutProgress'
+import QuoteProgress from './uiComponents/quoteProgress'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 
 const DivContainer = styled.div`
@@ -93,20 +93,18 @@ const Pformheader = styled.p`
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
-  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
+  const stepLabel = ['Shipping Schedule','Ship To','Quote Review']
   const [stepValidated, setStepValidated] = useState(
     {
       0: false,
       1: false,
-      2: false,
-      3: false
+      2: false
     }
   )
 
   const YupSchema = {
     0: shippingScheduleSchema, 
-    1: shipToSchema, 
-    2: billToSchema
+    1: shipToSchema
   }
 
   function handleMoveStep(requestedStep){
@@ -134,16 +132,15 @@ export default function CheckoutPage({history}) {
       <DivCheckoutCol>
         <Div>
           <DivRow>
-            <FontAwesomeIcon icon="lock" />
-            <H3>Checkout</H3>
-            <CheckoutProgress stepLabels={stepLabel} step={currentStep} stepValidated={stepValidated} clickMoveToStep={(index)=>handleMoveStep(index)}/>
+            <H3>Create a Quote</H3>
+            <QuoteProgress stepLabels={stepLabel} step={currentStep} stepValidated={stepValidated} clickMoveToStep={(index)=>handleMoveStep(index)}/>
           </DivRow>
         </Div>
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
             {({cart}) => (
-            <CheckoutWizard 
+            <QuoteWizard 
               step={currentStep} 
               shoppingCart={cart} 
               triggerSubmit={triggerSubmit} 
@@ -156,7 +153,7 @@ export default function CheckoutPage({history}) {
             {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>Back to Cart</ButtonBlack>}
             {currentStep > 0 && <ButtonBlack onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
             {currentStep < (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-            {currentStep === (stepLabel.length - 1) && <ButtonRed onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='file-invoice-dollar' size="sm" color="white"/>Create Quote</ButtonRed>}
           </DivNavigation>
         </Container>
       </DivCheckoutCol>
