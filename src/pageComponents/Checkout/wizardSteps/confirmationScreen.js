@@ -75,8 +75,8 @@ export default function ConfirmationScreen(props) {
   let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)
   let packingBasisName = packingBasis[packingBasisIndex].label
 
-  let carrierNameIndex = checkoutDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierName)
-  let carrierName = checkoutDropdownDataLabels.carriers[carrierNameIndex].label
+  let carrierIdIndex = checkoutDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierId)
+  let carrierName = checkoutDropdownDataLabels.carriers[carrierIdIndex].label
 
   return(
     <>

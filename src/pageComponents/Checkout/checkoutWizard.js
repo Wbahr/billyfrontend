@@ -116,6 +116,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     schedule: {
+      packingBasisName: '',
       packingBasis: '0',
       cartWithDates: shoppingCartAndDatesObj,
       shoppingCartToken: localStorage.getItem('shoppingCartToken')
@@ -133,7 +134,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       country: 'us',
       phone: '',
       email: '',
-      carrierName: '',
       carrierId: '',
       isCollect: '0',
       collectNumber: ''
