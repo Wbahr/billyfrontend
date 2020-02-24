@@ -133,7 +133,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       country: 'us',
       phone: '',
       email: '',
-      carrierName: '',
       carrierId: '',
       isCollect: '0',
       collectNumber: ''

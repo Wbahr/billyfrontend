@@ -45,7 +45,7 @@ export const shipToSchema = object({
     email: string()
       .email()
       .required(),
-    carrierName: string()
+    carrierId: string()
       .required()
   })
 })

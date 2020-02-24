@@ -148,7 +148,7 @@ export function ShipToForm(props) {
         changeFunction={handleCountryChange}
       /> 
       <Field 
-        name="shipto.carrierName" 
+        name="shipto.carrierId" 
         component={SelectField} 
         options={quoteDropdownDataLabels.carriers}
         placeholder="Select a Carrier"
