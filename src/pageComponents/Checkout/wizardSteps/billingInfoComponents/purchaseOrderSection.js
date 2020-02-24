@@ -40,13 +40,13 @@ export default function PurchaseOrderSection(props) {
   }, [customerPhysicalAddress])
   return (
     <>
-      <FormikInput label="PO Number" name="billing.purchaseOrder" />
-      <FormikInput label="Company Name" name="billing.companyName" width="500px"/>
-      <FormikInput label="First Name" name="billing.firstName" />
-      <FormikInput label="Last Name" name="billing.lastName" />
-      <FormikInput label="Address 1" name="billing.address1" width="600px"/>
+      <FormikInput label="PO Number*" name="billing.purchaseOrder" />
+      <FormikInput label="Company Name*" name="billing.companyName" width="500px"/>
+      <FormikInput label="First Name*" name="billing.firstName" />
+      <FormikInput label="Last Name*" name="billing.lastName" />
+      <FormikInput label="Address 1*" name="billing.address1" width="600px"/>
       <FormikInput label="Address 2" name="billing.address2" width="600px"/>
-      <FormikInput label="City" name="billing.city" />
+      <FormikInput label="City*" name="billing.city" />
       {values.billing.country  === "us" && 
         <>
           <Field 
@@ -54,7 +54,7 @@ export default function PurchaseOrderSection(props) {
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
-            label="State"
+            label="State*"
           /> 
         </>
       }
@@ -65,7 +65,7 @@ export default function PurchaseOrderSection(props) {
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"
-            label="Province"
+            label="Province*"
           /> 
         </>
       }
@@ -77,10 +77,10 @@ export default function PurchaseOrderSection(props) {
         placeholder="Select a Country"
         width="250px"
         isSearchable={false}
-        label="Country"
+        label="Country*"
       /> 
-      <FormikInput label='Email Invoice To' name="billing.email" /> 
-      <FormikInput label="Phone" name="billing.phone" />
+      <FormikInput label='Email Invoice To*' name="billing.email" /> 
+      <FormikInput label="Phone*" name="billing.phone" />
     </>
   )
 }

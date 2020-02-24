@@ -96,7 +96,7 @@ export function ShipToForm(props) {
         label="Saved Ship To"
         changeFunction={handleSavedAddressSelectChange}
       /> 
-      <FormikInput label="Company Name" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
+      <FormikInput label="Company Name*" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
       <Field 
         name="shipto.savedContact" 
         component={SelectField} 
@@ -105,13 +105,13 @@ export function ShipToForm(props) {
         label="Saved Contacts"
         changeFunction={handleSavedContactSelectChange}
       /> 
-      <FormikInput label="First Name" name="shipto.contactNameFirst" changeFunction={handleContactChange}/>
-      <FormikInput label="Last Name" name="shipto.contactNameLast" changeFunction={handleContactChange}/>
-      <FormikInput label="Phone" name="shipto.phone" />
-      <FormikInput label="Email" name="shipto.email" />
-      <FormikInput label="Address 1" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
+      <FormikInput label="First Name*" name="shipto.contactNameFirst" changeFunction={handleContactChange}/>
+      <FormikInput label="Last Name*" name="shipto.contactNameLast" changeFunction={handleContactChange}/>
+      <FormikInput label="Phone*" name="shipto.phone" />
+      <FormikInput label="Email*" name="shipto.email" />
+      <FormikInput label="Address 1*" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="Address 2" name="shipto.address2" width="600px" changeFunction={handleSavedAddressChange}/>
-      <FormikInput label="City" name="shipto.city" changeFunction={handleSavedAddressChange}/>
+      <FormikInput label="City*" name="shipto.city" changeFunction={handleSavedAddressChange}/>
       {values.shipto.country  === "us" && 
         <>
           <Field 
@@ -119,7 +119,7 @@ export function ShipToForm(props) {
             component={SelectField} 
             options={StateList}
             placeholder="Select a State"
-            label="State"
+            label="State*"
             changeFunction={handleSavedAddressChange}
           /> 
         </>
@@ -131,12 +131,12 @@ export function ShipToForm(props) {
             component={SelectField} 
             options={CanadianProvinceList}
             placeholder="Select a Province"
-            label="Province"
+            label="Province*"
             changeFunction={handleSavedAddressChange}
           /> 
         </>
       }
-      <FormikInput label="Zip" name="shipto.zip" />    
+      <FormikInput label="Zip*" name="shipto.zip" />    
       <Field 
         name="shipto.country" 
         component={SelectField} 
@@ -152,7 +152,7 @@ export function ShipToForm(props) {
         component={SelectField} 
         options={checkoutDropdownDataLabels.carriers}
         placeholder="Select a Carrier"
-        label="Carrier"
+        label="Carrier*"
       /> 
       <FormRow>
         <label>Ship Collect?</label>
@@ -164,7 +164,7 @@ export function ShipToForm(props) {
           isSearchable={false}
         /> 
     </FormRow>
-    {values.shipto.isCollect  === "1" && <FormikInput label="Collect Number" name="shipto.collectNumber" />}
+    {values.shipto.isCollect  === "1" && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
   </WrapForm>
   )
 }

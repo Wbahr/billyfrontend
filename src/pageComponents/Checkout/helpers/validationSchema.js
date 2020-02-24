@@ -11,17 +11,15 @@ export const shippingScheduleSchema = object({
 // Step 2
 export const shipToSchema = object({
   shipto: object({
-    saved_ship_to: string()
-      .required(),
-    company_name: string()
+    companyName: string()
       .min(3)
       .max(256)
       .required(),
-    contact_name_first: string()
+    contactNameFirst: string()
       .min(3)
       .max(50)
       .required(),
-    contact_name_last: string()
+    contactNameLast: string()
       .min(3)
       .max(50)
       .required(),
@@ -36,8 +34,7 @@ export const shipToSchema = object({
       .min(3)
       .max(100)
       .required(),
-    state: string(),
-    province: string(),
+    stateOrProvince: string(),
     zip: string()
       .min(5)
       .max(10)
@@ -54,17 +51,15 @@ export const shipToSchema = object({
 // Step 3
 export const billToSchema = object({
   billing: object({
-    saved_ship_to: string()
-      .required(),
-    company_name: string()
+    companyName: string()
       .min(3)
       .max(256)
       .required(),
-    contact_name_first: string()
+    firstName: string()
       .min(3)
       .max(50)
       .required(),
-    contact_name_last: string()
+    lastName: string()
       .min(3)
       .max(50)
       .required(),
@@ -79,8 +74,7 @@ export const billToSchema = object({
       .min(3)
       .max(100)
       .required(),
-    state: string(),
-    province: string(),
+    stateOrProvince: string(),
     zip: string()
       .min(5)
       .max(10)
