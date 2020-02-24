@@ -14,6 +14,7 @@ import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import Quote from '../pageComponents/Quote/quotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
@@ -71,6 +72,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
         <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
         <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/quote' component={Quote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>

@@ -29,22 +29,22 @@ export function ShipToForm(props) {
     handleBlur, 
     values, 
     errors, 
-    checkoutDropdownDataLabels, 
-    checkoutDropdownData,
+    quoteDropdownDataLabels, 
+    quoteDropdownData,
     setFieldValue
   } = props
 
   function handleSavedAddressSelectChange(name, value){
     if(value !== -1){
-      let index = checkoutDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
+      let index = quoteDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].mailCountry.toLowerCase())
-      setFieldValue('shipto.companyName', checkoutDropdownData.shipToAddresses[index].companyName)
-      setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].mailAddress1)
-      setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].mailAddress2)
-      setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
-      setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
-      setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
+      setFieldValue('shipto.country', quoteDropdownData.shipToAddresses[index].mailCountry.toLowerCase())
+      setFieldValue('shipto.companyName', quoteDropdownData.shipToAddresses[index].companyName)
+      setFieldValue('shipto.address1', quoteDropdownData.shipToAddresses[index].mailAddress1)
+      setFieldValue('shipto.address2', quoteDropdownData.shipToAddresses[index].mailAddress2)
+      setFieldValue('shipto.city', quoteDropdownData.shipToAddresses[index].mailCity)
+      setFieldValue('shipto.stateOrProvince', quoteDropdownData.shipToAddresses[index].mailState)
+      setFieldValue('shipto.zip', quoteDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.country', 'us')
@@ -70,10 +70,10 @@ export function ShipToForm(props) {
 
   function handleSavedContactSelectChange(name, value){
     if(value !== -1){
-      let index = checkoutDropdownData.contacts.findIndex(elem => elem.id === value)
+      let index = quoteDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.contactNameFirst', checkoutDropdownData.contacts[index].firstName)
-      setFieldValue('shipto.contactNameLast', checkoutDropdownData.contacts[index].lastName)
+      setFieldValue('shipto.contactNameFirst', quoteDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.contactNameLast', quoteDropdownData.contacts[index].lastName)
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.contactNameFirst', '')
@@ -91,7 +91,7 @@ export function ShipToForm(props) {
       <Field 
         name="shipto.savedShipTo" 
         component={SelectField} 
-        options={checkoutDropdownDataLabels.shiptos}
+        options={quoteDropdownDataLabels.shiptos}
         width="800px"
         label="Saved Ship To"
         changeFunction={handleSavedAddressSelectChange}
@@ -100,7 +100,7 @@ export function ShipToForm(props) {
       <Field 
         name="shipto.savedContact" 
         component={SelectField} 
-        options={checkoutDropdownDataLabels.contacts}
+        options={quoteDropdownDataLabels.contacts}
         width="500px"
         label="Saved Contacts"
         changeFunction={handleSavedContactSelectChange}
@@ -150,7 +150,7 @@ export function ShipToForm(props) {
       <Field 
         name="shipto.carrierName" 
         component={SelectField} 
-        options={checkoutDropdownDataLabels.carriers}
+        options={quoteDropdownDataLabels.carriers}
         placeholder="Select a Carrier"
         label="Carrier*"
       /> 

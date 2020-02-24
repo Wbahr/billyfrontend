@@ -152,10 +152,6 @@ export const StateList = [
       "value": "OR"
   },
   {
-      "label": "Palau",
-      "value": "PW"
-  },
-  {
       "label": "Pennsylvania",
       "value": "PA"
   },
