@@ -29,6 +29,9 @@ export const ButtonRed = styled.button`
     cursor: default;
     background-image: linear-gradient(to top left, grey, darkgrey);
   }
+  svg {
+    margin-right: 5px;
+  }
 `
 
 export const ButtonBlack = styled.button`

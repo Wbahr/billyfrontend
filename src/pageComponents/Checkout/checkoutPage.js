@@ -156,7 +156,7 @@ export default function CheckoutPage({history}) {
             {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>Back to Cart</ButtonBlack>}
             {currentStep > 0 && <ButtonBlack onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
             {currentStep < (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-            {currentStep === (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
           </DivNavigation>
         </Container>
       </DivCheckoutCol>
