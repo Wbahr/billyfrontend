@@ -67,7 +67,7 @@ export default function ConfirmationScreen(props) {
     <ShippingScheduleLineDisplay item={item} index={index}/>
   ))
 
-  let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasis)
+  let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)
   let packingBasisName = packingBasis[packingBasisIndex].label
 
   let carrierNameIndex = quoteDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierName)
