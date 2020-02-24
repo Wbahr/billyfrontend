@@ -6,7 +6,6 @@ import _ from 'lodash'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
-import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 import {Elements} from 'react-stripe-elements';
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
@@ -76,7 +75,7 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm}) {
+export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
@@ -181,8 +180,11 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     <Formik 
       initialValues={initValues}
       enableReinitialize={true}
+      validationSchema={YupSchema[step]}
+      validate={(values)=>handleValidateFields(values)}
     >
       {formikProps => (
+        console.log('errors',formikProps.errors),
         <Elements>
           <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>

@@ -55,7 +55,7 @@ export const ShippingScheduleForm = ({
 }) => (
   <>
     <FormRow>
-      <label htmlFor="schedule.packingBasis">How do you want your order to ship?</label>
+      <label htmlFor="schedule.packingBasis">How do you want your order to ship?*</label>
       <div style={{flexGrow: 99}}>
         <Field 
           name="schedule.packingBasis" 

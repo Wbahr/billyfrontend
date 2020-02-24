@@ -10,6 +10,7 @@ import CheckoutWizard from './checkoutWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
+import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 
 const DivContainer = styled.div`
   display: flex;
@@ -91,14 +92,36 @@ const Pformheader = styled.p`
 
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
-  const [disablePrevious, setDisablePrevious] = useState(false)
-  const [disableNext, setDisableNext] = useState(false)
-  const [disableSubmit, setDisableSubmit] = useState(false)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
+  const [stepValidated, setStepValidated] = useState(
+    {
+      0: false,
+      1: false,
+      2: false,
+      3: false
+    }
+  )
+
+  const YupSchema = {
+    0: shippingScheduleSchema, 
+    1: shipToSchema, 
+    2: billToSchema
+  }
 
   function handleMoveStep(requestedStep){
-    setCurrentStep(requestedStep)
+    if(requestedStep === 0 || stepValidated[requestedStep - 1]){
+      setCurrentStep(requestedStep)
+    }
+  }
+
+  function handleValidateFields(values){
+    YupSchema[currentStep].isValid(values).then(function(valid) {
+      setStepValidated({
+        ...stepValidated,
+        [currentStep]: values
+      })
+    })
   }
 
   function handleCheckoutSubmit(formValues){
@@ -113,19 +136,27 @@ export default function CheckoutPage({history}) {
           <DivRow>
             <FontAwesomeIcon icon="lock" />
             <H3>Checkout</H3>
-            <CheckoutProgress stepLabels={stepLabel} step={currentStep} clickMoveToStep={(index)=>handleMoveStep(index)}/>
+            <CheckoutProgress stepLabels={stepLabel} step={currentStep} stepValidated={stepValidated} clickMoveToStep={(index)=>handleMoveStep(index)}/>
           </DivRow>
         </Div>
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
-            {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart} triggerSubmit={triggerSubmit} submitForm={(formValues)=>handleCheckoutSubmit(formValues)}/>)}
+            {({cart}) => (
+            <CheckoutWizard 
+              step={currentStep} 
+              shoppingCart={cart} 
+              triggerSubmit={triggerSubmit} 
+              YupSchema={YupSchema}
+              handleValidateFields={(values)=>handleValidateFields(values)}
+              submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
+            />)}
           </Context.Consumer>
           <DivNavigation>
             {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>Back to Cart</ButtonBlack>}
-            {currentStep > 0 && <ButtonBlack disable={disablePrevious} onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
-            {currentStep < (stepLabel.length - 1) && <ButtonRed disable={disableNext} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-            {currentStep === (stepLabel.length - 1) && <ButtonRed disable={disableSubmit} onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
+            {currentStep > 0 && <ButtonBlack onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
+            {currentStep < (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
           </DivNavigation>
         </Container>
       </DivCheckoutCol>
