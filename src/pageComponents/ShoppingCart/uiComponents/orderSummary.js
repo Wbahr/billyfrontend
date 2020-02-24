@@ -119,6 +119,7 @@ export default function OrderSummary({history}) {
               <p>Start Secure Checkout</p>
             </DivCheckoutButton>
             <DivQuoteButton onClick={()=>history.push('/create-quote')}>
+              <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
               <p>Create a Quote</p>
             </DivQuoteButton>
           </DivButtonContainer>
