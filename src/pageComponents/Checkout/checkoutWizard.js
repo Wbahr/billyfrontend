@@ -116,6 +116,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     schedule: {
+      packingBasisName: '',
       packingBasis: '0',
       cartWithDates: shoppingCartAndDatesObj,
       shoppingCartToken: localStorage.getItem('shoppingCartToken')
