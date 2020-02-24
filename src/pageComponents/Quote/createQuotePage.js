@@ -10,7 +10,7 @@ import QuoteWizard from './quoteWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import QuoteProgress from './uiComponents/quoteProgress'
-import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
+import { shippingScheduleSchema, shipToSchema } from './helpers/validationSchema'
 
 const DivContainer = styled.div`
   display: flex;
