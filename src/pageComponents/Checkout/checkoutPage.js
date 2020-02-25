@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
@@ -91,12 +91,21 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
+const SUBMIT_ORDER = gql`
+  mutation SubmitOrder($order: OrderInputDataInputGraphType){
+    submitOrder(orderInput: $order){
+      transactionId
+      messages
+    } 
+  }
+`
+
 function CheckoutPage(props) {
   const {
     history,
     formik
   } = props
-  
+
   const [currentStep, setCurrentStep] = useState(0)
   const [possibleTaxChange, setPossibleTaxChange] = useState(false)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
@@ -116,8 +125,16 @@ function CheckoutPage(props) {
     2: billToSchema
   }
 
+  const [submitOrder] = useMutation(SUBMIT_ORDER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      console.log('submitOrder $$$$$', data)
+    }
+  })
+
   useEffect(() => {
-    console.log('formik', formik)
+    // const touch = getIn(props.formik.touched, props.name)
+    // console.log('formik ->', touch)
     // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
     if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
       updateTaxes(zipcode, shipToId)
@@ -144,8 +161,9 @@ function CheckoutPage(props) {
   }
 
   function handleCheckoutSubmit(formValues){
-    let mutatedFormValues = formValues
-    console.log('mutatedFormValues', mutatedFormValues)
+    submitOrder({ variables: { 
+      order: {formValues}} 
+    })
   }
   
   return(
