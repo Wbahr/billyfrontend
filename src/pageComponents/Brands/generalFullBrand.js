@@ -1,25 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
 import { StyledText0 } from '../../styles/fonts'
-import SectionHeader from '../_common/sectionHeader'
-import Rexroth  from './featuredBrandsPage/rexroth'
-import Eaton from './featuredBrandsPages/eaton'
-import Parker from './featuredBrandsPages/parker'
-import Smc from './featuredBrandsPages/smc'
-import Hydac from './featuredBrandsPage/hydac'
-import Omron from './featuredBrandsPages/omron'
-import Lincoln from './featuredBrandsPages/lincoln'
-import Haskel from './featuredBrandsPages/haskel'
-import Butech from './featuredBrandsPages/butech'
-import Clippard from './featuredBrandsPages/clippard'
-import Paccar from './featuredBrandsPages/paccar'
-import Rittal from './featuredBrandsPages/rittal'
-import Schmersal from './featuredBrandsPages/schmersal'
-import Ross from './featuredBrandsPages/ross'
-import Abb from './featuredBrandsPages/abb'
-import Orientalmotor from './featuredBrandsPages/orientalmotor'
-import Aventics from './featuredBrandsPages/adventics'
-import PhoenixContact from './featuredBrandsPages/phoenixContact'
+import RexrothPage  from './featuredBrandsPages/rexroth'
+import EatonPage from './featuredBrandsPages/eaton'
+import ParkerPage from './featuredBrandsPages/parker'
+import SmcPage from './featuredBrandsPages/smc'
+import HydacPage from './featuredBrandsPages/hydac'
+import OmronPage from './featuredBrandsPages/omron'
+import LincolnPage from './featuredBrandsPages/lincoln'
+import HaskelPage from './featuredBrandsPages/haskel'
+import ButechPage from './featuredBrandsPages/butech'
+import ClippardPage from './featuredBrandsPages/clippard'
+import PaccarPage from './featuredBrandsPages/paccar'
+import RittalPage from './featuredBrandsPages/rittal'
+import SchmersalPage from './featuredBrandsPages/schmersal'
+import RossPage from './featuredBrandsPages/ross'
+import AbbPage from './featuredBrandsPages/abb'
+import OrientalmotorPage from './featuredBrandsPages/orientalmotor'
+import AventicsPage from './featuredBrandsPages/adventics'
+import PhoenixContactPage from './featuredBrandsPages/phoenixContact'
 // import _ from 'lodash'
 
 const DivRow = styled.div`
@@ -63,79 +62,8 @@ const DivProductDetail = styled.div`
   padding: 0 25px;
 `
 
-class GeneralFullBrand extends React.Component {
-  componentWillMount(){
-    console.log('brand: abb ',this.props.brand)
-  }
-  render(){
-    const {
-      brand:{
-        companyName,
-        companyDescription,
-        products
-      }
-    } = this.props
 
-    let productList = _.map(products, (product)=>
-      <div>
-        <DivProductHeader id={product.name}>{product.name}</DivProductHeader>
-        <DivProductDetail>
-          <StyledText0>{product.detail}</StyledText0>
-        </DivProductDetail>
-        <div>
-          {
-            _.map(product.bullets, (bullet, index) => {
-                if (index%2 === 0) {
-                  return (
-                    <ul>
-                      <li>{bullet}</li>
-                    </ul>
-                  )
-                } else {
-                 return (
-                    <ul>
-                      <li>{bullet}</li>
-                    </ul>
-                  )
-                }
-              }
-            )
-          }
-        </div>
-      </div>
-    )
-
-    let productItems =  _.map(products, (product)=>
-      <div>
-        <a href={'#'+ product.name}>{product.name}</a>
-      </div>
-    )
-    let productSummary = (
-      <DivProductShortcuts>
-        {productItems}
-      </DivProductShortcuts>
-    )
-
-    return(
-      <DivRow>
-        <DivColumn1>
-          {productSummary}
-        </DivColumn1>
-        <DivColumn2>
-          <SectionHeader text={companyName} />
-          <StyledText0>{companyDescription}</StyledText0>
-          {productList}
-        </DivColumn2>
-      </DivRow>
-    )
-  }
-}
-
-export default GeneralFullBrand
-
-
-
-export default function FullBrand({history}) {
+export default function GeneralFullBrand({history}) {
   const [pageComponent, setPageComponent] = useState()
   let { page } = useParams()
 
@@ -229,7 +157,7 @@ export default function FullBrand({history}) {
     } else if (page === 'lincoln'){
       setPageComponent(<LincolnPage/>)
     } else if (page === 'haskel'){
-      setPageComponent(<HasKelPage/>)
+      setPageComponent(<HaskelPage/>)
     } else if (page === 'butech'){
       setPageComponent(<ButechPage/>)
     } else if (page === 'clippard'){
@@ -255,9 +183,15 @@ export default function FullBrand({history}) {
   }, [page])
 
   return(
-    <div>
-     
+    <div> 
+      
+        {pageComponent}      
+  
+      
     </div>
   )
 }
 
+GeneralFullBrand.propTypes = {
+  history: PropTypes.object.isRequired
+}

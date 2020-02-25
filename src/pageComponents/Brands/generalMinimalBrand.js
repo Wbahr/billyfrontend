@@ -13,7 +13,7 @@ const Div = styled.div`
   background-color: grey;
 `
 
-class GeneralFullBrand extends React.Component {
+class FullBrand extends React.Component {
   componentWillMount(){
     console.log('brand: ',this.props.brand)
   }
@@ -34,4 +34,4 @@ class GeneralFullBrand extends React.Component {
   }
 }
 
-export default GeneralFullBrand
+export default FullBrand
