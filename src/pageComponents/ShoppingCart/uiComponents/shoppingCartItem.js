@@ -16,6 +16,7 @@ const DivContainer = styled.div`
   padding: 8px 16px;
   margin: 8px 0;
   height: 135px;
+  background-color: white;
 `
 
 const DivRow = styled.div`

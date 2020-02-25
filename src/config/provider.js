@@ -256,7 +256,10 @@ export default function Provider(props) {
   }
 
   function handleMoveItem(itemLocation, newLocation){
-    console.log('handleMoveItem')
+    let mutatedCart = [...shoppingCart]
+    let movedItem = mutatedCart.splice(itemLocation, 1)
+    mutatedCart.splice(newLocation, 0, movedItem[0])
+    setShoppingCart([...mutatedCart])
   }
 
   function handleSplitItem(index, lineCount, lineQuantity){
