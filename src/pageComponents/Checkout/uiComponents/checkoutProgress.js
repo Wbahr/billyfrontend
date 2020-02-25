@@ -9,7 +9,6 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep, ste
     margin: 0;
     
     li {
-      cursor: pointer;
       list-style-type: none;
       width: 25%;
       float: left;
@@ -59,16 +58,18 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep, ste
 
   let Steps = stepLabels.map((stepName, index) =>{
     let LI = styled.li`
+      cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
       :before {
-        background-color: ${stepValidated[index] ? "#afd5ff" : "white"};
+        background-color: ${stepValidated[index] ? "#60acff" : "white"};
       }
     `
 
     const LiSelected = styled.li`
     color: #535353 !important; 
     font-weight: 500;
+    cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
     :before {
-      border-color: #535353 !important;
+      border-color: #007bff !important;
       background-color: ${stepValidated[index] ? "#afd5ff" : "white"};
     }
   `
