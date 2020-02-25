@@ -115,6 +115,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     schedule: {
+      isQuote: true,
       packingBasisName: '',
       packingBasis: '0',
       cartWithDates: shoppingCartAndDatesObj,

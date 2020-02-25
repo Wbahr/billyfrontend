@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
+import { connect, getIn } from 'formik'
 
 const DivContainer = styled.div`
   display: flex;
@@ -90,8 +91,14 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-export default function CheckoutPage({history}) {
+function CheckoutPage(props) {
+  const {
+    history,
+    formik
+  } = props
+  
   const [currentStep, setCurrentStep] = useState(0)
+  const [possibleTaxChange, setPossibleTaxChange] = useState(false)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
   const [stepValidated, setStepValidated] = useState(
@@ -109,7 +116,19 @@ export default function CheckoutPage({history}) {
     2: billToSchema
   }
 
+  useEffect(() => {
+    console.log('formik', formik)
+    // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
+    if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
+      updateTaxes(zipcode, shipToId)
+      setPossibleTaxChange(false)
+    } else if (currentStep === 2) {
+      setPossibleTaxChange(true)
+    }
+  },[currentStep])
+
   function handleMoveStep(requestedStep){
+    const { values: formikValues } = useFormikContext()
     if(requestedStep === 0 || stepValidated[requestedStep - 1]){
       setCurrentStep(requestedStep)
     }
@@ -166,3 +185,5 @@ export default function CheckoutPage({history}) {
     </DivContainer>
   )
 }
+
+export default connect(CheckoutPage)

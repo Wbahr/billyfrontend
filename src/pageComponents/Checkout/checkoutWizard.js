@@ -75,7 +75,7 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
+function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
@@ -116,6 +116,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     schedule: {
+      isQuote: false,
       packingBasisName: '',
       packingBasis: '0',
       cartWithDates: shoppingCartAndDatesObj,
@@ -184,7 +185,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       validate={(values)=>handleValidateFields(values)}
     >
       {formikProps => (
-        console.log('errors',formikProps.errors),
         <Elements>
           <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
@@ -199,3 +199,5 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 CheckoutWizard.propTypes = {
   step: PropTypes.number.isRequired
 }
+
+export default CheckoutWizard

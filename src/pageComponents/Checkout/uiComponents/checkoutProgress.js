@@ -47,15 +47,6 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep, ste
     }
   ` 
 
-  // const [stepValidated, setStepValidated] = useState(
-  //   {
-  //     0: false,
-  //     1: false,
-  //     2: false,
-  //     3: false
-  //   }
-  // )
-
   let Steps = stepLabels.map((stepName, index) =>{
     let LI = styled.li`
       cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
