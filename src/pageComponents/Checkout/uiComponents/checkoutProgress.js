@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function CheckoutProgress({stepLabels, step, clickMoveToStep}) {
+export default function CheckoutProgress({stepLabels, step, clickMoveToStep, stepValidated}) {
 
   const UlProgressBar = styled.ul`
     margin: 0;
@@ -17,7 +17,7 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep}) {
       position: relative;
       text-align: center;
       text-transform: uppercase;
-      color: #7d7d7d; 
+      color: #535353; 
     }
 
     li:before {
@@ -25,12 +25,11 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep}) {
       height: 20px;
       content: '';
       line-height: 20px;
-      border: 2px solid #7d7d7d;
+      border: 2px solid #535353;
       display: block;
       text-align: center;
       margin: 0 auto 10px auto;
       border-radius: 50%;
-      background-color: white;
     }
 
     li:after {
@@ -49,19 +48,35 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep}) {
     }
   ` 
 
-  const LiSelected = styled.li`
+  // const [stepValidated, setStepValidated] = useState(
+  //   {
+  //     0: false,
+  //     1: false,
+  //     2: false,
+  //     3: false
+  //   }
+  // )
+
+  let Steps = stepLabels.map((stepName, index) =>{
+    let LI = styled.li`
+      :before {
+        background-color: ${stepValidated[index] ? "#afd5ff" : "white"};
+      }
+    `
+
+    const LiSelected = styled.li`
     color: #535353 !important; 
     font-weight: 500;
     :before {
-      border-color: #007bff !important;
+      border-color: #535353 !important;
+      background-color: ${stepValidated[index] ? "#afd5ff" : "white"};
     }
   `
 
-  let Steps = stepLabels.map((stepName, index) =>{
     if (index === step) {
       return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
     } else {
-      return(<li onClick={()=>clickMoveToStep(index)}>{stepName}</li>)
+      return(<LI onClick={()=>clickMoveToStep(index)}>{stepName}</LI>)
     }
   })
   return(
