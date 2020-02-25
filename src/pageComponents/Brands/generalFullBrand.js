@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import { StyledText0 } from '../../styles/fonts'
 import RexrothPage  from './featuredBrandsPages/rexroth'
 import EatonPage from './featuredBrandsPages/eaton'

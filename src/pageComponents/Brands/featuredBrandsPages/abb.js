@@ -3,8 +3,8 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 
-export default function Abb() {
-  const context = useContext(Context);
+export default function Abb() { 
+
 
   return(
     <div>
@@ -13,6 +13,6 @@ export default function Abb() {
        
       </div>
     </div>
-  )
+  );
 }
 
