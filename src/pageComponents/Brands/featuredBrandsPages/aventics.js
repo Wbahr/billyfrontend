@@ -8,7 +8,7 @@ export default function Aventics() {
   return(
     <div>
       <div>
-        <p>Hello Adventics</p>
+        <p>Hello Aventics</p>
        
       </div>
     </div>
