@@ -2,6 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 import { StyledText0 } from '../../styles/fonts'
 import SectionHeader from '../_common/sectionHeader'
+import Rexroth  from './featuredBrandsPage/rexroth'
+import Eaton from './featuredBrandsPages/eaton'
+import Parker from './featuredBrandsPages/parker'
+import Smc from './featuredBrandsPages/smc'
+import Hydac from './featuredBrandsPage/hydac'
+import Omron from './featuredBrandsPages/omron'
+import Lincoln from './featuredBrandsPages/lincoln'
+import Haskel from './featuredBrandsPages/haskel'
+import Butech from './featuredBrandsPages/butech'
+import Clippard from './featuredBrandsPages/clippard'
+import Paccar from './featuredBrandsPages/paccar'
+import Rittal from './featuredBrandsPages/rittal'
+import Schmersal from './featuredBrandsPages/schmersal'
+import Ross from './featuredBrandsPages/ross'
+import Abb from './featuredBrandsPages/abb'
+import Orientalmotor from './featuredBrandsPages/orientalmotor'
+import Aventics from './featuredBrandsPages/adventics'
+import PhoenixContact from './featuredBrandsPages/phoenixContact'
 // import _ from 'lodash'
 
 const DivRow = styled.div`
@@ -47,7 +65,7 @@ const DivProductDetail = styled.div`
 
 class GeneralFullBrand extends React.Component {
   componentWillMount(){
-    console.log('brand: ',this.props.brand)
+    console.log('brand: abb ',this.props.brand)
   }
   render(){
     const {
@@ -114,3 +132,132 @@ class GeneralFullBrand extends React.Component {
 }
 
 export default GeneralFullBrand
+
+
+
+export default function FullBrand({history}) {
+  const [pageComponent, setPageComponent] = useState()
+  let { page } = useParams()
+
+  const FeaturedPage = [
+    {
+      'label': 'Rexroth',
+      'page': 'rexroth'
+    },
+    {
+      'label': 'Eaton',
+      'page': 'eaton'
+    },
+    {
+      'label': 'Parker',
+      'page': 'parker'
+    },
+    {
+      'label': 'SMC',
+      'page': 'smc'
+    },
+    {
+      'label': 'Hydac',
+      'page': 'hydac'
+    },
+    {
+      'label': 'Omron',
+      'page': 'omron'
+    },
+    {
+      'label': 'Lincoln',
+      'page': 'lincoln'
+    },
+    {
+      'label': 'Haskel',
+      'page': 'haskel'
+    },
+    {
+      'label': 'Butech',
+      'page': 'butech'
+    },
+    {
+      'label': 'Clippard',
+      'page': 'clippard'
+    },
+    {
+      'label': 'Paccar',
+      'page': 'paccar'
+    },
+    {
+      'label': 'Rittal',
+      'page': 'rittal'
+    },
+    {
+      'label': 'Schmersal',
+      'page': 'schmersal'
+    },
+    {
+      'label': 'Ross',
+      'page': 'ross'
+    },
+    {
+      'label': 'Abb',
+      'page': 'abb'
+    },
+    {
+      'label': 'Orientalmotor',
+      'page': 'orientalmotor'
+    },
+    {
+      'label': 'Aventics',
+      'page': 'aventics'
+    },
+    {
+      'label': 'Phoenix-contact',
+      'page': 'phoenix-contact'
+    }
+  ]
+  useEffect(() => {
+    if(page === 'rexroth'){
+      setPageComponent(<RexrothPage/>)
+    } else if (page === 'eaton'){
+      setPageComponent(<EatonPage/>)
+    } else if (page === 'parker'){
+      setPageComponent(<ParkerPage/>)
+    } else if (page === 'smc'){
+      setPageComponent(<SmcPage/>)
+    } else if (page === 'hydac'){
+      setPageComponent(<HydacPage/>)
+    } else if (page === 'omron'){
+      setPageComponent(<OmronPage/>)
+    } else if (page === 'lincoln'){
+      setPageComponent(<LincolnPage/>)
+    } else if (page === 'haskel'){
+      setPageComponent(<HasKelPage/>)
+    } else if (page === 'butech'){
+      setPageComponent(<ButechPage/>)
+    } else if (page === 'clippard'){
+      setPageComponent(<ClippardPage/>)
+    } else if (page === 'paccar'){
+      setPageComponent(<PaccarPage/>)
+    } else if (page === 'rittal'){
+      setPageComponent(<RittalPage/>)
+    } else if (page === 'schmersal'){
+      setPageComponent(<SchmersalPage/>)
+    } else if (page === 'ross'){
+      setPageComponent(<RossPage/>)
+    } else if (page === 'abb'){
+      setPageComponent(<AbbPage/>)
+    } else if (page === 'orientalmotor'){
+      setPageComponent(<OrientalmotorPage/>)
+    } else if (page === 'aventics'){
+      setPageComponent(<AventicsPage/>)
+    } else if (page === 'phoenix-contact'){
+      setPageComponent(<PhoenixContactPage/>)
+    }
+    
+  }, [page])
+
+  return(
+    <div>
+     
+    </div>
+  )
+}
+

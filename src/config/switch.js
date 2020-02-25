@@ -18,6 +18,9 @@ import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
+import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
+import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
+
 // Supporting Components
 import Auth from './auth'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
@@ -63,7 +66,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/brands/:brandName' component={generalMinimalBrand} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/brands/featured/:brandName' component={generalFullBrand} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
