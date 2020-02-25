@@ -7,8 +7,6 @@ import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 import DebounceInput from 'react-debounce-input'
 
 const DivContainer = styled.div`
@@ -248,24 +246,13 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
-    // const CustomDatePickerComponent = ({ value, onClick }) => (
-    //   <CustomDatePicker onClick={onClick}>
-    //     {value}
-    //   </CustomDatePicker>
-    // )
-
     Content = (
       <DivCard>
         <DivMove>
           <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
         </DivMove>
-        {/* <DivMove>
-          <DivDivide onClick={()=>showSplitLineModal(index)}>
-            <FontAwesomeIcon icon="divide" color="white"/>
-          </DivDivide>
-        </DivMove> */}
         <DivCol1>
-          <Img height='80px'  src={imagePath} />
+          <Img max-height='100%' max-width='100%' src={imagePath} />
         </DivCol1>
         <DivCol2>
           <P1>{itemDetails.itemDesc}</P1>

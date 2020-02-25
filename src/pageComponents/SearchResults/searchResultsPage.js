@@ -16,6 +16,7 @@ import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import  SkeletonItem from './uiComponents/skeletonItem';
 
 const DivContainer = styled.div`
   display: flex;
@@ -81,7 +82,7 @@ export default function SearchResultsPage(props) {
   const [resultPage, setResultPage] = useState(search.resultPage)
   const [sortType, setSortType] = useState(search.sortType)
   const [searchResults, setSearchResults] = useState([])
-  const [totalResults, setTotalResults] = useState(0)
+  const [totalResults, setTotalResults] = useState('--')
   const [attributeCategories, setAttributeCategories] = useState([])
   const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
   const [brands, setBrands] = useState([])
@@ -95,7 +96,9 @@ export default function SearchResultsPage(props) {
   const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-  const [modalItem, setModalItem] = useState(null)
+  const [locationsModalItem, setLocationsModalItem] = useState(null)
+  const [detailsModalItem, setDetailsModalItem] = useState(null)
+  const [detailsModalItemCode, setDetailsModalItemCode] = useState(null)
   const [showLocationsModal, setShowLocationsModal] = useState(false)
   const [showAddedModal, setShowAddedModal] = useState(false)
   const [clearInnerSearch, setClearInnerSearch] = useState(false)
@@ -104,6 +107,7 @@ export default function SearchResultsPage(props) {
   const [searchNonce, setSearchNonce] = useState(0);
   const [parentCategory, setParentCategory] = useState('');
   const [childCategory, setChildCategory] = useState('');
+  const [ottoFindPart, setOttoFindPart] = useState(false)
 
   // Set search defaults for categories. This occurs before the first search is executed
   useEffect(() => {
@@ -121,16 +125,15 @@ export default function SearchResultsPage(props) {
   })
 
   const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
       var itemSearchResult = data.itemSearch
-
       //If the number of retrieved results equals the requesting page size,
       //then enable the scroller to possibly load more.
       const search = queryString.parse(location.search)
       if(itemSearchResult.result.length == search.resultSize){
         setInfiniteScrollHasMore(true)
       }
-
       setSearchNonce(search.nonce)
       setNewAttributeCategories(itemSearchResult.attributeCategories)
       setBrands(_.get(itemSearchResult,`brands`,[]))
@@ -163,6 +166,7 @@ export default function SearchResultsPage(props) {
 
       if (searchOld.searchTerm !== searchNew.searchTerm || searchOld.sortType !== searchNew.sortType){
         setSearchResults([])
+        setOttoFindPart(false)
         setSearchTerm(searchNew.searchTerm)
         loadFunc(true)
         setIsReplacingResults(true)
@@ -192,21 +196,37 @@ export default function SearchResultsPage(props) {
   // Execute additional search
   useEffect(() => {
     setSearchResults([])
+    setOttoFindPart(false)
     setCurrentPage(0)
     setIsReplacingResults(true)
     loadFunc(true)
   }, [checkedAttributeFilters, checkedBrandFilters, parentCategory, childCategory])
+
+  useEffect(()=> {
+    if (!_.isNil(drift.api)){
+      if (ottoFindPart) {
+        drift.api.startInteraction({ interactionId: 126679 });
+      } else {
+        drift.api.hideChat()
+      }
+    }
+  }, [ottoFindPart])
 
   function parseQueryResults(itemSearchData) {
     let additionalSearchResults = itemSearchData.result
 
     if(isReplacingResults){
       setSearchResults([...additionalSearchResults])
+      setOttoFindPart(false)
     } else{
+      if (searchResults.length >= 48) {
+        setOttoFindPart(true)
+      }
       setSearchResults([...searchResults, ...additionalSearchResults])
     }
     
     setTotalResults(itemSearchData.count)
+
   }
 
   function handleUpdateResults(updateObj){
@@ -254,7 +274,7 @@ export default function SearchResultsPage(props) {
   function loadFunc(isNewSearch){
     const search = queryString.parse(location.search)
 
-    var resultSize = search.resultSize ? parseInt(search.resultSize) : 25
+    var resultSize = searchResults.length === 0 ? parseInt(search.resultSize) : 24
     
     setSearching(true)
     performItemSearch({
@@ -282,22 +302,25 @@ export default function SearchResultsPage(props) {
 
   function handleShowLocationsModal(freqno){
     setShowLocationsModal(true)
-    setModalItem(freqno)
+    setLocationsModalItem(freqno)
   }
 
   function handleHideLocationsModal(){
     setShowLocationsModal(false)
-    setModalItem(null)
+    setLocationsModalItem(null)
   }
 
-  function handleShowDetailsModal(freqno){
+  function handleShowDetailsModal(freqno, itemCode){
+    console.log('freqno, itemCode',freqno, itemCode)
+    setDetailsModalItem(freqno)
+    setDetailsModalItemCode(itemCode)
     setShowDetailsModal(true)
-    setModalItem(freqno)
   }
 
   function handleHideDetailsModal(){
     setShowDetailsModal(false)
-    setModalItem(null)
+    setDetailsModalItem(null)
+    setDetailsModalItemCode(null)
   }
 
   function handleAddedToCart(){
@@ -321,7 +344,7 @@ export default function SearchResultsPage(props) {
         updateResults={handleUpdateResults} 
         history={props.history}
         showDetailsModal={showDetailsModal}
-        toggleDetailsModal={(freqno)=>{handleShowDetailsModal(freqno)}}
+        toggleDetailsModal={(freqno, itemCode)=>{handleShowDetailsModal(freqno, itemCode)}}
         toggleLocationsModal={(freqno)=>{handleShowLocationsModal(freqno)}}
         addedToCart={()=>{handleAddedToCart()}}
       />
@@ -349,12 +372,14 @@ export default function SearchResultsPage(props) {
       <LocationsModal 
         open={showLocationsModal} 
         hideLocationsModal={handleHideLocationsModal}
-        invMastUid={modalItem}
+        invMastUid={locationsModalItem}
       />
       <DetailsModal 
         open={showDetailsModal} 
         hideDetailsModal={handleHideDetailsModal}
-        invMastUid={modalItem}
+        invMastUid={detailsModalItem}
+        itemCode={detailsModalItemCode}
+        history={props.history}
       />
       <div>
         <CategoryFilter 
@@ -398,11 +423,26 @@ export default function SearchResultsPage(props) {
               setCurrentPage(currentPage + 1)
             }}
             hasMore={infiniteScrollHasMore}
-            loader={<Loader/>}
+            threshold={3000}
         >
-          <DivSearchResultsContainer>
-            {(searchResults.length === 0 && isSearching) && <Loader/>}
+          <DivSearchResultsContainer>          
             {SearchResults}
+            {(SearchResults.length < totalResults || totalResults === '--') &&
+              <>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+                <SkeletonItem/>
+              </>
+            }
           </DivSearchResultsContainer>
         </InfiniteScroll>
       </ResultsContainer>

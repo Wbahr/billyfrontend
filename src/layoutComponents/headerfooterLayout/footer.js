@@ -59,7 +59,7 @@ const ContainerTop = styled.div`
 const ContentContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 1000px;
+  width: 1100px;
   margin: 0 auto;
 `
 
@@ -87,8 +87,8 @@ const DivSocialIcons = styled.div`
 const DivAirline = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
-  margin-right: 50px;
+  width: 620px;
+  margin-right: 30px;
 `
 
 const DivMenu = styled.div`
@@ -168,14 +168,13 @@ export default function FooterComponent() {
             <DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
           </DivAirline>
           <DivMenu>
-            <Head>Products</Head>
-            <Item>Valves</Item>
+            <Head>Featured Brands</Head>
+            <Item>SMC</Item>
             <Item>Hydraulics</Item>
             <Item>Gears</Item>
             <Item>Tubing</Item>
             <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>
-            <Item>Controls</Item>
           </DivMenu>
 
           <DivMenu>
@@ -184,7 +183,6 @@ export default function FooterComponent() {
             <Item>Hydraulics</Item>
             <Item>Gears</Item>
             <Item>Tubing</Item>
-            <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>
             <Item>Controls</Item>
           </DivMenu>
@@ -193,7 +191,6 @@ export default function FooterComponent() {
             <Head>Products</Head>
             <Item>Valves</Item>
             <Item>Hydraulics</Item>
-            <Item>Gears</Item>
             <Item>Tubing</Item>
             <Item>Pumps</Item>
             <Item>Aluminum Framing</Item>
@@ -211,7 +208,7 @@ export default function FooterComponent() {
         </ContentContainer>
       </ContainerTop>
       <Container>
-        <Pcopyright> © Airline Hydraulics Corporation, 2020</Pcopyright> |
+        <Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
         <Pcopyright>Privacy Policy</Pcopyright> |
         <Pcopyright>Terms & Conditions</Pcopyright> |
         <Pcopyright>Legal Disclaimer</Pcopyright> |

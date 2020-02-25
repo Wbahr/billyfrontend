@@ -39,7 +39,7 @@ export default function Input({
 }){
   return(
     <DivContainer>
-      {label && <Label for={label}>{`${label}:`}</Label>}        
+      {label && <Label htmlFor={label}>{`${label}:`}</Label>}        
       <Field name={name}>
             {({
               field,

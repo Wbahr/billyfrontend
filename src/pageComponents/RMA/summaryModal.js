@@ -218,7 +218,7 @@ class SummaryModal extends React.Component {
             </DivTotal>
             <DivAgree>
               <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary}/>
-              <InputAgree as='label' for='agree'>{agreementText}</InputAgree>
+              <InputAgree as='label' htmlFor='agree'>{agreementText}</InputAgree>
             </DivAgree>
             {submitError && <DivErrors>Submit failed</DivErrors>}
           </DivItemlist>

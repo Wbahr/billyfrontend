@@ -9,7 +9,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 const Div = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px grey solid;
+  // border-bottom: 1px grey solid;
   margin-top: 24px;
 `
 

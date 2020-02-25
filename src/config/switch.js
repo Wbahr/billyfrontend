@@ -7,25 +7,32 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
 import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
+import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
+// Supporting Components
+import Auth from './auth'
+import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
 
-function WrapperRoute({ component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
+function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
     <Route
       {...otherProps}
       render={routeProps => (
-        <LayoutWrapperComponent {...routeProps}>
-          <Component {...routeProps} />
-        </LayoutWrapperComponent>
+        <Auth authRequired={auth || false} {...routeProps}>
+          <LayoutWrapperComponent {...routeProps}>
+            <Component {...routeProps} />
+          </LayoutWrapperComponent>
+        </Auth>
       )}
     />
   );
@@ -54,12 +61,9 @@ class App extends React.Component {
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/dashboard' component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/account/orders' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/payment-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/shipping-preferences' component={AccountDashboard} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/account/wishlists' component={AccountDashboard} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
@@ -68,6 +72,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
         <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
         <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
@@ -77,6 +82,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
   }

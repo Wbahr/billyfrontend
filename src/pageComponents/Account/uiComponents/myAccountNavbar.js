@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -24,19 +24,34 @@ const DivNavbar = styled.div`
   }
 `
 
-export default function MyAccountNavbar({history}) {
-  const location = history.location.pathname
+const Pselected = styled.p`
+  color: white;
+  padding: 4px;
+  background-color: blue;
+  background-image: linear-gradient(to top left,#0056b3,#007bff);
+  border-radius: 20px;
+`
+
+export default function MyAccountNavbar({history, page, AccountPages}) {
+  const [navbarLinks, setNavbarLinks] = useState([])
+
+  useEffect(() => {
+    let tempNavbarLinks = []
+    for(let i=0; AccountPages.length > i; i++){
+      if(page === AccountPages[i].page) {
+        tempNavbarLinks.push(<Pselected>{AccountPages[i].label}</Pselected>)
+      } else {
+        tempNavbarLinks.push(<p onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
+      }
+    }
+    setNavbarLinks(tempNavbarLinks)
+  }, [page])
 
   return(
     <NavbarContainer>
       <H3>My Account</H3>
       <DivNavbar>
-        <p>Home</p>
-        <p>User Settings</p>
-        <p>Shipping</p>
-        <p>Billing</p>
-        <p>Shopping Lists</p>
-        <p>Notifications</p>
+        {navbarLinks}
       </DivNavbar>
     </NavbarContainer>
   )
@@ -44,4 +59,5 @@ export default function MyAccountNavbar({history}) {
 
 MyAccountNavbar.propTypes = {
   history: PropTypes.object.isRequired,
+  page: PropTypes.string.isRequired
 }

@@ -2,22 +2,30 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-// import OrderSummary from './uiComponents/orderSummary'
-import CheckoutWizard from './checkoutWizard'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 import Context from '../../config/context'
+import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
+import CheckoutWizard from './checkoutWizard'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonRed, ButtonBlack } from '../../styles/buttons'
+import CheckoutProgress from './uiComponents/checkoutProgress'
+import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
 
 const DivContainer = styled.div`
   display: flex;
   max-width: 1400px;
   margin: 0 auto;
+  flex-grow: inherit;
 `
 
 const DivCheckoutCol = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 920px;
+  @media(max-width: 1000px) {
+    width: 100%;
+  }
 `
 
 const DivOrderTotalCol = styled.div`
@@ -32,13 +40,13 @@ const DivOrderTotalCol = styled.div`
 const Div = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px grey solid;
-  margin-top: 24px;
 `
 
 const DivRow = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-bottom;
+  margin: 0 20px 0 20px;
   p {
     cursor: pointer;
     color: grey;
@@ -51,6 +59,7 @@ const DivRow = styled.div`
 const H3 = styled.h3`
   font-family: ProximaBold;
   text-transform: uppercase;
+  padding-left: 8px;
   margin: 0 0 2px 4px;
 `
 
@@ -63,33 +72,96 @@ const Pstep = styled.span`
 const DivNavigation = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;
+`
+
+const Container = styled.div`
+  margin: 20px;
+  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  height: 100%;
+  border: 1px solid lightgrey;
+  padding: 20px;
+`
+
+const Pformheader = styled.p`
+  margin: 0;
+  font-family: ProximaBold;
+  text-transform: uppercase;
 `
 
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
-  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Confirmation']
+  const [triggerSubmit, setTriggerSubmit] = useState(false)
+  const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
+  const [stepValidated, setStepValidated] = useState(
+    {
+      0: false,
+      1: false,
+      2: false,
+      3: false
+    }
+  )
 
+  const YupSchema = {
+    0: shippingScheduleSchema, 
+    1: shipToSchema, 
+    2: billToSchema
+  }
+
+  function handleMoveStep(requestedStep){
+    if(requestedStep === 0 || stepValidated[requestedStep - 1]){
+      setCurrentStep(requestedStep)
+    }
+  }
+
+  function handleValidateFields(values){
+    YupSchema[currentStep].isValid(values).then(function(valid) {
+      setStepValidated({
+        ...stepValidated,
+        [currentStep]: values
+      })
+    })
+  }
+
+  function handleCheckoutSubmit(formValues){
+    let mutatedFormValues = formValues
+    console.log('mutatedFormValues', mutatedFormValues)
+  }
+  
   return(
     <DivContainer>
       <DivCheckoutCol>
         <Div>
           <DivRow>
+            <FontAwesomeIcon icon="lock" />
             <H3>Checkout</H3>
-            <Pstep>({stepLabel[currentStep]})</Pstep>
+            <CheckoutProgress stepLabels={stepLabel} step={currentStep} stepValidated={stepValidated} clickMoveToStep={(index)=>handleMoveStep(index)}/>
           </DivRow>
         </Div>
-        <Context.Consumer>
-          {({cart}) => (<CheckoutWizard step={currentStep} shoppingCart={cart}/>)}
-        </Context.Consumer>
-        <DivNavigation>
-          {currentStep === 0 && <button onClick={()=>history.push('/cart')}>Back to Cart</button>}
-          {currentStep > 0 && <button onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</button>}
-          {currentStep < (stepLabel.length - 1) && <button onClick={()=>{setCurrentStep(currentStep + 1)}}>Next</button>}
-          {currentStep === (stepLabel.length - 1) && <button onClick={()=>{console.log('confirm')}}>Submit</button>}
-        </DivNavigation>
+        <Container>
+          <Pformheader>{stepLabel[currentStep]}</Pformheader>
+          <Context.Consumer>
+            {({cart}) => (
+            <CheckoutWizard 
+              step={currentStep} 
+              shoppingCart={cart} 
+              triggerSubmit={triggerSubmit} 
+              YupSchema={YupSchema}
+              handleValidateFields={(values)=>handleValidateFields(values)}
+              submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
+            />)}
+          </Context.Consumer>
+          <DivNavigation>
+            {currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>Back to Cart</ButtonBlack>}
+            {currentStep > 0 && <ButtonBlack onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
+            {currentStep < (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
+            {currentStep === (stepLabel.length - 1) && <ButtonRed onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
+          </DivNavigation>
+        </Container>
       </DivCheckoutCol>
       <DivOrderTotalCol>
-        {/* <OrderSummary/> */}
+        <CheckoutOrderSummary/>
       </DivOrderTotalCol>
     </DivContainer>
   )

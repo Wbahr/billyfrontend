@@ -173,7 +173,6 @@ const Img = styled.img`
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
   const mutatedItemId = mutateItemId(result.item_id) 
-
   function mutateItemId(itemId){
     let mutatedItemId = itemId.replace(/\s/g, '-')
     return(mutatedItemId)
@@ -201,7 +200,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           <DivPartImg>
             <Img src={imagePath}/>
           </DivPartImg>
-          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno)}}>Quick Look</ButtonBlack>
+          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno, result.item_id)}}>Quick Look</ButtonBlack>
           <DivPartDetails>
             <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
           </DivPartDetails>
@@ -220,7 +219,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           </DivPartNumberRow>
           <DivPartNumberRowSpread>
             <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-            {(!_.isNil(result.anon_price) && result.anon_price !== 0) ? <Div><Pprice>${result.anon_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+            {(!_.isNil(result.unit_price) && result.unit_price !== 0) ? <Div><Pprice>${result.unit_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
           </DivPartNumberRowSpread>
           <DivSpace>
             <Context.Consumer>
@@ -230,7 +229,6 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'frecno': result.frecno,
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
-                    'requestedShipDate': new Date()
                   }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}

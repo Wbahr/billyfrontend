@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
@@ -110,6 +110,17 @@ const GET_ITEM_BY_ID = gql`
         }
     }
 `
+
+const GET_ITEM_PRICE = gql`
+query ItemSearch($item: ItemPriceRequestInputGraphType){
+  getItemPrices(items: $item){
+    itemCode
+    quantity
+    totalPrice
+  }
+}
+`
+
 const ItemDetailPageContainer = styled.div`
   display: flex;
   width: 100%;  
@@ -300,19 +311,42 @@ export default function ItemDetailPage({history}){
 
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
+  const [unitPrice, setUnitPrice ] = useState(null)
 
   itemId = parseInt(itemId,10)
   const { 
     loading, 
     error, 
-    data 
+    data
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
     onCompleted: result => {
       if (result.itemDetails) {
+        performPriceLookup(
+          {
+            variables: {	
+              "item": {
+                "itemsAndQuantities": [
+                  {
+                    "itemCode": result.itemDetails.itemCode,
+                    "quantity": 1
+                  }
+                ]
+              }
+            }
+          }
+        )
         setItem(result.itemDetails)
       } else {
         setItem({})
+      }
+    }
+  })
+
+  const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
+    onCompleted: data => {
+      if (!_.isNil(data.getItemPrices[0])) {
+        setUnitPrice(data.getItemPrices[0].totalPrice)
       }
     }
   })
@@ -389,7 +423,7 @@ export default function ItemDetailPage({history}){
           <H2ItemTitle>{item.itemDesc}</H2ItemTitle>
           <PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
           <Row>
-            <Pprice>{`Price: $${item.anonPrice.toFixed(2)}`}</Pprice>
+            <Pprice>{_.isNil(unitPrice) ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
             {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           </Row>
           <TABLE>
@@ -414,7 +448,7 @@ export default function ItemDetailPage({history}){
         </DivDetails>
         <DivPurchaseInfo>
           <RowSpaced>
-            <Row><Pprice>{`$${item.anonPrice.toFixed(2)}`}</Pprice><P> /each</P></Row>
+            <Row><Pprice>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice><P> /each</P></Row>
             <RowEnd>
               <span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
             </RowEnd>

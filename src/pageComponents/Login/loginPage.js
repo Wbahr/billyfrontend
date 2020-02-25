@@ -5,6 +5,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
+import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -94,7 +95,7 @@ const QUERY_LOGIN = gql`
   }
 `
 
-export default function LoginPage({history}) {
+export default function LoginPage(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -102,10 +103,10 @@ export default function LoginPage({history}) {
   const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
   const context = useContext(Context);
+  const history = props.history
 
   const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
     onCompleted: data => {
-      console.log('executeLogIn', data)
       let requestData = data.submitLogin
       if(requestData.success){
         // Need to reset password
@@ -116,8 +117,14 @@ export default function LoginPage({history}) {
         } else {
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-          context.loginUser(requestData.authorizationInfo.userInfo)
-          history.push('/')
+          context.loginUser(requestData.authorizationInfo.userInfo, requestData.authorizationInfo.token)
+          let urlParams = new URLSearchParams(props.location.search)
+          let redirect = urlParams.get('next')
+          if(!_.isNil(redirect)){
+            history.push(redirect)
+          } else {
+            history.push('/')
+          }
         }
       } else {
         setErrorMessage(requestData.message)
@@ -151,16 +158,16 @@ export default function LoginPage({history}) {
       />
       <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
       <P>Airline Hydraulics Login</P>
-      {errorMessage.length > 0  && <p>{errorMessage}</p>}
-      {infoMessage.length > 0  && <p>{infoMessage}</p>}
+      {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
+      {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
       {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
       <DivInput>
-        <Label for='email'>Username or Email</Label>
-        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email}/>
+        <Label htmlFor='email'>Username or Email</Label>
+        <Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
       </DivInput>
       <DivInput>
-        <Label for='password'>Password</Label>
-        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password}/>
+        <Label htmlFor='password'>Password</Label>
+        <Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
       </DivInput>
       <Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
       <A onClick={()=>setShowPasswordResetModal(true)}>Forgot your Password?</A>

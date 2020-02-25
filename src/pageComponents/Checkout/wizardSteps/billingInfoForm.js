@@ -1,38 +1,66 @@
 import React from 'react'
 import { Field } from 'formik'
+import FormikInput from '../../_common/formik/input_v2'
+import styled from 'styled-components'
+import { injectStripe } from 'react-stripe-elements'
+import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
+import SelectField from '../../_common/formik/select'
+import StripePaymentSection from '../uiComponents/stripePayment'
+import NewCardSection from './billingInfoComponents/newCardSection'
+import SavedCardSection from './billingInfoComponents/savedCardSection'
+import PurchaseOrderSection from './billingInfoComponents/purchaseOrderSection'
 
-export const BillingInfoForm = ({
-  handleSubmit,
-  handleChange,
-  handleBlur,
-  values,
-  errors,
-}) => (
-  <form onSubmit={handleSubmit}>
-    <Field as="select" name="shipto.payment_method">
-      <option value="credit_card">Credit Card</option>
-      <option value="invoice">Invoice</option>
-    </Field>
-    <Field name="billing.po" placeholder="PO Number" />
-    <Field name="billing.company_id" placeholder="Company ID" />
-    <Field name="billing.company_name" placeholder="Company Name" />
-    <Field name="billing.first_name" placeholder="First Name" />
-    <Field name="billing.last_name" placeholder="Last Name" />
-    <Field name="billing.address1" placeholder="Address 1" />
-    <Field name="billing.address2" placeholder="Address 2" />
-    <Field name="billing.city" placeholder="City" />
-    <Field name="billing.state" placeholder="State" />
-    <Field name="billing.zip" placeholder="Zip" />    
-    <Field name="billing.county" placeholder="Country" />
-    <Field name="billing.email" placeholder="Email" />    
-    <Field name="billing.phone" placeholder="Phone" />
-    {errors.name && <div>{errors.name}</div>}
-    <button type="submit">Submit</button>
-  </form>
-)
+const WrapForm = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
 
-export const defaultValues = {
-  billing: {
-    name: 'test bob'
+const FormRow = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 24px;
+  align-items: center;
+  padding: 0 8px;
+  label {
+    margin: 4px 8px auto 4px;
+    font-style: italic;
   }
+`
+
+function BillingInfoForm(props) {
+  const {
+    values,
+    stripe
+  } = props
+  
+  return (
+    <WrapForm>
+      <FormRow>
+        <label htmlFor="paymentMethod">How would you like to pay?*</label>
+        <Field 
+          name="billing.paymentMethod" 
+          component={SelectField} 
+          options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
+          placeholder="Select a Payment Method"
+          isSearchable={false}
+        /> 
+      </FormRow>
+      {values.billing.paymentMethod === "credit_card" &&
+        <FormRow>
+        <label htmlFor="card_type">New or Saved Card?*</label>
+        <Field 
+          name="billing.cardType" 
+          component={SelectField} 
+          options={[{'label': 'New Card', 'value': 'new_card'},{'label': 'Saved Card', 'value': 'saved_card'}]}
+          isSearchable={false}
+        /> 
+      </FormRow>
+      }
+      {values.billing.paymentMethod === "purchase_order" && <PurchaseOrderSection {...props}/>}
+      {(values.billing.paymentMethod === "credit_card" && values.billing.cardType === "new_card") && <NewCardSection {...props}/>}
+      {(values.billing.paymentMethod === "credit_card" && values.billing.cardType === "saved_card") && <SavedCardSection {...props}/>}
+    </WrapForm>
+  )
 }
+
+export default injectStripe(BillingInfoForm)

@@ -1,11 +1,17 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Context from '../../config/context'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
+import {Elements} from 'react-stripe-elements'
+import PaymentManagementPage from './accountPages/paymentManagement'
+import AccountManagementPage from './accountPages/accountManagement'
+import ShipToManagementPage from './accountPages/shiptoManagement'
+import ShoppingListManagementPage from './accountPages/shoppingListManagement'
 
 const AccountInfoContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 1200px;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
   padding: 20px 40px;
@@ -13,29 +19,50 @@ const AccountInfoContainer = styled.div`
 `
 
 export default function AccountDashboard({history}) {
-  const [customerType, setCustomerType] = useState('')
-  const context = useContext(Context);
+  const [pageComponent, setPageComponent] = useState()
+  let { page } = useParams()
+
+  const AccountPages = [
+    {
+      'label': 'Home',
+      'page': 'dashboard'
+    },
+    {
+      'label': 'User Settings',
+      'page': 'user-settings'
+    },
+    {
+      'label': 'Shipping',
+      'page': 'shipping-preferences'
+    },
+    {
+      'label': 'Billing',
+      'page': 'payment-preferences'
+    },
+    {
+      'label': 'Shopping Lists',
+      'page': 'shopping-lists'
+    }
+  ]
+  useEffect(() => {
+    if(page === 'dashboard'){
+      setPageComponent(<AccountManagementPage/>)
+    } else if (page === 'user-settings'){
+      setPageComponent(<AccountManagementPage/>)
+    } else if (page === 'shipping-preferences'){
+      setPageComponent(<ShipToManagementPage/>)
+    } else if (page === 'payment-preferences'){
+      setPageComponent(<Elements><PaymentManagementPage/></Elements>)
+    } else if (page === 'shopping-lists'){
+      setPageComponent(<ShoppingListManagementPage/>)
+    }
+  }, [page])
 
   return(
     <div>
-      <MyAccountNavbar history={history}/>
-      <AccountInfoContainer>
-        <div>
-          <p>Hi {context.userInfo.firstName}</p>
-        </div>
-        <div>
-          <p>Account Info</p>
-          <p>Company: {context.userInfo.companyName} - {context.userInfo.companyId}</p>
-          <p>email: {}</p>
-          <p>password: *****</p>
-        </div>
-        <div>
-          <p>Default Ship To:</p>
-
-        </div>
-        <div>
-          <p>Payment Preferences:</p>
-        </div>
+      <MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
+      <AccountInfoContainer>  
+        {pageComponent}      
       </AccountInfoContainer>
     </div>
   )
