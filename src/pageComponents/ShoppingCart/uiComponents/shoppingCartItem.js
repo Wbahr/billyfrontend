@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 const DivContainer = styled.div`
   display: flex;
@@ -161,13 +162,20 @@ const Input = styled.input`
 `
 
 const P1 = styled.p`
+  cursor: pointer;
   font-size: 16px;
   font-weight: 600;
 `
 
+const TextRow = styled.div`
+  display: flex;
+`
+
 const P2 = styled.p`
+  cursor: pointer;
   color: grey;
   font-size: 12px !important;
+  padding: 0 2px;
 `
 
 const P3 = styled.p`
@@ -255,8 +263,17 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           <Img max-height='100%' max-width='100%' src={imagePath} />
         </DivCol1>
         <DivCol2>
-          <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+          <CopyToClipboard text={itemDetails.itemDesc}>
+            <P1>{itemDetails.itemDesc}</P1>
+          </CopyToClipboard>
+          <TextRow>
+            <CopyToClipboard text={itemDetails.itemCode}>
+              <P2>{itemDetails.itemCode}</P2>
+            </CopyToClipboard> <P2>|</P2>
+            <CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
+              <P2>AHC{itemDetails.invMastUid}</P2>
+            </CopyToClipboard>
+          </TextRow>
           <DivRow>
             <Context.Consumer>
               {({ updateItem, cart }) => (
