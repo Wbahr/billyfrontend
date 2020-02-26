@@ -8,6 +8,7 @@ import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import Context from '../../../config/context'
 
 const Div = styled.div`
   display: flex;
@@ -112,12 +113,20 @@ export default function OrderSummary({history}) {
         <DivLineItemTotal>
           <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>
-        {context.cart.length > -1 &&
+        {context.cart.length > 0 &&
           <DivButtonContainer>
-            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-              <FontAwesomeIcon icon="lock" color="white"/>
-              <p>Start Secure Checkout</p>
-            </DivCheckoutButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee"){
+                  return(
+                    <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+                      <FontAwesomeIcon icon="lock" color="white"/>
+                      <p>Start Secure Checkout</p>
+                    </DivCheckoutButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
             <DivQuoteButton onClick={()=>history.push('/create-quote')}>
               <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
               <p>Create a Quote</p>

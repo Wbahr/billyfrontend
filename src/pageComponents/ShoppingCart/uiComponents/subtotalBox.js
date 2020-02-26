@@ -106,10 +106,18 @@ export default function SubtotalBox({history}) {
         <h5>Subtotal: {formatCurrency(context.cartPricing.subTotal)}</h5>
         { context.cart.length > 0 &&
           <>
-            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-              <FontAwesomeIcon icon="lock" color="white"/>
-              <p>Start Secure Checkout</p>
-            </DivCheckoutButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee"){
+                  return(
+                    <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+                      <FontAwesomeIcon icon="lock" color="white"/>
+                      <p>Start Secure Checkout</p>
+                    </DivCheckoutButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
             <DivQuoteButton onClick={()=>history.push('/create-quote')}>
               <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
               <p>Create a Quote</p>

@@ -4,6 +4,7 @@ import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
 import SelectField from '../../_common/formik/select'
+import Context from '../../../config/context'
 
 const WrapForm = styled.div`
   display: flex;
@@ -96,25 +97,33 @@ export function ShipToForm(props) {
 
   return (
     <WrapForm>
-      <ContactSection>
-        <Field 
-          name="contact.savedContact" 
-          component={SelectField} 
-          options={checkoutDropdownDataLabels.contacts}
-          width="500px"
-          label="Saved Order Contacts*"
-          placeholder="Select an Order Contact"
-          changeFunction={handleSavedContactSelectChange}
-        /> 
-        {values.contact.savedContact !== '' &&
-          <>
-            <FormikInput label="Order Contact First Name*" name="contact.firstName" changeFunction={handleContactChange}/>
-            <FormikInput label="Order Contact Last Name*" name="contact.lastName" changeFunction={handleContactChange}/>
-            <FormikInput label="Order Contact Phone*" name="contact.phone" changeFunction={handleContactChange}/>
-            <FormikInput label="Order Contact Email*" name="contact.email" changeFunction={handleContactChange}/>
-          </>
-        }
-      </ContactSection>
+      <Context.Consumer>
+        {({userInfo}) => {
+          if (!_.isNil(userInfo) && userInfo.role === "Impersonator"){
+            return(
+              <ContactSection>
+                <Field 
+                  name="contact.savedContact" 
+                  component={SelectField} 
+                  options={checkoutDropdownDataLabels.contacts}
+                  width="500px"
+                  label="Saved Order Contacts*"
+                  placeholder="Select an Order Contact"
+                  changeFunction={handleSavedContactSelectChange}
+                /> 
+                {values.contact.savedContact !== '' &&
+                  <>
+                    <FormikInput label="Order Contact First Name*" name="contact.firstName" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Last Name*" name="contact.lastName" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Phone*" name="contact.phone" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Email*" name="contact.email" changeFunction={handleContactChange}/>
+                  </>
+                }
+              </ContactSection>
+            )
+          }
+        }}        
+      </Context.Consumer>
       <Field 
         name="shipto.savedShipTo" 
         component={SelectField} 
