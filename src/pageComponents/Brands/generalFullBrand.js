@@ -184,14 +184,11 @@ export default function GeneralFullBrand({history}) {
     
   }, [page])
       
-}
   return(
-    <div> 
-      
+    <> 
         {pageComponent}      
   
-      
-    </div>
+    </>
   )
 }
 
