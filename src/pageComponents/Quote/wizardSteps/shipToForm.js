@@ -4,6 +4,7 @@ import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
 import SelectField from '../../_common/formik/select'
+import Context from '../../../config/context'
 
 const WrapForm = styled.div`
   display: flex;
@@ -20,6 +21,14 @@ const FormRow = styled.div`
     margin: 4px 8px auto 4px;
     font-style: italic;
   }
+`
+
+const ContactSection = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #e7f2ff;
+  width: 100%;
+  padding: 8px 0;
 `
 
 export function ShipToForm(props) {
@@ -72,22 +81,49 @@ export function ShipToForm(props) {
     if(value !== -1){
       let index = quoteDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.firstName', quoteDropdownData.contacts[index].firstName)
-      setFieldValue('shipto.lastName', quoteDropdownData.contacts[index].lastName)
+      setFieldValue('contact.firstName', checkoutDropdownData.contacts[index].firstName)
+      setFieldValue('contact.lastName', checkoutDropdownData.contacts[index].lastName)
     } else {
       setFieldValue(name, value)
-      setFieldValue('shipto.firstName', '')
-      setFieldValue('shipto.lastName', '')
+      setFieldValue('contact.firstName', '')
+      setFieldValue('contact.lastName', '')
     }
   }
   
   function handleContactChange(name, value){
     setFieldValue(name, value)
-    setFieldValue('shipto.savedContact', -1)
+    setFieldValue('contact.savedContact', -1)
   }
 
   return (
     <WrapForm>
+      <Context.Consumer>
+        {({userInfo}) => {
+          if (!_.isNil(userInfo) && userInfo.role === "Impersonator"){
+            return(
+              <ContactSection>
+                <Field 
+                  name="contact.savedContact" 
+                  component={SelectField} 
+                  options={checkoutDropdownDataLabels.contacts}
+                  width="500px"
+                  label="Saved Order Contacts*"
+                  placeholder="Select an Order Contact"
+                  changeFunction={handleSavedContactSelectChange}
+                /> 
+                {values.contact.savedContact !== '' &&
+                  <>
+                    <FormikInput label="Order Contact First Name*" name="contact.firstName" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Last Name*" name="contact.lastName" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Phone*" name="contact.phone" changeFunction={handleContactChange}/>
+                    <FormikInput label="Order Contact Email*" name="contact.email" changeFunction={handleContactChange}/>
+                  </>
+                }
+              </ContactSection>
+            )
+          }
+        }}        
+      </Context.Consumer>
       <Field 
         name="shipto.savedShipTo" 
         component={SelectField} 
@@ -97,16 +133,8 @@ export function ShipToForm(props) {
         changeFunction={handleSavedAddressSelectChange}
       /> 
       <FormikInput label="Company Name" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
-      <Field 
-        name="shipto.savedContact" 
-        component={SelectField} 
-        options={quoteDropdownDataLabels.contacts}
-        width="500px"
-        label="Saved Contacts"
-        changeFunction={handleSavedContactSelectChange}
-      /> 
-      <FormikInput label="First Name*" name="shipto.firstName" changeFunction={handleContactChange}/>
-      <FormikInput label="Last Name*" name="shipto.lastName" changeFunction={handleContactChange}/>
+      <FormikInput label="First Name*" name="shipto.firstName" />
+      <FormikInput label="Last Name*" name="shipto.lastName" />
       <FormikInput label="Phone*" name="shipto.phone" />
       <FormikInput label="Email*" name="shipto.email" />
       <FormikInput label="Address 1*" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>

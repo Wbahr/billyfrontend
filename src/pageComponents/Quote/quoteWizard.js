@@ -114,6 +114,13 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   })
 
   const initValues = {
+    contact: {
+      savedContact: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: ''
+    },
     schedule: {
       isQuote: true,
       packingBasisName: '',
@@ -125,7 +132,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       savedShipTo: -1,
       firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
       lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
-      savedContact: -1,
       address1: '',
       address2: '',
       city: '',
