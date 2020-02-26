@@ -103,7 +103,7 @@ export function ShipToForm(props) {
           options={checkoutDropdownDataLabels.contacts}
           width="500px"
           label="Saved Order Contacts*"
-          placeholder="Saved Contact"
+          placeholder="Select an Order Contact"
           changeFunction={handleSavedContactSelectChange}
         /> 
         {values.contact.savedContact !== '' &&
