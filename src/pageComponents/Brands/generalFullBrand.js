@@ -183,15 +183,6 @@ export default function GeneralFullBrand({history}) {
     }
     
   }, [page])
-// const featuredBrands = 'rexroth';
-//   switch (featuredBrands){
-//       case 'rexroth':
-//      return setPageComponent(<RexrothPage/>)
-//      case 'aventics':
-//       return setPageComponent(<Page/>)
-     
-//     }
-    
       
 }
   return(
