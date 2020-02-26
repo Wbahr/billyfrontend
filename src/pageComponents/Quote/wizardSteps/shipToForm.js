@@ -72,12 +72,12 @@ export function ShipToForm(props) {
     if(value !== -1){
       let index = quoteDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('shipto.contactNameFirst', quoteDropdownData.contacts[index].firstName)
-      setFieldValue('shipto.contactNameLast', quoteDropdownData.contacts[index].lastName)
+      setFieldValue('shipto.firstName', quoteDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.lastName', quoteDropdownData.contacts[index].lastName)
     } else {
       setFieldValue(name, value)
-      setFieldValue('shipto.contactNameFirst', '')
-      setFieldValue('shipto.contactNameLast', '')
+      setFieldValue('shipto.firstName', '')
+      setFieldValue('shipto.lastName', '')
     }
   }
   
@@ -105,8 +105,8 @@ export function ShipToForm(props) {
         label="Saved Contacts"
         changeFunction={handleSavedContactSelectChange}
       /> 
-      <FormikInput label="First Name*" name="shipto.contactNameFirst" changeFunction={handleContactChange}/>
-      <FormikInput label="Last Name*" name="shipto.contactNameLast" changeFunction={handleContactChange}/>
+      <FormikInput label="First Name*" name="shipto.firstName" changeFunction={handleContactChange}/>
+      <FormikInput label="Last Name*" name="shipto.lastName" changeFunction={handleContactChange}/>
       <FormikInput label="Phone*" name="shipto.phone" />
       <FormikInput label="Email*" name="shipto.email" />
       <FormikInput label="Address 1*" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>

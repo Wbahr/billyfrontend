@@ -160,7 +160,7 @@ export default function ShippingScheduleItem({item, index}) {
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
     let date = item.requestedShipDate
-    date = date.getMonth() + '/' +  date.getDate() + '/' +  date.getFullYear()
+    date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
     Content = (
       <DivCard>

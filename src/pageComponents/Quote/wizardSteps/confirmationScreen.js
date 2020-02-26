@@ -79,7 +79,7 @@ export default function ConfirmationScreen(props) {
         <SectionTitle>Ship To</SectionTitle>
         <SectionFields>
           <DivAddressSection>
-            <Pbold>{shipto.contactNameFirst} {shipto.contactNameLast}</Pbold>
+            <Pbold>{shipto.firstName} {shipto.lastName}</Pbold>
             <Pbold>{shipto.address1}</Pbold>
             <Pbold>{shipto.address2}</Pbold>
             <Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>

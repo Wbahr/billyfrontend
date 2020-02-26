@@ -132,20 +132,20 @@ function CheckoutPage(props) {
     }
   })
 
-  useEffect(() => {
-    // const touch = getIn(props.formik.touched, props.name)
-    // console.log('formik ->', touch)
-    // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
-    if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
-      updateTaxes(zipcode, shipToId)
-      setPossibleTaxChange(false)
-    } else if (currentStep === 2) {
-      setPossibleTaxChange(true)
-    }
-  },[currentStep])
+  // useEffect(() => {
+  //   // const touch = getIn(props.formik.touched, props.name)
+  //   // console.log('formik ->', touch)
+  //   // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
+  //   if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
+  //     updateTaxes(zipcode, shipToId)
+  //     setPossibleTaxChange(false)
+  //   } else if (currentStep === 2) {
+  //     setPossibleTaxChange(true)
+  //   }
+  // },[currentStep])
 
   function handleMoveStep(requestedStep){
-    const { values: formikValues } = useFormikContext()
+    // const { values: formikValues } = useFormikContext()
     if(requestedStep === 0 || stepValidated[requestedStep - 1]){
       setCurrentStep(requestedStep)
     }
@@ -161,9 +161,8 @@ function CheckoutPage(props) {
   }
 
   function handleCheckoutSubmit(formValues){
-    submitOrder({ variables: { 
-      order: {formValues}} 
-    })
+    console.log('handleCheckoutSubmit', formValues)
+    submitOrder({ variables: { order: formValues } })
   }
   
   return(

@@ -79,13 +79,17 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
+  const [submittingOrder, setSubmittingOrder] = useState(false)
   const context = useContext(Context)
 
   const AutoSubmit = () => {
     const {
       values
     } = useFormikContext()
-    submitForm(values)
+    if(!submittingOrder){
+      setSubmittingOrder(true)
+      submitForm(values)
+    }
     return(
       <p>Submitting...</p>
     )
@@ -96,7 +100,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
     if (shoppingCartAndDatesObj.length === 0) {
         let date = new Date()
         date.setDate(date.getDate() + 1)
-        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: date}))
+        const recentCart = shoppingCart.map(elem => ({'frecno': elem.frecno, 'itemNotes': elem.itemNotes, 'quantity': elem.quantity, 'requestedShipDate': date}))
         setShoppingCartAndDatesObj(recentCart)
     }
   },[shoppingCart])
@@ -115,6 +119,13 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
   })
 
   const initValues = {
+    contact: {
+      savedContact: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: ''
+    },
     schedule: {
       isQuote: false,
       packingBasisName: '',
@@ -124,9 +135,8 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
     },
     shipto: {
       savedShipTo: -1,
-      contactNameFirst: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
-      contactNameLast: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
-      savedContact: -1,
+      firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       address1: '',
       address2: '',
       city: '',

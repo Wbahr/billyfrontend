@@ -51,7 +51,7 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep, ste
     let LI = styled.li`
       cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
       :before {
-        background-color: ${stepValidated[index] ? "#60acff" : "white"};
+        background-color: ${stepValidated[index] ? "#000080" : "white"};
       }
     `
 

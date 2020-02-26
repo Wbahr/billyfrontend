@@ -16,7 +16,7 @@ const Label = styled.label`
   font-weight: 400;
   padding-left: 4px;
   margin-bottom: -4px;
-  background-color: white;
+  // background-color: white;
   width: max-content;
   padding: 2px;
   margin-left: 7px;

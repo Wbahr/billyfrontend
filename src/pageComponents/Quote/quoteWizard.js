@@ -123,8 +123,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     },
     shipto: {
       savedShipTo: -1,
-      contactNameFirst: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
-      contactNameLast: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
+      firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       savedContact: -1,
       address1: '',
       address2: '',

@@ -15,11 +15,11 @@ export const shipToSchema = object({
       .min(3)
       .max(256)
       .required(),
-    contactNameFirst: string()
+    firstName: string()
       .min(3)
       .max(50)
       .required(),
-    contactNameLast: string()
+    lastName: string()
       .min(3)
       .max(50)
       .required(),

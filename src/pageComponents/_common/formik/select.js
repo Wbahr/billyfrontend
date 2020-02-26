@@ -13,7 +13,7 @@ const LabelStyle = {
   fontWeight: 400,
   paddingLeft: '4px',
   marginBottom: '-4px',
-  backgroundColor: 'white',
+  // backgroundColor: 'white',
   width: 'max-content',
   padding: '2px',
   marginLeft: '7px'
