@@ -8,13 +8,12 @@ import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
-import Context from '../../../config/context'
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 350px;
+  height: max-content;
   margin-left: auto;
   padding: 16px;
   align-items: flex-end;
@@ -127,13 +126,20 @@ export default function OrderSummary({history}) {
                 }
               }}        
             </Context.Consumer>
-            <DivQuoteButton onClick={()=>history.push('/create-quote')}>
-              <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-              <p>Create a Quote</p>
-            </DivQuoteButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && (userInfo.role === "AirlineEmployee" || userInfo.role === "Impersonator")){
+                  return(
+                    <DivQuoteButton onClick={()=>history.push('/create-quote')}>
+                      <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                      <p>Create a Quote</p>
+                    </DivQuoteButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
           </DivButtonContainer>
         }
-
       </Div>
     </>
   )

@@ -118,10 +118,18 @@ export default function SubtotalBox({history}) {
                 }
               }}        
             </Context.Consumer>
-            <DivQuoteButton onClick={()=>history.push('/create-quote')}>
-              <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-              <p>Create a Quote</p>
-            </DivQuoteButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && (userInfo.role === "AirlineEmployee" || userInfo.role === "Impersonator")){
+                  return(
+                    <DivQuoteButton onClick={()=>history.push('/create-quote')}>
+                      <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                      <p>Create a Quote</p>
+                    </DivQuoteButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
             <DivShoppinglistButton>
               <p>Save to Shopping List</p>
             </DivShoppinglistButton>
