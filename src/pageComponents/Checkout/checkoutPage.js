@@ -128,7 +128,12 @@ function CheckoutPage(props) {
   const [submitOrder] = useMutation(SUBMIT_ORDER, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
-      console.log('submitOrder $$$$$', data)
+      let orderId = _.get(data,`submitOrder.transactionId`,null)
+      if (!_.isNil(orderId)) {
+        history.push(`/order-complete/${orderId}`)
+      } else {
+        window.alert('an error has occured. check the networking tab')
+      }
     }
   })
 
@@ -161,7 +166,6 @@ function CheckoutPage(props) {
   }
 
   function handleCheckoutSubmit(formValues){
-    console.log('handleCheckoutSubmit', formValues)
     submitOrder({ variables: { order: formValues } })
   }
   
