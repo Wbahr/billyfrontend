@@ -8,7 +8,7 @@ export default function Abb() {
   return(
     <div>
       <div>
-        <p>Hello ABB</p>
+        <p>ABB</p>
        
       </div>
     </div>
