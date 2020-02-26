@@ -108,7 +108,7 @@ export default function SubtotalBox({history}) {
           <>
             <Context.Consumer>
               {({userInfo}) => {
-                if (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee"){
+                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee")){
                   return(
                     <DivCheckoutButton onClick={()=>history.push('/checkout')}>
                       <FontAwesomeIcon icon="lock" color="white"/>
@@ -130,9 +130,17 @@ export default function SubtotalBox({history}) {
                 }
               }}        
             </Context.Consumer>
-            <DivShoppinglistButton>
-              <p>Save to Shopping List</p>
-            </DivShoppinglistButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo)){
+                  return(
+                    <DivShoppinglistButton>
+                      <p>Save to Shopping List</p>
+                    </DivShoppinglistButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
          </>
         }
       </Div>

@@ -116,7 +116,7 @@ export default function OrderSummary({history}) {
           <DivButtonContainer>
             <Context.Consumer>
               {({userInfo}) => {
-                if (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee"){
+                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee")){
                   return(
                     <DivCheckoutButton onClick={()=>history.push('/checkout')}>
                       <FontAwesomeIcon icon="lock" color="white"/>
