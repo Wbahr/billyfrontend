@@ -67,9 +67,12 @@ export function ShipToForm(props) {
   }
 
   // Once this field is changed, set selected_saved_ship_to and saved_ship_to to -1 (Since what was automatically loaded was changed)
+    // Keep the savedShipTo null if it is already null (customer is anon)
   function handleSavedAddressChange(name, value){
     setFieldValue(name, value)
-    setFieldValue('shipto.savedShipTo', -1)
+    if(!_.isNil(values.shipto.savedShipTo)){
+      setFieldValue('shipto.savedShipTo', -1)
+    }
   }
 
   function handleCountryChange(name, value){
@@ -124,14 +127,22 @@ export function ShipToForm(props) {
           }
         }}        
       </Context.Consumer>
-      <Field 
-        name="shipto.savedShipTo" 
-        component={SelectField} 
-        options={checkoutDropdownDataLabels.shiptos}
-        width="800px"
-        label="Saved Ship To"
-        changeFunction={handleSavedAddressSelectChange}
-      /> 
+      <Context.Consumer>
+        {({userInfo}) => {
+          if (!_.isNil(userInfo)){
+            return(
+              <Field 
+                name="shipto.savedShipTo" 
+                component={SelectField} 
+                options={checkoutDropdownDataLabels.shiptos}
+                width="800px"
+                label="Saved Ship To"
+                changeFunction={handleSavedAddressSelectChange}
+              /> 
+            )
+          }
+        }}        
+      </Context.Consumer>
       <FormikInput label="Company Name" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
       <FormikInput label="First Name*" name="shipto.firstName" />
       <FormikInput label="Last Name*" name="shipto.lastName" />

@@ -115,7 +115,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 
   const initValues = {
     contact: {
-      savedContact: '',
+      savedContact: null,
       firstName: '',
       lastName: '',
       phone: '',
@@ -129,7 +129,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       shoppingCartToken: localStorage.getItem('shoppingCartToken')
     },
     shipto: {
-      savedShipTo: -1,
+      savedShipTo: _.isNil(_.get(context,`userInfo`, null)) ? null : -1,
       firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
       lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       address1: '',
