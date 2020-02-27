@@ -60,14 +60,14 @@ export default function ProcessingOrderModal() {
   const [timeElapsed, setTimeElapsed] = useState(0)
   const totalSeconds = 22
   useInterval(() => {
-    setTimeElapsed(timeElapsed + .3)
-  }, 300)
+    setTimeElapsed(timeElapsed + .05)
+  }, 50)
 
   return(
     <Popup open={true} closeOnDocumentClick={false}>
       <LoadingRing
-        complete={(timeElapsed/totalSeconds) >= .99 ? (totalSeconds *.99) : timeElapsed}
-        totalSeconds={totalSeconds}
+        complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}
+        totalSeconds={totalSeconds * 1000}
       />
       <p>Processing Order... Please wait</p>
       <p>You will be redirected to a confirmation screen upon completion.</p>
