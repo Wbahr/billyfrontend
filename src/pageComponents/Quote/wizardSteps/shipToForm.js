@@ -198,12 +198,12 @@ export function ShipToForm(props) {
         <Field 
           name="shipto.isCollect" 
           component={SelectField} 
-          options={[{'label': 'No', 'value': '0'},{'label': 'Yes', 'value': '1'}]}
+          options={[{'label': 'No', 'value': 0},{'label': 'Yes', 'value': 1}]}
           width="100px"
           isSearchable={false}
         /> 
     </FormRow>
-    {values.shipto.isCollect  === "1" && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
+    {values.shipto.isCollect  === 1 && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
   </WrapForm>
   )
 }

@@ -141,7 +141,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       phone: '',
       email: '',
       carrierId: '',
-      isCollect: '0',
+      isCollect: 0,
       collectNumber: ''
     }
   }

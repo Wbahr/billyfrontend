@@ -7,6 +7,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements';
+import ProcessingOrderModal from './uiComponents/processingOrderModal'
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
@@ -91,7 +92,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       submitForm(values)
     }
     return(
-      <p>Submitting...</p>
+      <ProcessingOrderModal/>
     )
   }
 
@@ -146,7 +147,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       phone: '',
       email: '',
       carrierId: '',
-      isCollect: '0',
+      isCollect: 0,
       collectNumber: ''
     },
     billing: {
