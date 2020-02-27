@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
@@ -6,6 +6,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'
+import LoadingRing from './loadingRing'
 
 // const Table = styled.table`
 //   margin: 0 16px;
@@ -35,11 +36,39 @@ import Context from '../../../config/context'
 //     text-align: center;
 //   }
 // `
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 export default function ProcessingOrderModal() {
-  
+  const [timeElapsed, setTimeElapsed] = useState(0)
+  const totalSeconds = 22
+  useInterval(() => {
+    setTimeElapsed(timeElapsed + .3)
+  }, 300)
+
   return(
-    <Popup>
+    <Popup open={true} closeOnDocumentClick={false}>
+      <LoadingRing
+        complete={(timeElapsed/totalSeconds) >= .99 ? (totalSeconds *.99) : timeElapsed}
+        totalSeconds={totalSeconds}
+      />
       <p>Processing Order... Please wait</p>
       <p>You will be redirected to a confirmation screen upon completion.</p>
     </Popup>
