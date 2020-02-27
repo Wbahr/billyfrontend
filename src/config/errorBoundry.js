@@ -16,7 +16,7 @@ const Container = styled.div`
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: true };
+    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error) {
