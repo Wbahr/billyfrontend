@@ -8,6 +8,19 @@ import Loader from '../../_common/loader'
 import Context from '../../../config/context'
 import LoadingRing from './loadingRing'
 
+
+const Container = styled.div`
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  h4 {
+    font-family: ProximaBold;
+  }
+  p {
+    font-family: Proxima;
+    text-align: center;
+  }
+`
 // const Table = styled.table`
 //   margin: 0 16px;
 //   table-layout: fixed;
@@ -64,13 +77,15 @@ export default function ProcessingOrderModal() {
   }, 50)
 
   return(
-    <Popup open={true} closeOnDocumentClick={false}>
-      <LoadingRing
-        complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}
-        totalSeconds={totalSeconds * 1000}
-      />
-      <p>Processing Order... Please wait</p>
-      <p>You will be redirected to a confirmation screen upon completion.</p>
+    <Popup open={true} closeOnDocumentClick={false} contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+      <Container>
+        <LoadingRing
+          complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}
+          totalSeconds={totalSeconds * 1000}
+        />
+        <h5>Processing Order... Please wait</h5>
+        <p>You will be redirected to a confirmation screen upon completion.</p>
+      </Container>
     </Popup>
   )
 }

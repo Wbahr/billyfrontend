@@ -43,7 +43,7 @@ export default function LoadingRing({
           cx={size}
           cy={size}
         />
-        <text x="50%" y="50%" textAnchor="middle" stroke="#000" strokeWidth=".3px" dy=".3em">
+        <text x="50%" y="50%" textAnchor="middle" stroke="#000" strokeWidth=".3px" dy=".3em" fontFamily="ProximaBold">
           {((complete/totalSeconds) * 100).toFixed(0) + '%'}
         </text>
       </svg>
