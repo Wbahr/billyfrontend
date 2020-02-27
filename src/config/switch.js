@@ -23,6 +23,7 @@ import Signup from '../pageComponents/Signup/signupPage'
 // Supporting Components
 import Auth from './auth'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
+import ErrorBoundry from './errorBoundry'
 
 function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
@@ -31,7 +32,9 @@ function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponen
       render={routeProps => (
         <Auth authRequired={auth || false} {...routeProps}>
           <LayoutWrapperComponent {...routeProps}>
-            <Component {...routeProps} />
+            <ErrorBoundry>
+              <Component {...routeProps} />
+            </ErrorBoundry>
           </LayoutWrapperComponent>
         </Auth>
       )}
