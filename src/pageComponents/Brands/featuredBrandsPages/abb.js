@@ -36,9 +36,8 @@ const BrandDetailsContainer = styled.div`
 
 const ProductsDetails = styled.div`
   font-size: 16px;
-  margin-left: 20px;
-  margin-top: 45px;
-  margin-right: 20px;
+  margin: 45px 20px 0 20px;
+ 
 `;
 
 
@@ -56,12 +55,19 @@ const DistributorDetails = styled.div`
   font-size: 18px;
 `;
 
+const ProductsTitle = styled.div`
+  font-size: 25px;
+  margin-top: 27px;
+  color: gray;
+  text-transform: uppercase;
+`;
 
 const Div = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
   width: 100%;
   align-content: center;
+  margin-bottom: 20px;
 `;
 
 const ProductsDiv = styled.div`
@@ -74,8 +80,7 @@ const ProductsH4 = styled.h4`
     text-align: center;
 `;
 const ShopAbbButton = styled.button`
-  
-background-color: #b51029;
+  background-color: #b51029;
   width: 20%
   color: white;
   font-weight: 600;
@@ -85,27 +90,45 @@ background-color: #b51029;
   padding: 5px;
   margin: 0 auto;
   margin-top: 30px;
- 
- 
-
   `;
 
+
 const BorderBottom = styled.div`
+  display: flex;
   border-bottom: 1px solid red;
-  width: 55%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
   `;
 
+ const RelatedLinkCircle = styled.div`
+ width: 200px;
+ height: 200px;
+ border-radius: 100px;
+ background: red; 
+ margin: 0 5px 0 5px;
+ position: relative;
+ text-align:center;
+
+ `;
+
+ const LinkStyle = styled.a`
+  color: black;
+  text-decoration: none;
+  font-size: 14px;
+  position: absolute;
+  top: 50px;
  
+
+ `;
 export default function Abb() {
 
   return (
 
     <Container>
       <FeaturedBrandLogo>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/ABB_logo.svg/1280px-ABB_logo.svg.png" width="10%" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/ABB_logo.svg/1280px-ABB_logo.svg.png" width="8%" />
       </FeaturedBrandLogo>
       <BrandDetailsContainer>
 
@@ -117,7 +140,7 @@ export default function Abb() {
         </Div>
 
         <Div>
-          
+          <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
         </Div>
 
@@ -167,8 +190,20 @@ export default function Abb() {
         </ProductsDiv>
 
         <Div>
+        <ProductsTitle>Related Link</ProductsTitle>
           <BorderBottom></BorderBottom>
         </Div>
+
+        <Div>
+          <RelatedLinkCircle><LinkStyle href="https://new.abb.com/us" target="_blank">ABB's US Website</LinkStyle></RelatedLinkCircle>
+          <RelatedLinkCircle></RelatedLinkCircle>
+          <RelatedLinkCircle></RelatedLinkCircle>
+          <RelatedLinkCircle></RelatedLinkCircle>
+          <RelatedLinkCircle></RelatedLinkCircle>
+          <RelatedLinkCircle></RelatedLinkCircle>
+          
+        </Div>
+
 
       </BrandDetailsContainer>
 
