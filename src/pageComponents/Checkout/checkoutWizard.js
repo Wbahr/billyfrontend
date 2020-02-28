@@ -37,6 +37,7 @@ const GET_CHECKOUT_DATA = gql`
         physState
         physPostalCode
         physCountry
+        collectNumberUps
       }
       carriers{
         freightMultiplier

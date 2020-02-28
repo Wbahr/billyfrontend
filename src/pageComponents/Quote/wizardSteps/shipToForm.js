@@ -54,6 +54,13 @@ export function ShipToForm(props) {
       setFieldValue('shipto.city', quoteDropdownData.shipToAddresses[index].mailCity)
       setFieldValue('shipto.stateOrProvince', quoteDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', quoteDropdownData.shipToAddresses[index].mailPostalCode)
+      if(_.isNil(quoteDropdownData.shipToAddresses[index].collectNumberUps)){
+        setFieldValue('shipto.isCollect', 0)
+        setFieldValue('shipto.collectNumber', '')
+      } else {
+        setFieldValue('shipto.isCollect', 1)
+        setFieldValue('shipto.collectNumber', quoteDropdownData.shipToAddresses[index].collectNumberUps)
+      }
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.country', 'us')
@@ -63,6 +70,8 @@ export function ShipToForm(props) {
       setFieldValue('shipto.city', '')
       setFieldValue('shipto.stateOrProvince', '')
       setFieldValue('shipto.zip', '')
+      setFieldValue('shipto.isCollect', 0)
+      setFieldValue('shipto.collectNumber', '')
     }
   }
 
