@@ -30,6 +30,7 @@ const BrandDetailsContainer = styled.div`
   width: 100%;
   flex-wrap: wrap;
   margin: 0 auto;
+  
 
   `;
 
@@ -58,7 +59,7 @@ const DistributorDetails = styled.div`
 const ProductsTitle = styled.div`
   font-size: 25px;
   margin-top: 27px;
-  color: gray;
+  color:  	 #595959;
   text-transform: uppercase;
 `;
 
@@ -66,18 +67,20 @@ const Div = styled.div`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
-  align-content: center;
-  margin-bottom: 20px;
+  
 `;
 
 const ProductsDiv = styled.div`
 display: flex;  
 flex-wrap: nowrap;
 margin: 20px 0 20px 0;
+background-color:  #f2f2f2;
+padding: 15px 
 `;
 
 const ProductsH4 = styled.h4`
     text-align: center;
+    color: 	#000000;
 `;
 const ShopAbbButton = styled.button`
   background-color: #b51029;
@@ -100,26 +103,37 @@ const BorderBottom = styled.div`
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+  color: #b51029;
   `;
 
  const RelatedLinkCircle = styled.div`
  width: 200px;
  height: 200px;
  border-radius: 100px;
- background: red; 
- margin: 0 5px 0 5px;
+ background-color: #b51029; 
+ margin: 0 auto;
  position: relative;
- text-align:center;
+ 
 
  `;
 
  const LinkStyle = styled.a`
-  color: black;
+  color: white;
   text-decoration: none;
   font-size: 14px;
   position: absolute;
-  top: 50px;
+  top: 130px;
+  margin-left: 50px;
+
+ `;
+
+ const IconImg = styled.img`
+ width: 35%;
+ position: absolute;
+ margin: 50px 0 0 65px;
  
+}
+
 
  `;
 export default function Abb() {
@@ -195,12 +209,19 @@ export default function Abb() {
         </Div>
 
         <Div>
-          <RelatedLinkCircle><LinkStyle href="https://new.abb.com/us" target="_blank">ABB's US Website</LinkStyle></RelatedLinkCircle>
+          <RelatedLinkCircle>
+          <IconImg src="https://www.konfest.com/wp-content/uploads/2019/05/Konfest-PNG-JPG-Image-Pic-Photo-Free-Download-Royalty-Unlimited-clip-art-sticker-world-wide-web-icons-website-earth-grid-globe-black-white-12.png"></IconImg>
+
+            <LinkStyle href="https://new.abb.com/us" target="_blank">ABB's US Website</LinkStyle>
+          </RelatedLinkCircle>
+          <RelatedLinkCircle>
+            <IconImg src="#"></IconImg>
+            <LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">Videos</LinkStyle>
+          </RelatedLinkCircle>
           <RelatedLinkCircle></RelatedLinkCircle>
           <RelatedLinkCircle></RelatedLinkCircle>
-          <RelatedLinkCircle></RelatedLinkCircle>
-          <RelatedLinkCircle></RelatedLinkCircle>
-          <RelatedLinkCircle></RelatedLinkCircle>
+          
+          
           
         </Div>
 
