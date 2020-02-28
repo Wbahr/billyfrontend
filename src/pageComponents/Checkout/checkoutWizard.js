@@ -7,6 +7,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements';
+import ProcessingOrderModal from './uiComponents/processingOrderModal'
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
@@ -75,19 +76,23 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
+function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
+  const [submittingOrder, setSubmittingOrder] = useState(false)
   const context = useContext(Context)
 
   const AutoSubmit = () => {
     const {
       values
     } = useFormikContext()
-    submitForm(values)
+    if(!submittingOrder){
+      setSubmittingOrder(true)
+      submitForm(values)
+    }
     return(
-      <p>Submitting...</p>
+      <ProcessingOrderModal/>
     )
   }
 
@@ -96,7 +101,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     if (shoppingCartAndDatesObj.length === 0) {
         let date = new Date()
         date.setDate(date.getDate() + 1)
-        const recentCart = shoppingCart.map(elem => ({...elem, requestedShipDate: date}))
+        const recentCart = shoppingCart.map(elem => ({'frecno': elem.frecno, 'itemNotes': elem.itemNotes, 'quantity': elem.quantity, 'requestedShipDate': date}))
         setShoppingCartAndDatesObj(recentCart)
     }
   },[shoppingCart])
@@ -115,17 +120,24 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   })
 
   const initValues = {
+    contact: {
+      savedContact: null,
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: ''
+    },
     schedule: {
+      isQuote: false,
       packingBasisName: '',
       packingBasis: '0',
       cartWithDates: shoppingCartAndDatesObj,
       shoppingCartToken: localStorage.getItem('shoppingCartToken')
     },
     shipto: {
-      savedShipTo: -1,
-      contactNameFirst: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
-      contactNameLast: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
-      savedContact: -1,
+      savedShipTo: _.isNil(_.get(context,`userInfo`, null)) ? null : -1,
+      firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       address1: '',
       address2: '',
       city: '',
@@ -135,7 +147,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       phone: '',
       email: '',
       carrierId: '',
-      isCollect: '0',
+      isCollect: 0,
       collectNumber: ''
     },
     billing: {
@@ -184,7 +196,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
       validate={(values)=>handleValidateFields(values)}
     >
       {formikProps => (
-        console.log('errors',formikProps.errors),
         <Elements>
           <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
@@ -199,3 +210,5 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 CheckoutWizard.propTypes = {
   step: PropTypes.number.isRequired
 }
+
+export default CheckoutWizard

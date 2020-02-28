@@ -300,11 +300,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
                   </Context.Consumer>
             </DivItem>
             <DivItem>
-              <Peach>{formatCurrency(itemDetails.anonPrice)}/each</Peach>
+              <Peach>{formatCurrency(itemDetails.listPrice)}/each</Peach>
             </DivItem>
             <DivItem>
               <DivTotalPrice>
-                <p>{formatCurrency((itemDetails.anonPrice).toFixed(2) * item.quantity)}</p>
+                <p>{formatCurrency((itemDetails.listPrice).toFixed(2) * item.quantity)}</p>
               </DivTotalPrice>
             </DivItem>
           </DivQuantity>

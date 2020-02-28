@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
+import { connect, getIn } from 'formik'
 
 const DivContainer = styled.div`
   display: flex;
@@ -90,8 +91,23 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-export default function CheckoutPage({history}) {
+const SUBMIT_ORDER = gql`
+  mutation SubmitOrder($order: OrderInputDataInputGraphType){
+    submitOrder(orderInput: $order){
+      transactionId
+      messages
+    } 
+  }
+`
+
+function CheckoutPage(props) {
+  const {
+    history,
+    formik
+  } = props
+
   const [currentStep, setCurrentStep] = useState(0)
+  const [possibleTaxChange, setPossibleTaxChange] = useState(false)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
   const [stepValidated, setStepValidated] = useState(
@@ -109,7 +125,32 @@ export default function CheckoutPage({history}) {
     2: billToSchema
   }
 
+  const [submitOrder] = useMutation(SUBMIT_ORDER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let orderId = _.get(data,`submitOrder.transactionId`,null)
+      if (!_.isNil(orderId)) {
+        history.push(`/order-complete/${orderId}`)
+      } else {
+        window.alert('an error has occured. check the networking tab')
+      }
+    }
+  })
+
+  // useEffect(() => {
+  //   // const touch = getIn(props.formik.touched, props.name)
+  //   // console.log('formik ->', touch)
+  //   // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
+  //   if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
+  //     updateTaxes(zipcode, shipToId)
+  //     setPossibleTaxChange(false)
+  //   } else if (currentStep === 2) {
+  //     setPossibleTaxChange(true)
+  //   }
+  // },[currentStep])
+
   function handleMoveStep(requestedStep){
+    // const { values: formikValues } = useFormikContext()
     if(requestedStep === 0 || stepValidated[requestedStep - 1]){
       setCurrentStep(requestedStep)
     }
@@ -125,8 +166,7 @@ export default function CheckoutPage({history}) {
   }
 
   function handleCheckoutSubmit(formValues){
-    let mutatedFormValues = formValues
-    console.log('mutatedFormValues', mutatedFormValues)
+    submitOrder({ variables: { order: formValues } })
   }
   
   return(
@@ -166,3 +206,5 @@ export default function CheckoutPage({history}) {
     </DivContainer>
   )
 }
+
+export default connect(CheckoutPage)

@@ -12,6 +12,7 @@ import Checkout from '../pageComponents/Checkout/checkoutPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import Login from '../pageComponents/Login/loginPage'
+import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
@@ -22,6 +23,7 @@ import Signup from '../pageComponents/Signup/signupPage'
 // Supporting Components
 import Auth from './auth'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
+import ErrorBoundry from './errorBoundry'
 
 function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
@@ -30,7 +32,9 @@ function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponen
       render={routeProps => (
         <Auth authRequired={auth || false} {...routeProps}>
           <LayoutWrapperComponent {...routeProps}>
-            <Component {...routeProps} />
+            <ErrorBoundry>
+              <Component {...routeProps} />
+            </ErrorBoundry>
           </LayoutWrapperComponent>
         </Auth>
       )}
@@ -68,11 +72,12 @@ class App extends React.Component {
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
+        <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
         <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>

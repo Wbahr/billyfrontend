@@ -13,7 +13,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 350px;
-  height: 350px;
+  height: max-content;
   margin-left: auto;
   padding: 16px;
   align-items: flex-end;
@@ -112,19 +112,34 @@ export default function OrderSummary({history}) {
         <DivLineItemTotal>
           <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>
-        {context.cart.length > -1 &&
+        {context.cart.length > 0 &&
           <DivButtonContainer>
-            <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-              <FontAwesomeIcon icon="lock" color="white"/>
-              <p>Start Secure Checkout</p>
-            </DivCheckoutButton>
-            <DivQuoteButton onClick={()=>history.push('/create-quote')}>
-              <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-              <p>Create a Quote</p>
-            </DivQuoteButton>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee")){
+                  return(
+                    <DivCheckoutButton onClick={()=>history.push('/checkout')}>
+                      <FontAwesomeIcon icon="lock" color="white"/>
+                      <p>Start Secure Checkout</p>
+                    </DivCheckoutButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
+            <Context.Consumer>
+              {({userInfo}) => {
+                if (!_.isNil(userInfo) && (userInfo.role === "AirlineEmployee" || userInfo.role === "Impersonator")){
+                  return(
+                    <DivQuoteButton onClick={()=>history.push('/create-quote')}>
+                      <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                      <p>Create a Quote</p>
+                    </DivQuoteButton>
+                  )
+                }
+              }}        
+            </Context.Consumer>
           </DivButtonContainer>
         }
-
       </Div>
     </>
   )

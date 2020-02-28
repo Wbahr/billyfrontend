@@ -1,64 +1,34 @@
-import React, {useState, useRef} from 'react'
+import React, { useState } from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import Loader from '../../_common/loader'
 import Context from '../../../config/context'
+import { ButtonBlack } from '../../../styles/buttons'
 
-const Table = styled.table`
-  margin: 0 16px;
-  table-layout: fixed;
-  width: 90%;
-`
-
-const TR = styled.tr`
-  border-top: 1px lightgrey solid;
-  border-bottom: 1px lightgrey solid;
-`
-
-const TDGrey = styled.td`
-  padding: 4px 8px 4px 24px;
-  font-weight: 500;
-  background-color: whitesmoke;
-`
-
-const TDWhite = styled.td`
-padding: 4px 24px 4px 8px;
-`
-
-const Div = styled.div`
+const DivItem = styled.div`
   display: flex;
   flex-direction: column;
-  p {
-    text-align: center;
-  }
 `
 
-const QUERY_STOCK_AVAILABILITY = gql`
-  query GetStockAvailability($invMastUid: ID){
-    getStockAvailability(invMastUid: $invMastUid){
-      airlineStocks {
-        companyId
-        itemCode
-        locationId
-        locationName
-        locationType
-        quantityAllocated
-        quantityAvailable
-        quantityFrozen
-        quantityNonPickable
-        quantityOnHand
-        quantityQuarantined
-      }
-      factoryStock {
-        factoryAvailability
-        factoryMessage
-        invMastUid
-        leadTimeDays
-      }
-    }
+const Label = styled.label`
+  margin: 0;
+  font-size: 12px;
+  font-style: italic;
+`
+
+const Container = styled.div`
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  h4 {
+    font-family: ProximaBold;
+  }
+  p {
+    font-family: Proxima;
+    text-align: center;
+  }
+  button {
+    margin-top: 8px;
   }
 `
 
@@ -73,18 +43,24 @@ export default function SplitLineModal({open, index, hideSplitLineModal}) {
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick>
-      <p>Split Line</p>
-      <p>Line Count: </p><input value={lineCount} onChange={(e)=> setLineCount(e.target.value)}/>
-      <p>Quantity per Line: </p><input value={lineQuantity} onChange={(e)=> setLineQuantity(e.target.value)}/>
-      <Context.Consumer>
-        {({splitItem}) => (
-          <button onClick={()=>{
-            splitItem(index,lineCount,lineQuantity)
-            handleClose()
-          }}>Split Line</button>
-        )}
-      </Context.Consumer>
+    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+      <Container>
+        <h4>Split Line</h4>
+        <DivItem>
+          <Label>Line Count: </Label><input value={lineCount} style={{'width': '100px'}} onChange={(e)=> setLineCount(e.target.value)}/>
+        </DivItem>
+        <DivItem>
+          <Label>Quantity per Line: </Label><input value={lineQuantity} style={{'width': '100px'}} onChange={(e)=> setLineQuantity(e.target.value)}/>
+        </DivItem>
+        <Context.Consumer>
+          {({splitItem}) => (
+            <ButtonBlack onClick={()=>{
+              splitItem(index,lineCount,lineQuantity)
+              handleClose()
+            }}>Split</ButtonBlack>
+          )}
+        </Context.Consumer>
+      </Container>
     </Popup>
   )
 }

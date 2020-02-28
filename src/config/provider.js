@@ -71,6 +71,27 @@ const END_IMPERSONATION = gql`
   }
 `
 
+const GET_TAXES = gql`
+  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
+    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
+      grandTotal
+      subTotal
+      tariffTotal
+      taxTotal
+      taxRate
+      checkoutItems {
+        frecno
+        itemNotes
+        itemTotalPrice
+        itemTotalTariff
+        itemUnitPrice
+        quantity
+        requestedShipDate
+      }
+    }
+  }
+`
+
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
@@ -204,6 +225,13 @@ export default function Provider(props) {
       } else {
         setErrorMessage(requestData.message)
       }
+    }
+  })
+
+  const [handleUpdateTaxes] = useLazyQuery(GET_TAXES, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      console.log('got taxes ->', data)
     }
   })
   
@@ -373,6 +401,17 @@ export default function Provider(props) {
           },
           saveCart: ()=> {
             handleUpdateShoppingCart(3)
+          },
+          updateTaxes: (zipcode, shipToId)=> {
+            handleUpdateTaxes(
+              { variables:  
+                {
+                  "anonymousCartToken": localStorage.getItem('shoppingCartToken'),
+                  "shipToId": shipToId,
+                  "zipcode": zipcode
+                }
+              }
+            )
           },
           setOrderNotes: (orderNotes) => {
             handleSetOrderNotes(orderNotes)
