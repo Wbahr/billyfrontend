@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch, withRouter } from 'react-router-dom'
 // Layouts
+import AdminLayout from '../layoutComponents/adminLayout'
 import EmptyLayout from '../layoutComponents/emptyLayout'
 import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/headerfooterHomepageLayout'
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
@@ -22,6 +23,7 @@ import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
 // Supporting Components
 import Auth from './auth'
+import AdminHome from '../adminComponents/adminHome'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 
@@ -87,6 +89,9 @@ class App extends React.Component {
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        {/* ADMIN INTERNAL TOOLS */}
+        <WrapperRoute exact path='/admin-dashboard' auth component={AdminHome} layout={AdminLayout}/>
+        <WrapperRoute exact path='/admin-dashboard/:tool' auth component={AdminHome} layout={AdminLayout}/>
         <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
