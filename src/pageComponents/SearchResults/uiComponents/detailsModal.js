@@ -297,7 +297,7 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
     )
   }
     return(
-      <Popup open={open} onClose={()=>{handleCloseModal()}} closeOnDocumentClick>
+      <Popup open={open} onClose={()=>{handleCloseModal()}} closeOnDocumentClick  contentStyle={_.isNil(item) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px'}}>
         {PopupContent}
       </Popup>
     )
