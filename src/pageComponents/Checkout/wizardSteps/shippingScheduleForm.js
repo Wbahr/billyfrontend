@@ -45,7 +45,6 @@ const DivScheduleHeader = styled.div`
 `
 
 export function ShippingScheduleForm(props){
-  console.log('ShippingScheduleForm->', props)
   const {
     values, 
     setFieldValue

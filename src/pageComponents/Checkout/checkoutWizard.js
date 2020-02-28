@@ -137,8 +137,8 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
     },
     shipto: {
       savedShipTo: _.isNil(_.get(context,`userInfo`, null)) ? null : -1,
-      firstName: _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
-      lastName: _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
+      firstName: _.get(context,`userInfo.role`,'') === 'Impersonator' ? '' : _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
+      lastName: _.get(context,`userInfo.role`,'') === 'Impersonator' ? '' : _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),
       address1: '',
       address2: '',
       city: '',
@@ -166,6 +166,10 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       phone: '',
       email: '',
       cardType: 'new_card'
+    },
+    confirmationEmail: {
+      sendToShipTo: 1,
+      ccEmails: []
     }
   }
 

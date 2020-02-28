@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/checkoutDropdownData'
+import FormikInput from '../../_common/formik/input_v2'
+import FormikFieldArray from '../../_common/formik/fieldArray'
+import FormikCheckbox from '../../_common/formik/checkBox'
+import Context from '../../../config/context'
 
 const SectionRow = styled.div`
   display: flew;
@@ -13,6 +17,10 @@ const SectionContainer = styled.div`
   border: 1px solid whitesmoke;
   margin: 8px 0;
   padding: 8px 16px;
+`
+
+const SectionContainerBlue = styled(SectionContainer)`
+  background-color: #e7f2ff;
 `
 
 const SectionContainerHalf = styled(SectionContainer)`
@@ -80,6 +88,19 @@ export default function ConfirmationScreen(props) {
 
   return(
     <>
+      <Context.Consumer>
+        {({userInfo}) => {
+          if (!_.isNil(userInfo) && (userInfo.role === "Impersonator" || userInfo.role === "AirlineEmployee")){
+            return(
+              <SectionContainerBlue>
+                <SectionTitle>Confirmation Email</SectionTitle>
+                <FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
+                <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
+              </SectionContainerBlue>
+            )
+          }
+        }}        
+      </Context.Consumer>
       <SectionRow>
         <SectionContainerHalf>
           <SectionTitle>Ship To</SectionTitle>

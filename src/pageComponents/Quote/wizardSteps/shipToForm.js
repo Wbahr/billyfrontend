@@ -93,12 +93,20 @@ export function ShipToForm(props) {
     if(value !== -1){
       let index = quoteDropdownData.contacts.findIndex(elem => elem.id === value)
       setFieldValue(name, value)
-      setFieldValue('contact.firstName', checkoutDropdownData.contacts[index].firstName)
-      setFieldValue('contact.lastName', checkoutDropdownData.contacts[index].lastName)
+      setFieldValue('contact.firstName', quoteDropdownData.contacts[index].firstName)
+      setFieldValue('contact.lastName', quoteDropdownData.contacts[index].lastName)
+      // setFieldValue('contact.email', quoteDropdownData.contacts[index].email)
+      // setFieldValue('contact.phone', quoteDropdownData.contacts[index].phone)
+      setFieldValue('shipto.firstName', quoteDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.lastName', quoteDropdownData.contacts[index].lastName)
+      // setFieldValue('shipto.email', quoteDropdownData.contacts[index].email)
+      // setFieldValue('shipto.phone', quoteDropdownData.contacts[index].phone)
     } else {
       setFieldValue(name, value)
       setFieldValue('contact.firstName', '')
       setFieldValue('contact.lastName', '')
+      // setFieldValue('contact.email', '')
+      // setFieldValue('contact.phone', '')
     }
   }
   

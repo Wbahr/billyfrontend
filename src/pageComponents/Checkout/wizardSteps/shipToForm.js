@@ -95,10 +95,18 @@ export function ShipToForm(props) {
       setFieldValue(name, value)
       setFieldValue('contact.firstName', checkoutDropdownData.contacts[index].firstName)
       setFieldValue('contact.lastName', checkoutDropdownData.contacts[index].lastName)
+      // setFieldValue('contact.email', checkoutDropdownData.contacts[index].email)
+      // setFieldValue('contact.phone', checkoutDropdownData.contacts[index].phone)
+      setFieldValue('shipto.firstName', checkoutDropdownData.contacts[index].firstName)
+      setFieldValue('shipto.lastName', checkoutDropdownData.contacts[index].lastName)
+      // setFieldValue('shipto.email', checkoutDropdownData.contacts[index].email)
+      // setFieldValue('shipto.phone', checkoutDropdownData.contacts[index].phone)
     } else {
       setFieldValue(name, value)
       setFieldValue('contact.firstName', '')
       setFieldValue('contact.lastName', '')
+      // setFieldValue('contact.email', '')
+      // setFieldValue('contact.phone', '')
     }
   }
   

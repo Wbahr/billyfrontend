@@ -76,6 +76,20 @@ export default function ConfirmationScreen(props) {
   return(
     <>
       <SectionContainer>
+        <Context.Consumer>
+          {({userInfo}) => {
+            if (!_.isNil(userInfo) && (userInfo.role === "Impersonator" || userInfo.role === "AirlineEmployee")){
+              return(
+                <SectionContainerBlue>
+                  <SectionTitle>Confirmation Email</SectionTitle>
+                  <FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
+                  <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
+                  <FormikCheckbox label={`Include Images on Quotes?`} name="confirmationEmail.imagesOnQuote"/>
+                </SectionContainerBlue>
+              )
+            }
+          }}        
+        </Context.Consumer>
         <SectionTitle>Ship To</SectionTitle>
         <SectionFields>
           <DivAddressSection>
