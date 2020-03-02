@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Select from 'react-select';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-//import Images from './Images';
-import gql from 'graphql-tag';
+import Select from 'react-select'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 
 
 const QUERY_SUPPLIER_LIST = gql`
@@ -26,8 +23,6 @@ const QUERY_ITEM_SEARCH = gql`
     }
   }
 `
-
-
 
 const ContentScreenContainer = styled.div`
   display: flex;
@@ -57,7 +52,6 @@ const DivSearchItemContainer = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid grey;
-
 `
 
 const SearchResultsContainer = styled.div`
@@ -85,18 +79,13 @@ export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('') //Search term initial value
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
   const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
-  const [searchResults, setSearchResults] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
-  const [showMoreItems, setShowMoreItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState()
   const [title, setTitle] = useState("Begin item creation");
   const [loadMoreDisable, setLoadMoreDisable] = useState(false)
   const [loadMoreBtnText, setLoadMoreBtnText] = useState("I want more items")
-  // const [searchSize, setSearchSize] = useState(10)
   
-  const searchSizeExpander = 4
-
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
       setSupplierList(data.getAirlineSuppliers)
@@ -112,13 +101,6 @@ export default function ItemCreationPage() {
     }
   })
 
-  const [performMoreItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
-    onCompleted: data => {
-      // const itemSearchResult = data.itemSearch
-      setItemSearchResult(data.itemSearch.result)
-      // console.log(data.itemSearch.result)
-    }
-  })
 
   function searchItems() {
     performItemSearch({
@@ -164,9 +146,7 @@ export default function ItemCreationPage() {
       loadMoreBtnDisabler--
       setLoadMoreBtnText("I want more items: " + loadMoreBtnDisabler)
     }
-    // setLoadMoreDisable(true)
     searchSize = searchSize + 12
-    console.log(searchSize)
   }
 
   function handleChange(newSelection){
@@ -215,64 +195,18 @@ export default function ItemCreationPage() {
               getOptionValue={(option) => option.name}
             />
           </DivSpacer>
-
-
-          
         </DivSearchInputWrapper>
-
-
-
-        {/* <button onClick={() => searchItems()}>Check Console here</button> */}
-        {/* <ButtonBlue onClick={(e) => { toggleVisibility(), setTitle("Update item creation") }} type="button">{title}</ButtonBlue> */}
         <button onClick={(e) => {setShowSearchedItems(true), setTitle("Update item creation"), searchItems()}}>{title}</button>
         {showSearchedItems && <SearchResultWrapper>
           <SearchResultsContainer>
-
             {searchResultItems}
           </SearchResultsContainer>
-          {/* <SearchResultsContainer>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2H23-M5N_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2TY10-12A_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2H23-M5N_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-          </SearchResultsContainer>
-          <SearchResultsContainer>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2P-23_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2P-23_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-            <img src="https://www.airlinehyd.com/images/items/SMC%20KQ2H23-M5N_l.jpg" width="auto" height="200" float="left" alt="Image Placeholder" ></img>
-          </SearchResultsContainer> */}
-
-
-          
-
-
-
-
-
-
           <button disabled={loadMoreDisable} onClick={() => moreSearchItems()}>{loadMoreBtnText}</button> {/*need to know endpoint on how search is being done*/}
           <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
         </SearchResultWrapper>
-
         }
-
-
         {showNewItemForm && <NewItemForm />}
-
-
-        {/* <SearchResultsContainer src="https://www.sourceatlantic.ca/UserFiles/images/homepage/industrial-mro-safety.jpg"></SearchResultsContainer> */}
-
-
- 
-
-
-
-
       </ContentScreenContainer>
-
-
-
-
-
     </>
   )
 }
