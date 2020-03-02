@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import AddIcon from '@material-ui/icons/Add'
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
@@ -43,7 +43,14 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: 'white',
-    color: 'black'
+    color: 'black',
+    fontFamily: 'ProximaBold'
+  },
+  appSubBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'white',
+    color: 'black',
+    fontFamily: 'ProximaBold'
   },
   drawer: {
     width: drawerWidth,
@@ -51,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: 'rgb(33,33,33,.75)',
+    // backgroundColor: 'rgb(33,33,33,.75)',
   },
   content: {
     flexGrow: 1,
@@ -72,6 +79,25 @@ const useStyles = makeStyles(theme => ({
     height: '50px'
   }
 }));
+
+function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const renderLink = React.useMemo(
+    () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+    [to],
+  );
+
+  return (
+    <li>
+      <ListItem button component={renderLink}>
+        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        <ListItemText primary={primary} />
+      </ListItem>
+    </li>
+  );
+}
+
 
 export default function AdminHome(props) {
   let { tool } = useParams()
@@ -94,9 +120,7 @@ export default function AdminHome(props) {
           <Link component={RouterLink} to="/">
           <img src={AirlineLogo} height="50px" style={{'paddingRight': '20px'}}/>
           </Link>
-          <Typography variant="h6" noWrap>
-            Admin Tools
-          </Typography>
+          <h4>Admin Tools</h4>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -107,19 +131,9 @@ export default function AdminHome(props) {
         }}
       >
         <div className={classes.toolbar} />
-        <List className={classes.linkItem}>
-          <Link component={RouterLink} to="/admin-dashboard/item-creation">
-            <DivLink>
-              <ListItemAvatar className={classes.listAvatar}>
-                <Avatar className={classes.avatar}>
-                  <AddIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Item Creation" />
-            </DivLink>
-          </Link>
+        <List aria-label="main mailbox folders">
+            <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
         </List>
-        <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

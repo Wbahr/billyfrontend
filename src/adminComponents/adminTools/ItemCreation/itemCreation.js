@@ -4,8 +4,7 @@ import NewItemForm from './uiComponents/newItemForm'
 import Select from 'react-select'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-// import Button from '@material-ui/core/Button'
-
+import { Button } from '@material-ui/core'
 
 const QUERY_SUPPLIER_LIST = gql`
   query GetSuppliers{
@@ -160,7 +159,7 @@ export default function ItemCreationPage() {
             <input type="text" placeholder="Enter item ID" name="itemIDSearch" value={searchTerm} onChange={e => setSearchTerm(e.target.value)}></input>
           </DivSpacer>
           <DivSpacer>
-            <label for="supplierNameSearch">Supplier Name:</label>
+            <label htmlFor="supplierNameSearch">Supplier Name:</label>
             <Select
               name="supplierNameSearch"
               value={selectedSupplier}
@@ -171,14 +170,20 @@ export default function ItemCreationPage() {
             />
           </DivSpacer>
         </DivSearchInputWrapper>
-        <button disabled={isSearching} onClick={() => {searchItems()}}>{isSearching ? 'Searching..' : 'Search for Item'}</button>
+        <Button variant="contained" color="primary" disabled={isSearching} onClick={() => {searchItems()}}>
+          {isSearching ? 'Searching..' : 'Search for Item'}
+        </Button>
         {searchResultItems.length > 0 && 
           <SearchResultWrapper>
             <SearchResultsContainer>
               {searchResultItems}
             </SearchResultsContainer>
-            <button disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>{currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}</button>
-            <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
+            <Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
+              {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
+            </Button>
+            <Button variant="contained" color="primary" onClick={() => setShowNewItemForm(true)}>
+              Take me to the form
+            </Button>
           </SearchResultWrapper>
         }
         {showNewItemForm && <NewItemForm />}
