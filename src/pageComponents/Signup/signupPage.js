@@ -85,7 +85,6 @@ export default function LoginPage({history}) {
       <P>Airline Hydraulics Signup</P>
       {renderContent()}
       <A onClick={()=> history.push('/login')}>Have an Account? Login</A>
-      <A onClick={()=> history.push('/itemCreation')}>Go to this other page! Login</A>
     </SignupPageContainer>
   )
 }
