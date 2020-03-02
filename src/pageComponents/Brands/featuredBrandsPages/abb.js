@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import { faAutoprefixer } from '@fortawesome/free-brands-svg-icons'
 import ShowMoreText from 'react-show-more-text';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 
@@ -118,7 +119,7 @@ const RelatedLinkCircle = styled.div`
  background-color: #b51029; 
  margin: 0 auto;
  position: relative;
- 
+ margin-bottom: 30px;
 
  `;
 
@@ -136,13 +137,59 @@ const IconImg = styled.img`
  width: 35%;
  position: absolute;
  margin: 50px 0 0 65px;
- 
-}
-
-
  `;
+
+
+const ArticlesDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: 30px;
+  flex-direction:
+`;
+
+const ArticlesVideo = styled.iframe`
+  width: 450px;
+  height: 250px;
+  margin: 0 15px 0 15px;
+ 
+`;
+
+const ArticlesContentDiv = styled.div`
+  margin-left: 20px;
+  text-align: center;
+  // background-color: #E5E4E2;
+  padding: 15px 0;
+`;
+
+const ArticlesTopic = styled.h6`
+  color: #b51029;
+  font-weight: bold;
+  margin: 10px; 0 10px 0;
+`;
+
+const SmallArticlesContent = styled.div`
+display: flex
+flex-wrap: nowrap;
+width: 33%;
+margin-bottom: 30px;
+
+
+`;
+
+const BorderRight = styled.div`
+border-right: 1px solid grey;
+height: 45px;
+`;
+
+
+
+const ArticlesContentDetails = styled.p`
+margin: 0 15px;
+`;
+
 export default function Abb() {
- function executeOnClick(isExpanded) {
+  function executeOnClick(isExpanded) {
     console.log(isExpanded);
   }
 
@@ -199,24 +246,21 @@ export default function Abb() {
           <img src="https://www07.abb.com/images/librariesprovider84/home-page/dr-newemax_emax2acdd56edc1f463c09537ff0000433538.jpg?sfvrsn=9c293515_1" width="450px" height="250px" />
           <ProductsDetails>
             <ProductsH4>Low Voltage Products and Systems</ProductsH4>
-            {/* ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes: */}
-
-
             <ShowMoreText
-              lines={5}
+              lines={4}
               more='Show more'
               less='Show less'
               anchorClass=''
               onClick={() => executeOnClick()}
               expanded={false}
-              
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consectetur tellus mi, ac euismod nisi suscipit vitae. Duis vehicula nibh quis felis tempor vulputate. Nunc non fringilla nisl, et malesuada elit. Etiam vel purus justo. Suspendisse imperdiet ultricies odio, porttitor iaculis ante iaculis ut. Aenean in sapien metus. Integer et arcu sodales, rhoncus neque eget, imperdiet mauris. Duis rhoncus ex ex, vitae fringilla sem tempor ut. In sed ante varius mauris auctor congue id at orci. Sed nibh diam, bibendum non pretium a, ornare ut velit. Phasellus egestas ac elit sed dictum. Proin pulvinar, dui ut tincidunt ultricies, erat lectus feugiat tellus, at sagittis ex tortor id felis. Donec in neque vitae arcu hendrerit dignissim vel et turpis.
-            
-            Nunc rhoncus, ex in maximus commodo, dui quam aliquet elit, non egestas quam tortor sit amet quam. Duis scelerisque tellus vitae sollicitudin scelerisque. Morbi enim magna, fringilla vitae pellentesque quis, semper sit amet risus. Aliquam erat volutpat. Quisque aliquam tincidunt ipsum, eu vestibulum urna porta at. Quisque et ipsum elementum, gravida metus a, elementum tellus. Cras porttitor nec tellus vitae aliquet. Aliquam at mi ut tortor ultricies maximus. Pellentesque ut enim vitae neque molestie lacinia ac eget mauris. Aliquam lacinia, dui id efficitur consequat, dolor ante fringilla massa, vitae aliquam nisi neque non ante. Mauris arcu dui, bibendum id egestas nec, vulputate nec diam. Cras nec laoreet lacus.
-            
-            Integer dapibus, lorem vitae rhoncus finibus, nunc massa cursus enim, eget mollis neque est ac urna. Cras ac hendrerit lectus, sed sagittis nulla. Praesent sed interdum turpis. Ut ullamcorper ex nec venenatis fermentum. Vestibulum ut ornare libero, eu malesuada orci. Sed maximus metus ac nisl rutrum, et placerat ante bibendum.
-          </ShowMoreText> 
+
+              {/* ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes: */}
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+ Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+ 
+ 
+          </ShowMoreText>
           </ProductsDetails>
 
 
@@ -228,6 +272,46 @@ export default function Abb() {
           </ProductsDetails>
           <img src="https://www.gegridsolutions.com/HVMV_Equipment/Images/PrimaryEquipment/hvmv-gis.jpg" width="450px" height="250px" />
         </ProductsDiv>
+
+        <Div>
+          <ProductsTitle>Articles</ProductsTitle>
+          <BorderBottom></BorderBottom>
+        </Div>
+
+        <SmallArticlesContent>
+          <ArticlesContentDiv>
+          <img src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" width="260px" height="160px" />
+            <ArticlesTopic>
+              Thermistor protection modules for ACS880 drives</ArticlesTopic>
+            <ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
+          </ArticlesContentDiv>
+        </SmallArticlesContent>
+
+        <SmallArticlesContent>
+          <ArticlesContentDiv>
+          <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1"  width="260px" height="160px"/>
+            <ArticlesTopic>
+              Drives give South African farmer 40% energy savings, smoother operation and less work</ArticlesTopic>
+            <ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
+            </ArticlesContentDetails>
+          </ArticlesContentDiv>
+          </SmallArticlesContent>
+
+          <SmallArticlesContent>
+          <ArticlesContentDiv>
+            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1"  width="260px" height="160px" />
+            <ArticlesTopic>
+              Lorem ipsum dolor sit amet</ArticlesTopic>
+            <ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
+          </ArticlesContentDiv>
+          </SmallArticlesContent>
+
+
+          <ArticlesDiv>
+          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
+          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
+          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+        </ArticlesDiv>
 
         <Div>
           <ProductsTitle>Related Link</ProductsTitle>
