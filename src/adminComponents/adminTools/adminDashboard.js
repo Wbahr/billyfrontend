@@ -3,12 +3,12 @@ import styled from 'styled-components'
 
 
 
-export default function ItemCreation(props) {
+export default function AdminDashboard(props) {
 
 
   return(
     <>
-      <p>Item Creation</p>
+      <p>dashboard loading...</p>
     </>
   )
 }
