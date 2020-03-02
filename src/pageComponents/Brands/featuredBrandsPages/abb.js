@@ -138,7 +138,11 @@ const IconImg = styled.img`
 
  `;
 export default function Abb() {
- 
+  function executeOnClick(isExpanded) {
+    console.log(isExpanded);
+}
+
+
   return (
 
     <Container>
@@ -194,7 +198,7 @@ export default function Abb() {
             <ProductsH4>Low Voltage Products and Systems</ProductsH4>
             {/* ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes: */}
 
-{/* 
+
             <ShowMoreText
               lines={5}
               more='Show more'
@@ -209,7 +213,7 @@ export default function Abb() {
             Nunc rhoncus, ex in maximus commodo, dui quam aliquet elit, non egestas quam tortor sit amet quam. Duis scelerisque tellus vitae sollicitudin scelerisque. Morbi enim magna, fringilla vitae pellentesque quis, semper sit amet risus. Aliquam erat volutpat. Quisque aliquam tincidunt ipsum, eu vestibulum urna porta at. Quisque et ipsum elementum, gravida metus a, elementum tellus. Cras porttitor nec tellus vitae aliquet. Aliquam at mi ut tortor ultricies maximus. Pellentesque ut enim vitae neque molestie lacinia ac eget mauris. Aliquam lacinia, dui id efficitur consequat, dolor ante fringilla massa, vitae aliquam nisi neque non ante. Mauris arcu dui, bibendum id egestas nec, vulputate nec diam. Cras nec laoreet lacus.
             
             Integer dapibus, lorem vitae rhoncus finibus, nunc massa cursus enim, eget mollis neque est ac urna. Cras ac hendrerit lectus, sed sagittis nulla. Praesent sed interdum turpis. Ut ullamcorper ex nec venenatis fermentum. Vestibulum ut ornare libero, eu malesuada orci. Sed maximus metus ac nisl rutrum, et placerat ante bibendum.
-</ShowMoreText> */}
+</ShowMoreText> 
           </ProductsDetails>
 
 
