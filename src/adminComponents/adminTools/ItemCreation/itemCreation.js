@@ -4,6 +4,7 @@ import NewItemForm from './uiComponents/newItemForm'
 import Select from 'react-select'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+// import Button from '@material-ui/core/Button'
 
 
 const QUERY_SUPPLIER_LIST = gql`
@@ -28,9 +29,8 @@ const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 28px auto;
-  // justify-content: space-between;
   flex-grow: 99;
   align-items: center;
 `
@@ -44,14 +44,16 @@ const DivSpacer = styled.div`
 const DivSearchItemContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin: 10px;
   padding: 5px;
   width: 225px;
   height: auto;
   text-align: center;
   justify-content: center;
   align-items: center;
+  background-color: white;
   border: 1px solid grey;
+  border-radius: 2px;
 `
 
 const SearchResultsContainer = styled.div`
@@ -61,7 +63,6 @@ const SearchResultsContainer = styled.div`
   padding: 5px;
   align-self: center;
   margin: 28px auto;
-  max-width: 1200px;
   height: auto;
   justify-content: center;
 `
@@ -72,8 +73,6 @@ const DivSearchInputWrapper = styled.div`
 const SearchResultWrapper = styled.div`
 
 `
-let searchSize = 24
-let loadMoreBtnDisabler = 4;
 
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('') //Search term initial value
@@ -82,10 +81,10 @@ export default function ItemCreationPage() {
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [showSearchedItems, setShowSearchedItems] = useState(false)
   const [selectedSupplier, setSelectedSupplier] = useState()
-  const [title, setTitle] = useState("Begin item creation");
-  const [loadMoreDisable, setLoadMoreDisable] = useState(false)
-  const [loadMoreBtnText, setLoadMoreBtnText] = useState("I want more items")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [isSearching, setIsSearching] = useState(false)
   
+  let maxPage = 3
   const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
     onCompleted: data => {
       setSupplierList(data.getAirlineSuppliers)
@@ -94,21 +93,23 @@ export default function ItemCreationPage() {
   })
 
   const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+    fetchPolicy: 'no-cache',
     onCompleted: data => {
-      // const itemSearchResult = data.itemSearch
-      setItemSearchResult(data.itemSearch.result)
-      // console.log(data.itemSearch.result)
+      setCurrentPage(currentPage + 1)
+      setIsSearching(false)
+      setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
     }
   })
 
 
   function searchItems() {
+    setIsSearching(true)
     performItemSearch({
       variables: {
         searchParams: {
           searchTerm: searchTerm,
-          resultSize: 12,
-          resultPage: 1,
+          resultSize: 10,
+          resultPage: currentPage,
           sortType: 'relevancy',
           brandFilters: [],
           categoryFilter: {
@@ -121,32 +122,8 @@ export default function ItemCreationPage() {
     })
   }
 
-  function moreSearchItems(){
-    performItemSearch({
-      variables: {
-        searchParams: {
-          searchTerm: searchTerm,
-          resultSize: searchSize,
-          resultPage: 1,
-          sortType: 'relevancy',
-          brandFilters: [],
-          categoryFilter: {
-            'parentCategory': '',
-            'childCategory': ''
-          },
-          attributeFilters:[]
-        }
-      }
-    })
-    if(loadMoreBtnDisabler == 1){
-      setLoadMoreDisable(true)
-      setLoadMoreBtnText("Contact Item Master for help.")
-    }
-    else{
-      loadMoreBtnDisabler--
-      setLoadMoreBtnText("I want more items: " + loadMoreBtnDisabler)
-    }
-    searchSize = searchSize + 12
+  function loadMoreItems(){
+    searchItems()
   }
 
   function handleChange(newSelection){
@@ -155,7 +132,7 @@ export default function ItemCreationPage() {
 
 
   let searchResultItems = []
-  itemSearchResult.map((element) => {
+  itemSearchResult.map((element, index) => {
     let resultImage = ""
     if (element.thumbnail_image_path === null)
     {
@@ -166,14 +143,12 @@ export default function ItemCreationPage() {
       resultImage = "https://www.airlinehyd.com/images/items/"+(element.thumbnail_image_path.split("\\")[8]).replace("_t", "_l")
     }
     searchResultItems.push(
-      <DivSearchItemContainer>
+      <DivSearchItemContainer key={index}>
         <img src={resultImage} width="auto" height="150" margin="28px 14px" alt={element.item_id} ></img>
         <p>{element.item_id}</p>
         <p>{element.item_desc}</p>
-        
       </DivSearchItemContainer>
     )
-    console.log(element)
   })
 
   return (
@@ -196,14 +171,15 @@ export default function ItemCreationPage() {
             />
           </DivSpacer>
         </DivSearchInputWrapper>
-        <button onClick={(e) => {setShowSearchedItems(true), setTitle("Update item creation"), searchItems()}}>{title}</button>
-        {showSearchedItems && <SearchResultWrapper>
-          <SearchResultsContainer>
-            {searchResultItems}
-          </SearchResultsContainer>
-          <button disabled={loadMoreDisable} onClick={() => moreSearchItems()}>{loadMoreBtnText}</button> {/*need to know endpoint on how search is being done*/}
-          <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
-        </SearchResultWrapper>
+        <button disabled={isSearching} onClick={() => {searchItems()}}>{isSearching ? 'Searching..' : 'Search for Item'}</button>
+        {searchResultItems.length > 0 && 
+          <SearchResultWrapper>
+            <SearchResultsContainer>
+              {searchResultItems}
+            </SearchResultsContainer>
+            <button disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>{currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}</button>
+            <button onClick={() => setShowNewItemForm(true)}>Take me to the form</button>
+          </SearchResultWrapper>
         }
         {showNewItemForm && <NewItemForm />}
       </ContentScreenContainer>
