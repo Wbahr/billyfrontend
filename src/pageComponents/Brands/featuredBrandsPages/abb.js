@@ -3,6 +3,7 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import { faAutoprefixer } from '@fortawesome/free-brands-svg-icons'
+import ShowMoreText from 'react-show-more-text';
 
 
 
@@ -106,7 +107,7 @@ const BorderBottom = styled.div`
   color: #b51029;
   `;
 
- const RelatedLinkCircle = styled.div`
+const RelatedLinkCircle = styled.div`
  width: 200px;
  height: 200px;
  border-radius: 100px;
@@ -117,7 +118,7 @@ const BorderBottom = styled.div`
 
  `;
 
- const LinkStyle = styled.a`
+const LinkStyle = styled.a`
   color: white;
   text-decoration: none;
   font-size: 14px;
@@ -127,7 +128,7 @@ const BorderBottom = styled.div`
 
  `;
 
- const IconImg = styled.img`
+const IconImg = styled.img`
  width: 35%;
  position: absolute;
  margin: 50px 0 0 65px;
@@ -137,7 +138,10 @@ const BorderBottom = styled.div`
 
  `;
 export default function Abb() {
-
+  executeOnClick(isExpanded) {
+    console.log(isExpanded);
+  }
+}
   return (
 
     <Container>
@@ -159,7 +163,7 @@ export default function Abb() {
         </Div>
 
         <ProductsDiv>
-          <img src="https://base.imgix.net/files/base/ebm/machinedesign/image/2019/04/machinedesign_11709_wtdmotors_promo.png?auto=format&fit=crop&h=432&w=768" width="450px" height="250px"/>
+          <img src="https://base.imgix.net/files/base/ebm/machinedesign/image/2019/04/machinedesign_11709_wtdmotors_promo.png?auto=format&fit=crop&h=432&w=768" width="450px" height="250px" />
           <ProductsDetails>
             <ProductsH4>Drives</ProductsH4>
             ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks.
@@ -171,7 +175,7 @@ export default function Abb() {
             <ProductsH4>Motors and Generators</ProductsH4>
             ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages.
             </ProductsDetails>
-          <img src="https://www07.abb.com/images/librariesprovider100/pg-iec-lv-motors/group-photo-of-iec-lv-motors_crop.jpg?sfvrsn=c1785e14_1" width="450px" height="250px"/>
+          <img src="https://www07.abb.com/images/librariesprovider100/pg-iec-lv-motors/group-photo-of-iec-lv-motors_crop.jpg?sfvrsn=c1785e14_1" width="450px" height="250px" />
         </ProductsDiv>
         <ProductsDiv>
           <img src="https://img.directindustry.com/images_di/photo-g/19831-10658086.jpg" width="450px" height="250px" />
@@ -185,10 +189,10 @@ export default function Abb() {
             <ProductsH4>Control Components</ProductsH4>
             ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
           </ProductsDetails>
-          <img src="https://library.automationdirect.com/wp-content/uploads/2019/04/Figure-1-BRX-control-panel.jpg" width="450px" height="250px"/>
+          <img src="https://library.automationdirect.com/wp-content/uploads/2019/04/Figure-1-BRX-control-panel.jpg" width="450px" height="250px" />
         </ProductsDiv>
         <ProductsDiv>
-          <img src="https://www07.abb.com/images/librariesprovider84/home-page/dr-newemax_emax2acdd56edc1f463c09537ff0000433538.jpg?sfvrsn=9c293515_1"  width="450px" height="250px"/>
+          <img src="https://www07.abb.com/images/librariesprovider84/home-page/dr-newemax_emax2acdd56edc1f463c09537ff0000433538.jpg?sfvrsn=9c293515_1" width="450px" height="250px" />
           <ProductsDetails>
             <ProductsH4>Low Voltage Products and Systems</ProductsH4>
             ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
@@ -200,17 +204,17 @@ export default function Abb() {
             <ProductsH4>Medium Voltage Products and Systems</ProductsH4>
             ABB provides utility, industrial and commercial customers with safe, reliable and smart technologies for the distribution of electricity. Airline’s offering includes Circuit Breakers, Compact Secondary Substations (CSS), Contactors, E-Houses, Fault Current Limitation and Arc Protection.
           </ProductsDetails>
-          <img src="https://www.gegridsolutions.com/HVMV_Equipment/Images/PrimaryEquipment/hvmv-gis.jpg"  width="450px" height="250px"/>
+          <img src="https://www.gegridsolutions.com/HVMV_Equipment/Images/PrimaryEquipment/hvmv-gis.jpg" width="450px" height="250px" />
         </ProductsDiv>
 
         <Div>
-        <ProductsTitle>Related Link</ProductsTitle>
+          <ProductsTitle>Related Link</ProductsTitle>
           <BorderBottom></BorderBottom>
         </Div>
 
         <Div>
           <RelatedLinkCircle>
-          <IconImg src="https://www.konfest.com/wp-content/uploads/2019/05/Konfest-PNG-JPG-Image-Pic-Photo-Free-Download-Royalty-Unlimited-clip-art-sticker-world-wide-web-icons-website-earth-grid-globe-black-white-12.png"></IconImg>
+            <IconImg src="https://www.konfest.com/wp-content/uploads/2019/05/Konfest-PNG-JPG-Image-Pic-Photo-Free-Download-Royalty-Unlimited-clip-art-sticker-world-wide-web-icons-website-earth-grid-globe-black-white-12.png"></IconImg>
 
             <LinkStyle href="https://new.abb.com/us" target="_blank">ABB's US Website</LinkStyle>
           </RelatedLinkCircle>
@@ -220,9 +224,6 @@ export default function Abb() {
           </RelatedLinkCircle>
           <RelatedLinkCircle></RelatedLinkCircle>
           <RelatedLinkCircle></RelatedLinkCircle>
-          
-          
-          
         </Div>
 
 
