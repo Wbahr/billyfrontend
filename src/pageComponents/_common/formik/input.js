@@ -35,7 +35,8 @@ export default function Input({
   disabled,
   name,
   label,
-  placeholder
+  placeholder,
+  onChange
 }){
   return(
     <DivContainer>
@@ -43,11 +44,12 @@ export default function Input({
       <Field name={name}>
             {({
               field,
+              form,
               form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
               meta,
             }) => (
               <>
-              <MainInput type={type} disabled={disabled} placeholder={placeholder} {...field} />
+              <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={(e)=>{eval(onChange)}} />
               {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
               </>
             )}
@@ -61,7 +63,8 @@ Input.propTypes = {
   type: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  onChange: PropTypes.string
 }
 
 Input.defaultProps = {
