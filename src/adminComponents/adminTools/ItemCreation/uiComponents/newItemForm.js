@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styled from "styled-components"
-import FormikInput from '../../_common/formik/input'
+import FormikInput from '../../../../pageComponents/_common/formik/input'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 

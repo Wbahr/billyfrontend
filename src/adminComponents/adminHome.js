@@ -19,7 +19,7 @@ import AirlineLogo from '../imgs/airline/airline_vector.png'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import AdminDashboard from './adminTools/adminDashboard'
-import ItemCreation from './adminTools/itemCreation'
+import ItemCreation from './adminTools/ItemCreation/itemCreation'
 
 const DivLink = styled.div`
   display: flex;
