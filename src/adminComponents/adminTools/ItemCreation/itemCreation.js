@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
@@ -133,7 +134,7 @@ export default function ItemCreationPage() {
   function searchItems() {
     setIsSearching(true)
     let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-    let SearchTerm = supplierList[index].prefix + ' ' + searchTerm
+    let SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
     performItemSearch({
       variables: {
         searchParams: {

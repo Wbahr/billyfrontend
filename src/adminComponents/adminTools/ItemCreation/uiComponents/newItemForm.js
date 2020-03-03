@@ -1,6 +1,7 @@
 // Render Prop
-import React, { useState } from 'react';
-import { Formik, Form as FormikForm, Field } from 'formik';
+import React, { useState } from 'react'
+import _ from 'lodash'
+import { Formik, Form as FormikForm, Field } from 'formik'
 import styled from "styled-components"
 import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
 import FormikSelect from '../../../../pageComponents/_common/formik/select'
@@ -60,7 +61,7 @@ export default function NewItemForm(props) {
     productGroupsList
   } = props
   let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-  let SearchTerm = supplierList[index].prefix + ' ' + searchTerm
+  let SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
   return <div>
     <Formik
       initialValues={{
