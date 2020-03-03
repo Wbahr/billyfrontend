@@ -86,7 +86,6 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           placeholder='$0.00'
           disabled={disabled} 
           style={{width: width || "400px"}}
-          onChange={(e)=>changeFunction(name, e.target.value)}
         />
       </DivContainer>
     )

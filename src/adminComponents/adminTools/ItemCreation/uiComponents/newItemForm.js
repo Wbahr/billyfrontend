@@ -8,6 +8,7 @@ import FormikSelect from '../../../../pageComponents/_common/formik/select'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Button } from '@material-ui/core'
+import * as Yup from 'yup'
 
 const Form = styled(FormikForm)`
   margin: 32px 64px;
@@ -41,16 +42,33 @@ const DivFormContainer = styled.div`
   margin-bottom: 8px; 
 `
 
-export const UnitOfMeasure = [
-  {
-      "label": "Alabama",
-      "value": "AL"
-  },
-  {
-      "label": "Alaska",
-      "value": "AK"
-  }
-]
+const DivError = styled.div`
+  height: auto;
+  width: max-content;
+  border: 1px solid orange;
+  border-radius: 2px;
+  background-color: cornsilk;
+  color: darkorange;
+  padding 4px;
+  margin: 4px auto;
+`
+
+const ItemCreationSchema = Yup.object({
+  itemCreation: Yup.object({
+    itemDescription: Yup.string()
+    .min(2, 'Too Short!')
+    .max(40, 'Too Long!')
+    .required('Required'),
+    listPrice: Yup.string()
+    .required('Required'),
+    unitOfMeasure: Yup.string()
+    .required('Required'),
+    airlinePartCost: Yup.string()
+    .required('Required'),
+    productGroupID: Yup.string()
+    .required('Required'),
+  })
+})
 
 export default function NewItemForm(props) {
   const {
@@ -71,57 +89,44 @@ export default function NewItemForm(props) {
           supplierID: selectedSupplier,
           unitOfMeasure: '', 
           listPrice: '',
-          airlinePartCost: ''
+          airlinePartCost: '',
+          productGroupID: ''
         }
       }}
-      validate={values => {
-        let errors = {}
-        if (!values.itemID) {
-          errors.itemID = 'Required';
-        } else if (!/^[A-Z0-9._ %+-]{2,40}$/i.test(values.itemID)) {
-          errors.itemID = 'Please enter less than 40 characters and exclude {*,"}';
-        }
-        if (!values.productGroupID) {
-          errors.productGroupID = 'Required';
-        } else if (!/^[0-9]{4,4}$/i.test(values.productGroupID)) {
-          errors.productGroupID = 'Enter a valid ProductGroupID';
-        }
-        return errors;
-      }}
+      validationSchema={ItemCreationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+      
       }}
     >
-      {({ values, isSubmitting }) => (
+      {({ values, isSubmitting, errors }) => (
+        console.log('errors', errors),
         <Form>
           <H2>Item Creation Form</H2>
+          {Object.keys(errors).length > 0 && <DivError>Please fill out all fields</DivError>}
           <DivFormContainer>
-            <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled={true} />
-            <FormikInput label={`Item Description (${values.itemCreation.itemDescription.length}/40 char):`} type="text" name="itemCreation.itemDescription" maxlength="40"/>
+            <FormikInput label="Item ID*:" type="text" name="itemCreation.itemID" disabled={true} />
+            <FormikInput label={`Item Description (${values.itemCreation.itemDescription.length}/40 char)*:`} type="text" name="itemCreation.itemDescription" maxlength="40"/>
             <Field 
               name="itemCreation.unitOfMeasure" 
               component={FormikSelect} 
               options={unitsOfMeasureList}
               placeholder="Select a UOM"
-              label="Unit of Measure:"
+              label="Unit of Measure*:"
               width="400px"
             /> 
             <FormikInput type="hidden" name="itemCreation.supplierID" />
-            <FormikInput label="List Price:" type="currency" name="itemCreation.listPrice" />
-            <FormikInput label="Airline Cost:" type="currency" name="itemCreation.airlinePartCost" />
+            <FormikInput label="List Price*:" type="currency" name="itemCreation.listPrice" />
+            <FormikInput label="Airline Cost*:" type="currency" name="itemCreation.airlinePartCost" />
             <Field 
               name="itemCreation.productGroupID" 
               component={FormikSelect} 
               options={productGroupsList}
               placeholder="Select a Product Group"
-              label="Product Group ID:"
+              label="Product Group ID*:"
               width="400px"
             /> 
             <DivCenter>
-              <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting}>
+              <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting || Object.keys(errors).length > 0}>
                 {isSubmitting ? 'Registering Item..' : 'Register Item'}
               </Button>
             </DivCenter>
