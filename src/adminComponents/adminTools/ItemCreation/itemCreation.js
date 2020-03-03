@@ -12,6 +12,7 @@ const QUERY_ITEM_CREATION_DATA = gql`
     getAirlineSuppliers{
       id
       name
+      prefix: supplierPrefix
     }
     getUnitsOfMeasure{
       value: unitId
@@ -132,7 +133,7 @@ export default function ItemCreationPage() {
   function searchItems() {
     setIsSearching(true)
     let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
-    // let SearchTerm = searchTerm + ' ' + supplierList[index]
+    let SearchTerm = supplierList[index].prefix + ' ' + searchTerm
     let SearchTerm = searchTerm 
     performItemSearch({
       variables: {
@@ -237,7 +238,7 @@ export default function ItemCreationPage() {
                 {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
               </Button>
               <Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
-                Take me to the form
+                Create a New Item
               </Button>
             </ButtonContainer>
           </div>

@@ -10,11 +10,13 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     marginTop: '40px',
     height: '40px',
-    backgroundColor: 'darkblue',
+    backgroundColor: '#007bff',
     color: 'white',
     fontSize: '18px',
     fontFamily: 'ProximaBold',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
+
   }
 }));
 

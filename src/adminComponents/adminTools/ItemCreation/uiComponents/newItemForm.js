@@ -1,6 +1,6 @@
 // Render Prop
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form as FormikForm, Field } from 'formik';
 import styled from "styled-components"
 import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
 import FormikSelect from '../../../../pageComponents/_common/formik/select'
@@ -8,23 +8,27 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Button } from '@material-ui/core'
 
+const Form = styled(FormikForm)`
+  margin: 32px 64px;
+`
+
 const DivCenter = styled.div`
   display: flex;
+  width: 100%;
   justify-content: center;
 `
 
 const H2 = styled.h2`
+  font-family: ProximaBold;
   width: 100%;
   text-align: center;
-  font-size: 20px;
+  font-size: 26px;
   margin: 0;
-`
-
-const H4 = styled.h4`
-  width: 100%;
-  text-align: center;
-  font-size: 16px;
-  color: #DB1633;
+  background-color: white;
+  color: black;
+  padding: 6px;
+  border-bottom: 1px solid;
+  text-transform: uppercase;
 `
 
 const DivFormContainer = styled.div`
@@ -56,8 +60,6 @@ export default function NewItemForm(props) {
   } = props
   console.log('searchTerm', searchTerm)
   return <div>
-    <H2>Item Creation</H2>
-    <H4>for internal new items</H4>
     <Formik
       initialValues={{
         itemCreation: {
@@ -92,6 +94,7 @@ export default function NewItemForm(props) {
     >
       {({ isSubmitting }) => (
         <Form>
+          <H2>Item Creation Form</H2>
           <DivFormContainer>
             <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled={true} />
             <FormikInput label="Item Description (max 40 char):" type="text" name="itemCreation.itemDescription"/>
@@ -114,12 +117,12 @@ export default function NewItemForm(props) {
               label="Product Group ID:"
               width="400px"
             /> 
+            <DivCenter>
+              <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Registering Item..' : 'Register Item'}
+              </Button>
+            </DivCenter>
           </DivFormContainer>
-          <DivCenter>
-            <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Registering Item..' : 'Register Item'}
-            </Button>
-          </DivCenter>
         </Form>
       )}
     </Formik>
