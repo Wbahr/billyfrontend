@@ -6,6 +6,7 @@ import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
 import FormikSelect from '../../../../pageComponents/_common/formik/select'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { Button } from '@material-ui/core'
 
 const DivCenter = styled.div`
   display: flex;
@@ -46,7 +47,13 @@ export const UnitOfMeasure = [
   }
 ]
 
-export default function NewItemForm() {
+export default function NewItemForm(props) {
+  const {
+    selectedSupplier
+  } = props
+
+  // let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
+  // let SearchTerm = searchTerm = ' ' + supplierList[index]
 
   return <div>
     <H2>Item Creation</H2>
@@ -55,6 +62,7 @@ export default function NewItemForm() {
       initialValues={{
         itemID: 'SMC kq2', 
         itemDescription: '', 
+        supplierID: selectedSupplier,
         unitOfMeasure: '', 
         listPrice: '0.00',
         airlinePartCost: '0.00'
@@ -83,23 +91,25 @@ export default function NewItemForm() {
       {({ isSubmitting }) => (
         <Form>
           <DivFormContainer>
-            <FormikInput label="Item ID:" type="text" name="itemID" disabled="true" />
-            <FormikInput label="Item Description (max 40 char):" type="text" name="itemDescription"/>
+            <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled="true" />
+            <FormikInput label="Item Description (max 40 char):" type="text" name="itemCreation.itemDescription"/>
             <Field 
-              name="unitOfMeasure" 
+              name="itemCreation.unitOfMeasure" 
               component={FormikSelect} 
               options={UnitOfMeasure}
               placeholder="Select a UOM"
               label="Unit of Measure:"
               width="400px"
             /> 
-            <FormikInput type="hidden" name="supplierID" disabled="true"/>
-            <FormikInput label="Product Group ID" type="text" name="productGroupID" />
-            <FormikInput label="List Price" type="text" name="listPrice" />
-            <FormikInput label="Airline Cost" type="text" name="airlinePartCost" />
+            <FormikInput type="hidden" name="itemCreation.supplierID" disabled="true"/>
+            <FormikInput label="Product Group ID:" type="text" name="itemCreation.productGroupID" />
+            <FormikInput label="List Price:" type="text" name="itemCreation.listPrice" />
+            <FormikInput label="Airline Cost:" type="text" name="itemCreation.airlinePartCost" />
           </DivFormContainer>
           <DivCenter>
-            <button type="submit" disabled={isSubmitting}>{isSubmitting ? 'Registering Item..' : 'Register Item'}</button>
+            <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Registering Item..' : 'Register Item'}
+            </Button>
           </DivCenter>
         </Form>
       )}

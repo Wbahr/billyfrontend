@@ -133,6 +133,7 @@ export default function AdminHome(props) {
         <div className={classes.toolbar} />
         <List aria-label="main mailbox folders">
             <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
+            <Divider/>
         </List>
       </Drawer>
       <main className={classes.content}>
