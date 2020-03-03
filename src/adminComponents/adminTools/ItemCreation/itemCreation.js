@@ -254,6 +254,7 @@ export default function ItemCreationPage() {
             supplierList={supplierList}
             unitsOfMeasureList={unitsOfMeasureList}
             productGroupsList={productGroupsList}
+            clearForm={()=>resetItem()}
           />}
       </ContentScreenContainer>
     </>

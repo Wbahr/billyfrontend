@@ -9,6 +9,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Button } from '@material-ui/core'
 import * as Yup from 'yup'
+import { useMutation } from '@apollo/react-hooks'
 
 const Form = styled(FormikForm)`
   margin: 32px 64px;
@@ -50,11 +51,12 @@ const DivError = styled.div`
   background-color: cornsilk;
   color: darkorange;
   padding 4px;
-  margin: 4px auto;
+  margin: 0 auto;
+  margin-bottom: 4px;
 `
 
 const ItemCreationSchema = Yup.object({
-  itemCreation: Yup.object({
+  itemCreate: Yup.object({
     itemDescription: Yup.string()
     .min(2, 'Too Short!')
     .max(40, 'Too Long!')
@@ -70,20 +72,43 @@ const ItemCreationSchema = Yup.object({
   })
 })
 
+const CREATE_ITEM = gql`
+  mutation CreateItem($item: ItemCreateInputGraphType) {
+    itemCreate(item: $item){
+      itemId
+      message
+      success
+    }
+  }
+`
+
 export default function NewItemForm(props) {
   const {
     searchTerm,
     supplierList,
     selectedSupplier,
     unitsOfMeasureList,
-    productGroupsList
+    productGroupsList,
+    clearForm
   } = props
   let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
   let SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
+
+  const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
+    onCompleted: data => {
+      let responseData = data.itemCreate
+      if(responseData.success){
+        console.log('submitted', responseData)
+        clearForm()
+      } else {
+        console.log('error')
+      }
+    }
+  })
   return <div>
     <Formik
       initialValues={{
-        itemCreation: {
+        itemCreate: {
           itemID: SearchTerm, 
           itemDescription: '', 
           supplierID: selectedSupplier,
@@ -94,31 +119,31 @@ export default function NewItemForm(props) {
         }
       }}
       validationSchema={ItemCreationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-      
+      onSubmit={(values) => {
+        executeCreateItem({"variables": {'item': values}})
       }}
     >
       {({ values, isSubmitting, errors }) => (
         console.log('errors', errors),
         <Form>
           <H2>Item Creation Form</H2>
-          {Object.keys(errors).length > 0 && <DivError>Please fill out all fields</DivError>}
           <DivFormContainer>
-            <FormikInput label="Item ID*:" type="text" name="itemCreation.itemID" disabled={true} />
-            <FormikInput label={`Item Description (${values.itemCreation.itemDescription.length}/40 char)*:`} type="text" name="itemCreation.itemDescription" maxlength="40"/>
+            {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
+            <FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
+            <FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
             <Field 
-              name="itemCreation.unitOfMeasure" 
+              name="itemCreate.unitOfMeasure" 
               component={FormikSelect} 
               options={unitsOfMeasureList}
               placeholder="Select a UOM"
               label="Unit of Measure*:"
               width="400px"
             /> 
-            <FormikInput type="hidden" name="itemCreation.supplierID" />
-            <FormikInput label="List Price*:" type="currency" name="itemCreation.listPrice" />
-            <FormikInput label="Airline Cost*:" type="currency" name="itemCreation.airlinePartCost" />
+            <FormikInput type="hidden" name="itemCreate.supplierID" />
+            <FormikInput label="List Price*:" type="currency" name="itemCreate.listPrice" />
+            <FormikInput label="Airline Cost*:" type="currency" name="itemCreate.airlinePartCost" />
             <Field 
-              name="itemCreation.productGroupID" 
+              name="itemCreate.productGroupID" 
               component={FormikSelect} 
               options={productGroupsList}
               placeholder="Select a Product Group"

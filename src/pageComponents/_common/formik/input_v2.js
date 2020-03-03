@@ -72,7 +72,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           disabled={disabled} 
           style={{width: width || "400px"}}
           onChange={(e)=>changeFunction(name, e.target.value)}
-          maxlength={maxlength}
+          maxLength={maxlength}
         />
       </DivContainer>
     )
