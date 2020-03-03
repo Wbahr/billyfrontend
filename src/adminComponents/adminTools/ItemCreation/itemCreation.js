@@ -9,16 +9,16 @@ import AirlineSelect from '../../../pageComponents/_common/selectv2'
 
 const QUERY_ITEM_CREATION_DATA = gql`
   query GetItemCreationData{
-    getAirlineSuppliers{
+    suppliers{
       id
       name
       prefix: supplierPrefix
     }
-    getUnitsOfMeasure{
+    unitsOfMeasure{
       value: unitId
       label: unitDescription
     }
-    getProductGroups{
+    productGroups{
       value: productGroupId
       label: productGroupDesc
     }
@@ -114,9 +114,9 @@ export default function ItemCreationPage() {
   let maxPage = 3
   const { loading, error, data } = useQuery(QUERY_ITEM_CREATION_DATA, {
     onCompleted: data => {
-      setSupplierList(data.getAirlineSuppliers)
-      setUnitsOfMeasure(data.getUnitsOfMeasure)
-      setProductGroups(data.getProductGroups)
+      setSupplierList(data.suppliers)
+      setUnitsOfMeasure(data.unitsOfMeasure)
+      setProductGroups(data.productGroups)
     }
   })
 
@@ -132,9 +132,8 @@ export default function ItemCreationPage() {
 
   function searchItems() {
     setIsSearching(true)
-    let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
+    let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
     let SearchTerm = supplierList[index].prefix + ' ' + searchTerm
-    let SearchTerm = searchTerm 
     performItemSearch({
       variables: {
         searchParams: {

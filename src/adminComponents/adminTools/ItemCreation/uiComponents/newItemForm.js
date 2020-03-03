@@ -54,16 +54,18 @@ export const UnitOfMeasure = [
 export default function NewItemForm(props) {
   const {
     searchTerm,
+    supplierList,
     selectedSupplier,
     unitsOfMeasureList,
     productGroupsList
   } = props
-  console.log('searchTerm', searchTerm)
+  let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
+  let SearchTerm = supplierList[index].prefix + ' ' + searchTerm
   return <div>
     <Formik
       initialValues={{
         itemCreation: {
-          itemID: searchTerm, 
+          itemID: SearchTerm, 
           itemDescription: '', 
           supplierID: selectedSupplier,
           unitOfMeasure: '', 
