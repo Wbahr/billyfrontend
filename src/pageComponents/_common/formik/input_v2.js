@@ -47,7 +47,7 @@ const MainInput = styled(FormikField)`
 `
 
 export default function Input({type, disabled, name, label, placeholder, width, changeFunction}){
-  if(type !== "hidden" && _.isNil(changeFunction)){
+  if(type === "text" && _.isNil(changeFunction)){
     return(
       <DivContainer>
         {label && <Label htmlFor={label}>{`${label}`}</Label>}        
@@ -60,7 +60,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
         />
       </DivContainer>
     )
-  } else if(type !== "hidden" && !_.isNil(changeFunction)){
+  } else if(type === "text" && !_.isNil(changeFunction)){
     return(
       <DivContainer>
         {label && <Label htmlFor={label}>{`${label}`}</Label>}        
@@ -68,6 +68,20 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           type="text" 
           name={name} 
           placeholder={placeholder} 
+          disabled={disabled} 
+          style={{width: width || "400px"}}
+          onChange={(e)=>changeFunction(name, e.target.value)}
+        />
+      </DivContainer>
+    )
+  } else if(type === "currency") {
+    return(
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainInput 
+          type="text" 
+          name={name} 
+          placeholder='$0.00'
           disabled={disabled} 
           style={{width: width || "400px"}}
           onChange={(e)=>changeFunction(name, e.target.value)}

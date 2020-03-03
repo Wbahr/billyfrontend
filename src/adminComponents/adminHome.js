@@ -20,6 +20,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
+import AppHeader from './appHeader'
 
 const DivLink = styled.div`
   display: flex;
@@ -62,7 +63,6 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
   },
   toolbar: theme.mixins.toolbar,
   avatar: {
@@ -137,7 +137,7 @@ export default function AdminHome(props) {
         </List>
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
+        <AppHeader />
         <AdminTool />
       </main>
     </div>

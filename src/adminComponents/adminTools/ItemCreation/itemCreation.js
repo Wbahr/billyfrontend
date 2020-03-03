@@ -243,7 +243,8 @@ export default function ItemCreationPage() {
           </div>
         }
         {showNewItemForm && 
-          <NewItemForm 
+          <NewItemForm
+            searchTerm={searchTerm}
             selectedSupplier={selectedSupplier}
             supplierList={supplierList}
             unitsOfMeasureList={unitsOfMeasureList}

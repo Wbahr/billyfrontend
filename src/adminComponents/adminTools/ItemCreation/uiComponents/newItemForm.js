@@ -49,25 +49,25 @@ export const UnitOfMeasure = [
 
 export default function NewItemForm(props) {
   const {
+    searchTerm,
     selectedSupplier,
     unitsOfMeasureList,
     productGroupsList
   } = props
-
-  // let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
-  // let SearchTerm = searchTerm = ' ' + supplierList[index]
-
+  console.log('searchTerm', searchTerm)
   return <div>
     <H2>Item Creation</H2>
     <H4>for internal new items</H4>
     <Formik
       initialValues={{
-        itemID: 'SMC kq2', 
-        itemDescription: '', 
-        supplierID: selectedSupplier,
-        unitOfMeasure: '', 
-        listPrice: '0.00',
-        airlinePartCost: '0.00'
+        itemCreation: {
+          itemID: searchTerm, 
+          itemDescription: '', 
+          supplierID: selectedSupplier,
+          unitOfMeasure: '', 
+          listPrice: '',
+          airlinePartCost: ''
+        }
       }}
       validate={values => {
         let errors = {}
@@ -93,7 +93,7 @@ export default function NewItemForm(props) {
       {({ isSubmitting }) => (
         <Form>
           <DivFormContainer>
-            <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled="true" />
+            <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled={true} />
             <FormikInput label="Item Description (max 40 char):" type="text" name="itemCreation.itemDescription"/>
             <Field 
               name="itemCreation.unitOfMeasure" 
@@ -103,9 +103,9 @@ export default function NewItemForm(props) {
               label="Unit of Measure:"
               width="400px"
             /> 
-            <FormikInput type="hidden" name="itemCreation.supplierID" disabled="true"/>
-            <FormikInput label="List Price:" type="text" name="itemCreation.listPrice" />
-            <FormikInput label="Airline Cost:" type="text" name="itemCreation.airlinePartCost" />
+            <FormikInput type="hidden" name="itemCreation.supplierID" />
+            <FormikInput label="List Price:" type="currency" name="itemCreation.listPrice" />
+            <FormikInput label="Airline Cost:" type="currency" name="itemCreation.airlinePartCost" />
             <Field 
               name="itemCreation.productGroupID" 
               component={FormikSelect} 
