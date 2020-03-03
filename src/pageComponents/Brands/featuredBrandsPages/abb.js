@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../../config/context'
-import { faAutoprefixer } from '@fortawesome/free-brands-svg-icons'
 import ShowMoreText from 'react-show-more-text';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 
 
@@ -64,8 +64,9 @@ const DistributorDetails = styled.div`
 const ProductsTitle = styled.div`
   font-size: 25px;
   margin-top: 27px;
-  color:  	 #595959;
+  color: #595959;
   text-transform: uppercase;
+  margin-right: 30px;
 `;
 
 const Div = styled.div`
@@ -76,11 +77,11 @@ const Div = styled.div`
 `;
 
 const ProductsDiv = styled.div`
-display: flex;  
-flex-wrap: nowrap;
-margin: 20px 0 20px 0;
-background-color:  #f2f2f2;
-padding: 15px 
+  display: flex;  
+  flex-wrap: nowrap;
+  margin: 20px 0 20px 0;
+  background-color:  #f2f2f2;
+  padding: 15px 
 `;
 
 const ProductsH4 = styled.h4`
@@ -88,6 +89,7 @@ const ProductsH4 = styled.h4`
   color: 	#000000;
   margin-bottom: 15px;
 `;
+
 const ShopAbbButton = styled.button`
   background-color: #b51029;
   width: 20%
@@ -113,32 +115,29 @@ const BorderBottom = styled.div`
   `;
 
 const RelatedLinkCircle = styled.div`
- width: 200px;
- height: 200px;
- border-radius: 100px;
- background-color: #b51029; 
- margin: 0 auto;
- position: relative;
- margin-bottom: 30px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  background-color: #b51029; 
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 30px;
 
  `;
 
 const LinkStyle = styled.a`
   color: white;
-  text-decoration: none;
-  font-size: 14px;
+  font-size: 16px;
   position: absolute;
-  top: 130px;
-  margin-left: 50px;
-
+  text-transform: uppercase;
+  text-align: center;
+  &:hover{
+    color: white;
+    text-decoration: none;
+  }
+ 
+ 
  `;
-
-const IconImg = styled.img`
- width: 35%;
- position: absolute;
- margin: 50px 0 0 65px;
- `;
-
 
 const ArticlesDiv = styled.div`
   display: flex;
@@ -158,34 +157,46 @@ const ArticlesVideo = styled.iframe`
 const ArticlesContentDiv = styled.div`
   margin-left: 20px;
   text-align: center;
-  // background-color: #E5E4E2;
   padding: 15px 0;
 `;
 
 const ArticlesTopic = styled.h6`
   color: #b51029;
   font-weight: bold;
-  margin: 10px; 0 10px 0;
+  margin: 10px 15px;
 `;
 
 const SmallArticlesContent = styled.div`
-display: flex
-flex-wrap: nowrap;
-width: 33%;
-margin-bottom: 30px;
+  display: flex
+  flex-wrap: nowrap;
+  width: 33%;
+  margin-bottom: 30px;
 
 
 `;
 
-const BorderRight = styled.div`
-border-right: 1px solid grey;
-height: 45px;
+const FontAwesomeDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color: black;
+  &:hover{
+    color: white;
+    
+  }
 `;
 
-
+const LinkStyleDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  
+`;
 
 const ArticlesContentDetails = styled.p`
-margin: 0 15px;
+  margin: 0 15px;
+  text-align: left;
+  font-size: 14px;
 `;
 
 export default function Abb() {
@@ -207,6 +218,9 @@ export default function Abb() {
         <Div>
           <ShopAbbButton onClick={() => alert("clicked!")}>Shop for ABB Products </ShopAbbButton>
         </Div>
+
+
+        {/*............................... PRODUCTS................................... */}
 
         <Div>
           <ProductsTitle>Products</ProductsTitle>
@@ -258,8 +272,8 @@ export default function Abb() {
               {/* ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes: */}
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
  Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
- 
- 
+
+
           </ShowMoreText>
           </ProductsDetails>
 
@@ -273,6 +287,9 @@ export default function Abb() {
           <img src="https://www.gegridsolutions.com/HVMV_Equipment/Images/PrimaryEquipment/hvmv-gis.jpg" width="450px" height="250px" />
         </ProductsDiv>
 
+
+        {/*.................................. ARTICLES................................... */}
+
         <Div>
           <ProductsTitle>Articles</ProductsTitle>
           <BorderBottom></BorderBottom>
@@ -280,7 +297,7 @@ export default function Abb() {
 
         <SmallArticlesContent>
           <ArticlesContentDiv>
-          <img src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" width="260px" height="160px" />
+            <img src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" width="260px" height="160px" />
             <ArticlesTopic>
               Thermistor protection modules for ACS880 drives</ArticlesTopic>
             <ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
@@ -289,29 +306,33 @@ export default function Abb() {
 
         <SmallArticlesContent>
           <ArticlesContentDiv>
-          <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1"  width="260px" height="160px"/>
+            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1" width="260px" height="160px" />
             <ArticlesTopic>
               Drives give South African farmer 40% energy savings, smoother operation and less work</ArticlesTopic>
             <ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
             </ArticlesContentDetails>
           </ArticlesContentDiv>
-          </SmallArticlesContent>
+        </SmallArticlesContent>
 
-          <SmallArticlesContent>
+        <SmallArticlesContent>
           <ArticlesContentDiv>
-            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1"  width="260px" height="160px" />
+            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1" width="260px" height="160px" />
             <ArticlesTopic>
               Lorem ipsum dolor sit amet</ArticlesTopic>
             <ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
           </ArticlesContentDiv>
-          </SmallArticlesContent>
+        </SmallArticlesContent>
 
 
-          <ArticlesDiv>
+        <ArticlesDiv>
           <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
           <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
           <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
         </ArticlesDiv>
+
+
+
+        {/*.............................. RELATED LINK ................................... */}
 
         <Div>
           <ProductsTitle>Related Link</ProductsTitle>
@@ -320,16 +341,48 @@ export default function Abb() {
 
         <Div>
           <RelatedLinkCircle>
-            <IconImg src="https://www.konfest.com/wp-content/uploads/2019/05/Konfest-PNG-JPG-Image-Pic-Photo-Free-Download-Royalty-Unlimited-clip-art-sticker-world-wide-web-icons-website-earth-grid-globe-black-white-12.png"></IconImg>
 
-            <LinkStyle href="https://new.abb.com/us" target="_blank">ABB's US Website</LinkStyle>
+            <LinkStyleDiv>
+              <LinkStyle href="https://new.abb.com/us" target="_blank">
+                <FontAwesomeDiv>
+                  <FontAwesomeIcon icon='globe-americas' size='4x' />
+                </FontAwesomeDiv>
+                ABB's US Website</LinkStyle>
+            </LinkStyleDiv>
           </RelatedLinkCircle>
+
           <RelatedLinkCircle>
-            <IconImg src="#"></IconImg>
-            <LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">Videos</LinkStyle>
+
+            <LinkStyleDiv>
+              <LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">
+                <FontAwesomeDiv>
+                  <FontAwesomeIcon icon={faYoutube} size='4x' />
+                </FontAwesomeDiv>
+                Videos</LinkStyle>
+            </LinkStyleDiv>
           </RelatedLinkCircle>
-          <RelatedLinkCircle></RelatedLinkCircle>
-          <RelatedLinkCircle></RelatedLinkCircle>
+
+          <RelatedLinkCircle>
+
+            <LinkStyleDiv>
+              <LinkStyle href="#" target="_blank">
+                <FontAwesomeDiv>
+                  <FontAwesomeIcon icon='shopping-cart' size='4x' />
+                </FontAwesomeDiv>
+                shop abb products</LinkStyle>
+            </LinkStyleDiv>
+          </RelatedLinkCircle>
+
+          <RelatedLinkCircle>
+
+            <LinkStyleDiv>
+              <LinkStyle href="#" target="_blank">
+                <FontAwesomeDiv>
+                  <FontAwesomeIcon icon='address-book' size='4x' />
+                </FontAwesomeDiv>
+                abb Catalogs</LinkStyle>
+            </LinkStyleDiv>
+          </RelatedLinkCircle>
         </Div>
 
 
