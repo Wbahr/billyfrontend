@@ -7,11 +7,19 @@ import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/inputv2'
 import AirlineSelect from '../../../pageComponents/_common/selectv2'
 
-const QUERY_SUPPLIER_LIST = gql`
-  query GetSuppliers{
+const QUERY_ITEM_CREATION_DATA = gql`
+  query GetItemCreationData{
     getAirlineSuppliers{
       id
       name
+    }
+    getUnitsOfMeasure{
+      value: unitId
+      label: unitDescription
+    }
+    getProductGroups{
+      value: productGroupId
+      label: productGroupDesc
     }
   }
 `
@@ -85,6 +93,8 @@ export default function ItemCreationPage() {
   const [selectedSupplier, setSelectedSupplier] = useState('')
   const [searchEnabled, setSearchEnabled] = useState(false)
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
+  const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
+  const [productGroupsList, setProductGroups] = useState([])
   const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -101,9 +111,11 @@ export default function ItemCreationPage() {
   }, [searchTerm, selectedSupplier])
 
   let maxPage = 3
-  const { loading, error, data } = useQuery(QUERY_SUPPLIER_LIST, {
+  const { loading, error, data } = useQuery(QUERY_ITEM_CREATION_DATA, {
     onCompleted: data => {
       setSupplierList(data.getAirlineSuppliers)
+      setUnitsOfMeasure(data.getUnitsOfMeasure)
+      setProductGroups(data.getProductGroups)
     }
   })
 
@@ -120,7 +132,8 @@ export default function ItemCreationPage() {
   function searchItems() {
     setIsSearching(true)
     let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
-    let SearchTerm = searchTerm = ' ' + supplierList[index]
+    // let SearchTerm = searchTerm + ' ' + supplierList[index]
+    let SearchTerm = searchTerm 
     performItemSearch({
       variables: {
         searchParams: {
@@ -233,6 +246,8 @@ export default function ItemCreationPage() {
           <NewItemForm 
             selectedSupplier={selectedSupplier}
             supplierList={supplierList}
+            unitsOfMeasureList={unitsOfMeasureList}
+            productGroupsList={productGroupsList}
           />}
       </ContentScreenContainer>
     </>

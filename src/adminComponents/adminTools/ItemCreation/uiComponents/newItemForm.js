@@ -49,7 +49,9 @@ export const UnitOfMeasure = [
 
 export default function NewItemForm(props) {
   const {
-    selectedSupplier
+    selectedSupplier,
+    unitsOfMeasureList,
+    productGroupsList
   } = props
 
   // let index = itemSearchResult.findIndex(elem => elem.id === selectedSupplier)
@@ -96,15 +98,22 @@ export default function NewItemForm(props) {
             <Field 
               name="itemCreation.unitOfMeasure" 
               component={FormikSelect} 
-              options={UnitOfMeasure}
+              options={unitsOfMeasureList}
               placeholder="Select a UOM"
               label="Unit of Measure:"
               width="400px"
             /> 
             <FormikInput type="hidden" name="itemCreation.supplierID" disabled="true"/>
-            <FormikInput label="Product Group ID:" type="text" name="itemCreation.productGroupID" />
             <FormikInput label="List Price:" type="text" name="itemCreation.listPrice" />
             <FormikInput label="Airline Cost:" type="text" name="itemCreation.airlinePartCost" />
+            <Field 
+              name="itemCreation.productGroupID" 
+              component={FormikSelect} 
+              options={productGroupsList}
+              placeholder="Select a Product Group"
+              label="Product Group ID:"
+              width="400px"
+            /> 
           </DivFormContainer>
           <DivCenter>
             <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting}>
