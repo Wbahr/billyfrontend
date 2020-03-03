@@ -46,7 +46,7 @@ const MainInput = styled(FormikField)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, changeFunction}){
+export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength}){
   if(type === "text" && _.isNil(changeFunction)){
     return(
       <DivContainer>
@@ -57,6 +57,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           placeholder={placeholder} 
           disabled={disabled} 
           style={{width: width || "400px"}}
+          maxlength={maxlength}
         />
       </DivContainer>
     )
@@ -71,6 +72,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           disabled={disabled} 
           style={{width: width || "400px"}}
           onChange={(e)=>changeFunction(name, e.target.value)}
+          maxlength={maxlength}
         />
       </DivContainer>
     )
@@ -106,5 +108,6 @@ Input.propTypes = {
 
 Input.defaultProps = {
   type: 'text',
-  placeholder: ''
+  placeholder: '',
+  maxlength: 'none'
 }

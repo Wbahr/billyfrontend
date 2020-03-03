@@ -95,12 +95,12 @@ export default function NewItemForm(props) {
         }, 400);
       }}
     >
-      {({ isSubmitting }) => (
+      {({ values, isSubmitting }) => (
         <Form>
           <H2>Item Creation Form</H2>
           <DivFormContainer>
             <FormikInput label="Item ID:" type="text" name="itemCreation.itemID" disabled={true} />
-            <FormikInput label="Item Description (max 40 char):" type="text" name="itemCreation.itemDescription"/>
+            <FormikInput label={`Item Description (${values.itemCreation.itemDescription.length}/40 char):`} type="text" name="itemCreation.itemDescription" maxlength="40"/>
             <Field 
               name="itemCreation.unitOfMeasure" 
               component={FormikSelect} 

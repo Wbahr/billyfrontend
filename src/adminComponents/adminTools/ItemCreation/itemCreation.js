@@ -169,23 +169,27 @@ export default function ItemCreationPage() {
     setShowNewItemForm(false)
   }
 
+  function mutateItemId(itemId){
+    let mutatedItemId = itemId.replace(/\s/g, '-')
+    return(mutatedItemId)
+  }
+
 
   let searchResultItems = []
   itemSearchResult.map((element, index) => {
     let resultImage = ""
-    if (element.thumbnail_image_path === null)
-    {
+    if (element.thumbnail_image_path === null){
       resultImage = 'https://www.airlinehyd.com/images/no-image.jpg'
-    }
-    else
-    {
+    }else{
       resultImage = "https://www.airlinehyd.com/images/items/"+(element.thumbnail_image_path.split("\\")[8]).replace("_t", "_l")
     }
+    let mutatedItemId = mutateItemId(element.item_id)
     searchResultItems.push(
       <DivSearchItemContainer key={index}>
         <img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.item_id} ></img>
         <h6>{element.item_id}</h6>
         <p>{element.item_desc}</p>
+        <a href={`/product/${mutatedItemId}/${element.frecno}`} target="_blank">View Details</a>
       </DivSearchItemContainer>
     )
   })
