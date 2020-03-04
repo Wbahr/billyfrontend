@@ -83,6 +83,7 @@ const CREATE_ITEM = gql`
 `
 
 export default function NewItemForm(props) {
+  const [currency, setCurrency] = useState(0.00)
   const {
     searchTerm,
     supplierList,
@@ -98,7 +99,6 @@ export default function NewItemForm(props) {
   if(index > -1){
     SearchTerm = supplierList[index].prefix + ' ' + searchTerm
   }
-  
 
   const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
     onCompleted: data => {

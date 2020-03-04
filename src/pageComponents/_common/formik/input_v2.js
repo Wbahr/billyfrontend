@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Field as FormikField, ErrorMessage } from 'formik'
+import CurrencyInput from 'react-currency-input'
 
 const DivContainer = styled.div`
   display flex;
@@ -30,6 +31,23 @@ const DivError = styled.div`
 `
 
 const MainInput = styled(FormikField)`
+  height: 40px;
+  padding: 0 8px;
+  color: #303030;
+  font-size: 16px;
+  border-radius: 1px;
+  border: 1px solid #e1e1e1;  
+  :focus{
+    border: 1px solid #007bff;  
+    outline: none;
+  }
+  ::placeholder {
+    color: grey;
+    font-size: 14px;
+  }
+`
+
+const MainCurrencyInput = styled(CurrencyInput)`
   height: 40px;
   padding: 0 8px;
   color: #303030;
@@ -80,13 +98,15 @@ export default function Input({type, disabled, name, label, placeholder, width, 
     return(
       <DivContainer>
         {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput 
-          type="text" 
-          name={name} 
-          placeholder='$0.00'
-          disabled={disabled} 
-          style={{width: width || "400px"}}
-        />
+          <FormikField name={name}>
+            {({
+              field, // { name, value, onChange, onBlur }
+              form: {touched, errors}, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+              form
+            }) => (
+              <MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || "400px"}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
+            )}
+          </FormikField>
       </DivContainer>
     )
   } else {

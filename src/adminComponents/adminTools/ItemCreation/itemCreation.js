@@ -257,7 +257,7 @@ export default function ItemCreationPage() {
             </ButtonContainer>
           </div>
         }
-        {showNewItemForm && 
+        {true && 
           <NewItemForm
             searchTerm={searchTerm}
             selectedSupplier={selectedSupplier}
