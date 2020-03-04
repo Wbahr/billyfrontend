@@ -31,7 +31,7 @@ module.exports = (env) => {
     resolve: {
       modules: [
         path.resolve(__dirname, './src'),
-        path.resolve('./node_modules')
+        'node_modules'
       ]
     },
     module: {
