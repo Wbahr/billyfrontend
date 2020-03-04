@@ -91,8 +91,13 @@ export default function NewItemForm(props) {
     productGroupsList,
     clearForm
   } = props
+
   let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-  let SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
+  let SearchTerm = searchTerm
+  if(index > 0){
+    SearchTerm = supplierList[index].prefix + ' ' + searchTerm
+  }
+  
 
   const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
     onCompleted: data => {
@@ -109,7 +114,7 @@ export default function NewItemForm(props) {
     <Formik
       initialValues={{
         itemCreate: {
-          itemID: SearchTerm, 
+          itemID: SearchTerm.toUpperCase(), 
           itemDescription: '', 
           supplierID: selectedSupplier,
           unitOfMeasure: '', 
@@ -120,7 +125,7 @@ export default function NewItemForm(props) {
       }}
       validationSchema={ItemCreationSchema}
       onSubmit={(values) => {
-        executeCreateItem({"variables": {'item': values}})
+        executeCreateItem({ variables: { item: values.itemCreate } })
       }}
     >
       {({ values, isSubmitting, errors }) => (

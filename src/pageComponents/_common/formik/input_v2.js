@@ -57,7 +57,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
           placeholder={placeholder} 
           disabled={disabled} 
           style={{width: width || "400px"}}
-          maxlength={maxlength}
+          maxLength={maxlength}
         />
       </DivContainer>
     )
