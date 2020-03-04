@@ -124,7 +124,8 @@ export default function NewItemForm(props) {
           unitOfMeasure: '', 
           listPrice: '',
           airlinePartCost: '',
-          productGroupID: ''
+          productGroupID: '',
+          tariff: 0.00
         }
       }}
       validationSchema={ItemCreationSchema}
@@ -152,6 +153,7 @@ export default function NewItemForm(props) {
             <FormikInput type="hidden" name="itemCreate.supplierID" />
             <FormikInput label="List Price*:" type="currency" name="itemCreate.listPrice" />
             <FormikInput label="Airline Cost*:" type="currency" name="itemCreate.airlinePartCost" />
+            <FormikInput label="Tariff:" type="currency" name="itemCreate.tariff" />
             <Field 
               name="itemCreate.productGroupID" 
               component={FormikSelect} 
