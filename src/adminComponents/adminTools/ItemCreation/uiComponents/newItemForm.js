@@ -83,6 +83,7 @@ const CREATE_ITEM = gql`
 `
 
 export default function NewItemForm(props) {
+  const [currency, setCurrency] = useState(0.00)
   const {
     searchTerm,
     supplierList,
@@ -95,10 +96,9 @@ export default function NewItemForm(props) {
 
   let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
   let SearchTerm = searchTerm
-  if(index > 0){
+  if(index > -1){
     SearchTerm = supplierList[index].prefix + ' ' + searchTerm
   }
-  
 
   const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
     onCompleted: data => {
@@ -129,7 +129,6 @@ export default function NewItemForm(props) {
         <Form>
           <H2>Item Creation Form</H2>
           <DivFormContainer>
-            {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
             <FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
             <FormikInput type="hidden" name="itemCreate.manufacturerPartNumber" />
             <FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
@@ -152,6 +151,9 @@ export default function NewItemForm(props) {
               label="Product Group ID*:"
               width="400px"
             /> 
+            <DivCenter>
+              {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
+            </DivCenter>
             <DivCenter>
               <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting || Object.keys(errors).length > 0}>
                 {isSubmitting ? 'Registering Item..' : 'Register Item'}
