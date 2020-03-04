@@ -27,12 +27,12 @@ import AdminHome from '../adminComponents/adminHome'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 
-function WrapperRoute({auth, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
+function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
     <Route
       {...otherProps}
       render={routeProps => (
-        <Auth authRequired={auth || false} {...routeProps}>
+        <Auth authRequired={auth || false} roles={roles} {...routeProps}>
           <LayoutWrapperComponent {...routeProps}>
             <ErrorBoundry>
               <Component {...routeProps} />
@@ -91,7 +91,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
         {/* ADMIN INTERNAL TOOLS */}
         <WrapperRoute exact path='/admin-dashboard' auth component={AdminHome} layout={AdminLayout}/>
-        <WrapperRoute exact path='/admin-dashboard/:tool' auth component={AdminHome} layout={AdminLayout}/>
+        <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee']} component={AdminHome} layout={AdminLayout}/>
         <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
