@@ -105,6 +105,13 @@ export default function NewItemForm(props) {
       showModal(data.itemCreate)
     }
   })
+
+  function formatCurrentFields(values){
+    let mutatedValues = values
+    mutatedValues.listPrice = parseFloat(values.listPrice.substring(1))
+    mutatedValues.airlinePartCost = parseFloat(values.airlinePartCost.substring(1))
+    return mutatedValues
+  }
   return <div>
     <Formik
       initialValues={{
@@ -121,11 +128,11 @@ export default function NewItemForm(props) {
       }}
       validationSchema={ItemCreationSchema}
       onSubmit={(values) => {
-        executeCreateItem({ variables: { item: values.itemCreate } })
+        let mutatedValues = formatCurrentFields(values.itemCreate)
+        executeCreateItem({ variables: { item: mutatedValues } })
       }}
     >
       {({ values, isSubmitting, errors }) => (
-        console.log('errors', errors),
         <Form>
           <H2>Item Creation Form</H2>
           <DivFormContainer>
