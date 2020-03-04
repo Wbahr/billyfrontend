@@ -7,6 +7,7 @@ import gql from 'graphql-tag'
 import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/inputv2'
 import AirlineSelect from '../../../pageComponents/_common/selectv2'
+import ItemCreationModal from './uiComponents/itemCreationModal'
 
 const QUERY_ITEM_CREATION_DATA = gql`
   query GetItemCreationData{
@@ -101,6 +102,7 @@ export default function ItemCreationPage() {
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [isSearching, setIsSearching] = useState(false)
+  const [submitResponse, setSubmitResponse] = useState(null)
   
   useEffect(() => {
     if(searchTerm !== '' && selectedSupplier !== ''){
@@ -174,6 +176,13 @@ export default function ItemCreationPage() {
     return(mutatedItemId)
   }
 
+  function showModal(response){
+    setSubmitResponse(response)
+    if(response.success){
+      resetItem()
+    }
+  }
+
 
   let searchResultItems = []
   itemSearchResult.map((element, index) => {
@@ -196,6 +205,7 @@ export default function ItemCreationPage() {
 
   return (
     <>
+      {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={()=>setSubmitResponse(null)} /> }
       <ContentScreenContainer>
         <DivSearchInputWrapper>
           <DivSpacer>
@@ -255,6 +265,7 @@ export default function ItemCreationPage() {
             unitsOfMeasureList={unitsOfMeasureList}
             productGroupsList={productGroupsList}
             clearForm={()=>resetItem()}
+            showModal={response => showModal(response)}
           />}
       </ContentScreenContainer>
     </>

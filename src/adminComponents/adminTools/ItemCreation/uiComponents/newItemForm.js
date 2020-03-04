@@ -89,7 +89,8 @@ export default function NewItemForm(props) {
     selectedSupplier,
     unitsOfMeasureList,
     productGroupsList,
-    clearForm
+    clearForm,
+    showModal
   } = props
 
   let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
@@ -101,13 +102,7 @@ export default function NewItemForm(props) {
 
   const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
     onCompleted: data => {
-      let responseData = data.itemCreate
-      if(responseData.success){
-        console.log('submitted', responseData)
-        clearForm()
-      } else {
-        console.log('error')
-      }
+      showModal(data.itemCreate)
     }
   })
   return <div>
