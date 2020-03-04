@@ -46,9 +46,9 @@ export default function AccountDashboard({history}) {
   ]
   useEffect(() => {
     if(page === 'dashboard'){
-      setPageComponent(<AccountManagementPage/>)
+      setPageComponent(<AccountManagementPage history={history}/>)
     } else if (page === 'user-settings'){
-      setPageComponent(<AccountManagementPage/>)
+      setPageComponent(<AccountManagementPage history={history}/>)
     } else if (page === 'shipping-preferences'){
       setPageComponent(<ShipToManagementPage/>)
     } else if (page === 'payment-preferences'){

@@ -7,7 +7,7 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Divider from '@material-ui/core/Divider';
@@ -15,26 +15,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import AirlineLogo from '../imgs/airline/airline_vector.png'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import AppHeader from './appHeader'
 
-const DivLink = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 20px;
-  color: #fff;
-  p {
-    margin: 0;
-    align-self: flex-end;
-  }
-`
-const IconContainer = styled.div`
-
-`
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -132,6 +118,8 @@ export default function AdminHome(props) {
       >
         <div className={classes.toolbar} />
         <List aria-label="main mailbox folders">
+            <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
+            <Divider/>
             <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
             <Divider/>
         </List>

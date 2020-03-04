@@ -8,7 +8,6 @@ export default function AdminDashboard(props) {
 
   return(
     <>
-      <p>dashboard loading...</p>
     </>
   )
 }

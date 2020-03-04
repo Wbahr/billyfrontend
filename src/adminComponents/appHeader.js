@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
+import Context from '../config/context'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +25,8 @@ const useStyles = makeStyles(theme => ({
 export default function AppHeader(props) {
   let { tool } = useParams()
   const classes = useStyles()
+  const context = useContext(Context)
+  
 
   let AdminTool
   switch(tool){
@@ -31,7 +34,7 @@ export default function AppHeader(props) {
       AdminTool = 'Item Creation'
       break
     default:
-      AdminTool = 'Welcome Back'
+      AdminTool = `Welcome Back, ${_.get(context,`userInfo.firstName`,'Airline Employee')}`
   }
 
   return (
