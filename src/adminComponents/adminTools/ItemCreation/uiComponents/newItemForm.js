@@ -83,7 +83,7 @@ const CREATE_ITEM = gql`
 `
 
 export default function NewItemForm(props) {
-  const [currency, setCurrency] = useState(0.00)
+  const [formIsSubmitting, setFormIsSubmitting] = useState(false)
   const {
     searchTerm,
     supplierList,
@@ -102,6 +102,7 @@ export default function NewItemForm(props) {
 
   const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
     onCompleted: data => {
+      setFormIsSubmitting(false)
       showModal(data.itemCreate)
     }
   })
@@ -128,6 +129,7 @@ export default function NewItemForm(props) {
       }}
       validationSchema={ItemCreationSchema}
       onSubmit={(values) => {
+        setFormIsSubmitting(true)
         let mutatedValues = formatCurrentFields(values.itemCreate)
         executeCreateItem({ variables: { item: mutatedValues } })
       }}
@@ -162,8 +164,8 @@ export default function NewItemForm(props) {
               {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
             </DivCenter>
             <DivCenter>
-              <Button variant="contained" color="secondary" type="submit" disabled={isSubmitting || Object.keys(errors).length > 0}>
-                {isSubmitting ? 'Registering Item..' : 'Register Item'}
+              <Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || Object.keys(errors).length > 0}>
+                {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
               </Button>
             </DivCenter>
           </DivFormContainer>
