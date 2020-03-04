@@ -24,7 +24,8 @@ import Signup from '../pageComponents/Signup/signupPage'
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
-import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
+import PermissionDenied from '../pageComponents/Error/permissionDenied'
+import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -90,8 +91,11 @@ class App extends React.Component {
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
         {/* ADMIN INTERNAL TOOLS */}
-        <WrapperRoute exact path='/admin-dashboard' auth component={AdminHome} layout={AdminLayout}/>
+        <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee']} component={AdminHome} layout={AdminLayout}/>
         <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee']} component={AdminHome} layout={AdminLayout}/>
+
+        {/* Error Screens */}
+        <WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
       </Switch>
     )
