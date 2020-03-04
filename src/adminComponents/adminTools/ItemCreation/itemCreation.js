@@ -222,11 +222,17 @@ export default function ItemCreationPage() {
             <AirlineSelect
               label="Supplier Name:"
               name="supplierNameSearch"
-              placeholder="Select a Supplier"
+              placeholder='Select a Supplier'
               value={selectedSupplier}
-              options={supplierList}
+              options={[{'id': null, 'name': null, 'prefix': null} ,...supplierList]}
               changeFunction={handleChange}
-              getOptionLabel={(option) => option.id + " - " + option.name}
+              getOptionLabel={(option) => {
+                if(option.name === null){
+                  return('Select a Supplier') 
+                } else {
+                  return(option.id + " - " + option.name)
+                }
+              }}
               getOptionValue={(option) => option.name}
               isClearable={true}
               isLoading={supplierList.length === 0}
