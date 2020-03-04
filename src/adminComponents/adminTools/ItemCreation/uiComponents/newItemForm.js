@@ -5,7 +5,6 @@ import { Formik, Form as FormikForm, Field } from 'formik'
 import styled from "styled-components"
 import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
 import FormikSelect from '../../../../pageComponents/_common/formik/select'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import { Button } from '@material-ui/core'
 import * as Yup from 'yup'
@@ -90,7 +89,6 @@ export default function NewItemForm(props) {
     selectedSupplier,
     unitsOfMeasureList,
     productGroupsList,
-    clearForm,
     showModal
   } = props
 
