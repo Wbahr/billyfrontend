@@ -111,6 +111,7 @@ export default function NewItemForm(props) {
     let mutatedValues = values
     mutatedValues.listPrice = parseFloat(values.listPrice.substring(1))
     mutatedValues.airlinePartCost = parseFloat(values.airlinePartCost.substring(1))
+    mutatedValues.tariff = parseFloat(values.tariff.substring(1))
     return mutatedValues
   }
   return <div>
