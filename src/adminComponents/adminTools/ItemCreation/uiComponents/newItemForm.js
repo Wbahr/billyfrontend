@@ -110,6 +110,7 @@ export default function NewItemForm(props) {
       initialValues={{
         itemCreate: {
           itemID: SearchTerm.toUpperCase(), 
+          manufacturerPartNumber: searchTerm.toUpperCase(),
           itemDescription: '', 
           supplierID: selectedSupplier,
           unitOfMeasure: '', 
@@ -130,6 +131,7 @@ export default function NewItemForm(props) {
           <DivFormContainer>
             {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
             <FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
+            <FormikInput type="hidden" name="itemCreate.manufacturerPartNumber" />
             <FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
             <Field 
               name="itemCreate.unitOfMeasure" 
