@@ -21,7 +21,7 @@ const Container = styled.div`
   }
 `
 
-export default function FourOFourPage({history}) {
+export default function PermissionDeniedPage({history}) {
 
   return(
     <Container>
