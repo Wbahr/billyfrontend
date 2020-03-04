@@ -93,7 +93,7 @@ const ButtonContainer = styled.div`
 
 export default function ItemCreationPage() {
   const [searchTerm, setSearchTerm] = useState('') //Search term initial value
-  const [selectedSupplier, setSelectedSupplier] = useState('')
+  const [selectedSupplier, setSelectedSupplier] = useState(null)
   const [searchEnabled, setSearchEnabled] = useState(false)
   const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
   const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
@@ -105,7 +105,7 @@ export default function ItemCreationPage() {
   const [submitResponse, setSubmitResponse] = useState(null)
   
   useEffect(() => {
-    if(searchTerm !== '' && selectedSupplier !== ''){
+    if(searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)){
       setSearchEnabled(true)
     } else {
       if (searchEnabled){
@@ -165,7 +165,7 @@ export default function ItemCreationPage() {
 
   function resetItem() {
     setSearchTerm('')
-    setSelectedSupplier('')
+    setSelectedSupplier(null)
     setItemSearchResult([])
     setCurrentPage(1)
     setShowNewItemForm(false)
@@ -228,6 +228,8 @@ export default function ItemCreationPage() {
               changeFunction={handleChange}
               getOptionLabel={(option) => option.id + " - " + option.name}
               getOptionValue={(option) => option.name}
+              isClearable={true}
+              isLoading={supplierList.length === 0}
             />
           </DivSpacer>
         </DivSearchInputWrapper>
