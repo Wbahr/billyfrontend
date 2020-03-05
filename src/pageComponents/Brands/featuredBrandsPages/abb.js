@@ -107,7 +107,7 @@ const ShopAbbButton = styled.button`
 const BorderBottom = styled.div`
   display: flex;
   border-bottom: 1px solid red;
-  width: 80%;
+  width: 75%;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -193,17 +193,50 @@ const LinkStyleDiv = styled.div`
   
 `;
 
+
 const ArticlesContentDetails = styled.p`
   margin: 0 15px;
   text-align: left;
   font-size: 14px;
 `;
 
-export default function Abb() {
-  function executeOnClick(isExpanded) {
-    console.log(isExpanded);
-  }
+const ShowMoreBtn1 = styled.button`
+  background-color:  #246696;
+  font-size: 12px;
+  color: white;
+  border: 0;
+ border-radius:2em;
+ box-sizing: border-box;
+ text-decoration:none;
+ text-align:center;
+padding: 4px 10px;
+     margin: 0 auto;
 
+`;
+
+const ShowMoreBtn2 = styled.button`
+  background-color:  #246696;
+  font-size: 12px;
+  color: white;
+  border: 0;
+ border-radius:2em;
+ box-sizing: border-box;
+ text-decoration:none;
+ text-align:center;
+padding: 4px 10px;
+     margin: 0 auto;
+
+`;
+
+const ListItemDiv = styled.div`
+  font-size: 13px;
+  margin-top: 10px;
+`;
+
+export default function Abb() {
+  
+  const [showText, setShowText] = useState(false);
+    
   return (
 
     <Container>
@@ -251,32 +284,124 @@ export default function Abb() {
         </ProductsDiv>
         <ProductsDiv>
           <ProductsDetails>
-            <ProductsH4>Control Components</ProductsH4>
+            <ProductsH4>Control Systems</ProductsH4>
+
             ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
+
+          
+            {showText && <div>
+
+              <ul>
+                <li>ABB's 800xA platform provides the collaborative environment necessary for various organizations and departments to work as one and achieve operational excellence.</li>
+                <li>Advant OCS (Open Control System) is an ABB solution for operators to improve their manufacturing productivity and achieve sustainable competitive advantages.</li>
+                <li>The Compact Product Suite is a comprehensive group of control products for system integrators, OEMs and customers who like to engineer their own solution to meet their specific automation needs.</li>
+                <li>ABB's Freelance Distributed Control System can run on any PC and is easy to install, learn, engineer, commission, back-up, maintain and expand.</li>
+                <li>ABB offers Safety Systems to satisfy the safety requirements of industry (process and machinery). Additionally, it also provides the availability required in the most critical applications.</li>
+                <li>Satt OCS comprises everything from products to total solutions for a wide variety of industries, including food processing, water, energy, pharmaceutical, light chemical, infrastructure, etc.</li>
+              </ul>
+
+            </div>}
+            <ShowMoreBtn1 onClick={() => setShowText(!showText)}>{showText ?  'Show Less' : 'Show More '}</ShowMoreBtn1>
           </ProductsDetails>
           <img src="https://library.automationdirect.com/wp-content/uploads/2019/04/Figure-1-BRX-control-panel.jpg" width="450px" height="250px" />
         </ProductsDiv>
+
+        
         <ProductsDiv>
           <img src="https://www07.abb.com/images/librariesprovider84/home-page/dr-newemax_emax2acdd56edc1f463c09537ff0000433538.jpg?sfvrsn=9c293515_1" width="450px" height="250px" />
           <ProductsDetails>
             <ProductsH4>Low Voltage Products and Systems</ProductsH4>
-            <ShowMoreText
-              lines={4}
-              more='Show more'
-              less='Show less'
-              anchorClass=''
-              onClick={() => executeOnClick()}
-              expanded={false}
-            >
+           
+            ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
+            
+            {showText && <div> test </div>}
+            
+        <ListItemDiv>
+          <ul>
+            <li>Alternating Relays</li>
+            <li>Analog Signal Converters</li>
+            <li>Arc Guard Systems</li>
+            <li>Cable Distribution Cabinets</li>
+            <li>Cam Switches</li>
+            <li>Circuit Breakers</li>
+            <li>Connection Devices</li>
+            <li>Contactors</li>
+            <li>Contact Protection Relays</li>
+            <li>Current Sensors</li>
+            <li>Current Monitors, 1PH</li>
+            <li>Current Transducers</li>
+            <li>Cycle Monitors</li>
+            <li>Distributed I/O</li>
+            <li>Disconnect Switches</li>
+            <li>Door Entry Systems</li>
+            <li>Electronic Relays</li>
+            <li>Enclosed Switches</li>
+            <li>Enclosures</li>
+            <li>Electronic Relays & Controls</li>
+            <li>Fieldbus Devices</li>
+            <li>Fieldbus Plug</li>
 
-              {/* ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes: */}
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
- Why do we use it? It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+          </ul>
+        </ListItemDiv>
+        <ListItemDiv>
+          <ul>
+            
+            <li>Flashers</li>
+            <li>Fusegear</li>
+            <li>HVAC Controls</li>
+            <li>Interface Relays</li>
+            <li>Isolation Monitors</li>
+            <li>Limit Switches</li>
+            <li>Liquid Level Controls</li>
+            <li>Logic Relays</li>
+            <li>Man Machine Interface</li>
+            <li>Manual Motor Starters</li>
+            <li>Manual Motor Protectors</li>
+            <li>Modular DIN Rail Products</li>
+            <li>Motion Detectors</li>
+            <li>Motor Protectors, Electronic</li>
+            <li>Obstruction Lighting Controls</li>
+            <li>Operator Panels</li>
+            <li>Opto Couplers</li>
+            <li>Overload Relays</li>
+            <li>Panel Lamps</li>
+            <li>Panel Switches</li>
+            <li>Pilot Devices</li>
+            <li>Power Supplies</li>
 
+          </ul>
+        </ListItemDiv>
+        
+        <ListItemDiv>
+          <ul>
+           
+            <li>PLC's</li>
+            <li>Power Quality Products</li>
+            <li>Relays, Mechanical</li>
+            <li>Scalable PLC ACS500</li>
+            <li>Sensors</li>
+            <li>Sensor Interface Relays</li>
+            <li>Serial Data Converters</li>
+            <li>Signal Converters, Universal</li>
+            <li>Softstarters</li>
+            <li>Starters</li>
+            <li>Switches</li>
+            <li>Terminal Blocks</li>
+            <li>Thermistor Motor Protectors</li>
+            <li>Timers</li>
+            <li>Tower Lighting Controls</li>
+            <li>Universal Motor Controller</li>
+            <li>Vending Controls</li>
+            <li>Voltage Monitors</li>
+            <li>Wireless Devices</li>
+            <li>Winding Overtemperature Monitors</li>
 
-          </ShowMoreText>
-          </ProductsDetails>
-
+          </ul>
+        </ListItemDiv>
+        
+        <ShowMoreBtn2 onClick={() => setShowText(!showText)}>{showText ?  'Show Less' : 'Show More '} </ShowMoreBtn2>
+        </ProductsDetails>
+    
 
         </ProductsDiv>
         <ProductsDiv>
@@ -291,7 +416,7 @@ export default function Abb() {
         {/*.................................. ARTICLES................................... */}
 
         <Div>
-          <ProductsTitle>Articles</ProductsTitle>
+          <ProductsTitle>Articles & Videos</ProductsTitle>
           <BorderBottom></BorderBottom>
         </Div>
 
@@ -388,7 +513,7 @@ export default function Abb() {
 
       </BrandDetailsContainer>
 
-    </Container>
+    </Container >
 
   );
 }
