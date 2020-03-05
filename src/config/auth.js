@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import _ from 'lodash'
+import Context from '../config/context'
 
 export default function Auth(props) {
+  const context = useContext(Context)
 
-  let userInfo = localStorage.getItem('userInfo')
+  const {
+    userInfo
+  } = context
+
 
   if(props.authRequired && !_.isNil(userInfo) && _.isNil(props.roles)){
     // If the user is signed in and the route doesn't have role restrictions, take them to the requested page
@@ -21,7 +26,6 @@ export default function Auth(props) {
     props.history.push('/permission-denied')
     return(null)
   } else {
-    console.log('ehh role error')
     return(
       <div {...props}>
         {props.children}
