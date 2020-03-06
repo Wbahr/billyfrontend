@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 
@@ -478,16 +479,14 @@ export default function Abb() {
           </ArticlesContentDiv>
         </SmallArticlesContent>
 
-   
           <VideoDiv>
-          
-            <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
+           <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
             <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
             <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
-            
-          </VideoDiv>
-      
-
+            </VideoDiv>
+        
+         
+        
 
         {/*.............................. RELATED LINK ................................... */}
 
