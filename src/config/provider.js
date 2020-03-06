@@ -246,6 +246,9 @@ export default function Provider(props) {
   function handleLogin(userInformation, token) {
     setToken(token)
     setUserInfo(userInformation)
+    if(userInformation.role === 'AirlineEmployee'){
+      drift.api.widget.hide()
+    }
     handleUpdateShoppingCart(4)
     let alertObj = {
       'show': true,
@@ -256,6 +259,7 @@ export default function Provider(props) {
   }
 
   function handleLogout(){
+    drift.api.widget.show()
     props.history.push('/')
     setUserInfo(null)
     localStorage.removeItem('userInfo')
