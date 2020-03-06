@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../../config/context'
-import ShowMoreText from 'react-show-more-text';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { Carousel } from 'react-responsive-carousel';
 
 
 
@@ -18,7 +18,7 @@ const FeaturedBrandLogo = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 50px 0 50px 0;
+  padding: 80px 0;
   background-image: url('https://www.thomaselectrical.co.za/wp-content/uploads/2016/06/BACKGROUND-TOP.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -64,9 +64,10 @@ const DistributorDetails = styled.div`
 const ProductsTitle = styled.div`
   font-size: 25px;
   margin-top: 27px;
-  color: #595959;
+  color: #555555;
   text-transform: uppercase;
   margin-right: 30px;
+  letter-spacing: 2px;
 `;
 
 const Div = styled.div`
@@ -84,41 +85,48 @@ const ProductsDiv = styled.div`
   padding: 15px 
 `;
 
-const ProductsH4 = styled.h4`
+const ProductsH4 = styled.a`
   margin: 0 auto;
   color: 	#000000;
   margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: bold;
+  &:hover{
+    color: #b51029;
+    text-decoration: none;
+  }
+ 
 `;
 
 const ShopAbbButton = styled.button`
-  background-color: #b51029;
+background-image: linear-gradient(to left top, rgb(149, 15, 35), rgb(219, 22, 51));
   width: 20%
   color: white;
   font-weight: 600;
   border-radius:28px;
-  cursor:pointer;
   border: 0;
   padding: 5px;
   margin: 0 auto;
   margin-top: 30px;
+  outline: none;
   `;
 
 
 const BorderBottom = styled.div`
   display: flex;
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid #555555;
   width: 75%;
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
-  color: #b51029;
+  
   `;
 
 const RelatedLinkCircle = styled.div`
   width: 200px;
   height: 200px;
   border-radius: 100px;
-  background-color: #b51029; 
+  background-color: #ebe7e7; 
   margin: 0 auto;
   position: relative;
   margin-bottom: 30px;
@@ -126,20 +134,21 @@ const RelatedLinkCircle = styled.div`
  `;
 
 const LinkStyle = styled.a`
-  color: white;
+  color: #246696;
   font-size: 16px;
   position: absolute;
   text-transform: uppercase;
+  font-weight: bold;
   text-align: center;
   &:hover{
-    color: white;
+    color: #133752 ;
     text-decoration: none;
   }
  
  
  `;
 
-const ArticlesDiv = styled.div`
+const VideoDiv = styled.div`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
@@ -161,7 +170,7 @@ const ArticlesContentDiv = styled.div`
 `;
 
 const ArticlesTopic = styled.h6`
-  color: #b51029;
+  color: #B51F2B;
   font-weight: bold;
   margin: 10px 15px;
 `;
@@ -180,9 +189,9 @@ const FontAwesomeDiv = styled.div`
   justify-content: center;
   margin-top: 40px;
   margin-bottom: 20px;
-  color: black;
+  color: #DB1633;
   &:hover{
-    color: white;
+  color: #555555;
     
   }
 `;
@@ -190,7 +199,7 @@ const FontAwesomeDiv = styled.div`
 const LinkStyleDiv = styled.div`
   display: flex;
   justify-content: center;
-  
+  color: white;
 `;
 
 
@@ -201,42 +210,53 @@ const ArticlesContentDetails = styled.p`
 `;
 
 const ShowMoreBtn1 = styled.button`
-  background-color:  #246696;
+  // background-color:  #246696;
   font-size: 12px;
-  color: white;
-  border: 0;
- border-radius:2em;
- box-sizing: border-box;
- text-decoration:none;
- text-align:center;
-padding: 4px 10px;
-     margin: 0 auto;
+  // color: white;
+  border: none;
+  border-radius:2em;
+  padding: 4px 10px;
+  margin: 0 auto;
+  outline: none;
 
 `;
 
 const ShowMoreBtn2 = styled.button`
-  background-color:  #246696;
+  // background-color:  #246696;
   font-size: 12px;
-  color: white;
+  // color: white;
   border: 0;
- border-radius:2em;
- box-sizing: border-box;
- text-decoration:none;
- text-align:center;
-padding: 4px 10px;
-     margin: 0 auto;
-
+  border-radius:2em;
+  padding: 4px 10px;
+  margin: 0 auto;
+ 
+  outline: none;
 `;
 
 const ListItemDiv = styled.div`
   font-size: 13px;
   margin-top: 10px;
+  display: flex;
+
 `;
 
-export default function Abb() {
+const ShopProducts = styled.a`
+  color: #B51F2B;
+  font-size: 14px;
+  margin-top: 10px;
   
-  const [showText, setShowText] = useState(false);
-    
+`;
+
+const LongProductDetails = styled.p`
+   margin:0;
+`;
+
+
+export default function Abb() {
+
+  const [showText1, setShowText1] = useState(false);
+  const [showText2, setShowText2] = useState(false);
+
   return (
 
     <Container>
@@ -263,151 +283,161 @@ export default function Abb() {
         <ProductsDiv>
           <img src="https://base.imgix.net/files/base/ebm/machinedesign/image/2019/04/machinedesign_11709_wtdmotors_promo.png?auto=format&fit=crop&h=432&w=768" width="450px" height="250px" />
           <ProductsDetails>
-            <ProductsH4>Drives</ProductsH4>
+            <ProductsH4 href="#">Drives</ProductsH4>
             ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks.
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Drives Products</ShopProducts>
           </ProductsDetails>
 
         </ProductsDiv>
         <ProductsDiv>
           <ProductsDetails>
-            <ProductsH4>Motors and Generators</ProductsH4>
+            <ProductsH4 href="#">Motors and Generators</ProductsH4>
             ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages.
-            </ProductsDetails>
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Motors and Generators Products</ShopProducts>
+
+          </ProductsDetails>
           <img src="https://www07.abb.com/images/librariesprovider100/pg-iec-lv-motors/group-photo-of-iec-lv-motors_crop.jpg?sfvrsn=c1785e14_1" width="450px" height="250px" />
         </ProductsDiv>
         <ProductsDiv>
           <img src="https://img.directindustry.com/images_di/photo-g/19831-10658086.jpg" width="450px" height="250px" />
           <ProductsDetails>
-            <ProductsH4>Transformers</ProductsH4>
+            <ProductsH4 href="#">Transformers</ProductsH4>
             ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers.
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Transformers Products</ShopProducts>
           </ProductsDetails>
         </ProductsDiv>
         <ProductsDiv>
           <ProductsDetails>
-            <ProductsH4>Control Systems</ProductsH4>
+            <ProductsH4 href="#">Control Systems</ProductsH4>
 
-            ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
+            <LongProductDetails> ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
+            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}><FontAwesomeIcon icon='plus-circle' size='1x' /> {showText1 ? 'Show Less' : 'Show More '}</ShowMoreBtn1> </LongProductDetails>
 
-          
-            {showText && <div>
-
-              <ul>
-                <li>ABB's 800xA platform provides the collaborative environment necessary for various organizations and departments to work as one and achieve operational excellence.</li>
-                <li>Advant OCS (Open Control System) is an ABB solution for operators to improve their manufacturing productivity and achieve sustainable competitive advantages.</li>
-                <li>The Compact Product Suite is a comprehensive group of control products for system integrators, OEMs and customers who like to engineer their own solution to meet their specific automation needs.</li>
-                <li>ABB's Freelance Distributed Control System can run on any PC and is easy to install, learn, engineer, commission, back-up, maintain and expand.</li>
-                <li>ABB offers Safety Systems to satisfy the safety requirements of industry (process and machinery). Additionally, it also provides the availability required in the most critical applications.</li>
-                <li>Satt OCS comprises everything from products to total solutions for a wide variety of industries, including food processing, water, energy, pharmaceutical, light chemical, infrastructure, etc.</li>
-              </ul>
+            {showText1 && <div>
+              <ListItemDiv>
+                <ul>
+                  <li>ABB's 800xA platform provides the collaborative environment necessary for various organizations and departments to work as one and achieve operational excellence.</li>
+                  <li>Advant OCS (Open Control System) is an ABB solution for operators to improve their manufacturing productivity and achieve sustainable competitive advantages.</li>
+                  <li>The Compact Product Suite is a comprehensive group of control products for system integrators, OEMs and customers who like to engineer their own solution to meet their specific automation needs.</li>
+                  <li>ABB's Freelance Distributed Control System can run on any PC and is easy to install, learn, engineer, commission, back-up, maintain and expand.</li>
+                  <li>ABB offers Safety Systems to satisfy the safety requirements of industry (process and machinery). Additionally, it also provides the availability required in the most critical applications.</li>
+                  <li>Satt OCS comprises everything from products to total solutions for a wide variety of industries, including food processing, water, energy, pharmaceutical, light chemical, infrastructure, etc.</li>
+                </ul>
+              </ListItemDiv>
 
             </div>}
-            <ShowMoreBtn1 onClick={() => setShowText(!showText)}>{showText ?  'Show Less' : 'Show More '}</ShowMoreBtn1>
+
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Control Systems Products</ShopProducts>
           </ProductsDetails>
+
           <img src="https://library.automationdirect.com/wp-content/uploads/2019/04/Figure-1-BRX-control-panel.jpg" width="450px" height="250px" />
         </ProductsDiv>
 
-        
+
         <ProductsDiv>
           <img src="https://www07.abb.com/images/librariesprovider84/home-page/dr-newemax_emax2acdd56edc1f463c09537ff0000433538.jpg?sfvrsn=9c293515_1" width="450px" height="250px" />
           <ProductsDetails>
-            <ProductsH4>Low Voltage Products and Systems</ProductsH4>
-           
-            ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
-            
-            {showText && <div> test </div>}
-            
-        <ListItemDiv>
-          <ul>
-            <li>Alternating Relays</li>
-            <li>Analog Signal Converters</li>
-            <li>Arc Guard Systems</li>
-            <li>Cable Distribution Cabinets</li>
-            <li>Cam Switches</li>
-            <li>Circuit Breakers</li>
-            <li>Connection Devices</li>
-            <li>Contactors</li>
-            <li>Contact Protection Relays</li>
-            <li>Current Sensors</li>
-            <li>Current Monitors, 1PH</li>
-            <li>Current Transducers</li>
-            <li>Cycle Monitors</li>
-            <li>Distributed I/O</li>
-            <li>Disconnect Switches</li>
-            <li>Door Entry Systems</li>
-            <li>Electronic Relays</li>
-            <li>Enclosed Switches</li>
-            <li>Enclosures</li>
-            <li>Electronic Relays & Controls</li>
-            <li>Fieldbus Devices</li>
-            <li>Fieldbus Plug</li>
+            <ProductsH4 href="#">Low Voltage Products and Systems</ProductsH4>
 
-          </ul>
-        </ListItemDiv>
-        <ListItemDiv>
-          <ul>
-            
-            <li>Flashers</li>
-            <li>Fusegear</li>
-            <li>HVAC Controls</li>
-            <li>Interface Relays</li>
-            <li>Isolation Monitors</li>
-            <li>Limit Switches</li>
-            <li>Liquid Level Controls</li>
-            <li>Logic Relays</li>
-            <li>Man Machine Interface</li>
-            <li>Manual Motor Starters</li>
-            <li>Manual Motor Protectors</li>
-            <li>Modular DIN Rail Products</li>
-            <li>Motion Detectors</li>
-            <li>Motor Protectors, Electronic</li>
-            <li>Obstruction Lighting Controls</li>
-            <li>Operator Panels</li>
-            <li>Opto Couplers</li>
-            <li>Overload Relays</li>
-            <li>Panel Lamps</li>
-            <li>Panel Switches</li>
-            <li>Pilot Devices</li>
-            <li>Power Supplies</li>
+            <LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:  <ShowMoreBtn2 onClick={() => setShowText2(!showText2)}><FontAwesomeIcon icon='plus-circle' size='1x' /> {showText2 ? 'Show Less' : 'Show More '} </ShowMoreBtn2> </LongProductDetails>
 
-          </ul>
-        </ListItemDiv>
-        
-        <ListItemDiv>
-          <ul>
-           
-            <li>PLC's</li>
-            <li>Power Quality Products</li>
-            <li>Relays, Mechanical</li>
-            <li>Scalable PLC ACS500</li>
-            <li>Sensors</li>
-            <li>Sensor Interface Relays</li>
-            <li>Serial Data Converters</li>
-            <li>Signal Converters, Universal</li>
-            <li>Softstarters</li>
-            <li>Starters</li>
-            <li>Switches</li>
-            <li>Terminal Blocks</li>
-            <li>Thermistor Motor Protectors</li>
-            <li>Timers</li>
-            <li>Tower Lighting Controls</li>
-            <li>Universal Motor Controller</li>
-            <li>Vending Controls</li>
-            <li>Voltage Monitors</li>
-            <li>Wireless Devices</li>
-            <li>Winding Overtemperature Monitors</li>
+            {showText2 && <div>
+              <ListItemDiv>
 
-          </ul>
-        </ListItemDiv>
-        
-        <ShowMoreBtn2 onClick={() => setShowText(!showText)}>{showText ?  'Show Less' : 'Show More '} </ShowMoreBtn2>
-        </ProductsDetails>
-    
+                <ul>
+                  <li>Alternating Relays</li>
+                  <li>Analog Signal Converters</li>
+                  <li>Arc Guard Systems</li>
+                  <li>Cable Distribution Cabinets</li>
+                  <li>Cam Switches</li>
+                  <li>Circuit Breakers</li>
+                  <li>Connection Devices</li>
+                  <li>Contactors</li>
+                  <li>Contact Protection Relays</li>
+                  <li>Current Sensors</li>
+                  <li>Current Monitors, 1PH</li>
+                  <li>Current Transducers</li>
+                  <li>Cycle Monitors</li>
+                  <li>Distributed I/O</li>
+                  <li>Disconnect Switches</li>
+                  <li>Door Entry Systems</li>
+                  <li>Electronic Relays</li>
+                  <li>Enclosed Switches</li>
+                  <li>Enclosures</li>
+                  <li>Electronic Relays & Controls</li>
+                  <li>Fieldbus Devices</li>
+                  <li>Fieldbus Plug</li>
+
+                </ul>
+
+                <ul>
+
+                  <li>Flashers</li>
+                  <li>Fusegear</li>
+                  <li>HVAC Controls</li>
+                  <li>Interface Relays</li>
+                  <li>Isolation Monitors</li>
+                  <li>Limit Switches</li>
+                  <li>Liquid Level Controls</li>
+                  <li>Logic Relays</li>
+                  <li>Man Machine Interface</li>
+                  <li>Manual Motor Starters</li>
+                  <li>Manual Motor Protectors</li>
+                  <li>Modular DIN Rail Products</li>
+                  <li>Motion Detectors</li>
+                  <li>Motor Protectors, Electronic</li>
+                  <li>Obstruction Lighting Controls</li>
+                  <li>Operator Panels</li>
+                  <li>Opto Couplers</li>
+                  <li>Overload Relays</li>
+                  <li>Panel Lamps</li>
+                  <li>Panel Switches</li>
+                  <li>Pilot Devices</li>
+                  <li>Power Supplies</li>
+
+                </ul>
+
+                <ul>
+
+                  <li>PLC's</li>
+                  <li>Power Quality Products</li>
+                  <li>Relays, Mechanical</li>
+                  <li>Scalable PLC ACS500</li>
+                  <li>Sensors</li>
+                  <li>Sensor Interface Relays</li>
+                  <li>Serial Data Converters</li>
+                  <li>Signal Converters, Universal</li>
+                  <li>Softstarters</li>
+                  <li>Starters</li>
+                  <li>Switches</li>
+                  <li>Terminal Blocks</li>
+                  <li>Thermistor Motor Protectors</li>
+                  <li>Timers</li>
+                  <li>Tower Lighting Controls</li>
+                  <li>Universal Motor Controller</li>
+                  <li>Vending Controls</li>
+                  <li>Voltage Monitors</li>
+                  <li>Wireless Devices</li>
+                  <li>Winding Overtemperature Monitors</li>
+
+                </ul>
+
+
+              </ListItemDiv>
+
+            </div>}
+
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Control Systems Products</ShopProducts>
+          </ProductsDetails>
+
 
         </ProductsDiv>
         <ProductsDiv>
           <ProductsDetails>
-            <ProductsH4>Medium Voltage Products and Systems</ProductsH4>
+            <ProductsH4 href="#">Medium Voltage Products and Systems</ProductsH4>
             ABB provides utility, industrial and commercial customers with safe, reliable and smart technologies for the distribution of electricity. Airline’s offering includes Circuit Breakers, Compact Secondary Substations (CSS), Contactors, E-Houses, Fault Current Limitation and Arc Protection.
+              <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Medium Voltage Products and Systems Products</ShopProducts>
+
           </ProductsDetails>
           <img src="https://www.gegridsolutions.com/HVMV_Equipment/Images/PrimaryEquipment/hvmv-gis.jpg" width="450px" height="250px" />
         </ProductsDiv>
@@ -448,19 +478,21 @@ export default function Abb() {
           </ArticlesContentDiv>
         </SmallArticlesContent>
 
-
-        <ArticlesDiv>
-          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
-        </ArticlesDiv>
-
+   
+          <VideoDiv>
+          
+            <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
+            <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
+            <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+            
+          </VideoDiv>
+      
 
 
         {/*.............................. RELATED LINK ................................... */}
 
         <Div>
-          <ProductsTitle>Related Link</ProductsTitle>
+          <ProductsTitle>Related Links</ProductsTitle>
           <BorderBottom></BorderBottom>
         </Div>
 
@@ -499,7 +531,6 @@ export default function Abb() {
           </RelatedLinkCircle>
 
           <RelatedLinkCircle>
-
             <LinkStyleDiv>
               <LinkStyle href="#" target="_blank">
                 <FontAwesomeDiv>
