@@ -91,8 +91,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
         {/* ADMIN INTERNAL TOOLS */}
-        <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee']} component={AdminHome} layout={AdminLayout}/>
-        <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee']} component={AdminHome} layout={AdminLayout}/>
+        <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
+        <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
 
         {/* Error Screens */}
         <WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>
