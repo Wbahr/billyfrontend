@@ -33,7 +33,7 @@ function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperC
     <Route
       {...otherProps}
       render={routeProps => (
-        <Auth authRequired={auth || false} roles={roles} {...routeProps}>
+        <Auth auth={auth} roles={roles} {...routeProps}>
           <LayoutWrapperComponent {...routeProps}>
             <ErrorBoundry>
               <Component {...routeProps} />

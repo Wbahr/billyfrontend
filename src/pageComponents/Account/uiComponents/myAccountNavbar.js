@@ -39,9 +39,9 @@ export default function MyAccountNavbar({history, page, AccountPages}) {
     let tempNavbarLinks = []
     for(let i=0; AccountPages.length > i; i++){
       if(page === AccountPages[i].page) {
-        tempNavbarLinks.push(<Pselected>{AccountPages[i].label}</Pselected>)
+        tempNavbarLinks.push(<Pselected key={i}>{AccountPages[i].label}</Pselected>)
       } else {
-        tempNavbarLinks.push(<p onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
+        tempNavbarLinks.push(<p key={i} onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
       }
     }
     setNavbarLinks(tempNavbarLinks)

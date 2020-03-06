@@ -131,12 +131,12 @@ export default function Provider(props) {
   useEffect(()=> {
     if(didMountRef.current) {
       if (_.isNil(prevToken) && !_.isNil(token)) {
-        console.log('the user just logged in from Anon', token, prevToken)
+        // console.log('the user just logged in from Anon', token, prevToken)
         // If an (api) prevToken is NULL but (api) token is not NULL, the user just logged in from Anon
         // Merge Anon cart with logged in user's cart
         handleUpdateShoppingCart(4)
       } else if (!_.isNil(prevToken) && !_.isNil(token) && (prevToken !== token)) {
-        console.log('the user is using begin impersonation / end impersonation')
+        // console.log('the user is using begin impersonation / end impersonation')
         // If both (api) prevToken is NULL and (api) token is NULL, the user is using begin impersonation / end impersonation - get their existing cart
         handleUpdateShoppingCart(5)
       }
@@ -146,14 +146,14 @@ export default function Provider(props) {
 
   // Update database if shopping cart or order notes  changes
   useEffect(() => {
-    console.log('Cart or Order Notes changed')
-    console.log('didMountRef.current', didMountRef.current)
-    console.log('loadingCart', loadingCart.current)
-    console.log('tokens equal', prevToken === token)
+    // console.log('Cart or Order Notes changed')
+    // console.log('didMountRef.current', didMountRef.current)
+    // console.log('loadingCart', loadingCart.current)
+    // console.log('tokens equal', prevToken === token)
     if(didMountRef.current && !loadingCart.current && prevToken === token){
       let shoppingCartToken = localStorage.getItem("shoppingCartToken")
       if (_.isNil(shoppingCartToken) && shoppingCart.length > 0) {
-        console.log('creating cart from shoppingCart update')
+        // console.log('creating cart from shoppingCart update')
         handleUpdateShoppingCart(1)
       } else {
         handleUpdateShoppingCart(2)
@@ -165,18 +165,18 @@ export default function Provider(props) {
     fetchPolicy: 'no-cache',
     onCompleted: result => {
       let results = result.updateShoppingCart
-      console.log('Bobby',result)
+      // console.log('Bobby',result)
       if (!_.isNil(results.token)) {
         setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
         // If we are merging or loading an existing cart, the server will have the cart we need, so we need to load it
-        console.log('updateShoppingCart', cartAction)
+        // console.log('updateShoppingCart', cartAction)
         if (cartAction === 4 || cartAction === 5) {
           localStorage.setItem("shoppingCartToken", results.token)
           setShoppingCart(JSON.parse(results.cartData))
           setOrderNotes(results.orderNotes)
         // If a new cart was just created, set a token in local storage
         } else if (cartAction === 1) {
-          console.log('set token action 1')
+          // console.log('set token action 1')
           localStorage.setItem("shoppingCartToken", results.token)
         }
         loadingCart.current = false
@@ -191,7 +191,7 @@ export default function Provider(props) {
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){
-        console.log('data', data)
+        // console.log('data', data)
         localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
         localStorage.setItem('imperInfo', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
@@ -343,7 +343,7 @@ export default function Provider(props) {
     // 4 - Merge Cart
     // 5 - Get existing cart 
     setCartAction(action)
-    console.log('Cart Action:', action)
+    // console.log('Cart Action:', action)
     let shoppingCartToken = localStorage.getItem("shoppingCartToken")
     if (action === 1 || action === 4 || action === 5) {
       loadingCart.current = true
