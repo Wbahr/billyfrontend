@@ -32,7 +32,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <ContextProvider>
+    <ContextProvider history={customHistory}>
       <StripeProvider apiKey={process.env.STRIPE_KEY}>
         <BrowserRouter history={customHistory}>
           <Switch />

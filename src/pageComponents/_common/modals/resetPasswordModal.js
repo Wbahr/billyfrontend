@@ -4,6 +4,7 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import AirlineInput from '../../../pageComponents/_common/inputv2'
 
 const MUTATION_RESET_PASSWORD_REQUEST = gql`
   mutation PasswordResetRequestMutation($resetInfo: PasswordResetRequestInputGraphType){
@@ -12,6 +13,12 @@ const MUTATION_RESET_PASSWORD_REQUEST = gql`
       success
     }
   }
+`
+
+const DivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
 `
 
 export default function ResetPasswordModal({open, hideModal}) {
@@ -50,11 +57,20 @@ export default function ResetPasswordModal({open, hideModal}) {
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick>
-      <p>Reset Password</p>
-      {message && <p>{message}</p>}
-      <p>Username / Email: </p><input value={username} onChange={(e)=> setUsername(e.target.value)}/>
-      <button onClick={()=>{handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
+    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+      <DivContainer>
+        <p>Reset Password</p>
+        {message && <p>{message}</p>}
+        <AirlineInput 
+          label="Username / Email:"
+          type="text"
+          name="username"
+          value={username}
+          width='300px'
+          onChange={(e)=> setUsername(e.target.value)}
+        />
+        <button onClick={()=>{handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
+      </DivContainer>
     </Popup>
   )
 }

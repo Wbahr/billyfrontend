@@ -256,6 +256,7 @@ export default function Provider(props) {
   }
 
   function handleLogout(){
+    props.history.push('/')
     setUserInfo(null)
     localStorage.removeItem('userInfo')
     localStorage.removeItem('apiToken') 
@@ -264,7 +265,6 @@ export default function Provider(props) {
     setToken(null)
     handleEmptyCart()
     setImpersonatedCompanyInfo(null)
-    props.children.props.history.push('/')
     let alertObj = {
       'show': true,
       'message': 'You have been logged out.'
