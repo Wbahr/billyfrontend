@@ -145,6 +145,7 @@ export default function NewItemForm(props) {
               name="itemCreate.unitOfMeasure" 
               component={FormikSelect} 
               options={unitsOfMeasureList}
+              getOptionLabel={(option) => { option.value + " - " + option.label }}
               placeholder="Select a UOM"
               label="Unit of Measure*:"
               width="400px"
@@ -157,6 +158,7 @@ export default function NewItemForm(props) {
               name="itemCreate.productGroupID" 
               component={FormikSelect} 
               options={productGroupsList}
+              getOptionLabel={(option) => { option.value + " - " + option.label }}
               placeholder="Select a Product Group"
               label="Product Group ID*:"
               width="400px"
