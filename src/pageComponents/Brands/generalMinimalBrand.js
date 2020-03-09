@@ -1,6 +1,11 @@
-import React from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import { StyledText0 } from '../../styles/fonts'
 import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
+import AdaptallPage from './minimalBrandsPages/adaptall'
+import AdsensPage from './minimalBrandsPages/adsens'
 
 // import _ from 'lodash'
 
@@ -42,7 +47,7 @@ export default function GeneralMinimalBrand({history}) {
   const [pageComponent, setPageComponent] = useState()
   let { page } = useParams()
 
-  const MiniMalBrandPage = [
+  const MinimalBrandPages = [
     {
       'label': 'AcmeElectric',
       'page': 'acme-electric'
