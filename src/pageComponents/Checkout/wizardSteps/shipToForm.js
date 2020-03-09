@@ -55,7 +55,7 @@ export function ShipToForm(props) {
       setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
       setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
-      setFieldValue('shipto.saveShipTo',0)
+      setFieldValue('shipto.saveShipTo',0) //If not a custom ship to, we can't save it so set this to false 0.
       if(_.isNil(checkoutDropdownData.shipToAddresses[index].collectNumberUps)){
         setFieldValue('shipto.isCollect', 0)
         setFieldValue('shipto.collectNumber', '')
