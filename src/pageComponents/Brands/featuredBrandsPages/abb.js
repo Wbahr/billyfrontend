@@ -9,6 +9,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 
 
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -154,7 +155,10 @@ const VideoDiv = styled.div`
   flex-wrap: nowrap;
   width: 100%;
   margin-bottom: 30px;
-  flex-direction:
+  flex-direction:s
+  margin: 0 auto;
+  position: relative;
+
 `;
 
 const ArticlesVideo = styled.iframe`
@@ -168,12 +172,34 @@ const ArticlesContentDiv = styled.div`
   margin-left: 20px;
   text-align: center;
   padding: 15px 0;
+
+
 `;
+
+const ArticlesPicture = styled.img`
+  // width: 100%;
+  height: 282.47px;
+`;
+
+const ArticlesShortLine = styled.div`
+  display: flex;
+  border-bottom: 2px solid #555555;
+  width: 15%;
+  margin: 25px 0;
+ 
+  
+  `;
 
 const ArticlesTopic = styled.h6`
   color: #B51F2B;
   font-weight: bold;
-  margin: 10px 15px;
+  margin: 25px 15px;
+  font-size: 18px;
+  text-align: left;
+`;
+
+const ArticlesImgDiv = styled.div`
+
 `;
 
 const SmallArticlesContent = styled.div`
@@ -242,7 +268,7 @@ const ListItemDiv = styled.div`
 `;
 
 const ShopProducts = styled.a`
-  color: #B51F2B;
+  color: #246696;
   font-size: 14px;
   margin-top: 10px;
   
@@ -252,11 +278,21 @@ const LongProductDetails = styled.p`
    margin:0;
 `;
 
+const CarouselDiv = styled.div`
+  display: flex;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 55%;
+`;
+
 
 export default function Abb() {
 
   const [showText1, setShowText1] = useState(false);
   const [showText2, setShowText2] = useState(false);
+
+
+
 
   return (
 
@@ -270,7 +306,7 @@ export default function Abb() {
         </AirlineDistributorH1>
         <DistributorDetails>ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration.</DistributorDetails>
         <Div>
-          <ShopAbbButton onClick={() => alert("clicked!")}>Shop for ABB Products </ShopAbbButton>
+          <ShopAbbButton>Shop for ABB Products </ShopAbbButton>
         </Div>
 
 
@@ -453,18 +489,26 @@ export default function Abb() {
 
         <SmallArticlesContent>
           <ArticlesContentDiv>
-            <img src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" width="260px" height="160px" />
+            <ArticlesImgDiv>
+              <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" />
+            </ArticlesImgDiv>
             <ArticlesTopic>
-              Thermistor protection modules for ACS880 drives</ArticlesTopic>
+              Thermistor protection modules for ACS880 drives
+              <ArticlesShortLine></ArticlesShortLine>
+            </ArticlesTopic>
             <ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
           </ArticlesContentDiv>
         </SmallArticlesContent>
 
         <SmallArticlesContent>
           <ArticlesContentDiv>
-            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1" width="260px" height="160px" />
+            <ArticlesImgDiv>
+              <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1" />
+            </ArticlesImgDiv>
             <ArticlesTopic>
-              Drives give South African farmer 40% energy savings, smoother operation and less work</ArticlesTopic>
+              Drives give South African farmer 40% energy savings, smoother operation and less work
+              <ArticlesShortLine></ArticlesShortLine>
+            </ArticlesTopic>
             <ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
             </ArticlesContentDetails>
           </ArticlesContentDiv>
@@ -472,21 +516,60 @@ export default function Abb() {
 
         <SmallArticlesContent>
           <ArticlesContentDiv>
-            <img src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1" width="260px" height="160px" />
+          <ArticlesImgDiv> 
+            <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1" />
+            </ArticlesImgDiv> 
             <ArticlesTopic>
-              Lorem ipsum dolor sit amet</ArticlesTopic>
+              Lorem ipsum dolor sit amet
+              <ArticlesShortLine></ArticlesShortLine>
+            </ArticlesTopic>
             <ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
           </ArticlesContentDiv>
         </SmallArticlesContent>
 
-          <VideoDiv>
-           <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
-            <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
-            <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+
+        <VideoDiv>
+
+          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
+          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
+          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+        </VideoDiv>
+
+
+
+
+
+
+        {/* ........................................SLIDESHOW TEST..................................... */}
+
+        {/* <CarouselDiv>
+          <Carousel>
+            <VideoDiv>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></iframe>
             </VideoDiv>
-        
-         
-        
+
+
+            <VideoDiv>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/9YwszNopXY4"></iframe>
+            </VideoDiv>
+            <VideoDiv>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/BLV5Qbkks6U"></iframe>
+            </VideoDiv>
+            <VideoDiv>
+              <img src="https://i0.wp.com/www.designgroupitalia.com/dgiuploads/2019/04/ABB_Group_Cover-2-960x542.jpg" />
+
+            </VideoDiv>
+          </Carousel>
+
+        </CarouselDiv> */}
+
+
+
+        {/* ........................................ END SLIDESHOW TEST..................................... */}
+
+
+
+
 
         {/*.............................. RELATED LINK ................................... */}
 
