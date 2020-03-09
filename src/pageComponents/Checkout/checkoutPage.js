@@ -129,8 +129,9 @@ function CheckoutPage(props) {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
       let orderId = _.get(data,`submitOrder.transactionId`,null)
+      let confirmationEmail = _.get(data, `submitOrder.confirmationEmailRecipient`,'')
       if (!_.isNil(orderId)) {
-        history.push(`/order-complete/${orderId}`)
+        history.push(`/order-complete/${orderId}/${confirmationEmail}`)
       } else {
         window.alert('an error has occured. check the networking tab')
       }
