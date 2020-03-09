@@ -113,6 +113,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
     error, 
     data 
   } = useQuery(GET_CHECKOUT_DATA, {
+    fetchPolicy: 'no-cache',
     onCompleted: result => {
       let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
       setCheckoutDropdownData(result.getCheckoutDropdownData)

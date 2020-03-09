@@ -96,7 +96,7 @@ export default function ImpersonationSearchComponent(props) {
 
   let results = searchResult.map(result => {
     return(
-      <div onClick={()=>{context.startImpersonation(result.id)}}>{`${result.name} - ${result.customerIdP21}`}</div>
+      <div key={result.id} onClick={()=>{context.startImpersonation(result.id)}}>{`${result.name} - ${result.customerIdP21}`}</div>
     )
   })
   

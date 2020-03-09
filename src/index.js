@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import Switch from './config/switch'
 import { createBrowserHistory } from "history"
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -34,9 +34,9 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <ContextProvider history={customHistory}>
       <StripeProvider apiKey={process.env.STRIPE_KEY}>
-        <BrowserRouter history={customHistory}>
+        <Router history={customHistory}>
           <Switch />
-        </BrowserRouter>
+        </Router>
       </StripeProvider>
     </ContextProvider>
   </ApolloProvider>

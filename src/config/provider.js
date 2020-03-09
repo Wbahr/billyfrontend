@@ -198,6 +198,9 @@ export default function Provider(props) {
         localStorage.removeItem('shoppingCartToken')
         setToken(requestData.authorizationInfo.token)
         setUserInfo(requestData.authorizationInfo.userInfo)
+        if(!_.isNil(impersonatedCompanyInfo)){
+          props.history.push('/')
+        }
         setImpersonatedCompanyInfo(requestData.authorizationInfo.impersonationUserInfo)
         handleEmptyCart()
         let alertObj = {
@@ -222,6 +225,7 @@ export default function Provider(props) {
         setToken(requestData.authorizationInfo.token)
         setUserInfo(requestData.authorizationInfo.userInfo)
         setImpersonatedCompanyInfo(null)
+        props.history.push('/')
       } else {
         setErrorMessage(requestData.message)
       }

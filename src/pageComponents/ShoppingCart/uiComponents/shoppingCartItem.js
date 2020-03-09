@@ -304,7 +304,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
             </DivItem>
             <DivItem>
               <DivTotalPrice>
-                <p>{formatCurrency((itemDetails.listPrice).toFixed(2) * item.quantity)}</p>
+                <p>{formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity)}</p>
               </DivTotalPrice>
             </DivItem>
           </DivQuantity>
