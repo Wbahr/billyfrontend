@@ -76,6 +76,7 @@ export default function GeneralMinimalBrand({history}) {
     <> 
         {pageComponent}      
   
+
     </>
   )
 }
