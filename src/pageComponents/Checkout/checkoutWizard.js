@@ -138,6 +138,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       shoppingCartToken: localStorage.getItem('shoppingCartToken')
     },
     shipto: {
+      saveShipTo: 0,
       savedShipTo: _.isNil(_.get(context,`userInfo`, null)) ? null : -1,
       firstName: _.get(context,`userInfo.role`,'') === 'Impersonator' ? '' : _.get(context,`userInfo.firstName`,'') === null ? '' : _.get(context,`userInfo.firstName`,''),
       lastName: _.get(context,`userInfo.role`,'') === 'Impersonator' ? '' : _.get(context,`userInfo.lastName`,'') === null ? '' : _.get(context,`userInfo.lastName`,''),

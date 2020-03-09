@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
 import SelectField from '../../_common/formik/select'
 import Context from '../../../config/context'
+import FormikCheckbox from '../../_common/formik/checkBox'
 
 const WrapForm = styled.div`
   display: flex;
@@ -54,6 +55,7 @@ export function ShipToForm(props) {
       setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
       setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
       setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
+      setFieldValue('shipto.saveShipTo',0)
       if(_.isNil(checkoutDropdownData.shipToAddresses[index].collectNumberUps)){
         setFieldValue('shipto.isCollect', 0)
         setFieldValue('shipto.collectNumber', '')
@@ -148,14 +150,17 @@ export function ShipToForm(props) {
         {({userInfo}) => {
           if (!_.isNil(userInfo)){
             return(
-              <Field 
-                name="shipto.savedShipTo" 
-                component={SelectField} 
-                options={checkoutDropdownDataLabels.shiptos}
-                width="800px"
-                label="Saved Ship To"
-                changeFunction={handleSavedAddressSelectChange}
-              /> 
+              <>
+                {(values.shipto.savedShipTo === -1) && <FormRow><FormikCheckbox label="Save Ship To" name="shipto.saveShipTo"/></FormRow>}
+                <Field 
+                  name="shipto.savedShipTo" 
+                  component={SelectField} 
+                  options={checkoutDropdownDataLabels.shiptos}
+                  width="800px"
+                  label="Saved Ship To"
+                  changeFunction={handleSavedAddressSelectChange}
+                /> 
+              </>
             )
           }
         }}        
