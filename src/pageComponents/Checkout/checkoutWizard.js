@@ -8,6 +8,7 @@ import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements';
 import ProcessingOrderModal from './uiComponents/processingOrderModal'
+import OrderFailedModal from './uiComponents/orderFailedModal'
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
@@ -77,7 +78,7 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
+function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema, showOrderFailedModal}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
@@ -205,7 +206,8 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
         <Elements>
           <form name="checkoutForm" {...formikProps}>
             <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
-            {triggerSubmit && <AutoSubmit/>}
+            {(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
+            {showOrderFailedModal && <OrderFailedModal/>}
           </form>
         </Elements>
       )}

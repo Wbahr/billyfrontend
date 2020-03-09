@@ -107,6 +107,7 @@ function CheckoutPage(props) {
   } = props
 
   const [currentStep, setCurrentStep] = useState(0)
+  const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
   const [possibleTaxChange, setPossibleTaxChange] = useState(false)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
@@ -133,7 +134,7 @@ function CheckoutPage(props) {
       if (!_.isNil(orderId)) {
         history.push(`/order-complete/${orderId}/${confirmationEmail}`)
       } else {
-        window.alert('an error has occured. check the networking tab')
+        setShowOrderFailedModal(true)
       }
     }
   })
@@ -191,6 +192,7 @@ function CheckoutPage(props) {
               YupSchema={YupSchema}
               handleValidateFields={(values)=>handleValidateFields(values)}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
+              showOrderFailedModal={showOrderFailedModal}
             />)}
           </Context.Consumer>
           <DivNavigation>
