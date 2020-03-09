@@ -13,6 +13,15 @@ const Newsletter = styled.div`
   background-color: black;
   box-shadow: inset 0px 1px 2px black;
   padding-right: 350px;
+  @media (max-width: 1200px){
+    padding: 0;
+    justify-content: center;
+  }
+  @media (max-width: 800px){
+    height: max-content;
+    flex-direction: column;
+    padding: 10px 0;
+  }
 `
 
 const NewsletterLabel = styled.label`
@@ -45,6 +54,9 @@ const NewsletterButton = styled.button`
   font-weight: 600;
   background-color: black;
   border: 0;  
+  @media (max-width: 800px){
+    margin-top: 10px;
+  }
 `
 
 const ContainerTop = styled.div`
@@ -61,6 +73,14 @@ const ContentContainer = styled.div`
   justify-content: space-between;
   width: 1100px;
   margin: 0 auto;
+  @media (max-width: 1200px){
+    width: 90%;
+  }
+  @media (max-width: 800px){
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 const Container = styled.div`
@@ -82,6 +102,9 @@ const DivSocialIcons = styled.div`
   justify-content: space-between;
   width: 170px;
   height: 30px;
+  @media (max-width: 800px){
+    align-self: center;
+  }
 `
 
 const DivAirline = styled.div`
@@ -89,6 +112,11 @@ const DivAirline = styled.div`
   flex-direction: column;
   width: 620px;
   margin-right: 30px;
+  @media (max-width: 800px){
+    width: 90%;
+    align-self: center;
+    margin: 0 0 40px 0;
+  }
 `
 
 const DivMenu = styled.div`
@@ -97,6 +125,9 @@ const DivMenu = styled.div`
   justify-content: space-between;
   width: 200px; 
   margin: 8px 32px;
+  @media (max-width: 1200px){
+    display: none;
+  }
 `
 const Head = styled.p`
   font-size: 16px;
