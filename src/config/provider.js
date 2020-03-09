@@ -134,7 +134,12 @@ export default function Provider(props) {
         // console.log('the user just logged in from Anon', token, prevToken)
         // If an (api) prevToken is NULL but (api) token is not NULL, the user just logged in from Anon
         // Merge Anon cart with logged in user's cart
-        handleUpdateShoppingCart(4)
+        let shoppingCartToken = localStorage.getItem("shoppingCartToken")
+        if(_.isNil(shoppingCartToken)){
+          handleUpdateShoppingCart(5)
+        } else {
+          handleUpdateShoppingCart(4)
+        }
       } else if (!_.isNil(prevToken) && !_.isNil(token) && (prevToken !== token)) {
         // console.log('the user is using begin impersonation / end impersonation')
         // If both (api) prevToken is NULL and (api) token is NULL, the user is using begin impersonation / end impersonation - get their existing cart
@@ -253,7 +258,7 @@ export default function Provider(props) {
     if(userInformation.role === 'AirlineEmployee'){
       drift.api.widget.hide()
     }
-    handleUpdateShoppingCart(4)
+    // handleUpdateShoppingCart(4)
     let alertObj = {
       'show': true,
       'message': 'You have been successfully logged in.'
