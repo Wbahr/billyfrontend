@@ -41,7 +41,8 @@ export function ShipToForm(props) {
     errors, 
     checkoutDropdownDataLabels, 
     checkoutDropdownData,
-    setFieldValue
+    setFieldValue,
+    updateZip
   } = props
 
   function handleSavedAddressSelectChange(name, value){
@@ -63,6 +64,7 @@ export function ShipToForm(props) {
         setFieldValue('shipto.isCollect', 1)
         setFieldValue('shipto.collectNumber', checkoutDropdownData.shipToAddresses[index].collectNumberUps)
       }
+      updateZip(checkoutDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.country', 'us')
@@ -89,6 +91,13 @@ export function ShipToForm(props) {
   function handleCountryChange(name, value){
     handleSavedAddressChange(name, value)
     setFieldValue('shipto.stateOrProvince', '')
+  }
+
+  function handleZipChange(name, value){
+    setFieldValue(name, value)
+    if(values.shipto.zip.length > 5){
+      updateZip(values.shipto.zip)
+    }
   }
 
   function handleSavedContactSelectChange(name, value){
@@ -197,7 +206,7 @@ export function ShipToForm(props) {
           /> 
         </>
       }
-      <FormikInput label="Zip*" name="shipto.zip" />    
+      <FormikInput label="Zip*" name="shipto.zip" changeFunction={handleZipChange}/>    
       <Field 
         name="shipto.country" 
         component={SelectField} 

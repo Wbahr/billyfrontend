@@ -100,6 +100,27 @@ const SUBMIT_ORDER = gql`
   }
 `
 
+const GET_TAX_AMOUNT = gql`
+  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
+    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
+      grandTotal
+      subTotal
+      tariffTotal
+      taxTotal
+      taxRate
+      checkoutItems {
+        frecno
+        itemNotes
+        itemTotalPrice
+        itemTotalTariff
+        itemUnitPrice
+        quantity
+        requestedShipDate
+      }
+    }
+  }
+`
+
 function CheckoutPage(props) {
   const {
     history,
@@ -109,6 +130,7 @@ function CheckoutPage(props) {
   const context = useContext(Context)
   const [currentStep, setCurrentStep] = useState(0)
   const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
+  const [shippingZipCode, setShippingZipCode] = useState(null)
   const [taxAmount, setTaxAmount] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
@@ -127,6 +149,21 @@ function CheckoutPage(props) {
     2: billToSchema
   }
 
+  useEffect(() => {
+    if(!_.isNil(shippingZipCode)){
+      let cartToken = localStorage.getItem('cartToken')
+      getTaxAmount(
+        { "variables": {
+            "checkoutDataRequest": {
+              "anonymousCartToken": cartToken,
+              "zipcode": shippingZipCode
+            }
+          }
+        }
+      )
+    }
+  },[shippingZipCode])
+
   const [submitOrder] = useMutation(SUBMIT_ORDER, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
@@ -142,17 +179,13 @@ function CheckoutPage(props) {
     }
   })
 
-  // useEffect(() => {
-  //   // const touch = getIn(props.formik.touched, props.name)
-  //   // console.log('formik ->', touch)
-  //   // If the current step isn't 2 (ship to), step 2 has been validated, and the tax could've changed get the tax amount on step change
-  //   if (currentStep !== 2 && stepValidated[2] && possibleTaxChange) {
-  //     updateTaxes(zipcode, shipToId)
-  //     setPossibleTaxChange(false)
-  //   } else if (currentStep === 2) {
-  //     setPossibleTaxChange(true)
-  //   }
-  // },[currentStep])
+  const [getTaxAmount] = useLazyQuery(GET_TAX_AMOUNT, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let taxTotal = _.get(data,`getCheckoutData.taxTotal`, 0)
+      setTaxAmount(taxTotal)
+    }
+  })
 
   function handleMoveStep(requestedStep){
     // const { values: formikValues } = useFormikContext()
@@ -196,6 +229,7 @@ function CheckoutPage(props) {
               handleValidateFields={(values)=>handleValidateFields(values)}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
               showOrderFailedModal={showOrderFailedModal}
+              updateZip={(zip)=>setShippingZipCode(zip)}
             />)}
           </Context.Consumer>
           <DivNavigation>

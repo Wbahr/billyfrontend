@@ -100,7 +100,7 @@ export default function CheckoutOrderSummary({currentStep, taxAmount}) {
         <p>(TDB)</p>
       </DivLineItem>
       <DivLineItemTotal>
-        <p>Total {formatCurrency(Number(context.cartPricing.subToåtal) + Number(context.cartPricing.tariff))}</p>
+        <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(taxAmount))}</p>
       </DivLineItemTotal>
     </Div>
   )

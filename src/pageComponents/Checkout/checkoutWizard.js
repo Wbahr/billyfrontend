@@ -78,7 +78,7 @@ const GET_CHECKOUT_DATA = gql`
   }
 `
 
-function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema, showOrderFailedModal}) {
+function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema, showOrderFailedModal, updateZip}) {
   const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
   const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
@@ -206,7 +206,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       {formikProps => (
         <Elements>
           <form name="checkoutForm" {...formikProps}>
-            <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData}/>
+            <FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData} updateZip={updateZip}/>
             {(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
             {showOrderFailedModal && <OrderFailedModal/>}
           </form>
