@@ -20,7 +20,7 @@ import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
 import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
 import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
-import Brands from '../pageComponents/Brands/brandsPage'
+import brandsPage from '../pageComponents/Brands/brandsPage'
 // Supporting Components
 import Auth from './auth'
 import FourOFour from '../pageComponents/FourOFour/fourOFourPage'
@@ -66,7 +66,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
-        <WrapperRoute exact path='/brands' component={Brands} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
