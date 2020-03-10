@@ -4,7 +4,7 @@ import 'react-table/react-table.css'
 import styled from 'styled-components'
 
 import AccountSectionHeader from '../_common/sectionHeader'
-import Input from '../_common/input'
+import Input from '../_common/form/input'
 import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
 import _ from 'lodash'
 import { StyledText0, StyledText1 } from '../../styles/fonts'

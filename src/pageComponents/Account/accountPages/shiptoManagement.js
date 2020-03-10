@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import Select from '../../_common/select'
+import Select from '../../_common/form/select'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { Formik, Form, Field } from 'formik'

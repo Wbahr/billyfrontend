@@ -5,8 +5,8 @@ import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { Button } from '@material-ui/core'
-import AirlineInput from '../../../pageComponents/_common/inputv2'
-import AirlineSelect from '../../../pageComponents/_common/selectv2'
+import AirlineInput from '../../../pageComponents/_common/form/inputv2'
+import AirlineSelect from '../../../pageComponents/_common/form/selectv2'
 import ItemCreationModal from './uiComponents/itemCreationModal'
 
 const QUERY_ITEM_CREATION_DATA = gql`

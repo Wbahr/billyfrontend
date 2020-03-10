@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -106,9 +106,10 @@ function CheckoutPage(props) {
     formik
   } = props
 
+  const context = useContext(Context)
   const [currentStep, setCurrentStep] = useState(0)
   const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
-  const [possibleTaxChange, setPossibleTaxChange] = useState(false)
+  const [taxAmount, setTaxAmount] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
   const [stepValidated, setStepValidated] = useState(
@@ -132,6 +133,8 @@ function CheckoutPage(props) {
       let orderId = _.get(data,`submitOrder.transactionId`,null)
       let confirmationEmail = _.get(data, `submitOrder.confirmationEmailRecipient`,'')
       if (!_.isNil(orderId)) {
+        localStorage.removeItem('shoppingCartToken')
+        context.emptyCart()
         history.push(`/order-complete/${orderId}/${confirmationEmail}`)
       } else {
         setShowOrderFailedModal(true)
@@ -204,7 +207,10 @@ function CheckoutPage(props) {
         </Container>
       </DivCheckoutCol>
       <DivOrderTotalCol>
-        <CheckoutOrderSummary/>
+        <CheckoutOrderSummary
+          currentStep={currentStep}
+          taxAmount={taxAmount}
+        />
       </DivOrderTotalCol>
     </DivContainer>
   )

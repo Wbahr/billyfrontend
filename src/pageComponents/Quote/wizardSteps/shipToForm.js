@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
+import FormikTextArea from '../../_common/formik/textarea_v2'
 import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
 import SelectField from '../../_common/formik/select'

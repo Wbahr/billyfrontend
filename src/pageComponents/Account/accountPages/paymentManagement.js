@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // import Context from '../../../config/context'
 import { injectStripe } from 'react-stripe-elements'
 import PaymentManagerComponent from '../uiComponents/paymentManager'
-import Select from '../../_common/select'
+import Select from '../../_common/form/select'
 
 function PaymentManagementPage() {
   // const context = useContext(Context);

@@ -458,7 +458,7 @@ export default function ItemDetailPage({history}){
           <Div>
             <hr/>
             <ButtonRed>Add to Cart</ButtonRed>
-            <ButtonBlack>Buy Now</ButtonBlack>
+            {/* <ButtonBlack>Buy Now</ButtonBlack> */}
           </Div>
           {item.feature.length > 0 && <a href='#feature'>Features</a>}
           {item.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}

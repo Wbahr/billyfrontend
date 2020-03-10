@@ -4,7 +4,7 @@ import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import AirlineInput from '../../../pageComponents/_common/inputv2'
+import AirlineInput from '../form/inputv2'
 
 const MUTATION_RESET_PASSWORD_REQUEST = gql`
   mutation PasswordResetRequestMutation($resetInfo: PasswordResetRequestInputGraphType){

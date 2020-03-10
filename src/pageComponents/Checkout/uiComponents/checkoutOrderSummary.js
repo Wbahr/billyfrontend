@@ -76,33 +76,32 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-export default function CheckoutOrderSummary({history}) {
+export default function CheckoutOrderSummary({currentStep, taxAmount}) {
   const context = useContext(Context)
 
   return(
-    <>
-      <Div>
-        <H4>Order Summary</H4>
-        <DivLineItem>
-          <p>Subtotal</p>
-          <p>{formatCurrency(context.cartPricing.subTotal)}</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Tariff</p>
-          <p>{formatCurrency(context.cartPricing.tariff)}</p>
-        </DivLineItem>        
-        <DivLineItem>
-          <p>Tax</p>
-          <p>(TDB)</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Shipping</p>
-          <p>(TDB)</p>
-        </DivLineItem>
-        <DivLineItemTotal>
-          <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
-        </DivLineItemTotal>
-      </Div>
-    </>
+    <Div>
+      <H4>Order Summary</H4>
+      <DivLineItem>
+        <p>Subtotal</p>
+        <p>{formatCurrency(context.cartPricing.subTotal)}</p>
+      </DivLineItem>
+      <DivLineItem>
+        <p>Tariff</p>
+        <p>{formatCurrency(context.cartPricing.tariff)}</p>
+      </DivLineItem>        
+      <DivLineItem>
+        <p>Tax</p>
+        {/* If past step 1 (ship to), show tax */}
+        { currentStep > 1 ? <p>{formatCurrency(taxAmount)}</p> : <p>(TDB)</p> }
+      </DivLineItem>
+      <DivLineItem>
+        <p>Shipping</p>
+        <p>(TDB)</p>
+      </DivLineItem>
+      <DivLineItemTotal>
+        <p>Total {formatCurrency(Number(context.cartPricing.subToåtal) + Number(context.cartPricing.tariff))}</p>
+      </DivLineItemTotal>
+    </Div>
   )
 }

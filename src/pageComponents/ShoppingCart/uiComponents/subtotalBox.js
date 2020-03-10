@@ -130,7 +130,7 @@ export default function SubtotalBox({history}) {
                 }
               }}        
             </Context.Consumer>
-            <Context.Consumer>
+            {/* <Context.Consumer>
               {({userInfo}) => {
                 if (!_.isNil(userInfo)){
                   return(
@@ -140,7 +140,7 @@ export default function SubtotalBox({history}) {
                   )
                 }
               }}        
-            </Context.Consumer>
+            </Context.Consumer> */}
          </>
         }
       </Div>
