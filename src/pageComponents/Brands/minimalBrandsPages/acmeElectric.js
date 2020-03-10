@@ -76,7 +76,7 @@ const Div = styled.div`
     flex-wrap: nowrap; 
     justify-content: center;
     width: 100%;
-    margin: 40px 0 100px 0;
+    margin-top: 40px;
 `;
 const IconDiv = styled.div`
 display: flex;
