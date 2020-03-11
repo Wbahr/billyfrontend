@@ -61,7 +61,7 @@ const DivOrderTotalCol = styled.div`
 `
 
 
-export default function ShoppingCart({showSplitLineModal}) {
+export default function ShoppingCart({showSplitLineModal, showFactoryStockModal}) {
   const [savedCart, setSavedCart] = useState(false)
   const context = useContext(Context)
   
@@ -88,6 +88,7 @@ export default function ShoppingCart({showSplitLineModal}) {
                     emptyCart={emptyCart}
                     index={index}
                     showSplitLineModal={showSplitLineModal}
+                    showFactoryStockModal={showFactoryStockModal}
                   />
                 </div>
               )}

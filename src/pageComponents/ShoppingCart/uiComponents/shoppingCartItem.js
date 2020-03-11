@@ -75,7 +75,7 @@ const DivRemove = styled.div`
 `
 
 const DivSplitLine = styled(DivRemove)`
-  // padding: 6px;
+  padding: 0 3px;
   // border: 1px solid #328EFC;
   margin: 0;
   border-radius: 50px;
@@ -220,7 +220,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
 
@@ -283,6 +283,8 @@ export default function ShoppingCartItem({item, index, showSplitLineModal}) {
           </DivRow>
           <DivRow>
             <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
+            <DivSplitLine>|</DivSplitLine>
+            <DivSplitLine onClick={()=>showFactoryStockModal(index)}>Factory Stock</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
