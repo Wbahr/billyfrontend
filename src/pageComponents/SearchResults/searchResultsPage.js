@@ -281,6 +281,7 @@ export default function SearchResultsPage(props) {
       variables: {
         searchParams: {
           searchTerm: search.searchTerm,
+          searchType: search.nonweb ? 'nonweb' :'web',
           resultSize: resultSize,
           resultPage: isNewSearch ? 1 : currentPage + 1,
           sortType: search.sortType,
