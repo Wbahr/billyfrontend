@@ -64,7 +64,10 @@ export default function ShoppingCartPage(props) {
       <FactoryStockModal
         open={showFactoryStockModal}
         hideFactoryStockModal={handleHideFactoryStockModal}
-        index={index}
+        product={{
+          'name': 'SMC - 4233',
+          'frecno': '4233'
+        }}
       />
       <DivShoppingCartCol>
         <ShoppingCart

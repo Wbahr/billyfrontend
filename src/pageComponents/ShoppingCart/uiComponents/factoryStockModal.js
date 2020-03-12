@@ -41,10 +41,14 @@ const DivRow = styled.div`
   margin: 8px 0;
 `
 
-export default function FactoryStockModal({open, index, hideFactoryStockModal}) {
+export default function FactoryStockModal({open, product, hideFactoryStockModal}) {
   const [qtyAvailable, setQtyAvailable] = useState(0)
   const [leadTime, setLeadTime] = useState(0)
   const [disableUpdate, setDisableUpdate] = useState(true)
+  const {
+    name,
+    frecno
+  } = product
 
   function handleClose(){
     hideFactoryStockModal()
@@ -68,7 +72,7 @@ export default function FactoryStockModal({open, index, hideFactoryStockModal}) 
     <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '400px', 'border-radius': '5px'}}>
       <Container>
         <h4>Factory Stock</h4>
-        <h6>Part Number</h6>
+        <h6>{name}</h6>
         <DivRow>
           <DivItem>
             <Label>Quantity Available: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
