@@ -6,7 +6,6 @@ import gql from 'graphql-tag'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 
-//This grabs every piece of available data. Remove unneeded fields.
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: ID){
         itemDetails(invMastUid: $itemId) {
