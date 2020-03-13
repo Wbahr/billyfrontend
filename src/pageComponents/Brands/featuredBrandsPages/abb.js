@@ -21,7 +21,11 @@ const FeaturedBrandLogo = styled.div`
   width: 100%;
   justify-content: center;
   padding: 80px 0;
-  background-image: url('https://www.thomaselectrical.co.za/wp-content/uploads/2016/06/BACKGROUND-TOP.jpg');
+  background-image: url('https://media.istockphoto.com/photos/white-silver-geometric-universal-background-for-business-presentation-picture-id1207126778?s=2048x2048');
+  // background-image: url('https://media.istockphoto.com/photos/abstract-white-background-picture-id674723944?s=2048x2048');
+  // background-image: url('https://media.istockphoto.com/photos/abstract-background-of-polygons-on-white-background-picture-id857482302?s=2048x2048');
+ 
+
   background-repeat: no-repeat;
   background-size: cover;
 
