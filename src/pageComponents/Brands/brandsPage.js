@@ -42,9 +42,6 @@ const BorderLine = styled.div`
 
   `;
 
-
-
-
 const Container = styled.div`
     max-width: 1200px;
     width: 100%;
@@ -164,7 +161,6 @@ const CategoryP = styled.p`
 `;
 
 
-
 const ProductDiv = styled.div`
     display: flex;
     flex-direction: row;
@@ -173,13 +169,7 @@ const ProductDiv = styled.div`
  
 `;
 
-const SideLogoDiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    align-items: center;
- 
-`;
+
 const CompanyListDiv = styled.div`
     display: flex;
     justify-content: space-evenly;
@@ -187,15 +177,15 @@ const CompanyListDiv = styled.div`
    
 `;
 
-
-
 const ProductBorder = styled.div`
 display: flex;
 border-bottom: 1px solid #ebe7e7;
 width: 70%;
-
-
 `;
+
+
+
+
 
 export default function BrandsPage() {
 
@@ -404,11 +394,6 @@ export default function BrandsPage() {
             </ProductDiv>
             
           
-
-
-
-
-
             <CategoryDiv>
                 <CategoryName>
                     <CategoryP>HOSE, CONNECTORS & ACCESSORIES</CategoryP>
@@ -527,11 +512,7 @@ export default function BrandsPage() {
 
                 </Ul>
                
-               
-       
             </CompanyListDiv>
-
-           
             </ProductDiv>
             
 
