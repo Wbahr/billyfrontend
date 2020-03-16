@@ -124,7 +124,7 @@ export default function NewItemForm(props) {
           listPrice: '',
           airlinePartCost: '',
           productGroupID: '',
-          tariff: 0.00
+          tariff: '0'
         }
       }}
       validationSchema={ItemCreationSchema}
