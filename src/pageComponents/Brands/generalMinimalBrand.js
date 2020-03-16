@@ -1,5 +1,12 @@
-import React from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import { StyledText0 } from '../../styles/fonts'
+import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
+import AdaptallPage from './minimalBrandsPages/adaptall'
+import AdsensPage from './minimalBrandsPages/adsens'
+
 // import _ from 'lodash'
 
 const Div = styled.div`
@@ -13,25 +20,67 @@ const Div = styled.div`
   background-color: grey;
 `
 
-class GeneralFullBrand extends React.Component {
-  componentWillMount(){
-    console.log('brand: ',this.props.brand)
-  }
-  render(){
-    const {
-      brand:{
-        companyName,
-        companyDescription,
-      }
-    } = this.props
+// class FullBrand extends React.Component {
+//   componentWillMount(){
+//     console.log('brand: ',this.props.brand)
+//   }
+//   render(){
+//     const {
+//       brand:{
+//         companyName,
+//         companyDescription,
+//       }
+//     } = this.props
 
-    return(
-      <>
-        <p>{companyName}</p>
-        <p>{companyDescription}</p>
-      </>
-    )
-  }
+//     return(
+//       <>
+//         <p>{companyName}</p>
+//         <p>{companyDescription}</p>
+//       </>
+//     )
+//   }
+// }
+
+// export default FullBrand
+
+export default function GeneralMinimalBrand({history}) {
+  const [pageComponent, setPageComponent] = useState()
+  let { page } = useParams()
+
+  const MinimalBrandPages = [
+    {
+      'label': 'AcmeElectric',
+      'page': 'acme-electric'
+    },
+    {
+      'label': 'Adaptall',
+      'page': 'adaptall'
+    },
+    {
+      'label': 'Adsens',
+      'page': 'adsens'
+    }
+  ]
+  useEffect(() => {
+    if(page === 'acme-electric'){
+      setPageComponent(<AcmeElectricPage/>)
+    } else if (page === 'adaptall'){
+      setPageComponent(<AdaptallPage/>)
+    } else if (page === 'adsens'){
+      setPageComponent(<AdsensPage/>)
+    } 
+    
+  }, [page])
+      
+  return(
+    <> 
+        {pageComponent}      
+  
+
+    </>
+  )
 }
 
-export default GeneralFullBrand
+GeneralMinimalBrand.propTypes = {
+  history: PropTypes.object.isRequired
+}
