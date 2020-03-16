@@ -94,21 +94,22 @@ const LongBorderLine = styled.div`
  border-bottom: 1px solid #ebe7e7;
  width: 90%;
  margin: 0 auto;
- 
+ margin-top: 24px;
+ margin-bottom: 24px;
  `;
 
 const H6 = styled.h6`
     display: flex;
     font-weight: bold;
-    margin: 0 auto;S
+    margin: 0 auto;
 `;
 
 const Div = styled.div`
     display: flex;
     flex-direction: row;
-    padding: 20px 0;
+    margin-left: 89px;
     width: 80%;
-    margin: 0 auto;
+    // margin: 0 auto;
 `;
 
 const LetterDiv = styled.div`
@@ -122,11 +123,13 @@ const ListDiv = styled.div`
     display: flex;
     justify-content: space-between;
     flex: 7;
+    
 `;
 
 const Ul = styled.ul`
     list-style-type: none;
     font-weight: 200;
+    // padding: 0;
 `;
 
 const CompanyList = styled.a`
@@ -143,6 +146,7 @@ const CategoryDiv = styled.div`
     width: 80%;
     margin: auto;
     padding-top: 50px;
+    padding-bottom: 20px;
 `;
 
 const CategoryName = styled.div`
@@ -151,10 +155,12 @@ const CategoryName = styled.div`
 `;
 
 const CategoryP = styled.p`
-    font-size: 14px;
+    font-size: 17px;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1px;
+    margin: 0;
+    color: #555555;
 `;
 
 
@@ -176,21 +182,18 @@ const SideLogoDiv = styled.div`
 `;
 const CompanyListDiv = styled.div`
     display: flex;
-    justify-content: center;
-    flex:2;
+    justify-content: space-evenly;
+    flex: 2;
+   
 `;
 
-const LogoDiv = styled.div`
-    width: 150px;
-    height: auto;
-    display: flex;
-    justify-content: center;
 
-`;
 
-const LogoImg = styled.img`
+const ProductBorder = styled.div`
+display: flex;
+border-bottom: 1px solid #ebe7e7;
 width: 70%;
-margin: 10px; 
+
 
 `;
 
@@ -336,51 +339,19 @@ export default function BrandsPage() {
             <CategoryDiv>
                 <CategoryName>
                     <CategoryP>HYDRAULIC COMPONENTS</CategoryP>
-
                 </CategoryName>
   
+                <ProductBorder></ProductBorder>
+            
             </CategoryDiv>
 
 
             <ProductDiv>
-                <SideLogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" />
-                      <LogoImg src="https://1h6t0226incw29h3as373ufk-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/logo.png" />
-                  
-                  </LogoDiv>
-                  
-                  <LogoDiv> 
-                      <LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" />
-                      <LogoImg src="http://www.hydroleduc.com/images/links/page_accueil/logo.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://www.bucherhydraulics.com/docs/img/global/logo.png" />
-                      <LogoImg src="http://www.walvoil.com/image/logo-walvoil.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="http://www.kobelt.com/img/logo.png" />
-                      <LogoImg src="https://www.casappa.com/media/img/layout/logo_casappa_header.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://magnom.com/assets/magnom.jpg" />
-                      <LogoImg src="http://static.voith.com/2.13.0/resources/img/voith.svg" />
-                  
-                  </LogoDiv>
-                </SideLogoDiv>
-               
 
             <CompanyListDiv>
                 <Ul>
                     <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
                     <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
@@ -405,14 +376,26 @@ export default function BrandsPage() {
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
                   
 
 
                 </Ul>
             
+            
+                <Ul>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+
+
+                </Ul>
                
        
             </CompanyListDiv>
@@ -432,7 +415,7 @@ export default function BrandsPage() {
 
                 </CategoryName>
 
-
+                <ProductBorder></ProductBorder>
             </CategoryDiv>
 
 
@@ -440,12 +423,8 @@ export default function BrandsPage() {
              
             <CompanyListDiv>
                 <Ul>
-                    <li><CompanyList href="" target="_blank">Alternating RelaysAlternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
+                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
@@ -470,92 +449,43 @@ export default function BrandsPage() {
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                  
-                </Ul>
-            </CompanyListDiv>
 
-            <SideLogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" />
-                      <LogoImg src="https://1h6t0226incw29h3as373ufk-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/logo.png" />
-                  
-                  </LogoDiv>
-                  
-                  <LogoDiv> 
-                      <LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" />
-                      <LogoImg src="http://www.hydroleduc.com/images/links/page_accueil/logo.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://www.bucherhydraulics.com/docs/img/global/logo.png" />
-                      <LogoImg src="http://www.walvoil.com/image/logo-walvoil.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="http://www.kobelt.com/img/logo.png" />
-                      <LogoImg src="https://www.casappa.com/media/img/layout/logo_casappa_header.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://magnom.com/assets/magnom.jpg" />
-                      <LogoImg src="http://static.voith.com/2.13.0/resources/img/voith.svg" />
-                  
-                  </LogoDiv>
-                </SideLogoDiv>
+
+                </Ul>
+                <Ul>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+
+
+                </Ul>
+               
+            </CompanyListDiv>
 
            
             </ProductDiv>
-            
-          
-
-
             <CategoryDiv>
                 <CategoryName>
                     <CategoryP>PNEUMATIC COMPONENTS</CategoryP>
 
                 </CategoryName>
-
+                <ProductBorder></ProductBorder>
 
             </CategoryDiv>
 
 
             <ProductDiv>
-                <SideLogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" />
-                      <LogoImg src="https://1h6t0226incw29h3as373ufk-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/logo.png" />
-                  
-                  </LogoDiv>
-                  
-                  <LogoDiv> 
-                      <LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" />
-                      <LogoImg src="http://www.hydroleduc.com/images/links/page_accueil/logo.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://www.bucherhydraulics.com/docs/img/global/logo.png" />
-                      <LogoImg src="http://www.walvoil.com/image/logo-walvoil.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="http://www.kobelt.com/img/logo.png" />
-                      <LogoImg src="https://www.casappa.com/media/img/layout/logo_casappa_header.png" />
-                  
-                  </LogoDiv>
-                  <LogoDiv> 
-                      <LogoImg src="https://magnom.com/assets/magnom.jpg" />
-                      <LogoImg src="http://static.voith.com/2.13.0/resources/img/voith.svg" />
-                  
-                  </LogoDiv>
-                </SideLogoDiv>
-               
-
             <CompanyListDiv>
                 <Ul>
-                    <li><CompanyList href="" target="_blank">Alternating RelaysAlternating Relays</CompanyList></li>
+                <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
+                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
@@ -564,12 +494,6 @@ export default function BrandsPage() {
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                   
 
 
                 </Ul>
@@ -585,14 +509,24 @@ export default function BrandsPage() {
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
                     <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                  
 
 
                 </Ul>
-            
+                <Ul>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+
+
+                </Ul>
+               
                
        
             </CompanyListDiv>
