@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
+import Dropdown from './headerNavDropdown'
 
 const NavTop = styled.div`
   display: flex;
@@ -149,9 +150,24 @@ const DivCancelImpersonation = styled.div`
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchAsCustomer, setSearchAsCustomer] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(
+    {
+      brands: false
+    }
+  )
 
   function handleSearch() {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}&nonce=${new Date().getTime()}`)
+  }
+
+  function onHover(e) {
+    let target = e.target.id
+    setShowDropdown({...showDropdown, brands: true})
+  }
+
+  function onExit(e) {
+    let target = e.target.id
+    setShowDropdown({...showDropdown, brands: false})
   }
 
   return(
@@ -233,9 +249,23 @@ export default function HeaderComponent(props) {
             <Link to="/industries" style={{ textDecoration: 'none' }}>
               <NavItem>Industries</NavItem>
             </Link>
-            <Link to="/brands" style={{ textDecoration: 'none' }}>
-              <NavItem>Brands</NavItem>
-            </Link>
+            <div onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/brands" style={{ textDecoration: 'none' }} >
+                <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.brands} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/featured/brands/abb'
+                  }
+                ]}
+              />
+            </div>
             <Link to="/resources" style={{ textDecoration: 'none' }}>
               <NavItem>Resources</NavItem>
             </Link>
