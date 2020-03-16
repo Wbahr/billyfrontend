@@ -68,7 +68,7 @@ const BrandsImgDiv = styled.div`
   
  `;
 const Link = styled.a`
-    color: pink;
+    
  
 `;
 
@@ -99,6 +99,8 @@ const H6 = styled.h6`
     display: flex;
     font-weight: bold;
     margin: 0 auto;
+    color: #555555;
+    letter-spacing: 10px;
 `;
 
 const Div = styled.div`
@@ -126,14 +128,15 @@ const ListDiv = styled.div`
 const Ul = styled.ul`
     list-style-type: none;
     font-weight: 200;
+    width: 50%;
     // padding: 0;
 `;
 
 const CompanyList = styled.a`
     text-decoration: none;
-    color: black;
-    font-size: 15px;
-    font-weight: 400;
+    color: #246696;
+    font-size: 12px;
+    font-weight: bold;
 `;
 
 const CategoryDiv = styled.div`
@@ -173,8 +176,9 @@ const ProductDiv = styled.div`
 const CompanyListDiv = styled.div`
     display: flex;
     justify-content: space-evenly;
-    flex: 2;
-   
+    font-size: 11px;
+    color: #555555;
+    
 `;
 
 const ProductBorder = styled.div`
@@ -341,48 +345,42 @@ export default function BrandsPage() {
             <CompanyListDiv>
                 <Ul>
                     <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
-                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - Pumps, Motors, Cylinders, Valves, Filters,
+Manifolds, Power Units, Controllers, Rineer Motors & Oil Control Valves</li>
+                    <li><CompanyList href="">Bucher</CompanyList> - Command Controls Cartridge Valves Monarch Power Units</li>
+                    <li><CompanyList href="">Casappa</CompanyList> - Piston Pumps, Gear Pumps, Flow Dividers</li>
+                    <li><CompanyList href="">Cervis</CompanyList> - Controllers & Remote Controllers</li>
+                    <li><CompanyList href="">Daman</CompanyList> - Bar Manifolds, Custom Manifolds & Modules</li>
+                    <li><CompanyList href="">Flow Ezy</CompanyList> - Strainers</li>
+                    <li><CompanyList href="">Fulflo </CompanyList> - Directional, Pressure & Flow Valves</li>
+                    <li><CompanyList href="">Geartek</CompanyList> - Gear Pumps</li>
+                    <li><CompanyList href="">Hanna</CompanyList> - General-Type Cylinders</li>
+                    <li><CompanyList href="">Hedland</CompanyList> - Flow Meters</li>
+                    <li><CompanyList href="">High Country Tek</CompanyList> - Mobile Controllers & Modules</li>
+                    <li><CompanyList href="">HYDAC</CompanyList> - Accumulators, Filters, Instrumentation,
+Cylinders, Cartridge Valves, Manifolds, Cooling, Diagnostics, Accessories, Bieri High-Pressure Hydraulic Components</li>
+                    <li><CompanyList href="">Hydro Leduc</CompanyList> - Micro-Hydraulics, Piston Pumps, Piston Motors</li>
                    
-
-
                 </Ul>
 
-                <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                  
 
-
-                </Ul>
-            
-            
                 <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="">Kawasaki</CompanyList> - Staffa Piston Pumps & Piston Motors</li>
+                    <li><CompanyList href="">Kobelt</CompanyList> - Controllers & Remote Controllers</li>
+                    <li><CompanyList href="">KYB</CompanyList> - Hydrostar Piston Motors</li>
+                    <li><CompanyList href="">Lehigh Fluid Power</CompanyList> - General-Type Cylinders</li>
+                    <li><CompanyList href="">Magnom Filters</CompanyList> - Magnetic Filtration</li>
+                    <li><CompanyList href="">Milwaukee Cylinder</CompanyList> - Basic & NFPA-Type Cylinders</li>
+                    <li><CompanyList href="">MTS</CompanyList> - Linear Displacement Transducers</li>
+                    <li><CompanyList href="">Nason</CompanyList> - Compact Hydraulic Cylinders, NFPA Cylinders</li>
+                    <li><CompanyList href="">OEM Controls</CompanyList> - Joysticks & Controllers</li>
+                    <li><CompanyList href="">Parker</CompanyList> - Low-Speed High-Torque Motors</li>
+                    <li><CompanyList href="">Permco</CompanyList> - Gear Pumps & Motors, Vane Pumps & Motors, Flow Dividers & Intensifiers</li>
+                    <li><CompanyList href="">Settima</CompanyList> - Continuum® Helical Gear Pumps & Screw Pumps</li>
+                    <li><CompanyList href="">Thermal Transfer</CompanyList> - Air-to-Oil & Water-to-Oil Type Coolers </li>
+                    <li><CompanyList href="">Voith</CompanyList> - Internal Gear Pumps</li>
+                    <li><CompanyList href="">Walvoil </CompanyList> - Mobile Monoblock & Sectional Valves & Operators</li>
+                    <li><CompanyList href="">Yates Industries</CompanyList> -General-Type Cylinders </li>
 
 
                 </Ul>
@@ -409,48 +407,35 @@ export default function BrandsPage() {
             <CompanyListDiv>
                 <Ul>
                 <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
-                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Bosch Rexroth</CompanyList> - </li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
                    
 
 
                 </Ul>
 
                 <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-
-
-                </Ul>
-                <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-
+                <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
+                    <li><CompanyList href="" target="_blank">Bosch Rexroth</CompanyList> - </li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                   
 
                 </Ul>
+             
                
             </CompanyListDiv>
 
@@ -470,47 +455,35 @@ export default function BrandsPage() {
             <CompanyListDiv>
                 <Ul>
                 <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
-                    <li><CompanyList href="">Bosch Rexroth</CompanyList> - </li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Bosch Rexroth</CompanyList> - </li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                   
 
 
                 </Ul>
 
                 <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-
-
-                </Ul>
-                <Ul>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-                    <li><CompanyList href="">Alternating Relays</CompanyList></li>
-
+                <li><CompanyList href="" target="_blank">Aventics</CompanyList> - Cylinders </li>
+                    <li><CompanyList href="" target="_blank">Bosch Rexroth</CompanyList> - </li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                    <li><CompanyList href="" target="_blank">Alternating Relays</CompanyList></li>
+                   
 
                 </Ul>
+               
                
             </CompanyListDiv>
             </ProductDiv>
