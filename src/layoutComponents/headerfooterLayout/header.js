@@ -261,7 +261,75 @@ export default function HeaderComponent(props) {
                   },
                   {
                     'label': 'ABB',
-                    'link': '/featured/brands/abb'
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  },
+                  {
+                    'label': 'Butech',
+                    'link': '/brands/featured/butech'
+                  },
+                  {
+                    'label': 'Clippard',
+                    'link': '/brands/featured/clippard'
+                  },
+                  {
+                    'label': 'Eaton',
+                    'link': '/brands/featured/eaton'
+                  },
+                  {
+                    'label': 'Haskel',
+                    'link': '/brands/featured/haskel'
+                  },
+                  {
+                    'label': 'Hydac',
+                    'link': '/brands/featured/hydac'
+                  },
+                  {
+                    'label': 'Lincoln',
+                    'link': '/brands/featured/lincoln'
+                  },
+                  {
+                    'label': 'Omron',
+                    'link': '/brands/featured/omron'
+                  },
+                  {
+                    'label': 'Oriental Motor',
+                    'link': '/brands/featured/oriental-motor'
+                  },
+                  {
+                    'label': 'Paccar',
+                    'link': '/brands/featured/paccar'
+                  },
+                  {
+                    'label': 'Parker',
+                    'link': '/brands/featured/parker'
+                  },
+                  {
+                    'label': 'Phoenix Contact',
+                    'link': '/brands/featured/phoenix-contact'
+                  },
+                  {
+                    'label': 'Rexroth',
+                    'link': '/brands/featured/rexroth'
+                  },
+                  {
+                    'label': 'Rittal',
+                    'link': '/brands/featured/rittal'
+                  },
+                  {
+                    'label': 'Ross',
+                    'link': '/brands/featured/ross'
+                  },
+                  {
+                    'label': 'Schmersal',
+                    'link': '/brands/featured/schmersal'
+                  },
+                  {
+                    'label': 'SMC',
+                    'link': '/brands/featured/smc'
                   }
                 ]}
               />

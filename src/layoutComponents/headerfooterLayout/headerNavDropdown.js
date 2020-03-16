@@ -7,13 +7,17 @@ const DivOption = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 40px;
+  height: 30px;
   border-top: 1px solid whitesmoke;
   // border-bottom: 1px solid whitesmoke;
   color: black;
   padding: 0 16px;
+  opacity: 0.96;
+  background-color: white;
   &:hover{
+    opacity: 1;
     background-color: whitesmoke;
+    color: darkblue;
   }
 `
 
@@ -29,8 +33,7 @@ export default function ImpersonationSearchComponent(props) {
     position: absolute;
     display: flex;
     flex-direction: column;
-    width: 250px;
-    background-color: white;
+    width: 200px;
     box-shadow: 0px 1px 1px #9f9f9f;
     border-radius: 0 3px 3px 3px;
   `
