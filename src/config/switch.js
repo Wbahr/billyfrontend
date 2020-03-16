@@ -21,6 +21,9 @@ import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
+import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
+import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
+import brandsPage from '../pageComponents/Brands/brandsPage'
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
@@ -70,8 +73,10 @@ class App extends React.Component {
         <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/brands' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
+        <WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact' component={Home} layout={HeaderFooterLayout}/>
