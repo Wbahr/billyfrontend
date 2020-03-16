@@ -242,18 +242,17 @@ export default function HeaderComponent(props) {
           <LinkContainer>
             <Link to="/categories" style={{ textDecoration: 'none' }}>
               <NavItem>Shop <FontAwesomeIcon icon="caret-down" color="black"/></NavItem>
-              {/* <Dropdown open={showDropdown.shop}/> */}
             </Link>
             <Link to="/services" style={{ textDecoration: 'none' }}>
               <NavItem>Services</NavItem>
-              {/* <Dropdown open={showDropdown.services}/> */}
             </Link>
             <Link to="/industries" style={{ textDecoration: 'none' }}>
               <NavItem>Industries</NavItem>
-              {/* <Dropdown open={showDropdown.industries}/> */}
             </Link>
-            <Link to="/brands" style={{ textDecoration: 'none' }} onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
-              <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
+            <div onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/brands" style={{ textDecoration: 'none' }} >
+                <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
               <Dropdown open={showDropdown.brands} history={props.history}
                 options={[
                   {
@@ -266,10 +265,9 @@ export default function HeaderComponent(props) {
                   }
                 ]}
               />
-            </Link>
+            </div>
             <Link to="/resources" style={{ textDecoration: 'none' }}>
               <NavItem>Resources</NavItem>
-              {/* <Dropdown open={showDropdown.resources}/> */}
             </Link>
             <Link to="/about" style={{ textDecoration: 'none' }}>
               <NavItem>About</NavItem>

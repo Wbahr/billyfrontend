@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
 const DivOption = styled.div`
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
