@@ -68,7 +68,7 @@ const BrandsImgDiv = styled.div`
   
  `;
 const Link = styled.a`
-
+    color: pink;
  
 `;
 
