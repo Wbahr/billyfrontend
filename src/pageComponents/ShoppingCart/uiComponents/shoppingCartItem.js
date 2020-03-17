@@ -153,6 +153,11 @@ const Label = styled.label`
 
 const Peach = styled.p`
   margin: 0;
+  padding-right: 8px;
+`
+
+const DivEditPrice = styled.div`
+  cursor: pointer;
 `
 
 const Input = styled.input`
@@ -220,7 +225,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
 
@@ -302,12 +307,25 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
                   </Context.Consumer>
             </DivItem>
             <DivItem>
-              <Peach>{formatCurrency(itemDetails.listPrice)}/each</Peach>
+              <DivRow>
+                <Context.Consumer>
+                  {({ cart }) => (
+                    <>
+                      <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(cart[index].itemUnitPriceOverride)}/each</Peach>
+                      <DivEditPrice onClick={()=>showEditPriceModal(index)}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
+                    </>
+                  )}
+                </Context.Consumer>
+              </DivRow>
             </DivItem>
             <DivItem>
-              <DivTotalPrice>
-                <p>{formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity)}</p>
-              </DivTotalPrice>
+              <Context.Consumer>
+                {({ cart }) => (
+                  <DivTotalPrice>
+                    <p>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity) : formatCurrency(cart[index].itemUnitPriceOverride * item.quantity)}</p>
+                  </DivTotalPrice>
+                )}
+              </Context.Consumer>
             </DivItem>
           </DivQuantity>
           <DivQuantity>
