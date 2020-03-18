@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import CurrencyInput from 'react-currency-input'
 
 const DivContainer = styled.div`
   display flex;
@@ -35,6 +36,23 @@ const MainInput = styled.input`
   }
 `
 
+const MainCurrencyInput = styled(CurrencyInput)`
+  height: 40px;
+  padding: 0 8px;
+  color: #303030;
+  font-size: 16px;
+  border-radius: 1px;
+  border: 1px solid #e1e1e1;  
+  :focus{
+    border: 1px solid #007bff;  
+    outline: none;
+  }
+  ::placeholder {
+    color: grey;
+    font-size: 14px;
+  }
+`
+
 function InputV2(props) {
 
   const {
@@ -48,21 +66,35 @@ function InputV2(props) {
     onChange
   } = props
 
-  return(
-    <DivContainer>
-      {label && <Label htmlFor={label}>{`${label}`}</Label>}
-      <MainInput
-        disabled={disabled}
-        type={type || ''}
-        value={value}
-        placeholder={placeholder}
-        onChange={(e)=>onChange(e)}
-        name={label}
-        style={{width: width || "400px"}}
-      />
-      {error && <span>{error}</span>}
-    </DivContainer>
-  )
+  if (type === "currency"){
+    return(
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainCurrencyInput
+          value={value} 
+          prefix='$' 
+          style={{width: width || "400px"}} 
+          onChangeEvent={(e)=>onChange(e)}
+        />
+      </DivContainer>
+    )
+  } else {
+    return(
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}
+        <MainInput
+          disabled={disabled}
+          type={type || ''}
+          value={value}
+          placeholder={placeholder}
+          onChange={(e)=>onChange(e)}
+          name={label}
+          style={{width: width || "400px"}}
+        />
+        {error && <span>{error}</span>}
+      </DivContainer>
+    )
+  }
 }
 
 export default InputV2

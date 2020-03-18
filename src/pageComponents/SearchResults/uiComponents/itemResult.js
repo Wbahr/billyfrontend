@@ -229,6 +229,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'frecno': result.frecno,
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
+                    'itemUnitPriceOverride': null
                   }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}

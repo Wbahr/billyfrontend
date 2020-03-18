@@ -337,6 +337,11 @@ export default function Provider(props) {
         mutatedCart[index].itemNotes = value
         setShoppingCart([...mutatedCart])
         break
+      case 'priceOverride':
+        mutatedCart = shoppingCart
+        mutatedCart[index].itemUnitPriceOverride = value
+        setShoppingCart([...mutatedCart])
+      break
     }
   }
 
