@@ -41,8 +41,8 @@ const Container = styled.div`
 `
 
 export default function EditPriceModal({open, index, hideEditPriceModal}) {
-  const context = useContext(Context)
-  const [itemPrice, setItemPrice] = useState('$1.00')
+  // const context = useContext(Context)
+  const [itemPrice, setItemPrice] = useState('$0.00')
 
   function handleClose(){
     hideEditPriceModal()
