@@ -9,7 +9,8 @@ import SubtotalBox from './uiComponents/subtotalBox'
 import OrderSummary from './uiComponents/orderSummary'
 import SplitLineModal from './uiComponents/splitLineModal'
 import FactoryStockModal from './uiComponents/factoryStockModal'
-import EditPriceModal from './uiComponents/editPriceModal';
+import EditPriceModal from './uiComponents/editPriceModal'
+import CustomerPartModal from './uiComponents/editCustomerPartModal'
 
 const DivContainer = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ export default function ShoppingCartPage(props) {
   const [showSplitLineModal, setShowSplitLineModal] = useState(false)
   const [showFactoryStockModal, setShowFactoryStockModal] = useState(false)
   const [showEditPriceModal, setShowEditPriceModal] = useState(false)
+  const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
   const [index, setIndex] = useState(null)
 
   function handleShowSplitLineModal(index){
@@ -65,6 +67,15 @@ export default function ShoppingCartPage(props) {
     setShowEditPriceModal(false)
   }
 
+  function handleShowCustomerPartModal(index){
+    setIndex(index)
+    setShowCustomerPartModal(true)
+  }
+
+  function handleHideCustomerPartModal(){
+    setShowCustomerPartModal(false)
+  }
+
   return(
     <DivContainer>
       <SplitLineModal 
@@ -85,11 +96,17 @@ export default function ShoppingCartPage(props) {
         hideEditPriceModal={handleHideEditPriceModal}
         index={index}
       />
+      <CustomerPartModal
+        open={showCustomerPartModal} 
+        hideCustomerPartModal={handleHideCustomerPartModal}
+        index={index}
+      />
       <DivShoppingCartCol>
         <ShoppingCart
           showSplitLineModal={handleShowSplitLineModal}
           showFactoryStockModal={handleShowFactoryStockModal}
           showEditPriceModal={handleShowEditPriceModal}
+          showCustomerPartModal={handleShowCustomerPartModal}
         />
         <SubtotalBox
           history={props.history}

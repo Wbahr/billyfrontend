@@ -225,7 +225,7 @@ const GET_ITEM_BY_ID = gql`
     }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal}) {
   const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
 
@@ -290,6 +290,8 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
             <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
             <DivSplitLine>|</DivSplitLine>
             <DivSplitLine onClick={()=>showFactoryStockModal(index)}>Factory Stock</DivSplitLine>
+            <DivSplitLine>|</DivSplitLine>
+            <DivSplitLine onClick={()=>showCustomerPartModal(index)}>Edit Part No.</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
