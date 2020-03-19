@@ -291,7 +291,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
             <DivSplitLine>|</DivSplitLine>
             <DivSplitLine onClick={()=>showFactoryStockModal(index)}>Factory Stock</DivSplitLine>
             <DivSplitLine>|</DivSplitLine>
-            <DivSplitLine onClick={()=>showCustomerPartModal(index)}>Edit Part No.</DivSplitLine>
+            <DivSplitLine onClick={()=>showCustomerPartModal(index)}>Custom Part No.</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
