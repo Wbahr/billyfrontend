@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
@@ -152,7 +153,13 @@ export default function HeaderComponent(props) {
   const [searchAsCustomer, setSearchAsCustomer] = useState(false)
   const [showDropdown, setShowDropdown] = useState(
     {
-      brands: false
+      about: false,
+      brands: false,
+      contact: false,
+      resources: false,
+      services: false,
+      shop: false,
+      industries: false
     }
   )
 
@@ -162,12 +169,12 @@ export default function HeaderComponent(props) {
 
   function onHover(e) {
     let target = e.target.id
-    setShowDropdown({...showDropdown, brands: true})
+    setShowDropdown({...showDropdown, [target]: true})
   }
 
   function onExit(e) {
-    let target = e.target.id
-    setShowDropdown({...showDropdown, brands: false})
+    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+    setShowDropdown({...mutatedShowDropdown})
   }
 
   return(
@@ -240,16 +247,70 @@ export default function HeaderComponent(props) {
             <img src={AirlineLogo} height="50px"/>
           </Link>
           <LinkContainer>
-            <Link to="/categories" style={{ textDecoration: 'none' }}>
-              <NavItem>Shop <FontAwesomeIcon icon="caret-down" color="black"/></NavItem>
-            </Link>
-            <Link to="/services" style={{ textDecoration: 'none' }}>
-              <NavItem>Services</NavItem>
-            </Link>
-            <Link to="/industries" style={{ textDecoration: 'none' }}>
-              <NavItem>Industries</NavItem>
-            </Link>
-            <div onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+            <div id="shop" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/categories" style={{ textDecoration: 'none' }}>
+                <NavItem id="shop">Shop <FontAwesomeIcon icon={showDropdown.shop ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.shop} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="services" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/services" style={{ textDecoration: 'none' }}>
+                <NavItem id="services">Services <FontAwesomeIcon icon={showDropdown.services ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.services} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="industries" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/industries" style={{ textDecoration: 'none' }}>
+                <NavItem id="industries">Industries <FontAwesomeIcon icon={showDropdown.industries ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.industries} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="brands" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/brands" style={{ textDecoration: 'none' }} >
                 <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
@@ -334,15 +395,69 @@ export default function HeaderComponent(props) {
                 ]}
               />
             </div>
-            <Link to="/resources" style={{ textDecoration: 'none' }}>
-              <NavItem>Resources</NavItem>
-            </Link>
-            <Link to="/about" style={{ textDecoration: 'none' }}>
-              <NavItem>About</NavItem>
-            </Link>
-            <Link to="/contact" style={{ textDecoration: 'none' }}>
-              <NavItem>Contact</NavItem>
-            </Link>
+            <div id="resources" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/resources" style={{ textDecoration: 'none' }}>
+                <NavItem id="resources">Resources <FontAwesomeIcon icon={showDropdown.resources ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.resources} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="about" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/about" style={{ textDecoration: 'none' }}>
+                <NavItem id="about">About <FontAwesomeIcon icon={showDropdown.about ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.about} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="contact" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/contact" style={{ textDecoration: 'none' }}>
+                <NavItem id="contact">Contact <FontAwesomeIcon icon={showDropdown.contact ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.contact} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
           </LinkContainer>
           <Div>
             <Context.Consumer>
