@@ -123,7 +123,7 @@ const DivMenu = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 200px; 
+  width: 300px; 
   margin: 8px 32px;
   @media (max-width: 1200px){
     display: none;
@@ -137,12 +137,17 @@ const Head = styled.p`
 `
 
 const Item = styled.p`
+  cursor: pointer;
   font-size: 12px;
   font-weight: 300;
   color: grey;
   margin: 0;
   margin-left: 4px;
   line-height: 1.5;
+  :hover{
+    color: #328EFC;
+    font-weight: 400;
+  }
 `
 
 const ADim = styled.a`
@@ -178,8 +183,7 @@ const ACallUs = styled.a`
   margin: 0 0 0 8px;
 `
 
-export default function FooterComponent() {
-
+export default function FooterComponent({history}) {
   return(
     <>
       <Newsletter>
@@ -200,32 +204,22 @@ export default function FooterComponent() {
           </DivAirline>
           <DivMenu>
             <Head>Featured Brands</Head>
-            <Item>SMC</Item>
-            <Item>Hydraulics</Item>
-            <Item>Gears</Item>
-            <Item>Tubing</Item>
-            <Item>Pumps</Item>
-            <Item>Aluminum Framing</Item>
+            <Item onClick={()=> history.push('/brands')}>SMC</Item>
+            <Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
+            <Item onClick={()=> history.push('/brands')}>Gears</Item>
+            <Item onClick={()=> history.push('/brands')}>Tubing</Item>
+            <Item onClick={()=> history.push('/brands')}>Pumps</Item>
+            <Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
           </DivMenu>
 
           <DivMenu>
             <Head>Products</Head>
-            <Item>Valves</Item>
-            <Item>Hydraulics</Item>
-            <Item>Gears</Item>
-            <Item>Tubing</Item>
-            <Item>Aluminum Framing</Item>
-            <Item>Controls</Item>
-          </DivMenu>
-
-          <DivMenu>
-            <Head>Products</Head>
-            <Item>Valves</Item>
-            <Item>Hydraulics</Item>
-            <Item>Tubing</Item>
-            <Item>Pumps</Item>
-            <Item>Aluminum Framing</Item>
-            <Item>Controls</Item>
+            <Item onClick={()=> history.push('/brands')}>Valves</Item>
+            <Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
+            <Item onClick={()=> history.push('/brands')}>Gears</Item>
+            <Item onClick={()=> history.push('/brands')}>Tubing</Item>
+            <Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
+            <Item onClick={()=> history.push('/brands')}>Controls</Item>
           </DivMenu>
 
           <DivSocial>
