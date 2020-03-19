@@ -164,7 +164,8 @@ export default function HeaderComponent(props) {
 
   function onHover(e) {
     let target = e.target.id
-    setShowDropdown({...showDropdown, [target]: true})
+    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+    setShowDropdown({...mutatedShowDropdown, [target]: true})
   }
 
   function onExit(e) {
