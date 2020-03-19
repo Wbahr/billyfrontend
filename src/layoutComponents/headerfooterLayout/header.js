@@ -49,25 +49,20 @@ const LinkContainer = styled.div`
 const NavBottomContainer = styled.div`
   display: flex;
   height: 100%;
-  width: 1200px;
+  width: 1300px;
   justify-content: space-between;
   align-items: center;
 `
 
 const NavItem =styled.div`
-  display: block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   color: black !important;
   font-weight: 400;
   font-size: 16px;
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
-  border-bottom: 3px white solid;
-  margin-bottom: -3px;
-
-  &:hover{
-    transition: border-bottom 200ms;
-    border-bottom: 3px rgb(219,22,51) solid;
-  }
+  margin: 0 8px -3px 8px;
 `
 
 const InputSearch = styled.input`
@@ -249,7 +244,7 @@ export default function HeaderComponent(props) {
           <LinkContainer>
             <div id="shop" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/categories" style={{ textDecoration: 'none' }}>
-                <NavItem id="shop">Shop <FontAwesomeIcon icon={showDropdown.shop ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="shop">Shop <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.shop ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.shop} history={props.history}
                 options={[
@@ -270,7 +265,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="services" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/services" style={{ textDecoration: 'none' }}>
-                <NavItem id="services">Services <FontAwesomeIcon icon={showDropdown.services ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="services">Services <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.services ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.services} history={props.history}
                 options={[
@@ -291,7 +286,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="industries" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/industries" style={{ textDecoration: 'none' }}>
-                <NavItem id="industries">Industries <FontAwesomeIcon icon={showDropdown.industries ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="industries">Industries <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.industries ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.industries} history={props.history}
                 options={[
@@ -312,7 +307,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="brands" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/brands" style={{ textDecoration: 'none' }} >
-                <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="brands">Brands <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.brands} history={props.history}
                 options={[
@@ -397,7 +392,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="resources" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/resources" style={{ textDecoration: 'none' }}>
-                <NavItem id="resources">Resources <FontAwesomeIcon icon={showDropdown.resources ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="resources">Resources <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.resources ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.resources} history={props.history}
                 options={[
@@ -418,7 +413,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="about" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/about" style={{ textDecoration: 'none' }}>
-                <NavItem id="about">About <FontAwesomeIcon icon={showDropdown.about ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="about">About <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.about ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.about} history={props.history}
                 options={[
@@ -439,7 +434,7 @@ export default function HeaderComponent(props) {
             </div>
             <div id="contact" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/contact" style={{ textDecoration: 'none' }}>
-                <NavItem id="contact">Contact <FontAwesomeIcon icon={showDropdown.contact ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="contact">Contact <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.contact ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.contact} history={props.history}
                 options={[
