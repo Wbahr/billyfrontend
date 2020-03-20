@@ -398,16 +398,16 @@ export default function HeaderComponent(props) {
               <Dropdown open={showDropdown.resources} history={props.history}
                 options={[
                   {
-                    'label': 'All Brands',
-                    'link': '/brands'
+                    'label': 'Blog - Technically Speaking',
+                    'link': '/blog'
                   },
                   {
-                    'label': 'ABB',
-                    'link': '/brands/featured/abb'
+                    'label': 'Youtube Channel',
+                    'link': '/blog'
                   },
                   {
-                    'label': 'Aventics',
-                    'link': '/brands/featured/aventics'
+                    'label': 'FAQ',
+                    'link': '/resources/faq'
                   }
                 ]}
               />
@@ -419,16 +419,36 @@ export default function HeaderComponent(props) {
               <Dropdown open={showDropdown.about} history={props.history}
                 options={[
                   {
-                    'label': 'All Brands',
-                    'link': '/brands'
+                    'label': 'Locations',
+                    'link': '/about/locations'
                   },
                   {
-                    'label': 'ABB',
-                    'link': '/brands/featured/abb'
+                    'label': 'Transactional Services',
+                    'link': '/about/transactional-services'
                   },
                   {
-                    'label': 'Aventics',
-                    'link': '/brands/featured/aventics'
+                    'label': 'News',
+                    'link': '/about/news'
+                  },
+                  {
+                    'label': 'Events',
+                    'link': '/about/events'
+                  },
+                  {
+                    'label': 'Careers',
+                    'link': '/about/careers'
+                  },
+                  {
+                    'label': 'Quality Policy',
+                    'link': '/about/featured/aventics'
+                  },
+                  {
+                    'label': 'Our History',
+                    'link': '/about/our-history'
+                  },
+                  {
+                    'label': 'Mission Statement',
+                    'link': '/about/mission-statement'
                   }
                 ]}
               />
@@ -440,16 +460,20 @@ export default function HeaderComponent(props) {
               <Dropdown open={showDropdown.contact} history={props.history}
                 options={[
                   {
-                    'label': 'All Brands',
-                    'link': '/brands'
+                    'label': 'Contact Us',
+                    'link': '/contact-us'
                   },
                   {
-                    'label': 'ABB',
-                    'link': '/brands/featured/abb'
+                    'label': 'Credit Application',
+                    'link': '/credit-application'
                   },
                   {
-                    'label': 'Aventics',
-                    'link': '/brands/featured/aventics'
+                    'label': 'Framing Request',
+                    'link': '/framing-request'
+                  },
+                  {
+                    'label': 'Government Sales',
+                    'link': '/government-sales'
                   }
                 ]}
               />
