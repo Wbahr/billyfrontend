@@ -11,7 +11,7 @@ const DivSlideCard = styled.div`
   align-items: center;
   margin: 0 8px;
   box-shadow: 0 1px 1px rgba(0,0,0,.2);
-
+  
   &:hover{
     box-shadow: 0 2px 2px rgba(0,0,0,.2);
   }
