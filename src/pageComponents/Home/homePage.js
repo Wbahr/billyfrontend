@@ -4,6 +4,7 @@ import FeaturedManufacturers from './uiComponents/featuredManufacturers'
 import ShopOurProducts from './uiComponents/shopOurProducts'
 import Banner from './uiComponents/banner'
 import SuggestedSearch from './uiComponents/suggestedSearch'
+import LineCards from './uiComponents/lineCard'
 // import ContentScreen from '../../containerComponents/contentScreen'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
@@ -28,6 +29,7 @@ class HomePage extends React.Component {
         <ContentScreenContainer>
           <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
+          <LineCards/>
         </ContentScreenContainer>
       </>
     )

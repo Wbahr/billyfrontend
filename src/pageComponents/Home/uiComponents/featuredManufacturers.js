@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import { H2 } from '../../_common/text'
 import SectionHeader from '../../_common/sectionHeader.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -110,8 +110,26 @@ height: 120px;
   display: inline-block;
  display: flex;
  align-items: center;
+
 `;
 
+
+const ImgSlide = keyframes`
+0%{
+  transform: translate3d(0, 0, 0);
+}
+100%{
+  transform: translate3d(-3000px, 0, 0);
+}
+
+`;
+
+const LogoImg = styled.img`
+width: 150px;
+height: auto;
+animation: ${ImgSlide} 60s linear infinite;
+
+`;
 const divStyle = {
   // verticalAlign: "middle",
   // display: "inline-block",
@@ -141,10 +159,7 @@ const A = styled.a`
 
 `;
 
-const LogoImg = styled.img`
-width: 150px;
-height: auto;
-`;
+
 
 const P = styled.p`
   font-size: 25px;
@@ -152,6 +167,8 @@ const P = styled.p`
   margin: 0;
   width: 150px;
 `;
+
+
 
 export default class Slider extends Component {
   constructor() {
@@ -193,7 +210,7 @@ export default class Slider extends Component {
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured16.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured17.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured18.png" /></A></Brandsdiv>
-            <Brandsdiv><A href="#"> <P>All Brands</P></A></Brandsdiv>
+            {/* <Brandsdiv><A href="#"> <P>All Brands</P></A></Brandsdiv> */}
           </div>
 
           <IconDiv><A onClick={this.scroll.bind(null, 1)}><FontAwesomeIcon icon='chevron-right' size='2x' /></A></IconDiv>
