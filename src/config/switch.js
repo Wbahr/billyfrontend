@@ -24,6 +24,7 @@ import Signup from '../pageComponents/Signup/signupPage'
 import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
 import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
+import foodBeverage from '../pageComponents/Technologies/foodBeverage'
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
@@ -95,6 +96,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/technologies/:page' component={foodBeverage} layout={HeaderFooterLayoutExpanded}/>
+
         {/* ADMIN INTERNAL TOOLS */}
         <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
         <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
