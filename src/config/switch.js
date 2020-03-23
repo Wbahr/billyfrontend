@@ -24,13 +24,14 @@ import Signup from '../pageComponents/Signup/signupPage'
 import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
 import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
-import foodBeverage from '../pageComponents/Technologies/foodBeverage'
+import technologyPage from 'pageComponents/Technologies/technologyPage'
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
 import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
+
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
   return (
@@ -96,7 +97,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/technologies/:page' component={foodBeverage} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
 
         {/* ADMIN INTERNAL TOOLS */}
         <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
