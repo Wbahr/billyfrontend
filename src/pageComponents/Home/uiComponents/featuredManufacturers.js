@@ -136,7 +136,7 @@ const divStyle = {
   // whiteSpace: "nowrap",
   overflowX: "hidden",
   overflowY: "hidden",
-  width: "70%",
+  width: "80%",
   display: "flex"
 };
 

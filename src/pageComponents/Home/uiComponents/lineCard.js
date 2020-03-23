@@ -63,14 +63,14 @@ export default function LineCards() {
 
                 <LineCardDiv>
                     <A href="#">
-                        <ImgDiv><Img src="https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Airline%20line%20card%20thumb.jpg" /></ImgDiv>
+                        <ImgDiv><Img src="https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Hydraulic_Preferred_Stock_Catalog.jpg" /></ImgDiv>
                         <NameDiv><P>Hydraulic Catalog</P></NameDiv>
                     </A>
                 </LineCardDiv>
 
                 <LineCardDiv>
                     <A href="#">
-                        <ImgDiv><Img src="https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Airline%20line%20card%20thumb.jpg" /></ImgDiv>
+                        <ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/Automation_preferred_stock_catalog_thumbnail.png" /></ImgDiv>
                         <NameDiv><P>Automation Catalog</P></NameDiv>
                     </A>
                 </LineCardDiv>
