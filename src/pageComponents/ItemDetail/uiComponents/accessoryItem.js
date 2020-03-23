@@ -6,7 +6,7 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($associatedItemId: ID){
+    query ItemById($associatedItemId: Int){
         itemDetails(invMastUid: $associatedItemId) {
             anonPrice
             assembly

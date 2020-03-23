@@ -203,26 +203,30 @@ const CustomDatePicker = styled.button`
 `
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: ID){
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            tariff
-            unitSizeMultiple
-            availability
-            availabilityMessage
-            image {
-              path
-              sequence
-              type
-            }
+  query ItemById($itemId: Int){
+    itemDetails(invMastUid: $itemId) {
+        anonPrice
+        invMastUid
+        itemCode
+        itemDesc
+        listPrice
+        mfgPartNo
+        modelCode
+        tariff
+        unitSizeMultiple
+        availability
+        availabilityMessage
+        image {
+          path
+          sequence
+          type
         }
     }
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
+    }
+  }
 `
 
 export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal}) {

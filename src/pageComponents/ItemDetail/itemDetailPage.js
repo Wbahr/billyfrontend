@@ -7,7 +7,7 @@ import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: ID){
+    query ItemById($itemId: Int){
         itemDetails(invMastUid: $itemId) {
             anonPrice
             assembly

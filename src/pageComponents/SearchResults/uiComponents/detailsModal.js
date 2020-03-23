@@ -114,7 +114,7 @@ const ButtonBlack = styled.button`
 `
 
 const GET_ITEM_DETAILS = gql`
-query ItemById($invMastUid: ID){
+query ItemById($invMastUid: Int){
   itemDetails(invMastUid: $invMastUid) {
         anonPrice
         assembly

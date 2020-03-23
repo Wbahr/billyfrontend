@@ -36,7 +36,7 @@ const Div = styled.div`
 `
 
 const QUERY_STOCK_AVAILABILITY = gql`
-  query GetStockAvailability($invMastUid: ID){
+  query GetStockAvailability($invMastUid: Int){
     getStockAvailability(invMastUid: $invMastUid){
       airlineStocks {
         companyId
