@@ -143,6 +143,9 @@ const DivDetails = styled.div`
 `
 
 const DivPurchaseInfo = styled.div`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 125px;
   display: flex;
   flex-direction: column;
   align-items: center;

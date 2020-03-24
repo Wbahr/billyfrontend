@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -231,7 +231,11 @@ const GET_ITEM_BY_ID = gql`
 
 export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal}) {
   const [itemDetails, setItem] = useState(null)
+  const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
+  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState("0")
   const itemId = parseInt(item.frecno,10)
+
+  const context = useContext(Context)
 
   const { 
     loading, 
@@ -245,8 +249,31 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
       } else {
         setItem({})
       }
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerPartNumbers(result.customerPartNumbers)
+      } else {
+        setCustomerPartNumbers([])
+      }
     }
   })
+
+  function selectCustomerPartNumber(value){
+    if (value === "-1") {
+      setSelectedCustomerPartNumber("0") // Reset Dropdown
+      context.updateItem(index, 'customerPartNumber', null)
+      showCustomerPartModal(index)
+    } else if (value === "0") {
+      setSelectedCustomerPartNumber(value)
+      context.updateItem(index, 'customerPartNumber', null)
+    } else {
+      setSelectedCustomerPartNumber(value)
+      context.updateItem(index, 'customerPartNumber', value)
+    }
+  }
+
+  function clearCustomerPartNumber(){
+    selectCustomerPartNumber("0")
+  }
 
   let Content
   if(_.isNil(itemDetails)) {
@@ -263,6 +290,9 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    let CustomerPartOptions = _.map(customerPartNumbers, elem => {
+      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+    })
     Content = (
       <DivCard>
         <DivMove>
@@ -282,6 +312,18 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
             <CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
               <P2>AHC{itemDetails.invMastUid}</P2>
             </CopyToClipboard>
+          </TextRow>
+          <TextRow>
+            <select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+              <option value="0">Customer Part#</option>
+              {CustomerPartOptions}
+              <option value="-1">Create Part#</option>
+            </select>
+            { selectedCustomerPartNumber !== "0" &&
+              <div style={{'margin-left': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+                <FontAwesomeIcon icon="times" color="grey" />
+              </div>
+            }
           </TextRow>
           <DivRow>
             <Context.Consumer>

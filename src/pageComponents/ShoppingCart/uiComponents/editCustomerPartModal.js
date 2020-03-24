@@ -51,7 +51,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
   return(
     <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
       <Container>
-        <h4>Edit Part Number</h4>
+        <h4>Add Part Number</h4>
         <DivItem>
           <Label>Part Number: </Label><AirlineInput value={partNumber} width='200px' onChange={(e)=> setPartNumber(e.target.value)}/>
         </DivItem>
