@@ -28,14 +28,6 @@ export default function TechnologyPage({history}) {
     {
       'label': 'FoodBeverage',
       'page': 'food-beverage'
-    },
-    {
-      'label': 'Adaptall',
-      'page': 'adaptall'
-    },
-    {
-      'label': 'Adsens',
-      'page': 'adsens'
     }
   ]
   useEffect(() => {

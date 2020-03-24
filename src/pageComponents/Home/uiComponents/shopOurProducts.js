@@ -47,11 +47,11 @@ const Suggestion = styled.div`
   height: 45px;
   padding: 0px 8px;
   margin: 0 5px;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   color: #303030;
   &:hover {
     background-color: #328EFC;
-    border: 2px solid #1E5597;
+    border: 1px solid #1E5597;
     color: white;
     transition: color 500ms;
     transition: border 500ms;

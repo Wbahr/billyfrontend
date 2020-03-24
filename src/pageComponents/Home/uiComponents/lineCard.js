@@ -16,7 +16,7 @@ const LineCardWrapper = styled.div`
 const LineCardDiv = styled.div`
     display: flex;
     flex-direction: column;
-
+ 
 `;
 
 const ImgDiv = styled.div`
@@ -27,7 +27,10 @@ const NameDiv = styled.div`
     margin: 20px 0;
     color: #5a5a5a;
     font-weight: bold;
-
+    &:hover{
+       
+        color: #246696;
+    }
 `;
 
 const Img = styled.img`
@@ -42,6 +45,9 @@ const P = styled.p`
 `;
 
 const A = styled.a`
+&:hover{
+    text-decoration: none;
+}
 `;
 
 export default function LineCards() {

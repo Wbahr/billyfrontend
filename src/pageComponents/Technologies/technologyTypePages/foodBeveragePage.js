@@ -18,9 +18,9 @@ const Container = styled.div`
 
 const FeaturedBrandLogo = styled.div`
   display: flex;
-  width: 2000px;
+  width: 100%;
   justify-content: center;
-  padding: 150px 0;
+  padding: 140px 0;
   background-image: url('https://media.istockphoto.com/photos/factory-line-and-products-picture-id172401094?s=2048x2048');
  
   background-repeat: no-repeat;

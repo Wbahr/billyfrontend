@@ -7,11 +7,11 @@ const Div = styled.div`
   flex-direction: column;
   width: 100%;
   border-bottom: 1px solid #ccc;
-  margin: 20px 0;
+  margin: 40px 0;
 `
 
 const StyledHeaderDiv = styled.div`
-   border-bottom: 5px solid #DB1633;
+   border-bottom: 3px solid #DB1633;
    width: max-content;
 `
 
