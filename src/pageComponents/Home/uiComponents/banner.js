@@ -11,7 +11,8 @@ const BannerContainer = styled.div`
   display: flex;
   height: 100%;
   max-width: 1400px;
-  margin: 12px auto 0 auto;
+  // margin: 12px auto 0 auto;
+  margin: 20px auto;
   @media (max-width: 800px) {
     flex-direction: column;
   }
@@ -20,10 +21,11 @@ const BannerContainer = styled.div`
 const Col = styled.div`
   display: flex;
   flex-direction: column;
+  width: 600px;
 `
 
 const Div0 = styled.div`
-  margin: 10px;
+  margin: 10px 10px 10px 0;
   width: 600px;
   height: 320px;
 `
@@ -45,11 +47,12 @@ const Div3 = styled.div`
 const Div2 = styled.div`
   margin: 10px;
   background-color: grey;
-  width: 600px;
+  // width: 600px;
   height: 150px;
 `
 const Row = styled.div`
   display: flex;
+
 `
 
 const Img = styled.img`

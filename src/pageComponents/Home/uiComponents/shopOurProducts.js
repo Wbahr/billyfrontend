@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { H2 } from '../../_common/text'
 import SectionHeader from '../../_common/sectionHeader.js'
+import SmallSectionHeader from '../../_common/smallSectionHeader.js'
+
 import { Link, useHistory } from 'react-router-dom'
 import CategoryGrid from './categoryGrid'
+import Banner from './banner'
 
 const Thing = styled.div`
   margin-top: -6px;
@@ -16,6 +19,7 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+ 
 `
 
 const DivRight = styled(Div)`
@@ -58,6 +62,11 @@ const Suggestion = styled.div`
     transition: background-color 500ms;
   }
 `
+const Wrapper = styled.div`
+  // border-bottom: 1px solid lightgray;
+`;
+
+
 
 export default function ShopOurProducts(props) {
 
@@ -68,10 +77,13 @@ export default function ShopOurProducts(props) {
 
   return(
     <>
-      <div>
-        <SectionHeader
+      <Wrapper>
+        <SmallSectionHeader
           text='Recommended For You'
         />
+
+
+
         <DivRight>
           <Suggestion onClick={()=>handleSearch('Solenoid Valve')} >
             Solenoid Valve
@@ -88,12 +100,32 @@ export default function ShopOurProducts(props) {
           <Suggestion onClick={()=>handleSearch('Valve')}>
             Valve
           </Suggestion>
+
+          <Suggestion onClick={()=>handleSearch('Solenoid Valve')} >
+            Solenoid Valve
+          </Suggestion>
+          <Suggestion onClick={()=>handleSearch('SY Valve')}>
+            SY Valve
+          </Suggestion>
+          <Suggestion onClick={()=>handleSearch('Manifold')}>
+            Manifold
+          </Suggestion>
+          <Suggestion onClick={()=>handleSearch('Phoenix Terminal Block')}>
+            Phoenix Terminal Block
+          </Suggestion>
+          <Suggestion onClick={()=>handleSearch('Valve')}>
+            Valve
+          </Suggestion>
+         
         </DivRight>
-      </div>
+      </Wrapper>
+
+<Banner/>
+
       <div>
         <div>
           <SectionHeader
-            text='Categories'
+            text='Shop by Categories'
           />
         </div>
         <Div>

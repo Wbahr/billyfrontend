@@ -5,6 +5,7 @@ import ShopOurProducts from './uiComponents/shopOurProducts'
 import Banner from './uiComponents/banner'
 import SuggestedSearch from './uiComponents/suggestedSearch'
 import LineCards from './uiComponents/lineCard'
+import TechnicallySpeaking from './uiComponents/technicallySpeaking'
 // import ContentScreen from '../../containerComponents/contentScreen'
 // import ItemResult from './uiComponents/itemResult'
 // import ResultsSearch from './uiComponents/resultsSearch'
@@ -25,11 +26,12 @@ class HomePage extends React.Component {
     return(
       <>
         {/* <SuggestedSearch /> */}
-        <Banner/>
+        {/* <Banner/> */}
         <ContentScreenContainer>
           <ShopOurProducts {...this.props}/>
           <FeaturedManufacturers/>
           <LineCards/>
+          <TechnicallySpeaking/>
         </ContentScreenContainer>
       </>
     )
