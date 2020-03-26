@@ -1,12 +1,9 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { StyledText0 } from '../../styles/fonts'
 import FoodBeverage from './technologyTypePages/foodBeveragePage'
-
-
-// import _ from 'lodash'
 
 const Div = styled.div`
   width: 100%;
@@ -18,12 +15,10 @@ const Div = styled.div`
   padding 0;
   background-color: grey;
 `
-
-
-export default function TechnologyPage({history}) {
+export default function TechnologyPage({ history }) {
   const [pageComponent, setPageComponent] = useState()
   let { page } = useParams()
-
+  
   const technologyTypePages = [
     {
       'label': 'FoodBeverage',
@@ -31,21 +26,17 @@ export default function TechnologyPage({history}) {
     }
   ]
   useEffect(() => {
-    if(page === 'food-beverage'){
-      setPageComponent(<FoodBeverage/>)
-    } 
-    
+    if (page === 'food-beverage') {
+      setPageComponent(<FoodBeverage />)
+    }
   }, [page])
-      
-  return(
-    <> 
-        {pageComponent}      
-  
 
+  return (
+    <>
+      {pageComponent}
     </>
   )
 }
-
 TechnologyPage.propTypes = {
   history: PropTypes.object.isRequired
 }

@@ -19,19 +19,18 @@ const ContentScreenContainer = styled.div`
   justify-content: space-between;
   flex-grow: 99;
 `
-
 class HomePage extends React.Component {
 
-  render(){
-    return(
+  render() {
+    return (
       <>
         {/* <SuggestedSearch /> */}
-        {/* <Banner/> */}
         <ContentScreenContainer>
-          <ShopOurProducts {...this.props}/>
-          <FeaturedManufacturers/>
-          <LineCards/>
-          <TechnicallySpeaking/>
+          <Banner />
+          <ShopOurProducts {...this.props} />
+          <FeaturedManufacturers />
+          <LineCards />
+          <TechnicallySpeaking />
         </ContentScreenContainer>
       </>
     )
