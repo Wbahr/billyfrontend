@@ -78,6 +78,19 @@ function InputV2(props) {
         />
       </DivContainer>
     )
+  } else if (type === "percent"){
+    return(
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainCurrencyInput
+          value={value} 
+          suffix='%' 
+          style={{width: width || "400px"}} 
+          onChangeEvent={(e)=>onChange(e)}
+          precision="0"
+        />
+      </DivContainer>
+    )
   } else {
     return(
       <DivContainer>

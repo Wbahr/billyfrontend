@@ -8,13 +8,14 @@ import AirlineInput from '../../_common/form/inputv2'
 
 const DivRow = styled.div`
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: space-between;
 `
 
 const DivItem = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 4px;
 `
 
 const Label = styled.label`
@@ -43,18 +44,45 @@ const Container = styled.div`
 export default function EditPriceModal({open, index, hideEditPriceModal}) {
   // const context = useContext(Context)
   const [itemPrice, setItemPrice] = useState('$0.00')
+  const [margin, setMargin] = useState(0)
+  const airlinecost = 2
 
   function handleClose(){
     hideEditPriceModal()
   }
+
+  function handleChangePrice(type, value){
+    if(type === 'price'){
+      let mutatedValue = Number(value.substring(1))
+      let margin = (mutatedValue - airlinecost)/airlinecost
+      if (margin < 0){
+        margin = 0
+      }
+      setItemPrice(value)
+      setMargin((margin * 100).toFixed(1))
+    } else {
+      let mutatedValue = Number(value.slice(0, -1))
+      setMargin(mutatedValue)
+      let itemPrice = ((mutatedValue/100) * airlinecost) + airlinecost
+      setItemPrice(itemPrice)
+    }
+  }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '400px', 'border-radius': '5px'}}>
       <Container>
         <h4>Edit Item Price</h4>
-        <DivItem>
-          <Label>Item Price: </Label><AirlineInput type="currency" value={itemPrice} width='100px' onChange={(e)=> setItemPrice(e.target.value)}/>
-        </DivItem>
+        <DivRow>
+          <DivItem>
+            <Label>Item Price: </Label><AirlineInput type="currency" value={itemPrice} width='100px' onChange={(e)=> handleChangePrice('price', e.target.value)}/>
+          </DivItem>
+          <DivItem>
+            <Label>Margin: </Label><AirlineInput type="percent" value={margin} width='100px' onChange={(e)=> handleChangePrice('margin', e.target.value)}/>
+          </DivItem>
+          <DivItem>
+            <Label>Airline Price: </Label><AirlineInput type="currency" disabled={true} value={airlinecost} width='100px' onChange={()=>{}}/>
+          </DivItem>
+        </DivRow>
         <Context.Consumer>
           {({updateItem}) => (
             <DivRow>
