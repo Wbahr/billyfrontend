@@ -242,6 +242,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
     error, 
     data 
   } = useQuery(GET_ITEM_BY_ID, {
+    fetchPolicy: 'no-cache',
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.itemDetails)) {

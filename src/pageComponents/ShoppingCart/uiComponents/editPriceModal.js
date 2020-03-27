@@ -80,7 +80,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal}) {
             <Label>Margin: </Label><AirlineInput type="percent" value={margin} width='100px' onChange={(e)=> handleChangePrice('margin', e.target.value)}/>
           </DivItem>
           <DivItem>
-            <Label>Airline Price: </Label><AirlineInput type="currency" disabled={true} value={airlinecost} width='100px' onChange={()=>{}}/>
+            <Label>Airline Cost: </Label><AirlineInput type="currency" disabled={true} value={airlinecost} width='100px' onChange={()=>{}}/>
           </DivItem>
         </DivRow>
         <Context.Consumer>
