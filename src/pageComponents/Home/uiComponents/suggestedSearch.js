@@ -7,7 +7,6 @@ const DivContainer = styled.div`
   max-width: 1400px;
   margin: 12px auto 0 auto;
 `
-
 const Suggestion = styled.div`
   display: flex;
   align-items: center;
@@ -35,7 +34,6 @@ export default function ShopOurProducts(props) {
     props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
 
   }
-
   return(
     <>
       <DivContainer>

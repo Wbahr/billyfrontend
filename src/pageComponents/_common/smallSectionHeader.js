@@ -1,21 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
-import { H2 } from './text'
+import { H4 } from './textH4'
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid #ccc;
-  margin: 40px 0;
+//   border-bottom: 1px solid #ccc;
+  margin: 30px 0 20px ;
+  
 `
 
 const StyledHeaderDiv = styled.div`
-   border-bottom: 3px solid #DB1633;
+//    border-bottom: 3px solid #DB1633;
    width: max-content;
+   
+}
+
+
 `
 
-class sectionHeader extends React.Component {
+class smallSectionHeader extends React.Component {
 	render(){
 		const {
 			text
@@ -24,11 +29,11 @@ class sectionHeader extends React.Component {
 		return(
       <Div>
         <StyledHeaderDiv>
-          <H2>{text}</H2>
+          <H4>{text}</H4>
         </StyledHeaderDiv>
       </Div>
 		)
 	}
 }
 
-export default sectionHeader
+export default smallSectionHeader

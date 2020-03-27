@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { H2 } from '../../_common/text'
 import SectionHeader from '../../_common/sectionHeader.js'
+import SmallSectionHeader from '../../_common/smallSectionHeader.js'
 import { Link, useHistory } from 'react-router-dom'
 import CategoryGrid from './categoryGrid'
+import Banner from './banner'
 
 const Thing = styled.div`
   margin-top: -6px;
@@ -16,13 +18,12 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+ 
 `
-
 const DivRight = styled(Div)`
   justify-content: flex-start;
 
 `
-
 const Card = styled.div`
   display: flex;
   align-items: center;
@@ -37,7 +38,6 @@ const Card = styled.div`
   margin: 0 10px;
   box-shadow: 1px 2px 2px rgba(0,0,0,.2);
 `
-
 const Suggestion = styled.div`
   display: flex;
   align-items: center;
@@ -47,16 +47,19 @@ const Suggestion = styled.div`
   height: 45px;
   padding: 0px 8px;
   margin: 0 5px;
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   color: #303030;
   &:hover {
     background-color: #328EFC;
-    border: 2px solid #1E5597;
+    border: 1px solid #1E5597;
     color: white;
     transition: color 500ms;
     transition: border 500ms;
     transition: background-color 500ms;
   }
+`
+const Wrapper = styled.div`
+  // border-bottom: 1px solid lightgray;
 `
 
 export default function ShopOurProducts(props) {
@@ -66,43 +69,58 @@ export default function ShopOurProducts(props) {
 
   }
 
-  return(
+  return (
     <>
-      <div>
-        <SectionHeader
+      <Wrapper>
+        <SmallSectionHeader
           text='Recommended For You'
         />
         <DivRight>
-          <Suggestion onClick={()=>handleSearch('Solenoid Valve')} >
+          <Suggestion onClick={() => handleSearch('Solenoid Valve')} >
             Solenoid Valve
           </Suggestion>
-          <Suggestion onClick={()=>handleSearch('SY Valve')}>
+          <Suggestion onClick={() => handleSearch('SY Valve')}>
             SY Valve
           </Suggestion>
-          <Suggestion onClick={()=>handleSearch('Manifold')}>
+          <Suggestion onClick={() => handleSearch('Manifold')}>
             Manifold
           </Suggestion>
-          <Suggestion onClick={()=>handleSearch('Phoenix Terminal Block')}>
+          <Suggestion onClick={() => handleSearch('Phoenix Terminal Block')}>
             Phoenix Terminal Block
           </Suggestion>
-          <Suggestion onClick={()=>handleSearch('Valve')}>
+          <Suggestion onClick={() => handleSearch('Valve')}>
+            Valve
+          </Suggestion>
+          <Suggestion onClick={() => handleSearch('Solenoid Valve')} >
+            Solenoid Valve
+          </Suggestion>
+          <Suggestion onClick={() => handleSearch('SY Valve')}>
+            SY Valve
+          </Suggestion>
+          <Suggestion onClick={() => handleSearch('Manifold')}>
+            Manifold
+          </Suggestion>
+          <Suggestion onClick={() => handleSearch('Phoenix Terminal Block')}>
+            Phoenix Terminal Block
+          </Suggestion>
+          <Suggestion onClick={() => handleSearch('Valve')}>
             Valve
           </Suggestion>
         </DivRight>
-      </div>
+      </Wrapper>
+
       <div>
         <div>
           <SectionHeader
-            text='Categories'
+            text='Shop by Categories'
           />
         </div>
         <Div>
-          <CategoryGrid 
+          <CategoryGrid
             history={props.history}
           />
         </Div>
       </div>
-      
     </>
   )
 }
