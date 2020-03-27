@@ -175,7 +175,7 @@ export default function ShippingScheduleItem({item, index}) {
         <DivCol3>
           <DivQuantity>
             <DivItem>
-              <Label>{formatCurrency(itemDetails.listPrice)}/each</Label>
+              <Label>{formatCurrency(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)}/each</Label>
             </DivItem>
           </DivQuantity>
           <DivQuantity>
@@ -185,7 +185,7 @@ export default function ShippingScheduleItem({item, index}) {
           </DivQuantity>
           <DivQuantity>
             <DivItem>
-              <LabelBold>{formatCurrency(Number(item.quantity) * Number(itemDetails.listPrice))}</LabelBold>
+              <LabelBold>{formatCurrency(Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride))}</LabelBold>
             </DivItem>
           </DivQuantity>
         </DivCol3>
