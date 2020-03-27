@@ -99,7 +99,7 @@ export default class Slider extends Component {
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured11.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured12.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured13.png" /></A></Brandsdiv>
-            <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured14.png" /></A></Brandsdiv>
+            <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/rittal.jpg" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured15.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured16.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured17.png" /></A></Brandsdiv>
