@@ -75,6 +75,7 @@ function InputV2(props) {
           prefix='$' 
           style={{width: width || "400px"}} 
           onChangeEvent={(e)=>onChange(e)}
+          disabled={disabled}
         />
       </DivContainer>
     )
