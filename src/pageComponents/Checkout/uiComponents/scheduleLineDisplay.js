@@ -137,7 +137,6 @@ export default function ShippingScheduleItem({item, index}) {
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.itemDetails)) {
-        console.log('result.itemDetails', result.itemDetails)
         setItem(result.itemDetails)
       } else {
         setItem({})

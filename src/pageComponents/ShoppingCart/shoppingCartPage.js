@@ -36,6 +36,12 @@ export default function ShoppingCartPage(props) {
   const [showEditPriceModal, setShowEditPriceModal] = useState(false)
   const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
   const [index, setIndex] = useState(null)
+  const [modalData, setModalData] = useState(null)
+
+  function handleSetModalData(data){
+    console.log('handleSetModalData', data)
+    setModalData(data)
+  }
 
   function handleShowSplitLineModal(index){
     setIndex(index)
@@ -92,6 +98,7 @@ export default function ShoppingCartPage(props) {
         open={showEditPriceModal} 
         hideEditPriceModal={handleHideEditPriceModal}
         index={index}
+        data={modalData}
       />
       <CustomerPartModal
         open={showCustomerPartModal} 
@@ -104,6 +111,7 @@ export default function ShoppingCartPage(props) {
           showFactoryStockModal={handleShowFactoryStockModal}
           showEditPriceModal={handleShowEditPriceModal}
           showCustomerPartModal={handleShowCustomerPartModal}
+          handleSetModalData={handleSetModalData}
         />
         <SubtotalBox
           history={props.history}

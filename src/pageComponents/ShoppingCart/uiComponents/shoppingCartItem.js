@@ -229,7 +229,7 @@ const GET_ITEM_BY_ID = gql`
   }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
   const [itemDetails, setItem] = useState(null)
   const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
   const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState("0")
@@ -274,6 +274,35 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
 
   function clearCustomerPartNumber(){
     selectCustomerPartNumber("0")
+  }
+
+  function handleShowModal(type){
+    switch(type){
+      case 'split-line':
+        handleSetModalData({
+          modalType: type
+        })
+        showSplitLineModal(index)
+        break
+      case 'factory-stock':
+        handleSetModalData({
+          modalType: type
+        })
+        showFactoryStockModal(index)
+        break
+      case 'edit-price':
+        handleSetModalData({
+          modalType: type,
+          originalItemPrice: formatCurrency(itemDetails.listPrice),
+          itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(context.cart[index].itemUnitPriceOverride),
+          airlineCost: formatCurrency(1)
+        })
+        showEditPriceModal(index)
+        break
+      case 'customer-part':
+        showCustomerPartModal(index)
+        break
+    }
   }
 
   let Content
@@ -334,11 +363,11 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
             </Context.Consumer>
           </DivRow>
           <DivRow>
-            <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
+            <DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
             <DivSplitLine>|</DivSplitLine>
-            <DivSplitLine onClick={()=>showFactoryStockModal(index)}>Factory Stock</DivSplitLine>
+            <DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
             <DivSplitLine>|</DivSplitLine>
-            <DivSplitLine onClick={()=>showCustomerPartModal(index)}>Custom Part No.</DivSplitLine>
+            <DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
@@ -361,7 +390,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
                   {({ cart }) => (
                     <>
                       <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(cart[index].itemUnitPriceOverride)}/each</Peach>
-                      <DivEditPrice onClick={()=>showEditPriceModal(index)}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
+                      <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
                     </>
                   )}
                 </Context.Consumer>

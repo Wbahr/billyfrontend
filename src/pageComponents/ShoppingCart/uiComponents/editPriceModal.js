@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
@@ -41,25 +41,49 @@ const Container = styled.div`
   }
 `
 
-export default function EditPriceModal({open, index, hideEditPriceModal}) {
+export default function EditPriceModal({open, index, hideEditPriceModal, data}) {
   // const context = useContext(Context)
   const [itemPrice, setItemPrice] = useState('$0.00')
   const [margin, setMargin] = useState(0)
-  const airlinecost = 2
+  const airlinecost = 1
+
+  useEffect(()=> {
+    if (data && data.modalType === 'edit-price') {
+      let mutatedValue = Number(data.itemPrice.substring(1))
+      let margin = calculateMargin(mutatedValue)
+      setItemPrice(data.itemPrice)
+      setMargin(margin)
+    } else {
+
+    }
+  }, [data])
+
+  function handleReset(){
+    let mutatedValue = Number(data.originalItemPrice.substring(1))
+    setItemPrice(data.originalItemPrice)
+    let margin = calculateMargin(mutatedValue)
+    setMargin(margin)
+  }
 
   function handleClose(){
     hideEditPriceModal()
   }
 
+  function calculateMargin(mutatedValue){
+    let mutatedAirlineCost = Number(data.airlineCost.substring(1))
+    let margin = (mutatedValue - mutatedAirlineCost)/mutatedAirlineCost
+    if (margin < 0){
+      margin = 0
+    }
+    return((margin * 100).toFixed(1))
+  }
+
   function handleChangePrice(type, value){
     if(type === 'price'){
       let mutatedValue = Number(value.substring(1))
-      let margin = (mutatedValue - airlinecost)/airlinecost
-      if (margin < 0){
-        margin = 0
-      }
-      setItemPrice(value)
-      setMargin((margin * 100).toFixed(1))
+      let margin = calculateMargin(mutatedValue)
+      setItemPrice(mutatedValue)
+      setMargin(margin)
     } else {
       let mutatedValue = Number(value.slice(0, -1))
       setMargin(mutatedValue)
@@ -87,11 +111,18 @@ export default function EditPriceModal({open, index, hideEditPriceModal}) {
           {({updateItem}) => (
             <DivRow>
               <ButtonBlack onClick={()=>{
-                updateItem(index, 'priceOverride', null)
+                handleReset()
                 handleClose()
+              }}>Cancel</ButtonBlack>
+              <ButtonBlack onClick={()=>{
+                handleReset()
               }}>Reset</ButtonBlack>
               <ButtonRed onClick={()=>{
-                updateItem(index, 'priceOverride', parseFloat(itemPrice.substring(1)))
+                if (itemPrice === data.originalItemPrice) {
+                  updateItem(index, 'priceOverride', null)
+                } else {
+                  updateItem(index, 'priceOverride', parseFloat(itemPrice))
+                }
                 handleClose()
               }}>Save</ButtonRed>
             </DivRow>

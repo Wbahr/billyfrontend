@@ -99,7 +99,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
         <h4>Add Part Number</h4>
         {alert && <p>{alert}</p>}
         <DivItem>
-          <Label>Part Number: </Label><AirlineInput value={partNumber} width='200px' onChange={(e)=> setPartNumber(e.target.value)}/>
+          <Label>Part Number: </Label><AirlineInput value={partNumber} disabled={mutationLoading} width='200px' onChange={(e)=> setPartNumber(e.target.value)}/>
         </DivItem>
           <DivRow>
             <ButtonBlack disabled={mutationLoading} onClick={()=>{
