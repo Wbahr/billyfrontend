@@ -3,6 +3,7 @@ import styled, {keyframes} from 'styled-components'
 import { H2 } from '../../_common/text'
 import SectionHeader from '../../_common/sectionHeader.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Slider from 'infinite-react-carousel';
 import $ from 'jquery';
 const Wrapper = styled.div`
   display: flex;
@@ -12,12 +13,12 @@ const Wrapper = styled.div`
 `
 
 const ImgSlide = keyframes`
-0%{
-  transform: translate3d(0, 0, 0);
-}
-100%{
-  transform: translate3d(-3000px, 0, 0);
-}
+  0%{
+    transform: translate3d(0, 0, 0);
+  }
+  100%{
+    transform: translate3d(-3000px, 0, 0);
+  }
 `
 const Brandsdiv = styled.div`
   height: 120px;
@@ -67,7 +68,7 @@ const P = styled.p`
   margin: 0;
   width: 150px;
 `
-export default class Slider extends Component {
+export default class LogoSlider extends Component {
   constructor() {
     super()
     this.scroll = this.scroll.bind(this)
