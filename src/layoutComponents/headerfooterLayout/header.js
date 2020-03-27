@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link, useHistory } from 'react-router-dom'
@@ -48,25 +49,20 @@ const LinkContainer = styled.div`
 const NavBottomContainer = styled.div`
   display: flex;
   height: 100%;
-  width: 1200px;
+  width: 1300px;
   justify-content: space-between;
   align-items: center;
 `
 
 const NavItem =styled.div`
-  display: block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   color: black !important;
   font-weight: 400;
   font-size: 16px;
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
-  border-bottom: 3px white solid;
-  margin-bottom: -3px;
-
-  &:hover{
-    transition: border-bottom 200ms;
-    border-bottom: 3px rgb(219,22,51) solid;
-  }
+  margin: 0 8px -3px 8px;
 `
 
 const InputSearch = styled.input`
@@ -152,7 +148,13 @@ export default function HeaderComponent(props) {
   const [searchAsCustomer, setSearchAsCustomer] = useState(false)
   const [showDropdown, setShowDropdown] = useState(
     {
-      brands: false
+      about: false,
+      brands: false,
+      contact: false,
+      resources: false,
+      services: false,
+      shop: false,
+      industries: false
     }
   )
 
@@ -162,12 +164,13 @@ export default function HeaderComponent(props) {
 
   function onHover(e) {
     let target = e.target.id
-    setShowDropdown({...showDropdown, brands: true})
+    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+    setShowDropdown({...mutatedShowDropdown, [target]: true})
   }
 
   function onExit(e) {
-    let target = e.target.id
-    setShowDropdown({...showDropdown, brands: false})
+    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+    setShowDropdown({...mutatedShowDropdown})
   }
 
   return(
@@ -240,18 +243,72 @@ export default function HeaderComponent(props) {
             <img src={AirlineLogo} height="50px"/>
           </Link>
           <LinkContainer>
-            <Link to="/categories" style={{ textDecoration: 'none' }}>
-              <NavItem>Shop <FontAwesomeIcon icon="caret-down" color="black"/></NavItem>
-            </Link>
-            <Link to="/services" style={{ textDecoration: 'none' }}>
-              <NavItem>Services</NavItem>
-            </Link>
-            <Link to="/industries" style={{ textDecoration: 'none' }}>
-              <NavItem>Industries</NavItem>
-            </Link>
-            <div onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+            <div id="shop" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/categories" style={{ textDecoration: 'none' }}>
+                <NavItem id="shop">Shop <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.shop ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.shop} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="services" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/services" style={{ textDecoration: 'none' }}>
+                <NavItem id="services">Services <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.services ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.services} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="industries" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/industries" style={{ textDecoration: 'none' }}>
+                <NavItem id="industries">Industries <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.industries ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.industries} history={props.history}
+                options={[
+                  {
+                    'label': 'All Brands',
+                    'link': '/brands'
+                  },
+                  {
+                    'label': 'ABB',
+                    'link': '/brands/featured/abb'
+                  },
+                  {
+                    'label': 'Aventics',
+                    'link': '/brands/featured/aventics'
+                  }
+                ]}
+              />
+            </div>
+            <div id="brands" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
               <Link to="/brands" style={{ textDecoration: 'none' }} >
-                <NavItem id="brands">Brands <FontAwesomeIcon icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
+                <NavItem id="brands">Brands <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.brands ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.brands} history={props.history}
                 options={[
@@ -334,15 +391,93 @@ export default function HeaderComponent(props) {
                 ]}
               />
             </div>
-            <Link to="/resources" style={{ textDecoration: 'none' }}>
-              <NavItem>Resources</NavItem>
-            </Link>
-            <Link to="/about" style={{ textDecoration: 'none' }}>
-              <NavItem>About</NavItem>
-            </Link>
-            <Link to="/contact" style={{ textDecoration: 'none' }}>
-              <NavItem>Contact</NavItem>
-            </Link>
+            <div id="resources" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/resources" style={{ textDecoration: 'none' }}>
+                <NavItem id="resources">Resources <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.resources ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.resources} history={props.history}
+                options={[
+                  {
+                    'label': 'Blog - Technically Speaking',
+                    'link': '/blog'
+                  },
+                  {
+                    'label': 'Youtube Channel',
+                    'link': '/blog'
+                  },
+                  {
+                    'label': 'FAQ',
+                    'link': '/resources/faq'
+                  }
+                ]}
+              />
+            </div>
+            <div id="about" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/about" style={{ textDecoration: 'none' }}>
+                <NavItem id="about">About <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.about ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.about} history={props.history}
+                options={[
+                  {
+                    'label': 'Locations',
+                    'link': '/about/locations'
+                  },
+                  {
+                    'label': 'Transactional Services',
+                    'link': '/about/transactional-services'
+                  },
+                  {
+                    'label': 'News',
+                    'link': '/about/news'
+                  },
+                  {
+                    'label': 'Events',
+                    'link': '/about/events'
+                  },
+                  {
+                    'label': 'Careers',
+                    'link': '/about/careers'
+                  },
+                  {
+                    'label': 'Quality Policy',
+                    'link': '/about/featured/aventics'
+                  },
+                  {
+                    'label': 'Our History',
+                    'link': '/about/our-history'
+                  },
+                  {
+                    'label': 'Mission Statement',
+                    'link': '/about/mission-statement'
+                  }
+                ]}
+              />
+            </div>
+            <div id="contact" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+              <Link to="/contact" style={{ textDecoration: 'none' }}>
+                <NavItem id="contact">Contact <FontAwesomeIcon style={{'margin-left': '4px'}} icon={showDropdown.contact ? "caret-up" : "caret-down"} color="black"/></NavItem>
+              </Link>
+              <Dropdown open={showDropdown.contact} history={props.history}
+                options={[
+                  {
+                    'label': 'Contact Us',
+                    'link': '/contact-us'
+                  },
+                  {
+                    'label': 'Credit Application',
+                    'link': '/credit-application'
+                  },
+                  {
+                    'label': 'Framing Request',
+                    'link': '/framing-request'
+                  },
+                  {
+                    'label': 'Government Sales',
+                    'link': '/government-sales'
+                  }
+                ]}
+              />
+            </div>
           </LinkContainer>
           <Div>
             <Context.Consumer>

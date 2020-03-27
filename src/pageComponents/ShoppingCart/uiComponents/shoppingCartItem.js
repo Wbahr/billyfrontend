@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -153,6 +153,11 @@ const Label = styled.label`
 
 const Peach = styled.p`
   margin: 0;
+  padding-right: 8px;
+`
+
+const DivEditPrice = styled.div`
+  cursor: pointer;
 `
 
 const Input = styled.input`
@@ -198,31 +203,39 @@ const CustomDatePicker = styled.button`
 `
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: ID){
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            tariff
-            unitSizeMultiple
-            availability
-            availabilityMessage
-            image {
-              path
-              sequence
-              type
-            }
+  query ItemById($itemId: Int){
+    itemDetails(invMastUid: $itemId) {
+        anonPrice
+        invMastUid
+        itemCode
+        itemDesc
+        listPrice
+        mfgPartNo
+        modelCode
+        tariff
+        unitSizeMultiple
+        availability
+        availabilityMessage
+        image {
+          path
+          sequence
+          type
         }
     }
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
+    }
+  }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal}) {
+export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal}) {
   const [itemDetails, setItem] = useState(null)
+  const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
+  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState("0")
   const itemId = parseInt(item.frecno,10)
+
+  const context = useContext(Context)
 
   const { 
     loading, 
@@ -236,8 +249,31 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
       } else {
         setItem({})
       }
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerPartNumbers(result.customerPartNumbers)
+      } else {
+        setCustomerPartNumbers([])
+      }
     }
   })
+
+  function selectCustomerPartNumber(value){
+    if (value === "-1") {
+      setSelectedCustomerPartNumber("0") // Reset Dropdown
+      context.updateItem(index, 'customerPartNumber', null)
+      showCustomerPartModal(index)
+    } else if (value === "0") {
+      setSelectedCustomerPartNumber(value)
+      context.updateItem(index, 'customerPartNumber', null)
+    } else {
+      setSelectedCustomerPartNumber(value)
+      context.updateItem(index, 'customerPartNumber', value)
+    }
+  }
+
+  function clearCustomerPartNumber(){
+    selectCustomerPartNumber("0")
+  }
 
   let Content
   if(_.isNil(itemDetails)) {
@@ -254,6 +290,9 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
 
+    let CustomerPartOptions = _.map(customerPartNumbers, elem => {
+      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+    })
     Content = (
       <DivCard>
         <DivMove>
@@ -274,6 +313,18 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
               <P2>AHC{itemDetails.invMastUid}</P2>
             </CopyToClipboard>
           </TextRow>
+          <TextRow>
+            <select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+              <option value="0">Customer Part#</option>
+              {CustomerPartOptions}
+              <option value="-1">Create Part#</option>
+            </select>
+            { selectedCustomerPartNumber !== "0" &&
+              <div style={{'margin-left': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+                <FontAwesomeIcon icon="times" color="grey" />
+              </div>
+            }
+          </TextRow>
           <DivRow>
             <Context.Consumer>
               {({ updateItem, cart }) => (
@@ -285,6 +336,8 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
             <DivSplitLine onClick={()=>showSplitLineModal(index)}>Split Line</DivSplitLine>
             <DivSplitLine>|</DivSplitLine>
             <DivSplitLine onClick={()=>showFactoryStockModal(index)}>Factory Stock</DivSplitLine>
+            <DivSplitLine>|</DivSplitLine>
+            <DivSplitLine onClick={()=>showCustomerPartModal(index)}>Custom Part No.</DivSplitLine>
           </DivRow>
         </DivCol2>
         <DivCol3>
@@ -302,12 +355,25 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
                   </Context.Consumer>
             </DivItem>
             <DivItem>
-              <Peach>{formatCurrency(itemDetails.listPrice)}/each</Peach>
+              <DivRow>
+                <Context.Consumer>
+                  {({ cart }) => (
+                    <>
+                      <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(cart[index].itemUnitPriceOverride)}/each</Peach>
+                      <DivEditPrice onClick={()=>showEditPriceModal(index)}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
+                    </>
+                  )}
+                </Context.Consumer>
+              </DivRow>
             </DivItem>
             <DivItem>
-              <DivTotalPrice>
-                <p>{formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity)}</p>
-              </DivTotalPrice>
+              <Context.Consumer>
+                {({ cart }) => (
+                  <DivTotalPrice>
+                    <p>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity) : formatCurrency(cart[index].itemUnitPriceOverride * item.quantity)}</p>
+                  </DivTotalPrice>
+                )}
+              </Context.Consumer>
             </DivItem>
           </DivQuantity>
           <DivQuantity>

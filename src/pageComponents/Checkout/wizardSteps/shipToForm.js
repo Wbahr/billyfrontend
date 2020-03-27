@@ -217,6 +217,7 @@ export function ShipToForm(props) {
         label="Country*"
         changeFunction={handleCountryChange}
       /> 
+      <FormikInput label="Shipping Notes" name="shipto.shippingNotes" width="800px" />
       <Field 
         name="shipto.carrierId" 
         component={SelectField} 

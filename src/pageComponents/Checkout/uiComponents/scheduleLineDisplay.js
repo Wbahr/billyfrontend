@@ -103,7 +103,7 @@ const DivSpacer = styled.div`
 // `
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: ID){
+    query ItemById($itemId: Int){
         itemDetails(invMastUid: $itemId) {
             anonPrice
             invMastUid

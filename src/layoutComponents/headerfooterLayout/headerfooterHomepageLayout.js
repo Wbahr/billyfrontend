@@ -29,7 +29,7 @@ export default function HeaderFooterLayout(props) {
       <ContentScreenContainer {...props}>
         {props.children}
       </ContentScreenContainer>
-      <Footer />
+      <Footer {...props}/>
     </Div>
   )
 }

@@ -150,6 +150,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
       country: 'us',
       phone: '',
       email: '',
+      shippingNotes: '',
       carrierId: '',
       isCollect: 0,
       collectNumber: ''
