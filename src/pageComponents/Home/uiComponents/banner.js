@@ -22,13 +22,13 @@ const Div0 = styled.div`
 `
 const Div1 = styled.div`
   margin: 10px;
-  background-color: red;
+  background-color: grey;
   width: 290px;
   height: 150px;
 `
 const Div3 = styled.div`
   margin: 10px;
-  background-color: red;
+  background-color: grey;
   width: 290px;
   height: 150px;
 `
