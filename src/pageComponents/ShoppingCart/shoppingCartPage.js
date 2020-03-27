@@ -84,7 +84,7 @@ export default function ShoppingCartPage(props) {
         open={showFactoryStockModal}
         hideFactoryStockModal={handleHideFactoryStockModal}
         product={{
-          'name': 'SMC - 4233',
+          'name': 'Test Part Number',
           'frecno': '4233'
         }}
       />
