@@ -14,10 +14,12 @@ const UPDATE_SHOPPING_CART = gql`
       cartItems{
         frecno
         itemTotalPrice
+        airlineCost
       }
     }
   }
 `
+
 const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){
     impersonationBegin(customerId: $customerId){

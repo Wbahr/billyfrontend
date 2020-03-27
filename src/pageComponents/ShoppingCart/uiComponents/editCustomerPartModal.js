@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../../_common/form/inputv2'
@@ -40,11 +42,54 @@ const Container = styled.div`
   }
 `
 
+const CREATE_PART_NUMBER = gql`
+  mutation($part: CustomerPartNumberInput) {
+    customerPartNumber(customerPartNumber: $part){
+      xrefId
+      itemCode
+      theirItemId
+      success
+      message
+    }
+  }
+`
+
 export default function EditCustomerPartNumberModal({open, index, hideCustomerPartModal}) {
-  // const context = useContext(Context)
+  const context = useContext(Context)
   const [partNumber, setPartNumber] = useState('')
+  const [alert, setAlert] = useState(null)
+  const {
+    cart,
+    updateItem
+  } = context
+
+  const [createPartNumber, { loading: mutationLoading }] = useMutation(CREATE_PART_NUMBER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let response = data.customerPartNumber
+      if(response.success) {
+        setAlert(`Successfully created ${response.theirItemId}`)
+        updateItem(index, 'customerPartNumber', response.xrefId)
+      } else {
+        setPartNumber('')
+        setAlert(response.message)
+      }
+    }
+  })
+
+  function handleSubmitPartNumber(){
+    createPartNumber({
+      "variables": {
+        "part": {
+          "invMastUid": cart[index].frecno,
+          "theirItemId": partNumber
+        }
+      }
+    })
+  }
 
   function handleClose(){
+    setAlert(null)
     hideCustomerPartModal()
   }
   
@@ -52,22 +97,18 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
     <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
       <Container>
         <h4>Add Part Number</h4>
+        {alert && <p>{alert}</p>}
         <DivItem>
           <Label>Part Number: </Label><AirlineInput value={partNumber} width='200px' onChange={(e)=> setPartNumber(e.target.value)}/>
         </DivItem>
-        <Context.Consumer>
-          {({updateItem}) => (
-            <DivRow>
-              <ButtonBlack onClick={()=>{
-                handleClose()
-              }}>Cancel</ButtonBlack>
-              <ButtonRed onClick={()=>{
-                updateItem(index, 'priceOverride', parseFloat(itemPrice.substring(1)))
-                handleClose()
-              }}>Save</ButtonRed>
-            </DivRow>
-          )}
-        </Context.Consumer>
+          <DivRow>
+            <ButtonBlack disabled={mutationLoading} onClick={()=>{
+              handleClose()
+            }}>Cancel</ButtonBlack>
+            <ButtonRed disabled={mutationLoading} onClick={()=>{
+              handleSubmitPartNumber()
+            }}>{mutationLoading ? 'Saving' : 'Save'}</ButtonRed>
+          </DivRow>
       </Container>
     </Popup>
   )
