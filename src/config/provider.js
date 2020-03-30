@@ -13,8 +13,8 @@ const UPDATE_SHOPPING_CART = gql`
       tariff
       cartItems{
         frecno
-        itemTotalPrice
         airlineCost
+        quantity
       }
     }
   }

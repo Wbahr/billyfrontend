@@ -5,9 +5,15 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
+import AddedModal from '../SearchResults/uiComponents/addedModal'
+import Context from '../../config/context'
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: Int){
+        customerPartNumbers(frecno: $itemId){
+          customerPartNumber
+          id
+        }
         itemDetails(invMastUid: $itemId) {
             anonPrice
             assembly
@@ -314,6 +320,13 @@ export default function ItemDetailPage({history}){
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [unitPrice, setUnitPrice ] = useState(null)
+  const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState("0")
+  const [customerPartNumbers, setCustomerPartNumbers] = useState([])
+  const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+
+  function handleAddedToCart(){
+    setShowAddedToCartModal(false)
+  }
 
   itemId = parseInt(itemId,10)
   const { 
@@ -338,6 +351,7 @@ export default function ItemDetailPage({history}){
             }
           }
         )
+        setCustomerPartNumbers(result.customerPartNumbers)
         setItem(result.itemDetails)
       } else {
         setItem({})
@@ -416,8 +430,18 @@ export default function ItemDetailPage({history}){
       )
     })
 
+    let CustomerPartOptions = _.map(customerPartNumbers, elem => {
+      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+    })
+
     return(
       <ItemDetailPageContainer>
+        <AddedModal 
+          open={showShowAddedToCartModal} 
+          text={'Added to Cart!'} 
+          onClose={handleAddedToCart}
+          timeout={900}
+        />
         <DivPhoto>
           <Img src={imagePath}/>
         </DivPhoto>
@@ -433,7 +457,14 @@ export default function ItemDetailPage({history}){
             <TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
             <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
             <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-            <TR2><TDGrey>Customer Part #</TDGrey><TDWhite>--</TDWhite></TR2>
+            <TR2><TDGrey>Customer Part #</TDGrey>    
+              <TDWhite>
+                <select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+                  <option value="0">Select a Part No.</option>
+                  {CustomerPartOptions}
+                </select>
+              </TDWhite>        
+            </TR2>
             <TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
           </TABLE>
           <hr/>
@@ -459,7 +490,19 @@ export default function ItemDetailPage({history}){
           {item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
           <Div>
             <hr/>
-            <ButtonRed>Add to Cart</ButtonRed>
+            <Context.Consumer>
+              {({addItem}) => (
+                <ButtonRed onClick={()=>{
+                  addItem({
+                    'frecno': itemId,
+                    'quantity': parseInt(quantity, 10),
+                    'itemNotes': '',
+                    'itemUnitPriceOverride': null,
+                    'customerPartNumber': selectedCustomerPartNumber
+                  }), setShowAddedToCartModal(true), setQuantity(1)
+                  }}>Add to Cart</ButtonRed>
+              )}
+            </Context.Consumer>
             {/* <ButtonBlack>Buy Now</ButtonBlack> */}
           </Div>
           {item.feature.length > 0 && <a href='#feature'>Features</a>}
