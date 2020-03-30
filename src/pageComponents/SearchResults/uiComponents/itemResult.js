@@ -10,7 +10,7 @@ const DivItemResultContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 320px;
-  height: 350px;
+  min-height: 350px;
   margin: 0 8px 20px 8px;
   padding: 8px 0;
   border-bottom: 1px grey solid;
