@@ -320,7 +320,7 @@ export default function ItemDetailPage({history}){
   const [item, setItem] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [unitPrice, setUnitPrice ] = useState(null)
-  const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState("0")
+  const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(null)
   const [customerPartNumbers, setCustomerPartNumbers] = useState([])
   const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
@@ -460,7 +460,7 @@ export default function ItemDetailPage({history}){
             <TR2><TDGrey>Customer Part #</TDGrey>    
               <TDWhite>
                 <select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
-                  <option value="0">Select a Part No.</option>
+                  <option>Select a Part No.</option>
                   {CustomerPartOptions}
                 </select>
               </TDWhite>        

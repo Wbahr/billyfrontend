@@ -172,6 +172,8 @@ const Img = styled.img`
 
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
+  const [customerPartNumber, setCustomerPartNumber] = useState(null)
+
   const mutatedItemId = mutateItemId(result.item_id) 
   function mutateItemId(itemId){
     let mutatedItemId = itemId.replace(/\s/g, '-')
@@ -194,6 +196,13 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
     imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
 
+  let CustomerPartOptions 
+  if (!_.isNil(result.customerPartNumbers)){
+    CustomerPartOptions = _.map(result.customerPartNumbers, elem => {
+      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+    })
+  }
+
   return(
       <DivItemResultContainer>
         <DivPartDetailsRow>
@@ -206,6 +215,14 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           </DivPartDetails>
           <DivPartNumberRow>
             <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
+          </DivPartNumberRow>
+          <DivPartNumberRow>
+            <PpartAvailability>Customer Part #: 
+              <select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
+                <option>Select a Part No.</option>
+                {CustomerPartOptions}
+              </select>
+            </PpartAvailability>
           </DivPartNumberRow>
           <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
             {result.availability !== 0 ? 
@@ -229,7 +246,8 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'frecno': result.frecno,
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
-                    'itemUnitPriceOverride': null
+                    'itemUnitPriceOverride': null,
+                    'customerPartNumber': customerPartNumber
                   }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}
