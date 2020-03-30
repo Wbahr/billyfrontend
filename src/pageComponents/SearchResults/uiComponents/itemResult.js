@@ -211,7 +211,13 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
           </DivPartImg>
           <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno, result.item_id)}}>Quick Look</ButtonBlack>
           <DivPartDetails>
-            <PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${result.frecno}`)}}>{result.item_desc}</PpartTitle>
+            <PpartTitle onClick={()=>{
+              if (_.isNil(customerPartNumber)){
+                history.push(`/product/${mutatedItemId}/${result.frecno}`)
+              } else {
+                history.push(`/product/${mutatedItemId}/${result.frecno}/${customerPartNumber}`)
+              }
+            }}>{result.item_desc}</PpartTitle>
           </DivPartDetails>
           <DivPartNumberRow>
             <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
