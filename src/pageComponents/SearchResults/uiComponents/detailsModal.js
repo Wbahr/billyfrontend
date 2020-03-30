@@ -115,6 +115,10 @@ const ButtonBlack = styled.button`
 
 const GET_ITEM_DETAILS = gql`
 query ItemById($invMastUid: Int){
+  customerPartNumbers(frecno: $invMastUid){
+    customerPartNumber
+    id
+  }
   itemDetails(invMastUid: $invMastUid) {
         anonPrice
         assembly
@@ -149,6 +153,7 @@ query ItemById($invMastUid: Int){
           type
         }
     }
+
 }
 `
 
@@ -166,12 +171,14 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
   const [item, setItem] = useState(null)
   const [unitPrice, setUnitPrice] = useState(null)
   const [quantity, setQuantity] = useState(1)
-  const searchSent = useRef(false); 
+  const [customerPartNumber, setCustomerPartNumber] = useState(null)
+  const [customerPartNumbers, setCustomerPartNumbers] = useState([])
+  const searchSent = useRef(false)
 
   const [performItemDetailSearch] = useLazyQuery(GET_ITEM_DETAILS, {
     variables: { invMastUid },
     onCompleted: data => {
-      console.log('data', data.itemDetails)
+      setCustomerPartNumbers(data.customerPartNumbers)
       setItem(data.itemDetails)
     }
   })
@@ -246,6 +253,14 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
       imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
     }
     const mutatedItemId = mutateItemId(item.itemCode) 
+
+    let CustomerPartOptions 
+    if (!_.isNil(result.customerPartNumbers)){
+      CustomerPartOptions = _.map(result.customerPartNumbers, elem => {
+        return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+      })
+    }
+
     PopupContent =(
       <DivContainer>
         <DivColRow>
@@ -271,7 +286,8 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
                         'frecno': invMastUid,
                         'quantity': parseInt(quantity, 10),
                         'itemNotes': '',
-                        'itemUnitPriceOverride': null
+                        'itemUnitPriceOverride': null,
+                        'customerPartNumber': customerPartNumber
                       }), handleCloseModal()
                       }}>Add to Cart</ButtonRed>
                   )}
@@ -288,7 +304,14 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
                 <TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
                 <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
                 <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-                <TR2><TDGrey>Customer Part #</TDGrey><TDWhite>--</TDWhite></TR2>
+                <TR2><TDGrey>Customer Part #</TDGrey>
+                  <TDWhite>
+                  <select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
+                    <option>Select a Part No.</option>
+                    {CustomerPartOptions}
+                  </select>
+                  </TDWhite>
+                </TR2>
                 <TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
               </tbody>
             </TABLE>
