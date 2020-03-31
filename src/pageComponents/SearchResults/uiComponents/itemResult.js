@@ -172,7 +172,7 @@ const Img = styled.img`
 
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
   const [quantity, setQuantity] = useState(1)
-  const [customerPartNumber, setCustomerPartNumber] = useState(null)
+  const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id)
 
   const mutatedItemId = mutateItemId(result.item_id) 
   function mutateItemId(itemId){
@@ -197,9 +197,9 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
   }
 
   let CustomerPartOptions 
-  if (!_.isNil(result.customerPartNumbers)){
-    CustomerPartOptions = _.map(result.customerPartNumbers, elem => {
-      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+  if (!_.isNil(result.customer_part_numbers)){
+    CustomerPartOptions = _.map(result.customer_part_numbers, elem => {
+      return(<option value={elem.customer_part_number_id}>{elem.customer_part_number}</option>)
     })
   }
 
