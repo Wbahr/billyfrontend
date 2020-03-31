@@ -202,6 +202,15 @@ const CustomDatePicker = styled.button`
   margin: 0 8px;
 `
 
+const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
+  query ItemById($itemId: Int){
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
+    }
+  }
+`
+
 const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
@@ -236,6 +245,13 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
   const itemId = parseInt(item.frecno,10)
 
   const context = useContext(Context)
+  console.log('item', item)
+  useEffect(()=> {
+    console.log('shopping cart item', item.customerPartNumber, selectedCustomerPartNumber)
+    if (item.customerPartNumber !== selectedCustomerPartNumber) {
+      getUpdatedCustomerPartNumbers()
+    }
+  }, [item.customerPartNumber])
 
   const { 
     loading, 
@@ -258,9 +274,23 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
     }
   })
 
+  const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
+    fetchPolicy: 'no-cache',
+    variables: { itemId },
+    onCompleted: result => {
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerPartNumbers(result.customerPartNumbers)
+        setSelectedCustomerPartNumber(item.customerPartNumber)
+      } else {
+        setCustomerPartNumbers([])
+      }
+    }
+  })
+
   function selectCustomerPartNumber(value){
+
     if (value === "-1") {
-      setSelectedCustomerPartNumber("0") // Reset Dropdown
+      setSelectedCustomerPartNumber(null) // Reset Dropdown
       context.updateItem(index, 'customerPartNumber', null)
       showCustomerPartModal(index)
     } else if (value === "0") {
