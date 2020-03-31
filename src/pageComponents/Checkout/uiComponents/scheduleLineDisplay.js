@@ -104,29 +104,34 @@ const DivSpacer = styled.div`
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: Int){
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            tariff
-            unitSizeMultiple
-            availability
-            availabilityMessage
-            image {
-              path
-              sequence
-              type
-            }
-        }
+      customerPartNumbers(frecno: $itemId){
+        customerPartNumber
+        id
+      }
+      itemDetails(invMastUid: $itemId) {
+          anonPrice
+          invMastUid
+          itemCode
+          itemDesc
+          listPrice
+          mfgPartNo
+          modelCode
+          tariff
+          unitSizeMultiple
+          availability
+          availabilityMessage
+          image {
+            path
+            sequence
+            type
+          }
+      }
     }
 `
 
 export default function ShippingScheduleItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
+  const [customerParts, setCustomerParts] = useState([])
   const itemId = parseInt(item.frecno,10)
 
   const { 
@@ -140,6 +145,11 @@ export default function ShippingScheduleItem({item, index}) {
         setItem(result.itemDetails)
       } else {
         setItem({})
+      }
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerParts(result.customerPartNumbers)
+      } else {
+        setCustomerParts([])
       }
     }
   })
@@ -161,6 +171,8 @@ export default function ShippingScheduleItem({item, index}) {
     let date = item.requestedShipDate
     date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
+    let selectedCustomerPartNumber = customerParts.find(elem => elem.id === item.customerPartNumberId)
+
     Content = (
       <DivCard>
         <DivCol1>
@@ -168,7 +180,7 @@ export default function ShippingScheduleItem({item, index}) {
         </DivCol1>
         <DivCol2>
           <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
           <P2>Requested Date: {date}</P2>
         </DivCol2>
         <DivCol3>

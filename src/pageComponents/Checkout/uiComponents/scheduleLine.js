@@ -99,29 +99,34 @@ const DivSpacer = styled.div`
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($itemId: Int){
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            tariff
-            unitSizeMultiple
-            availability
-            availabilityMessage
-            image {
-              path
-              sequence
-              type
-            }
-        }
+      customerPartNumbers(frecno: $itemId){
+        customerPartNumber
+        id
+      }
+      itemDetails(invMastUid: $itemId) {
+          anonPrice
+          invMastUid
+          itemCode
+          itemDesc
+          listPrice
+          mfgPartNo
+          modelCode
+          tariff
+          unitSizeMultiple
+          availability
+          availabilityMessage
+          image {
+            path
+            sequence
+            type
+          }
+      }
     }
 `
 
 export default function ShippingScheduleItem({item, index}) {
   const [itemDetails, setItem] = useState(null)
+  const [customerParts, setCustomerParts] = useState([])
   const itemId = parseInt(item.frecno,10)
 
   const { 
@@ -135,6 +140,11 @@ export default function ShippingScheduleItem({item, index}) {
         setItem(result.itemDetails)
       } else {
         setItem({})
+      }
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerParts(result.customerPartNumbers)
+      } else {
+        setCustomerParts([])
       }
     }
   })
@@ -157,7 +167,7 @@ export default function ShippingScheduleItem({item, index}) {
     let tomorrowDate = new Date()
     tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
-    
+    let selectedCustomerPartNumber = customerParts.find(elem => elem.id === item.customerPartNumberId)
 
     Content = (
       <DivCard>
@@ -166,7 +176,7 @@ export default function ShippingScheduleItem({item, index}) {
         </DivCol1>
         <DivCol2>
           <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
         </DivCol2>
         <DivCol3>
           <DivQuantity>
@@ -201,7 +211,7 @@ export default function ShippingScheduleItem({item, index}) {
     )
   }
   return(
-    <DivContainer>
+    <DivContainer key={index}>
       {Content}
     </DivContainer>
   )
