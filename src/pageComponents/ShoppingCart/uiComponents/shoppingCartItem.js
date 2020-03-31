@@ -232,7 +232,7 @@ const GET_ITEM_BY_ID = gql`
 export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
   const [itemDetails, setItem] = useState(null)
   const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
-  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState("0")
+  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumber)
   const itemId = parseInt(item.frecno,10)
 
   const context = useContext(Context)
