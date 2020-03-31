@@ -202,6 +202,15 @@ const CustomDatePicker = styled.button`
   margin: 0 8px;
 `
 
+const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
+  query ItemById($itemId: Int){
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
+    }
+  }
+`
+
 const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
@@ -232,10 +241,17 @@ const GET_ITEM_BY_ID = gql`
 export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
   const [itemDetails, setItem] = useState(null)
   const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
-  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumber)
+  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
   const itemId = parseInt(item.frecno,10)
 
   const context = useContext(Context)
+  console.log('item', item)
+  useEffect(()=> {
+    console.log('shopping cart item', item.customerPartNumber, selectedCustomerPartNumber)
+    if (item.customerPartNumberId !== selectedCustomerPartNumber) {
+      getUpdatedCustomerPartNumbers()
+    }
+  }, [item.customerPartNumberId])
 
   const { 
     loading, 
@@ -258,17 +274,31 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
     }
   })
 
+  const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
+    fetchPolicy: 'no-cache',
+    variables: { itemId },
+    onCompleted: result => {
+      if (!_.isNil(result.customerPartNumbers)) {
+        setCustomerPartNumbers(result.customerPartNumbers)
+        setSelectedCustomerPartNumber(item.customerPartNumberId)
+      } else {
+        setCustomerPartNumbers([])
+      }
+    }
+  })
+
   function selectCustomerPartNumber(value){
+
     if (value === "-1") {
-      setSelectedCustomerPartNumber("0") // Reset Dropdown
-      context.updateItem(index, 'customerPartNumber', null)
+      setSelectedCustomerPartNumber(null) // Reset Dropdown
+      context.updateItem(index, 'customerPartNumberId', null)
       showCustomerPartModal(index)
     } else if (value === "0") {
       setSelectedCustomerPartNumber(value)
-      context.updateItem(index, 'customerPartNumber', null)
+      context.updateItem(index, 'customerPartNumberId', null)
     } else {
       setSelectedCustomerPartNumber(value)
-      context.updateItem(index, 'customerPartNumber', value)
+      context.updateItem(index, 'customerPartNumberId', Number(value))
     }
   }
 
