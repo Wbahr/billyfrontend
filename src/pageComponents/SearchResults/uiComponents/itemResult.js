@@ -253,7 +253,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
                     'itemUnitPriceOverride': null,
-                    'customerPartNumber': customerPartNumber
+                    'customerPartNumberId': customerPartNumber
                   }), addedToCart(), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}
