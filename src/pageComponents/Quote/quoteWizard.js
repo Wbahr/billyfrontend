@@ -76,8 +76,8 @@ const GET_CHECKOUT_DATA = gql`
 `
 
 export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema}) {
-  const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
-  const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+  const [quoteDropdownData, setQuoteDropdownData] = useState([])
+  const [quoteDropdownDataLabels, setQuoteDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
   const context = useContext(Context)
 
@@ -109,8 +109,8 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   } = useQuery(GET_CHECKOUT_DATA, {
     onCompleted: result => {
       let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
-      setCheckoutDropdownData(result.getCheckoutDropdownData)
-      setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
+      setQuoteDropdownData(result.getCheckoutDropdownData)
+      setQuoteDropdownDataLabels(mutatedCheckoutDropdownData)
     }
   })
 
@@ -180,7 +180,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
         console.log('errors',formikProps.errors),
         <Elements>
           <form name="quoteForm" {...formikProps}>
-            <FormStep {...formikProps} quoteDropdownDataLabels={checkoutDropdownDataLabels} quoteDropdownData={checkoutDropdownData}/>
+            <FormStep {...formikProps} quoteDropdownDataLabels={quoteDropdownDataLabels} quoteDropdownData={quoteDropdownData}/>
             {triggerSubmit && <AutoSubmit/>}
           </form>
         </Elements>

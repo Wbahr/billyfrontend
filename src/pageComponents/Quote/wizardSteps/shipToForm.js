@@ -126,7 +126,7 @@ export function ShipToForm(props) {
                 <Field 
                   name="contact.savedContact" 
                   component={SelectField} 
-                  options={checkoutDropdownDataLabels.contacts}
+                  options={quoteDropdownDataLabels.contacts}
                   width="500px"
                   label="Saved Order Contacts*"
                   placeholder="Select an Order Contact"
@@ -152,7 +152,7 @@ export function ShipToForm(props) {
               <Field 
                 name="shipto.savedShipTo" 
                 component={SelectField} 
-                options={checkoutDropdownDataLabels.shiptos}
+                options={quoteDropdownDataLabels.shiptos}
                 width="800px"
                 label="Saved Ship To"
                 changeFunction={handleSavedAddressSelectChange}

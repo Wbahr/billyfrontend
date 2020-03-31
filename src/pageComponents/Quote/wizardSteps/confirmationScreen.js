@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/quoteDropdownData'
+import FormikFieldArray from '../../_common/formik/fieldArray'
+import FormikCheckbox from '../../_common/formik/checkBox'
+import Context from '../../../config/context'
 
 const SectionRow = styled.div`
   display: flew;
@@ -13,6 +16,10 @@ const SectionContainer = styled.div`
   border: 1px solid whitesmoke;
   margin: 8px 0;
   padding: 8px 16px;
+`
+
+const SectionContainerBlue = styled(SectionContainer)`
+  background-color: #e7f2ff;
 `
 
 const DivAddressSection = styled.div`
