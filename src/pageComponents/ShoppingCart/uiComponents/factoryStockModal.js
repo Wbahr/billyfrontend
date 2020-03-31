@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
 import Context from '../../../config/context'
 import { ButtonBlack } from '../../../styles/buttons'
 
@@ -55,15 +55,43 @@ const GET_FACTORY_STOCK = gql`
   }
 `
 
+const MODIFY_FACTORY_STOCK = gql`
+  mutation ModifyFactoryStock($stockInput: FactoryStockInput){
+    factoryStock(factoryStock: $stockInput){
+      invMastUid
+      factoryAvailability
+      leadTimeDays
+      modifiedDate
+      modifiedBy
+    }
+  }
+`
+
 export default function FactoryStockModal({open, product, hideFactoryStockModal}) {
   const [qtyAvailable, setQtyAvailable] = useState(0)
   const [leadTime, setLeadTime] = useState(0)
-  const [disableUpdate, setDisableUpdate] = useState(true)
+  const [lastModified, setLastModified] = useState('--')
+  const [lastModifiedBy, setLastModifiedBy] = useState('--')
   const [factoryStockDetails, setFactoryStockDetails] = useState(null)
   const {
     name,
     frecno
   } = product
+
+  useEffect(() => {
+    if(open) {
+      getFactoryStock()
+    }
+  }, [open])
+
+  useEffect(() => {
+    if(!_.isNil(factoryStockDetails)){
+      setLeadTime(factoryStockDetails.leadTimeDays)
+      setQtyAvailable(factoryStockDetails.factoryAvailability)
+      setLastModified(factoryStockDetails.modifiedDate)
+      setLastModifiedBy(factoryStockDetails.modifiedBy)
+    }
+  }, [factoryStockDetails])
 
   const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
     fetchPolicy: 'no-cache',
@@ -73,17 +101,31 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
     }
   })
 
+  const [modifyFactoryStock, {loading}] = useMutation(MODIFY_FACTORY_STOCK, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      setFactoryStockDetails(data.factoryStock)
+    }
+  })
   function handleClose(){
     hideFactoryStockModal()
   }
 
   function handleUpdate(){
-    console.log('updating')
-    setDisableUpdate(true)
+    modifyFactoryStock(
+      {
+        variables: {
+          "stockInput": {
+            "invMastUid": Number(frecno),
+            "factoryAvailability": Number(qtyAvailable),
+            "leadTimeDays": Number(leadTime)
+          }
+        }
+      }
+    )
   }
 
   function handleChange(e){
-    setDisableUpdate(false)
     if( e.target.id === "qtyAvailable"){
       setQtyAvailable(e.target.value)
     } else if( e.target.id === "leadTime") {
@@ -106,13 +148,15 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
         </DivRow>
         <DivRow>
           <DivItem>
-            <Label>Last Modified: </Label><input value="12/2/2019 12:32:12" style={{'width': '150px'}}/>
-          </DivItem>
-          <DivItem>
-            <Label>Modified By: </Label><input value="Clover" style={{'width': '150px'}}/>
+            <Label>Last Modified: </Label><input disabled value={lastModified} style={{'width': '250px'}}/>
           </DivItem>
         </DivRow>
-        <ButtonBlack disabled={disableUpdate} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
+        <DivRow>
+          <DivItem>
+            <Label>Modified By: </Label><input disabled value={lastModifiedBy} style={{'width': '250px'}}/>
+          </DivItem>
+        </DivRow>
+        <ButtonBlack disabled={loading} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
       </Container>
     </Popup>
   )
