@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
+import gql from 'graphql-tag'
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import Context from '../../../config/context'
 import { ButtonBlack } from '../../../styles/buttons'
 
@@ -41,14 +43,35 @@ const DivRow = styled.div`
   margin: 8px 0;
 `
 
+const GET_FACTORY_STOCK = gql`
+  query GetFactoryStock($invMastUid: Int){
+    factoryStock(invMastUid: $invMastUid){
+      invMastUid
+      factoryAvailability
+      leadTimeDays
+      modifiedBy
+      modifiedDate
+    }
+  }
+`
+
 export default function FactoryStockModal({open, product, hideFactoryStockModal}) {
   const [qtyAvailable, setQtyAvailable] = useState(0)
   const [leadTime, setLeadTime] = useState(0)
   const [disableUpdate, setDisableUpdate] = useState(true)
+  const [factoryStockDetails, setFactoryStockDetails] = useState(null)
   const {
     name,
     frecno
   } = product
+
+  const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
+    fetchPolicy: 'no-cache',
+    variables: { frecno },
+    onCompleted: data => {
+      setFactoryStockDetails(data.factoryStock)
+    }
+  })
 
   function handleClose(){
     hideFactoryStockModal()
@@ -69,7 +92,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '400px', 'border-radius': '5px'}}>
+    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'maxWidth': '400px', 'borderRadius': '5px'}}>
       <Container>
         <h4>Factory Stock</h4>
         <h6>{name}</h6>

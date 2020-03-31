@@ -69,7 +69,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
       let response = data.customerPartNumber
       if(response.success) {
         setAlert(`Successfully created ${response.theirItemId}`)
-        updateItem(index, 'customerPartNumber', response.xrefId)
+        updateItem(index, 'customerPartNumberId', response.xrefId)
       } else {
         setPartNumber('')
         setAlert(response.message)

@@ -287,7 +287,7 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
                         'quantity': parseInt(quantity, 10),
                         'itemNotes': '',
                         'itemUnitPriceOverride': null,
-                        'customerPartNumber': customerPartNumber
+                        'customerPartNumberId': customerPartNumber
                       }), handleCloseModal()
                       }}>Add to Cart</ButtonRed>
                   )}

@@ -498,7 +498,7 @@ export default function ItemDetailPage({history}){
                     'quantity': parseInt(quantity, 10),
                     'itemNotes': '',
                     'itemUnitPriceOverride': null,
-                    'customerPartNumber': selectedCustomerPartNumber
+                    'customerPartNumberId': selectedCustomerPartNumber
                   }), setShowAddedToCartModal(true), setQuantity(1)
                   }}>Add to Cart</ButtonRed>
               )}
