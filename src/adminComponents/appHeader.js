@@ -33,8 +33,8 @@ export default function AppHeader(props) {
     case 'item-creation':
       AdminTool = 'Item Creation'
       break
-    case 'order-json':
-      AdminTool = 'View Order JSON'
+    case 'order-data':
+      AdminTool = 'View Order Data'
       break
     default:
       AdminTool = `Welcome Back, ${_.get(context,`userInfo.firstName`,'Airline Employee')}`

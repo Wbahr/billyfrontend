@@ -58,7 +58,7 @@ export default function OrderJSONpage() {
         Clear
       </Button>
       <Button variant="contained" color="primary" disabled={false} onClick={() => {searchItems()}}>
-        {false ? 'Searching..' : 'Get JSON'}
+        {false ? 'Searching..' : 'Get Data'}
       </Button>
     </ButtonContainer>
     <Editor
