@@ -71,7 +71,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 
   function calculateMargin(mutatedValue){
     let mutatedAirlineCost = Number(data.airlineCost.substring(1))
-    let margin = (mutatedValue - mutatedAirlineCost)/mutatedAirlineCost
+    let margin = (mutatedValue - mutatedAirlineCost)/mutatedValue
     if (margin < 0){
       margin = 0
     }
