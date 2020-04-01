@@ -37,7 +37,7 @@ const ContentScreenContainer = styled.div`
 
 export default function OrderJSONpage() {
   const [orderNumber, setOrderNumber] = useState('')
-  const [orderJson, setOrderJson] = useState('')
+  const [orderData, setOrderData] = useState('')
 
   return(
     <ContentScreenContainer>
@@ -62,7 +62,7 @@ export default function OrderJSONpage() {
       </Button>
     </ButtonContainer>
     <Editor
-      value={orderJson}
+      value={orderData}
       onChange={()=>console.log('changed')}
     />
   </ContentScreenContainer>
