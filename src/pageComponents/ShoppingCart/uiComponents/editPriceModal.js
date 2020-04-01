@@ -87,7 +87,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
     } else {
       let mutatedValue = Number(value.slice(0, -1))
       setMargin(mutatedValue)
-      let itemPrice = ((mutatedValue/100) * airlinecost) + airlinecost
+      let itemPrice = airlinecost /(1 - (mutatedValue/100))
       setItemPrice(itemPrice)
     }
   }
