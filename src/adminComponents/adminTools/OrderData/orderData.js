@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/form/inputv2'
-import { JsonEditor as Editor } from 'jsoneditor-react'
-import 'jsoneditor-react/es/editor.min.css'
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 const DivSearchInputWrapper = styled.div`
   max-width: 500px;
@@ -35,9 +34,9 @@ const ContentScreenContainer = styled.div`
   align-items: center;
 `
 
-export default function OrderJSONpage() {
+export default function OrderDatapage() {
   const [orderNumber, setOrderNumber] = useState('')
-  const [orderData, setOrderData] = useState('')
+  const [orderData, setOrderData] = useState(null)
 
   return(
     <ContentScreenContainer>
@@ -54,17 +53,24 @@ export default function OrderJSONpage() {
       </DivSpacer>
     </DivSearchInputWrapper>
     <ButtonContainer>
-      <Button variant="contained" color="secondary" disabled={false} onClick={() => setOrderNumber('')}>
+      <Button variant="contained" color="secondary" disabled={false} onClick={() => { setOrderNumber(''), setOrderData(null)}}>
         Clear
       </Button>
       <Button variant="contained" color="primary" disabled={false} onClick={() => {searchItems()}}>
         {false ? 'Searching..' : 'Get Data'}
       </Button>
     </ButtonContainer>
-    <Editor
+    <AirlineInput 
+      type="text"
+      placeholder="Order Data"
+      name="orderData"
       value={orderData}
-      onChange={()=>console.log('changed')}
     />
+    <ButtonContainer>
+      <CopyToClipboard text={orderData}>
+        <Button disabled={_.isNil(orderData)}variant="contained" color="secondary">Copy Data</Button>
+      </CopyToClipboard>
+    </ButtonContainer>
   </ContentScreenContainer>
   )
 }
