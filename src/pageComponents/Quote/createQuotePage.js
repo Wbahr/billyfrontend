@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/quoteOrderSummary'
@@ -90,6 +90,15 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
+const SUBMIT_ORDER = gql`
+  mutation SubmitOrder($order: OrderInputDataInputGraphType){
+    submitOrder(orderInput: $order){
+      transactionId
+      messages
+    } 
+  }
+`
+
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
@@ -122,9 +131,23 @@ export default function CheckoutPage({history}) {
     })
   }
 
+  const [submitOrder] = useMutation(SUBMIT_ORDER, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let orderId = _.get(data,`submitOrder.transactionId`,null)
+      let confirmationEmail = _.get(data, `submitOrder.confirmationEmailRecipient`,'')
+      if (!_.isNil(orderId)) {
+        localStorage.removeItem('shoppingCartToken')
+        context.emptyCart()
+        history.push(`/order-complete/${orderId}/${confirmationEmail}`)
+      } else {
+        setShowOrderFailedModal(true)
+      }
+    }
+  })
+
   function handleCheckoutSubmit(formValues){
-    let mutatedFormValues = formValues
-    console.log('mutatedFormValues', mutatedFormValues)
+    submitOrder({ variables: { order: formValues } })
   }
   
   return(

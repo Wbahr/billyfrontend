@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
-import {Elements} from 'react-stripe-elements';
+import {Elements} from 'react-stripe-elements'
+import ProcessingOrderModal from './uiComponents/processingOrderModal'
 // Wizard Steps
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
@@ -79,15 +80,19 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
   const [quoteDropdownData, setQuoteDropdownData] = useState([])
   const [quoteDropdownDataLabels, setQuoteDropdownDataLabels] = useState([])
   const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
+  const [submittingOrder, setSubmittingOrder] = useState(false)
   const context = useContext(Context)
 
   const AutoSubmit = () => {
     const {
       values
     } = useFormikContext()
-    submitForm(values)
+    if(!submittingOrder){
+      setSubmittingOrder(true)
+      submitForm(values)
+    }
     return(
-      <p>Submitting...</p>
+      <ProcessingOrderModal/>
     )
   }
 
