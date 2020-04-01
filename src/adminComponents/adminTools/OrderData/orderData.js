@@ -65,6 +65,7 @@ export default function OrderDatapage() {
       placeholder="Order Data"
       name="orderData"
       value={orderData}
+      disabled={true}
     />
     <ButtonContainer>
       <CopyToClipboard text={orderData}>
