@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import gql from 'graphql-tag'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/form/inputv2'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
@@ -34,9 +36,31 @@ const ContentScreenContainer = styled.div`
   align-items: center;
 `
 
+const GET_ORDER_DATA = gql`
+  query ItemById($itemId: Int){
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
+    }
+  }
+`
+
 export default function OrderDatapage() {
   const [orderNumber, setOrderNumber] = useState('')
   const [orderData, setOrderData] = useState(null)
+
+  const [getOrderData, {loading}] = useLazyQuery(GET_ORDER_DATA, {
+    fetchPolicy: 'no-cache',
+    variables: { orderNumber },
+    onCompleted: result => {
+      if (!_.isNil(result.customerPartNumbers)) {
+        setOrderNumber('')
+        setOrderData(null)
+      } else {
+        setOrderData(null)
+      }
+    }
+  })
 
   return(
     <ContentScreenContainer>
@@ -56,8 +80,8 @@ export default function OrderDatapage() {
       <Button variant="contained" color="secondary" disabled={false} onClick={() => { setOrderNumber(''), setOrderData(null)}}>
         Clear
       </Button>
-      <Button variant="contained" color="primary" disabled={false} onClick={() => {searchItems()}}>
-        {false ? 'Searching..' : 'Get Data'}
+      <Button variant="contained" color="primary" disabled={loading} onClick={() => {getOrderData()}}>
+        {loading ? 'Searching..' : 'Get Data'}
       </Button>
     </ButtonContainer>
     <AirlineInput 
