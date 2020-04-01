@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useParams } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Toolbar from '@material-ui/core/Toolbar'
+import List from '@material-ui/core/List'
 // import Typography from '@material-ui/core/Typography';
-import { Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import { Link as RouterLink } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import AddBoxIcon from '@material-ui/icons/AddBox'
+import DashboardIcon from '@material-ui/icons/Dashboard'
+import CodeIcon from '@material-ui/icons/Code'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
+import OrderJSON from './adminTools/OrderJSON/orderJSON'
 import AppHeader from './appHeader'
 
 const drawerWidth = 240;
@@ -94,6 +96,9 @@ export default function AdminHome(props) {
     case 'item-creation':
       AdminTool = ItemCreation
       break
+    case 'order-json':
+      AdminTool = OrderJSON
+      break
     default:
       AdminTool = AdminDashboard
   }
@@ -121,6 +126,8 @@ export default function AdminHome(props) {
             <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
             <Divider/>
             <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
+            <Divider/>
+            <ListItemLink to="/admin-dashboard/order-json" primary="View Order JSON" icon={<CodeIcon />} />
             <Divider/>
         </List>
       </Drawer>
