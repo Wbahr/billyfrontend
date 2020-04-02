@@ -95,7 +95,9 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 
   const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
     fetchPolicy: 'no-cache',
-    variables: { frecno },
+    variables: {
+      invMastUid: frecno
+    },
     onCompleted: data => {
       setFactoryStockDetails(data.factoryStock)
     }
