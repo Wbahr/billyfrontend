@@ -6,6 +6,7 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'
+import AirlineModal from '../../_common/modal'
 
 const Div = styled.div`
   display: flex;
@@ -254,12 +255,9 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
     }
     const mutatedItemId = mutateItemId(item.itemCode) 
 
-    let CustomerPartOptions 
-    if (!_.isNil(result.customerPartNumbers)){
-      CustomerPartOptions = _.map(result.customerPartNumbers, elem => {
-        return(<option value={elem.id}>{elem.customerPartNumber}</option>)
-      })
-    }
+    let CustomerPartOptions = _.map(customerPartNumbers, elem => {
+      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+    })
 
     PopupContent =(
       <DivContainer>
@@ -321,8 +319,8 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
     )
   }
     return(
-      <Popup open={open} onClose={()=>{handleCloseModal()}} closeOnDocumentClick  contentStyle={_.isNil(item) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px'}}>
+      <AirlineModal open={open} onClose={()=>{handleCloseModal()}} contentStyle={_.isNil(item) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px'}}>
         {PopupContent}
-      </Popup>
+      </AirlineModal>
     )
 }
