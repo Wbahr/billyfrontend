@@ -53,6 +53,8 @@ const GET_CHECKOUT_DATA = gql`
         id
         firstName
         lastName
+        phoneNumber
+        email
       }
       termsDescription
       customerPhysicalAddress{
