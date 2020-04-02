@@ -89,10 +89,7 @@ export default function ShoppingCartPage(props) {
       <FactoryStockModal
         open={showFactoryStockModal}
         hideFactoryStockModal={handleHideFactoryStockModal}
-        product={{
-          'name': 'Test Part Number',
-          'frecno': '4233'
-        }}
+        product={modalData}
       />
       <EditPriceModal 
         open={showEditPriceModal} 

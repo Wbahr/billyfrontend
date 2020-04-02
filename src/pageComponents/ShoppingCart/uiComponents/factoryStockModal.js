@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
-import Context from '../../../config/context'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { ButtonBlack } from '../../../styles/buttons'
+import Modal from '../../_common/modal'
 
 const DivItem = styled.div`
   display: flex;
@@ -73,10 +72,6 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
   const [lastModified, setLastModified] = useState('--')
   const [lastModifiedBy, setLastModifiedBy] = useState('--')
   const [factoryStockDetails, setFactoryStockDetails] = useState(null)
-  const {
-    name,
-    frecno
-  } = product
 
   useEffect(() => {
     if(open) {
@@ -96,7 +91,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
   const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
     fetchPolicy: 'no-cache',
     variables: {
-      invMastUid: frecno
+      invMastUid: _.get(product,`frecno`,0)
     },
     onCompleted: data => {
       setFactoryStockDetails(data.factoryStock)
@@ -118,7 +113,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
       {
         variables: {
           "stockInput": {
-            "invMastUid": Number(frecno),
+            "invMastUid": Number(_.get(product,`frecno`,0)),
             "factoryAvailability": Number(qtyAvailable),
             "leadTimeDays": Number(leadTime)
           }
@@ -136,10 +131,10 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'maxWidth': '400px', 'borderRadius': '5px'}}>
+    <Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
       <Container>
         <h4>Factory Stock</h4>
-        <h6>{name}</h6>
+        <h6>{_.get(product,`name`,'')}</h6>
         <DivRow>
           <DivItem>
             <Label>Quantity Available: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
@@ -160,6 +155,6 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
         </DivRow>
         <ButtonBlack disabled={loading} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
       </Container>
-    </Popup>
+    </Modal>
   )
 }

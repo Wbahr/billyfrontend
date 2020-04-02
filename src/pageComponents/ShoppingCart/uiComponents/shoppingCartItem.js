@@ -316,7 +316,9 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
         break
       case 'factory-stock':
         handleSetModalData({
-          modalType: type
+          modalType: type,
+          name: itemDetails.itemDesc,
+          frecno: itemId
         })
         showFactoryStockModal(index)
         break
