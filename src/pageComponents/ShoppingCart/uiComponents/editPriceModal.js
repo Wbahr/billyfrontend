@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
+import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
@@ -93,7 +93,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '400px', 'border-radius': '5px'}}>
+    <Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '400px', 'borderRadius': '3px'}}>
       <Container>
         <h4>Edit Item Price</h4>
         <DivRow>
@@ -129,6 +129,6 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
           )}
         </Context.Consumer>
       </Container>
-    </Popup>
+    </Modal>
   )
 }

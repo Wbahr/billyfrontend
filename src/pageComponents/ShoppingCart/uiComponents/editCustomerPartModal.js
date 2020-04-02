@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
+import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -94,7 +94,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+    <Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '350px', 'borderRadius': '3px'}}>
       <Container>
         <h4>Add Part Number</h4>
         {alert && <p>{alert}</p>}
@@ -110,6 +110,6 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
             }}>{mutationLoading ? 'Saving' : 'Save'}</ButtonRed>
           </DivRow>
       </Container>
-    </Popup>
+    </Modal>
   )
 }
