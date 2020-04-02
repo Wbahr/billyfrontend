@@ -12,5 +12,6 @@ export const H2 = styled.h2`
   // font-weight: 900;
   // font-weight: bold;
   letter-spacing: 1px;
+  padding-bottom: 15px;
   // width: min-content;
 `

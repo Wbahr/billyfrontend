@@ -14,7 +14,7 @@ const ContentScreenContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 28px auto;
   justify-content: space-between;
   flex-grow: 99;
@@ -26,11 +26,13 @@ class HomePage extends React.Component {
       <>
         {/* <SuggestedSearch /> */}
         <ContentScreenContainer>
-          <Banner />
+        <Banner />
           <ShopOurProducts {...this.props} />
+          <TechnicallySpeaking />
+
           <FeaturedManufacturers />
           <LineCards />
-          <TechnicallySpeaking />
+          
         </ContentScreenContainer>
       </>
     )

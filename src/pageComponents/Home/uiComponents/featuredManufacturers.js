@@ -3,15 +3,15 @@ import styled, {keyframes} from 'styled-components'
 import { H2 } from '../../_common/text'
 import SectionHeader from '../../_common/sectionHeader.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Slider from 'infinite-react-carousel';
 import $ from 'jquery';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
+}
 `
-
 const ImgSlide = keyframes`
   0%{
     transform: translate3d(0, 0, 0);
@@ -32,9 +32,6 @@ const Brandsdiv = styled.div`
 const LogoImg = styled.img`
   width: 150px;
   height: auto;
-  background-image: url('https://www.airlinehyd.com/customer/aihyco/images/Home/Featured2.png');
-  background-repeat: repeat-x;
-  animation: ${ImgSlide} 20s linear infinite;
 `
 const divStyle = {
   overflowX: "hidden",
@@ -42,6 +39,11 @@ const divStyle = {
   width: "80%",
   display: "flex"
 };
+
+const ImageContainer = styled.div`
+  width: 80%;
+  display: flex;
+`
 
 const IconDiv = styled.div`
   cursor: pointer;
@@ -54,7 +56,6 @@ const IconDiv = styled.div`
   }
 `
 const A = styled.a`
-
 `
 const Button = styled.button`
   border: 0;
@@ -62,13 +63,7 @@ const Button = styled.button`
   padding: 10px 16px;
   background-color: white;
 `
-const P = styled.p`
-  font-size: 25px;
-  text-align: center;
-  margin: 0;
-  width: 150px;
-`
-export default class LogoSlider extends Component {
+export default class CustomSlider extends Component {
   constructor() {
     super()
     this.scroll = this.scroll.bind(this)
@@ -86,8 +81,8 @@ export default class LogoSlider extends Component {
           text='Featured Manufacturers'
         />
         <Wrapper>
-          <IconDiv><Button onClick={this.scroll.bind(null, -1)}> <FontAwesomeIcon icon='chevron-left' size='2x' /></Button></IconDiv>
-          <div className="image-container" style={divStyle}>
+        {/* <IconDiv><Button onClick={this.scroll.bind(null, -1)}> <FontAwesomeIcon icon='chevron-left' size='2x' /></Button></IconDiv>
+          <div className="image-container" style={divStyle}>  */}
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured2.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured3.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured4.png" /></A></Brandsdiv>
@@ -105,8 +100,8 @@ export default class LogoSlider extends Component {
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured16.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured17.png" /></A></Brandsdiv>
             <Brandsdiv><A href=""><LogoImg src="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured18.png" /></A></Brandsdiv>
-          </div>
-          <IconDiv><Button onClick={this.scroll.bind(null, 1)}><FontAwesomeIcon icon='chevron-right' size='2x' /></Button></IconDiv>
+         {/* </div>
+          <IconDiv><Button onClick={this.scroll.bind(null, 1)}><FontAwesomeIcon icon='chevron-right' size='2x' /></Button></IconDiv> */}
         </Wrapper>
       </>
     )

@@ -10,6 +10,7 @@ const LineCardWrapper = styled.div`
     justify-content: space-evenly;
     height: 350px;
     align-items: center;
+    margin-bottom: 50px;
 `
 const LineCardDiv = styled.div`
     display: flex;

@@ -10,7 +10,7 @@ const Container = styled.div`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    background-color: #f5f5f5;
+    background-color: #f2f3f4;
     flex: 1;
     margin: 0 20px;  
 `
@@ -52,11 +52,13 @@ const Div = styled.div`
 `
 const SeeAll = styled.div`
     padding: 17px;
-    font-size: 24px;
+    font-size: 22px;
     `
 const A = styled.a`
+    color: #333;
 `
 const Wrapper = styled.div`
+    margin-bottom: 50px;
 `
 export default function TechnicallySpeaking() {
 
@@ -85,7 +87,7 @@ export default function TechnicallySpeaking() {
           </Container>
             <Div>
                 <SeeAll>
-                    <A href="#">See all videos and articles</A>
+                    <A href="#">See all videos and articles <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
                 </SeeAll>
             </Div>
           </Wrapper>

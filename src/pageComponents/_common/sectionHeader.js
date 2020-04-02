@@ -6,15 +6,13 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid #ccc;
   margin: 40px 0;
+  align-items: center;
 `
-
 const StyledHeaderDiv = styled.div`
-   border-bottom: 3px solid #DB1633;
-   width: max-content;
+   border-bottom: 2px solid #DB1633;
+   width: 10%;
 `
-
 class sectionHeader extends React.Component {
 	render(){
 		const {
@@ -23,9 +21,10 @@ class sectionHeader extends React.Component {
 
 		return(
       <Div>
+         <H2>{text}</H2>
         <StyledHeaderDiv>
-          <H2>{text}</H2>
         </StyledHeaderDiv>
+
       </Div>
 		)
 	}
