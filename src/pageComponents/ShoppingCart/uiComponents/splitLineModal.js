@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
+import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import { ButtonBlack } from '../../../styles/buttons'
@@ -43,7 +43,7 @@ export default function SplitLineModal({open, index, hideSplitLineModal}) {
   }
   
   return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+    <Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
       <Container>
         <h4>Split Line</h4>
         <DivItem>
@@ -61,6 +61,6 @@ export default function SplitLineModal({open, index, hideSplitLineModal}) {
           )}
         </Context.Consumer>
       </Container>
-    </Popup>
+    </Modal>
   )
 }
