@@ -1,8 +1,7 @@
 import React, {useState, useRef} from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'

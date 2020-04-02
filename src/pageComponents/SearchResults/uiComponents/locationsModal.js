@@ -1,9 +1,9 @@
 import React, {useState, useRef} from 'react'
 import _ from 'lodash'
-import Popup from 'reactjs-popup'
+import AirlineModal from '../../_common/modal'
 import styled from 'styled-components'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useLazyQuery } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
 import Loader from '../../_common/loader'
 
 const Table = styled.table`
@@ -133,8 +133,8 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
 
 
   return(
-    <Popup open={open} onClose={()=>{hideLocationsModal()}} closeOnDocumentClick  contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px', 'padding': '16px'}}>
+    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px', 'padding': '16px'}}>
       {PopupContent}
-    </Popup>
+    </AirlineModal>
   )
 }
