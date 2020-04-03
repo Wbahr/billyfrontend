@@ -110,6 +110,8 @@ export function ShipToForm(props) {
       setFieldValue('contact.phone', checkoutDropdownData.contacts[index].phoneNumber)
       setFieldValue('shipto.firstName', checkoutDropdownData.contacts[index].firstName)
       setFieldValue('shipto.lastName', checkoutDropdownData.contacts[index].lastName)
+      setFieldValue('shipto.email', checkoutDropdownData.contacts[index].email)
+      setFieldValue('shipto.phone', checkoutDropdownData.contacts[index].phoneNumber)
     } else {
       setFieldValue(name, value)
       setFieldValue('contact.firstName', '')
