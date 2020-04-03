@@ -102,6 +102,7 @@ export default function ItemCreationPage() {
   const [showNewItemForm, setShowNewItemForm] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [isSearching, setIsSearching] = useState(false)
+  const [searched, setSearched] = useState(false)
   const [submitResponse, setSubmitResponse] = useState(null)
   
   useEffect(() => {
@@ -128,6 +129,7 @@ export default function ItemCreationPage() {
     onCompleted: data => {
       setCurrentPage(currentPage + 1)
       setIsSearching(false)
+      setSearched(true)
       setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
     }
   })
@@ -169,6 +171,7 @@ export default function ItemCreationPage() {
     setItemSearchResult([])
     setCurrentPage(1)
     setShowNewItemForm(false)
+    setSearched(false)
   }
 
   function mutateItemId(itemId){
@@ -247,10 +250,11 @@ export default function ItemCreationPage() {
             {isSearching ? 'Searching Items..' : 'Search for Item'}
           </Button>
         </ButtonContainer>
-        {searchResultItems.length > 0 && 
+        {searched && 
           <div>
             <SearchResultsContainer>
               {searchResultItems}
+              {searchResultItems.length === 0 && <p>No Items Found</p>}
             </SearchResultsContainer>
             <ButtonContainer>
               <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
