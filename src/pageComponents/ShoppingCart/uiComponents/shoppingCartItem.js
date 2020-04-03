@@ -245,7 +245,6 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
   const itemId = parseInt(item.frecno,10)
 
   const context = useContext(Context)
-  console.log('item', item)
   useEffect(()=> {
     console.log('shopping cart item', item.customerPartNumber, selectedCustomerPartNumber)
     if (item.customerPartNumberId !== selectedCustomerPartNumber) {
