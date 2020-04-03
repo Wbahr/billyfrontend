@@ -137,7 +137,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
         <h6>{_.get(product,`name`,'')}</h6>
         <DivRow>
           <DivItem>
-            <Label>Quantity Available: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
+            <Label>Factory Availability: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
           </DivItem>
           <DivItem>
             <Label>Est. Lead Time (days): </Label><input id="leadTime" type="number" value={leadTime} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
