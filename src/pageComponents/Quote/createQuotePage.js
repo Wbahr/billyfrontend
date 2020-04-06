@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
@@ -102,7 +102,9 @@ const SUBMIT_ORDER = gql`
 export default function CheckoutPage({history}) {
   const [currentStep, setCurrentStep] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
+  const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Quote Review']
+  const context = useContext(Context)
   const [stepValidated, setStepValidated] = useState(
     {
       0: false,
@@ -139,7 +141,7 @@ export default function CheckoutPage({history}) {
       if (!_.isNil(orderId)) {
         localStorage.removeItem('shoppingCartToken')
         context.emptyCart()
-        history.push(`/order-complete/${orderId}/${confirmationEmail}`)
+        history.push(`/quote-complete/${orderId}/${confirmationEmail}`)
       } else {
         setShowOrderFailedModal(true)
       }
@@ -169,6 +171,7 @@ export default function CheckoutPage({history}) {
               triggerSubmit={triggerSubmit} 
               YupSchema={YupSchema}
               handleValidateFields={(values)=>handleValidateFields(values)}
+              showOrderFailedModal={showOrderFailedModal}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
             />)}
           </Context.Consumer>

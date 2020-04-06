@@ -61,7 +61,7 @@ const DivTextRow = styled.div`
   display: flex;
 `
 
-export default function ConfirmationScreen(props) {
+export default function QuoteConfirmationScreen(props) {
   const {
     values:{
       schedule,
