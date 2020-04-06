@@ -77,6 +77,7 @@ const CREATE_ITEM = gql`
       itemId
       message
       success
+      invMastUid
     }
   }
 `

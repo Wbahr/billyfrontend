@@ -29,6 +29,7 @@ export default function ItemCreationModal({submitResponse, handleCloseModal}) {
       <DivContainer>
         <PpartTitle>Item Created!</PpartTitle>
         <p>Item ID: {submitResponse.itemId}</p>
+        <a href={`/product/${submitResponse.itemId}/${submitResponse.invMastUid}`} target="_blank">View Details</a>
         <Button variant="contained" color="secondary" onClick={()=>{handleCloseModal()}}>
           Create New Item
         </Button>
