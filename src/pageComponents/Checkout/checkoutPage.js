@@ -195,10 +195,12 @@ function CheckoutPage(props) {
   }
 
   function handleValidateFields(values){
+    console.log('handle validation->', values),
     YupSchema[currentStep].isValid(values).then(function(valid) {
+      console.log('valid', valid),
       setStepValidated({
         ...stepValidated,
-        [currentStep]: values
+        [currentStep]: valid
       })
     })
   }
