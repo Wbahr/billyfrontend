@@ -9,6 +9,25 @@ export const shippingScheduleSchema = object({
 })
 
 // Step 2
+const contactSchema = object({
+  contact: object({
+    firstName: string()
+      .min(3)
+      .max(50)
+      .required(),
+    lastName: string()
+      .min(3)
+      .max(50)
+      .required(),
+    phone: string()
+      .min(10)
+      .required(),
+    email: string()
+      .email()
+      .required()
+  })
+})
+
 export const shipToSchema = object({
   shipto: object({
     firstName: string()
@@ -23,9 +42,6 @@ export const shipToSchema = object({
       .min(5)
       .max(256)
       .required(),
-    address2: string()
-      .min(0)
-      .max(256),
     city: string()
       .min(3)
       .max(100)
@@ -47,6 +63,8 @@ export const shipToSchema = object({
   })
 })
 
+export const airlineShipToSchema = shipToSchema.concat(contactSchema)
+
 // Step 3
 export const billToSchema = object({
   billing: object({
@@ -66,9 +84,6 @@ export const billToSchema = object({
       .min(5)
       .max(256)
       .required(),
-    address2: string()
-      .min(0)
-      .max(256),
     city: string()
       .min(3)
       .max(100)
