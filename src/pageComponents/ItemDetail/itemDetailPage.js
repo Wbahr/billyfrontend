@@ -373,7 +373,7 @@ export default function ItemDetailPage({history}){
     return(<p>No item found</p>)
   } else {
     let imagePath
-    let resultImage = item.image[0].path
+    let resultImage = _.get(item, `image[0].path`, null)
     if (_.isNil(resultImage)){
       imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
     } else {
