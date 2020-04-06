@@ -103,30 +103,30 @@ const DivSpacer = styled.div`
 // `
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: Int){
-      customerPartNumbers(frecno: $itemId){
-        customerPartNumber
-        id
-      }
-      itemDetails(invMastUid: $itemId) {
-          anonPrice
-          invMastUid
-          itemCode
-          itemDesc
-          listPrice
-          mfgPartNo
-          modelCode
-          tariff
-          unitSizeMultiple
-          availability
-          availabilityMessage
-          image {
-            path
-            sequence
-            type
-          }
-      }
+  query ItemById($itemId: Int){
+    customerPartNumbers(frecno: $itemId){
+      customerPartNumber
+      id
     }
+    itemDetails(invMastUid: $itemId) {
+        anonPrice
+        invMastUid
+        itemCode
+        itemDesc
+        listPrice
+        mfgPartNo
+        modelCode
+        tariff
+        unitSizeMultiple
+        availability
+        availabilityMessage
+        image {
+          path
+          sequence
+          type
+        }
+    }
+  }
 `
 
 export default function ShippingScheduleItem({item, index}) {
