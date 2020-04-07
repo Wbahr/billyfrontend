@@ -75,7 +75,7 @@ const AboutAirline = styled.div`
   font-size: 14px;
   display: flex;
   flex-direction: column;
-  margin: auto;
+  justify-content: center;
   @media (max-width: 800px) {
     width: 250px;
     font-size: 14px;
@@ -128,30 +128,22 @@ class Banner extends React.Component {
           <SmBanner>
             <BannerDiv>
             <ImgDiv> <Img src={otto} /></ImgDiv>
-
-              <A href="#" target="_blank">
                 <AboutAirline>
                   <H5>About Airline Hydraulics</H5>
                 We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
               </AboutAirline>
-              </A>
             </BannerDiv>
             <BannerDiv>
             <ImgDiv> <Img src="https://crescentind.com/wp-content/uploads/2018/01/ESOP-logo.png" /></ImgDiv>
-
-              <A href="#" target="_blank">
                 <AboutAirline>
                   <P> We're 100% Employee Owned and pround of it! </P>
                 </AboutAirline>
-              </A>
             </BannerDiv>
             <BannerDiv>
                 <ImgDiv> <FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
-                <A href="#" target="_blank">
                 <AboutAirline>
                   <P> Expect same-day shipping on most in-stock orders placed before 3:00pm Est & shipped by UPS.</P>
                 </AboutAirline>
-              </A>
             </BannerDiv>
           </SmBanner>
         </Col>
