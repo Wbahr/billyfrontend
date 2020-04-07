@@ -10,7 +10,7 @@ import CheckoutWizard from './checkoutWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
-import { shippingScheduleSchema, shipToSchema, billToSchema } from './helpers/validationSchema'
+import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, billToSchema } from './helpers/validationSchema'
 import { connect, getIn } from 'formik'
 
 const DivContainer = styled.div`
@@ -142,10 +142,16 @@ function CheckoutPage(props) {
       3: false
     }
   )
-
+  
   const YupSchema = {
     0: shippingScheduleSchema, 
     1: shipToSchema, 
+    2: billToSchema
+  }
+
+  const AirlineYupSchema = {
+    0: shippingScheduleSchema, 
+    1: airlineShipToSchema, 
     2: billToSchema
   }
 
@@ -196,6 +202,9 @@ function CheckoutPage(props) {
 
   function handleValidateFields(values){
     console.log('handle validation->', values),
+    YupSchema[currentStep].validate(values).catch(function(err) {
+      console.log(err.name, err.errors)
+    })
     YupSchema[currentStep].isValid(values).then(function(valid) {
       console.log('valid', valid),
       setStepValidated({
@@ -227,7 +236,7 @@ function CheckoutPage(props) {
               step={currentStep} 
               shoppingCart={cart} 
               triggerSubmit={triggerSubmit} 
-              YupSchema={YupSchema}
+              YupSchema={_.get(context.userInfo, `role`) === "Impersonator" ? AirlineYupSchema : YupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the AirlineYupSchema
               handleValidateFields={(values)=>handleValidateFields(values)}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
               showOrderFailedModal={showOrderFailedModal}
