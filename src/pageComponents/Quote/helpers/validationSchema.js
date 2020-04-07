@@ -59,7 +59,13 @@ export const shipToSchema = object({
       .email()
       .required(),
     carrierId: string()
-      .required()
+      .required(),
+    collectNumber: string()
+      .when('isCollect', {
+        is: 1,
+        then: string().min(1).required(),
+        otherwise: string()
+    })
   })
 })
 
