@@ -2,37 +2,43 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import SectionHeader from '../../_common/sectionHeader.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LineCard from '../../../imgs/homepage/lineCard.png'
+import Hydraulic from '../../../imgs/homepage/HydraulicCatalog.png'
+import Automation from '../../../imgs/homepage/AutomationCatalog.png'
 
 const LineCardWrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    height: 350px;
-    align-items: center;
+    margin-bottom: 50px;
 `
 const LineCardDiv = styled.div`
     display: flex;
     flex-direction: column;
- 
 `
 const ImgDiv = styled.div`
+    width: 260px;
+    height: 340px;
+    display: flex;
+    justify-content: center;
 `
 const NameDiv = styled.div`
     text-align: center;
     margin: 20px 0;
     color: #5a5a5a;
-    font-weight: bold;
-    &:hover{
-       
+    &:hover{ 
         color: #246696;
     }
 `
 const Img = styled.img`
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width:  100%
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 `
 const P = styled.p`
     margin: 0;
+    font-weight: bold;
+    color: #5a5a5a;
 `
 const A = styled.a`
 &:hover{
@@ -49,19 +55,19 @@ export default function LineCards() {
             <LineCardWrapper>
                 <LineCardDiv>
                     <A href="#">
-                        <ImgDiv><Img src="https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Airline%20line%20card%20thumb.jpg" /></ImgDiv>
+                        <ImgDiv><Img src={LineCard} /></ImgDiv>
                         <NameDiv><P>Line Card</P></NameDiv>
                     </A>
                 </LineCardDiv>
                 <LineCardDiv>
                     <A href="#">
-                        <ImgDiv><Img src="https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Hydraulic_Preferred_Stock_Catalog.jpg" /></ImgDiv>
+                        <ImgDiv><Img src={Hydraulic} /></ImgDiv>
                         <NameDiv><P>Hydraulic Catalog</P></NameDiv>
                     </A>
                 </LineCardDiv>
                 <LineCardDiv>
                     <A href="#">
-                        <ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/Automation_preferred_stock_catalog_thumbnail.png" /></ImgDiv>
+                        <ImgDiv><Img src={Automation} /></ImgDiv>
                         <NameDiv><P>Automation Catalog</P></NameDiv>
                     </A>
                 </LineCardDiv>

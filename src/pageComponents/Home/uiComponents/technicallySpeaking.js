@@ -6,22 +6,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Container = styled.div`
     display: flex;
     flex-direction: row;
+    @media (max-width: 400px) {
+        flex-direction: column;
+      } 
 `
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    background-color: #f5f5f5;
+    background-color: #f2f3f4;
     flex: 1;
-    margin: 0 20px;  
+    margin: 20px;  
 `
 const Img = styled.img`
-    width: 290px;
+    width: 305px;
     height: 290px;
 `
 const Details = styled.p`
     margin: 0;
     font-family: Verdana;
-    font-size: 22px; 
+    font-size: 22px;
+    @media (max-width: 800px) {
+        font-size: 25px;
+      } 
 `
 const BoxDiv = styled.div`
 
@@ -44,19 +50,30 @@ const Button = styled.button`
     border-color: #494949 !important;
     transition: all 0.3s ease 0s;
     }
+    @media (max-width: 800px) {
+        font-size: 20px;
+       } 
     `
 const ButtonDiv = styled.div`
     padding: 30px 0;
+    @media (max-width: 800px) {
+        padding: 15px 0;
+       } 
 `
 const Div = styled.div`
 `
 const SeeAll = styled.div`
     padding: 17px;
-    font-size: 24px;
+    font-size: 22px;
+    @media (max-width: 800px) {
+       font-size: 25px;
+    }
     `
 const A = styled.a`
+    color: #333;
 `
 const Wrapper = styled.div`
+    margin-bottom: 50px;
 `
 export default function TechnicallySpeaking() {
 
@@ -85,7 +102,7 @@ export default function TechnicallySpeaking() {
           </Container>
             <Div>
                 <SeeAll>
-                    <A href="#">See all videos and articles</A>
+                    <A href="#">See all videos and articles <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
                 </SeeAll>
             </Div>
           </Wrapper>
