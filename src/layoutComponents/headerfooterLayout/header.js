@@ -50,8 +50,12 @@ const NavBottomContainer = styled.div`
   display: flex;
   height: 100%;
   width: 1300px;
+  padding: 0 10px;
   justify-content: space-between;
   align-items: center;
+    @media (max-width: 800px) {
+    
+  }
 `
 
 const NavItem =styled.div`
@@ -64,7 +68,6 @@ const NavItem =styled.div`
   font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
   margin: 0 8px -3px 8px;
 `
-
 const InputSearch = styled.input`
   width: 360px;
   height: 40px;
@@ -81,7 +84,6 @@ const InputSearch = styled.input`
     border-bottom: 1px #b4b4b4 solid;
   }
 `
-
 const ButtonSearch = styled.button`
   width: 50px;
   height: 40px;
@@ -103,12 +105,9 @@ const ButtonSearchType = styled.button`
   border: 0;
   font-size: 14px;
 `
-
 const Div = styled.div`
   display: flex;
 `
-
-
 const Puser = styled.p`
   background-image: linear-gradient(to top left, #404040, #333);
   color: #f3f3f3;
@@ -118,12 +117,10 @@ const Puser = styled.p`
   border-radius: 30px;
   font-weight: 600;
 `
-
 const PeUser = styled(Puser)`
   color: #328EFC;
   font-weight: 600;
 `
-
 const A = styled.p`
   cursor: pointer;
   color: #f3f3f3;
@@ -132,17 +129,14 @@ const A = styled.p`
   font-weight: 600;
   padding: 0 5px;
 `
-
 const Aphone = styled(A)`
   margin-right: 50px;
   color: white;
 `
-
 const DivCancelImpersonation = styled.div`
   cursor: pointer;
   margin: 0 8px;
 `
-
 export default function HeaderComponent(props) {
   const [searchTerm, setSearchTerm] = useState('')
   const [searchAsCustomer, setSearchAsCustomer] = useState(false)
