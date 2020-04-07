@@ -231,12 +231,12 @@ function CheckoutPage(props) {
         <Container>
           <Pformheader>{stepLabel[currentStep]}</Pformheader>
           <Context.Consumer>
-            {({cart, userInfo}) => (
+            {({cart}) => (
             <CheckoutWizard 
               step={currentStep} 
               shoppingCart={cart} 
               triggerSubmit={triggerSubmit} 
-              YupSchema={_.get(userInfo,`role`) === "Impersonator" ? AirlineYupSchema : YupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the AirlineYupSchema
+              YupSchema={_.get(context.userInfo, `role`) === "Impersonator" ? AirlineYupSchema : YupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the AirlineYupSchema
               handleValidateFields={(values)=>handleValidateFields(values)}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
               showOrderFailedModal={showOrderFailedModal}

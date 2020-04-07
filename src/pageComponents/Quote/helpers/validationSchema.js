@@ -4,17 +4,32 @@ const { object, string, number, date } = require('yup')
 // Step 1
 export const shippingScheduleSchema = object({
   schedule: object({
-    packingBasis: string().matches(/(1|2|3|4)/).required()
+    packingBasisName: string().matches(/(1|2|3|4)/).required()
   })
 })
 
 // Step 2
+const contactSchema = object({
+  contact: object({
+    firstName: string()
+      .min(3)
+      .max(50)
+      .required(),
+    lastName: string()
+      .min(3)
+      .max(50)
+      .required(),
+    phone: string()
+      .min(10)
+      .required(),
+    email: string()
+      .email()
+      .required()
+  })
+})
+
 export const shipToSchema = object({
   shipto: object({
-    companyName: string()
-      .min(3)
-      .max(256)
-      .required(),
     firstName: string()
       .min(3)
       .max(50)
@@ -27,14 +42,12 @@ export const shipToSchema = object({
       .min(5)
       .max(256)
       .required(),
-    address2: string()
-      .min(1)
-      .max(256),
     city: string()
       .min(3)
       .max(100)
       .required(),
-    stateOrProvince: string(),
+    stateOrProvince: string()
+      .required(),
     zip: string()
       .min(5)
       .max(10)
@@ -50,12 +63,14 @@ export const shipToSchema = object({
   })
 })
 
+export const airlineShipToSchema = shipToSchema.concat(contactSchema)
+
 // Step 3
 export const billToSchema = object({
   billing: object({
-    companyName: string()
+    purchaseOrder: string()
       .min(3)
-      .max(256)
+      .max(50)
       .required(),
     firstName: string()
       .min(3)
@@ -69,23 +84,15 @@ export const billToSchema = object({
       .min(5)
       .max(256)
       .required(),
-    address2: string()
-      .min(1)
-      .max(256),
     city: string()
       .min(3)
       .max(100)
       .required(),
-    stateOrProvince: string(),
+    stateOrProvince: string()
+      .required(),
     zip: string()
       .min(5)
       .max(10)
-      .required(), 
-    phone: string()
-      .min(10)
-      .required(),
-    email: string()
-      .email()
       .required()
   })
 })
