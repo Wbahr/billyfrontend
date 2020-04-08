@@ -4,7 +4,7 @@ const { object, string, number, date } = require('yup')
 // Step 1
 export const shippingScheduleSchema = object({
   schedule: object({
-    packingBasisName: string().matches(/(1|2|3|4)/).required()
+    packingBasis: string().min(1).required()
   })
 })
 
