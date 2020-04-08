@@ -99,7 +99,6 @@ const BorderBottom = styled.div`
   border-bottom: 1px solid #555555;
   flex: 3.5;
   `
-
 const RelatedLinkCircle = styled.div`
   margin: 0 auto;
   // position: relative;
@@ -223,7 +222,6 @@ const RelatedContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
-
 `
 const BannerDiv = styled.div`
   max-width: 150px;
