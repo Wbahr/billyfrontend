@@ -159,6 +159,8 @@ const ArticlesTopic = styled.h6`
 const ArticlesImgDiv = styled.div`
   max-width: 350px;
   padding: 20px;
+  height: 300px;
+  overflow: hidden;
 `
 const SmallArticlesContent = styled.div`
   display: flex

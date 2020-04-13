@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import SectionHeader from '../../_common/sectionHeader.js'
 
 const Container = styled.div`
   display: flex;
@@ -161,6 +160,8 @@ const ArticlesTopic = styled.h6`
 const ArticlesImgDiv = styled.div`
   max-width: 350px;
   padding: 20px;
+  height: 300px;
+  overflow: hidden;
 `
 
 const SmallArticlesContent = styled.div`
@@ -230,7 +231,7 @@ const BannerImg = styled.img`
   width: 100%;
 `
 
-export default function Abb() {
+export default function Aventics() {
 
   return (
 
