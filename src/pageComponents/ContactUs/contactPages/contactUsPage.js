@@ -245,8 +245,10 @@ const OtherContactDiv = styled.div`
 `
 const PhoneNumber = styled.text`
     color: #B51F2B;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
+    letter-spacing: 2px;
+    padding-left: 40px;
 `
 const SaleDiv = styled.div`
     margin: 15px 0;
@@ -431,50 +433,6 @@ export default function ContactUs() {
                     <Button>Branch Locations</Button>
                 </SideDiv>
             </FormContainer>
-
-            {/* <EmailContainer>
-                <EmailDiv>
-                    <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Government Sales </EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress href="#"> govsales@airlinehyd.com</EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-                <BorderRight></BorderRight>
-                <EmailDiv>
-                    <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Credit</EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress>credit@airlinehyd.com </EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-                <BorderRight></BorderRight>
-                <EmailDiv>
-                    <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Marketing</EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress>marketing@airlinehyd.com</EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-                <BorderRight></BorderRight>
-                <EmailDiv>
-                    <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Repairs</EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress>repair@airlinehyd.com </EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-                <BorderRight></BorderRight>
-                <EmailDiv>
-                    <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Training</EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress>training@airlinehyd.com</EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-                <BorderRight></BorderRight>
-                <EmailDiv>
-                    <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Sales</EmailTo>
-                    <EmailListDiv>
-                        <Email><EmailAddress>sales@airlinehyd.com</EmailAddress></Email>
-                    </EmailListDiv>
-                </EmailDiv>
-            </EmailContainer> */}
         </ContactContainer>
     )
 }
