@@ -63,6 +63,13 @@ const Div = styled.div`
   margin: 25px 0;
   align-items: center;
 `
+const SectionDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+`
 const ProductsDiv = styled.div`
   display: flex;  
   flex-wrap: nowrap;
@@ -90,7 +97,6 @@ const ShopAbbButton = styled.button`
   border: 0;
   padding: 5px;
   margin: 0 auto;
-  margin-top: 30px;
   outline: none;
   `
 const BorderBottom = styled.div`
@@ -143,6 +149,7 @@ const ArticlesContentDiv = styled.div`
 `
 const ArticlesPicture = styled.img`
   width: 100%;
+  min-height: 100%;
 `
 const ArticlesShortLine = styled.div`
   display: flex;
@@ -225,10 +232,10 @@ const RelatedContainer = styled.div`
   width: 100%;
 `
 const BannerDiv = styled.div`
-  max-width: 150px;
+
 `
 const BannerImg = styled.img`
-  width: 100%;
+  width: 250px;
 `
 
 export default function Aventics() {
@@ -249,10 +256,10 @@ export default function Aventics() {
 
         {/*............................... PRODUCTS................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ProductsDiv>
           <ImgDiv>  <Img src="https://www.aventics.com/media/_processed_/a/6/zugankerzylinder-p_689622bbc4.jpg" /></ImgDiv>
           <ProductsDetails>
@@ -296,10 +303,10 @@ export default function Aventics() {
 
         {/*.................................. ARTICLES................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Articles & Videos</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ArticlesDiv>
           <SmallArticlesContent>
             <ArticlesContentDiv>
@@ -349,10 +356,10 @@ export default function Aventics() {
         {/*.............................. RELATED LINK ................................... */}
 
         <RelatedLinkDiv>
-          <Div>
+          <SectionDiv>
             <ProductsTitle>Related Links</ProductsTitle>
             <BorderBottom></BorderBottom>
-          </Div>
+          </SectionDiv>
           <RelatedContainer>
             <RelatedLinkCircle>
               <LinkStyleDiv>

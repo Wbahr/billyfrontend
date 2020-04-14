@@ -63,6 +63,13 @@ const Div = styled.div`
   margin: 25px 0;
   align-items: center;
 `
+const SectionDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+`
 const ProductsDiv = styled.div`
   display: flex;  
   flex-wrap: nowrap;
@@ -90,7 +97,6 @@ const ShopAbbButton = styled.button`
   border: 0;
   padding: 5px;
   margin: 0 auto;
-  margin-top: 30px;
   outline: none;
   `
 const BorderBottom = styled.div`
@@ -129,6 +135,7 @@ const VideoDiv = styled.div`
   flex-direction:s
   margin: 0 auto;
   position: relative;
+  justify-content: space-between;
 `
 const ArticlesVideo = styled.iframe`
   width: 450px;
@@ -142,6 +149,7 @@ const ArticlesContentDiv = styled.div`
 `
 const ArticlesPicture = styled.img`
   width: 100%;
+  min-height: 100%;
 `
 const ArticlesShortLine = styled.div`
   display: flex;
@@ -220,10 +228,10 @@ const LongProductDetails = styled.p`
    margin:0;
 `
 const BannerDiv = styled.div`
-  max-width: 150px;
+ 
 `
 const BannerImg = styled.img`
-  width: 100%;
+  width: 300px;
 `
 const ImgDiv = styled.div`
   display: flex;
@@ -248,6 +256,12 @@ const ArticlesDiv = styled.div`
   justify-content: space-between;
   width: 100%;
 `
+const Video = styled.div`
+  display: flex;
+  flex: 1;
+  max-width: 380px;
+  height: 250px;
+`
 export default function Abb() {
   const [showText1, setShowText1] = useState(false);
   const [showText2, setShowText2] = useState(false);
@@ -267,10 +281,10 @@ export default function Abb() {
 
         {/*............................... PRODUCTS................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ProductsDiv>
           <ImgDiv><Img src="https://webimages.imagebank.abb.com/public/default/product/9AAC130891/preview" /></ImgDiv>
           <ProductsDetails>
@@ -411,10 +425,10 @@ export default function Abb() {
 
         {/*.................................. ARTICLES................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Articles & Videos</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ArticlesDiv>
           <SmallArticlesContent>
             <ArticlesContentDiv>
@@ -455,18 +469,18 @@ export default function Abb() {
           </SmallArticlesContent>
         </ArticlesDiv>
         <VideoDiv>
-          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo></Video>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo></Video>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo></Video>
         </VideoDiv>
 
         {/*.............................. RELATED LINK ................................... */}
 
         <RelatedLinkDiv>
-          <Div>
+          <SectionDiv>
             <ProductsTitle>Related Links</ProductsTitle>
             <BorderBottom></BorderBottom>
-          </Div>
+          </SectionDiv>
           <RelatedContainer>
             <RelatedLinkCircle>
               <LinkStyleDiv>

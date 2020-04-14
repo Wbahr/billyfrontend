@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-
+import BuTech from '../../../imgs/homepage/Butech.png'
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -62,6 +62,13 @@ const Div = styled.div`
   margin: 25px 0;
   align-items: center;
 `
+const SectionDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+`
 const ProductsDiv = styled.div`
   display: flex;  
   flex-wrap: nowrap;
@@ -89,7 +96,6 @@ const ShopAbbButton = styled.button`
   border: 0;
   padding: 5px;
   margin: 0 auto;
-  margin-top: 30px;
   outline: none;
   `
 const BorderBottom = styled.div`
@@ -142,6 +148,7 @@ const ArticlesContentDiv = styled.div`
 `
 const ArticlesPicture = styled.img`
   width: 100%;
+  min-height: 100%;
 `
 const ArticlesShortLine = styled.div`
   display: flex;
@@ -224,10 +231,10 @@ const RelatedContainer = styled.div`
   width: 100%;
 `
 const BannerDiv = styled.div`
-  max-width: 150px;
+  
 `
 const BannerImg = styled.img`
-  width: 100%;
+  width: 250px;
 `
 
 
@@ -236,7 +243,7 @@ export default function Butech() {
   return (
     <Container>
       <FeaturedBrandLogo>
-        <BannerDiv> <BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/butech.jpg" /></BannerDiv>
+        <BannerDiv> <BannerImg src={BuTech} /></BannerDiv>
       </FeaturedBrandLogo>
       <BrandDetailsContainer>
         <AirlineDistributorH1>BuTech
@@ -248,10 +255,10 @@ export default function Butech() {
 
         {/*............................... PRODUCTS................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ProductsDiv>
           <ImgDiv>  <Img src="https://www.haskel.com/wp-content/uploads/5K103-2.jpg" /></ImgDiv>
           <ProductsDetails>
@@ -292,66 +299,11 @@ export default function Butech() {
             <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop BuTech's Accessories Products</ShopProducts>
           </ProductsDetails>
         </ProductsDiv>
-
-        {/*.................................. ARTICLES................................... */}
-
-        {/* <Div>
-          <ProductsTitle>Articles & Videos</ProductsTitle>
-          <BorderBottom></BorderBottom>
-        </Div>
-        <ArticlesDiv>
-          <SmallArticlesContent>
-            <ArticlesContentDiv>
-              <ArticlesImgDiv>
-                <ArticlesPicture src="https://www.aventics.com/media/_processed_/5/5/Landingpage-ib_140d01280c.jpg" />
-              </ArticlesImgDiv>
-              <ArticlesTopic>
-                The Internet of Things
-              <ArticlesShortLine></ArticlesShortLine>
-              </ArticlesTopic>
-              <ArticlesContentDetails>Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics.<a href="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/" target="_blank"> Read more >> </a></ArticlesContentDetails>
-            </ArticlesContentDiv>
-          </SmallArticlesContent>
-          <SmallArticlesContent>
-            <ArticlesContentDiv>
-              <ArticlesImgDiv>
-                <ArticlesPicture src="https://www.aventics.com/media/_processed_/3/e/ES05_-_the_simple_solution_for_elementary_pneumatics_6319ac1552.jpg" />
-              </ArticlesImgDiv>
-              <ArticlesTopic>
-                ES05 – the simple solution for elementary pneumatics
-              <ArticlesShortLine></ArticlesShortLine>
-              </ArticlesTopic>
-              <ArticlesContentDetails>ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. <a href="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154" target="_blank"> Read more >> </a>
-              </ArticlesContentDetails>
-            </ArticlesContentDiv>
-          </SmallArticlesContent>
-          <SmallArticlesContent>
-            <ArticlesContentDiv>
-              <ArticlesImgDiv>
-                <ArticlesPicture src="https://www.aventics.com/media/AVENTICS_USA/Expertise/Trends_topics/IoT/SPA_250wide.jpg" />
-              </ArticlesImgDiv>
-              <ArticlesTopic>
-                It’s that easy: AVENTICS supplies pneumatics at the press of a button
-              <ArticlesShortLine></ArticlesShortLine>
-              </ArticlesTopic>
-              <ArticlesContentDetails>You are the center of our attention. We offer fast results and reliable, simple solutions for industrial pneumatics. Based on our many years of expertise, we develop customized products for your applications, tailored to your needs and delivered just in time. Our service: We are at your service at the press of a button! Our ambition is being the smart pneumatic company that is easy to do business with: It’s that easy.
-          </ArticlesContentDetails>
-            </ArticlesContentDiv>
-          </SmallArticlesContent>
-        </ArticlesDiv>
-        <VideoDiv>
-          <Video><ArticlesVideo src="https://www.youtube.com/embed/_r27LoChqMA"></ArticlesVideo></Video>
-          <Video><ArticlesVideo src="https://www.youtube.com/embed/sILf43yMi3c"></ArticlesVideo></Video>
-          <Video><ArticlesVideo src="https://www.youtube.com/embed/H9slLX3o3KQ"></ArticlesVideo></Video>
-        </VideoDiv> */}
-
-        {/*.............................. RELATED LINK ................................... */}
-
         <RelatedLinkDiv>
-          <Div>
+          <SectionDiv>
             <ProductsTitle>Related Links</ProductsTitle>
             <BorderBottom></BorderBottom>
-          </Div>
+          </SectionDiv>
           <RelatedContainer>
             <RelatedLinkCircle>
               <LinkStyleDiv>

@@ -63,6 +63,13 @@ const Div = styled.div`
   margin: 25px 0;
   align-items: center;
 `
+const SectionDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+`
 const ProductsDiv = styled.div`
   display: flex;  
   flex-wrap: nowrap;
@@ -90,7 +97,6 @@ const ShopAbbButton = styled.button`
   border: 0;
   padding: 5px;
   margin: 0 auto;
-  margin-top: 30px;
   outline: none;
   `
 const BorderBottom = styled.div`
@@ -148,6 +154,7 @@ const ArticlesContentDiv = styled.div`
 `
 const ArticlesPicture = styled.img`
   width: 100%;
+  min-height: 100%;
 `
 const ArticlesShortLine = styled.div`
   display: flex;
@@ -230,10 +237,10 @@ const RelatedContainer = styled.div`
   width: 100%;
 `
 const BannerDiv = styled.div`
-  max-width: 150px;
+  
 `
 const BannerImg = styled.img`
-  width: 100%;
+  width: 250px;
 `
 const LongProductDetails = styled.p`
    margin:0;
@@ -260,10 +267,10 @@ export default function Clippard() {
 
         {/*............................... PRODUCTS................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ProductsDiv>
           <ImgDiv><Img src="http://www.clippard.com/cms/sites/default/files/wiki_images/Clippard-Minimatic-Cylinders.png" /></ImgDiv>
           <ProductsDetails>
@@ -329,16 +336,16 @@ export default function Clippard() {
             <ClippardProduct><Span>Filters :</Span>  Filters capture solid particulate and remove water by “spinning” the air centrifugally. Water and larger particles are thrown against the side of the bowl where they condense and/or fall to the lower part of the bowl. Smaller particles are captured as the air flows through the filter element.</ClippardProduct>
             <ClippardProduct><Span>Regulators :</Span>  Controlling pressure is an important requirement in all systems. Maximatic Regulators are adjustable from 7 to 125 psig. For applications requiring better resolution, 7 to 30 or 7 to 60 psig models with spring are available. The #10-32 size is a piston-style due to its small size, while the 1/8” to 1” are a diaphragm design.</ClippardProduct>
             <ClippardProduct><Span>Lubricators :</Span> Pneumatic actuators and valves perform better and last longer when properly lubricated. The bowl serves as a reservoir for the oil and supplies oil through the pick-up tube when pressurized. The amount of oil dispersed is controlled by an adjustable needle valve.</ClippardProduct>
-          <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard's Air Prep Equipment Products</ShopProducts>
+            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard's Air Prep Equipment Products</ShopProducts>
           </ProductsDetails>
         </ProductsDiv>
 
         {/*.................................. ARTICLES................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Articles & Videos</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ArticlesDiv>
           <SmallArticlesContent>
             <ArticlesContentDiv>
@@ -346,7 +353,7 @@ export default function Clippard() {
                 <ArticlesPicture src="https://www.clippard.com/cms/sites/default/files/wiki_images/cordis-high-resolution-proportional-pressure-controls_1.png" />
               </ArticlesImgDiv>
               <ArticlesTopic>
-              6 Ways Clippard's New Cordis EPR is Revolutionizing Electronic Pressure Control
+                6 Ways Clippard's New Cordis EPR is Revolutionizing Electronic Pressure Control
             <ArticlesShortLine></ArticlesShortLine>
               </ArticlesTopic>
               <ArticlesContentDetails>The future of proportional control has arrived—and it's digital! The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant.<a href="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control" target="_blank"> Read more >> </a></ArticlesContentDetails>
@@ -358,7 +365,7 @@ export default function Clippard() {
                 <ArticlesPicture src="https://www.clippard.com/cms/sites/default/files/wiki_images/stepper-motor-diagram.jpg" />
               </ArticlesImgDiv>
               <ArticlesTopic>
-              How Stepper Motors Provide Precision Control
+                How Stepper Motors Provide Precision Control
             <ArticlesShortLine></ArticlesShortLine>
               </ArticlesTopic>
               <ArticlesContentDetails>Stepper motors are used in a variety of applications to provide a means for tightly controlled motion. But what is a stepper motor, and how does it work? <a href="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control" target="_blank"> Read more >> </a>
@@ -371,11 +378,11 @@ export default function Clippard() {
                 <ArticlesPicture src="https://www.clippard.com/cms/sites/default/files/wiki_images/digital-proportional-pressure-controls.jpg" />
               </ArticlesImgDiv>
               <ArticlesTopic>
-              Press Release: New Cordis Proportional Pressure Controls
+                Press Release: New Cordis Proportional Pressure Controls
             <ArticlesShortLine></ArticlesShortLine>
               </ArticlesTopic>
               <ArticlesContentDetails>Clippard Releases New High Resolution Digital Proportional Pressure Controls <a href="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls" target="_blank"> Read more >> </a>
-        </ArticlesContentDetails>
+              </ArticlesContentDetails>
             </ArticlesContentDiv>
           </SmallArticlesContent>
         </ArticlesDiv>
@@ -388,10 +395,10 @@ export default function Clippard() {
         {/*.............................. RELATED LINK ................................... */}
 
         <RelatedLinkDiv>
-          <Div>
+          <SectionDiv>
             <ProductsTitle>Related Links</ProductsTitle>
             <BorderBottom></BorderBottom>
-          </Div>
+          </SectionDiv>
           <RelatedContainer>
             <RelatedLinkCircle>
               <LinkStyleDiv>
