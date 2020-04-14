@@ -204,6 +204,7 @@ const ShowMoreBtn1 = styled.button`
   padding: 4px 10px;
   margin: 0 auto;
   outline: none;
+  background-color: #f2f3f4;
 `
 const ShowMoreBtn2 = styled.button`
   font-size: 12px;
@@ -213,6 +214,7 @@ const ShowMoreBtn2 = styled.button`
   padding: 4px 10px;
   margin: 0 auto;
   outline: none;
+  background-color: #f2f3f4;
 `
 const ListItemDiv = styled.div`
   font-size: 13px;
@@ -313,7 +315,7 @@ export default function Abb() {
           <ProductsDetails>
             <ProductsH4 href="#">Control Systems</ProductsH4>
             <LongProductDetails> ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
-            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}><FontAwesomeIcon icon='plus-circle' size='1x' /> {showText1 ? 'Show Less' : 'Show More '}</ShowMoreBtn1> </LongProductDetails>
+            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1></LongProductDetails>
             {showText1 && <div>
               <ListItemDiv>
                 <ul>
@@ -335,7 +337,8 @@ export default function Abb() {
           <ImgDiv> <Img src="https://imageservice.abb.com/public/v2/2dd265e9-3194-4fbc-ae11-c32689b67dd3/preview.jpg?target=https%3A%2F%2Fwebimages.imagebank.abb.com%2fpublic%2fv2%2f2dd265e9-3194-4fbc-ae11-c32689b67dd3%2fpreview.jpg%3fcrop%3d0%2c0%2c0%2c0%26width%3d0%26height%3d0&key=5a9a85fb039414a94b82246eae7f93f8" /></ImgDiv>
           <ProductsDetails>
             <ProductsH4 href="#">Low Voltage Products and Systems</ProductsH4>
-            <LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:  <ShowMoreBtn2 onClick={() => setShowText2(!showText2)}><FontAwesomeIcon icon='plus-circle' size='1x' /> {showText2 ? 'Show Less' : 'Show More '} </ShowMoreBtn2> </LongProductDetails>
+            <LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
+            <ShowMoreBtn2 onClick={() => setShowText2(!showText2)}>{showText2 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn2> </LongProductDetails>
             {showText2 && <div>
               <ListItemDiv>
                 <ul>

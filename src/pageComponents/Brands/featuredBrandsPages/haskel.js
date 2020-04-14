@@ -312,7 +312,7 @@ export default function Haskel() {
             <ProductsH4 href="#">Air & hydraulic-driven gas boosters</ProductsH4>
             Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk.
             <LongProductDetails> Gas Boosters are ideal for increasing gas pressure, transferring high-pressure gas, charging cylinders and scavenging.
-              <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}><FontAwesomeIcon icon='plus-circle' size='1x' /> {showText1 ? 'Show Less' : 'Show More '} </ShowMoreBtn1> </LongProductDetails>
+            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </>: <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1> </LongProductDetails>
             {showText1 && <div>
               <ListItemDiv>
                 <ul>
