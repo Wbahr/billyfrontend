@@ -4,8 +4,6 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import EatonImg from '../../../imgs/homepage/Eaton.png'
-import EatonImg2 from '../../../imgs/homepage/Eaton2.png'
 
 const Container = styled.div`
   display: flex;
