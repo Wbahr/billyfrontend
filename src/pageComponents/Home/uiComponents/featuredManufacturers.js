@@ -20,6 +20,10 @@ const Brandsdiv = styled.div`
   margin: 25px 35px;
   align-items: center;
   text-align: center;
+  &:hover {
+    transition: transform 200ms;
+    transform: scale(1.1);
+  }
 `
 const LogoImg = styled.img`
   max-width: 100%;
