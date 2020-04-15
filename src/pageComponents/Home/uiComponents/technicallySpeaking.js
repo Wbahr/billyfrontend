@@ -21,7 +21,7 @@ const Img = styled.img`
     width: 305px;
     height: 290px;
 `
-const Details = styled.p`
+const Details = styled.div`
     margin: 0;
     font-family: Verdana;
     font-size: 22px;
