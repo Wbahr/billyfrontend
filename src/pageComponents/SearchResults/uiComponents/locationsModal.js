@@ -133,7 +133,7 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
 
 
   return(
-    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px', 'padding': '16px'}}>
+    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px', 'padding': '16px'}}>
       {PopupContent}
     </AirlineModal>
   )

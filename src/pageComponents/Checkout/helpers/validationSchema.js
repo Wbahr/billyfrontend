@@ -76,8 +76,7 @@ export const billToSchema = object({
   billing: object({
     purchaseOrder: string()
       .min(3)
-      .max(50)
-      .required(),
+      .max(50),
     firstName: string()
       .min(3)
       .max(50)

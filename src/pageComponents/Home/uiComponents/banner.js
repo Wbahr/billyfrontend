@@ -28,7 +28,7 @@ const LgBanner = styled.div`
   height: 280px;
   @media (max-width: 800px) {
 
-   
+  
   }
  
 `
@@ -142,7 +142,7 @@ class Banner extends React.Component {
             <BannerDiv>
                 <ImgDiv> <FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
                 <AboutAirline>
-                  <P> Expect same-day shipping on most in-stock orders placed before 3:00pm Est & shipped by UPS.</P>
+                  <P> Expect same-day shipping on most in-stock orders placed before 3:00pm EST & shipped by UPS.</P>
                 </AboutAirline>
             </BannerDiv>
           </SmBanner>
