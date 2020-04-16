@@ -40,7 +40,7 @@ const RelatedLinkDiv = styled.div`
   margin: 20px 0;
 
 `
-export default function Paccar() {
+export default function Rittal() {
 
   return (
     <>

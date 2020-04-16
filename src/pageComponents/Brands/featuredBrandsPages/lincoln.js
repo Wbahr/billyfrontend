@@ -46,7 +46,7 @@ const ListDiv = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
 `
-export default function Paccar() {
+export default function Lincoln() {
 
   return (
     <>

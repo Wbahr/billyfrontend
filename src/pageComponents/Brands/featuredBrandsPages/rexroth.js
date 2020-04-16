@@ -41,10 +41,10 @@ const RelatedLinkDiv = styled.div`
   margin: 20px 0;
 
 `
-const Span = styled.div`
+const Span = styled.span`
   font-weight: bold;
 `
-export default function Paccar() {
+export default function Rexroth() {
 
   return (
     <>

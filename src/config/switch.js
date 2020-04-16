@@ -83,7 +83,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/contact/:page' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/:page' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
