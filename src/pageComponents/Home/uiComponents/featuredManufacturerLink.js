@@ -16,6 +16,9 @@ const Brandsdiv = styled.div`
   text-align: center;
   transform: ${props => (props.pop ? "scale(1.2)" : "scale(1)")};
   transition: all 0.3s;
+  &:hover {
+    transform: scale(1.2);
+  }
 `
 
 export default function FeaturedManufacturerLink(props) {
