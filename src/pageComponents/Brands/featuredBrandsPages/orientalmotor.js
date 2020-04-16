@@ -122,7 +122,7 @@ export default function Paccar() {
           />
           <RelatedLink
             href="#"
-            text="Oriental Motor Catalogse"
+            text="Oriental Motor Catalogs"
             icon="address-book"
           />
             <RelatedLink

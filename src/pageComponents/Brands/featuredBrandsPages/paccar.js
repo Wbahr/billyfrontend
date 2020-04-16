@@ -195,7 +195,7 @@ export default function Paccar() {
           />
           <RelatedLink
             href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Braden"
-            text="Paccar Catalogse"
+            text="Paccar Catalogs"
             icon="address-book"
           />
         </RelatedLinkDiv>
