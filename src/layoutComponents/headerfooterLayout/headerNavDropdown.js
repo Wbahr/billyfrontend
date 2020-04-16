@@ -38,9 +38,9 @@ export default function ImpersonationSearchComponent(props) {
     border-radius: 0 3px 3px 3px;
   `
 
-  let Links = options.map(option=>{
+  let Links = options.map((option, index)=>{
     return(
-      <DivOption onClick={()=>{history.push(option.link)}}>
+      <DivOption key={`impersonation-option-${index}`} onClick={()=>{history.push(option.link)}}>
         {option.label}
       </DivOption>
     )

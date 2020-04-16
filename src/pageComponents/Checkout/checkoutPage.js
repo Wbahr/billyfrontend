@@ -94,7 +94,7 @@ const Pformheader = styled.p`
 const SUBMIT_ORDER = gql`
   mutation SubmitOrder($order: OrderInputDataInputGraphType){
     submitOrder(orderInput: $order){
-      transactionId
+      webReferenceId
       messages
     } 
   }
@@ -173,7 +173,7 @@ function CheckoutPage(props) {
   const [submitOrder] = useMutation(SUBMIT_ORDER, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
-      let orderId = _.get(data,`submitOrder.transactionId`,null)
+      let orderId = _.get(data,`submitOrder.webReferenceId`,null)
       let confirmationEmail = _.get(data, `submitOrder.confirmationEmailRecipient`,'')
       if (!_.isNil(orderId)) {
         localStorage.removeItem('shoppingCartToken')

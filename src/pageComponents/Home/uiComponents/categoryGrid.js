@@ -44,8 +44,9 @@ const Icon = styled.a`
   margin: auto;
   color: #555555;
   max-width: 100%;
-  &:hover{
-    color: #B51F2B;
+  font-size: 14px;
+  &:hover {
+    transition: transform 200ms;
     transform: scale(1.1);
     text-decoration: none;
   }
@@ -53,6 +54,12 @@ const Icon = styled.a`
 const CategoryName = styled.div`
   display: flex;
   margin: 13px 0;
+  font-weight: bold;
+  text-align: center;
+  font-family: Verdana;
+  &:hover {
+    color: #007bff;
+  }
 `
 const CategoryDiv = styled.div`
   display: flex;
@@ -73,7 +80,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src={framing} />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Aluminum Structural Framing</P> </CategoryName>
+          <CategoryName>Aluminum Structural Framing</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -81,7 +88,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src={hydraulic} />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Hydraulic Components</P> </CategoryName>
+          <CategoryName>Hydraulic Components</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -89,7 +96,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src={pneumatics} />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Pneumatic Components</P> </CategoryName>
+          <CategoryName>Pneumatic Components</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -97,7 +104,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/GEAR-BOXES-COUPLINGS_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Automation & Control Products</P> </CategoryName>
+          <CategoryName>Automation & Control Products</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -105,7 +112,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/CIRCUIT-PROTECTIVE-DEVICES-62_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Electrical Components</P> </CategoryName>
+          <CategoryName>Electrical Components</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -113,7 +120,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/HOSE-END-FITTINGS-2_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Hose & Connectors</P> </CategoryName>
+          <CategoryName>Hose & Connectors</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -121,7 +128,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/AIR-HYDRAULIC-DRIVEN-GAS-BOOSTERS-47_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Liquid & Gas Pressure Products</P> </CategoryName>
+          <CategoryName>Liquid & Gas Pressure Products</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -129,7 +136,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/GENERAL-LUBRICATION-EQUIPMENT-31_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Lubrication</P> </CategoryName>
+          <CategoryName>Lubrication</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -137,7 +144,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/LIGHT-CURTAINS-BEAMS-SCANNERS-81_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Machine Safety Products</P> </CategoryName>
+          <CategoryName>Machine Safety Products</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -145,7 +152,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://triactivestorage.blob.core.windows.net/corvustriactivemedia/Category/Images/Thumbnails/936b7a79-cd3a-440b-9a2d-3f06d7a4a2eb.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Process Control & Components</P> </CategoryName>
+          <CategoryName>Process Control & Components</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">
@@ -153,7 +160,7 @@ export default function CategoryGrid({ history }) {
           <ImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/WINCHES-32_s.jpg" />
           </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">Winches & Gear Drives</P> </CategoryName>
+          <CategoryName>Winches & Gear Drives</CategoryName>
         </CategoryDiv>
       </Icon>
       <Icon href="#" target="_blank">

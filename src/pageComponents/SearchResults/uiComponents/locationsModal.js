@@ -37,26 +37,21 @@ const Div = styled.div`
 
 const QUERY_STOCK_AVAILABILITY = gql`
   query GetStockAvailability($invMastUid: Int){
-    getStockAvailability(invMastUid: $invMastUid){
-      airlineStocks {
-        companyId
-        itemCode
-        locationId
-        locationName
-        locationType
-        quantityAllocated
-        quantityAvailable
-        quantityFrozen
-        quantityNonPickable
-        quantityOnHand
-        quantityQuarantined
-      }
-      factoryStock {
-        factoryAvailability
-        factoryMessage
-        invMastUid
-        leadTimeDays
-      }
+    airlineStock(invMastUid: $invMastUid){
+      invMastUid
+      itemCode
+      companyId
+      locationId
+      locationName
+      quantityAvailable
+    }
+    factoryStock(invMastUid: $invMastUid){
+      invMastUid
+      factoryAvailability
+      leadTimeDays
+      factoryMessage
+      modifiedBy
+      modifiedDate
     }
   }
 `
@@ -67,10 +62,12 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
   const searchSent = useRef(false); 
 
   const [getStockAvailability, { loading, error, data }] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
-    variables: { invMastUid },
+    variables: { 
+      'invMastUid': invMastUid 
+    },
     onCompleted: data => {
-      setAirlineStock(data.getStockAvailability.airlineStocks)
-      setFactoryStock(data.getStockAvailability.factoryStock)
+      setAirlineStock(data.airlineStock)
+      setFactoryStock(data.factoryStock)
     }
   })
 
@@ -133,7 +130,7 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
 
 
   return(
-    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'max-width': '300px', 'border-radius': '5px'} : {'max-width': '800px', 'border-radius': '5px', 'padding': '16px'}}>
+    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px', 'padding': '16px'}}>
       {PopupContent}
     </AirlineModal>
   )

@@ -40,7 +40,7 @@ function useInterval(callback, delay) {
 
 export default function ProcessingOrderModal() {
   const [timeElapsed, setTimeElapsed] = useState(0)
-  const totalSeconds = 22
+  const totalSeconds = 8
   useInterval(() => {
     setTimeElapsed(timeElapsed + .05)
   }, 50)

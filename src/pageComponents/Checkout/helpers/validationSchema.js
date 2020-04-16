@@ -4,7 +4,7 @@ const { object, string, number, date } = require('yup')
 // Step 1
 export const shippingScheduleSchema = object({
   schedule: object({
-    packingBasisName: string().matches(/(1|2|3|4)/).required()
+    packingBasis: string().min(1).required()
   })
 })
 
@@ -74,10 +74,6 @@ export const airlineShipToSchema = shipToSchema.concat(contactSchema)
 // Step 3
 export const billToSchema = object({
   billing: object({
-    purchaseOrder: string()
-      .min(3)
-      .max(50)
-      .required(),
     firstName: string()
       .min(3)
       .max(50)

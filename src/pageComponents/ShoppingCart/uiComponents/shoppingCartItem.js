@@ -381,7 +381,7 @@ export default function ShoppingCartItem({item, index, showSplitLineModal, showF
               <option value="-1">Create Part#</option>
             </select>
             { selectedCustomerPartNumber !== "0" &&
-              <div style={{'margin-left': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+              <div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
                 <FontAwesomeIcon icon="times" color="grey" />
               </div>
             }
