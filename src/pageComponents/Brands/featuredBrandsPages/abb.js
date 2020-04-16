@@ -63,6 +63,13 @@ const Div = styled.div`
   margin: 25px 0;
   align-items: center;
 `
+const SectionDiv = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 25px 0;
+  align-items: center;
+`
 const ProductsDiv = styled.div`
   display: flex;  
   flex-wrap: nowrap;
@@ -90,7 +97,6 @@ const ShopAbbButton = styled.button`
   border: 0;
   padding: 5px;
   margin: 0 auto;
-  margin-top: 30px;
   outline: none;
   `
 const BorderBottom = styled.div`
@@ -129,6 +135,7 @@ const VideoDiv = styled.div`
   flex-direction:s
   margin: 0 auto;
   position: relative;
+  justify-content: space-between;
 `
 const ArticlesVideo = styled.iframe`
   width: 450px;
@@ -142,6 +149,7 @@ const ArticlesContentDiv = styled.div`
 `
 const ArticlesPicture = styled.img`
   width: 100%;
+  min-height: 100%;
 `
 const ArticlesShortLine = styled.div`
   display: flex;
@@ -159,6 +167,8 @@ const ArticlesTopic = styled.h6`
 const ArticlesImgDiv = styled.div`
   max-width: 350px;
   padding: 20px;
+  height: 300px;
+  overflow: hidden;
 `
 const SmallArticlesContent = styled.div`
   display: flex
@@ -220,10 +230,10 @@ const LongProductDetails = styled.p`
    margin:0;
 `
 const BannerDiv = styled.div`
-  max-width: 150px;
+ 
 `
 const BannerImg = styled.img`
-  width: 100%;
+  width: 300px;
 `
 const ImgDiv = styled.div`
   display: flex;
@@ -248,6 +258,12 @@ const ArticlesDiv = styled.div`
   justify-content: space-between;
   width: 100%;
 `
+const Video = styled.div`
+  display: flex;
+  flex: 1;
+  max-width: 380px;
+  height: 250px;
+`
 export default function Abb() {
   const [showText1, setShowText1] = useState(false);
   const [showText2, setShowText2] = useState(false);
@@ -267,10 +283,10 @@ export default function Abb() {
 
         {/*............................... PRODUCTS................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Products</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ProductsDiv>
           <ImgDiv><Img src="https://webimages.imagebank.abb.com/public/default/product/9AAC130891/preview" /></ImgDiv>
           <ProductsDetails>
@@ -299,7 +315,7 @@ export default function Abb() {
           <ProductsDetails>
             <ProductsH4 href="#">Control Systems</ProductsH4>
             <LongProductDetails> ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.
-            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </>: <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1> </LongProductDetails>
+            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1></LongProductDetails>
             {showText1 && <div>
               <ListItemDiv>
                 <ul>
@@ -321,7 +337,8 @@ export default function Abb() {
           <ImgDiv> <Img src="https://imageservice.abb.com/public/v2/2dd265e9-3194-4fbc-ae11-c32689b67dd3/preview.jpg?target=https%3A%2F%2Fwebimages.imagebank.abb.com%2fpublic%2fv2%2f2dd265e9-3194-4fbc-ae11-c32689b67dd3%2fpreview.jpg%3fcrop%3d0%2c0%2c0%2c0%26width%3d0%26height%3d0&key=5a9a85fb039414a94b82246eae7f93f8" /></ImgDiv>
           <ProductsDetails>
             <ProductsH4 href="#">Low Voltage Products and Systems</ProductsH4>
-            <LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:  <ShowMoreBtn2 onClick={() => setShowText2(!showText2)}> {showText2 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </>: <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn2> </LongProductDetails>
+            <LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
+            <ShowMoreBtn2 onClick={() => setShowText2(!showText2)}>{showText2 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn2> </LongProductDetails>
             {showText2 && <div>
               <ListItemDiv>
                 <ul>
@@ -411,10 +428,10 @@ export default function Abb() {
 
         {/*.................................. ARTICLES................................... */}
 
-        <Div>
+        <SectionDiv>
           <ProductsTitle>Articles & Videos</ProductsTitle>
           <BorderBottom></BorderBottom>
-        </Div>
+        </SectionDiv>
         <ArticlesDiv>
           <SmallArticlesContent>
             <ArticlesContentDiv>
@@ -455,18 +472,18 @@ export default function Abb() {
           </SmallArticlesContent>
         </ArticlesDiv>
         <VideoDiv>
-          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo></Video>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo></Video>
+          <Video><ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo></Video>
         </VideoDiv>
 
         {/*.............................. RELATED LINK ................................... */}
 
         <RelatedLinkDiv>
-          <Div>
+          <SectionDiv>
             <ProductsTitle>Related Links</ProductsTitle>
             <BorderBottom></BorderBottom>
-          </Div>
+          </SectionDiv>
           <RelatedContainer>
             <RelatedLinkCircle>
               <LinkStyleDiv>

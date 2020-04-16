@@ -132,7 +132,7 @@ export default function GeneralFullBrand({history}) {
     },
     {
       'label': 'Orientalmotor',
-      'page': 'orientalmotor'
+      'page': 'oriental-motor'
     },
     {
       'label': 'Aventics',
@@ -174,7 +174,7 @@ export default function GeneralFullBrand({history}) {
       setPageComponent(<RossPage/>)
     } else if (page === 'abb'){
       setPageComponent(<AbbPage/>)
-    } else if (page === 'orientalmotor'){
+    } else if (page === 'oriental-motor'){
       setPageComponent(<OrientalmotorPage/>)
     } else if (page === 'aventics'){
       setPageComponent(<AventicsPage/>)
