@@ -110,7 +110,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
           'itemNotes': elem.itemNotes, 
           'quantity': elem.quantity, 
           'itemUnitPriceOverride': _.get(elem,`itemUnitPriceOverride`,null), 
-          'customerPartNumber': elem.customerPartNumberId, 
+          'customerPartNumberId': elem.customerPartNumberId, 
           'requestedShipDate': date}
         ))
         setShoppingCartAndDatesObj(recentCart)
