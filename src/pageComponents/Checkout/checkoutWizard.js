@@ -105,7 +105,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
     if (shoppingCartAndDatesObj.length === 0) {
         let date = new Date()
         date.setDate(date.getDate() + 1)
-        const recentCart = shoppingCart.map(elem => ({'frecno': elem.frecno, 'itemNotes': elem.itemNotes, 'quantity': elem.quantity, 'itemUnitPriceOverride': _.get(elem,`itemUnitPriceOverride`,null), 'customerPartNumberId': elem.customerPartNumberId, 'requestedShipDate': date}))
+        const recentCart = shoppingCart.map(elem => ({'frecno': elem.frecno, 'itemNotes': elem.itemNotes, 'quantity': elem.quantity, 'itemUnitPriceOverride': _.get(elem,`itemUnitPriceOverride`,null), 'customerPartNumber': elem.customerPartNumberId, 'requestedShipDate': date}))
         setShoppingCartAndDatesObj(recentCart)
     }
   },[shoppingCart])
