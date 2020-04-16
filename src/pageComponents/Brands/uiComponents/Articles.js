@@ -11,7 +11,6 @@ const SmallArticlesContent = styled.div`
   margin-bottom: 30px;
 `
 const ArticlesContentDiv = styled.div`
-  margin-left: 20px;
   text-align: center;
   padding: 15px 0;
 `

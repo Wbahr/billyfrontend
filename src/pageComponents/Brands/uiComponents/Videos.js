@@ -6,11 +6,12 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Video = styled.div`
   display: flex;
-  max-width: 380px;
+  width: 380px;
   height: 250px;
+  margin-bottom: 15px;
 `
 const ArticlesVideo = styled.iframe`
-//   width: 100%;
+ width: 100%;
 `
 const Container = styled.div`
     display: flex
