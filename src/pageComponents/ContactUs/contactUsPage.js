@@ -1,4 +1,3 @@
-
 import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
@@ -271,181 +270,203 @@ const Border = styled.div`
   border-bottom: 3px solid #ebe7e7;
   width: 30%;
   margin: 0 auto;
-` 
+`
+const EmailLink = styled.a`
+
+  &:hover{
+    text-decoration: none;
+  }
+`
+const PhoneCall = styled.a`
+  color: #212529;
+  &:hover{
+    text-decoration: none;
+    color: #B51F2B;
+  }
+`
+const Call = styled.a`
+  &:hover{
+    text-decoration: none;
+  }
+`
+const LinkTo = styled.a`
+  &:hover{
+    text-decoration: none;
+  }
+`
 
 export default function ContactUsPage() {
-    return (
-        <ContactContainer>
-            <ContactUsContainer>
-                <ContactUsDiv>
-                    <H1> Contact us</H1>
-                    <ShortBorder></ShortBorder>
-                </ContactUsDiv>
-                <DetailsDiv>
-                    <p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
-                </DetailsDiv>
-            </ContactUsContainer>
+  return (
+    <ContactContainer>
+      <ContactUsContainer>
+        <ContactUsDiv>
+          <H1> Contact us</H1>
+          <ShortBorder></ShortBorder>
+        </ContactUsDiv>
+        <DetailsDiv>
+          <p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
+        </DetailsDiv>
+      </ContactUsContainer>
+      <FormContainer>
+        <FormDiv>
+          <Row>
+            <InputDiv>
+              <Label>
+                Name
+                        </Label>
+              <Input />
+            </InputDiv>
+            <InputDiv>
+              <Label>
+                Last Name
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                Job tittle
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                Company
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                City
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                State
+                        </Label>
+              <Input />
+            </InputDiv>
+            <InputDiv>
+              <Label>
+                Zipcode
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                Email
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                Phone #
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
+                Job PO Number
+                        </Label>
+              <Input />
+            </InputDiv>
+          </Row>
+          <Row>
+            <InputDiv>
+              <Label>
 
-            <FormContainer>
-                <FormDiv>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Name
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                        <InputDiv>
-                            <Label>
-                                Last Name
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Job tittle
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Company
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                City
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                State
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                        <InputDiv>
-                            <Label>
-                                Zipcode
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Email
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Phone #
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
-                                Job PO Number
-                        </Label>
-                            <Input />
-                        </InputDiv>
-                    </Row>
-                    <Row>
-                        <InputDiv>
-                            <Label>
+              </Label>
+              <Textarea placeholder="Please enter your message...."></Textarea>
+            </InputDiv>
+          </Row>
 
+          <Row>
+            <CheckBoxDiv>
+              <Input type="checkbox" />
+              <Label>
+                Subscribe to our mailing list?
                             </Label>
-                            <Textarea placeholder="Please enter your message...."></Textarea>
-                        </InputDiv>
-                    </Row>
-
-                    <Row>
-                        <CheckBoxDiv>
-                            <Input type="checkbox" />
-                            <Label>
-                                Subscribe to our mailing list?
-                            </Label>
-                        </CheckBoxDiv>
-                    </Row>
+            </CheckBoxDiv>
+          </Row>
 
 
-                    <ButtonDiv> <FormButton>Submit</FormButton></ButtonDiv>
-                </FormDiv>
+          <ButtonDiv> <FormButton>Submit</FormButton></ButtonDiv>
+        </FormDiv>
 
-                <SideDiv>
-                    <CallCustomerServiceDiv>
-                        <div><PhoneNumber>1-800-999-7378</PhoneNumber></div>
-                    </CallCustomerServiceDiv>
-                    <CustomerServiceDiv>
-                        <CustomerServiceBtn><FontAwesomeIcon icon="envelope" size="2x" /><BtnText> Customer Service</BtnText></CustomerServiceBtn>
-                    </CustomerServiceDiv>
+        <SideDiv>
+          <CallCustomerServiceDiv>
+            <Call href="tel:18009997378"><PhoneNumber>1-800-999-7378</PhoneNumber></Call>
+          </CallCustomerServiceDiv>
+          <CustomerServiceDiv>
+            <EmailLink href="mailto:customer.service@airlinehyd.com"><CustomerServiceBtn><FontAwesomeIcon icon="envelope" size="2x" /><BtnText> Customer Service</BtnText></CustomerServiceBtn></EmailLink>
+          </CustomerServiceDiv>
 
-                    <OtherContactDiv>
-                    <Border></Border>
-                        <SaleDiv>
-                            <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Government Sales </EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#"> govsales@airlinehyd.com</EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <SaleDiv>
-                            <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Credit</EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#">credit@airlinehyd.com </EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <SaleDiv>
-                            <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Marketing</EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#">marketing@airlinehyd.com</EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <SaleDiv>
-                            <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Repairs</EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#">repair@airlinehyd.com </EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <SaleDiv>
-                            <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Training</EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#">training@airlinehyd.com</EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <SaleDiv>
-                            <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Sales</EmailTo>
-                            <EmailListDiv>
-                                <Email><EmailAddress href="#">sales@airlinehyd.com</EmailAddress></Email>
-                            </EmailListDiv>
-                        </SaleDiv>
-                        <Border></Border>
-                    </OtherContactDiv>
-                    <HeadquartersDiv>
-                        <Text>Headquarters</Text>
-                        <div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank"> 3557 Progress Drive Bensalem, PA 19020</Address></div>
-                        <IconDiv><FontAwesomeIcon icon="phone-alt" size="2px" /> (215) 638-4700</IconDiv>
-                        <IconDiv><FontAwesomeIcon icon="print" size="2px" /> (215) 638-1707</IconDiv>
-                    </HeadquartersDiv>
-                    <LocationImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
-                    </LocationImgDiv>
-                    <Button>Branch Locations</Button>
-                </SideDiv>
-            </FormContainer>
-        </ContactContainer>
-    )
+          <OtherContactDiv>
+            <Border></Border>
+            <SaleDiv>
+              <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Government Sales </EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:govsales@airlinehyd.com"> govsales@airlinehyd.com</EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <SaleDiv>
+              <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Credit</EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:credit@airlinehyd.com">credit@airlinehyd.com </EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <SaleDiv>
+              <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Marketing</EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:marketing@airlinehyd.com">marketing@airlinehyd.com</EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <SaleDiv>
+              <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Repairs</EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:repair@airlinehyd.com">repair@airlinehyd.com </EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <SaleDiv>
+              <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Training</EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:training@airlinehyd.com">training@airlinehyd.com</EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <SaleDiv>
+              <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Sales</EmailTo>
+              <EmailListDiv>
+                <Email><EmailAddress href="mailto:sales@airlinehyd.com">sales@airlinehyd.com</EmailAddress></Email>
+              </EmailListDiv>
+            </SaleDiv>
+            <Border></Border>
+          </OtherContactDiv>
+          <HeadquartersDiv>
+            <Text>Headquarters</Text>
+            <div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank"> 3557 Progress Drive Bensalem, PA 19020</Address></div>
+            <PhoneCall href="tel:2156384700"> <IconDiv><FontAwesomeIcon icon="phone-alt" size="2px" /> (215) 638-4700</IconDiv></PhoneCall>
+            <PhoneCall href="tel:2156381707"><IconDiv><FontAwesomeIcon icon="print" size="2px" /> (215) 638-1707</IconDiv></PhoneCall>
+          </HeadquartersDiv>
+          <LocationImgDiv>
+            <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
+          </LocationImgDiv>
+          <LinkTo href="/about/locations"><Button>Branch Locations</Button></LinkTo>
+        </SideDiv>
+      </FormContainer>
+    </ContactContainer>
+  )
 }
