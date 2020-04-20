@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import FormikInput from '../../_common/formik/input_v2'
 import FormikTextArea from '../../_common/formik/textarea_v2'
 import FormikCheckbox from '../../_common/formik/checkBox'
+import Button from '../../_common/button'
 
 const FormContainer = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ export default function ContactUsForm() {
             <FormikInput label="Phone Number*" name="phone" />
             <FormikInput label="Job PO Number*" name="jobOrder" />
             <FormikTextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
-            <button type="submit">Submit</button>
+            <Button type="submit" color="main" text="Submit"/>
             <FormikCheckbox label="Subscribe to our Mailing List?" name="subMailingList"/>
           </Form>
         )}

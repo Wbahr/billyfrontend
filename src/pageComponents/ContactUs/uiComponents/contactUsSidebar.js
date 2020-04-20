@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Button from '../../_common/button'
 
 // const EmailContainer = styled.div`
 //     display: flex;
@@ -72,22 +73,6 @@ const LocationImgDiv = styled.div`
 
 const Img = styled.img`
   width: 100%;
-`
-const Button = styled.button`
-  border: none;
-  font-size: 16px;
-  font-family: verdana;
-  border-radius: 2em;
-  text-decoration: none;
-  font-weight: 300;
-  color: #FFFFFF;
-  background-color: #133752;
-  transition: all 0.2s;
-  width: 50%;
-  padding: 8px 5px
-  &:hover{
-      background-color:#B51F2B;
-  }
 `
 
 const CustomerServiceDiv = styled.div`
@@ -206,7 +191,7 @@ export default function ContactUsSidebar() {
       <LocationImgDiv>
           <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
       </LocationImgDiv>
-      <Button>Branch Locations</Button>
+      <Button color="secondary" text="Branch Locations" />
       </SideDiv>      
     )
 }
