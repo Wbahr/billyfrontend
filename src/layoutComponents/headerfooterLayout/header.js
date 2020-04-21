@@ -402,6 +402,10 @@ export default function HeaderComponent(props) {
                   {
                     'label': 'FAQ',
                     'link': '/resources/faq'
+                  },
+                  {
+                    'label': 'Line Cards & Brochures',
+                    'link' : '/linecards'
                   }
                 ]}
               />

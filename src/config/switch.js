@@ -7,11 +7,14 @@ import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/h
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
+import aboutPage from '../pageComponents/About/aboutPage'
 import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
 import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
+import contactPage from '../pageComponents/ContactUs/contactUsPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
+import LineCards from '../pageComponents/LineCards/lineCardsPage'
 import Login from '../pageComponents/Login/loginPage'
 import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
@@ -26,8 +29,8 @@ import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
 import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
 import technologyPage from 'pageComponents/Technologies/technologyPage'
-import contactPage from '../pageComponents/ContactUs/contactUsPage'
-import aboutPage from '../pageComponents/About/aboutPage'
+
+
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
@@ -87,6 +90,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
         <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
