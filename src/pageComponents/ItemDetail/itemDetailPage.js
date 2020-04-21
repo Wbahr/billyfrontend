@@ -324,6 +324,7 @@ export default function ItemDetailPage({history}){
     data
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
+    fetchPolicy: 'no-cache',
     onCompleted: result => {
       if (result.itemDetails) {
         performPriceLookup(
