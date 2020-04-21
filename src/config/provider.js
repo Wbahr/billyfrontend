@@ -1,99 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Context from './context'
-import gql from 'graphql-tag'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-
-const UPDATE_SHOPPING_CART = gql`
-  mutation UpdateShoppingCart($cartData: ShoppingCartUpdateInputGraphType) {
-    updateShoppingCart(cartUpdate: $cartData) {
-      token
-      cartData
-      orderNotes
-      subtotal
-      tariff
-      cartItems{
-        frecno
-        airlineCost
-        quantity
-      }
-    }
-  }
-`
-
-const BEGIN_IMPERSONATION = gql`
-  query BeginImpersonation ($customerId: Int){
-    impersonationBegin(customerId: $customerId){
-      success
-      message
-      authorizationInfo{
-        token
-        userInfo{
-          companyId
-          companyName
-          firstName
-          lastName
-          role
-          permissions
-          limits{
-            limitType
-            limitValue
-          }
-        }
-        impersonationUserInfo{
-          customerId
-          customerName
-          customerIdP21
-        }
-      }
-    }
-  }
-`
-
-const END_IMPERSONATION = gql`
-  query EndImpersonation{
-    impersonationEnd{
-      success
-      message
-      authorizationInfo{
-        token
-        userInfo{
-          companyId
-          companyName
-          firstName
-          lastName
-          role
-          permissions
-          limits{
-            limitType
-            limitValue
-          }
-        }
-      }
-    }
-  }
-`
-
-const GET_TAXES = gql`
-  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
-    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
-      grandTotal
-      subTotal
-      tariffTotal
-      taxTotal
-      taxRate
-      checkoutItems {
-        frecno
-        itemNotes
-        itemTotalPrice
-        itemTotalTariff
-        itemUnitPrice
-        quantity
-        requestedShipDate
-      }
-    }
-  }
-`
-
+import { UPDATE_SHOPPING_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID } from './providerGQL'
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
@@ -102,6 +10,7 @@ export default function Provider(props) {
   const [prevToken, setPrevToken] = useState(localStorage.getItem("userInfo"))
   const [token, setToken] = useState(_.isNil(localStorage.getItem("imperInfo")) ? localStorage.getItem("userInfo") : localStorage.getItem("imperInfo"))
   const [shoppingCart, setShoppingCart] = useState([])
+  const [shoppingCartDisplay, setShoppingCartDisplay] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
   const [userInfo, setUserInfo] = useState(null)
   const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
@@ -239,6 +148,14 @@ export default function Provider(props) {
     }
   })
 
+  const [getItemData] = useLazyQuery(GET_ITEM_BY_ID, {
+    fetchPolicy: 'no-cache',
+    onCompleted: result => {
+      console.log('Mutate Shopping Cart Display', result),
+      mutateShoppingCartDisplay('add', result)
+    }
+  })
+
   const [handleUpdateTaxes] = useLazyQuery(GET_TAXES, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
@@ -246,7 +163,7 @@ export default function Provider(props) {
     }
   })
   
-   function resetTopAlert(){
+  function resetTopAlert(){
     let alertObj = {
       'show': false,
       'message': ''
@@ -273,10 +190,8 @@ export default function Provider(props) {
     drift.api.widget.show()
     props.history.push('/')
     setUserInfo(null)
-    localStorage.removeItem('userInfo')
-    localStorage.removeItem('apiToken') 
-    localStorage.removeItem('shoppingCartToken')
-    localStorage.removeItem('imperInfo') 
+    const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
+    keysToRemove.forEach(key => localStorage.removeItem(key))
     setToken(null)
     handleEmptyCart()
     setImpersonatedCompanyInfo(null)
@@ -288,8 +203,12 @@ export default function Provider(props) {
     window.setTimeout(()=>{resetTopAlert()}, 3500)
   }
 
-  function handleAddItem (item){
+  async function handleAddItem (item){
+    const itemId = item.frecno
+    // Add item to the cart
     setShoppingCart([...shoppingCart, item])
+    // Retrieve the item's data and add it to the display cart
+    getItemData({variables: { itemId }})
   }
 
   function handleRemoveItem(itemLocation){
@@ -356,6 +275,27 @@ export default function Provider(props) {
     setShoppingCart([])
   }
 
+  function mutateShoppingCartDisplay(type, data){
+    let mutatedShoppingCartDisplay
+    switch(type){
+      // case 'empty':
+      //   setShoppingCartDisplay([])
+      //   break
+      case 'add':
+        mutatedShoppingCartDisplay = [...shoppingCartDisplay, data]
+        setShoppingCartDisplay(mutatedShoppingCartDisplay)
+        break
+      // case 'remove':
+      //   mutatedShoppingCartDisplay = shoppingCartDisplay
+      //   mutatedShoppingCartDisplay.splice(index, 1)
+      //   setShoppingCartDisplay([...mutatedShoppingCartDisplay])
+      //   break
+      // case 'split':
+      //   console.log('split')
+      //   break
+    }
+  }
+
   function handleSetOrderNotes(orderNotes){
     setOrderNotes(orderNotes)
   }
@@ -404,6 +344,7 @@ export default function Provider(props) {
             handleLogout()
           },
           cart: shoppingCart,
+          cartDisplay: shoppingCartDisplay,
           cartPricing: shoppingCartPricing,
           orderNotes: orderNotes,
           addItem: (item) => {
