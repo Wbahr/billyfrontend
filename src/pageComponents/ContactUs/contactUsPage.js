@@ -409,7 +409,7 @@ export default function ContactUsPage() {
 
         <SideDiv>
           <CallCustomerServiceDiv>
-            <Call href="tel:18009997378"><PhoneNumber>1-800-999-7378</PhoneNumber></Call>
+            <Call href="tel:+118009997378"><PhoneNumber>1-800-999-7378</PhoneNumber></Call>
           </CallCustomerServiceDiv>
           <CustomerServiceDiv>
             <EmailLink href="mailto:customer.service@airlinehyd.com"><CustomerServiceBtn><FontAwesomeIcon icon="envelope" size="2x" /><BtnText> Customer Service</BtnText></CustomerServiceBtn></EmailLink>
@@ -458,8 +458,8 @@ export default function ContactUsPage() {
           <HeadquartersDiv>
             <Text>Headquarters</Text>
             <div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank"> 3557 Progress Drive Bensalem, PA 19020</Address></div>
-            <PhoneCall href="tel:2156384700"> <IconDiv><FontAwesomeIcon icon="phone-alt" size="2px" /> (215) 638-4700</IconDiv></PhoneCall>
-            <PhoneCall href="tel:2156381707"><IconDiv><FontAwesomeIcon icon="print" size="2px" /> (215) 638-1707</IconDiv></PhoneCall>
+            <PhoneCall href="tel:+12156384700"> <IconDiv><FontAwesomeIcon icon="phone-alt" size="2px" /> (215) 638-4700</IconDiv></PhoneCall>
+            <PhoneCall href="fax:+12156381707"><IconDiv><FontAwesomeIcon icon="print" size="2px" /> (215) 638-1707</IconDiv></PhoneCall>
           </HeadquartersDiv>
           <LocationImgDiv>
             <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />

@@ -75,7 +75,7 @@ class App extends React.Component {
     return (
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
-        <WrapperRoute exact path='/about/:page' component={aboutPage} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/about/:page' component={aboutPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
