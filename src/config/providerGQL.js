@@ -137,5 +137,10 @@ export const GET_ITEMS_BY_ID = gql`
         type
       }
     }
+    customerPartNumbersBatch(invMastUids: $invMastUids){
+      id
+      invMastUid
+      customerPartNumber
+    }
   }
 `

@@ -166,11 +166,20 @@ export default function Provider(props) {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
       let itemDetailsBatch = data.itemDetailsBatch
+      let customerPartNumbersBatch = data.customerPartNumbersBatch
       let result = [] 
       for (let i = 0; i < itemDetailsBatch.length; i++) {
+        let frecno = itemDetailsBatch[i].invMastUid
+        let customerPartNumbers = []
+        for (let i = 0; i < customerPartNumbersBatch.length; i++) {
+          let customerPartNumberObj = customerPartNumbersBatch[i]
+          if ( customerPartNumberObj.invMastUid === frecno) {
+            customerPartNumbers.push(customerPartNumberObj)
+          }
+        }
         let itemDetailsObj = {
           'itemDetails': itemDetailsBatch[i],
-          'customerPartNumbers': []
+          'customerPartNumbers': customerPartNumbers
         }
         result.push(itemDetailsObj)
       }
