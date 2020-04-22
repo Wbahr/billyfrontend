@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { UPDATE_SHOPPING_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID } from './providerGQL'
+import { UPDATE_SHOPPING_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID } from './providerGQL'
 
 export default function Provider(props) {
   const didMountRef = useRef(false);
@@ -95,7 +95,7 @@ export default function Provider(props) {
           if (cartAction === 5) {
             let cartFrecnos = []
             cartData.forEach(elem => cartFrecnos.push(elem.frecno))
-            // getMultiItemData({variables: {cartFrecnos}})
+            getMultiItemData({variables: {'invMastUids': cartFrecnos}})
           }
         // If a new cart was just created, set a token in local storage
         } else if (cartAction === 1) {
@@ -162,10 +162,19 @@ export default function Provider(props) {
     }
   })
 
-  const [getMultiItemData] = useLazyQuery(GET_ITEM_BY_ID, {
+  const [getMultiItemData] = useLazyQuery(GET_ITEMS_BY_ID, {
     fetchPolicy: 'no-cache',
-    onCompleted: result => {
-      mutateShoppingCartDisplay('add', result)
+    onCompleted: data => {
+      let itemDetailsBatch = data.itemDetailsBatch
+      let result = [] 
+      for (let i = 0; i < itemDetailsBatch.length; i++) {
+        let itemDetailsObj = {
+          'itemDetails': itemDetailsBatch[i],
+          'customerPartNumbers': []
+        }
+        result.push(itemDetailsObj)
+      }
+      mutateShoppingCartDisplay('add-multiple', result)
     }
   })
 
@@ -296,6 +305,10 @@ export default function Provider(props) {
       //   break
       case 'add':
         mutatedShoppingCartDisplay = [...shoppingCartDisplay, data]
+        setShoppingCartDisplay(mutatedShoppingCartDisplay)
+        break
+      case 'add-multiple':
+        mutatedShoppingCartDisplay = [...shoppingCartDisplay, ...data]
         setShoppingCartDisplay(mutatedShoppingCartDisplay)
         break
       // case 'remove':

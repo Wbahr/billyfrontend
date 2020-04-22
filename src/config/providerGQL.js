@@ -117,3 +117,25 @@ export const GET_ITEM_BY_ID = gql`
     }
   }
 `
+export const GET_ITEMS_BY_ID = gql`
+  query GetItemDetails($invMastUids: [Int]){
+    itemDetailsBatch(invMastUids: $invMastUids){
+      anonPrice
+      invMastUid
+      itemCode
+      itemDesc
+      listPrice
+      mfgPartNo
+      modelCode
+      tariff
+      unitSizeMultiple
+      availability
+      availabilityMessage
+      image {
+        path
+        sequence
+        type
+      }
+    }
+  }
+`
