@@ -191,10 +191,10 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.customerPartNumbers)) {
-        setCustomerPartNumbers(result.customerPartNumbers)
+        // setCustomerPartNumbers(result.customerPartNumbers)
         setSelectedCustomerPartNumber(item.customerPartNumberId)
       } else {
-        setCustomerPartNumbers([])
+        // setCustomerPartNumbers([])
       }
     }
   })
