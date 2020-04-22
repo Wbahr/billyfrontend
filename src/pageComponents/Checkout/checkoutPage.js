@@ -130,7 +130,7 @@ function CheckoutPage(props) {
   const context = useContext(Context)
   const [currentStep, setCurrentStep] = useState(0)
   const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
-  const [shippingZipCode, setShippingZipCode] = useState(null)
+  const [shippingZipCode, setShippingZipCode] = useState({})
   const [taxAmount, setTaxAmount] = useState(0)
   const [triggerSubmit, setTriggerSubmit] = useState(false)
   const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
@@ -162,7 +162,8 @@ function CheckoutPage(props) {
         { "variables": {
             "checkoutDataRequest": {
               "anonymousCartToken": cartToken,
-              "zipcode": shippingZipCode
+              "shipToId": shippingZipCode.shipToId,
+              "zipcode": shippingZipCode.zip,
             }
           }
         }
@@ -240,7 +241,10 @@ function CheckoutPage(props) {
               handleValidateFields={(values)=>handleValidateFields(values)}
               submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
               showOrderFailedModal={showOrderFailedModal}
-              updateZip={(zip)=>setShippingZipCode(zip)}
+              updateZip={(shipToId, zip)=>setShippingZipCode({
+                shipToId: shipToId,
+                zip: zip
+              })}
             />)}
           </Context.Consumer>
           <DivNavigation>
