@@ -170,11 +170,11 @@ const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
   }
 `
 
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
+export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
   const {
     itemDetails,
     customerPartNumbers
-  } = item
+  } = displayItem
   // const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
   const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
   const itemId = parseInt(item.frecno,10)

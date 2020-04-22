@@ -89,7 +89,8 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
                     <SkeletonItem />
                     :
                     <ShoppingCartItem
-                      item={displayItem}
+                      item={item}
+                      displayItem={displayItem}
                       emptyCart={emptyCart}
                       index={index}
                       showSplitLineModal={showSplitLineModal}
