@@ -216,7 +216,7 @@ export default function Provider(props) {
     window.setTimeout(()=>{resetTopAlert()}, 3500)
   }
 
-  async function handleAddItem (item){
+  function handleAddItem (item){
     const itemId = item.frecno
     // Add item to the cart
     setShoppingCart([...shoppingCart, item])
