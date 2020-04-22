@@ -35,7 +35,7 @@ const CardList = styled.div`
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-bottom: 40px;
 `
 const LinkDiv = styled.div`
     display: flex;
@@ -61,7 +61,7 @@ const ThumbnailCol = styled.div`
     align-self: flex-start;
 `
 const ThumbnailDiv = styled.a`
-    margin: 40px;
+    margin: 0 40px 40px;
     display: flex;
     flex-direction: column;
     align-self: flex-start;
