@@ -87,9 +87,16 @@ export default function Provider(props) {
         // If we are merging or loading an existing cart, the server will have the cart we need, so we need to load it
         // console.log('updateShoppingCart', cartAction)
         if (cartAction === 4 || cartAction === 5) {
+          let cartData = JSON.parse(results.cartData)
           localStorage.setItem("shoppingCartToken", results.token)
-          setShoppingCart(JSON.parse(results.cartData))
+          setShoppingCart(cartData)
           setOrderNotes(results.orderNotes)
+          // If the cart was existing, populate cartDisplay
+          if (cartAction === 5) {
+            let cartFrecnos = []
+            cartData.forEach(elem => cartFrecnos.push(elem.frecno))
+            // getMultiItemData({variables: {cartFrecnos}})
+          }
         // If a new cart was just created, set a token in local storage
         } else if (cartAction === 1) {
           // console.log('set token action 1')
@@ -151,7 +158,13 @@ export default function Provider(props) {
   const [getItemData] = useLazyQuery(GET_ITEM_BY_ID, {
     fetchPolicy: 'no-cache',
     onCompleted: result => {
-      console.log('Mutate Shopping Cart Display', result),
+      mutateShoppingCartDisplay('add', result)
+    }
+  })
+
+  const [getMultiItemData] = useLazyQuery(GET_ITEM_BY_ID, {
+    fetchPolicy: 'no-cache',
+    onCompleted: result => {
       mutateShoppingCartDisplay('add', result)
     }
   })

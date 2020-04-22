@@ -151,7 +151,7 @@ const Detail6 = styled.div`
 `
 
 const Price = styled.div`
-  width: 105px;
+  width: 80px;
   height: 37px;
   background: linear-gradient(-90deg, whitesmoke, #dedede, whitesmoke, #dedede);
   background-size: 400% 400%;
@@ -203,7 +203,6 @@ export default function SkeletonItem(){
               )}
             </Context.Consumer>
       </DivCard>
-
     </SkeletonDiv>
   )
 }
