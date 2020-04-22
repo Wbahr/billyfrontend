@@ -167,7 +167,7 @@ const DivRemove = styled.div`
   align-items: center;
 `
 
-export default function SkeletonItem(){
+export default function SkeletonItem({index}){
   return(
     <SkeletonDiv>
       <DivCard>

@@ -86,7 +86,9 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
                   {...provided.dragHandleProps}
                 >
                   {_.isNil(displayItem) ?
-                    <SkeletonItem />
+                    <SkeletonItem 
+                      index={index}
+                    />
                     :
                     <ShoppingCartItem
                       item={item}
