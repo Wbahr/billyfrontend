@@ -74,9 +74,9 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 
   const ShoppingCartItems = (
     <Context.Consumer>
-      {({cart, cartDisplay, emptyCart}) => (
+      {({cart, itemDetailCache, emptyCart}) => (
         cart.map((item, index)=>{
-          let displayItem = cartDisplay.find(elem => elem.itemDetails.invMastUid === item.frecno)
+          let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
           return(
             <Draggable key={index} draggableId={String(index)} index={index}>
               {(provided, snapshot) => (

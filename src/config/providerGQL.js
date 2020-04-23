@@ -1,22 +1,5 @@
 import gql from 'graphql-tag'
 
-export const UPDATE_SHOPPING_CART = gql`
-  mutation UpdateShoppingCart($cartData: ShoppingCartUpdateInputGraphType) {
-    updateShoppingCart(cartUpdate: $cartData) {
-      token
-      cartData
-      orderNotes
-      subtotal
-      tariff
-      cartItems{
-        frecno
-        airlineCost
-        quantity
-      }
-    }
-  }
-`
-
 export const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){
     impersonationBegin(customerId: $customerId){
@@ -141,6 +124,50 @@ export const GET_ITEMS_BY_ID = gql`
       id
       invMastUid
       customerPartNumber
+    }
+  }
+`
+
+export const UPDATE_CART = gql`
+  mutation UpdateCart($cartInfo: ShoppingCartUpdate){
+    shoppingCart(cartUpdate: $cartInfo){
+      token
+      cartItems{
+        frecno
+        customerPartNumberId
+        quantity
+        itemNotes
+        itemUnitPriceOverride
+      }
+      subtotal
+      tariff
+      orderNotes
+      action
+    }
+  }
+`
+
+const QUERY_LOGIN = gql`
+  query SubmitLogin($loginInfo: LoginInputGraphType){
+    submitLogin(login: $loginInfo){
+      success
+      message
+      isPasswordReset
+      authorizationInfo{
+        token
+        userInfo {
+          firstName
+          lastName
+          companyName
+          companyId
+          role
+          permissions
+          limits {
+            limitType
+            limitValue
+          }
+        }
+      }
     }
   }
 `

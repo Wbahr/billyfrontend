@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/quoteOrderSummary'
@@ -77,7 +77,7 @@ const DivNavigation = styled.div`
 
 const Container = styled.div`
   margin: 20px;
-  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 18px;
   height: 100%;
   border: 1px solid lightgrey;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
