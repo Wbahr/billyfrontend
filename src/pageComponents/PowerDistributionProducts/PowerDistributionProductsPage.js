@@ -15,8 +15,11 @@ const FeaturedBrandLogo = styled.div`
     justify-content: center;
     padding: 200px 0;
     background-image: url('https://media.istockphoto.com/photos/fiberglass-production-industry-equipment-at-manufacture-background-picture-id1130458099?s=2048x2048');
+    // background-image: url('https://media.istockphoto.com/photos/inside-production-hall-picture-id1094819418?s=2048x2048');
+    // background-image: url('  https://media.istockphoto.com/photos/home-appliance-quality-control-checks-picture-id1151823344?s=2048x2048');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
   `
 const BrandDetailsContainer = styled.div`
     display: flex;
@@ -176,7 +179,7 @@ const RelatedContainer = styled.div`
 `
 const BannerDiv = styled.div`
     margin: 0 30px;
-    width: 250px;
+    width: 200px;
     height: 115px;
 `
 const BannerImg = styled.img`
@@ -187,6 +190,11 @@ const BannerImg = styled.img`
 const MainProductDiv = styled.div`
    
 `
+const BrandDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 export default function PowerDistributionProducts() {
     const [showText1, setShowText1] = useState(false);
     return (
@@ -202,13 +210,14 @@ export default function PowerDistributionProducts() {
                 or mobile machinery to move, push, pull, lift, dig or drill. Airline’s Automation Group draws upon years of experience and an expansive inventory
                 of motion, power, control, electrical and pneumatic components to deliver automation systems and sub-system solutions that provide precise and reliable performance.
                 </DistributorDetails>
-                <AirlineDistributorH4>Airline is an authorized distributor of quality brands such as:
+                <BrandDiv>
+                    <AirlineDistributorH4>Airline is an authorized distributor of quality brands such as:
         </AirlineDistributorH4>
-                <DistributorDetails>
-                    <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
-                    <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/rittal.jpg" /></BannerDiv>
-
-                </DistributorDetails>
+                    <DistributorDetails>
+                        <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
+                        <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/rittal.jpg" /></BannerDiv>
+                    </DistributorDetails>
+                </BrandDiv>
 
                 {/*............................... PRODUCTS................................... */}
 
