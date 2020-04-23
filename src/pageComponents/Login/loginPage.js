@@ -115,9 +115,10 @@ export default function LoginPage(props) {
           setInfoMessage(requestData.message)
           setPassword('')
         } else {
+          let mergeToken = localStorage.getItem('shoppingCartToken')
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-          context.loginUser(requestData.authorizationInfo.userInfo, requestData.authorizationInfo.token)
+          context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
           let urlParams = new URLSearchParams(props.location.search)
           let redirect = urlParams.get('next')
           if(!_.isNil(redirect)){

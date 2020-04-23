@@ -5,7 +5,7 @@ import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITE
 
 export default function Provider(props) {
   const didMountRef = useRef(false)
-  const loadingCart = useRef(false)
+  const justLoadedCart = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
   const [itemDetailCache, setItemDetailCache] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
@@ -24,7 +24,10 @@ export default function Provider(props) {
 
   useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
     if(didMountRef.current){
-      handleShoppingCart('update')
+      if(!justLoadedCart.current){
+        handleShoppingCart('update')
+      }
+      justLoadedCart.current = false
     }
     didMountRef.current = true
   },[shoppingCart, orderNotes])
@@ -39,30 +42,29 @@ export default function Provider(props) {
         cartItems.forEach(elem => delete elem._typename)
         setShoppingCart(cartItems)
         setOrderNotes(result.orderNotes)
-        if (result.action === 'retrieve') { // If the cart was existing, populate cartDisplay
+        if (result.action === 'retrieve' && cartItems.length > 0) { // If the cart was existing, populate cartDisplay
           let cartFrecnos = []
           cartItems.forEach(elem => cartFrecnos.push(elem.frecno))
           getMultiItemData({variables: {'invMastUids': cartFrecnos}})
         }
       }
       setShoppingCartPricing({'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2)})
-      loadingCart.current = false
     }
   })
 
   const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
-      handleShoppingCart('retrieve')
       let requestData = data.impersonationBegin
       if(requestData.success){
-        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
         const {
           userInfo,
-          impersonationUserInfo
+          impersonationUserInfo,
+          token
         } = requestData.authorizationInfo
+        localStorage.setItem('apiToken', token)
         manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
-        handleEmptyCart()
+        handleShoppingCart('retrieve')
         let alertObj = {
           'show': true,
           'message': 'You are now impersonating a customer'
@@ -85,7 +87,7 @@ export default function Provider(props) {
         } = requestData.authorizationInfo
         localStorage.setItem('apiToken', token)
         manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
-        handleEmptyCart()
+        handleShoppingCart('retrieve')
         props.history.push('/')
       } else {
         setErrorMessage(requestData.message)
@@ -151,12 +153,11 @@ export default function Provider(props) {
         localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo)) 
         localStorage.removeItem('shoppingCartToken')
         setUserInfo(userInfo)
-        if(!_.isNil(impersonatedCompanyInfo)){ //User switched companies they are impersonating
-          currentUserType = 'Impersonator'
+        if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
           props.history.push('/')
         }
         setImpersonatedCompanyInfo(impersonationInfo)
-        currentUserType = 'AirlineEmployee'
+        currentUserType = 'Impersonator'
         break
       case 'end-impersonation':
         localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
@@ -187,8 +188,12 @@ export default function Provider(props) {
     })
   }
 
-  function handleLogin(userInfo) {
-    handleShoppingCart('retrieve')
+  function handleLogin(userInfo, mergeToken) {
+    if(shoppingCart.length > 0) {
+      handleShoppingCart('merge', mergeToken)
+    } else {
+      handleShoppingCart('retrieve')
+    }
     manageUserInfo('login', userInfo)
     if(userInfo.role === 'AirlineEmployee'){
       drift.api.widget.hide()
@@ -283,7 +288,7 @@ export default function Provider(props) {
     }
   }
 
-  function handleShoppingCart(action) {
+  function handleShoppingCart(action, mergeToken) {
     let shoppingCartToken = localStorage.getItem('shoppingCartToken')
     let cartInfo
     switch(action) {
@@ -300,20 +305,21 @@ export default function Provider(props) {
           'token': shoppingCartToken,
           'actionString': action
         }}
+        justLoadedCart.current = true
         break
       case 'merge':
         cartInfo = { 'cartInfo': {
-          'token': shoppingCartToken,
-          'actionString': action,
-          'orderNotes': orderNotes,
-          'cartItems': []
+          'token': mergeToken,
+          'actionString': action
         }}
+        justLoadedCart.current = true
         break
       case 'retrieve':
         cartInfo = { 'cartInfo': {
           'token': shoppingCartToken,
           'actionString': action
         }}
+        justLoadedCart.current = true
         break
     }
     updateCart({ variables: cartInfo })
@@ -338,8 +344,8 @@ export default function Provider(props) {
             resetTopAlert()
           },
           userInfo: userInfo,
-          loginUser: (userInformation, token)=>{
-            handleLogin(userInformation, token)
+          loginUser: (userInformation, mergeToken)=>{
+            handleLogin(userInformation, mergeToken)
           },
           logoutUser: ()=>{
             handleLogout()
