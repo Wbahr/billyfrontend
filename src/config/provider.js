@@ -30,10 +30,10 @@ export default function Provider(props) {
         setShoppingCartPricing({'state': 'loading', 'subTotal': '--', 'tariff': '--'})
         let currentTimeoutId
         if(_.isNil(timeoutId)){
-          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 1000)
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 500)
         } else {
           timeoutCollection.remove(timeoutId)
-          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 1000)
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 800)
         }
         setTimeoutId(currentTimeoutId)
       }
