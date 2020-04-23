@@ -295,6 +295,15 @@ export default function Provider(props) {
         mutatedItemDetailCache = [...itemDetailCache, ...data]
         setItemDetailCache(mutatedItemDetailCache)
         break
+      case 'update-customer-numbers':
+        mutatedItemDetailCache = itemDetailCache.map( elem => {
+          if (elem.itemDetails.invMastUid === data.frecno) {
+            elem.customerPartNumbers = data.customerPartNumbers
+          }
+          return(elem)
+        })
+        setItemDetailCache(mutatedItemDetailCache)
+        break
     }
   }
 
@@ -364,6 +373,9 @@ export default function Provider(props) {
           },
           cart: shoppingCart,
           itemDetailCache: itemDetailCache,
+          updateItemDetailCache: (type, data) => {
+            mutateItemDetailCache(type, data)
+          },
           cartPricing: shoppingCartPricing,
           orderNotes: orderNotes,
           addItem: (item) => {

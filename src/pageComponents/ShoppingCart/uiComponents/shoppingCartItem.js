@@ -175,7 +175,6 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
     itemDetails,
     customerPartNumbers
   } = displayItem
-  // const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
   const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
   const itemId = parseInt(item.frecno,10)
 
@@ -191,10 +190,8 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.customerPartNumbers)) {
-        // setCustomerPartNumbers(result.customerPartNumbers)
+        context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
         setSelectedCustomerPartNumber(item.customerPartNumberId)
-      } else {
-        // setCustomerPartNumbers([])
       }
     }
   })
