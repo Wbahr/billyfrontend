@@ -53,6 +53,7 @@ export default function Provider(props) {
   const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
+      handleShoppingCart('retrieve')
       let requestData = data.impersonationBegin
       if(requestData.success){
         localStorage.setItem('apiToken', requestData.authorizationInfo.token)
