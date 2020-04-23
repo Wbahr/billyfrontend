@@ -89,6 +89,7 @@
     "reactjs-popup": "^1.5.0",
     "reactstrap": "^8.2.0",
     "styled-components": "^4.4.1",
+    "time-events-manager": "^0.1.1",
     "yup": "^0.27.0"
   }
 }

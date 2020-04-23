@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID } from './providerGQL'
@@ -14,6 +15,7 @@ export default function Provider(props) {
   const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
   const [userType, setUserType] = useState({'current': null, 'previous': null})
   const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
+  const [timeoutId, setTimeoutId] = useState(null)
 
   useEffect(() => {
     if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -25,7 +27,15 @@ export default function Provider(props) {
   useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
     if(didMountRef.current){
       if(!justLoadedCart.current){
-        handleShoppingCart('update')
+        setShoppingCartPricing({'state': 'loading', 'subTotal': '--', 'tariff': '--'})
+        let currentTimeoutId
+        if(_.isNil(timeoutId)){
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 1000)
+        } else {
+          timeoutCollection.remove(timeoutId)
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 1000)
+        }
+        setTimeoutId(currentTimeoutId)
       }
       justLoadedCart.current = false
     }
@@ -39,7 +49,7 @@ export default function Provider(props) {
       if (result.action === 'merge' || result.action === 'retrieve') {
         localStorage.setItem("shoppingCartToken", result.token)
         let cartItems = result.cartItems
-        cartItems.forEach(elem => delete elem._typename)
+        cartItems.forEach(elem => delete elem.__typename)
         setShoppingCart(cartItems)
         setOrderNotes(result.orderNotes)
         if (result.action === 'retrieve' && cartItems.length > 0) { // If the cart was existing, populate cartDisplay
@@ -294,6 +304,7 @@ export default function Provider(props) {
     let cartInfo
     switch(action) {
       case 'update':
+        setTimeoutId(null)
         cartInfo = { 'cartInfo': {
           'token': shoppingCartToken,
           'actionString': action,
