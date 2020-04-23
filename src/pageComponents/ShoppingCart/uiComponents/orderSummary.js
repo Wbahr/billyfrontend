@@ -91,11 +91,11 @@ export default function OrderSummary({history}) {
         <H4>Order Summary</H4>
         <DivLineItem>
           <p>Subtotal</p>
-          <p>{formatCurrency(context.cartPricing.subTotal)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.subTotal)}</p>
         </DivLineItem>
         <DivLineItem>
           <p>Tariff</p>
-          <p>{formatCurrency(context.cartPricing.tariff)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.tariff)}</p>
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
@@ -110,7 +110,7 @@ export default function OrderSummary({history}) {
           <button>Apply</button>
         </DivLineItem>    */}
         <DivLineItemTotal>
-          <p>Total (without tax) {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
+          <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>
         {context.cart.length > 0 &&
           <DivButtonContainer>

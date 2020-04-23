@@ -103,7 +103,7 @@ export default function SubtotalBox({history}) {
       </Context.Consumer>
 
       <Div>
-        <h5>Subtotal: {formatCurrency(context.cartPricing.subTotal)}</h5>
+        <h5>Subtotal: {context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.subTotal)}</h5>
         { context.cart.length > 0 &&
           <>
             <Context.Consumer>

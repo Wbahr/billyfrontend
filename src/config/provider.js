@@ -9,7 +9,7 @@ export default function Provider(props) {
   const [shoppingCart, setShoppingCart] = useState([])
   const [itemDetailCache, setItemDetailCache] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
-  const [shoppingCartPricing, setShoppingCartPricing] = useState({'subTotal': '--', 'tariff': '--'})
+  const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
   const [userInfo, setUserInfo] = useState(null)
   const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
   const [userType, setUserType] = useState({'current': null, 'previous': null})
@@ -48,7 +48,7 @@ export default function Provider(props) {
           getMultiItemData({variables: {'invMastUids': cartFrecnos}})
         }
       }
-      setShoppingCartPricing({'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2)})
+      setShoppingCartPricing({'state': 'stable', 'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2)})
     }
   })
 
@@ -289,6 +289,7 @@ export default function Provider(props) {
   }
 
   function handleShoppingCart(action, mergeToken) {
+    setShoppingCartPricing({'state': 'loading', 'subTotal': '--', 'tariff': '--'})
     let shoppingCartToken = localStorage.getItem('shoppingCartToken')
     let cartInfo
     switch(action) {
