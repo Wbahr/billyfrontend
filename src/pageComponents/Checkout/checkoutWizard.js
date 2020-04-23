@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements';

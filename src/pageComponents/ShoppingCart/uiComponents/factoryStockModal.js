@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import { ButtonBlack } from '../../../styles/buttons'
 import Modal from '../../_common/modal'
 

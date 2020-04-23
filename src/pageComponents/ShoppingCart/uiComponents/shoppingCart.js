@@ -5,6 +5,7 @@ import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 
 const Div = styled.div`
   display: flex;
@@ -73,8 +74,9 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 
   const ShoppingCartItems = (
     <Context.Consumer>
-      {({cart, emptyCart}) => (
+      {({cart, itemDetailCache, emptyCart}) => (
         cart.map((item, index)=>{
+          let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
           return(
             <Draggable key={index} draggableId={String(index)} index={index}>
               {(provided, snapshot) => (
@@ -83,21 +85,29 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
                 >
-                  <ShoppingCartItem
-                    item={item}
-                    emptyCart={emptyCart}
-                    index={index}
-                    showSplitLineModal={showSplitLineModal}
-                    showFactoryStockModal={showFactoryStockModal}
-                    showEditPriceModal={showEditPriceModal}
-                    showCustomerPartModal={showCustomerPartModal}
-                    handleSetModalData={handleSetModalData}
-                  />
+                  {_.isNil(displayItem) ?
+                    <SkeletonItem 
+                      index={index}
+                    />
+                    :
+                    <ShoppingCartItem
+                      item={item}
+                      displayItem={displayItem}
+                      emptyCart={emptyCart}
+                      index={index}
+                      showSplitLineModal={showSplitLineModal}
+                      showFactoryStockModal={showFactoryStockModal}
+                      showEditPriceModal={showEditPriceModal}
+                      showCustomerPartModal={showCustomerPartModal}
+                      handleSetModalData={handleSetModalData}
+                    />
+                  }
                 </div>
               )}
             </Draggable>
           )
-        })
+          }
+        )
       )}
     </Context.Consumer>
   )

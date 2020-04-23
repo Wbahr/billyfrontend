@@ -8,7 +8,7 @@ import FormikSelect from '../../../../pageComponents/_common/formik/select'
 import gql from 'graphql-tag';
 import { Button } from '@material-ui/core'
 import * as Yup from 'yup'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 
 const Form = styled(FormikForm)`
   margin: 32px 64px;

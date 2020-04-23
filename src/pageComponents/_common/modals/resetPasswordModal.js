@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import AirlineInput from '../form/inputv2'
 

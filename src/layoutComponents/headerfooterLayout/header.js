@@ -65,7 +65,7 @@ const NavItem =styled.div`
   color: black !important;
   font-weight: 400;
   font-size: 16px;
-  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   margin: 0 8px -3px 8px;
 `
 const InputSearch = styled.input`

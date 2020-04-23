@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'

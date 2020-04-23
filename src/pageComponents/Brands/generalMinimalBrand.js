@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { StyledText0 } from '../../styles/fonts'
 import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
-import AdaptallPage from './minimalBrandsPages/adaptall'
-import AdsensPage from './minimalBrandsPages/adsens'
+// import AdaptallPage from './minimalBrandsPages/adaptall'
+// import AdsensPage from './minimalBrandsPages/adsens'
 
 // import _ from 'lodash'
 
@@ -65,9 +65,11 @@ export default function GeneralMinimalBrand({history}) {
     if(page === 'acme-electric'){
       setPageComponent(<AcmeElectricPage/>)
     } else if (page === 'adaptall'){
-      setPageComponent(<AdaptallPage/>)
+      setPageComponent(<AcmeElectricPage/>) // Swap this when Adaptall page is completed
+      // setPageComponent(<AdaptallPage/>)
     } else if (page === 'adsens'){
-      setPageComponent(<AdsensPage/>)
+      setPageComponent(<AcmeElectricPage/>) // Swap this when Adsens page is completed
+      // setPageComponent(<AdsensPage/>)
     } 
     
   }, [page])

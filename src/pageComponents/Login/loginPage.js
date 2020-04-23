@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
@@ -115,9 +115,10 @@ export default function LoginPage(props) {
           setInfoMessage(requestData.message)
           setPassword('')
         } else {
+          let mergeToken = localStorage.getItem('shoppingCartToken')
           localStorage.setItem('apiToken', requestData.authorizationInfo.token)
           localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-          context.loginUser(requestData.authorizationInfo.userInfo, requestData.authorizationInfo.token)
+          context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
           let urlParams = new URLSearchParams(props.location.search)
           let redirect = urlParams.get('next')
           if(!_.isNil(redirect)){

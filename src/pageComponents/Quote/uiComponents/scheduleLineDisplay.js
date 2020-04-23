@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'

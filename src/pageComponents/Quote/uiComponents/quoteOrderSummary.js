@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 // import queryString from 'query-string'
 import _ from 'lodash'
-// import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+// import { useQuery, useLazyQuery } from '@apollo/client';
 // import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
@@ -85,11 +85,11 @@ export default function CheckoutOrderSummary({history}) {
         <H4>Quote Summary</H4>
         <DivLineItem>
           <p>Subtotal</p>
-          <p>{formatCurrency(context.cartPricing.subTotal)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.subTotal)}</p>
         </DivLineItem>
         <DivLineItem>
           <p>Tariff</p>
-          <p>{formatCurrency(context.cartPricing.tariff)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.tariff)}</p>
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
@@ -100,7 +100,7 @@ export default function CheckoutOrderSummary({history}) {
           <p>(TBD)</p>
         </DivLineItem>
         <DivLineItemTotal>
-          <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
+          <p>Total {context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
         </DivLineItemTotal>
       </Div>
     </>

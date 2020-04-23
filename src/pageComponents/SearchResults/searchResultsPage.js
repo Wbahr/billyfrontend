@@ -14,7 +14,7 @@ import AddedToCartModal from './uiComponents/addedToCartModal'
 import AddedModal from './uiComponents/addedModal'
 import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import  SkeletonItem from './uiComponents/skeletonItem';
 

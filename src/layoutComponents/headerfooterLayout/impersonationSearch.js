@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../config/context'
 import DebounceInput from 'react-debounce-input'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag';
 
 const Container = styled.div`
