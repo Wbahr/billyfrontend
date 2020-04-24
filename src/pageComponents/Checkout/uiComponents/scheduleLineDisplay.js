@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Field } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import Context from '../../../config/context'
 
 const DivContainer = styled.div`
   display: flex;
@@ -89,120 +85,59 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
-const DivSpacer = styled.div`
-  margin: 0 8px;
-`
-
-// const CustomDatePicker = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   width: 110px;
-//   background-color: white;
-//   border: 1px solid lightgrey;
-//   margin: 0 8px;
-// `
-
-const GET_ITEM_BY_ID = gql`
-  query ItemById($itemId: Int){
-    customerPartNumbers(frecno: $itemId){
-      customerPartNumber
-      id
-    }
-    itemDetails(invMastUid: $itemId) {
-        anonPrice
-        invMastUid
-        itemCode
-        itemDesc
-        listPrice
-        mfgPartNo
-        modelCode
-        tariff
-        unitSizeMultiple
-        availability
-        availabilityMessage
-        image {
-          path
-          sequence
-          type
-        }
-    }
-  }
-`
-
 export default function ShippingScheduleItem({item, index}) {
-  const [itemDetails, setItem] = useState(null)
-  const [customerParts, setCustomerParts] = useState([])
   const itemId = parseInt(item.frecno,10)
+  const context = useContext(Context)
+  let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
+  const {
+    itemDetails,
+    customerPartNumbers
+  } = displayItem
 
-  const { 
-    loading, 
-    error, 
-    data 
-  } = useQuery(GET_ITEM_BY_ID, {
-    variables: { itemId },
-    onCompleted: result => {
-      if (!_.isNil(result.itemDetails)) {
-        setItem(result.itemDetails)
-      } else {
-        setItem({})
-      }
-      if (!_.isNil(result.customerPartNumbers)) {
-        setCustomerParts(result.customerPartNumbers)
-      } else {
-        setCustomerParts([])
-      }
-    }
-  })
-
-  let Content
-  if(_.isNil(itemDetails)) {
-    Content = (<p>{item.freqno}</p>)
+  let imagePath
+  let resultImage = _.get(itemDetails,`image[0].path`,null)
+  if (_.isNil(resultImage)){
+    imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
   } else {
-    let imagePath
-    let resultImage = _.get(itemDetails,`image[0].path`,null)
-    if (_.isNil(resultImage)){
-      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-    } else {
-      let imagePathArray = resultImage.split("\\")
-      let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 't.jpg'
-      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-    }
-    let date = item.requestedShipDate
-    date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
-
-    let selectedCustomerPartNumber = customerParts.find(elem => elem.id === item.customerPartNumberId)
-
-    Content = (
-      <DivCard>
-        <DivCol1>
-          <Img height='65px'  src={imagePath} />
-        </DivCol1>
-        <DivCol2>
-          <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
-          <P2>Requested Date: {date}</P2>
-        </DivCol2>
-        <DivCol3>
-          <DivQuantity>
-            <DivItem>
-              <Label>{formatCurrency(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)}/each</Label>
-            </DivItem>
-          </DivQuantity>
-          <DivQuantity>
-            <DivItem>
-              <Label>Qty: {item.quantity}</Label>
-            </DivItem>
-          </DivQuantity>
-          <DivQuantity>
-            <DivItem>
-              <LabelBold>{formatCurrency(Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride))}</LabelBold>
-            </DivItem>
-          </DivQuantity>
-        </DivCol3>
-      </DivCard>
-    )
+    let imagePathArray = resultImage.split("\\")
+    let imageFile = imagePathArray[imagePathArray.length - 1]
+    imageFile = imageFile.slice(0, -5) + 't.jpg'
+    imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
   }
+  let date = item.requestedShipDate
+  date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
+
+  let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
+
+  let Content = (
+    <DivCard>
+      <DivCol1>
+        <Img height='65px'  src={imagePath} />
+      </DivCol1>
+      <DivCol2>
+        <P1>{itemDetails.itemDesc}</P1>
+        <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+        <P2>Requested Date: {date}</P2>
+      </DivCol2>
+      <DivCol3>
+        <DivQuantity>
+          <DivItem>
+            <Label>{formatCurrency(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)}/each</Label>
+          </DivItem>
+        </DivQuantity>
+        <DivQuantity>
+          <DivItem>
+            <Label>Qty: {item.quantity}</Label>
+          </DivItem>
+        </DivQuantity>
+        <DivQuantity>
+          <DivItem>
+            <LabelBold>{formatCurrency(Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride))}</LabelBold>
+          </DivItem>
+        </DivQuantity>
+      </DivCol3>
+    </DivCard>
+  )
   return(
     <DivContainer>
       {Content}

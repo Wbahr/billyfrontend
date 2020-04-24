@@ -46,7 +46,7 @@ const MainInput = styled(FormikField)`
   }
 `
 
-export default function TextArea({type, disabled, name, label, placeholder, width, changeFunction, maxlength}){
+export default function TextArea({type, disabled, name, label, placeholder, width, changeFunction, maxlength, rows}){
   if(type === "text" && _.isNil(changeFunction)){
     return(
       <DivContainer>
@@ -59,6 +59,7 @@ export default function TextArea({type, disabled, name, label, placeholder, widt
           disabled={disabled} 
           style={{width: width || "400px"}}
           maxLength={maxlength}
+          rows={rows}
         />
       </DivContainer>
     )
@@ -75,6 +76,7 @@ export default function TextArea({type, disabled, name, label, placeholder, widt
           style={{width: width || "400px"}}
           onChange={(e)=>changeFunction(name, e.target.value)}
           maxLength={maxlength}
+          rows={rows}
         />
       </DivContainer>
     )
@@ -97,5 +99,6 @@ TextArea.propTypes = {
 TextArea.defaultProps = {
   type: 'text',
   placeholder: '',
-  maxlength: 'none'
+  maxlength: 'none',
+  rows: '3'
 }

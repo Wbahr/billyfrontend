@@ -65,7 +65,7 @@ const NavItem =styled.div`
   color: black !important;
   font-weight: 400;
   font-size: 16px;
-  font-family: helvetica-neue-light,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   margin: 0 8px -3px 8px;
 `
 const InputSearch = styled.input`
@@ -456,7 +456,7 @@ export default function HeaderComponent(props) {
               />
             </div>
             <div id="contact" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
-              <Link to="/contact" style={{ textDecoration: 'none' }}>
+              <Link to="/contact-us" style={{ textDecoration: 'none' }}>
                 <NavItem id="contact">Contact <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.contact ? "caret-up" : "caret-down"} color="black"/></NavItem>
               </Link>
               <Dropdown open={showDropdown.contact} history={props.history}

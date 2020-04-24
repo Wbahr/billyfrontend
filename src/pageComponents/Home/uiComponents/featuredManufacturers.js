@@ -40,12 +40,12 @@ export default function FeaturedManufacturers(){
   const [r2, setR2] = useState(1)
 
   useInterval(() => {
-    let random1 = getRandomInt(17)
+    let random1 = getRandomInt(18)
     setR1(random1)
   }, 1200)
 
   useInterval(() => {
-    let random2 = getRandomInt(17)
+    let random2 = getRandomInt(18)
     setR2(random2)
   }, 1700)
 
@@ -55,6 +55,7 @@ export default function FeaturedManufacturers(){
         text='Featured Manufacturers'
       />
       <Wrapper>
+        <FeaturedManufacturerLink brandPagePath="/Brands/featured/rexroth" logo="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" pop={17 === r1 || 17 === r2}/>
         <FeaturedManufacturerLink brandPagePath="/Brands/featured/smc" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured2.png" pop={0 === r1 || 0 === r2}/>
         <FeaturedManufacturerLink brandPagePath="/Brands/featured/eaton" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured3.png" pop={1 === r1 || 1 === r2}/>
         <FeaturedManufacturerLink brandPagePath="/Brands/featured/hydac" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured4.png" pop={2 === r1 || 2 === r2}/>

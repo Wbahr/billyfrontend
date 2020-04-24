@@ -90,11 +90,11 @@ export default function CheckoutOrderSummary({currentStep, taxAmount}) {
       <DivLineItem>
         <p>Tax</p>
         {/* If past step 1 (ship to), show tax */}
-        { currentStep > 1 ? <p>{formatCurrency(taxAmount)}</p> : <p>(TDB)</p> }
+        { currentStep > 1 ? <p>{formatCurrency(taxAmount)}</p> : <p>(TBD)</p> }
       </DivLineItem>
       <DivLineItem>
         <p>Shipping</p>
-        <p>(TDB)</p>
+        <p>(TBD)</p>
       </DivLineItem>
       <DivLineItemTotal>
         <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(taxAmount))}</p>

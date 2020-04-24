@@ -74,6 +74,10 @@ export const airlineShipToSchema = shipToSchema.concat(contactSchema)
 // Step 3
 export const billToSchema = object({
   billing: object({
+    purchaseOrder: string()
+      .min(1)
+      .max(20)
+      .required(),
     firstName: string()
       .min(3)
       .max(50)

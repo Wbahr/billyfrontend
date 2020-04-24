@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
@@ -64,18 +64,7 @@ const GET_ITEM_BY_ID = gql`
                 type
                 id
               }
-              itemAssociationInvMastU {
-                associatedInvMastUid
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                modifiedBy
-                quantity
-                type
-                id
-              }
-              itemAssociationAssociatedInvMastU {
+              associatedItems {
                 associatedInvMastUid
                 createDate
                 createdBy
@@ -335,6 +324,7 @@ export default function ItemDetailPage({history}){
     data
   } = useQuery(GET_ITEM_BY_ID, {
     variables: { itemId },
+    fetchPolicy: 'no-cache',
     onCompleted: result => {
       if (result.itemDetails) {
         performPriceLookup(
@@ -421,7 +411,7 @@ export default function ItemDetailPage({history}){
       </DivSection>
     )
 
-    let AccessoryItems = item.itemAssociationInvMastU.map(elem => {
+    let AccessoryItems = item.associatedItems.map(elem => {
       return(
         <AccessoryItem 
           associatedItemId={elem.associatedInvMastUid}
@@ -474,7 +464,7 @@ export default function ItemDetailPage({history}){
           {TechSpecs}
           {item.itemLink.length > 0 && <H4>Links</H4>}
           {Links}
-          {item.itemAssociationInvMastU.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
+          {item.associatedItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
           <DivAccessoryItems>
             {AccessoryItems}
           </DivAccessoryItems>
@@ -507,7 +497,7 @@ export default function ItemDetailPage({history}){
           </Div>
           {item.feature.length > 0 && <a href='#feature'>Features</a>}
           {item.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
-          {item.itemAssociationInvMastU.length > 0 && <a href='#accessory'>Accessory</a>}
+          {item.associatedItems.length > 0 && <a href='#accessory'>Accessory</a>}
         </DivPurchaseInfo>
       </ItemDetailPageContainer>
     )

@@ -1,195 +1,64 @@
 import React, { useState, useEffect, useRef } from 'react'
+import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
-import gql from 'graphql-tag'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-
-const UPDATE_SHOPPING_CART = gql`
-  mutation UpdateShoppingCart($cartData: ShoppingCartUpdateInputGraphType) {
-    updateShoppingCart(cartUpdate: $cartData) {
-      token
-      cartData
-      orderNotes
-      subtotal
-      tariff
-      cartItems{
-        frecno
-        airlineCost
-        quantity
-      }
-    }
-  }
-`
-
-const BEGIN_IMPERSONATION = gql`
-  query BeginImpersonation ($customerId: Int){
-    impersonationBegin(customerId: $customerId){
-      success
-      message
-      authorizationInfo{
-        token
-        userInfo{
-          companyId
-          companyName
-          firstName
-          lastName
-          role
-          permissions
-          limits{
-            limitType
-            limitValue
-          }
-        }
-        impersonationUserInfo{
-          customerId
-          customerName
-          customerIdP21
-        }
-      }
-    }
-  }
-`
-
-const END_IMPERSONATION = gql`
-  query EndImpersonation{
-    impersonationEnd{
-      success
-      message
-      authorizationInfo{
-        token
-        userInfo{
-          companyId
-          companyName
-          firstName
-          lastName
-          role
-          permissions
-          limits{
-            limitType
-            limitValue
-          }
-        }
-      }
-    }
-  }
-`
-
-const GET_TAXES = gql`
-  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
-    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
-      grandTotal
-      subTotal
-      tariffTotal
-      taxTotal
-      taxRate
-      checkoutItems {
-        frecno
-        itemNotes
-        itemTotalPrice
-        itemTotalTariff
-        itemUnitPrice
-        quantity
-        requestedShipDate
-      }
-    }
-  }
-`
-
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID } from './providerGQL'
 
 export default function Provider(props) {
-  const didMountRef = useRef(false);
-  const loadingCart = useRef(false)
-  const [cartAction, setCartAction] = useState(null)
-  const [prevToken, setPrevToken] = useState(localStorage.getItem("userInfo"))
-  const [token, setToken] = useState(_.isNil(localStorage.getItem("imperInfo")) ? localStorage.getItem("userInfo") : localStorage.getItem("imperInfo"))
+  const didMountRef = useRef(false)
+  const justLoadedCart = useRef(false)
   const [shoppingCart, setShoppingCart] = useState([])
+  const [itemDetailCache, setItemDetailCache] = useState([])
   const [orderNotes, setOrderNotes] = useState('')
+  const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
   const [userInfo, setUserInfo] = useState(null)
   const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
+  const [userType, setUserType] = useState({'current': null, 'previous': null})
   const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
-  const [shoppingCartPricing, setShoppingCartPricing] = useState({'subTotal': '--', 'tariff': '--'})
+  const [timeoutId, setTimeoutId] = useState(null)
 
   useEffect(() => {
-    // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
-    if (!didMountRef.current) {
-      // If userInfo or imperInfo in local storage, update Context
-      let userInfoStorage = localStorage.getItem("userInfo")
-      let imperInfoStorage = localStorage.getItem("imperInfo")
-      setUserInfo(JSON.parse(userInfoStorage))
-      setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
-      let shoppingCartToken = localStorage.getItem("shoppingCartToken")
-
-      // If the user isn't logged in, create a shopping cart
-      if (!_.isNil(shoppingCartToken)){
-        handleUpdateShoppingCart(5)
-      }
-      // Set Component Mounted = TRUE
-      didMountRef.current = true
+    if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
+      manageUserInfo('load-context')
+      handleShoppingCart('retrieve')
     }
   })
 
-  // This Effect manages the shopping cart when users signin / signout
-  // Set token on login or impersonation
-  // This is the only place to set prevToken
-  useEffect(()=> {
-    if(didMountRef.current) {
-      if (_.isNil(prevToken) && !_.isNil(token)) {
-        // console.log('the user just logged in from Anon', token, prevToken)
-        // If an (api) prevToken is NULL but (api) token is not NULL, the user just logged in from Anon
-        // Merge Anon cart with logged in user's cart
-        let shoppingCartToken = localStorage.getItem("shoppingCartToken")
-        if(_.isNil(shoppingCartToken)){
-          handleUpdateShoppingCart(5)
+  useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
+    if(didMountRef.current){
+      if(!justLoadedCart.current){
+        setShoppingCartPricing({'state': 'loading', 'subTotal': '--', 'tariff': '--'})
+        let currentTimeoutId
+        if(_.isNil(timeoutId)){
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 500)
         } else {
-          handleUpdateShoppingCart(4)
+          timeoutCollection.remove(timeoutId)
+          currentTimeoutId = window.setTimeout(()=>{handleShoppingCart('update')}, 800)
         }
-      } else if (!_.isNil(prevToken) && !_.isNil(token) && (prevToken !== token)) {
-        // console.log('the user is using begin impersonation / end impersonation')
-        // If both (api) prevToken is NULL and (api) token is NULL, the user is using begin impersonation / end impersonation - get their existing cart
-        handleUpdateShoppingCart(5)
+        setTimeoutId(currentTimeoutId)
       }
-      setPrevToken(token)
+      justLoadedCart.current = false
     }
-  }, [token])
-
-  // Update database if shopping cart or order notes  changes
-  useEffect(() => {
-    // console.log('Cart or Order Notes changed')
-    // console.log('didMountRef.current', didMountRef.current)
-    // console.log('loadingCart', loadingCart.current)
-    // console.log('tokens equal', prevToken === token)
-    if(didMountRef.current && !loadingCart.current && prevToken === token){
-      let shoppingCartToken = localStorage.getItem("shoppingCartToken")
-      if (_.isNil(shoppingCartToken) && shoppingCart.length > 0) {
-        // console.log('creating cart from shoppingCart update')
-        handleUpdateShoppingCart(1)
-      } else {
-        handleUpdateShoppingCart(2)
-      }
-    }
+    didMountRef.current = true
   },[shoppingCart, orderNotes])
 
-  const [updateShoppingCart] = useMutation(UPDATE_SHOPPING_CART, {
+  const [updateCart] = useMutation(UPDATE_CART, {
     fetchPolicy: 'no-cache',
-    onCompleted: result => {
-      let results = result.updateShoppingCart
-      // console.log('Bobby',result)
-      if (!_.isNil(results.token)) {
-        setShoppingCartPricing({'subTotal': results.subtotal.toFixed(2), 'tariff': results.tariff.toFixed(2)})
-        // If we are merging or loading an existing cart, the server will have the cart we need, so we need to load it
-        // console.log('updateShoppingCart', cartAction)
-        if (cartAction === 4 || cartAction === 5) {
-          localStorage.setItem("shoppingCartToken", results.token)
-          setShoppingCart(JSON.parse(results.cartData))
-          setOrderNotes(results.orderNotes)
-        // If a new cart was just created, set a token in local storage
-        } else if (cartAction === 1) {
-          // console.log('set token action 1')
-          localStorage.setItem("shoppingCartToken", results.token)
+    onCompleted: data => {
+      let result = data.shoppingCart
+      if (result.action === 'merge' || result.action === 'retrieve') {
+        localStorage.setItem("shoppingCartToken", result.token)
+        let cartItems = result.cartItems
+        cartItems.forEach(elem => delete elem.__typename)
+        setShoppingCart(cartItems)
+        setOrderNotes(result.orderNotes)
+        if (result.action === 'retrieve' && cartItems.length > 0) { // If the cart was existing, populate cartDisplay
+          let cartFrecnos = []
+          cartItems.forEach(elem => cartFrecnos.push(elem.frecno))
+          getMultiItemData({variables: {'invMastUids': cartFrecnos}})
         }
-        loadingCart.current = false
-      } else if (_.isNil(results.token) && !_.isNil(impersonatedCompanyInfo)) {
-        handleUpdateShoppingCart(1)
       }
+      setShoppingCartPricing({'state': 'stable', 'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2)})
     }
   })
 
@@ -198,18 +67,14 @@ export default function Provider(props) {
     onCompleted: data => {
       let requestData = data.impersonationBegin
       if(requestData.success){
-        // console.log('data', data)
-        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
-        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
-        localStorage.setItem('imperInfo', JSON.stringify(requestData.authorizationInfo.impersonationUserInfo)) 
-        localStorage.removeItem('shoppingCartToken')
-        setToken(requestData.authorizationInfo.token)
-        setUserInfo(requestData.authorizationInfo.userInfo)
-        if(!_.isNil(impersonatedCompanyInfo)){
-          props.history.push('/')
-        }
-        setImpersonatedCompanyInfo(requestData.authorizationInfo.impersonationUserInfo)
-        handleEmptyCart()
+        const {
+          userInfo,
+          impersonationUserInfo,
+          token
+        } = requestData.authorizationInfo
+        localStorage.setItem('apiToken', token)
+        manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
+        handleShoppingCart('retrieve')
         let alertObj = {
           'show': true,
           'message': 'You are now impersonating a customer'
@@ -225,17 +90,50 @@ export default function Provider(props) {
     onCompleted: data => {
       let requestData = data.impersonationEnd
       if(requestData.success){
-        localStorage.setItem('apiToken', requestData.authorizationInfo.token)
-        localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo)) 
-        localStorage.removeItem('imperInfo') 
-        handleEmptyCart()
-        setToken(requestData.authorizationInfo.token)
-        setUserInfo(requestData.authorizationInfo.userInfo)
-        setImpersonatedCompanyInfo(null)
+        const {
+          userInfo,
+          impersonationUserInfo,
+          token
+        } = requestData.authorizationInfo
+        localStorage.setItem('apiToken', token)
+        manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
+        handleShoppingCart('retrieve')
         props.history.push('/')
       } else {
         setErrorMessage(requestData.message)
       }
+    }
+  })
+
+  const [getItemData] = useLazyQuery(GET_ITEM_BY_ID, {
+    fetchPolicy: 'no-cache',
+    onCompleted: result => {
+      mutateItemDetailCache('add', result)
+    }
+  })
+
+  const [getMultiItemData] = useLazyQuery(GET_ITEMS_BY_ID, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let itemDetailsBatch = data.itemDetailsBatch
+      let customerPartNumbersBatch = data.customerPartNumbersBatch
+      let result = [] 
+      for (let i = 0; i < itemDetailsBatch.length; i++) {
+        let frecno = itemDetailsBatch[i].invMastUid
+        let customerPartNumbers = []
+        for (let i = 0; i < customerPartNumbersBatch.length; i++) {
+          let customerPartNumberObj = customerPartNumbersBatch[i]
+          if ( customerPartNumberObj.invMastUid === frecno) {
+            customerPartNumbers.push(customerPartNumberObj)
+          }
+        }
+        let itemDetailsObj = {
+          'itemDetails': itemDetailsBatch[i],
+          'customerPartNumbers': customerPartNumbers
+        }
+        result.push(itemDetailsObj)
+      }
+      mutateItemDetailCache('add-multiple', result)
     }
   })
 
@@ -245,51 +143,93 @@ export default function Provider(props) {
       console.log('got taxes ->', data)
     }
   })
+
+  function manageUserInfo(action, userInfo, impersonationInfo){
+    let currentUserType
+    let userInfoStorage = localStorage.getItem("userInfo")
+    let imperInfoStorage = localStorage.getItem("imperInfo")
+    switch(action) {
+      case 'load-context':
+        setUserInfo(JSON.parse(userInfoStorage))
+        setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
+        if (_.isNil(userInfoStorage)) {
+          currentUserType = 'Anon'
+        } else {
+          currentUserType = JSON.parse(userInfoStorage).role
+        }
+        break
+      case 'begin-impersonation':
+        localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
+        localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo)) 
+        localStorage.removeItem('shoppingCartToken')
+        setUserInfo(userInfo)
+        if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
+          props.history.push('/')
+        }
+        setImpersonatedCompanyInfo(impersonationInfo)
+        currentUserType = 'Impersonator'
+        break
+      case 'end-impersonation':
+        localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
+        localStorage.removeItem('imperInfo') 
+        setUserInfo(userInfo)
+        setImpersonatedCompanyInfo(null)
+        currentUserType = 'AirlineEmployee'
+        break
+      case 'login':
+        setUserInfo(userInfo)
+        currentUserType = userInfo.role
+        break
+      case 'logout':
+        const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
+        keysToRemove.forEach(key => localStorage.removeItem(key))
+        setUserInfo(null)
+        setImpersonatedCompanyInfo(null)
+        currentUserType = 'Anon'
+        break
+    }
+    setUserType({'current': currentUserType, 'previous': _.isNil(userType.current) ? 'Anon' : userType.current})
+  }
   
-   function resetTopAlert(){
-    let alertObj = {
+  function resetTopAlert(){
+    setTopAlert({
       'show': false,
       'message': ''
-    }
-    setTopAlert(alertObj)
+    })
   }
 
-  function handleLogin(userInformation, token) {
-    setToken(token)
-    setUserInfo(userInformation)
-    if(userInformation.role === 'AirlineEmployee'){
+  function handleLogin(userInfo, mergeToken) {
+    if(shoppingCart.length > 0) {
+      handleShoppingCart('merge', mergeToken)
+    } else {
+      handleShoppingCart('retrieve')
+    }
+    manageUserInfo('login', userInfo)
+    if(userInfo.role === 'AirlineEmployee'){
       drift.api.widget.hide()
     }
-    // handleUpdateShoppingCart(4)
-    let alertObj = {
+    setTopAlert({
       'show': true,
       'message': 'You have been successfully logged in.'
-    }
-    setTopAlert(alertObj)
+    })
     window.setTimeout(()=>{resetTopAlert()}, 3000)
   }
 
   function handleLogout(){
     drift.api.widget.show()
+    manageUserInfo('logout')
     props.history.push('/')
-    setUserInfo(null)
-    localStorage.removeItem('userInfo')
-    localStorage.removeItem('apiToken') 
-    localStorage.removeItem('shoppingCartToken')
-    localStorage.removeItem('imperInfo') 
-    setToken(null)
     handleEmptyCart()
-    setImpersonatedCompanyInfo(null)
-    let alertObj = {
+    setTopAlert({
       'show': true,
       'message': 'You have been logged out.'
-    }
-    setTopAlert(alertObj)
+    })
     window.setTimeout(()=>{resetTopAlert()}, 3500)
   }
 
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
+    getItemData({variables: { 'itemId': item.frecno }}) // Retrieve the item's data and add it to the display cart
   }
 
   function handleRemoveItem(itemLocation){
@@ -316,70 +256,98 @@ export default function Provider(props) {
     }
     let frontCart = shoppingCart.slice(0,index) // returns cart item before split item
     let backCart = shoppingCart.slice(index + 1) // returns cart item after split item
-
     setShoppingCart([...frontCart ,...splitItems,...backCart])
   }
 
   function handleUpdateItem(index, type, value){
-    let mutatedCart
+    let mutatedCart = shoppingCart
     switch(type){
       case 'quantity':
         if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-          mutatedCart = shoppingCart
           let mutatedValue = ''
-          if(!isNaN(value)  && value.length > 0){
+          if(!isNaN(value) && value.length > 0){
             mutatedValue = parseInt(value, 10)
           }
           mutatedCart[index].quantity = mutatedValue
-          setShoppingCart([...mutatedCart])
         }
         break
       case 'notes':
-        mutatedCart = shoppingCart
         mutatedCart[index].itemNotes = value
-        setShoppingCart([...mutatedCart])
         break
       case 'priceOverride':
-        mutatedCart = shoppingCart
         mutatedCart[index].itemUnitPriceOverride = value
-        setShoppingCart([...mutatedCart])
       break
       case 'customerPartNumberId':
-        mutatedCart = shoppingCart
         mutatedCart[index].customerPartNumberId = value
-        setShoppingCart([...mutatedCart])
       break
     }
+    setShoppingCart([...mutatedCart])
+  }
+
+  function mutateItemDetailCache(type, data){
+    let mutatedItemDetailCache
+    switch(type){
+      case 'add':
+        mutatedItemDetailCache = [...itemDetailCache, data]
+        setItemDetailCache(mutatedItemDetailCache)
+        break
+      case 'add-multiple':
+        mutatedItemDetailCache = [...itemDetailCache, ...data]
+        setItemDetailCache(mutatedItemDetailCache)
+        break
+      case 'update-customer-numbers':
+        mutatedItemDetailCache = itemDetailCache.map( elem => {
+          if (elem.itemDetails.invMastUid === data.frecno) {
+            elem.customerPartNumbers = data.customerPartNumbers
+          }
+          return(elem)
+        })
+        setItemDetailCache(mutatedItemDetailCache)
+        break
+    }
+  }
+
+  function handleShoppingCart(action, mergeToken) {
+    setShoppingCartPricing({'state': 'loading', 'subTotal': '--', 'tariff': '--'})
+    let shoppingCartToken = localStorage.getItem('shoppingCartToken')
+    let cartInfo
+    switch(action) {
+      case 'update':
+        setTimeoutId(null)
+        cartInfo = { 'cartInfo': {
+          'token': shoppingCartToken,
+          'actionString': action,
+          'orderNotes': orderNotes,
+          'cartItems': shoppingCart
+        }}
+        break
+      case 'save':
+        cartInfo = { 'cartInfo': {
+          'token': shoppingCartToken,
+          'actionString': action
+        }}
+        justLoadedCart.current = true
+        break
+      case 'merge':
+        cartInfo = { 'cartInfo': {
+          'token': mergeToken,
+          'actionString': action
+        }}
+        justLoadedCart.current = true
+        break
+      case 'retrieve':
+        cartInfo = { 'cartInfo': {
+          'token': shoppingCartToken,
+          'actionString': action
+        }}
+        justLoadedCart.current = true
+        break
+    }
+    updateCart({ variables: cartInfo })
   }
 
   function handleEmptyCart(){
     setShoppingCart([])
-  }
-
-  function handleSetOrderNotes(orderNotes){
-    setOrderNotes(orderNotes)
-  }
-
-  function handleUpdateShoppingCart(action) {
-    // Cart Actions
-    // 1 - Create Cart
-    // 2 - Update Cart
-    // 3 - Save Cart
-    // 4 - Merge Cart
-    // 5 - Get existing cart 
-    setCartAction(action)
-    // console.log('Cart Action:', action)
-    let shoppingCartToken = localStorage.getItem("shoppingCartToken")
-    if (action === 1 || action === 4 || action === 5) {
-      loadingCart.current = true
-    }
-    updateShoppingCart({ variables: { cartData: {
-        "token": shoppingCartToken,
-        "action": action,
-        "cart": JSON.stringify(shoppingCart),
-        "orderNotes": orderNotes
-       }} 
-    })
   }
 
     return (
@@ -397,13 +365,17 @@ export default function Provider(props) {
             resetTopAlert()
           },
           userInfo: userInfo,
-          loginUser: (userInformation, token)=>{
-            handleLogin(userInformation, token)
+          loginUser: (userInformation, mergeToken)=>{
+            handleLogin(userInformation, mergeToken)
           },
           logoutUser: ()=>{
             handleLogout()
           },
           cart: shoppingCart,
+          itemDetailCache: itemDetailCache,
+          updateItemDetailCache: (type, data) => {
+            mutateItemDetailCache(type, data)
+          },
           cartPricing: shoppingCartPricing,
           orderNotes: orderNotes,
           addItem: (item) => {
@@ -425,21 +397,18 @@ export default function Provider(props) {
             handleEmptyCart()
           },
           saveCart: ()=> {
-            handleUpdateShoppingCart(3)
+            handleShoppingCart('save')
           },
           updateTaxes: (zipcode, shipToId)=> {
-            handleUpdateTaxes(
-              { variables:  
-                {
-                  "anonymousCartToken": localStorage.getItem('shoppingCartToken'),
-                  "shipToId": shipToId,
-                  "zipcode": zipcode
-                }
+            handleUpdateTaxes({ 
+              variables: {
+                "anonymousCartToken": localStorage.getItem('shoppingCartToken'),
+                "shipToId": shipToId,
+                "zipcode": zipcode }
               }
-            )
-          },
+            )},
           setOrderNotes: (orderNotes) => {
-            handleSetOrderNotes(orderNotes)
+            setOrderNotes(orderNotes)
           }
         }}
       >

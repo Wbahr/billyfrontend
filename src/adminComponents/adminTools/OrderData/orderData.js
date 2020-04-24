@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery } from '@apollo/client'
 import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/form/inputv2'
 import { CopyToClipboard } from 'react-copy-to-clipboard'

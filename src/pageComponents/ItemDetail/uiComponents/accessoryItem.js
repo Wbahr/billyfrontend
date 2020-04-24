@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import Loader from '../../_common/loader'
 import styled from "styled-components"
 import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/client'
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($associatedItemId: Int){

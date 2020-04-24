@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import { useParams } from 'react-router-dom'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'

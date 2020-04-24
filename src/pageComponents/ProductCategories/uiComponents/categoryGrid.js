@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import CategoryImage from './categoryImage'
 import gql from 'graphql-tag'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 
 const DivContainer = styled.div`

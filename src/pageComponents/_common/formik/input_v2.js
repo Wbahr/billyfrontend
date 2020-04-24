@@ -9,6 +9,7 @@ const DivContainer = styled.div`
   flex-direction: column;
   height: 71px;
   padding: 0 8px;
+  width: max-content;
 `
 
 const Label = styled.label`

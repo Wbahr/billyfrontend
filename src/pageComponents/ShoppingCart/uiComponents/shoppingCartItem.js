@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
@@ -53,17 +52,6 @@ const DivDivide = styled.div`
   height: 20px;
   width: 20px;
   opacity: 0.5;
-`
-
-const DivItemContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`
-
-const DivItemContent = styled.div`
-  display: flex;
-  width: 100%;
 `
 
 const DivRemove = styled.div`
@@ -123,15 +111,6 @@ const Img = styled.img`
   margin: 0 4px;
 `
 
-const DivQty = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  p {
-    margin: 0;
-  }
-`
-
 const DivTotalPrice = styled.div`
   display: flex;
   width: 150px;
@@ -160,12 +139,6 @@ const DivEditPrice = styled.div`
   cursor: pointer;
 `
 
-const Input = styled.input`
-  width: 50px;
-  height: 25px;
-  margin-left: 4px;
-`
-
 const P1 = styled.p`
   cursor: pointer;
   font-size: 16px;
@@ -188,20 +161,6 @@ const P3 = styled.p`
   font-size: 12px !important;
 `
 
-const InputNotes = styled.input`
-  width: 300px;
-  font-size: 12px;
-`
-
-const CustomDatePicker = styled.button`
-  display: flex;
-  justify-content: center;
-  width: 110px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  margin: 0 8px;
-`
-
 const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
   query ItemById($itemId: Int){
     customerPartNumbers(frecno: $itemId){
@@ -211,77 +170,28 @@ const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
   }
 `
 
-const GET_ITEM_BY_ID = gql`
-  query ItemById($itemId: Int){
-    itemDetails(invMastUid: $itemId) {
-      anonPrice
-      invMastUid
-      itemCode
-      itemDesc
-      listPrice
-      mfgPartNo
-      modelCode
-      tariff
-      unitSizeMultiple
-      availability
-      availabilityMessage
-      image {
-        path
-        sequence
-        type
-      }
-    }
-    customerPartNumbers(frecno: $itemId){
-      customerPartNumber
-      id
-    }
-  }
-`
-
-export default function ShoppingCartItem({item, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
-  const [itemDetails, setItem] = useState(null)
-  const [customerPartNumbers, setCustomerPartNumbers] = useState(null)
+export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
+  const {
+    itemDetails,
+    customerPartNumbers
+  } = displayItem
   const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
   const itemId = parseInt(item.frecno,10)
 
   const context = useContext(Context)
   useEffect(()=> {
-    console.log('shopping cart item', item.customerPartNumber, selectedCustomerPartNumber)
     if (item.customerPartNumberId !== selectedCustomerPartNumber) {
       getUpdatedCustomerPartNumbers()
     }
   }, [item.customerPartNumberId])
-
-  const { 
-    loading, 
-    error, 
-    data 
-  } = useQuery(GET_ITEM_BY_ID, {
-    fetchPolicy: 'no-cache',
-    variables: { itemId },
-    onCompleted: result => {
-      if (!_.isNil(result.itemDetails)) {
-        setItem(result.itemDetails)
-      } else {
-        setItem({})
-      }
-      if (!_.isNil(result.customerPartNumbers)) {
-        setCustomerPartNumbers(result.customerPartNumbers)
-      } else {
-        setCustomerPartNumbers([])
-      }
-    }
-  })
 
   const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
     fetchPolicy: 'no-cache',
     variables: { itemId },
     onCompleted: result => {
       if (!_.isNil(result.customerPartNumbers)) {
-        setCustomerPartNumbers(result.customerPartNumbers)
+        context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
         setSelectedCustomerPartNumber(item.customerPartNumberId)
-      } else {
-        setCustomerPartNumbers([])
       }
     }
   })

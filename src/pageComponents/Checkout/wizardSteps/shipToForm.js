@@ -64,7 +64,7 @@ export function ShipToForm(props) {
         setFieldValue('shipto.isCollect', 1)
         setFieldValue('shipto.collectNumber', checkoutDropdownData.shipToAddresses[index].collectNumberUps)
       }
-      updateZip(checkoutDropdownData.shipToAddresses[index].mailPostalCode)
+      updateZip(checkoutDropdownData.shipToAddresses[index].id, checkoutDropdownData.shipToAddresses[index].mailPostalCode)
     } else {
       setFieldValue(name, value)
       setFieldValue('shipto.country', 'us')
@@ -95,8 +95,9 @@ export function ShipToForm(props) {
 
   function handleZipChange(name, value){
     setFieldValue(name, value)
-    if(values.shipto.zip.length > 5){
-      updateZip(values.shipto.zip)
+    
+    if(value.length >= 5){
+      updateZip(values.shipto.savedShipTo, value)
     }
   }
 

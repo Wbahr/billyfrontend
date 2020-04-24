@@ -1,203 +1,70 @@
 import React from 'react'
 import _ from 'lodash'
-import { Formik, Form, Field } from 'formik'
+import { Formik } from 'formik'
 import styled from 'styled-components'
-import Button from '../_common/button'
-import { emailIsValid, requiredField  } from '../_common/helpers/generalHelperFunctions'
+import FormikInput from '../../_common/formik/input_v2'
+import FormikTextArea from '../../_common/formik/textarea_v2'
+import FormikCheckbox from '../../_common/formik/checkBox'
+import Button from '../../_common/button'
 
-const DivFieldContainer = styled.div`
+const FormContainer = styled.div`
   display: flex;
-  flex-direction: column;
-`
-const StyledRMAList = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  padding-left: 10px;
-`
-
-const StyledRMAListGrey = styled(StyledRMAList)`
-  background-color: #E9E6E5;
-  width: 40%;
-  padding-top: 10px;
-  @media (max-width: 700px) {
-    width: auto;
-  }
-`
-
-const StyledSubmitButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  justify-content: flex-end;
-`
-
-const DivErrors = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
   justify-content: center;
-  background-color: #ff5252;
-  color: white;
-  border: 1px solid red;
-  border-radius: 3px;
-  padding: 8px;
-  margin: 0 auto 8px auto;
-  text-align: center;
+  margin: 60px 0;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  flex-grow: 99;
 `
 
-const StyledCheckbox = styled.input`
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-  padding-right: 18px;
+const Form = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  padding: 20px;
+  background-color: rgb(242, 243, 244);
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+  height: max-content;
 `
 
-const Input = styled.input`
-  width: 350px;
-  height: 25px;
-  border: none;
-  border-bottom: 2px solid #404040;
-  margin: 8px;
-  padding: 16px 8px;
-  :focus {
-    outline: none;
-    border-bottom: 3px solid #404040;
-  }
-`
-
-const StyledTextArea = styled.textarea`
-  width: 350px; 
-  border: 1px solid #404040;
-  border-radius: 3px;
-  margin: 8px;
-  padding: 0 8px;
-  :focus {
-    outline: none;
-  }
-`
-
-const validate = (values) => {
-	let errors = {}
-  if (Object.entries(values).length === 0 && values.constructor === Object){
-    errors[0].push('Please complete all required fields')
-  } else if (requiredField(values.firstname) || requiredField(values.lastname)){
-    errors = 'Must fill out full name'
-  } else if (requiredField(values.company)){
-    errors = 'Must include a company'
-  } else if (requiredField(values.phone)){
-    errors = 'Must include a contact number'
-  } else if (requiredField(values.email) || emailIsValid(values.email)){
-    errors = 'Must  include a valid email'
-  } else if (requiredField(values.zip) || requiredField(values.state)){
-    errors = 'Must include a zipcode and state'
-  }
-  // console.log('values', values)
-  // console.log('errors', errors)
-	return errors
+const initValues = {
+  firstName: '',
+  lastName: '',
+  jobTitle: '',
+  company: '',
+  city: '',
+  state: '',
+  zip: '',
+  email: '',
+  phone: '',
+  jobOrder: '',
+  message: '',
+  subMailingList: '0'
 }
 
-const ContactUsForm = ({ clickedContinue}) => (
-	<div>
-		<Formik
-			validate={validate}
-			validateOnBlur={false}
-			validateOnChange={false}
-			onSubmit={values => clickedContinue(values.items)}
-			render={({ values, handleChange, errors }) => (
-        <Form>
-          <DivFieldContainer>
-            <Field name={`firstname`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='First Name*' />
-              )}
-            </Field>
-            <Field name={`lastname`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Last Name*' />
-              )}
-            </Field>
-            <Field name={`jobtitle`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Job Title' />
-              )}
-            </Field>
-            <Field name={`company`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Company*' />
-              )}
-            </Field>
-            <Field name={`city`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='City' />
-              )}
-            </Field>
-            <Field name={`state`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='State*' />
-              )}
-            </Field>
-            <Field name={`zip`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Zipcode*' />
-              )}
-            </Field>
-            <Field name={`email`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Email*' />
-              )}
-            </Field>
-            <Field name={`phone`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Phone*' />
-              )}
-            </Field>
-            <Field name={`jobnum`}>
-              {({ field, form}) => (
-                <Input {...field}
-                  component='input'
-                  placeholder='Job or PO Number' />
-              )}
-            </Field>
-            <Field component='textarea' name={`items.${index}.details`}>
-              {({ field, form}) => (
-                <StyledTextArea {...field}
-                  component='textarea'
-                  rows='3'
-                  placeholder='Please type your message here.' />
-              )}
-            </Field>
-          </DivFieldContainer>
-          <StyledSubmitButtonContainer>
-            {!_.isNil(errors) &&
-              <DivErrors>
-                {Object.keys(errors).length > 0 && <span>{errors[0]}</span>}
-              </DivErrors>
-            }
-            <Button type="submit" text='Submit' />
-          </StyledSubmitButtonContainer>
-        </Form>
-			)}
-		/>
-	</div>
-)
-
-export default ContactUsForm
+export default function ContactUsForm() {
+  return (
+    <FormContainer>
+      <Formik 
+        initialValues={initValues}
+      >
+        {formikProps => (
+          <Form name="contactUsForm" {...formikProps}>
+            <FormikInput label="First Name*" name="firstName" />
+            <FormikInput label="Last Name*" name="lastName" />
+            <FormikInput label="Job Title*" name="jobTitle" />
+            <FormikInput label="Company*" name="company" />
+            <FormikInput label="City*" name="city" />
+            <FormikInput label="State*" name="state" />
+            <FormikInput label="Zip Code*" name="zip" />
+            <FormikInput label="Email*" name="email" />
+            <FormikInput label="Phone Number*" name="phone" />
+            <FormikInput label="Job PO Number*" name="jobOrder" />
+            <FormikTextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
+            <Button type="submit" color="main" text="Submit"/>
+            <FormikCheckbox label="Subscribe to our Mailing List?" name="subMailingList"/>
+          </Form>
+        )}
+      </Formik>
+    </FormContainer>
+  )
+}
