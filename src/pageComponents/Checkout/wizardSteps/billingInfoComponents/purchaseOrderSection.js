@@ -40,7 +40,7 @@ export default function PurchaseOrderSection(props) {
   }, [customerPhysicalAddress])
   return (
     <>
-      <FormikInput label="PO Number" name="billing.purchaseOrder" />
+      <FormikInput label="PO Number*" name="billing.purchaseOrder" />
       <FormikInput label="Company Name" name="billing.companyName" width="500px"/>
       <FormikInput label="First Name*" name="billing.firstName" />
       <FormikInput label="Last Name*" name="billing.lastName" />
