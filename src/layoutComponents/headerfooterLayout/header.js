@@ -296,6 +296,10 @@ export default function HeaderComponent(props) {
                   {
                     'label': 'Aventics',
                     'link': '/brands/featured/aventics'
+                  },
+                  {
+                    'label': 'Power Distribution Products and Electrical Enclosures',
+                    'link': '/power-distribution-products-and-electrical-enclosures'
                   }
                 ]}
               />
@@ -402,6 +406,10 @@ export default function HeaderComponent(props) {
                   {
                     'label': 'FAQ',
                     'link': '/resources/faq'
+                  },
+                  {
+                    'label': 'Line Cards & Brochures',
+                    'link' : '/linecards'
                   }
                 ]}
               />

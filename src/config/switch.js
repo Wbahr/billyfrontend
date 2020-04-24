@@ -7,15 +7,19 @@ import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/h
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
+import aboutPage from '../pageComponents/About/aboutPage'
 import AccountDashboard from '../pageComponents/Account/accountDashboardPage'
 import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
+import contactPage from '../pageComponents/ContactUs/contactUsPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
+import LineCards from '../pageComponents/LineCards/lineCardsPage'
 import Login from '../pageComponents/Login/loginPage'
 import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
 import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
@@ -26,7 +30,8 @@ import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
 import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
 import technologyPage from 'pageComponents/Technologies/technologyPage'
-import contactPage from '../pageComponents/ContactUs/contactUsPage'
+
+
 // Supporting Components
 import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
@@ -74,7 +79,7 @@ class App extends React.Component {
     return (
       <Switch>
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
-        <WrapperRoute exact path='/about' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/about/:page' component={aboutPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account/:page' auth component={AccountDashboard} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
@@ -86,11 +91,13 @@ class App extends React.Component {
         <WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
         <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
         <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/quote-complete/:orderId' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
         <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
