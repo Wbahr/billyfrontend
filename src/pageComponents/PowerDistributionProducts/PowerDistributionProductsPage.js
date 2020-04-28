@@ -839,7 +839,7 @@ export default function PowerDistributionProducts() {
                 {/*.............................. NEED MORE INFO................................... */}
 
                 <SectionDiv>
-                    <ProductsTitle>Need more informations</ProductsTitle>
+                    <ProductsTitle>Need more information</ProductsTitle>
                     <BorderBottom></BorderBottom>
                 </SectionDiv>
                 <InfoDiv>
