@@ -119,7 +119,6 @@ const PhoneNumber = styled.text`
   font-size: 25px;
   font-weight: bold;
   letter-spacing: 2px;
-  padding-left: 40px;
 `
 
 const SaleDiv = styled.div`
