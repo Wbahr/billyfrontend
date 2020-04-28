@@ -258,7 +258,7 @@ export default function PowerDistributionProducts() {
             <BrandDetailsContainer>
                 <AirlineDistributorH1>Power Distribution Products and Electrical Enclosures</AirlineDistributorH1>
                 <DistributorDiv>
-                    <DistributorDiv>Airline can provide the service and products you need when thinking about your facilities electrical power distribution system. Airline is uniquely situated as a preferred Eaton industrial distributor and is committed to serving the industrial end user market. The following are some examples of the Eaton products/solutions that we can offer as well as the capabilities of Eaton’s Engineering Services Team.
+                    <DistributorDiv>Airline can provide the service and products you need when thinking about your facilities electrical power distribution system. Airline is uniquely situated as a preferred Rittal and Eaton industrial distributor. This allows us to be committed to serving the industrial end user market. The following are some examples of the Rittal and Eaton products/solutions that we can offer as well as the capabilities of Eaton’s Engineering Services Team.
                     </DistributorDiv>
                 </DistributorDiv>
                 <BrandDiv>
@@ -267,12 +267,12 @@ export default function PowerDistributionProducts() {
                         <LogoDiv>
                             <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
                             <LogoText>Interested in Eaton?</LogoText>
-                            <BtnDiv><LogoBtn>Request more informations</LogoBtn></BtnDiv>
+                            <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                         </LogoDiv>
                         <LogoDiv>
                             <BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
                             <LogoText>Interested in Rittal?</LogoText>
-                            <BtnDiv><LogoBtn>Request more informations</LogoBtn></BtnDiv>
+                            <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                         </LogoDiv>
                     </DistributorDetails>
                 </BrandDiv>
@@ -524,7 +524,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Programmable} />
+                            <ProductImg src="https://www.eaton.com/content/dam/eaton/products/industrialcontrols-drives-automation-sensors/freedom-nema-an19/Easy-E4-UC-12rc1-Effortless-Control.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Programmable logic controllers</ProductHeader>
@@ -647,7 +647,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={PowerDefense} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Power DefenseE circuit breakers</ProductHeader>
+                            <ProductHeader>Power Defense circuit breakers</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails>Eaton’s globally rated Power Defense circuit breakers increase personnel safety and provide a foundation for IoT, with embedded communications and metering functionality, helping to optimize your facility’s performance.</ProductDetails>
@@ -676,7 +676,7 @@ export default function PowerDistributionProducts() {
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
                         </ProductDetailsDiv>
-                        <ProductBtn>Shop products</ProductBtn>
+                        <ProductBtn>Request a quote</ProductBtn>
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
@@ -712,38 +712,14 @@ export default function PowerDistributionProducts() {
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
                         </ProductDetailsDiv>
-                        <ProductBtn>Shop products</ProductBtn>
-                    </ProductDiv>
-                    <ProductDiv>
-                        <ProductImgDiv>
-                            <ProductImg src={LvCapacitor} />
-                        </ProductImgDiv>
-                        <ProductHeaderDiv>
-                            <ProductHeader>Capacitor banks, filters and voltage regulators</ProductHeader>
-                        </ProductHeaderDiv>
-                        <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
-                        </ProductDetailsDiv>
-                        <ProductBtn>Shop products</ProductBtn>
-                    </ProductDiv>
-                    <ProductDiv>
-                        <ProductImgDiv>
-                            <ProductImg src={LvEHouse} />
-                        </ProductImgDiv>
-                        <ProductHeaderDiv>
-                            <ProductHeader>E-houses and portable power solutions</ProductHeader>
-                        </ProductHeaderDiv>
-                        <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
-                        </ProductDetailsDiv>
-                        <ProductBtn>Shop products</ProductBtn>
+                        <ProductBtn>Request a quote</ProductBtn>
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
                             <ProductImg src={Wallmount} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Wallmount</ProductHeader>
+                            <ProductHeader>Wallmount Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -755,7 +731,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={Freestanding} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Freestanding</ProductHeader>
+                            <ProductHeader>Freestanding Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -767,7 +743,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={Floormount} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Floormount Disconnect</ProductHeader>
+                            <ProductHeader>Floormount Disconnect Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -779,7 +755,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={Fan} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Fan</ProductHeader>
+                            <ProductHeader>Fans</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -791,7 +767,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={Roofmount} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Roofmount Air Conditioner</ProductHeader>
+                            <ProductHeader>Roofmount Air Conditioners</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -803,7 +779,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={PushButton} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Push Button Box</ProductHeader>
+                            <ProductHeader>Push Button Boxes</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -827,7 +803,7 @@ export default function PowerDistributionProducts() {
                             <ProductImg src={Hygienic} />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
-                            <ProductHeader>Hygienic Design</ProductHeader>
+                            <ProductHeader>Hygienic Design Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
                             <ProductDetails></ProductDetails>
@@ -870,12 +846,12 @@ export default function PowerDistributionProducts() {
                     <LogoDiv>
                         <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
                         <LogoText>Interested in Eaton?</LogoText>
-                        <BtnDiv><LogoBtn>Request more informations</LogoBtn></BtnDiv>
+                        <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                     </LogoDiv>
                     <LogoDiv>
                         <BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
                         <LogoText>Interested in Rittal?</LogoText>
-                        <BtnDiv><LogoBtn>Request more informations</LogoBtn></BtnDiv>
+                        <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                     </LogoDiv>
                 </InfoDiv>
             </BrandDetailsContainer>
