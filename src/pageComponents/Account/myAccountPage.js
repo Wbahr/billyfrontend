@@ -5,6 +5,7 @@ import _ from 'lodash'
 import AccountNavPanel from './accountNavPanel'
 import PropTypes from 'prop-types'
 import AccountDashboard from './accountDashboardPage'
+import OrdersTable from './ordersPages/orders'
 
 export default function AccountManagementPage({history}) {
   let { page } = useParams()
@@ -19,7 +20,7 @@ export default function AccountManagementPage({history}) {
   return(
     <>
       <AccountNavPanel history={history}/>
-      {AccountPage}
+      <OrdersTable />
     </>
   )
 }
