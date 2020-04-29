@@ -722,7 +722,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Wallmount Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>NEMA protection ratings are ensured through a secure locking system, foamed-in-place gasket and knife edge perimeter. Features include a body constructed of cold rolled steel, steel doors and zinc-plated mounting panels.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -734,7 +734,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Freestanding Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Select from raised and removable 12" floor mounts or freestanding enclosures with or without base/plinth panels.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -746,7 +746,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Floormount Disconnect Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>These enclosures provide personnel safety, protect electrical components and support the addition of a flange-mounted disconnect handle.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -758,7 +758,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Fans</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Rittal filter fans are adaptable with filter blankets, hoods and louvers.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -770,7 +770,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Roofmount Air Conditioners</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails> Rittal’s roof-mounted cooling units ensures doors, side panels and escape routes are kept free. Electrical condensate evaporation, nano-coated condenser.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -782,7 +782,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Push Button Boxes</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>The NEMA rated PB series pushbutton box enclosure is designed for indoor use to house pushbuttons, selector switches, and pilot lights. This enclosure protects equipment from dirt, dust, sprayed water, oil, and coolants.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -794,7 +794,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Wallmount Air Conditioner</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Rittal’s wallmount cooling units can be externally or internally mounted in doors and walls using standardized cut-outs.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -806,7 +806,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Hygienic Design Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Our Hygienic Design Solutions deliver full protection from caustic washdowns and thermal management to keep your vital equipment running.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -818,7 +818,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>Modular Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Modular enclosures provide the protection required for industrial drives, controls and other equipment. They deliver the practical flexibility to evolve with the changing demands of modern business.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
@@ -830,7 +830,7 @@ export default function PowerDistributionProducts() {
                             <ProductHeader>HMI Arm Enclosures</ProductHeader>
                         </ProductHeaderDiv>
                         <ProductDetailsDiv>
-                            <ProductDetails></ProductDetails>
+                            <ProductDetails>Rittal offers HMI solutions for all types of applications: Pendant arm systems, PC enclosures, industrial workstations and consoles. All designed for user efficiency.</ProductDetails>
                         </ProductDetailsDiv>
                         <ProductBtn>Shop products</ProductBtn>
                     </ProductDiv>
