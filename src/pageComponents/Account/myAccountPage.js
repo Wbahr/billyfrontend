@@ -26,6 +26,15 @@ export default function AccountManagementPage({history}) {
       case 'shopping-lists':
         setPageComponent(<AccountDashboard history={history}/>)
         break;
+      case 'user-settings':
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
+      case 'shipping-preferences':
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
+      case 'payment-preferences':
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
       case 'my-orders':
         setPageComponent(<OrdersTable history={history}/>)
         break;
