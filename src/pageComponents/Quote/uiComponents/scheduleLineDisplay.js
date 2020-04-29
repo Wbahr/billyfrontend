@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag';
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Field } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import Context from '../../../config/context'
+
 
 const DivContainer = styled.div`
   display: flex;
@@ -89,69 +86,14 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
-const DivSpacer = styled.div`
-  margin: 0 8px;
-`
-
-// const CustomDatePicker = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   width: 110px;
-//   background-color: white;
-//   border: 1px solid lightgrey;
-//   margin: 0 8px;
-// `
-
-const GET_ITEM_BY_ID = gql`
-  query ItemById($itemId: Int){
-    customerPartNumbers(frecno: $itemId){
-      customerPartNumber
-      id
-    }
-    itemDetails(invMastUid: $itemId) {
-        anonPrice
-        invMastUid
-        itemCode
-        itemDesc
-        listPrice
-        mfgPartNo
-        modelCode
-        tariff
-        unitSizeMultiple
-        availability
-        availabilityMessage
-        image {
-          path
-          sequence
-          type
-        }
-    }
-  }
-`
-
 export default function ShippingScheduleItem({item, index}) {
-  const [itemDetails, setItem] = useState(null)
   const itemId = parseInt(item.frecno,10)
-
-  const { 
-    loading, 
-    error, 
-    data 
-  } = useQuery(GET_ITEM_BY_ID, {
-    variables: { itemId },
-    onCompleted: result => {
-      if (!_.isNil(result.itemDetails)) {
-        setItem(result.itemDetails)
-      } else {
-        setItem({})
-      }
-      if (!_.isNil(result.customerPartNumbers)) {
-        setCustomerParts(result.customerPartNumbers)
-      } else {
-        setCustomerParts([])
-      }
-    }
-  })
+  const context = useContext(Context)
+  let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
+  const {
+    itemDetails,
+    customerPartNumbers
+  } = displayItem
 
   let Content
   if(_.isNil(itemDetails)) {
@@ -170,7 +112,7 @@ export default function ShippingScheduleItem({item, index}) {
     let date = item.requestedShipDate
     date = (date.getMonth() + 1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
-    let selectedCustomerPartNumber = customerParts.find(elem => elem.id === item.customerPartNumberId)
+    let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
 
     Content = (
       <DivCard>
