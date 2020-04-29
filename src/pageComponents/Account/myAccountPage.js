@@ -23,6 +23,9 @@ export default function AccountManagementPage({history}) {
       case 'dashboard':
         setPageComponent(<AccountDashboard history={history}/>)
         break;
+      case 'shopping-lists':
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
       case 'my-orders':
         setPageComponent(<OrdersTable history={history}/>)
         break;
