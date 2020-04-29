@@ -78,13 +78,13 @@ export default function AccountManagementPage({history}) {
       </div>
       <DivNavSection>
         <h5>Manage Account</h5>
-        <p onClick={()=> history.push('/contact-us')}>Account Settings</p>
+        <p onClick={()=> history.push('/account/')}>Account Settings</p>
         <p onClick={()=> history.push('/contact-us')}>Shopping Lists</p>
         <p onClick={()=> history.push('/contact-us')}>Purchase History</p>
       </DivNavSection>
       <DivNavSection>
         <h5>Order Information</h5>
-        <p onClick={()=> history.push('/contact-us')}>Orders</p>
+        <p onClick={()=> history.push('/account/my-orders')}>Orders</p>
         <p onClick={()=> history.push('/contact-us')}>Open Orders Report</p>
         <p onClick={()=> history.push('/contact-us')}>Open Payables</p>
         <p onClick={()=> history.push('/contact-us')}>Suspended Orders</p>

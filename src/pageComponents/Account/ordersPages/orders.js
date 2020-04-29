@@ -7,7 +7,7 @@ const TableContainer = styled.div`
   flex-direction: column;
 `
 
-export default function Orders() {
+export default function OrdersTable() {
 
   const data = useMemo(
     () => [

@@ -12,23 +12,31 @@ const Container = styled.div`
 `
 
 export default function AccountManagementPage({history}) {
+  const [pageComponent, setPageComponent] = useState()
   let { page } = useParams()
   
-  let AccountPage
   useEffect(() => {
-    if(page === 'dashboard'){
-      AccountPage = <AccountDashboard history={history}/>
+    switch(page){
+      case 'dashboard':
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
+      case 'my-orders':
+        setPageComponent(<OrdersTable history={history}/>)
+        break;
+      default:
+        setPageComponent(<AccountDashboard history={history}/>)
+        break;
     }
   }, [page])
 
   return(
     <Container>
       <AccountNavPanel history={history}/>
-      <OrdersTable/>
+      {pageComponent}
     </Container>
   )
 }
 
 AccountManagementPage.propTypes = {
-history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 }
