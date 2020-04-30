@@ -1,14 +1,44 @@
-import React, { useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination} from 'react-table'
+import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
+import { useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
 
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-export default function OrdersTable() {
+const GET_ORDERS = gql`
+query Orders{
+    accountOrders {
+      orderNumber
+      OrderDate
+      poNo
+      type
+      status
+      total
+      buyer
+      lineItems {
+        invMastUid
+        itemCode
+        customerPartNumber
+        quantity
+        unitPrice
+      }
+    }
+  }
+`
 
+export default function OrdersTable() {
+  const [orders, setOrders] = useState([])
+  
+  const { loading, error, dat }= useQuery(GET_ORDERS, {
+    onCompleted: dat => {
+      console.log('GET_ORDERS', dat)
+    }
+  })
   const data = useMemo(
     () => [
       {
@@ -211,18 +241,18 @@ export default function OrdersTable() {
         <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
         </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
         <span>
           Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{' '}
         </span>
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
         <span>
           | Go to page:{' '}
           <input
@@ -241,7 +271,7 @@ export default function OrdersTable() {
             setPageSize(Number(e.target.value))
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[10, 25, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>

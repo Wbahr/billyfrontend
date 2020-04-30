@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { useTable, usePagination} from 'react-table'
+import { useTable, usePagination, useFilters, useGlobalFilter } from 'react-table'
+import matchSorter from 'match-sorter'
 
 const TableContainer = styled.div`
   display: flex;
@@ -12,100 +13,46 @@ export default function QuotesTable() {
   const data = useMemo(
     () => [
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       },
       {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+        quote_date: 'Hello',
+        quote_no: 'World',
+        quote_ref_no: '123132',
+        accessor: 'Bpanczer'
       }
     ],
     [],
@@ -113,32 +60,56 @@ export default function QuotesTable() {
   const columns = useMemo(
     () => [
       {
-        Header: 'Order Date',
-        accessor: 'order_date', // accessor is the "key" in the data
+        Header: 'Quote Date',
+        accessor: 'quote_date', // accessor is the "key" in the data
       },
       {
-        Header: 'Order #',
-        accessor: 'order_no',
+        Header: 'Quote #',
+        accessor: 'quote_no',
       },
       {
-        Header: 'PO #',
-        accessor: 'po_no',
-      },
-      {
-        Header: 'Buyer',
-        accessor: 'buyer',
+        Header: 'Quote Ref #',
+        accessor: 'quote_ref_no',
       },
       {
         Header: 'Total',
         accessor: 'total',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
       }
     ],
     [],
   )
+
+  function SelectColumnFilter({
+    column: { filterValue, setFilter, preFilteredRows, id },
+  }) {
+    // Calculate the options for filtering
+    // using the preFilteredRows
+    const options = React.useMemo(() => {
+      const options = new Set()
+      preFilteredRows.forEach(row => {
+        options.add(row.values[id])
+      })
+      return [...options.values()]
+    }, [id, preFilteredRows])
+  
+    // Render a multi-select box
+    return (
+      <select
+        value={filterValue}
+        onChange={e => {
+          setFilter(e.target.value || undefined)
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    )
+  }
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -161,16 +132,15 @@ export default function QuotesTable() {
       data,
       initialState: { pageIndex: 0 },
     },
-    usePagination
+    usePagination,
+    useFilters,
+    useGlobalFilter
   )
 
   return(
     <TableContainer>
     <h4>Open Quotes</h4>
-    <input placeholder='Search PO#, Order #, Item ID'></input>
-    <select>
-      <option>All Orders</option>
-    </select>
+    <input placeholder='Quote Reference #, Quote #, Item ID'></input>
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
@@ -241,7 +211,7 @@ export default function QuotesTable() {
             setPageSize(Number(e.target.value))
           }}
         >
-          {[10, 20, 30, 40, 50].map(pageSize => (
+          {[10, 25, 50].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
