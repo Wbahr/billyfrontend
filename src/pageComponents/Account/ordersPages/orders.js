@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination} from 'react-table'
-import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
+import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
+import { formatTableData } from '../helpers/mutators'
 
 const TableContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const GET_ORDERS = gql`
 query Orders{
     accountOrders {
       orderNumber
-      OrderDate
+      orderDate
       poNo
       type
       status
@@ -34,125 +35,27 @@ query Orders{
 export default function OrdersTable() {
   const [orders, setOrders] = useState([])
   
-  const { loading, error, dat }= useQuery(GET_ORDERS, {
-    onCompleted: dat => {
-      console.log('GET_ORDERS', dat)
+  useQuery(GET_ORDERS, {
+    onCompleted: response => {
+      const mutatedOrders = formatTableData('orders', response.accountOrders)
+      setOrders(mutatedOrders)
     }
   })
-  const data = useMemo(
-    () => [
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      }
-    ],
-    [],
-  )
+  let data = orders
+  
   const columns = useMemo(
     () => [
       {
         Header: 'Order Date',
-        accessor: 'order_date', // accessor is the "key" in the data
+        accessor: 'orderDate', // accessor is the "key" in the data
       },
       {
         Header: 'Order #',
-        accessor: 'order_no',
+        accessor: 'orderNumber',
       },
       {
         Header: 'PO #',
-        accessor: 'po_no',
+        accessor: 'poNo',
       },
       {
         Header: 'Buyer',
@@ -165,6 +68,10 @@ export default function OrdersTable() {
       {
         Header: 'Status',
         accessor: 'status',
+      },
+      {
+        Header: 'Filter',
+        accessor: 'filter',
       }
     ],
     [],
