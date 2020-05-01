@@ -442,7 +442,7 @@ export default function HeaderComponent(props) {
                   },
                   {
                     'label': 'Quality Policy',
-                    'link': '/about/featured/aventics'
+                    'link': '/about/quality-policy'
                   },
                   {
                     'label': 'Our History',
