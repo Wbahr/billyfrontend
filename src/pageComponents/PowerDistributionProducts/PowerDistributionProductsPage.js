@@ -246,12 +246,44 @@ const LogoBtn = styled.button`
 `
 const InfoDiv = styled.div`
     display: flex;
-    margin: 20px 0 80px;
+    margin: 20px 0 50px;
+`
+const ServiceSection = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+const ServiceMainDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+
+`
+const Services = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    margin: 0 20px;
+    font-size: 14px;
+`
+const ServiceName = styled.p`
+    margin-bottom: 5px;
+    font-weight: bold;
+`
+const ServiceList = styled.ul`
+    
+`
+const List = styled.li`
+`
+const SubText = styled.p`
+    text-align: center;
+    font-weight: bold;
+    color: #133752;
+    font-size: 25px;
+    margin-bottom: 0;
 `
 
 export default function PowerDistributionProducts() {
     return (
-
         <Container>
             <FeaturedBrandLogo>
             </FeaturedBrandLogo>
@@ -842,6 +874,135 @@ export default function PowerDistributionProducts() {
                         <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                     </LogoDiv>
                 </InfoDiv>
+
+                {/*.............................. SERVICES................................... */}
+
+                <SectionDiv>
+                    <ProductsTitle>services</ProductsTitle>
+                    <BorderBottom></BorderBottom>
+                </SectionDiv>
+                <ServiceSection>
+                    <SubHeaderDiv>
+                        <SubText>Eaton’s Electrical Engineering Services</SubText>
+                    </SubHeaderDiv>
+                    <ServiceMainDiv>
+                        <Services>
+                            <ServiceName>Predictive and preventive maintenance for generation equipment</ServiceName>
+                            <ServiceList>
+                                <List>Preventive maintenance and test of transformers, OCBs, SF6 breakers, circuit interrupters, cutouts, relays, switchgear, PTs, CPTs, CTs, reactors, grounding systems and lightning arresters</List>
+                                <List>Transformer and breaker oil analysis</List>
+                                <List>Preventive-maintenance program design and implementation</List>
+                                <List>Partial-discharge testingvand analysis</List>
+                                <List>Maintenance contracts</List>
+                                <List>Thermographic surveys</List>
+                                <List>Performance-based maintenance programs</List>
+                            </ServiceList>
+                        </Services>
+                        {/* <Services>
+                            <ServiceName>Power system design and analysis capabilities</ServiceName>
+                            <ServiceList>
+                                <List>Arc flash studies</List>
+                                <List>NERC compliance reporting</List>
+                                <List>Coordination / short circuit/ fault current studies</List>
+                                <List>Load flow / power factor studies</List>
+                                <List>Grounding analysis/ ground grid design</List>
+                                <List>Transient stability studies</List>
+                            </ServiceList>
+                        </Services> */}
+                        <Services>
+                            <ServiceName>Substation turnkey design capabilities</ServiceName>
+                            <ServiceList>
+                                <List>Crisis response—nationwide</List>
+                                <List>Substation commissioning and startup</List>
+                                <List>Substation operation and maintenance</List>
+                                <List>Integrated project solutions</List>
+                                <List>New substation design and construction</List>
+                                <List>Energy management</List>
+                                <List>Project management</List>
+                            </ServiceList>
+                            <ServiceName>Power system design and analysis capabilities</ServiceName>
+                            <ServiceList>
+                                <List>Arc flash studies</List>
+                                <List>NERC compliance reporting</List>
+                                <List>Coordination / short circuit/ fault current studies</List>
+                                <List>Load flow / power factor studies</List>
+                                <List>Grounding analysis/ ground grid design</List>
+                                <List>Transient stability studies</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
+                            <ServiceName>Equipment life extension</ServiceName>
+                            <ServiceList>
+                                <List>Medium-voltage vacuum replacement breaker designs for most OEM’s breakers</List>
+                                <List>Generator breaker replacements</List>
+                                <List>More than 200 ANSIapproved designs</List>
+                                <List>Switchgear modifications, bus-bracing analysis</List>
+                                <List>Protective relay upgrades, retrofits and redesign; new doors, etc.</List>
+                                <List>Add to existing switchgear</List>
+                                <List>Energy management, PLC control and load shedding</List>
+                                <List>System metering and control</List>
+                                <List>Power breaker centers dedicated to the reconditioning of low- and medium-voltage breakers and contactors per ANSI C37.59-2002</List>
+                                <List>Excitation system replacement and upgrades</List>
+                                <List>High-resistance grounding system design and installation</List>
+                                <List>Low-voltage replacement breaker (LVAR) and vacuum starter replacement (VSR)</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
+                            <ServiceName>Transformer capabilities</ServiceName>
+                            <ServiceList>
+                                <List>Bushing monitoring systems</List>
+                                <List>Oil processing rigs—oil-fill/degasification/vacuum-fill</List>
+                                <List>Transformer internal inspections, reblocking, rewinding, etc.</List>
+                                <List>PCB disposal</List>
+                                <List>Dress out / startup</List>
+                                <List>On-site repairs</List>
+                                <List>Power factor (Doble) testing</List>
+                                <List>Tap changer repairs and replacements</List>
+                                <List>EnvirotempE FR3E fluid retrofil</List>
+                            </ServiceList>
+                        </Services>
+                    </ServiceMainDiv>
+
+
+
+
+
+                    <SubHeaderDiv>
+                        <SubText>Rittal Services & Support</SubText>
+                    </SubHeaderDiv>
+                    <ServiceMainDiv>
+                        <Services>
+                            <ServiceName>Maintenance and spare parts</ServiceName>
+                            <ServiceList>
+                                <List>Preventative maintenance to safeguard the performance of your equipment</List>
+                                <List>Worldwide availability of spare parts and multiple regional stocking locations</List>
+                                <List>Customer-specific inventory of spare parts with service contract</List>
+                                <List>Approved, OEM spare parts shipped direct from Rittal</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
+                            <ServiceName>On-site repairs</ServiceName>
+                            <ServiceList>
+                                <List>Fast expert assistance</List>
+                                <List>Qualified technicians to handle any problems</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
+                            <ServiceName>Installation and Start-Up:</ServiceName>
+                            <ServiceList>
+                                <List>Installation/assembly and commissioning of individual devices or complete systems</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
+                            <ServiceName>Rittal Climate Inspections</ServiceName>
+                            <ServiceList>
+                                <List>Excessive heat can affect the proper operation and service life of electrical equipment</List>
+                                <List>80% of control component failures are caused by a failing cooling solution</List>
+                                <List>Unplanned interruptions to production can easily cost your business tens of thousands of dollars per hour</List>
+                            </ServiceList>
+                        </Services>
+                    </ServiceMainDiv>
+                </ServiceSection>
             </BrandDetailsContainer>
         </Container >
 
