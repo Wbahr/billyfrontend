@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import { StyledText0 } from '../../styles/fonts'
 import Locations from './aboutSubPages/locationsPage'
 import News from './aboutSubPages/newsPage'
+import QualityPolicy from './aboutSubPages/qualityPolicyPage'
+
 
 export default function AboutPage({ history }) {
     const [pageComponent, setPageComponent] = useState()
@@ -18,7 +20,12 @@ export default function AboutPage({ history }) {
         {
             'label': 'News',
             'page': 'news'
+        },
+        {
+            'label': 'Quality Policy',
+            'page': 'quality-policy'
         }
+        
     ]
     useEffect(() => {
         if (page === 'locations') {
@@ -26,6 +33,9 @@ export default function AboutPage({ history }) {
         }
         else if (page === 'news') {
             setPageComponent(<News />)
+        }
+        else if (page === 'quality-policy') {
+            setPageComponent(<QualityPolicy />)
         }
     }, [page])
 
