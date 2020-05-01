@@ -10,17 +10,21 @@ export function formatTableData(type, data){
           let partNumbers = ''
           for(let j = 0; j < elem.lineItems.length ;j++) {
             let lineItem = elem.lineItems[j]
-            partNumbers = partNumbers + ' ' + lineItem.itemCode
+            partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
           }
           let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers
+          let displayTotal = '$' + elem.total.toFixed(2)
+          let epoch = Date.parse(elem.orderDate);
+          let DateObj = new Date(epoch)
+          let formattedDate = (DateObj.getMonth() + 1) + '/' + DateObj.getDate() + '/' + DateObj.getFullYear()
           mutatedData.push(
             {
               'orderNumber': elem.orderNumber,
-              'orderDate': elem.orderDate,
+              'orderDate': formattedDate,
               'poNo': elem.poNo,
               'status': elem.status,
               'buyer': elem.buyer,
-              'total': elem.total,
+              'total': displayTotal,
               'filter': filterField
             }
           )

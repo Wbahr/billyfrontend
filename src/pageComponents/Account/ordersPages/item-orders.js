@@ -159,7 +159,7 @@ export default function OrdersTable() {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, hiddenColumns: []},
     },
     usePagination
   )
