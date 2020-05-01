@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Banner from '../../../imgs/locationPage/map1.png'
+import Header from '../uiComponents/Header'
 
 const Container = styled.div`
   max-width: 1300px;
@@ -14,27 +15,6 @@ const LocationHeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-`
-const HeaderDivDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 40px 0 20px;
-  align-items: center;
-`
-const H1 = styled.h1`
-  font-family: verdana;
-  color: #333;
-  margin: 0;
-  text-transform: uppercase;
-  // font-size: 30px;
-  letter-spacing: 1px;
-  padding-bottom: 15px;
-  letter-spacing: 2px;
-`
-const ShortBorder = styled.div`
-  border-bottom: 3px solid #B51F2B;
-  width: 7%;
 `
 const HeaderDetailsDiv = styled.div`
   display: flex;
@@ -243,10 +223,7 @@ export default function Locations() {
     return (
         <Container>
             <LocationHeaderDiv>
-                <HeaderDivDiv>
-                    <H1> Locations</H1>
-                    <ShortBorder></ShortBorder>
-                </HeaderDivDiv>
+                <Header text="Locations"/>
                 <HeaderDetailsDiv>
                     <p>Airline offers support and service throughout the Northeast</p>
                 </HeaderDetailsDiv>
