@@ -16,7 +16,7 @@ export function formatTableData(type, data){
           let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
-          let formattedDate = (DateObj.getMonth() + 1) + '/' + DateObj.getDate() + '/' + DateObj.getFullYear()
+          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
           mutatedData.push(
             {
               'orderNumber': elem.orderNumber,

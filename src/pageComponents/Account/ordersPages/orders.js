@@ -262,6 +262,7 @@ export default function OrdersTable() {
             </option>
           ))}
         </select>
+        <p>Results: {rows.length}</p>
         </div>
       </TableContainer>
   )
