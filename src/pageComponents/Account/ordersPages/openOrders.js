@@ -111,8 +111,8 @@ export default function OrdersTable() {
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
-  const [dateFrom, setDateFrom] = useState(null)
-  const [dateTo, setDateTo] = useState(null)
+  const [dateFrom, setDateFrom] = useState()
+  const [dateTo, setDateTo] = useState()
 
   useQuery(GET_ORDERS, {
     onCompleted: response => {
@@ -124,13 +124,15 @@ export default function OrdersTable() {
 
   useEffect(() => {
     if (didMountRef) {
-      let mutatedData = originalData
+      let mutatedData
       // Apply search filter
       if (filter.length > 0) {
-        mutatedData = mutatedData.filter(row => {
+        mutatedData = originalData.filter(row => {
           let upperCaseFilter = filter.toUpperCase()
             return row.filter.includes(upperCaseFilter)
         })
+      } else {
+        mutatedData = originalData
       }
       // Apply showOrderType filter
       if (showOrderType !== 'all') {
@@ -139,22 +141,13 @@ export default function OrdersTable() {
         })
       }
       // Apply date filters
-      if (!_.isNil(dateFrom)) {
-        let epochDateFrom = dateFrom.valueOf()
-        mutatedData = mutatedData.filter(row => { 
-          return Date.parse(row.orderDate) >= epochDateFrom 
-        })
-      }
-      if (!_.isNil(dateTo)) {
-        let epochDateTo = dateTo.valueOf()
-        mutatedData = mutatedData.filter(row => { 
-          return Date.parse(row.orderDate) <= epochDateTo 
-        })
+      if (false) {
+
       }
       setData(mutatedData)
     }
     didMountRef.current = true
-  }, [filter, showOrderType, dateFrom, dateTo])
+  }, [filter, showOrderType])
 
   const columns = useMemo(
     () => [
@@ -218,18 +211,12 @@ export default function OrdersTable() {
   // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
-    <h4>Orders</h4>
+    <h4>Open Orders Report</h4>
     {/* <CopyToClipboard text={copyData}>
         <button>copy</button>
     </CopyToClipboard> */}
     <DivRow>
       <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-        <option value='all'>All Orders</option>
-        <option value='Completed'>Completed Orders</option>
-        <option value='Open'>Open Orders</option>
-        <option value='Credit Hold'>Credit Hold Orders</option>
-      </Select>
     </DivRow>
     {/* Date From */}
     <DivRowDate>
@@ -241,9 +228,6 @@ export default function OrdersTable() {
         selected={Date.parse(dateFrom)}
         onChange={(value)=>setDateFrom(value)}
       />
-      <DivSpacer onClick={()=>{setDateFrom(null)}}>
-        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-      </DivSpacer>
     </DivRowDate>
     {/* Date To */}
     <DivRowDate>
@@ -252,12 +236,9 @@ export default function OrdersTable() {
       </DivSpacer>
       <Pdate>Date to:</Pdate>
       <DatePicker
-        selected={Date.parse(dateTo)}
-        onChange={(value)=>setDateTo(value)}
+        selected={Date.parse(dateFrom)}
+        onChange={(value)=>setDateFrom(value)}
       />
-      <DivSpacer onClick={()=>{setDateTo(null)}}>
-        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-      </DivSpacer>
     </DivRowDate>
     <Table {...getTableProps()}>
       <thead>

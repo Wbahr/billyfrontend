@@ -6,6 +6,7 @@ import AccountNavPanel from './accountNavPanel'
 import PropTypes from 'prop-types'
 import AccountDashboard from './accountDashboardPage'
 import OrdersTable from './ordersPages/orders'
+import OpenOrdersTable from './ordersPages/openOrders'
 import ItemOrdersTable from './ordersPages/item-orders'
 import OpenQuotesTable from './quotePages/openQuotes'
 import InvoicesTable from './invoicePages/invoices'
@@ -16,7 +17,7 @@ const Container = styled.div`
 
 export default function AccountManagementPage({history}) {
   const [pageComponent, setPageComponent] = useState()
-  let { page } = useParams()
+  let { page, orderId } = useParams()
 
   useEffect(() => {
     switch(page){
@@ -38,6 +39,9 @@ export default function AccountManagementPage({history}) {
       case 'my-orders':
         setPageComponent(<OrdersTable history={history}/>)
         break;
+      case 'open-orders-report':
+        setPageComponent(<OpenOrdersTable history={history}/>)
+        break;
       case 'my-ordered-items':
         setPageComponent(<ItemOrdersTable history={history}/>)
         break;
@@ -47,6 +51,9 @@ export default function AccountManagementPage({history}) {
       case 'invoices':
         setPageComponent(<InvoicesTable history={history}/>)
         break;
+      // case 'order-details':
+      //   setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
+      //   break;
       default:
         setPageComponent(<OrdersTable history={history}/>)
         break;

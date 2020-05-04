@@ -86,7 +86,7 @@ export default function AccountManagementPage({history}) {
       <DivNavSection>
         <h5>Order Information</h5>
         <p onClick={()=> history.push('/account/my-orders')}>Orders</p>
-        <p onClick={()=> history.push('/account/my-orders')}>Open Orders Report</p>
+        <p onClick={()=> history.push('/account/open-orders-report')}>Open Orders Report</p>
         {/* <p onClick={()=> history.push('/account/my-orders')}>Open Payables</p>
         <p onClick={()=> history.push('/account/my-orders')}>Suspended Orders</p> */}
       </DivNavSection>

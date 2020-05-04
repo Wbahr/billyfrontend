@@ -31,6 +31,35 @@ export function formatTableData(type, data){
         }
       }
       break
+    case 'open-orders':
+      for(let i = 0; i < data.length; i++) {
+        let elem = data[i]
+        if(elem.type === 'Order' && elem.status === 'Open'){
+          let epoch = Date.parse(elem.orderDate);
+          let DateObj = new Date(epoch)
+          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
+          for(let j = 0; j < elem.lineItems.length ;j++) {
+            let lineItem = elem.lineItems[j]
+            let unitPrice = '$' + lineItem.unitPrice.toFixed(2)
+            mutatedData.push(
+              {
+                'orderNumber': elem.orderNumber,
+                'orderDate': formattedDate,
+                'line': j + 1,
+                'poNo': elem.poNo,
+                'promiseDate': '1/1/2020',
+                'itemId': lineItem.itemCode,
+                'customerPartId': lineItem.customerPartNumber,
+                'qtyRemaining': '1 / ' + lineItem.quantity,
+                'unitPrice': unitPrice,
+                'extPrice': '$4.00',
+                'filter': elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
+              }
+            )
+          }
+        }
+      }
+      break
   }
   return mutatedData
 }
