@@ -142,7 +142,6 @@ const IndustryCol = styled.div`
     display: flex;
     flex-direction: column;
     margin: 0 20px;
-
 `
 const IndustryImgDiv = styled.div`
     width: 250px;
@@ -256,7 +255,6 @@ const ServiceMainDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 40px;
-
 `
 const Services = styled.div`
     display: flex;
@@ -269,8 +267,7 @@ const ServiceName = styled.p`
     margin-bottom: 5px;
     font-weight: bold;
 `
-const ServiceList = styled.ul`
-    
+const ServiceList = styled.ul`   
 `
 const List = styled.li`
 `
@@ -898,17 +895,6 @@ export default function PowerDistributionProducts() {
                                 <List>Performance-based maintenance programs</List>
                             </ServiceList>
                         </Services>
-                        {/* <Services>
-                            <ServiceName>Power system design and analysis capabilities</ServiceName>
-                            <ServiceList>
-                                <List>Arc flash studies</List>
-                                <List>NERC compliance reporting</List>
-                                <List>Coordination / short circuit/ fault current studies</List>
-                                <List>Load flow / power factor studies</List>
-                                <List>Grounding analysis/ ground grid design</List>
-                                <List>Transient stability studies</List>
-                            </ServiceList>
-                        </Services> */}
                         <Services>
                             <ServiceName>Substation turnkey design capabilities</ServiceName>
                             <ServiceList>
@@ -962,11 +948,6 @@ export default function PowerDistributionProducts() {
                             </ServiceList>
                         </Services>
                     </ServiceMainDiv>
-
-
-
-
-
                     <SubHeaderDiv>
                         <SubText>Rittal Services & Support</SubText>
                     </SubHeaderDiv>
