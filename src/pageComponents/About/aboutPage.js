@@ -6,6 +6,7 @@ import { StyledText0 } from '../../styles/fonts'
 import Locations from './aboutSubPages/locationsPage'
 import News from './aboutSubPages/newsPage'
 import QualityPolicy from './aboutSubPages/qualityPolicyPage'
+import TransactionalServices from './aboutSubPages/transactionalServicesPage'
 
 
 export default function AboutPage({ history }) {
@@ -24,6 +25,10 @@ export default function AboutPage({ history }) {
         {
             'label': 'Quality Policy',
             'page': 'quality-policy'
+        },
+        {
+            'label': 'Transactional Services',
+            'page': 'transactional-services'
         }
         
     ]
@@ -36,6 +41,9 @@ export default function AboutPage({ history }) {
         }
         else if (page === 'quality-policy') {
             setPageComponent(<QualityPolicy />)
+        }
+        else if (page === 'transactional-services') {
+            setPageComponent(<TransactionalServices />)
         }
     }, [page])
 
