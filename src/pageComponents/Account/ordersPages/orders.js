@@ -4,9 +4,12 @@ import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
-import { formatTableData } from '../helpers/mutators'
+import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const TableContainer = styled.div`
   display: flex;
@@ -55,6 +58,32 @@ const SpanSort = styled.span`
   margin-left: 4px;
 `
 
+const DivSpacer = styled.div`
+  margin: 0 8px;
+`
+
+const DivRow = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const DivRowDate = styled(DivRow)`
+  margin-top: 16px;
+`
+
+const Pdate = styled.p`
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0;
+  margin-right: 4px;
+  padding-top: 6px;
+`
+
+const Select = styled.select`
+  margin-left: 16px;
+`
+
 const GET_ORDERS = gql`
 query Orders{
     accountOrders {
@@ -82,7 +111,9 @@ export default function OrdersTable() {
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
-  
+  const [dateFrom, setDateFrom] = useState()
+  const [dateTo, setDateTo] = useState()
+
   useQuery(GET_ORDERS, {
     onCompleted: response => {
       const mutatedOrders = formatTableData('orders', response.accountOrders)
@@ -169,16 +200,44 @@ export default function OrdersTable() {
     usePagination
   )
 
+  let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
     <h4>Orders</h4>
-    <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-    <select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-      <option value='all'>All Orders</option>
-      <option value='Completed'>Completed Orders</option>
-      <option value='Open'>Open Orders</option>
-      <option value='Credit Hold'>Credit Hold Orders</option>
-    </select>
+    {/* <CopyToClipboard text={copyData}>
+        <button>copy</button>
+    </CopyToClipboard> */}
+    <DivRow>
+      <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
+        <option value='all'>All Orders</option>
+        <option value='Completed'>Completed Orders</option>
+        <option value='Open'>Open Orders</option>
+        <option value='Credit Hold'>Credit Hold Orders</option>
+      </Select>
+    </DivRow>
+    {/* Date From */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date from:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateFrom)}
+        onChange={(value)=>setDateFrom(value)}
+      />
+    </DivRowDate>
+    {/* Date To */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date to:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateFrom)}
+        onChange={(value)=>setDateFrom(value)}
+      />
+    </DivRowDate>
     <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (

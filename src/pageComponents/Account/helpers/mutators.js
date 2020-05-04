@@ -34,3 +34,19 @@ export function formatTableData(type, data){
   }
   return mutatedData
 }
+
+export function clipboardData(headers, data){
+  let mutatedData = ''
+  for(let i = 0; i < headers.length ;i++){
+    let header = headers[i].Header
+    if(!_.isNil(header) && header !== 'Filter'){
+      mutatedData += header + ' '
+    }
+  }
+  for(let j = 0; j < data.length ;j++){
+    let dataObj = data[j]
+    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.total
+  }
+
+  return mutatedData
+}
