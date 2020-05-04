@@ -116,7 +116,7 @@ export default function OrdersTable() {
 
   useQuery(GET_ORDERS, {
     onCompleted: response => {
-      const mutatedOrders = formatTableData('orders', response.accountOrders)
+      const mutatedOrders = formatTableData('open-orders', response.accountOrders)
       setOriginalData(mutatedOrders)
       setData(mutatedOrders)
     }
@@ -124,15 +124,13 @@ export default function OrdersTable() {
 
   useEffect(() => {
     if (didMountRef) {
-      let mutatedData
+      let mutatedData = originalData
       // Apply search filter
       if (filter.length > 0) {
-        mutatedData = originalData.filter(row => {
+        mutatedData = mutatedData.filter(row => {
           let upperCaseFilter = filter.toUpperCase()
             return row.filter.includes(upperCaseFilter)
         })
-      } else {
-        mutatedData = originalData
       }
       // Apply showOrderType filter
       if (showOrderType !== 'all') {
@@ -141,13 +139,22 @@ export default function OrdersTable() {
         })
       }
       // Apply date filters
-      if (false) {
-
+      if (!_.isNil(dateFrom)) {
+        let epochDateFrom = dateFrom.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) >= epochDateFrom 
+        })
+      }
+      if (!_.isNil(dateTo)) {
+        let epochDateTo = dateTo.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) <= epochDateTo 
+        })
       }
       setData(mutatedData)
     }
     didMountRef.current = true
-  }, [filter, showOrderType])
+  }, [filter, showOrderType, dateFrom, dateTo])
 
   const columns = useMemo(
     () => [
@@ -160,20 +167,36 @@ export default function OrdersTable() {
         accessor: 'orderNumber',
       },
       {
+        Header: 'Line',
+        accessor: 'line',
+      },
+      {
         Header: 'PO #',
         accessor: 'poNo',
       },
       {
-        Header: 'Buyer',
-        accessor: 'buyer',
+        Header: 'Promise Date',
+        accessor: 'promiseDate', // accessor is the "key" in the data
       },
       {
-        Header: 'Total',
-        accessor: 'total',
+        Header: 'Item ID',
+        accessor: 'itemId',
       },
       {
-        Header: 'Status',
-        accessor: 'status',
+        Header: 'Customer Part',
+        accessor: 'customerPartId',
+      },
+      {
+        Header: 'Qty Open / Ordered',
+        accessor: 'qtyRemaining',
+      },
+      {
+        Header: 'Unit $',
+        accessor: 'unitPrice',
+      },
+      {
+        Header: 'Ext $',
+        accessor: 'extPrice',
       },
       {
         Header: 'Filter',
@@ -228,6 +251,9 @@ export default function OrdersTable() {
         selected={Date.parse(dateFrom)}
         onChange={(value)=>setDateFrom(value)}
       />
+      <DivSpacer onClick={()=>{setDateFrom(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
     </DivRowDate>
     {/* Date To */}
     <DivRowDate>
@@ -236,9 +262,12 @@ export default function OrdersTable() {
       </DivSpacer>
       <Pdate>Date to:</Pdate>
       <DatePicker
-        selected={Date.parse(dateFrom)}
-        onChange={(value)=>setDateFrom(value)}
+        selected={Date.parse(dateTo)}
+        onChange={(value)=>setDateTo(value)}
       />
+      <DivSpacer onClick={()=>{setDateTo(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
     </DivRowDate>
     <Table {...getTableProps()}>
       <thead>

@@ -115,6 +115,7 @@ export default function OrdersTable() {
   const [dateTo, setDateTo] = useState(null)
 
   useQuery(GET_ORDERS, {
+    fetchPolicy: 'no-cache',
     onCompleted: response => {
       const mutatedOrders = formatTableData('orders', response.accountOrders)
       setOriginalData(mutatedOrders)
