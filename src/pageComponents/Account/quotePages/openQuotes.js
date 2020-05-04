@@ -1,115 +1,188 @@
-import React, { useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import styled from 'styled-components'
-import { useTable, usePagination, useFilters, useGlobalFilter } from 'react-table'
-import matchSorter from 'match-sorter'
+import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
+import { useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
+import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
+import { formatTableData, clipboardData } from '../helpers/mutators'
+import AirlineInput from '../../_common/form/inputv2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 1200px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  padding: 20px 40px;
+  margin: 0 auto 0 0;
+`
+
+const Table = styled.table`
+  margin: 16px;
+`
+
+const TRheader = styled.tr`
+  border-bottom: 1px solid gray;
+`
+
+const THheader = styled.th`
+  padding: 8px 16px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+`
+
+const TRrow = styled.tr`
+  border-bottom: 1px solid lightgray;
+`
+
+const TDrow = styled.td`
+  padding: 8px 16px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+`
+
+const ButtonPagination = styled.button`
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 1px;
+`
+
+const SpanSort = styled.span`
+  margin-left: 4px;
+`
+
+const DivSpacer = styled.div`
+  margin: 0 8px;
+`
+
+const DivRow = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const DivRowDate = styled(DivRow)`
+  margin-top: 16px;
+`
+
+const Pdate = styled.p`
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0;
+  margin-right: 4px;
+  padding-top: 6px;
+`
+
+const Select = styled.select`
+  margin-left: 16px;
+`
+
+const GET_ORDERS = gql`
+query Orders{
+    accountOrders {
+      orderNumber
+      orderDate
+      poNo
+      isQuote
+      orderType
+      status
+      total
+      buyer
+      lineItems {
+        invMastUid
+        itemCode
+        customerPartNumber
+        quantity
+        unitPrice
+      }
+    }
+  }
 `
 
 export default function QuotesTable() {
+  const didMountRef = useRef(false)
+  const [originalData, setOriginalData] = useState([])
+  const [data, setData] = useState([])
+  const [filter, setFilter] = useState('')
+  const [showOrderType, setShowOrderType] = useState('all')
+  const [dateFrom, setDateFrom] = useState()
+  const [dateTo, setDateTo] = useState()
 
-  const data = useMemo(
-    () => [
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
-      },
-      {
-        quote_date: 'Hello',
-        quote_no: 'World',
-        quote_ref_no: '123132',
-        accessor: 'Bpanczer'
+  useQuery(GET_ORDERS, {
+    onCompleted: response => {
+      const mutatedOrders = formatTableData('quotes', response.accountOrders)
+      setOriginalData(mutatedOrders)
+      setData(mutatedOrders)
+    }
+  })
+
+  useEffect(() => {
+    if (didMountRef) {
+      let mutatedData = originalData
+      // Apply search filter
+      if (filter.length > 0) {
+        mutatedData = mutatedData.filter(row => {
+          let upperCaseFilter = filter.toUpperCase()
+            return row.filter.includes(upperCaseFilter)
+        })
       }
-    ],
-    [],
-  )
+      // Apply showOrderType filter
+      if (showOrderType !== 'all') {
+        mutatedData = mutatedData.filter(row => {
+          return row.status.includes(showOrderType)
+        })
+      }
+      // Apply date filters
+      if (!_.isNil(dateFrom)) {
+        let epochDateFrom = dateFrom.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) >= epochDateFrom 
+        })
+      }
+      if (!_.isNil(dateTo)) {
+        let epochDateTo = dateTo.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) <= epochDateTo 
+        })
+      }
+      setData(mutatedData)
+    }
+    didMountRef.current = true
+  }, [filter, showOrderType, dateFrom, dateTo])
+
   const columns = useMemo(
     () => [
       {
         Header: 'Quote Date',
-        accessor: 'quote_date', // accessor is the "key" in the data
+        accessor: 'quoteDate', // accessor is the "key" in the data
       },
       {
         Header: 'Quote #',
-        accessor: 'quote_no',
+        accessor: 'quoteNumber',
       },
       {
         Header: 'Quote Ref #',
-        accessor: 'quote_ref_no',
+        accessor: 'quoteRefNo',
       },
       {
         Header: 'Total',
         accessor: 'total',
+      },
+      {
+        Header: 'Filter',
+        accessor: 'filter',
       }
     ],
     [],
   )
-
-  function SelectColumnFilter({
-    column: { filterValue, setFilter, preFilteredRows, id },
-  }) {
-    // Calculate the options for filtering
-    // using the preFilteredRows
-    const options = React.useMemo(() => {
-      const options = new Set()
-      preFilteredRows.forEach(row => {
-        options.add(row.values[id])
-      })
-      return [...options.values()]
-    }, [id, preFilteredRows])
   
-    // Render a multi-select box
-    return (
-      <select
-        value={filterValue}
-        onChange={e => {
-          setFilter(e.target.value || undefined)
-        }}
-      >
-        <option value="">All</option>
-        {options.map((option, i) => (
-          <option key={i} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    )
-  }
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -130,69 +203,105 @@ export default function QuotesTable() {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, hiddenColumns: ['filter']},
     },
-    usePagination,
-    useFilters,
-    useGlobalFilter
+    useSortBy,
+    usePagination
   )
 
   return(
     <TableContainer>
-    <h4>Open Quotes</h4>
-    <input placeholder='Quote Reference #, Quote #, Item ID'></input>
-    <table {...getTableProps()}>
+    <h4>Open Quotes Report</h4>
+    <DivRow>
+      <AirlineInput placeholder='Search Quote #, Quote Ref $, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+    </DivRow>
+    {/* Date From */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date from:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateFrom)}
+        onChange={(value)=>setDateFrom(value)}
+      />
+      <DivSpacer onClick={()=>{setDateFrom(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
+    </DivRowDate>
+    {/* Date To */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date to:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateTo)}
+        onChange={(value)=>setDateTo(value)}
+      />
+      <DivSpacer onClick={()=>{setDateTo(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
+    </DivRowDate>
+    <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <TRheader {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>
+              <THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render('Header')}
-              </th>
+                <SpanSort>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
+                      : ''}
+                </SpanSort>
+              </THheader>
             ))}
-          </tr>
+          </TRheader>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
         {page.map(row => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()}>
+            <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return (
-                  <td {...cell.getCellProps()}>
+                  <TDrow {...cell.getCellProps()}>
                     {cell.render('Cell')}
-                  </td>
+                  </TDrow>
                 )
               })}
-            </tr>
+            </TRrow>
           )
         })}
       </tbody>
-    </table>
+    </Table>
           {/* 
         Pagination can be built however you'd like. 
         This is just a very basic UI implementation:
       */}
       <div>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        </ButtonPagination>{' '}
+        <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+        </ButtonPagination>{' '}
         <span>
           Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{' '}
         </span>
+        <ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </ButtonPagination>{' '}
+        <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </ButtonPagination>{' '}
         <span>
           | Go to page:{' '}
           <input
@@ -217,6 +326,7 @@ export default function QuotesTable() {
             </option>
           ))}
         </select>
+        <p>Results: {rows.length}</p>
         </div>
       </TableContainer>
   )

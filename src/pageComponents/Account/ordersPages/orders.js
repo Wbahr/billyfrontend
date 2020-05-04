@@ -90,7 +90,8 @@ query Orders{
       orderNumber
       orderDate
       poNo
-      type
+      isQuote
+      orderType
       status
       total
       buyer

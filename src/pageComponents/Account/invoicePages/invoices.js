@@ -1,128 +1,175 @@
-import React, { useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import styled from 'styled-components'
-import { useTable, usePagination} from 'react-table'
+import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
+import { useQuery } from '@apollo/client'
+import gql from 'graphql-tag'
+import { formatTableData, clipboardData } from '../helpers/mutators'
+import AirlineInput from '../../_common/form/inputv2'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const TableContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 1200px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+  padding: 20px 40px;
+  margin: 0 auto 0 0;
 `
 
-export default function QuotesTable() {
+const Table = styled.table`
+  margin: 16px;
+`
 
-  const data = useMemo(
-    () => [
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
-      },
-      {
-        order_date: 'Hello',
-        order_no: 'World',
-        po_no: '123132',
-        buyer: 'Bpanczer',
-        total: '$12.00',
-        status: 'Completed'
+const TRheader = styled.tr`
+  border-bottom: 1px solid gray;
+`
+
+const THheader = styled.th`
+  padding: 8px 16px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+`
+
+const TRrow = styled.tr`
+  border-bottom: 1px solid lightgray;
+`
+
+const TDrow = styled.td`
+  padding: 8px 16px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+`
+
+const ButtonPagination = styled.button`
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 1px;
+`
+
+const SpanSort = styled.span`
+  margin-left: 4px;
+`
+
+const DivSpacer = styled.div`
+  margin: 0 8px;
+`
+
+const DivRow = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const DivRowDate = styled(DivRow)`
+  margin-top: 16px;
+`
+
+const Pdate = styled.p`
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0;
+  margin-right: 4px;
+  padding-top: 6px;
+`
+
+const Select = styled.select`
+  margin-left: 16px;
+`
+
+const GET_ORDERS = gql`
+query Orders{
+    accountOrders {
+      orderNumber
+      orderDate
+      poNo
+      isQuote
+      orderType
+      status
+      total
+      buyer
+      lineItems {
+        invMastUid
+        itemCode
+        customerPartNumber
+        quantity
+        unitPrice
       }
-    ],
-    [],
-  )
+    }
+  }
+`
+
+export default function InvoicesTable() {
+  const didMountRef = useRef(false)
+  const [originalData, setOriginalData] = useState([])
+  const [data, setData] = useState([])
+  const [filter, setFilter] = useState('')
+  const [showInvoiceType, setShowInvoiceType] = useState('all')
+  const [dateFrom, setDateFrom] = useState(null)
+  const [dateTo, setDateTo] = useState(null)
+
+  useQuery(GET_ORDERS, {
+    fetchPolicy: 'no-cache',
+    onCompleted: response => {
+      const mutatedOrders = formatTableData('orders', response.accountOrders)
+      setOriginalData(mutatedOrders)
+      setData(mutatedOrders)
+    }
+  })
+
+  useEffect(() => {
+    if (didMountRef) {
+      let mutatedData = originalData
+      // Apply search filter
+      if (filter.length > 0) {
+        mutatedData = mutatedData.filter(row => {
+          let upperCaseFilter = filter.toUpperCase()
+            return row.filter.includes(upperCaseFilter)
+        })
+      }
+      // Apply showInvoiceType filter
+      if (showInvoiceType !== 'all') {
+        mutatedData = mutatedData.filter(row => {
+          return row.status.includes(showInvoiceType)
+        })
+      }
+      // Apply date filters
+      if (!_.isNil(dateFrom)) {
+        let epochDateFrom = dateFrom.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) >= epochDateFrom 
+        })
+      }
+      if (!_.isNil(dateTo)) {
+        let epochDateTo = dateTo.valueOf()
+        mutatedData = mutatedData.filter(row => { 
+          return Date.parse(row.orderDate) <= epochDateTo 
+        })
+      }
+      setData(mutatedData)
+    }
+    didMountRef.current = true
+  }, [filter, showInvoiceType, dateFrom, dateTo])
+
   const columns = useMemo(
     () => [
       {
         Header: 'Order Date',
-        accessor: 'order_date', // accessor is the "key" in the data
+        accessor: 'orderDate', // accessor is the "key" in the data
       },
       {
         Header: 'Order #',
-        accessor: 'order_no',
+        accessor: 'orderNumber',
       },
       {
         Header: 'PO #',
-        accessor: 'po_no',
+        accessor: 'poNo',
       },
       {
         Header: 'Buyer',
@@ -135,6 +182,10 @@ export default function QuotesTable() {
       {
         Header: 'Status',
         accessor: 'status',
+      },
+      {
+        Header: 'Filter',
+        accessor: 'filter'
       }
     ],
     [],
@@ -159,70 +210,110 @@ export default function QuotesTable() {
     {
       columns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, hiddenColumns: ['filter']},
     },
+    useSortBy,
     usePagination
   )
 
   return(
     <TableContainer>
-    <h4>Open Quotes</h4>
-    <input placeholder='Search PO#, Order #, Item ID'></input>
-    <select>
-      <option>All Orders</option>
-    </select>
-    <table {...getTableProps()}>
+    <h4>Invoices</h4>
+    <DivRow>
+      <AirlineInput placeholder='Search Invoice #, PO #, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+      <Select style={{width: "200px"}} value={showInvoiceType} onChange={(e)=>setShowInvoiceType(e.target.value)}>
+        <option value='all'>All Invoices</option>
+        <option value='Open'>Open Invoices</option>
+        <option value='Closed'>Closed Invoices</option>
+      </Select>
+    </DivRow>
+    {/* Date From */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date from:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateFrom)}
+        onChange={(value)=>setDateFrom(value)}
+      />
+      <DivSpacer onClick={()=>{setDateFrom(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
+    </DivRowDate>
+    {/* Date To */}
+    <DivRowDate>
+      <DivSpacer>
+        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+      </DivSpacer>
+      <Pdate>Date to:</Pdate>
+      <DatePicker
+        selected={Date.parse(dateTo)}
+        onChange={(value)=>setDateTo(value)}
+      />
+      <DivSpacer onClick={()=>{setDateTo(null)}}>
+        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+      </DivSpacer>
+    </DivRowDate>
+    <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <TRheader {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>
+              <THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
                 {column.render('Header')}
-              </th>
+                <SpanSort>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
+                      : ''}
+                </SpanSort>
+              </THheader>
             ))}
-          </tr>
+          </TRheader>
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
         {page.map(row => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()}>
+            <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return (
-                  <td {...cell.getCellProps()}>
+                  <TDrow {...cell.getCellProps()}>
                     {cell.render('Cell')}
-                  </td>
+                  </TDrow>
                 )
               })}
-            </tr>
+            </TRrow>
           )
         })}
       </tbody>
-    </table>
+    </Table>
           {/* 
         Pagination can be built however you'd like. 
         This is just a very basic UI implementation:
       */}
       <div>
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+        <ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+        </ButtonPagination>{' '}
+        <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
+        </ButtonPagination>{' '}
         <span>
           Page{' '}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{' '}
         </span>
+        <ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
+          {'>'}
+        </ButtonPagination>{' '}
+        <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </ButtonPagination>{' '}
         <span>
           | Go to page:{' '}
           <input
@@ -247,6 +338,7 @@ export default function QuotesTable() {
             </option>
           ))}
         </select>
+        <p>Results: {rows.length}</p>
         </div>
       </TableContainer>
   )

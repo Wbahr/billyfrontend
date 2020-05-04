@@ -6,7 +6,7 @@ export function formatTableData(type, data){
     case 'orders':
       for(let i = 0; i < data.length; i++) {
         let elem = data[i]
-        if(elem.type === 'Order'){
+        if(!elem.isQuote){
           let partNumbers = ''
           for(let j = 0; j < elem.lineItems.length ;j++) {
             let lineItem = elem.lineItems[j]
@@ -25,7 +25,8 @@ export function formatTableData(type, data){
               'status': elem.status,
               'buyer': elem.buyer,
               'total': displayTotal,
-              'filter': filterField
+              'filter': filterField,
+              'orderType': elem.orderType
             }
           )
         }
@@ -34,13 +35,14 @@ export function formatTableData(type, data){
     case 'open-orders':
       for(let i = 0; i < data.length; i++) {
         let elem = data[i]
-        if(elem.type === 'Order' && elem.status === 'Open'){
+        if(!elem.isQuote && elem.status === 'Open'){
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
           for(let j = 0; j < elem.lineItems.length ;j++) {
             let lineItem = elem.lineItems[j]
             let unitPrice = '$' + lineItem.unitPrice.toFixed(2)
+            let extPrice = '$' + (lineItem.unitPrice * lineItem.quantity).toFixed(2)
             mutatedData.push(
               {
                 'orderNumber': elem.orderNumber,
@@ -52,11 +54,37 @@ export function formatTableData(type, data){
                 'customerPartId': lineItem.customerPartNumber,
                 'qtyRemaining': '1 / ' + lineItem.quantity,
                 'unitPrice': unitPrice,
-                'extPrice': '$4.00',
+                'extPrice':  extPrice,
                 'filter': elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
               }
             )
           }
+        }
+      }
+      break
+      case 'quotes':
+      for(let i = 0; i < data.length; i++) {
+        let elem = data[i]
+        if(elem.isQuote){
+          let partNumbers = ''
+          for(let j = 0; j < elem.lineItems.length ;j++) {
+            let lineItem = elem.lineItems[j]
+            partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
+          }
+          let filterField = elem.orderNumber + ' ' + partNumbers
+          let displayTotal = '$' + elem.total.toFixed(2)
+          let epoch = Date.parse(elem.orderDate);
+          let DateObj = new Date(epoch)
+          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
+          mutatedData.push(
+            {
+              'quoteNumber': elem.orderNumber,
+              'quoteDate': formattedDate,
+              'quoteRefNo': 'quoteRefNo',
+              'total': displayTotal,
+              'filter': filterField,
+            }
+          )
         }
       }
       break
