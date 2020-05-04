@@ -972,6 +972,13 @@ export default function PowerDistributionProducts() {
                     </SubHeaderDiv>
                     <ServiceMainDiv>
                         <Services>
+                            <ServiceName>On-site repairs</ServiceName>
+                            <ServiceList>
+                                <List>Fast expert assistance</List>
+                                <List>Qualified technicians to handle any problems</List>
+                            </ServiceList>
+                        </Services>
+                        <Services>
                             <ServiceName>Maintenance and spare parts</ServiceName>
                             <ServiceList>
                                 <List>Preventative maintenance to safeguard the performance of your equipment</List>
@@ -981,24 +988,16 @@ export default function PowerDistributionProducts() {
                             </ServiceList>
                         </Services>
                         <Services>
-                            <ServiceName>On-site repairs</ServiceName>
+                            <ServiceName>Rittal Climate Inspections</ServiceName>
                             <ServiceList>
-                                <List>Fast expert assistance</List>
-                                <List>Qualified technicians to handle any problems</List>
+                                <List>Rittal Service expert will come to your site to inventory, document, and evaluate the state of the operating environment.</List>
+                                <List>Enclosure cooling equipment will be checked for cleanliness, function, and serviceability.</List>
                             </ServiceList>
                         </Services>
                         <Services>
                             <ServiceName>Installation and Start-Up:</ServiceName>
                             <ServiceList>
                                 <List>Installation/assembly and commissioning of individual devices or complete systems</List>
-                            </ServiceList>
-                        </Services>
-                        <Services>
-                            <ServiceName>Rittal Climate Inspections</ServiceName>
-                            <ServiceList>
-                                <List>Excessive heat can affect the proper operation and service life of electrical equipment</List>
-                                <List>80% of control component failures are caused by a failing cooling solution</List>
-                                <List>Unplanned interruptions to production can easily cost your business tens of thousands of dollars per hour</List>
                             </ServiceList>
                         </Services>
                     </ServiceMainDiv>
