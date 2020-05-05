@@ -1,49 +1,6 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import RittalLogo from '../../imgs/PowerDistributionPage/rittal-logo.jpg'
-import Food from '../../imgs/powerDistributionPage/food and bev.png'
-import PowerGeneration from '../../imgs/powerDistributionPage/power generation.png'
-import OEMDrives from '../../imgs/powerDistributionPage/OEM drives.jpg'
-import GeneralPurpose from '../../imgs/powerDistributionPage/General purpose drives.jpg'
-import HVAC from '../../imgs/powerDistributionPage/HVAC drives.jpg'
-import StandardEnclosed from '../../imgs/powerDistributionPage/Standard enclosed drives.jpg'
-import FlexCenter from '../../imgs/powerDistributionPage/Flex Center.jpg'
-import AdvancedVFD from '../../imgs/powerDistributionPage/Advanced VFD solutions.jpg'
-import XTContactor from '../../imgs/powerDistributionPage/XT contactors.jpg'
-import XTManual from '../../imgs/powerDistributionPage/XT manual motor.jpg'
-import EMS from '../../imgs/powerDistributionPage/EMS.jpg'
-import NEMA from '../../imgs/powerDistributionPage/NEMA power control.jpg'
-import PowerControl from '../../imgs/powerDistributionPage/Specialty power control.jpg'
-import SolidState from '../../imgs/powerDistributionPage/Solid-state.jpg'
-import MotorProtection from '../../imgs/powerDistributionPage/Motor protection.jpg'
-import Enclosed from '../../imgs/powerDistributionPage/Enclosed control1.jpg'
-import Aftermarke from '../../imgs/powerDistributionPage/Aftermarket.jpg'
-import Industrial from '../../imgs/powerDistributionPage/Industrial relays.jpg'
-import Operator from '../../imgs/powerDistributionPage/Operator interface.jpg'
-import Intelligent from '../../imgs/powerDistributionPage/Intelligent wiring solutions.jpg'
-import SafetyProducts from '../../imgs/powerDistributionPage/Safety products.jpg'
-import TerminalBlocks from '../../imgs/powerDistributionPage/Terminal blocks.jpg'
-import PilotDevices from '../../imgs/powerDistributionPage/Pilot devices.jpg'
-import ControlStations from '../../imgs/powerDistributionPage/Control stations.jpg'
-import ControlPower from '../../imgs/powerDistributionPage/Control power.jpg'
-import Sensors from '../../imgs/powerDistributionPage/Sensors.jpg'
-import SignalTowers from '../../imgs/powerDistributionPage/Signal towers.jpg'
-import PowerDefense from '../../imgs/powerDistributionPage/Power Defense.jpg'
-import Bussmann from '../../imgs/powerDistributionPage/Bussmann.jpg'
-import Distribution from '../../imgs/powerDistributionPage/Distribution Transformers.jpg'
-import LVMedium from '../../imgs/powerDistributionPage/LV medium-low-voltage.jpg'
-import LvMotorControl from '../../imgs/powerDistributionPage/LV motor control.jpg'
-import LvDrive from '../../imgs/powerDistributionPage/LV Drive.jpg'
-import Wallmount from '../../imgs/powerDistributionPage/Wallmount.jpg'
-import Freestanding from '../../imgs/powerDistributionPage/Freestanding.jpg'
-import Floormount from '../../imgs/powerDistributionPage/Floormount Disconnect.jpg'
-import Fan from '../../imgs/powerDistributionPage/Fan.jpg'
-import Roofmount from '../../imgs/powerDistributionPage/Roofmount Air Conditioner.jpg'
-import PushButton from '../../imgs/powerDistributionPage/Push Button Box.jpg'
-import Hygienic from '../../imgs/powerDistributionPage/Hygienic Design.jpg'
-import Modular from '../../imgs/powerDistributionPage/Modular Enclosures.jpg'
-import HMI from '../../imgs/powerDistributionPage/HMI.png'
 
 const Container = styled.div`
     display: flex;
@@ -295,7 +252,7 @@ export default function PowerDistributionProducts() {
                             <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                         </LogoDiv>
                         <LogoDiv>
-                            <BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
+                            <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
                             <LogoText>Interested in Rittal?</LogoText>
                             <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                         </LogoDiv>
@@ -323,7 +280,7 @@ export default function PowerDistributionProducts() {
                         </IndustryCol>
                         <IndustryCol>
                             <IndustryImgDiv>
-                                <IndustryImg src={PowerGeneration} />
+                                <IndustryImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Power%20Generation.png" />
                             </IndustryImgDiv>
                             <IndustryTextDiv>
                                 <IndustryText>Power Generation</IndustryText>
@@ -331,7 +288,7 @@ export default function PowerDistributionProducts() {
                         </IndustryCol>
                         <IndustryCol>
                             <IndustryImgDiv>
-                                <IndustryImg src={Food} />
+                                <IndustryImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/food%20and%20bev.png" />
                             </IndustryImgDiv>
                             <IndustryTextDiv>
                                 <IndustryText>Food & Beverage</IndustryText>
@@ -357,7 +314,7 @@ export default function PowerDistributionProducts() {
                 <ProductSection>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={OEMDrives} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/OEM%20drives.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>OEM drives</ProductHeader>
@@ -369,7 +326,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={GeneralPurpose} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/General%20purpose%20drives.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>General purpose drives</ProductHeader>
@@ -381,7 +338,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={HVAC} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/HVAC%20drives.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>HVAC drives</ProductHeader>
@@ -393,7 +350,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Wallmount} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Wallmount.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Wallmount Enclosures</ProductHeader>
@@ -405,7 +362,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={StandardEnclosed} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Standard%20enclosed%20drives.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Standard enclosed drives</ProductHeader>
@@ -417,7 +374,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Freestanding} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Freestanding.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Freestanding Enclosures</ProductHeader>
@@ -429,7 +386,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={FlexCenter} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Flex%20Center.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Flex Center</ProductHeader>
@@ -441,7 +398,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={AdvancedVFD} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Advanced%20VFD%20solutions.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Advanced VFD solutions</ProductHeader>
@@ -453,7 +410,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={XTContactor} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20contactors.jpg"/>
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>XT contactors and starters</ProductHeader>
@@ -465,7 +422,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={XTManual} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20manual%20motor.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>XT manual motor protectors and combination motor controllers</ProductHeader>
@@ -477,7 +434,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={EMS} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/EMS.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Electronic motor starters (EMS)</ProductHeader>
@@ -489,7 +446,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Floormount} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Floormount%20Disconnect.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Floormount Disconnect Enclosures</ProductHeader>
@@ -501,7 +458,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={NEMA} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/NEMA%20power%20control.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>NEMA power control</ProductHeader>
@@ -513,7 +470,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={PowerControl} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Specialty%20power%20control.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Specialty power control</ProductHeader>
@@ -525,7 +482,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Fan} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Fan.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Fans</ProductHeader>
@@ -537,7 +494,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={SolidState} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Solid-state.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Solid-state starters (soft starters)</ProductHeader>
@@ -549,7 +506,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={MotorProtection} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Motor%20protection.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Motor protection</ProductHeader>
@@ -561,7 +518,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Enclosed} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Enclosed%20control.jpg"/>
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Enclosed control</ProductHeader>
@@ -573,7 +530,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Roofmount} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Roofmount%20Air%20Conditioner.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Roofmount & Wallmount Air conditioners</ProductHeader>
@@ -585,7 +542,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Aftermarke} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Aftermarket.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Aftermarket and renewal parts</ProductHeader>
@@ -597,7 +554,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={PushButton} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Push%20Button%20Box.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Push Button Boxes</ProductHeader>
@@ -609,7 +566,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Industrial} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Industrial%20relays.jpg"/>
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Industrial relays</ProductHeader>
@@ -633,7 +590,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Operator} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Operator%20interface.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Operator interface</ProductHeader>
@@ -645,7 +602,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Intelligent} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Intelligent%20wiring%20solutions.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Intelligent wiring solutions</ProductHeader>
@@ -657,7 +614,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Hygienic} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Hygienic%20Design.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Hygienic Design Enclosures</ProductHeader>
@@ -669,7 +626,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={SafetyProducts} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Safety%20products.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Safety products</ProductHeader>
@@ -681,7 +638,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={TerminalBlocks} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Terminal%20blocks.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Terminal blocks</ProductHeader>
@@ -693,7 +650,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={PilotDevices} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Pilot%20devices.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Pilot devices</ProductHeader>
@@ -705,7 +662,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={ControlStations} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Control%20stations.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Control stations</ProductHeader>
@@ -717,7 +674,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Modular} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Modular%20Enclosures.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Modular Enclosures</ProductHeader>
@@ -729,7 +686,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={ControlPower} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Control%20power.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Control power</ProductHeader>
@@ -741,7 +698,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Sensors} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Sensors.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Sensors and limit switches</ProductHeader>
@@ -753,7 +710,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={SignalTowers} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Signal%20towers.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Signal towers</ProductHeader>
@@ -765,7 +722,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={PowerDefense} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Power%20Defense.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Power Defense circuit breakers</ProductHeader>
@@ -777,7 +734,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Bussmann} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Bussmann.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Bussmann® series fuses, blocks, holders and disconnect switches</ProductHeader>
@@ -789,7 +746,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={Distribution} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/distribution%20transformers.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Power and distribution transformers and busway</ProductHeader>
@@ -801,7 +758,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={HMI} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/HMI.png" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>HMI Arm Enclosures</ProductHeader>
@@ -813,7 +770,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={LVMedium} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20medium-low-voltage.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Medium- and low-voltage switchgear</ProductHeader>
@@ -825,7 +782,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={LvMotorControl} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20motor%20control.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Medium- and low-voltage motor control centers</ProductHeader>
@@ -837,7 +794,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src={LvDrive} />
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20Drive.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Medium- and low-voltage drives</ProductHeader>
@@ -862,7 +819,7 @@ export default function PowerDistributionProducts() {
                         <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                     </LogoDiv>
                     <LogoDiv>
-                        <BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
+                        <BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
                         <LogoText>Interested in Rittal?</LogoText>
                         <BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
                     </LogoDiv>
@@ -981,7 +938,6 @@ export default function PowerDistributionProducts() {
                 </ServiceSection>
             </BrandDetailsContainer>
         </Container >
-
     );
 }
 
