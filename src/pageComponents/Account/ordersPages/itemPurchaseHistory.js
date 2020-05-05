@@ -106,18 +106,19 @@ query Orders{
   }
 `
 
-export default function OrdersTable() {
+export default function ItemPurchaseHistoryTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
-  const [dateFrom, setDateFrom] = useState()
-  const [dateTo, setDateTo] = useState()
+  const [dateFrom, setDateFrom] = useState(null)
+  const [dateTo, setDateTo] = useState(null)
 
   useQuery(GET_ORDERS, {
+    fetchPolicy: 'no-cache',
     onCompleted: response => {
-      const mutatedOrders = formatTableData('open-orders', response.accountOrders)
+      const mutatedOrders = formatTableData('orders', response.accountOrders)
       setOriginalData(mutatedOrders)
       setData(mutatedOrders)
     }
@@ -168,36 +169,20 @@ export default function OrdersTable() {
         accessor: 'orderNumber',
       },
       {
-        Header: 'Line',
-        accessor: 'line',
-      },
-      {
         Header: 'PO #',
         accessor: 'poNo',
       },
       {
-        Header: 'Promise Date',
-        accessor: 'promiseDate', // accessor is the "key" in the data
+        Header: 'Buyer',
+        accessor: 'buyer',
       },
       {
-        Header: 'Item ID',
-        accessor: 'itemId',
+        Header: 'Total',
+        accessor: 'total',
       },
       {
-        Header: 'Customer Part',
-        accessor: 'customerPartId',
-      },
-      {
-        Header: 'Qty Open / Ordered',
-        accessor: 'qtyRemaining',
-      },
-      {
-        Header: 'Unit $',
-        accessor: 'unitPrice',
-      },
-      {
-        Header: 'Ext $',
-        accessor: 'extPrice',
+        Header: 'Status',
+        accessor: 'status',
       },
       {
         Header: 'Filter',
@@ -232,13 +217,9 @@ export default function OrdersTable() {
     usePagination
   )
 
-  // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
-    <h4>Open Orders</h4>
-    {/* <CopyToClipboard text={copyData}>
-        <button>copy</button>
-    </CopyToClipboard> */}
+    <h4>Item Purchase History</h4>
     <DivRow>
       <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
     </DivRow>

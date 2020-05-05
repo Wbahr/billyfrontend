@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import AccountDashboard from './accountDashboardPage'
 import OrdersTable from './ordersPages/orders'
 import OpenOrdersTable from './ordersPages/openOrders'
-import ItemOrdersTable from './ordersPages/item-orders'
+import ItemOrdersTable from './ordersPages/itemPurchaseHistory'
 import OpenQuotesTable from './quotePages/openQuotes'
 import InvoicesTable from './invoicePages/invoices'
 

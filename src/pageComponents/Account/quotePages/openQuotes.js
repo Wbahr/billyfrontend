@@ -211,9 +211,9 @@ export default function QuotesTable() {
 
   return(
     <TableContainer>
-    <h4>Open Quotes Report</h4>
+    <h4>Open Quotes</h4>
     <DivRow>
-      <AirlineInput placeholder='Search Quote #, Quote Ref $, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+      <AirlineInput placeholder='Search Quote #, Quote Ref #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
     </DivRow>
     {/* Date From */}
     <DivRowDate>

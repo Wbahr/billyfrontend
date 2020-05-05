@@ -12,7 +12,8 @@ export function formatTableData(type, data){
             let lineItem = elem.lineItems[j]
             partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
           }
-          let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers
+          let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
+          filterField = filterField.toUpperCase()
           let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
@@ -43,6 +44,8 @@ export function formatTableData(type, data){
             let lineItem = elem.lineItems[j]
             let unitPrice = '$' + lineItem.unitPrice.toFixed(2)
             let extPrice = '$' + (lineItem.unitPrice * lineItem.quantity).toFixed(2)
+            let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
+            filterField = filterField.toUpperCase()
             mutatedData.push(
               {
                 'orderNumber': elem.orderNumber,
@@ -55,7 +58,7 @@ export function formatTableData(type, data){
                 'qtyRemaining': '1 / ' + lineItem.quantity,
                 'unitPrice': unitPrice,
                 'extPrice':  extPrice,
-                'filter': elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
+                'filter': filterField
               }
             )
           }
@@ -72,6 +75,7 @@ export function formatTableData(type, data){
             partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
           }
           let filterField = elem.orderNumber + ' ' + partNumbers
+          filterField = filterField.toUpperCase()
           let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
