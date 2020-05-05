@@ -410,7 +410,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20contactors.jpg"/>
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20contactors.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>XT contactors and starters</ProductHeader>
@@ -518,7 +518,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Enclosed%20control.jpg"/>
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Enclosed%20control.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Enclosed control</ProductHeader>
@@ -566,7 +566,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                     <ProductDiv>
                         <ProductImgDiv>
-                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Industrial%20relays.jpg"/>
+                            <ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Industrial%20relays.jpg" />
                         </ProductImgDiv>
                         <ProductHeaderDiv>
                             <ProductHeader>Industrial relays</ProductHeader>
