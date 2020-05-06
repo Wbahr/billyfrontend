@@ -1,3 +1,4 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
@@ -5,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = (env) => {
+  const cleanWebpackPlugin = new CleanWebpackPlugin()
   const htmlWebpackPlugin = new HtmlWebPackPlugin({
     template: './src/index.html',
     filename: './index.html'
@@ -25,7 +27,7 @@ module.exports = (env) => {
     entry: './src/index.js',
     output: {
       path: path.resolve(__dirname, './dist'),
-      filename: 'index_bundle.js',
+      filename: '[name].[hash].js',
       publicPath: '/'
     },
     resolve: {
@@ -88,6 +90,19 @@ module.exports = (env) => {
     devServer: {
       historyApiFallback: true,
     },
-    plugins: [htmlWebpackPlugin, definePlugin]
+    optimization: {
+      moduleIds: 'hashed',
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    },
+    plugins: [htmlWebpackPlugin, definePlugin, cleanWebpackPlugin]
   }
 }
