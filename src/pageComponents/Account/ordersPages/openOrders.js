@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { OrdersPDF } from './ordersPDF'
 
 const TableContainer = styled.div`
   display: flex;
@@ -113,13 +112,12 @@ export default function OrdersTable() {
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
-  const [dateFrom, setDateFrom] = useState(null)
-  const [dateTo, setDateTo] = useState(null)
+  const [dateFrom, setDateFrom] = useState()
+  const [dateTo, setDateTo] = useState()
 
   useQuery(GET_ORDERS, {
-    fetchPolicy: 'no-cache',
     onCompleted: response => {
-      const mutatedOrders = formatTableData('orders', response.accountOrders)
+      const mutatedOrders = formatTableData('open-orders', response.accountOrders)
       setOriginalData(mutatedOrders)
       setData(mutatedOrders)
     }
@@ -170,20 +168,36 @@ export default function OrdersTable() {
         accessor: 'orderNumber',
       },
       {
+        Header: 'Line',
+        accessor: 'line',
+      },
+      {
         Header: 'PO #',
         accessor: 'poNo',
       },
       {
-        Header: 'Buyer',
-        accessor: 'buyer',
+        Header: 'Promise Date',
+        accessor: 'promiseDate', // accessor is the "key" in the data
       },
       {
-        Header: 'Total',
-        accessor: 'total',
+        Header: 'Item ID',
+        accessor: 'itemId',
       },
       {
-        Header: 'Status',
-        accessor: 'status',
+        Header: 'Customer Part',
+        accessor: 'customerPartId',
+      },
+      {
+        Header: 'Qty Open / Ordered',
+        accessor: 'qtyRemaining',
+      },
+      {
+        Header: 'Unit $',
+        accessor: 'unitPrice',
+      },
+      {
+        Header: 'Ext $',
+        accessor: 'extPrice',
       },
       {
         Header: 'Filter',
@@ -221,18 +235,12 @@ export default function OrdersTable() {
   // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
-    <h4>Orders</h4>
+    <h4>Open Orders</h4>
     {/* <CopyToClipboard text={copyData}>
         <button>copy</button>
     </CopyToClipboard> */}
     <DivRow>
       <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-        <option value='all'>All Orders</option>
-        <option value='Completed'>Completed Orders</option>
-        <option value='Open'>Open Orders</option>
-        <option value='Credit Hold'>Credit Hold Orders</option>
-      </Select>
     </DivRow>
     {/* Date From */}
     <DivRowDate>
@@ -262,12 +270,6 @@ export default function OrdersTable() {
         <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
       </DivSpacer>
     </DivRowDate>
-    <DivRow>
-      <button>Copy</button>
-      <button>PDF</button>
-      <button>XLS</button>
-      <button>CSV</button>
-    </DivRow>
     <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (

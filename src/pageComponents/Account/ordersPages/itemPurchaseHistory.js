@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { OrdersPDF } from './ordersPDF'
 
 const TableContainer = styled.div`
   display: flex;
@@ -107,7 +106,7 @@ query Orders{
   }
 `
 
-export default function OrdersTable() {
+export default function ItemPurchaseHistoryTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
@@ -218,21 +217,11 @@ export default function OrdersTable() {
     usePagination
   )
 
-  // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
-    <h4>Orders</h4>
-    {/* <CopyToClipboard text={copyData}>
-        <button>copy</button>
-    </CopyToClipboard> */}
+    <h4>Item Purchase History</h4>
     <DivRow>
       <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-        <option value='all'>All Orders</option>
-        <option value='Completed'>Completed Orders</option>
-        <option value='Open'>Open Orders</option>
-        <option value='Credit Hold'>Credit Hold Orders</option>
-      </Select>
     </DivRow>
     {/* Date From */}
     <DivRowDate>
@@ -262,12 +251,6 @@ export default function OrdersTable() {
         <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
       </DivSpacer>
     </DivRowDate>
-    <DivRow>
-      <button>Copy</button>
-      <button>PDF</button>
-      <button>XLS</button>
-      <button>CSV</button>
-    </DivRow>
     <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (

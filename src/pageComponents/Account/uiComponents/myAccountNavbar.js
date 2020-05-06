@@ -49,7 +49,7 @@ export default function MyAccountNavbar({history, page, AccountPages}) {
 
   return(
     <NavbarContainer>
-      <H3>My Account</H3>
+      <H3>Account Settings</H3>
       <DivNavbar>
         {navbarLinks}
       </DivNavbar>

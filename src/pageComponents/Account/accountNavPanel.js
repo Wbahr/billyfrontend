@@ -78,25 +78,26 @@ export default function AccountManagementPage({history}) {
       </div>
       <DivNavSection>
         <h5>Manage Account</h5>
-        <p onClick={()=> history.push('/contact-us')}>Account Settings</p>
-        <p onClick={()=> history.push('/contact-us')}>Shopping Lists</p>
-        <p onClick={()=> history.push('/contact-us')}>Purchase History</p>
+        <p onClick={()=> history.push('/admin-dashboard')}>Admin Tools</p>
+        <p onClick={()=> history.push('/account/dashboard')}>Account Settings</p>
+        <p onClick={()=> history.push('/account/shopping-lists')}>Shopping Lists</p>
+        <p onClick={()=> history.push('/account/my-ordered-items')}>Item Purchase History</p>
       </DivNavSection>
       <DivNavSection>
         <h5>Order Information</h5>
-        <p onClick={()=> history.push('/contact-us')}>Orders</p>
-        <p onClick={()=> history.push('/contact-us')}>Open Orders Report</p>
-        <p onClick={()=> history.push('/contact-us')}>Open Payables</p>
-        <p onClick={()=> history.push('/contact-us')}>Suspended Orders</p>
+        <p onClick={()=> history.push('/account/my-orders')}>Orders</p>
+        <p onClick={()=> history.push('/account/open-orders-report')}>Open Orders Report</p>
+        {/* <p onClick={()=> history.push('/account/my-orders')}>Open Payables</p>
+        <p onClick={()=> history.push('/account/my-orders')}>Suspended Orders</p> */}
       </DivNavSection>
       <DivNavSection>
         <h5>Quotes</h5>
-        <p onClick={()=> history.push('/contact-us')}>Open Quotes</p>
+        <p onClick={()=> history.push('/account/open-quotes')}>Open Quotes</p>
         <p onClick={()=> history.push('/contact-us')}>Request a Quote</p>
       </DivNavSection>
       <DivNavSection>
         <h5>Invoices</h5>
-        <p onClick={()=> history.push('/contact-us')}>Invoices</p>
+        <p onClick={()=> history.push('/account/invoices')}>Invoices</p>
       </DivNavSection>      
       <DivNavSection>
         <h5>Customer Service</h5>

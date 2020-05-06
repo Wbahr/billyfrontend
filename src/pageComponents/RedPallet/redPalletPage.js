@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import 'react-table/react-table.css'
+// import 'react-table/react-table.css'
 import RPlogo from '../../imgs/airline/redpalletlogo.png'
 import { StyledTextGrey, StyledTextGreyBold } from '../../styles/fonts'
 import RedPalletForm from './redPalletForm'

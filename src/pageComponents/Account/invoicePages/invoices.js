@@ -3,14 +3,12 @@ import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { OrdersPDF } from './ordersPDF'
 
 const TableContainer = styled.div`
   display: flex;
@@ -107,12 +105,12 @@ query Orders{
   }
 `
 
-export default function OrdersTable() {
+export default function InvoicesTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
-  const [showOrderType, setShowOrderType] = useState('all')
+  const [showInvoiceType, setShowInvoiceType] = useState('all')
   const [dateFrom, setDateFrom] = useState(null)
   const [dateTo, setDateTo] = useState(null)
 
@@ -135,10 +133,10 @@ export default function OrdersTable() {
             return row.filter.includes(upperCaseFilter)
         })
       }
-      // Apply showOrderType filter
-      if (showOrderType !== 'all') {
+      // Apply showInvoiceType filter
+      if (showInvoiceType !== 'all') {
         mutatedData = mutatedData.filter(row => {
-          return row.status.includes(showOrderType)
+          return row.status.includes(showInvoiceType)
         })
       }
       // Apply date filters
@@ -157,7 +155,7 @@ export default function OrdersTable() {
       setData(mutatedData)
     }
     didMountRef.current = true
-  }, [filter, showOrderType, dateFrom, dateTo])
+  }, [filter, showInvoiceType, dateFrom, dateTo])
 
   const columns = useMemo(
     () => [
@@ -218,20 +216,15 @@ export default function OrdersTable() {
     usePagination
   )
 
-  // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
-    <h4>Orders</h4>
-    {/* <CopyToClipboard text={copyData}>
-        <button>copy</button>
-    </CopyToClipboard> */}
+    <h4>Invoices</h4>
     <DivRow>
-      <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-        <option value='all'>All Orders</option>
-        <option value='Completed'>Completed Orders</option>
-        <option value='Open'>Open Orders</option>
-        <option value='Credit Hold'>Credit Hold Orders</option>
+      <AirlineInput placeholder='Search Invoice #, PO #, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+      <Select style={{width: "200px"}} value={showInvoiceType} onChange={(e)=>setShowInvoiceType(e.target.value)}>
+        <option value='all'>All Invoices</option>
+        <option value='Open'>Open Invoices</option>
+        <option value='Closed'>Closed Invoices</option>
       </Select>
     </DivRow>
     {/* Date From */}
@@ -262,12 +255,6 @@ export default function OrdersTable() {
         <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
       </DivSpacer>
     </DivRowDate>
-    <DivRow>
-      <button>Copy</button>
-      <button>PDF</button>
-      <button>XLS</button>
-      <button>CSV</button>
-    </DivRow>
     <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
