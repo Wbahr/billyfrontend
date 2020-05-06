@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { OrdersPDF } from './ordersPDF'
 
 const TableContainer = styled.div`
   display: flex;
@@ -261,6 +262,12 @@ export default function OrdersTable() {
         <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
       </DivSpacer>
     </DivRowDate>
+    <DivRow>
+      <button>Copy</button>
+      <button>PDF</button>
+      <button>XLS</button>
+      <button>CSV</button>
+    </DivRow>
     <Table {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
