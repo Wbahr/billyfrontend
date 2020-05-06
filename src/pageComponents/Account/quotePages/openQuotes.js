@@ -85,7 +85,7 @@ const Select = styled.select`
 `
 
 const GET_ORDERS = gql`
-query Orders{
+  query Orders{
     accountOrders {
       orderNumber
       orderDate
@@ -93,13 +93,14 @@ query Orders{
       isQuote
       orderType
       status
-      total
+      totalPrice
       buyer
       lineItems {
+        quantityOpen
         invMastUid
         itemCode
         customerPartNumber
-        quantity
+        quantityOrdered
         unitPrice
       }
     }

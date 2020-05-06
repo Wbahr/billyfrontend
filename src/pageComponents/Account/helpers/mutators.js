@@ -14,7 +14,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.total.toFixed(2)
+          let displayTotal = '$' + elem.totalPrice.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -43,7 +43,7 @@ export function formatTableData(type, data){
           for(let j = 0; j < elem.lineItems.length ;j++) {
             let lineItem = elem.lineItems[j]
             let unitPrice = '$' + lineItem.unitPrice.toFixed(2)
-            let extPrice = '$' + (lineItem.unitPrice * lineItem.quantity).toFixed(2)
+            let extPrice = '$' + (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2)
             let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
             filterField = filterField.toUpperCase()
             mutatedData.push(
@@ -55,7 +55,7 @@ export function formatTableData(type, data){
                 'promiseDate': '1/1/2020',
                 'itemId': lineItem.itemCode,
                 'customerPartId': lineItem.customerPartNumber,
-                'qtyRemaining': '1 / ' + lineItem.quantity,
+                'qtyRemaining': `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
                 'unitPrice': unitPrice,
                 'extPrice':  extPrice,
                 'filter': filterField
@@ -76,7 +76,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + partNumbers
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.total.toFixed(2)
+          let displayTotal = '$' + elem.totalPrice.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -106,7 +106,7 @@ export function clipboardData(headers, data){
   }
   for(let j = 0; j < data.length ;j++){
     let dataObj = data[j]
-    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.total
+    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.totalPrice
   }
 
   return mutatedData
