@@ -82,7 +82,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/about/:page' component={aboutPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/account/order-details/:orderId' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/account/:page/:orderId' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
         <WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>

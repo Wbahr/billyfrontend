@@ -83,29 +83,6 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-const GET_ORDERS = gql`
-  query Orders{
-    accountOrders {
-      orderNumber
-      orderDate
-      poNo
-      isQuote
-      orderType
-      status
-      totalPrice
-      buyer
-      lineItems {
-        quantityOpen
-        invMastUid
-        itemCode
-        customerPartNumber
-        quantityOrdered
-        unitPrice
-      }
-    }
-  }
-`
-
 export default function InvoicesTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
@@ -114,15 +91,6 @@ export default function InvoicesTable() {
   const [showInvoiceType, setShowInvoiceType] = useState('all')
   const [dateFrom, setDateFrom] = useState(null)
   const [dateTo, setDateTo] = useState(null)
-
-  useQuery(GET_ORDERS, {
-    fetchPolicy: 'no-cache',
-    onCompleted: response => {
-      const mutatedOrders = formatTableData('orders', response.accountOrders)
-      setOriginalData(mutatedOrders)
-      setData(mutatedOrders)
-    }
-  })
 
   useEffect(() => {
     if (didMountRef) {
@@ -266,9 +234,9 @@ export default function InvoicesTable() {
                 <SpanSort>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
-                      : ''}
+                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
                 </SpanSort>
               </THheader>
             ))}

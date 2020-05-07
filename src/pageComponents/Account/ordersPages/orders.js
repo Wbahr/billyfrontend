@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
@@ -11,6 +11,8 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { OrdersPDF } from './ordersPDF'
+import ToggleSwitch from '../../_common/toggleSwitch'
+import Context from '../../../config/context'
 
 const TableContainer = styled.div`
   display: flex;
@@ -43,8 +45,10 @@ const TRrow = styled.tr`
 const TDrow = styled.td`
   padding: 8px 16px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
   font-size: 15px;
+  color: ${props => props.isOrderDetail ? "#0056b3" : "black"};
+  font-weight: ${props => props.isOrderDetail ? 400 : 300};
+  cursor: ${props => props.isOrderDetail ? "pointer" : "default"};
 `
 
 const ButtonPagination = styled.button`
@@ -85,50 +89,28 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-const GET_ORDERS = gql`
-  query Orders{
-    accountOrders {
-      orderNumber
-      orderDate
-      poNo
-      isQuote
-      orderType
-      status
-      totalPrice
-      buyer
-      lineItems {
-        quantityOpen
-        invMastUid
-        itemCode
-        customerPartNumber
-        quantityOrdered
-        unitPrice
-      }
-    }
-  }
-`
-
-export default function OrdersTable() {
+export default function OrdersTable({ history }) {
+  const context = useContext(Context)
   const didMountRef = useRef(false)
-  const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
   const [dateFrom, setDateFrom] = useState(null)
   const [dateTo, setDateTo] = useState(null)
+  const [toggled, setToggled] = useState(false)
 
-  useQuery(GET_ORDERS, {
-    fetchPolicy: 'no-cache',
-    onCompleted: response => {
-      const mutatedOrders = formatTableData('orders', response.accountOrders)
-      setOriginalData(mutatedOrders)
-      setData(mutatedOrders)
+  useEffect(() => {
+    if (!didMountRef) {
+      console.log('context.getOrders()')
+      context.getOrders()
+    } else if (context.ordersCache.length > 0) {
+      setData(context.ordersCache)
     }
-  })
+  }, [context.ordersCache])
 
   useEffect(() => {
     if (didMountRef) {
-      let mutatedData = originalData
+      let mutatedData = context.ordersCache
       // Apply search filter
       if (filter.length > 0) {
         mutatedData = mutatedData.filter(row => {
@@ -219,13 +201,9 @@ export default function OrdersTable() {
     usePagination
   )
 
-  // let copyData = clipboardData(columns, data)
   return(
     <TableContainer>
     <h4>Orders</h4>
-    {/* <CopyToClipboard text={copyData}>
-        <button>copy</button>
-    </CopyToClipboard> */}
     <DivRow>
       <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
       <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
@@ -264,6 +242,12 @@ export default function OrdersTable() {
       </DivSpacer>
     </DivRowDate>
     <DivRow>
+      <ToggleSwitch 
+        label='List View:'
+        text='test'
+        toggled={toggled}
+        setToggled={(value)=>setToggled(value)}
+      />
       <button>Copy</button>
       <button>PDF</button>
       <button>XLS</button>
@@ -279,9 +263,9 @@ export default function OrdersTable() {
                 <SpanSort>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
-                      : ''}
+                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
                 </SpanSort>
               </THheader>
             ))}
@@ -294,11 +278,19 @@ export default function OrdersTable() {
           return (
             <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <TDrow {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TDrow>
-                )
+                if(cell.column.id === 'orderNumber') {
+                  return (
+                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                } else {
+                  return (
+                    <TDrow {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                }
               })}
             </TRrow>
           )

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
@@ -84,29 +83,6 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-const GET_ORDERS = gql`
-  query Orders{
-    accountOrders {
-      orderNumber
-      orderDate
-      poNo
-      isQuote
-      orderType
-      status
-      totalPrice
-      buyer
-      lineItems {
-        quantityOpen
-        invMastUid
-        itemCode
-        customerPartNumber
-        quantityOrdered
-        unitPrice
-      }
-    }
-  }
-`
-
 export default function QuotesTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
@@ -115,14 +91,6 @@ export default function QuotesTable() {
   const [showOrderType, setShowOrderType] = useState('all')
   const [dateFrom, setDateFrom] = useState()
   const [dateTo, setDateTo] = useState()
-
-  useQuery(GET_ORDERS, {
-    onCompleted: response => {
-      const mutatedOrders = formatTableData('quotes', response.accountOrders)
-      setOriginalData(mutatedOrders)
-      setData(mutatedOrders)
-    }
-  })
 
   useEffect(() => {
     if (didMountRef) {
@@ -254,9 +222,9 @@ export default function QuotesTable() {
                 <SpanSort>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
-                      : ''}
+                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
                 </SpanSort>
               </THheader>
             ))}

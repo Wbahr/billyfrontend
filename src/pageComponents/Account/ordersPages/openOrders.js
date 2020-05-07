@@ -42,8 +42,10 @@ const TRrow = styled.tr`
 const TDrow = styled.td`
   padding: 8px 16px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
   font-size: 15px;
+  color: ${props => props.isOrderDetail ? "#0056b3" : "black"};
+  font-weight: ${props => props.isOrderDetail ? 400 : 300};
+  cursor: ${props => props.isOrderDetail ? "pointer" : "default"};
 `
 
 const ButtonPagination = styled.button`
@@ -84,29 +86,6 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-const GET_ORDERS = gql`
-  query Orders{
-    accountOrders {
-      orderNumber
-      orderDate
-      poNo
-      isQuote
-      orderType
-      status
-      totalPrice
-      buyer
-      lineItems {
-        quantityOpen
-        invMastUid
-        itemCode
-        customerPartNumber
-        quantityOrdered
-        unitPrice
-      }
-    }
-  }
-`
-
 export default function OrdersTable() {
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
@@ -115,14 +94,6 @@ export default function OrdersTable() {
   const [showOrderType, setShowOrderType] = useState('all')
   const [dateFrom, setDateFrom] = useState()
   const [dateTo, setDateTo] = useState()
-
-  useQuery(GET_ORDERS, {
-    onCompleted: response => {
-      const mutatedOrders = formatTableData('open-orders', response.accountOrders)
-      setOriginalData(mutatedOrders)
-      setData(mutatedOrders)
-    }
-  })
 
   useEffect(() => {
     if (didMountRef) {
@@ -281,9 +252,9 @@ export default function OrdersTable() {
                 <SpanSort>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
-                      : ''}
+                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
                 </SpanSort>
               </THheader>
             ))}
@@ -296,11 +267,19 @@ export default function OrdersTable() {
           return (
             <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <TDrow {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TDrow>
-                )
+                if(cell.column.id === 'orderNumber') {
+                  return (
+                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                } else {
+                  return (
+                    <TDrow {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                }
               })}
             </TRrow>
           )

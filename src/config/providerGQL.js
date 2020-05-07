@@ -171,3 +171,40 @@ const QUERY_LOGIN = gql`
     }
   }
 `
+
+export const GET_ORDERS = gql`
+  query {
+    accountOrders{
+      orderDate
+      orderNumber
+      poNo
+      isQuote
+      orderType
+      status
+      packingBasis
+      total
+      buyer
+      shipToName
+      shipToAddress1
+      shipToAddress2
+      shipToAddress3
+      shipToCity
+      shipToState
+      shipToZip
+      shipToCountry
+      lineItems{
+        invMastUid
+        itemCode
+        customerPartNumber
+        quantityOrdered
+        quantityOpen
+        unitPrice
+        totalPrice
+        trackingNumbers{
+          trackingNumber
+          carrierId
+        }
+      }
+    }
+  }
+`

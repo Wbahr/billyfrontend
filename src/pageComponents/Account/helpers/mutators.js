@@ -14,7 +14,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.totalPrice.toFixed(2)
+          let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -76,7 +76,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + partNumbers
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.totalPrice.toFixed(2)
+          let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -106,7 +106,7 @@ export function clipboardData(headers, data){
   }
   for(let j = 0; j < data.length ;j++){
     let dataObj = data[j]
-    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.totalPrice
+    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.total
   }
 
   return mutatedData

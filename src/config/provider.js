@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID } from './providerGQL'
+import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS } from './providerGQL'
 
 export default function Provider(props) {
   const didMountRef = useRef(false)
@@ -16,6 +16,7 @@ export default function Provider(props) {
   const [userType, setUserType] = useState({'current': null, 'previous': null})
   const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
   const [timeoutId, setTimeoutId] = useState(null)
+  const [ordersCache, setOrdersCache] = useState([])
 
   useEffect(() => {
     if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -141,6 +142,15 @@ export default function Provider(props) {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
       console.log('got taxes ->', data)
+    }
+  })
+
+  const [handleGetOrders] = useLazyQuery(GET_ORDERS, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      console.log('handleGetOrders', handleGetOrders)
+      let requestData = data.accountOrders
+      setOrdersCache(requestData)
     }
   })
 
@@ -350,6 +360,13 @@ export default function Provider(props) {
     setShoppingCart([])
   }
 
+  function handleUpdateOrders() {
+    console.log('handleUpdateOrders')
+    if(ordersCache.length === 0){
+      handleGetOrders()
+    }
+  }
+
     return (
       <Context.Provider
         value={{
@@ -409,6 +426,10 @@ export default function Provider(props) {
             )},
           setOrderNotes: (orderNotes) => {
             setOrderNotes(orderNotes)
+          },
+          ordersCache: ordersCache,
+          getOrders: () => {
+            handleUpdateOrders()
           }
         }}
       >
