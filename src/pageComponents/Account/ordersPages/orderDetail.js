@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Context from '../../../config/context'
 
 export default function OrderDetail({ orderId }) {
+  const context = useContext(Context)
   const didMountRef = useRef(false)
   const [filter, setFilter] = useState('')
   const [isListView, setIsListView] = useState(false)
-  const [originalData, setOriginalData] = useState([])
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
 
   const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -32,6 +30,15 @@ export default function OrderDetail({ orderId }) {
       margin: 0;  
     }
   `
+
+  useEffect(() => {
+    if (!didMountRef.current && context.ordersCache.length === 0) {
+      context.getOrders()
+    } else if (context.ordersCache.length > 0) {
+      let mutatedData = formatTableData('order-detail', context.ordersCache, orderId)
+      setData(mutatedData)
+    }
+  }, [context.ordersCache])
 
   return(
     <div>

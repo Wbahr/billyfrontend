@@ -100,17 +100,17 @@ export default function OrdersTable({ history }) {
   const [toggled, setToggled] = useState(false)
 
   useEffect(() => {
-    if (!didMountRef) {
-      console.log('context.getOrders()')
+    if (!didMountRef.current) {
       context.getOrders()
     } else if (context.ordersCache.length > 0) {
-      setData(context.ordersCache)
+      let mutatedData = formatTableData('orders', context.ordersCache)
+      setData(mutatedData)
     }
   }, [context.ordersCache])
 
   useEffect(() => {
-    if (didMountRef) {
-      let mutatedData = context.ordersCache
+    if (didMountRef.current) {
+      let mutatedData = formatTableData('orders', context.ordersCache)
       // Apply search filter
       if (filter.length > 0) {
         mutatedData = mutatedData.filter(row => {

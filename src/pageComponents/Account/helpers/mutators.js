@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export function formatTableData(type, data){
+export function formatTableData(type, data, orderId){
   let mutatedData = []
   switch(type){
     case 'orders':
@@ -91,7 +91,10 @@ export function formatTableData(type, data){
           )
         }
       }
-      break
+        break
+      case 'order-detail':
+
+        break
   }
   return mutatedData
 }

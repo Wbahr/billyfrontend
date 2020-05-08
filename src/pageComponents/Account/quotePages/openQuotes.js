@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Context from '../../../config/context'
 
 const TableContainer = styled.div`
   display: flex;
@@ -84,6 +85,7 @@ const Select = styled.select`
 `
 
 export default function QuotesTable() {
+  const context = useContext(Context)
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
@@ -93,8 +95,17 @@ export default function QuotesTable() {
   const [dateTo, setDateTo] = useState()
 
   useEffect(() => {
+    if (!didMountRef.current) {
+      context.getOrders()
+    } else if (context.ordersCache.length > 0) {
+      let mutatedData = formatTableData('quotes', context.ordersCache)
+      setData(mutatedData)
+    }
+  }, [context.ordersCache])
+
+  useEffect(() => {
     if (didMountRef) {
-      let mutatedData = originalData
+      let mutatedData = formatTableData('quotes', context.ordersCache)
       // Apply search filter
       if (filter.length > 0) {
         mutatedData = mutatedData.filter(row => {

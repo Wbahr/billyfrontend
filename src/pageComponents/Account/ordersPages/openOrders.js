@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
@@ -10,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Context from '../../../config/context'
 
 const TableContainer = styled.div`
   display: flex;
@@ -86,9 +85,9 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-export default function OrdersTable() {
+export default function OpenOrdersTable({history}) {
+  const context = useContext(Context)
   const didMountRef = useRef(false)
-  const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
   const [filter, setFilter] = useState('')
   const [showOrderType, setShowOrderType] = useState('all')
@@ -96,8 +95,17 @@ export default function OrdersTable() {
   const [dateTo, setDateTo] = useState()
 
   useEffect(() => {
+    if (!didMountRef.current) {
+      context.getOrders()
+    } else if (context.ordersCache.length > 0) {
+      let mutatedData = formatTableData('open-orders', context.ordersCache)
+      setData(mutatedData)
+    }
+  }, [context.ordersCache])
+
+  useEffect(() => {
     if (didMountRef) {
-      let mutatedData = originalData
+      let mutatedData = formatTableData('open-orders', context.ordersCache)
       // Apply search filter
       if (filter.length > 0) {
         mutatedData = mutatedData.filter(row => {
