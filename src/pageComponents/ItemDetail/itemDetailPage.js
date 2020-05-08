@@ -106,8 +106,9 @@ const GET_ITEM_BY_ID = gql`
 `
 
 const GET_ITEM_PRICE = gql`
-query ItemSearch($item: ItemPriceRequestInputGraphType){
-  getItemPrices(items: $item){
+query ItemSearch($items: [ItemQuantityInput]){
+  getItemPrices(items: $items){
+    invMastUid
     itemCode
     quantity
     totalPrice
@@ -330,14 +331,12 @@ export default function ItemDetailPage({history}){
         performPriceLookup(
           {
             variables: {	
-              "item": {
-                "itemsAndQuantities": [
-                  {
-                    "itemCode": result.itemDetails.itemCode,
-                    "quantity": 1
-                  }
-                ]
-              }
+              "items": [
+                {
+                  "invMastUid": result.itemDetails.invMastUid,
+                  "quantity": 1
+                }
+              ]
             }
           }
         )
