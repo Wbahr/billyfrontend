@@ -37,7 +37,7 @@ export default function AccountManagementPage({history}) {
       case 'payment-preferences':
         setPageComponent(<AccountDashboard history={history}/>)
         break;
-      case 'my-orders':
+      case 'orders':
         setPageComponent(<OrdersTable history={history}/>)
         break;
       case 'open-orders-report':
@@ -54,9 +54,6 @@ export default function AccountManagementPage({history}) {
         break;
       case 'order-detail':
         setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
-        break;
-      default:
-        setPageComponent(<OrdersTable history={history}/>)
         break;
     }
   }, [page])

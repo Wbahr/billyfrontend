@@ -42,8 +42,10 @@ const TRrow = styled.tr`
 const TDrow = styled.td`
   padding: 8px 16px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
   font-size: 15px;
+  color: ${props => props.isQuoteDetail ? "#0056b3" : "black"};
+  font-weight: ${props => props.isQuoteDetail ? 400 : 300};
+  cursor: ${props => props.isQuoteDetail ? "pointer" : "default"};
 `
 
 const ButtonPagination = styled.button`
@@ -248,11 +250,19 @@ export default function QuotesTable() {
           return (
             <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <TDrow {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TDrow>
-                )
+                if(cell.column.id === 'quoteNumber') {
+                  return (
+                    <TDrow {...cell.getCellProps()} isQuoteDetail onClick={()=>history.push(`/account/quote-detail/${cell.value}`)}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                } else {
+                  return (
+                    <TDrow {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                }
               })}
             </TRrow>
           )
