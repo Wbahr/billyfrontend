@@ -12,7 +12,7 @@ const FeaturedBrandLogo = styled.div`
     width: 100%;
     justify-content: center;
     padding: 200px 0;
-    background-image: url('https://media.istockphoto.com/photos/fiberglass-production-industry-equipment-at-manufacture-background-picture-id1130458099?s=2048x2048');
+    background-image: url('https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/power-distribution.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
