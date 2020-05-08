@@ -158,8 +158,9 @@ query ItemById($invMastUid: Int){
 `
 
 const GET_ITEM_PRICE = gql`
-query ItemSearch($item: ItemPriceRequestInputGraphType){
-  getItemPrices(items: $item){
+query ItemSearch($items: [ItemQuantityInput]){
+  getItemPrices(items: $items){
+    invMastUid
     itemCode
     quantity
     totalPrice
@@ -185,14 +186,12 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 
   const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
     variables: {	
-      "item": {
-        "itemsAndQuantities": [
-          {
-            "itemCode": itemCode,
-            "quantity": 1
-          }
-        ]
-      }
+      "items": [
+        {
+          "invMastUid": invMastUid,
+          "quantity": 1
+        }
+      ]
     },
     onCompleted: data => {
       if (!_.isNil(data.getItemPrices[0])) {
