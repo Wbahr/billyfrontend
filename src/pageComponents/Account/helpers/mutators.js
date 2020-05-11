@@ -93,7 +93,13 @@ export function formatTableData(type, data, orderId){
       }
         break
       case 'order-detail':
-
+        for(let i = 0; i < data.length; i++) {
+          let elem = data[i]
+          if(elem.orderNumber === orderId){
+            mutatedData = elem
+            break
+          }
+        }
         break
   }
   return mutatedData

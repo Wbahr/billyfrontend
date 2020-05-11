@@ -100,7 +100,7 @@ export default function OrdersTable({ history }) {
   const [toggled, setToggled] = useState(false)
 
   useEffect(() => {
-    if (!didMountRef.current) {
+    if (!didMountRef.current && context.ordersCache.length === 0) {
       context.getOrders()
     } else if (context.ordersCache.length > 0) {
       let mutatedData = formatTableData('orders', context.ordersCache)

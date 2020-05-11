@@ -97,7 +97,7 @@ export default function QuotesTable() {
   const [dateTo, setDateTo] = useState()
 
   useEffect(() => {
-    if (!didMountRef.current) {
+    if (!didMountRef.current && context.ordersCache.length === 0) {
       context.getOrders()
     } else if (context.ordersCache.length > 0) {
       let mutatedData = formatTableData('quotes', context.ordersCache)
