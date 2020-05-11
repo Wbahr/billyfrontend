@@ -244,10 +244,9 @@ export default function Provider(props) {
 
   function handleAddItems (items){
     setShoppingCart([...shoppingCart, ...items])
-    for(let i; i < items.length;i++){
-      let item = items[i]
-      getItemData({variables: { 'itemId': item.invMastUid }}) // Retrieve the item's data and add it to the display cart
-    }
+    let itemFrecnos = []
+    items.forEach(elem => itemFrecnos.push(elem.invMastUid))
+    getMultiItemData({variables: {'invMastUids': itemFrecnos}})
   }
 
   function handleRemoveItem(itemLocation){

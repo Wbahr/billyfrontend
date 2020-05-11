@@ -62,7 +62,6 @@ export default function OrderDetail({ history, orderId }) {
           'frecno': item.invMastUid,
           'quantity': parseInt(item.quantityOrdered, 10),
           'itemNotes': '',
-          'customerPartNumberId': item.customerPartNumber,
           'itemUnitPriceOverride': null
         }
       )
