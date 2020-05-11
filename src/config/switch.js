@@ -23,6 +23,7 @@ import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import ShopPage from '../pageComponents/Shop/shopPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
 import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
@@ -106,6 +107,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/shop/:page' component={ShopPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>

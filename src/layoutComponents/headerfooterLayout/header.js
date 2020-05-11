@@ -244,17 +244,59 @@ export default function HeaderComponent(props) {
               <Dropdown open={showDropdown.shop} history={props.history}
                 options={[
                   {
-                    'label': 'All Brands',
-                    'link': '/brands'
+                    'label': 'All Categories',
+                    'link': '/shop/all-categories'
                   },
                   {
-                    'label': 'ABB',
-                    'link': '/brands/featured/abb'
+                    'label': 'Aluminum Structural Framing',
+                    'link': '/shop/aluminum-structural-framing'
                   },
                   {
-                    'label': 'Aventics',
-                    'link': '/brands/featured/aventics'
+                    'label': 'Automation & Control',
+                    'link': '/shop/automation-and-control'
                   }
+                  ,
+                  {
+                    'label': 'Electrical Components',
+                    'link': '/shop/electrical-components'
+                  },
+                  {
+                    'label': 'Hose & Connectors',
+                    'link': '/shop/hose-and-connectors'
+                  },
+                  {
+                    'label': 'Hydraulic Components',
+                    'link': '/shop/hydraulic-components'
+                  },
+                  {
+                    'label': 'Liquid & Gas Pressure',
+                    'link': '/shop/liquid-and-gas-pressure'
+                  },
+                  {
+                    'label': 'Lubrication',
+                    'link': '/shop/lubrication'
+                  },
+                  {
+                    'label': 'Machine Safety',
+                    'link': '/shop/machine-safety'
+                  },
+                  {
+                    'label': 'Pneumatic Components',
+                    'link': '/shop/pneumatic-components'
+                  },
+                  {
+                    'label': 'Process Control & Components',
+                    'link': '/shop/process-control-and-components'
+                  },
+                  {
+                    'label': 'Winches & Gear Drives',
+                    'link': '/shop/winches-and-gear-drives'
+                  },
+                  {
+                    'label': 'Product Spotlights',
+                    'link': '/shop/product-spotlights'
+                  }
+
                 ]}
               />
             </div>
