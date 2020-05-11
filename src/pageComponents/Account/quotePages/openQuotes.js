@@ -86,7 +86,7 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-export default function QuotesTable() {
+export default function QuotesTable({history}) {
   const context = useContext(Context)
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])

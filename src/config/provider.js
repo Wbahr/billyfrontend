@@ -242,6 +242,14 @@ export default function Provider(props) {
     getItemData({variables: { 'itemId': item.frecno }}) // Retrieve the item's data and add it to the display cart
   }
 
+  function handleAddItems (items){
+    setShoppingCart([...shoppingCart, ...items])
+    for(let i; i < items.length;i++){
+      let item = items[i]
+      getItemData({variables: { 'itemId': item.invMastUid }}) // Retrieve the item's data and add it to the display cart
+    }
+  }
+
   function handleRemoveItem(itemLocation){
     let mutatedCart = shoppingCart
     mutatedCart.splice(itemLocation, 1)
@@ -397,6 +405,9 @@ export default function Provider(props) {
           orderNotes: orderNotes,
           addItem: (item) => {
             handleAddItem(item)
+          },
+          addItems: (items) => {
+            handleAddItems(items)
           },
           removeItem: (itemLocation) => {
             handleRemoveItem(itemLocation)

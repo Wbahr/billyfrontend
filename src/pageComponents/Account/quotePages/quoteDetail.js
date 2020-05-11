@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
-import OrderDetailItem from './orderDetailItem'
+import OrderDetailItem from './quoteDetailItem'
 
 export default function OrderDetail({ history, orderId }) {
   const context = useContext(Context)
@@ -53,40 +53,22 @@ export default function OrderDetail({ history, orderId }) {
 
   }
 
-  function handleAddOrder() {
-    let items = []
-    for(let i =0; i < data.lineItems.length ;i++){
-      let item = data.lineItems[i]
-      items.push(
-        {
-          'frecno': item.invMastUid,
-          'quantity': parseInt(item.quantityOrdered, 10),
-          'itemNotes': '',
-          'customerPartNumberId': item.customerPartNumber,
-          'itemUnitPriceOverride': null
-        }
-      )
-    }
-    context.addItems(items)
-  }
-
 
   return(
     <div>
       <div>
-        <h4>Order #{orderId}</h4>
-        <p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
-        <button onClick={()=>handleAddOrder()}>Add Order to Cart</button>
-
+        <h4>Quote #{orderId}</h4>
+        <p onClick={()=>{history.push('/account/open-quotes')}}>Back to Quotes</p>
+        <button>Add Quote to Cart</button>
       </div>
       <DivOrderInfoContainer>
         <DivOrderInfo>
-          <p>Order Date: {data.orderDate}</p>
-          <p>Order Number: {orderId}</p>
+          <p>Quote Date: {data.orderDate}</p>
+          <p>Quote Number: {orderId}</p>
           <p>P.O. Number: {data.poNo}</p>
           <p>Status: {data.status}</p>
           <p>Packing Basis: {data.packingBasis}</p>
-          <p>Order Total: ${data.total}</p>
+          <p>Quote Total: ${data.total}</p>
         </DivOrderInfo>
         <DivOrderInfo>
           <p>Ship-to-Address:</p>

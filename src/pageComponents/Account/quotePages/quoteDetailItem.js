@@ -199,18 +199,7 @@ const P3 = styled.p`
         </DivCol2>
         <DivCol3>
           <p>Quantity:</p><input value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
-          <Context.Consumer>
-            {({addItem}) => (
-              <button onClick={()=>{
-                addItem({
-                  'frecno': item.invMastUid,
-                  'quantity': parseInt(quantity, 10),
-                  'itemNotes': '',
-                  'itemUnitPriceOverride': null
-                })
-                }}>Add to Cart</button>
-            )}
-          </Context.Consumer>
+          <button>Add to Cart</button>
         </DivCol3>
       </DivCard>
     </DivContainer>
