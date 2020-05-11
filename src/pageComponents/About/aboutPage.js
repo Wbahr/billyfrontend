@@ -7,7 +7,7 @@ import Locations from './aboutSubPages/locationsPage'
 import News from './aboutSubPages/newsPage'
 import QualityPolicy from './aboutSubPages/qualityPolicyPage'
 import TransactionalServices from './aboutSubPages/transactionalServicesPage'
-
+import MissionStatement from './aboutSubPages/missionStatementPage'
 
 export default function AboutPage({ history }) {
     const [pageComponent, setPageComponent] = useState()
@@ -29,6 +29,10 @@ export default function AboutPage({ history }) {
         {
             'label': 'Transactional Services',
             'page': 'transactional-services'
+        },
+        {
+            'label': 'Mission/vision Statement',
+            'page': 'mission-statement'
         }
         
     ]
@@ -44,6 +48,9 @@ export default function AboutPage({ history }) {
         }
         else if (page === 'transactional-services') {
             setPageComponent(<TransactionalServices />)
+        }
+        else if (page === 'mission-statement') {
+            setPageComponent(<MissionStatement />)
         }
     }, [page])
 

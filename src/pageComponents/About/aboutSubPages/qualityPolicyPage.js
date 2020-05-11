@@ -1,13 +1,11 @@
 import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Header from '../uiComponents/Header'
 
 const MainContainer = styled.div`
-    width: 1300px;
-    margin: 0 auto;
+    max-width: 1300px;
+    margin: 50px auto;
     padding: 0 10px;
 `
 const DetailDiv = styled.div`
@@ -54,6 +52,7 @@ const Certification = styled.a`
 
 export default function QualityPolicy() {
     return (
+        <>
         <MainContainer>
             <Header text="Quality Policy"/>
             <Col>
@@ -67,5 +66,6 @@ export default function QualityPolicy() {
             </InfoDiv>
             </Col>
         </MainContainer>
+        </>
     )
 }

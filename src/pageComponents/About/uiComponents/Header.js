@@ -14,22 +14,21 @@ const H1 = styled.h1`
   color: #333;
   margin: 0;
   text-transform: uppercase;
-  // font-size: 30px;
   letter-spacing: 1px;
   padding-bottom: 15px;
   letter-spacing: 2px;
 `
 const ShortBorder = styled.div`
   border-bottom: 3px solid #B51F2B;
-  width: 7%;
+  width: 120px;
 `
 export default function Header(props) {
-    return (
-        <>
-            <HeaderDiv>
-                <H1>{props.text}</H1>
-                <ShortBorder></ShortBorder>
-            </HeaderDiv>
-        </>
-    )
+  return (
+    <>
+      <HeaderDiv>
+          <H1>{props.text}</H1>
+          <ShortBorder></ShortBorder>
+      </HeaderDiv>
+    </>
+  )
 }
