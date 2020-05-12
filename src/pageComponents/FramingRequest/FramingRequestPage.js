@@ -3,14 +3,12 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import Header from '../_common/header'
 import SubHeader from '../_common/subHeaderAndDetails'
+import ContactForm from './uiComponents/contactForm'
+import ProjectForm from './uiComponents/projectRequirementForm'
 
 const Container = styled.div`
   max-width: 1300px;
   margin: 50px auto;
-`
-const SubHeaderDiv = styled.div`
-`
-const P = styled.p`
 `
 const Title_Div = styled.div`
     display: flex;
@@ -42,10 +40,11 @@ const ImgDiv = styled.div`
 const Img = styled.img`
     width: 100%;
 `
-const MainDiv = styled.div`
+const SectionDiv = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin-bottom: 40px;
 `
 const DetailDiv = styled.div`
     // margin-top: 10px;
@@ -54,8 +53,28 @@ const DetailDiv = styled.div`
     height: 248px;
 
 `
+const ContactDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+const ContactInfo = styled.p`
+`
 const Detail = styled.p`
 `
+const SubTitle = styled.div`
+    text-align: center;
+    display: flex;
+    justify-content: center;
+`
+const H5 = styled.h4`
+    color: #B51F2B;
+    width: 55%;
+`
+const ContactSection = styled.div`
+    display: flex;
+
+`
+
 export default function FramingRequestPage() {
     return (
         <Container>
@@ -64,8 +83,7 @@ export default function FramingRequestPage() {
                 text="Let Airline's engineering and manufacturing team transform your ideas into reality."
                 details="Structural framing can be configured to support a variety of applications including workstations, lean manufacturing cells, safety guards, large area enclosures, clean rooms, machine bases, solar racking an much more. Get the process started with a framing application in your facility by submitting the form below."
             />
-
-            <MainDiv>
+            <SectionDiv>
                 <Div>
                     <Title_Div>
                         <Number_Div>
@@ -98,7 +116,7 @@ export default function FramingRequestPage() {
                     </ImgDiv>
                     <DetailDiv>
                         <Detail>
-                        Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
+                            Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
                     </Detail>
                     </DetailDiv>
                 </Div>
@@ -116,11 +134,24 @@ export default function FramingRequestPage() {
                     </ImgDiv>
                     <DetailDiv>
                         <Detail>
-                        If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
+                            If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
                     </Detail>
                     </DetailDiv>
                 </Div>
-            </MainDiv>
+            </SectionDiv>
+            <SubTitle>
+                <H5>Please enter the information about your guarding needs below. Required fields are marked with an asterisk (*)</H5>
+            </SubTitle>
+            <ContactSection>
+                <ContactDiv>
+                    <ContactForm text="Contact Information"/>
+                </ContactDiv>
+                <ContactDiv>
+                    <ContactForm text="Project Requirements"/>
+                </ContactDiv>
+            </ContactSection>
+            {/* <ProjectForm /> */}
+
         </Container>
     )
 }
