@@ -8,7 +8,7 @@ import ProjectForm from './uiComponents/projectRequirementForm'
 
 const Container = styled.div`
   max-width: 1300px;
-  margin: 50px auto;
+  margin: 0 auto;
 `
 const Title_Div = styled.div`
     display: flex;

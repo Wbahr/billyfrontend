@@ -12,6 +12,7 @@ import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import contactPage from '../pageComponents/ContactUs/contactUsPage'
 import FramingRequest from '../pageComponents/FramingRequest/FramingRequestPage'
+import GovermentSale from '../pageComponents/GovermentSales/GovermentSalesPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
 import LineCards from '../pageComponents/LineCards/lineCardsPage'
@@ -93,6 +94,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
