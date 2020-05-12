@@ -37,7 +37,6 @@ export default function OrderDetail({ history, orderId }) {
       context.getOrders()
     } else if (context.ordersCache.length > 0) {
       let mutatedData = formatTableData('order-detail', context.ordersCache, orderId)
-      console.log('mutatedData', mutatedData)
       setData(mutatedData)
     }
     didMountRef.current = true
@@ -72,7 +71,8 @@ export default function OrderDetail({ history, orderId }) {
           'frecno': item.invMastUid,
           'quantity': parseInt(item.quantityOrdered, 10),
           'itemNotes': '',
-          'itemUnitPriceOverride': null
+          'itemUnitPriceOverride': null,
+          'customerPartNumberId': item.customerPartNumberId
         }
       )
     }

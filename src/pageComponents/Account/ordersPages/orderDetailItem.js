@@ -206,7 +206,8 @@ export default function OrderDetailItem({ item }) {
                   'frecno': item.invMastUid,
                   'quantity': parseInt(quantity, 10),
                   'itemNotes': '',
-                  'itemUnitPriceOverride': null
+                  'itemUnitPriceOverride': null,
+                  'customerPartNumberId': item.customerPartNumberId
                 })
                 }}>Add to Cart</button>
             )}

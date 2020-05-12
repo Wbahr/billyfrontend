@@ -148,7 +148,6 @@ export default function Provider(props) {
   const [handleGetOrders] = useLazyQuery(GET_ORDERS, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
-      console.log('handleGetOrders', handleGetOrders)
       let requestData = data.accountOrders
       setOrdersCache(requestData)
     }
@@ -178,6 +177,7 @@ export default function Provider(props) {
         }
         setImpersonatedCompanyInfo(impersonationInfo)
         currentUserType = 'Impersonator'
+        setOrdersCache([])
         break
       case 'end-impersonation':
         localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
@@ -185,6 +185,7 @@ export default function Provider(props) {
         setUserInfo(userInfo)
         setImpersonatedCompanyInfo(null)
         currentUserType = 'AirlineEmployee'
+        setOrdersCache([])
         break
       case 'login':
         setUserInfo(userInfo)
@@ -196,6 +197,7 @@ export default function Provider(props) {
         setUserInfo(null)
         setImpersonatedCompanyInfo(null)
         currentUserType = 'Anon'
+        setOrdersCache([])
         break
     }
     setUserType({'current': currentUserType, 'previous': _.isNil(userType.current) ? 'Anon' : userType.current})
@@ -368,7 +370,6 @@ export default function Provider(props) {
   }
 
   function handleUpdateOrders() {
-    console.log('handleUpdateOrders')
     if(ordersCache.length === 0){
       handleGetOrders()
     }
