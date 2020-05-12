@@ -10,13 +10,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import OrderDetailItem from './orderDetailItem'
 
-export default function OrderDetail({ history, orderId }) {
-  const context = useContext(Context)
-  const didMountRef = useRef(false)
-  const [filter, setFilter] = useState('')
-  const [isListView, setIsListView] = useState(true)
-  const [data, setData] = useState({})
-
   const DivOrderInfoContainer = styled.div`
     display: flex;
     border-top: 1px solid black;
@@ -32,6 +25,13 @@ export default function OrderDetail({ history, orderId }) {
     }
   `
 
+export default function OrderDetail({ history, orderId }) {
+  const context = useContext(Context)
+  const didMountRef = useRef(false)
+  const [filter, setFilter] = useState('')
+  const [isListView, setIsListView] = useState(true)
+  const [data, setData] = useState({})
+
   useEffect(() => {
     if (!didMountRef.current && context.ordersCache.length === 0) {
       context.getOrders()
@@ -40,7 +40,17 @@ export default function OrderDetail({ history, orderId }) {
       console.log('mutatedData', mutatedData)
       setData(mutatedData)
     }
+    didMountRef.current = true
   }, [context.ordersCache])
+
+  // useEffect(() => {
+  //   if (!_.isEmpty(data)) {
+  //     let batchInvMastUids = _.map(data.lineItems, (item) => {
+  //       return(item.invMastUid)
+  //     })
+
+  //   }
+  // }, [data])
 
   let itemDetails = []
   if(isListView){
