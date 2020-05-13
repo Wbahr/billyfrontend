@@ -6,10 +6,10 @@ const HeaderDiv = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 40px 0 20px;
+  // margin: 40px 0 20px;
   align-items: center;
 `
-const H1 = styled.h1`
+const H1 = styled.h2`
   font-family: verdana;
   color: #333;
   margin: 0;

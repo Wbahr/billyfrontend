@@ -2,7 +2,6 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Banner from '../../../imgs/locationPage/map1.png'
 import Header from '../uiComponents/Header'
 
@@ -20,6 +19,7 @@ const HeaderDetailsDiv = styled.div`
   display: flex;
   font-size: 20px;
   justify-content: center;
+  margin-top: 20px;
 `
 const MapDiv = styled.div`
     max-width: 1300px;

@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Header from '../_common/header'
 
 const Container = styled.div`
