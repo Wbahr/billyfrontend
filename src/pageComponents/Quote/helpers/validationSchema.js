@@ -80,12 +80,10 @@ export const billToSchema = object({
       .required(),
     firstName: string()
       .min(3)
-      .max(50)
-      .required(),
+      .max(50),
     lastName: string()
       .min(3)
-      .max(50)
-      .required(),
+      .max(50),
     address1: string()
       .min(5)
       .max(256)
