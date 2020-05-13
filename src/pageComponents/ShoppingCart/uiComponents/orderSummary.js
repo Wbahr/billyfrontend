@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import NumberFormat from 'react-number-format'
 
 const Div = styled.div`
   display: flex;
@@ -91,11 +91,12 @@ export default function OrderSummary({history}) {
         <H4>Order Summary</H4>
         <DivLineItem>
           <p>Subtotal</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.subTotal)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}
+          </p>
         </DivLineItem>
         <DivLineItem>
           <p>Tariff</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.tariff)}</p>
+          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
         </DivLineItem>        
         <DivLineItem>
           <p>Tax</p>
@@ -110,7 +111,7 @@ export default function OrderSummary({history}) {
           <button>Apply</button>
         </DivLineItem>    */}
         <DivLineItemTotal>
-          <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff))}</p>
+          <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
         </DivLineItemTotal>
         {context.cart.length > 0 &&
           <DivButtonContainer>

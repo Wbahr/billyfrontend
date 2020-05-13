@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
+import NumberFormat from 'react-number-format'
 
 const DivContainer = styled.div`
   display: flex;
@@ -122,7 +122,7 @@ export default function ShippingScheduleItem({item, index}) {
       <DivCol3>
         <DivQuantity>
           <DivItem>
-            <Label>{formatCurrency(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)}/each</Label>
+            <Label>{<NumberFormat value={_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}/each</Label>
           </DivItem>
         </DivQuantity>
         <DivQuantity>
@@ -132,7 +132,7 @@ export default function ShippingScheduleItem({item, index}) {
         </DivQuantity>
         <DivQuantity>
           <DivItem>
-            <LabelBold>{formatCurrency(Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride))}</LabelBold>
+            <LabelBold>{<NumberFormat value={Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</LabelBold>
           </DivItem>
         </DivQuantity>
       </DivCol3>

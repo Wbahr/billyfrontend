@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag'
-import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {DebounceInput} from 'react-debounce-input'
 import Context from '../../../config/context'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import NumberFormat from 'react-number-format'
 
 const Container = styled.div`
   display: flex;
@@ -103,7 +99,7 @@ export default function SubtotalBox({history}) {
       </Context.Consumer>
 
       <Div>
-        <h5>Subtotal: {context.cartPricing.state === 'loading' ? 'Calculating...' : formatCurrency(context.cartPricing.subTotal)}</h5>
+        <h5>Subtotal: {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</h5>
         { context.cart.length > 0 &&
           <>
             <Context.Consumer>

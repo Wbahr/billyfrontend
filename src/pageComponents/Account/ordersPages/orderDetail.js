@@ -12,6 +12,7 @@ import OrderDetailItem from './orderDetailItem'
 import Input from '../../_common/form/inputv2'
 import ToggleSwitch from '../../_common/toggleSwitch'
 import matchSorter from 'match-sorter'
+import { format as dateFormat } from 'date-fns'
 
   const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -33,6 +34,7 @@ import matchSorter from 'match-sorter'
   const DivHeader = styled.div`
     display: flex;
     align-items: center;
+    margin: 4px 0;
     h4 {
       margin: 0;
     }
@@ -121,6 +123,20 @@ export default function OrderDetail({ history, orderId }) {
     context.addItems(items)
   }
 
+  const {
+    orderDate,
+    poNo,
+    status,
+    packingBasis,
+    total,
+    shipToName,
+    shipToAddress1,
+    shipToAddress2,
+    shipToAddress3,
+    shipToCity,
+    shipToState,
+    shipToZip
+  } = data
 
   return(
     <div>
@@ -131,20 +147,20 @@ export default function OrderDetail({ history, orderId }) {
       </DivHeader>
       <DivOrderInfoContainer>
         <DivOrderInfo>
-          <p>Order Date: {data.orderDate}</p>
+          <p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
           <p>Order Number: {orderId}</p>
-          <p>P.O. Number: {data.poNo}</p>
-          <p>Status: {data.status}</p>
-          <p>Packing Basis: {data.packingBasis}</p>
-          <p>Order Total: ${data.total}</p>
+          <p>P.O. Number: {poNo}</p>
+          <p>Status: {status}</p>
+          <p>Packing Basis: {packingBasis}</p>
+          <p>Order Total: ${total}</p>
         </DivOrderInfo>
         <DivOrderInfo>
           <p>Ship-to-Address:</p>
-          <p>{data.shipToName}</p>
-          <p>{data.shipToAddress1}</p>
-          {!_.isNil(data.shipToAddress2) && <p>{data.shipToAddress2}</p>}
-          {!_.isNil(data.shipToAddress3) && <p>{data.shipToAddress3}</p>}
-          <p>{data.shipToCity}, {data.shipToState} {data.shipToZip}</p>
+          <p>{shipToName}</p>
+          <p>{shipToAddress1}</p>
+          {!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
+          {!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
+          <p>{shipToCity}, {shipToState} {shipToZip}</p>
         </DivOrderInfo>
       </DivOrderInfoContainer>
       <div>

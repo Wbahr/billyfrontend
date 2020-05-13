@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import NumberFormat from 'react-number-format'
 
 const DivContainer = styled.div`
   display: flex;
@@ -234,9 +234,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
       case 'edit-price':
         handleSetModalData({
           modalType: type,
-          originalItemPrice: formatCurrency(itemDetails.listPrice),
-          itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(context.cart[index].itemUnitPriceOverride),
-          airlineCost: formatCurrency(1)
+          originalItemPrice: <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+          itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={context.cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+          airlineCost: <NumberFormat value={1} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
         })
         showEditPriceModal(index)
         break
@@ -330,7 +330,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
                 <Context.Consumer>
                   {({ cart }) => (
                     <>
-                      <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(itemDetails.listPrice) : formatCurrency(cart[index].itemUnitPriceOverride)}/each</Peach>
+                      <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>/each}</Peach>
                       <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
                     </>
                   )}
@@ -341,7 +341,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
               <Context.Consumer>
                 {({ cart }) => (
                   <DivTotalPrice>
-                    <p>{_.isNil(cart[index].itemUnitPriceOverride) ? formatCurrency(_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity) : formatCurrency(cart[index].itemUnitPriceOverride * item.quantity)}</p>
+                    <p>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
                   </DivTotalPrice>
                 )}
               </Context.Consumer>

@@ -1,4 +1,7 @@
+import React from 'react'
 import _ from 'lodash'
+import { format as dateFormat } from 'date-fns'
+import NumberFormat from 'react-number-format'
 
 export function formatTableData(type, data, orderId){
   let mutatedData = []
@@ -14,10 +17,9 @@ export function formatTableData(type, data, orderId){
           }
           let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.total.toFixed(2)
-          let epoch = Date.parse(elem.orderDate);
-          let DateObj = new Date(epoch)
-          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
+          let displayTotal = <NumberFormat value={elem.total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+          let epoch = Date.parse(elem.orderDate)
+          let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
           mutatedData.push(
             {
               'orderNumber': elem.orderNumber,
@@ -38,12 +40,12 @@ export function formatTableData(type, data, orderId){
         let elem = data[i]
         if(!elem.isQuote && elem.status === 'Open'){
           let epoch = Date.parse(elem.orderDate);
-          let DateObj = new Date(epoch)
-          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
+          let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
           for(let j = 0; j < elem.lineItems.length ;j++) {
             let lineItem = elem.lineItems[j]
-            let unitPrice = '$' + lineItem.unitPrice.toFixed(2)
-            let extPrice = '$' + (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2)
+            let unitPrice = <NumberFormat value={lineItem.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+            let extPrice = 
+            <NumberFormat value={lineItem.unitPrice * lineItem.quantityOrdered} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
             let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
             filterField = filterField.toUpperCase()
             mutatedData.push(
@@ -77,9 +79,8 @@ export function formatTableData(type, data, orderId){
           let filterField = elem.orderNumber + ' ' + partNumbers
           filterField = filterField.toUpperCase()
           let displayTotal = '$' + elem.total.toFixed(2)
-          let epoch = Date.parse(elem.orderDate);
-          let DateObj = new Date(epoch)
-          let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
+          let epoch = Date.parse(elem.orderDate)
+          let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
           mutatedData.push(
             {
               'quoteNumber': elem.orderNumber,

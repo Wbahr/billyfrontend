@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
 
 
@@ -127,7 +126,7 @@ export default function ShippingScheduleItem({item, index}) {
         <DivCol3>
           <DivQuantity>
             <DivItem>
-              <Label>{formatCurrency(itemDetails.listPrice)}/each</Label>
+              <Label>{<NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}/each</Label>
             </DivItem>
           </DivQuantity>
           <DivQuantity>
@@ -137,7 +136,7 @@ export default function ShippingScheduleItem({item, index}) {
           </DivQuantity>
           <DivQuantity>
             <DivItem>
-              <LabelBold>{formatCurrency(Number(item.quantity) * Number(itemDetails.listPrice))}</LabelBold>
+              <LabelBold>{<NumberFormat value={Number(item.quantity) * Number(itemDetails.listPrice)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</LabelBold>
             </DivItem>
           </DivQuantity>
         </DivCol3>
