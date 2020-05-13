@@ -51,7 +51,7 @@ const Input = styled.input`
   }
 `
 
-export default function ToggleSwitch({ label, text, toggled, setToggled }) {
+export default function ToggleSwitch({ label, text, text2, toggled, setToggled }) {
 
 
   return(
@@ -61,7 +61,7 @@ export default function ToggleSwitch({ label, text, toggled, setToggled }) {
         <Input type='checkbox' checked={toggled} onClick={()=>setToggled(!toggled)}/>
         <Span></Span>
       </Label>
-      {toggled && text}
+      {toggled ? text : text2}
     </Container>
   )
 }

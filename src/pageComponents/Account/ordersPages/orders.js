@@ -11,7 +11,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { OrdersPDF } from './ordersPDF'
-import ToggleSwitch from '../../_common/toggleSwitch'
 import Context from '../../../config/context'
 
 const TableContainer = styled.div`
@@ -97,7 +96,6 @@ export default function OrdersTable({ history }) {
   const [showOrderType, setShowOrderType] = useState('all')
   const [dateFrom, setDateFrom] = useState(null)
   const [dateTo, setDateTo] = useState(null)
-  const [toggled, setToggled] = useState(false)
 
   useEffect(() => {
     if (!didMountRef.current && context.ordersCache.length === 0) {
@@ -242,12 +240,6 @@ export default function OrdersTable({ history }) {
       </DivSpacer>
     </DivRowDate>
     <DivRow>
-      <ToggleSwitch 
-        label='List View:'
-        text='test'
-        toggled={toggled}
-        setToggled={(value)=>setToggled(value)}
-      />
       <button>Copy</button>
       <button>PDF</button>
       <button>XLS</button>

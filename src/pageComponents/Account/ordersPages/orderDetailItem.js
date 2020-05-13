@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import Input from '../../_common/form/inputv2'
 
   const DivContainer = styled.div`
     display: flex;
@@ -162,6 +163,23 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
     font-size: 12px !important;
   `
 
+  const ButtonSmall = styled.button`
+    background-color: #b51029;
+    color: white;
+    font-weight: 600;
+    border: 0;
+    padding: 4px 8px;
+    box-shadow: 1px 1px 2px #000;
+    margin: 4px auto 4px 16px;
+    &:hover{
+      background-color: rgb(219, 22, 51);
+    }
+    &:active{
+      background-color: #b51029;
+      box-shadow: 0px 0px 1px #000;
+    }
+  `
+
 export default function OrderDetailItem({ item }) {
   const context = useContext(Context)
   const didMountRef = useRef(false)
@@ -198,10 +216,11 @@ export default function OrderDetailItem({ item }) {
           <P2>Total Price: {item.totalPrice}</P2>
         </DivCol2>
         <DivCol3>
-          <p>Quantity:</p><input value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
+          <p>Quantity:</p>
+          <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
           <Context.Consumer>
             {({addItem}) => (
-              <button onClick={()=>{
+              <ButtonSmall onClick={()=>{
                 addItem({
                   'frecno': item.invMastUid,
                   'quantity': parseInt(quantity, 10),
@@ -209,7 +228,7 @@ export default function OrderDetailItem({ item }) {
                   'itemUnitPriceOverride': null,
                   'customerPartNumberId': item.customerPartNumberId
                 })
-                }}>Add to Cart</button>
+                }}>Add to Cart</ButtonSmall>
             )}
           </Context.Consumer>
         </DivCol3>

@@ -9,6 +9,9 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import OrderDetailItem from './orderDetailItem'
+import Input from '../../_common/form/inputv2'
+import ToggleSwitch from '../../_common/toggleSwitch'
+import matchSorter from 'match-sorter'
 
   const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -20,8 +23,41 @@ import OrderDetailItem from './orderDetailItem'
     width: 300px;
     display: flex;
     flex-direction: column; 
+    margin: 8px 0;
     p {
-      margin: 0;  
+      margin: 0;
+      margin-left: 8px;  
+    }
+  `
+
+  const DivHeader = styled.div`
+    display: flex;
+    align-items: center;
+    h4 {
+      margin: 0;
+    }
+    p {
+      cursor: pointer;
+      color: grey;
+      font-size: 14px;
+      margin: 0 0 0 auto;
+    }
+  `
+
+  const ButtonSmall = styled.button`
+    background-color: #b51029;
+    color: white;
+    font-weight: 600;
+    border: 0;
+    padding: 4px 8px;
+    box-shadow: 1px 1px 2px #000;
+    margin: 4px 16px 4px 16px;
+    &:hover{
+      background-color: rgb(219, 22, 51);
+    }
+    &:active{
+      background-color: #b51029;
+      box-shadow: 0px 0px 1px #000;
     }
   `
 
@@ -31,6 +67,7 @@ export default function OrderDetail({ history, orderId }) {
   const [filter, setFilter] = useState('')
   const [isListView, setIsListView] = useState(true)
   const [data, setData] = useState({})
+  const [toggled, setToggled] = useState(false)
 
   useEffect(() => {
     if (!didMountRef.current && context.ordersCache.length === 0) {
@@ -53,11 +90,16 @@ export default function OrderDetail({ history, orderId }) {
 
   let itemDetails = []
   if(isListView){
-    itemDetails = _.map(data.lineItems, (item) => {
+    console.log('data.lineItems', data.lineItems)
+    let filteredListItems = matchSorter(data.lineItems, filter, {keys: ['itemCode']})
+    itemDetails = _.map(filteredListItems, (item) => {
       return(
         <OrderDetailItem item={item} />
       )
     })
+    if (itemDetails.length === 0){
+      itemDetails = <p>No items found matching search.</p>
+    }
   } else {
 
   }
@@ -82,12 +124,11 @@ export default function OrderDetail({ history, orderId }) {
 
   return(
     <div>
-      <div>
+      <DivHeader>
         <h4>Order #{orderId}</h4>
         <p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
-        <button onClick={()=>handleAddOrder()}>Add Order to Cart</button>
-
-      </div>
+        <ButtonSmall onClick={()=>handleAddOrder()}>Add Order to Cart</ButtonSmall>
+      </DivHeader>
       <DivOrderInfoContainer>
         <DivOrderInfo>
           <p>Order Date: {data.orderDate}</p>
@@ -107,14 +148,15 @@ export default function OrderDetail({ history, orderId }) {
         </DivOrderInfo>
       </DivOrderInfoContainer>
       <div>
-        <p>List View:</p>
-        <input value={filter} placeholder='Search by Item ID' onClick={(e)=>setFilter(e.target.value)}/>
+        <ToggleSwitch 
+          label='View:'
+          text='List'
+          text2='Grid'
+          toggled={toggled}
+          setToggled={(value)=>setToggled(value)}
+        />
+        <Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
       </div>
-      { isListView ?
-        <p>List View</p>
-        :
-        <p>Table</p>
-      }
       {itemDetails}
     </div>
   )
