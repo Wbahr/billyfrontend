@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
 import { formatTableData, clipboardData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
@@ -10,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Context from '../../../config/context'
 
 const TableContainer = styled.div`
   display: flex;
@@ -42,8 +42,10 @@ const TRrow = styled.tr`
 const TDrow = styled.td`
   padding: 8px 16px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
   font-size: 15px;
+  color: ${props => props.isQuoteDetail ? "#0056b3" : "black"};
+  font-weight: ${props => props.isQuoteDetail ? 400 : 300};
+  cursor: ${props => props.isQuoteDetail ? "pointer" : "default"};
 `
 
 const ButtonPagination = styled.button`
@@ -84,30 +86,8 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-const GET_ORDERS = gql`
-  query Orders{
-    accountOrders {
-      orderNumber
-      orderDate
-      poNo
-      isQuote
-      orderType
-      status
-      totalPrice
-      buyer
-      lineItems {
-        quantityOpen
-        invMastUid
-        itemCode
-        customerPartNumber
-        quantityOrdered
-        unitPrice
-      }
-    }
-  }
-`
-
-export default function QuotesTable() {
+export default function QuotesTable({history}) {
+  const context = useContext(Context)
   const didMountRef = useRef(false)
   const [originalData, setOriginalData] = useState([])
   const [data, setData] = useState([])
@@ -116,17 +96,18 @@ export default function QuotesTable() {
   const [dateFrom, setDateFrom] = useState()
   const [dateTo, setDateTo] = useState()
 
-  useQuery(GET_ORDERS, {
-    onCompleted: response => {
-      const mutatedOrders = formatTableData('quotes', response.accountOrders)
-      setOriginalData(mutatedOrders)
-      setData(mutatedOrders)
+  useEffect(() => {
+    if (!didMountRef.current && context.ordersCache.length === 0) {
+      context.getOrders()
+    } else if (context.ordersCache.length > 0) {
+      let mutatedData = formatTableData('quotes', context.ordersCache)
+      setData(mutatedData)
     }
-  })
+  }, [context.ordersCache])
 
   useEffect(() => {
     if (didMountRef) {
-      let mutatedData = originalData
+      let mutatedData = formatTableData('quotes', context.ordersCache)
       // Apply search filter
       if (filter.length > 0) {
         mutatedData = mutatedData.filter(row => {
@@ -254,9 +235,9 @@ export default function QuotesTable() {
                 <SpanSort>
                     {column.isSorted
                       ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="lightgrey"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="lightgrey"/>
-                      : ''}
+                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
                 </SpanSort>
               </THheader>
             ))}
@@ -269,11 +250,19 @@ export default function QuotesTable() {
           return (
             <TRrow {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return (
-                  <TDrow {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </TDrow>
-                )
+                if(cell.column.id === 'quoteNumber') {
+                  return (
+                    <TDrow {...cell.getCellProps()} isQuoteDetail onClick={()=>history.push(`/account/quote-detail/${cell.value}`)}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                } else {
+                  return (
+                    <TDrow {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </TDrow>
+                  )
+                }
               })}
             </TRrow>
           )

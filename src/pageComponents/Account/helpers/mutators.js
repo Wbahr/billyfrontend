@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export function formatTableData(type, data){
+export function formatTableData(type, data, orderId){
   let mutatedData = []
   switch(type){
     case 'orders':
@@ -14,7 +14,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.totalPrice.toFixed(2)
+          let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -76,7 +76,7 @@ export function formatTableData(type, data){
           }
           let filterField = elem.orderNumber + ' ' + partNumbers
           filterField = filterField.toUpperCase()
-          let displayTotal = '$' + elem.totalPrice.toFixed(2)
+          let displayTotal = '$' + elem.total.toFixed(2)
           let epoch = Date.parse(elem.orderDate);
           let DateObj = new Date(epoch)
           let formattedDate = DateObj.getFullYear() + '/' +  (DateObj.getMonth() + 1) + '/' + DateObj.getDate()
@@ -91,7 +91,16 @@ export function formatTableData(type, data){
           )
         }
       }
-      break
+        break
+      case 'order-detail':
+        for(let i = 0; i < data.length; i++) {
+          let elem = data[i]
+          if(elem.orderNumber === orderId){
+            mutatedData = elem
+            break
+          }
+        }
+        break
   }
   return mutatedData
 }
@@ -106,7 +115,7 @@ export function clipboardData(headers, data){
   }
   for(let j = 0; j < data.length ;j++){
     let dataObj = data[j]
-    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.totalPrice
+    mutatedData += dataObj.orderNumber + ' ' + dataObj.orderDate + ' ' + dataObj.poNo + ' ' + dataObj.status + ' ' + dataObj.buyer + '  ' + dataObj.total
   }
 
   return mutatedData

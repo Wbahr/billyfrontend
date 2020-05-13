@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID } from './providerGQL'
+import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS } from './providerGQL'
 
 export default function Provider(props) {
   const didMountRef = useRef(false)
@@ -16,6 +16,7 @@ export default function Provider(props) {
   const [userType, setUserType] = useState({'current': null, 'previous': null})
   const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
   const [timeoutId, setTimeoutId] = useState(null)
+  const [ordersCache, setOrdersCache] = useState([])
 
   useEffect(() => {
     if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -144,6 +145,14 @@ export default function Provider(props) {
     }
   })
 
+  const [handleGetOrders] = useLazyQuery(GET_ORDERS, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      let requestData = data.accountOrders
+      setOrdersCache(requestData)
+    }
+  })
+
   function manageUserInfo(action, userInfo, impersonationInfo){
     let currentUserType
     let userInfoStorage = localStorage.getItem("userInfo")
@@ -168,6 +177,7 @@ export default function Provider(props) {
         }
         setImpersonatedCompanyInfo(impersonationInfo)
         currentUserType = 'Impersonator'
+        setOrdersCache([])
         break
       case 'end-impersonation':
         localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
@@ -175,6 +185,7 @@ export default function Provider(props) {
         setUserInfo(userInfo)
         setImpersonatedCompanyInfo(null)
         currentUserType = 'AirlineEmployee'
+        setOrdersCache([])
         break
       case 'login':
         setUserInfo(userInfo)
@@ -186,6 +197,7 @@ export default function Provider(props) {
         setUserInfo(null)
         setImpersonatedCompanyInfo(null)
         currentUserType = 'Anon'
+        setOrdersCache([])
         break
     }
     setUserType({'current': currentUserType, 'previous': _.isNil(userType.current) ? 'Anon' : userType.current})
@@ -230,6 +242,13 @@ export default function Provider(props) {
   function handleAddItem (item){
     setShoppingCart([...shoppingCart, item])
     getItemData({variables: { 'itemId': item.frecno }}) // Retrieve the item's data and add it to the display cart
+  }
+
+  function handleAddItems (items){
+    setShoppingCart([...shoppingCart, ...items])
+    let itemFrecnos = []
+    items.forEach(elem => itemFrecnos.push(elem.frecno))
+    getMultiItemData({variables: {'invMastUids': itemFrecnos}})
   }
 
   function handleRemoveItem(itemLocation){
@@ -350,6 +369,12 @@ export default function Provider(props) {
     setShoppingCart([])
   }
 
+  function handleUpdateOrders() {
+    if(ordersCache.length === 0){
+      handleGetOrders()
+    }
+  }
+
     return (
       <Context.Provider
         value={{
@@ -381,6 +406,9 @@ export default function Provider(props) {
           addItem: (item) => {
             handleAddItem(item)
           },
+          addItems: (items) => {
+            handleAddItems(items)
+          },
           removeItem: (itemLocation) => {
             handleRemoveItem(itemLocation)
           },
@@ -409,6 +437,10 @@ export default function Provider(props) {
             )},
           setOrderNotes: (orderNotes) => {
             setOrderNotes(orderNotes)
+          },
+          ordersCache: ordersCache,
+          getOrders: () => {
+            handleUpdateOrders()
           }
         }}
       >
