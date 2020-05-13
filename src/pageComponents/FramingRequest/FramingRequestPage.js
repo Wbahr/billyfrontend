@@ -56,6 +56,7 @@ const DetailDiv = styled.div`
 const ContactDiv = styled.div`
     display: flex;
     flex-direction: column;
+    align-self: start;
 `
 const ContactInfo = styled.p`
 `
@@ -147,11 +148,9 @@ export default function FramingRequestPage() {
                     <ContactForm text="Contact Information"/>
                 </ContactDiv>
                 <ContactDiv>
-                    <ContactForm text="Project Requirements"/>
+                    <ProjectForm text="Project Requirements"/>
                 </ContactDiv>
             </ContactSection>
-            {/* <ProjectForm /> */}
-
         </Container>
     )
 }

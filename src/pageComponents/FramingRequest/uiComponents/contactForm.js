@@ -21,7 +21,7 @@ const FormContainer = styled.div`
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
-  width: 74%;
+  width: 66%;
   padding: 20px;
   background-color: rgb(242, 243, 244);
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
@@ -66,7 +66,7 @@ export default function ContactForm(props) {
             <FormikInput label="Zip Code*" name="zip" />
             <FormikInput label="Email*" name="email" />
             <FormikInput label="Phone Number*" name="phone" />
-            <Button type="submit" color="main" text="Submit"/>
+            {/* <Button type="submit" color="main" text="Submit"/> */}
           </Form>
         )}
       </Formik>
