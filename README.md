@@ -9,3 +9,9 @@ This project uses:
 
 Airline Tools uses:
 - Material UI for UI components. https://material-ui.com/
+
+To run this project:
+- Start on local by `npm run start`
+- Build the Test site by `npm run build` or `npm run build-test`
+- Build the QA site by `npm run build-qa`
+- Build the Production site by `npm run build-prod` **CHECK TO MAKE SURE STRIPE AND API KEYS ARE UPDATED HERE
