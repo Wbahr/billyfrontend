@@ -247,7 +247,7 @@ export default function Provider(props) {
   function handleAddItems (items){
     setShoppingCart([...shoppingCart, ...items])
     let itemFrecnos = []
-    items.forEach(elem => itemFrecnos.push(elem.invMastUid))
+    items.forEach(elem => itemFrecnos.push(elem.frecno))
     getMultiItemData({variables: {'invMastUids': itemFrecnos}})
   }
 
