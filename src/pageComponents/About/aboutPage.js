@@ -8,6 +8,9 @@ import News from './aboutSubPages/newsPage'
 import QualityPolicy from './aboutSubPages/qualityPolicyPage'
 import TransactionalServices from './aboutSubPages/transactionalServicesPage'
 import MissionStatement from './aboutSubPages/missionStatementPage'
+import Events from './aboutSubPages/eventsPage'
+import Careers from './aboutSubPages/careersPage'
+import History from './aboutSubPages/historyPage'
 
 export default function AboutPage({ history }) {
     const [pageComponent, setPageComponent] = useState()
@@ -33,6 +36,18 @@ export default function AboutPage({ history }) {
         {
             'label': 'Mission/vision Statement',
             'page': 'mission-statement'
+        },
+        {
+            'label': 'Careers',
+            'page': 'careers'
+        },
+        {
+            'label': 'Events',
+            'page': 'events'
+        },
+        {
+            'label': 'Our History',
+            'page': 'our-history'
         }
         
     ]
@@ -51,6 +66,15 @@ export default function AboutPage({ history }) {
         }
         else if (page === 'mission-statement') {
             setPageComponent(<MissionStatement />)
+        }
+        else if (page === 'careers') {
+            setPageComponent(<Careers />)
+        }
+        else if (page === 'events') {
+            setPageComponent(<Events />)
+        }
+        else if (page === 'our-history') {
+            setPageComponent(<History />)
         }
     }, [page])
 

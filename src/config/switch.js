@@ -11,6 +11,7 @@ import About from '../pageComponents/About/aboutPage'
 import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import contactPage from '../pageComponents/ContactUs/contactUsPage'
+import CreditApplication from '../pageComponents/CreditApplication/CreditApplicationPage'
 import FramingRequest from '../pageComponents/FramingRequest/FramingRequestPage'
 import GovermentSale from '../pageComponents/GovermentSales/GovermentSalesPage'
 import Home from '../pageComponents/Home/homePage'
@@ -93,6 +94,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
         <WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/credit-application' component={CreditApplication} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>

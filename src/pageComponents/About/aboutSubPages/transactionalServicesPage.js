@@ -24,8 +24,7 @@ const ServiceList = styled.p`
 const HeaderDiv = styled.div`
 `
 const Ul = styled.ul`
-    font-size: 14px;
-    height: 130px;
+    font-size: 12px;
 `
 const Li = styled.li`
 `
@@ -34,6 +33,9 @@ const ServiceDiv = styled.div`
     margin: 20px;
     display: flex;
     flex-direction: column;
+    border: 2px solid #f2f3f4;
+    border-radius: 10px;
+    padding: 15px;
 `
 const Div_icon = styled.div`
     width: 200px;
@@ -42,15 +44,12 @@ const Div_icon = styled.div`
     align-items: center;
     justify-content: center;
 `
-const Icon = styled.img`
-    width: 100%;
-    object-fit: contain;
-`
 const AllServiceDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-top: 50px;
     justify-content: center;
+    flex-wrap: wrap;
 `
 const ShowMoreBtn1 = styled.button`
   font-size: 12px;

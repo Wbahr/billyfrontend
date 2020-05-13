@@ -9,11 +9,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 `
-export default function News() {
+export default function Careers() {
     return (
         <>
          <Container>
-             <Header text="News"/>
+             <Header text="Careers"/>
          </Container>
         </>
     )
