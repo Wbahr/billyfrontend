@@ -88,6 +88,21 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
+const ButtonExport = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin: 10px 4px;
+  &:hover {
+    background-color: whitesmoke;
+  }
+`
+
 export default function OrdersTable({ history }) {
   const context = useContext(Context)
   const didMountRef = useRef(false)
@@ -211,39 +226,51 @@ export default function OrdersTable({ history }) {
         <option value='Credit Hold'>Credit Hold Orders</option>
       </Select>
     </DivRow>
-    {/* Date From */}
-    <DivRowDate>
-      <DivSpacer>
-        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-      </DivSpacer>
-      <Pdate>Date from:</Pdate>
-      <DatePicker
-        selected={Date.parse(dateFrom)}
-        onChange={(value)=>setDateFrom(value)}
-      />
-      <DivSpacer onClick={()=>{setDateFrom(null)}}>
-        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-      </DivSpacer>
-    </DivRowDate>
-    {/* Date To */}
-    <DivRowDate>
-      <DivSpacer>
-        <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-      </DivSpacer>
-      <Pdate>Date to:</Pdate>
-      <DatePicker
-        selected={Date.parse(dateTo)}
-        onChange={(value)=>setDateTo(value)}
-      />
-      <DivSpacer onClick={()=>{setDateTo(null)}}>
-        <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-      </DivSpacer>
-    </DivRowDate>
     <DivRow>
-      <button>Copy</button>
-      <button>PDF</button>
-      <button>XLS</button>
-      <button>CSV</button>
+      <div>
+        {/* Date From */}
+        <DivRowDate>
+          <DivSpacer>
+            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+          </DivSpacer>
+          <Pdate>Date from:</Pdate>
+          <DatePicker
+            selected={Date.parse(dateFrom)}
+            onChange={(value)=>setDateFrom(value)}
+          />
+          <DivSpacer onClick={()=>{setDateFrom(null)}}>
+            <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+          </DivSpacer>
+        </DivRowDate>
+        {/* Date To */}
+        <DivRowDate>
+          <DivSpacer>
+            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+          </DivSpacer>
+          <Pdate>Date to:</Pdate>
+          <DatePicker
+            selected={Date.parse(dateTo)}
+            onChange={(value)=>setDateTo(value)}
+          />
+          <DivSpacer onClick={()=>{setDateTo(null)}}>
+            <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+          </DivSpacer>
+        </DivRowDate>
+      </div>
+      <DivRow>
+        <ButtonExport>
+          <FontAwesomeIcon size='lg' icon="copy" color="grey"/>
+        </ButtonExport> 
+        <ButtonExport>
+          <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
+        </ButtonExport>      
+        <ButtonExport>
+          <FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
+        </ButtonExport>
+        <ButtonExport>
+          <FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
+        </ButtonExport>
+      </DivRow>
     </DivRow>
     <Table {...getTableProps()}>
       <thead>
