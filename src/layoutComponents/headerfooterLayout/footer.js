@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Newsletter = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end
+  justify-content: flex-end;
   background-color: black;
   height: 70px;
   background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) ), url("https://www.airlinehyd.com/customer/aihyco/images/Headers/Basic_Background.png");
