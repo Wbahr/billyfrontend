@@ -115,6 +115,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
     error, 
     data 
   } = useQuery(GET_CHECKOUT_DATA, {
+    fetchPolicy: 'no-cache',
     onCompleted: result => {
       let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
       setQuoteDropdownData(result.getCheckoutDropdownData)
