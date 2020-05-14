@@ -245,7 +245,7 @@ export default function HeaderComponent(props) {
                 options={[
                   {
                     'label': 'All Brands',
-                    'link': '/brands'
+                    'link': '/shop/all-categories'
                   },
                   {
                     'label': 'ABB',
