@@ -12,7 +12,7 @@ const FeaturedBrandLogo = styled.div`
     width: 100%;
     justify-content: center;
     padding: 200px 0;
-    background-image: url('https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/power-distribution.png');
+    background-image: url('https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/power-distribution2.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

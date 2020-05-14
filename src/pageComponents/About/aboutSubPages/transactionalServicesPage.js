@@ -35,7 +35,7 @@ const ServiceDiv = styled.div`
     flex-direction: column;
     border: 2px solid #f2f3f4;
     border-radius: 10px;
-    padding: 15px;
+    padding: 40px 15px 15px;
 `
 const Div_icon = styled.div`
     width: 200px;
@@ -80,7 +80,7 @@ export default function transactionalServicesPage() {
                 <AllServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='shipping-fast' size="6x" />
+                            <FontAwesomeIcon icon='shipping-fast' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_1>
                             <ServiceList><Span>Same-Day ServiceList</Span> on in-stock orders placed before 3:30 p.m. EST. Orders shipped from our main warehouse in Bensalem, PA will generally be delivered the next business day via UPS to many areas in the Northeastern United States.</ServiceList>
@@ -88,7 +88,7 @@ export default function transactionalServicesPage() {
                     </ServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='truck-loading' size="6x" />
+                            <FontAwesomeIcon icon='truck-loading' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_2>
                             <ServiceList><Span>J.I.T. (Just-In-Time) Inventory Services</Span> ensure the products you need are available when you need them. Choose from the program below that best fits your needs:</ServiceList>
@@ -117,7 +117,7 @@ export default function transactionalServicesPage() {
                     </ServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='user-edit' size="6x" />
+                            <FontAwesomeIcon icon='user-edit' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_1>
                             <ServiceList><Span>Customer Part Number Program</Span> allows you to place orders using your own part numbers, which are cross-referenced in our system to the corresponding manufacturer's part number. Both numbers will appear on the order’s documentation.</ServiceList>
@@ -125,7 +125,7 @@ export default function transactionalServicesPage() {
                     </ServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='database' size="6x" />
+                            <FontAwesomeIcon icon='database' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_1>
                             <ServiceList><Span>E.D.I. Trading Partner Program</Span> uses electronic data interchange standards to efficiently conduct business transactions such as order processing and billing. This program reduces transactional errors as well as overhead costs related to purchasing and accounting.</ServiceList>
@@ -133,7 +133,7 @@ export default function transactionalServicesPage() {
                     </ServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='desktop' size="6x" />
+                            <FontAwesomeIcon icon='desktop' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_1>
                             <ServiceList><Span>E-Commerce Website</Span> Shop 24/7 on Airline's website to browse our inventory and get the latest product information. Log in to your account to view pricing, place an order, check order status, review your order history and more.</ServiceList>
@@ -141,7 +141,7 @@ export default function transactionalServicesPage() {
                     </ServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
-                            <FontAwesomeIcon icon='box-open' size="6x" />
+                            <FontAwesomeIcon icon='box-open' size="6x" color="#B51F2B"/>
                         </Div_icon>
                         <Div_1>
                             <ServiceList><Span>Packaging to Meet Your Needs</Span> Airline can provide kitting, custom packaging, bar-coding, bulk packaging, preparation for overseas shipments or other specialized handling to meet your requirements or your customer’s specifications.</ServiceList>
