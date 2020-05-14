@@ -75,6 +75,7 @@ export default function Provider(props) {
         } = requestData.authorizationInfo
         localStorage.setItem('apiToken', token)
         manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
+        handleUpdateOrders()
         handleShoppingCart('retrieve')
         let alertObj = {
           'show': true,
@@ -177,7 +178,6 @@ export default function Provider(props) {
         }
         setImpersonatedCompanyInfo(impersonationInfo)
         currentUserType = 'Impersonator'
-        setOrdersCache([])
         break
       case 'end-impersonation':
         localStorage.setItem('userInfo', JSON.stringify(userInfo)) 
@@ -220,6 +220,7 @@ export default function Provider(props) {
     if(userInfo.role === 'AirlineEmployee'){
       drift.api.widget.hide()
     }
+    handleUpdateOrders()
     setTopAlert({
       'show': true,
       'message': 'You have been successfully logged in.'
@@ -370,9 +371,7 @@ export default function Provider(props) {
   }
 
   function handleUpdateOrders() {
-    if(ordersCache.length === 0){
-      handleGetOrders()
-    }
+    handleGetOrders()
   }
 
     return (
