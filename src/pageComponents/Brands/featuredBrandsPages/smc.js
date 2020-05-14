@@ -20,7 +20,7 @@ const Container = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	margin: 0 auto;
-	`
+`
 const ArticlesDiv = styled.div`
 	display: flex;
 	justify-content: space-between;

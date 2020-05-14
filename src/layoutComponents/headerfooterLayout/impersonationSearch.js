@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../config/context'
 import DebounceInput from 'react-debounce-input'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 
 const Container = styled.div`
@@ -64,12 +64,12 @@ const IMPERSONATION_SEARCH = gql`
   }
 `
 
-export default function ImpersonationSearchComponent(props) {
+export default function ImpersonationSearchComponent() {
 	const [impersonationTerm, setImpersonationTerm] = useState('')
 	const [searchResult, setSearchResult] = useState([])
 	const context = useContext(Context)
 
-	const [impersonationSearch, { loading, error, data }] = useLazyQuery(IMPERSONATION_SEARCH, {
+	const [impersonationSearch] = useLazyQuery(IMPERSONATION_SEARCH, {
 		onCompleted: data => {
 			setSearchResult(data.getImpersonationCustomerList)
 		}

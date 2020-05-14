@@ -100,11 +100,7 @@ const SubDetail = styled.p`
 const Span = styled.span`
     font-weight: 500;
 `
-const Border = styled.div`
-    border-right: 3px solid #f2f3f4;
-    height: 70px;
-    margin: 20px;
-`
+
 const Blog = styled.div`
     display: flex;
     flex-direction: column;

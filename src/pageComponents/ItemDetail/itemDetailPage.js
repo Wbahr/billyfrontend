@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/client'
@@ -203,19 +204,9 @@ const H2ItemTitle = styled.h2`
   font-size: 25px;
   font-weight: 600;
 `
-const PManufacturer = styled.p`
-  font-size: 14px;
-`
 
 const PItemExtendedDescription = styled.p`
   font-size: 16px;
-`
-
-const H3ItemSection = styled.h3`
-  background-color: rgb(64, 64, 64);  
-  color: white;  
-  padding: 4px 0 4px 8px;
-  font-size: 1.5rem;
 `
 
 const ButtonRed = styled.button`
@@ -233,21 +224,6 @@ const ButtonRed = styled.button`
   &:active{
     background-color: #b51029;
     box-shadow: 0px 0px 1px #000;
-  }
-`
-const ButtonBlack = styled.button`
-  background-color: rgb(219, 22, 51);
-  width: 90%
-  color: white;
-  font-weight: 600;
-  border: 0;
-  padding: 4px 0;
-  margin: 4px auto;
-  &:hover{
-    opacity: 1;
-  }
-  &:active{
-    opacity: 1;
   }
 `
 
@@ -319,11 +295,7 @@ export default function ItemDetailPage({history}){
 	}
 
 	itemId = parseInt(itemId,10)
-	const { 
-		loading, 
-		error, 
-		data
-	} = useQuery(GET_ITEM_BY_ID, {
+	useQuery(GET_ITEM_BY_ID, {
 		variables: { itemId },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {

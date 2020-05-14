@@ -10,85 +10,85 @@ import AirlineSelect from '../../../pageComponents/_common/form/selectv2'
 import ItemCreationModal from './uiComponents/itemCreationModal'
 
 const QUERY_ITEM_CREATION_DATA = gql`
-  query GetItemCreationData{
-    suppliers{
-      id
-      name
-      prefix: supplierPrefix
-    }
-    unitsOfMeasure{
-      value: unitId
-      label: unitDescription
-    }
-    productGroups{
-      value: productGroupId
-      label: productGroupDesc
-    }
-  }
+	query GetItemCreationData{
+		suppliers{
+			id
+			name
+			prefix: supplierPrefix
+		}
+		unitsOfMeasure{
+			value: unitId
+			label: unitDescription
+		}
+		productGroups{
+			value: productGroupId
+			label: productGroupDesc
+		}
+	}
 `
 
 const QUERY_ITEM_SEARCH = gql`
-  query ItemSearch($searchParams: ElasticSearchItemRequest!){
-    itemSearch(searchParams: $searchParams){
-      result
-      count
-    }
-  }
+	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+		itemSearch(searchParams: $searchParams){
+			result
+			count
+		}
+	}
 `
 
 const ContentScreenContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-width: 1600px;
-  margin: 28px auto;
-  flex-grow: 99;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	max-width: 1600px;
+	margin: 28px auto;
+	flex-grow: 99;
+	align-items: center;
 `
 
 const DivSpacer = styled.div`
-  margin: 5px 0px;
-  display: flex;
-  flex-direction: column;
+	margin: 5px 0px;
+	display: flex;
+	flex-direction: column;
 `
 
 const DivSearchItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  padding: 5px;
-  width: 225px;
-  height: auto;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border: 1px solid grey;
-  border-radius: 2px;
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	padding: 5px;
+	width: 225px;
+	height: auto;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	background-color: white;
+	border: 1px solid grey;
+	border-radius: 2px;
 `
 
 const SearchResultsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 5px;
-  align-self: center;
-  margin: 28px auto;
-  height: auto;
-  justify-content: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 5px;
+	align-self: center;
+	margin: 28px auto;
+	height: auto;
+	justify-content: center;
 `
 const DivSearchInputWrapper = styled.div`
-  max-width: 500px;
+	max-width: 500px;
 `
 
 const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 12px auto;
-  button {
-    margin: 0 16px;
-  }
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 12px auto;
+	button {
+		margin: 0 16px;
+	}
 `
 
 export default function ItemCreationPage() {
@@ -104,7 +104,7 @@ export default function ItemCreationPage() {
 	const [isSearching, setIsSearching] = useState(false)
 	const [searched, setSearched] = useState(false)
 	const [submitResponse, setSubmitResponse] = useState(null)
-  
+	
 	useEffect(() => {
 		if(searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)){
 			setSearchEnabled(true)
@@ -116,7 +116,7 @@ export default function ItemCreationPage() {
 	}, [searchTerm, selectedSupplier])
 
 	let maxPage = 3
-	const { loading, error, data } = useQuery(QUERY_ITEM_CREATION_DATA, {
+	useQuery(QUERY_ITEM_CREATION_DATA, {
 		onCompleted: data => {
 			setSupplierList(data.suppliers)
 			setUnitsOfMeasure(data.unitsOfMeasure)
@@ -207,79 +207,79 @@ export default function ItemCreationPage() {
 	})
 
 	return (
-    <>
-      {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={()=>setSubmitResponse(null)} /> }
-      <ContentScreenContainer>
-      	<DivSearchInputWrapper>
-      		<DivSpacer>
-      			<AirlineInput 
-      				label="Manufacturer ID:"
-      				type="text"
-      				placeholder="Enter Manufacturer ID"
-      				name="itemIDSearch"
-      				value={searchTerm}
-      				onChange={e => setSearchTerm(e.target.value)}
-      			/>
-      		</DivSpacer>
-      		<DivSpacer>
-      			<AirlineSelect
-      				label="Supplier Name:"
-      				name="supplierNameSearch"
-      				placeholder='Select a Supplier'
-      				value={selectedSupplier}
-      				options={[{'id': null, 'name': null, 'prefix': null} ,...supplierList]}
-      				changeFunction={handleChange}
-      				getOptionLabel={(option) => {
-      					if(option.name === null){
-      						return('Select a Supplier') 
-      					} else {
-      						return(option.id + ' - ' + option.name)
-      					}
-      				}}
-      				getOptionValue={(option) => option.name}
-      				isClearable={true}
-      				isLoading={supplierList.length === 0}
-      			/>
-      		</DivSpacer>
-      	</DivSearchInputWrapper>
-      	<ButtonContainer>
-      		<Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
-            Clear Item
-      		</Button>
-      		<Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => {searchItems()}}>
-      			{isSearching ? 'Searching Items..' : 'Search for Item'}
-      		</Button>
-      	</ButtonContainer>
-      	{searched && 
-          <div>
-          	<SearchResultsContainer>
-          		{searchResultItems}
-          		{searchResultItems.length === 0 && <p>No Items Found</p>}
-          	</SearchResultsContainer>
-          	<ButtonContainer>
-          		<Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
-                Clear Item
-          		</Button>
-          		<Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
-          			{currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
-          		</Button>
-          		<Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
-                Create a New Item
-          		</Button>
-          	</ButtonContainer>
-          </div>
-      	}
-      	{showNewItemForm && 
-          <NewItemForm
-          	searchTerm={searchTerm}
-          	selectedSupplier={selectedSupplier}
-          	supplierList={supplierList}
-          	unitsOfMeasureList={unitsOfMeasureList}
-          	productGroupsList={productGroupsList}
-          	clearForm={()=>resetItem()}
-          	showModal={response => showModal(response)}
-          />}
-      </ContentScreenContainer>
-    </>
+		<>
+			{!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={()=>setSubmitResponse(null)} /> }
+			<ContentScreenContainer>
+				<DivSearchInputWrapper>
+					<DivSpacer>
+						<AirlineInput 
+							label="Manufacturer ID:"
+							type="text"
+							placeholder="Enter Manufacturer ID"
+							name="itemIDSearch"
+							value={searchTerm}
+							onChange={e => setSearchTerm(e.target.value)}
+						/>
+					</DivSpacer>
+					<DivSpacer>
+						<AirlineSelect
+							label="Supplier Name:"
+							name="supplierNameSearch"
+							placeholder='Select a Supplier'
+							value={selectedSupplier}
+							options={[{'id': null, 'name': null, 'prefix': null} ,...supplierList]}
+							changeFunction={handleChange}
+							getOptionLabel={(option) => {
+								if(option.name === null){
+									return('Select a Supplier') 
+								} else {
+									return(option.id + ' - ' + option.name)
+								}
+							}}
+							getOptionValue={(option) => option.name}
+							isClearable={true}
+							isLoading={supplierList.length === 0}
+						/>
+					</DivSpacer>
+				</DivSearchInputWrapper>
+				<ButtonContainer>
+					<Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+						Clear Item
+					</Button>
+					<Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => {searchItems()}}>
+						{isSearching ? 'Searching Items..' : 'Search for Item'}
+					</Button>
+				</ButtonContainer>
+				{searched && 
+					<div>
+						<SearchResultsContainer>
+							{searchResultItems}
+							{searchResultItems.length === 0 && <p>No Items Found</p>}
+						</SearchResultsContainer>
+						<ButtonContainer>
+							<Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+								Clear Item
+							</Button>
+							<Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
+								{currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
+							</Button>
+							<Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
+								Create a New Item
+							</Button>
+						</ButtonContainer>
+					</div>
+				}
+				{showNewItemForm && 
+					<NewItemForm
+						searchTerm={searchTerm}
+						selectedSupplier={selectedSupplier}
+						supplierList={supplierList}
+						unitsOfMeasureList={unitsOfMeasureList}
+						productGroupsList={productGroupsList}
+						clearForm={()=>resetItem()}
+						showModal={response => showModal(response)}
+					/>}
+			</ContentScreenContainer>
+		</>
 	)
 }
