@@ -7,34 +7,34 @@ import Locations from './aboutSubPages/locationsPage'
 import News from './aboutSubPages/newsPage'
 
 export default function AboutPage({ history }) {
-    const [pageComponent, setPageComponent] = useState()
-    let { page } = useParams()
+	const [pageComponent, setPageComponent] = useState()
+	let { page } = useParams()
 
-    const aboutPages = [
-        {
-            'label': 'Locations',
-            'page': 'locations'
-        },
-        {
-            'label': 'News',
-            'page': 'news'
-        }
-    ]
-    useEffect(() => {
-        if (page === 'locations') {
-            setPageComponent(<Locations />)
-        }
-        else if (page === 'news') {
-            setPageComponent(<News />)
-        }
-    }, [page])
+	const aboutPages = [
+		{
+			'label': 'Locations',
+			'page': 'locations'
+		},
+		{
+			'label': 'News',
+			'page': 'news'
+		}
+	]
+	useEffect(() => {
+		if (page === 'locations') {
+			setPageComponent(<Locations />)
+		}
+		else if (page === 'news') {
+			setPageComponent(<News />)
+		}
+	}, [page])
 
-    return (
+	return (
         <>
             {pageComponent}
         </>
-    )
+	)
 }
 AboutPage.propTypes = {
-    history: PropTypes.object.isRequired
+	history: PropTypes.object.isRequired
 }

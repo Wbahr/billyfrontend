@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function QuoteProgress({stepLabels, step, clickMoveToStep}) {
 
-  const UlProgressBar = styled.ul`
+	const UlProgressBar = styled.ul`
     margin: 0;
     
     li {
@@ -49,7 +49,7 @@ export default function QuoteProgress({stepLabels, step, clickMoveToStep}) {
     }
   ` 
 
-  const LiSelected = styled.li`
+	const LiSelected = styled.li`
     color: #535353 !important; 
     font-weight: 500;
     :before {
@@ -57,18 +57,18 @@ export default function QuoteProgress({stepLabels, step, clickMoveToStep}) {
     }
   `
 
-  let Steps = stepLabels.map((stepName, index) =>{
-    if (index === step) {
-      return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
-    } else {
-      return(<li onClick={()=>clickMoveToStep(index)}>{stepName}</li>)
-    }
-  })
-  return(
+	let Steps = stepLabels.map((stepName, index) =>{
+		if (index === step) {
+			return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
+		} else {
+			return(<li onClick={()=>clickMoveToStep(index)}>{stepName}</li>)
+		}
+	})
+	return(
     <>
       <UlProgressBar>
-        {Steps}
+      	{Steps}
       </UlProgressBar>
     </>
-  )
+	)
 }

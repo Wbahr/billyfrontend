@@ -56,26 +56,26 @@ const ShortBorder = styled.div`
 `
 
 export default function ContactUsPage() {
-    return (
-        <ContactContainer>
-            <HeaderContainer>
-                <ContactUsDiv>
-                    <H1> Contact us</H1>
-                    <ShortBorder></ShortBorder>
-                </ContactUsDiv>
-                <DetailsDiv>
-                    <p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
-                </DetailsDiv>
-            </HeaderContainer>
-            <ContentContainer>
-              <Sidebar />
-              <ContactUsForm />
-            </ContentContainer>
-        </ContactContainer>
-    )
+	return (
+		<ContactContainer>
+			<HeaderContainer>
+				<ContactUsDiv>
+					<H1> Contact us</H1>
+					<ShortBorder></ShortBorder>
+				</ContactUsDiv>
+				<DetailsDiv>
+					<p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
+				</DetailsDiv>
+			</HeaderContainer>
+			<ContentContainer>
+				<Sidebar />
+				<ContactUsForm />
+			</ContentContainer>
+		</ContactContainer>
+	)
 }
 
-            {/* <Row>
+{/* <Row>
                 <InputDiv>
                     <Label>
                     </Label>

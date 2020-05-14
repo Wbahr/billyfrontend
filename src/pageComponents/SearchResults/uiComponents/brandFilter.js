@@ -55,77 +55,77 @@ const InputSearch = styled.input`
 `
 
 const defaultStyle = {
-  transition: `opacity 300ms ease-in-out`,
-  opacity: 0,
+	transition: 'opacity 300ms ease-in-out',
+	opacity: 0,
 }
 
 const transitionStyles = {
-  entering: { opacity: 1 },
-  entered:  { opacity: 1 },
-  exiting:  { opacity: 0 },
-  exited:  { opacity: 0 },
-};
+	entering: { opacity: 1 },
+	entered:  { opacity: 1 },
+	exiting:  { opacity: 0 },
+	exited:  { opacity: 0 },
+}
 
 export default function BrandFilter({brands, updatedBrandFilter}) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [filter, setFilter] = useState('')
-  const [allBrands, setBrands] = useState(brands)
-  const [brandFilterValues, setBrandFilterValues] = useState([])
+	const [isOpen, setIsOpen] = useState(false)
+	const [filter, setFilter] = useState('')
+	const [allBrands, setBrands] = useState(brands)
+	const [brandFilterValues, setBrandFilterValues] = useState([])
 
-  const handleFeatureToggle = (e, brand) => {
-    let newBrandFilterValues
-    if(e.target.checked){
-      newBrandFilterValues = [...brandFilterValues, brand]
-      setBrandFilterValues(newBrandFilterValues)
-    } else {
-      newBrandFilterValues = _.without(brandFilterValues, brand)
-      setBrandFilterValues(newBrandFilterValues)
-    }
-    updatedBrandFilter(newBrandFilterValues)
-  }
+	const handleFeatureToggle = (e, brand) => {
+		let newBrandFilterValues
+		if(e.target.checked){
+			newBrandFilterValues = [...brandFilterValues, brand]
+			setBrandFilterValues(newBrandFilterValues)
+		} else {
+			newBrandFilterValues = _.without(brandFilterValues, brand)
+			setBrandFilterValues(newBrandFilterValues)
+		}
+		updatedBrandFilter(newBrandFilterValues)
+	}
 
-  let BrandOptions = allBrands.map((brand, index) => {
-    let disable = false
+	let BrandOptions = allBrands.map((brand, index) => {
+		let disable = false
 
-    if(brand.brandName.toLowerCase() !== 'null' && _.startsWith(brand.brandName.toLowerCase(), filter)){
-      return (
-        <DivOptionRow key={index}>
-          <input type="checkbox" 
-            onChange={(e) => handleFeatureToggle(e, brand.brandName)}
-            disabled={disable}
-          />
-          {disable ?
-            <DisabledLabel htmlFor={brand.brandName}>{brand.brandNameDisplay}</DisabledLabel>
-          :
-            <Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
-          }
-        </DivOptionRow>
-      )
-    }
-  })
+		if(brand.brandName.toLowerCase() !== 'null' && _.startsWith(brand.brandName.toLowerCase(), filter)){
+			return (
+				<DivOptionRow key={index}>
+					<input type="checkbox" 
+						onChange={(e) => handleFeatureToggle(e, brand.brandName)}
+						disabled={disable}
+					/>
+					{disable ?
+						<DisabledLabel htmlFor={brand.brandName}>{brand.brandNameDisplay}</DisabledLabel>
+						:
+						<Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
+					}
+				</DivOptionRow>
+			)
+		}
+	})
 
-  return(
+	return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>Brands</P>
-        {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+      	<P>Brands</P>
+      	{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
         <>
           <div>
-            {brands.length > 10 && <InputSearch placeholder={`Search Brands`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
+          	{brands.length > 10 && <InputSearch placeholder={'Search Brands'} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
-            {BrandOptions}
+          	{BrandOptions}
           </DivOptions>
         </>
       }
     </>
-  )
+	)
 }
 
 BrandFilter.propTypes = {
-  brands: PropTypes.array.isRequired,
-  open: PropTypes.bool,
-  toggleAttribute: PropTypes.func
+	brands: PropTypes.array.isRequired,
+	open: PropTypes.bool,
+	toggleAttribute: PropTypes.func
 }

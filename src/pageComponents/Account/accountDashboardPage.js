@@ -19,55 +19,55 @@ const AccountInfoContainer = styled.div`
 `
 
 export default function AccountDashboard({history}) {
-  const [pageComponent, setPageComponent] = useState()
-  let { page } = useParams()
+	const [pageComponent, setPageComponent] = useState()
+	let { page } = useParams()
 
-  const AccountPages = [
-    {
-      'label': 'Home',
-      'page': 'dashboard'
-    },
-    {
-      'label': 'User Settings',
-      'page': 'user-settings'
-    },
-    {
-      'label': 'Shipping',
-      'page': 'shipping-preferences'
-    },
-    {
-      'label': 'Billing',
-      'page': 'payment-preferences'
-    },
-    {
-      'label': 'Shopping Lists',
-      'page': 'shopping-lists'
-    }
-  ]
-  useEffect(() => {
-    if(page === 'dashboard'){
-      setPageComponent(<AccountManagementPage history={history}/>)
-    } else if (page === 'user-settings'){
-      setPageComponent(<AccountManagementPage history={history}/>)
-    } else if (page === 'shipping-preferences'){
-      setPageComponent(<ShipToManagementPage/>)
-    } else if (page === 'payment-preferences'){
-      setPageComponent(<Elements><PaymentManagementPage/></Elements>)
-    } else if (page === 'shopping-lists'){
-      setPageComponent(<ShoppingListManagementPage/>)
-    }
-  }, [page])
+	const AccountPages = [
+		{
+			'label': 'Home',
+			'page': 'dashboard'
+		},
+		{
+			'label': 'User Settings',
+			'page': 'user-settings'
+		},
+		{
+			'label': 'Shipping',
+			'page': 'shipping-preferences'
+		},
+		{
+			'label': 'Billing',
+			'page': 'payment-preferences'
+		},
+		{
+			'label': 'Shopping Lists',
+			'page': 'shopping-lists'
+		}
+	]
+	useEffect(() => {
+		if(page === 'dashboard'){
+			setPageComponent(<AccountManagementPage history={history}/>)
+		} else if (page === 'user-settings'){
+			setPageComponent(<AccountManagementPage history={history}/>)
+		} else if (page === 'shipping-preferences'){
+			setPageComponent(<ShipToManagementPage/>)
+		} else if (page === 'payment-preferences'){
+			setPageComponent(<Elements><PaymentManagementPage/></Elements>)
+		} else if (page === 'shopping-lists'){
+			setPageComponent(<ShoppingListManagementPage/>)
+		}
+	}, [page])
 
-  return(
-    <div>
-      <MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
-      <AccountInfoContainer>  
-        {pageComponent}      
-      </AccountInfoContainer>
-    </div>
-  )
+	return(
+		<div>
+			<MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
+			<AccountInfoContainer>  
+				{pageComponent}      
+			</AccountInfoContainer>
+		</div>
+	)
 }
 
 AccountDashboard.propTypes = {
-  history: PropTypes.object.isRequired
+	history: PropTypes.object.isRequired
 }

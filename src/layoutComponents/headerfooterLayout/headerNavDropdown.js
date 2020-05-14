@@ -22,14 +22,14 @@ const DivOption = styled.div`
 `
 
 export default function ImpersonationSearchComponent(props) {
-  const {
-    open,
-    options,
-    history
-  } = props
+	const {
+		open,
+		options,
+		history
+	} = props
 
-  const Container = styled.div`
-    visibility: ${open ? "visible" : "hidden"};
+	const Container = styled.div`
+    visibility: ${open ? 'visible' : 'hidden'};
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -38,16 +38,16 @@ export default function ImpersonationSearchComponent(props) {
     border-radius: 0 3px 3px 3px;
   `
 
-  let Links = options.map((option, index)=>{
-    return(
-      <DivOption key={`impersonation-option-${index}`} onClick={()=>{history.push(option.link)}}>
-        {option.label}
-      </DivOption>
-    )
-  })
-  return(
-    <Container>
-      {Links}
-    </Container>
-  )
+	let Links = options.map((option, index)=>{
+		return(
+			<DivOption key={`impersonation-option-${index}`} onClick={()=>{history.push(option.link)}}>
+				{option.label}
+			</DivOption>
+		)
+	})
+	return(
+		<Container>
+			{Links}
+		</Container>
+	)
 }

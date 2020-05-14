@@ -73,105 +73,105 @@ const Img = styled.img`
 `
 export default function CategoryGrid({ history }) {
 
-  return (
-    <DivContainer>
-      <Icon>
-      {/* <Icon href="#" target="_blank"> dont nest divs inside a tags */}
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src={framing} />
-          </ImgDiv>
-          <CategoryName>Aluminum Structural Framing</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src={hydraulic} />
-          </ImgDiv>
-          <CategoryName>Hydraulic Components</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src={pneumatics} />
-          </ImgDiv>
-          <CategoryName>Pneumatic Components</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/GEAR-BOXES-COUPLINGS_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Automation & Control Products</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/CIRCUIT-PROTECTIVE-DEVICES-62_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Electrical Components</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/HOSE-END-FITTINGS-2_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Hose & Connectors</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/AIR-HYDRAULIC-DRIVEN-GAS-BOOSTERS-47_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Liquid & Gas Pressure Products</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/GENERAL-LUBRICATION-EQUIPMENT-31_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Lubrication</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/LIGHT-CURTAINS-BEAMS-SCANNERS-81_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Machine Safety Products</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://triactivestorage.blob.core.windows.net/corvustriactivemedia/Category/Images/Thumbnails/936b7a79-cd3a-440b-9a2d-3f06d7a4a2eb.jpg" />
-          </ImgDiv>
-          <CategoryName>Process Control & Components</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv>
-            <Img src="https://www.airlinehyd.com/customer/aihyco/images/WINCHES-32_s.jpg" />
-          </ImgDiv>
-          <CategoryName>Winches & Gear Drives</CategoryName>
-        </CategoryDiv>
-      </Icon>
-      <Icon>
-        <CategoryDiv>
-          <ImgDiv >
-            <FontAwesomeIcon icon='tools' size='4x' />
-          </ImgDiv>
-          <CategoryName> <P href="#" target="_blank">SMC ETech</P> </CategoryName>
-        </CategoryDiv>
-      </Icon>
-    </DivContainer>
-  )
+	return (
+		<DivContainer>
+			<Icon>
+				{/* <Icon href="#" target="_blank"> dont nest divs inside a tags */}
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src={framing} />
+					</ImgDiv>
+					<CategoryName>Aluminum Structural Framing</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src={hydraulic} />
+					</ImgDiv>
+					<CategoryName>Hydraulic Components</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src={pneumatics} />
+					</ImgDiv>
+					<CategoryName>Pneumatic Components</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/GEAR-BOXES-COUPLINGS_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Automation & Control Products</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/CIRCUIT-PROTECTIVE-DEVICES-62_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Electrical Components</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/HOSE-END-FITTINGS-2_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Hose & Connectors</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/AIR-HYDRAULIC-DRIVEN-GAS-BOOSTERS-47_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Liquid & Gas Pressure Products</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/GENERAL-LUBRICATION-EQUIPMENT-31_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Lubrication</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/LIGHT-CURTAINS-BEAMS-SCANNERS-81_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Machine Safety Products</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://triactivestorage.blob.core.windows.net/corvustriactivemedia/Category/Images/Thumbnails/936b7a79-cd3a-440b-9a2d-3f06d7a4a2eb.jpg" />
+					</ImgDiv>
+					<CategoryName>Process Control & Components</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/WINCHES-32_s.jpg" />
+					</ImgDiv>
+					<CategoryName>Winches & Gear Drives</CategoryName>
+				</CategoryDiv>
+			</Icon>
+			<Icon>
+				<CategoryDiv>
+					<ImgDiv >
+						<FontAwesomeIcon icon='tools' size='4x' />
+					</ImgDiv>
+					<CategoryName> <P href="#" target="_blank">SMC ETech</P> </CategoryName>
+				</CategoryDiv>
+			</Icon>
+		</DivContainer>
+	)
 }

@@ -184,61 +184,61 @@ const ACallUs = styled.a`
 `
 
 export default function FooterComponent({history}) {
-  return(
+	return(
     <>
       <Newsletter>
-        <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><NewsletterButton>Subscribe</NewsletterButton>
+      	<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><NewsletterButton>Subscribe</NewsletterButton>
       </Newsletter>
       <ContainerTop>
-        <ContentContainer>
-          <DivAirline>
-            <DivRow>
-              <div>
-                <img src={AirlineLogo} height="45px" />
-              </div>
-              <ACallUs href="tel:1-800-999-7378">800-999-7378</ACallUs>
-            </DivRow>
-            <a target='_blank' href='https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020'><DivRow><FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/><P>3557 Progress Drive, Bensalem, PA 19020</P></DivRow></a>
-            <a href='tel:215-638-4700'><DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow></a>
-            <DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
-          </DivAirline>
-          <DivMenu>
-            <Head>Featured Brands</Head>
-            <Item onClick={()=> history.push('/brands')}>SMC</Item>
-            <Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
-            <Item onClick={()=> history.push('/brands')}>Gears</Item>
-            <Item onClick={()=> history.push('/brands')}>Tubing</Item>
-            <Item onClick={()=> history.push('/brands')}>Pumps</Item>
-            <Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
-          </DivMenu>
+      	<ContentContainer>
+      		<DivAirline>
+      			<DivRow>
+      				<div>
+      					<img src={AirlineLogo} height="45px" />
+      				</div>
+      				<ACallUs href="tel:1-800-999-7378">800-999-7378</ACallUs>
+      			</DivRow>
+      			<a target='_blank' href='https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020'><DivRow><FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/><P>3557 Progress Drive, Bensalem, PA 19020</P></DivRow></a>
+      			<a href='tel:215-638-4700'><DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow></a>
+      			<DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
+      		</DivAirline>
+      		<DivMenu>
+      			<Head>Featured Brands</Head>
+      			<Item onClick={()=> history.push('/brands')}>SMC</Item>
+      			<Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
+      			<Item onClick={()=> history.push('/brands')}>Gears</Item>
+      			<Item onClick={()=> history.push('/brands')}>Tubing</Item>
+      			<Item onClick={()=> history.push('/brands')}>Pumps</Item>
+      			<Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
+      		</DivMenu>
 
-          <DivMenu>
-            <Head>Products</Head>
-            <Item onClick={()=> history.push('/brands')}>Valves</Item>
-            <Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
-            <Item onClick={()=> history.push('/brands')}>Gears</Item>
-            <Item onClick={()=> history.push('/brands')}>Tubing</Item>
-            <Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
-            <Item onClick={()=> history.push('/brands')}>Controls</Item>
-          </DivMenu>
+      		<DivMenu>
+      			<Head>Products</Head>
+      			<Item onClick={()=> history.push('/brands')}>Valves</Item>
+      			<Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
+      			<Item onClick={()=> history.push('/brands')}>Gears</Item>
+      			<Item onClick={()=> history.push('/brands')}>Tubing</Item>
+      			<Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
+      			<Item onClick={()=> history.push('/brands')}>Controls</Item>
+      		</DivMenu>
 
-          <DivSocial>
-            <DivSocialIcons>
-              <ADim target="_blank" href="https://www.facebook.com/Airlinehyd/"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
-              <ADim target="_blank" href="https://www.linkedin.com/company/airline-hydraulics-corporation"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
-              <ADim target="_blank" href="https://twitter.com/AirlineHyd"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
-              <ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
-            </DivSocialIcons>
-          </DivSocial>
-        </ContentContainer>
+      		<DivSocial>
+      			<DivSocialIcons>
+      				<ADim target="_blank" href="https://www.facebook.com/Airlinehyd/"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
+      				<ADim target="_blank" href="https://www.linkedin.com/company/airline-hydraulics-corporation"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
+      				<ADim target="_blank" href="https://twitter.com/AirlineHyd"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
+      				<ADim target="_blank" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
+      			</DivSocialIcons>
+      		</DivSocial>
+      	</ContentContainer>
       </ContainerTop>
       <Container>
-        <Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
-        <Pcopyright>Privacy Policy</Pcopyright> |
-        <Pcopyright>Terms & Conditions</Pcopyright> |
-        <Pcopyright>Legal Disclaimer</Pcopyright> |
-        <Pcopyright>Help Center</Pcopyright>
+      	<Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
+      	<Pcopyright>Privacy Policy</Pcopyright> |
+      	<Pcopyright>Terms & Conditions</Pcopyright> |
+      	<Pcopyright>Legal Disclaimer</Pcopyright> |
+      	<Pcopyright>Help Center</Pcopyright>
       </Container>
     </>
-  )
+	)
 }

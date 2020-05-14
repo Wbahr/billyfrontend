@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag';
+import { useQuery, useLazyQuery } from '@apollo/client'
+import gql from 'graphql-tag'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const DivContainer = styled.div`
   display: flex;
@@ -121,88 +121,88 @@ const GET_ITEM_BY_ID = gql`
 `
 
 export default function ShippingScheduleItem({item, index}) {
-  const [itemDetails, setItem] = useState(null)
-  const itemId = parseInt(item.frecno,10)
+	const [itemDetails, setItem] = useState(null)
+	const itemId = parseInt(item.frecno,10)
 
-  const { 
-    loading, 
-    error, 
-    data 
-  } = useQuery(GET_ITEM_BY_ID, {
-    variables: { itemId },
-    onCompleted: result => {
-      if (!_.isNil(result.itemDetails)) {
-        setItem(result.itemDetails)
-      } else {
-        setItem({})
-      }
-    }
-  })
+	const { 
+		loading, 
+		error, 
+		data 
+	} = useQuery(GET_ITEM_BY_ID, {
+		variables: { itemId },
+		onCompleted: result => {
+			if (!_.isNil(result.itemDetails)) {
+				setItem(result.itemDetails)
+			} else {
+				setItem({})
+			}
+		}
+	})
 
-  let Content
-  if(_.isNil(itemDetails)) {
-    Content = (<p>{item.freqno}</p>)
-  } else {
-    let imagePath
-    let resultImage = _.get(itemDetails,`image[0].path`,null)
-    if (_.isNil(resultImage)){
-      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-    } else {
-      let imagePathArray = resultImage.split("\\")
-      let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 't.jpg'
-      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-    }
+	let Content
+	if(_.isNil(itemDetails)) {
+		Content = (<p>{item.freqno}</p>)
+	} else {
+		let imagePath
+		let resultImage = _.get(itemDetails,'image[0].path',null)
+		if (_.isNil(resultImage)){
+			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+		} else {
+			let imagePathArray = resultImage.split('\\')
+			let imageFile = imagePathArray[imagePathArray.length - 1]
+			imageFile = imageFile.slice(0, -5) + 't.jpg'
+			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+		}
 
-    let tomorrowDate = new Date()
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
+		let tomorrowDate = new Date()
+		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
     
 
-    Content = (
-      <DivCard>
-        <DivCol1>
-          <Img height='65px'  src={imagePath} />
-        </DivCol1>
-        <DivCol2>
-          <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
-        </DivCol2>
-        <DivCol3>
-          <DivQuantity>
-            <DivItem>
-              <Label>Qty: {item.quantity}</Label>
-            </DivItem>
-          </DivQuantity>
-        </DivCol3>
-        <div>
-        <Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
-          {({
-            field,
-            form,
-            form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-            meta
-          }) => (
-                <DivRow>
-                  <DivSpacer>
-                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                  </DivSpacer>
-                  <DatePicker
-                    minDate={tomorrowDate}
-                    selected={Date.parse(field.value)}
-                    onChange={(value)=>form.setFieldValue(field.name, value)}
-                  />
-                </DivRow>
-              )
-          }
-        </Field>
-        </div>
-      </DivCard>
-    )
-  }
-  return(
-    <DivContainer>
-      {Content}
-    </DivContainer>
-  )
+		Content = (
+			<DivCard>
+				<DivCol1>
+					<Img height='65px'  src={imagePath} />
+				</DivCol1>
+				<DivCol2>
+					<P1>{itemDetails.itemDesc}</P1>
+					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+				</DivCol2>
+				<DivCol3>
+					<DivQuantity>
+						<DivItem>
+							<Label>Qty: {item.quantity}</Label>
+						</DivItem>
+					</DivQuantity>
+				</DivCol3>
+				<div>
+					<Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
+						{({
+							field,
+							form,
+							form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+							meta
+						}) => (
+							<DivRow>
+								<DivSpacer>
+									<FontAwesomeIcon icon="calendar" color="lightgrey"/>
+								</DivSpacer>
+								<DatePicker
+									minDate={tomorrowDate}
+									selected={Date.parse(field.value)}
+									onChange={(value)=>form.setFieldValue(field.name, value)}
+								/>
+							</DivRow>
+						)
+						}
+					</Field>
+				</div>
+			</DivCard>
+		)
+	}
+	return(
+		<DivContainer>
+			{Content}
+		</DivContainer>
+	)
 }

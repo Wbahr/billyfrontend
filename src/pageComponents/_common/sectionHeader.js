@@ -20,12 +20,12 @@ class sectionHeader extends React.Component {
 		} = this.props
 
 		return(
-      <Div>
-         <H2>{text}</H2>
-        <StyledHeaderDiv>
-        </StyledHeaderDiv>
+			<Div>
+				<H2>{text}</H2>
+				<StyledHeaderDiv>
+				</StyledHeaderDiv>
 
-      </Div>
+			</Div>
 		)
 	}
 }

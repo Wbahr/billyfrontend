@@ -45,9 +45,9 @@ const TDrow = styled.td`
   padding: 8px 16px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 15px;
-  color: ${props => props.isOrderDetail ? "#0056b3" : "black"};
+  color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
   font-weight: ${props => props.isOrderDetail ? 400 : 300};
-  cursor: ${props => props.isOrderDetail ? "pointer" : "default"};
+  cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
 `
 
 const ButtonPagination = styled.button`
@@ -104,267 +104,267 @@ const ButtonExport = styled.div`
 `
 
 export default function OrdersTable({ history }) {
-  const context = useContext(Context)
-  const didMountRef = useRef(false)
-  const [data, setData] = useState([])
-  const [filter, setFilter] = useState('')
-  const [showOrderType, setShowOrderType] = useState('all')
-  const [dateFrom, setDateFrom] = useState(null)
-  const [dateTo, setDateTo] = useState(null)
+	const context = useContext(Context)
+	const didMountRef = useRef(false)
+	const [data, setData] = useState([])
+	const [filter, setFilter] = useState('')
+	const [showOrderType, setShowOrderType] = useState('all')
+	const [dateFrom, setDateFrom] = useState(null)
+	const [dateTo, setDateTo] = useState(null)
 
-  useEffect(() => {
-    if (!didMountRef.current && context.ordersCache.length === 0) {
-      context.getOrders()
-    } else if (context.ordersCache.length > 0) {
-      let mutatedData = formatTableData('orders', context.ordersCache)
-      setData(mutatedData)
-    }
-  }, [context.ordersCache])
+	useEffect(() => {
+		if (!didMountRef.current && context.ordersCache.length === 0) {
+			context.getOrders()
+		} else if (context.ordersCache.length > 0) {
+			let mutatedData = formatTableData('orders', context.ordersCache)
+			setData(mutatedData)
+		}
+	}, [context.ordersCache])
 
-  useEffect(() => {
-    if (didMountRef.current) {
-      let mutatedData = formatTableData('orders', context.ordersCache)
-      // Apply search filter
-      if (filter.length > 0) {
-        mutatedData = mutatedData.filter(row => {
-          let upperCaseFilter = filter.toUpperCase()
-            return row.filter.includes(upperCaseFilter)
-        })
-      }
-      // Apply showOrderType filter
-      if (showOrderType !== 'all') {
-        mutatedData = mutatedData.filter(row => {
-          return row.status.includes(showOrderType)
-        })
-      }
-      // Apply date filters
-      if (!_.isNil(dateFrom)) {
-        let epochDateFrom = dateFrom.valueOf()
-        mutatedData = mutatedData.filter(row => { 
-          return Date.parse(row.orderDate) >= epochDateFrom 
-        })
-      }
-      if (!_.isNil(dateTo)) {
-        let epochDateTo = dateTo.valueOf()
-        mutatedData = mutatedData.filter(row => { 
-          return Date.parse(row.orderDate) <= epochDateTo 
-        })
-      }
-      setData(mutatedData)
-    }
-    didMountRef.current = true
-  }, [filter, showOrderType, dateFrom, dateTo])
+	useEffect(() => {
+		if (didMountRef.current) {
+			let mutatedData = formatTableData('orders', context.ordersCache)
+			// Apply search filter
+			if (filter.length > 0) {
+				mutatedData = mutatedData.filter(row => {
+					let upperCaseFilter = filter.toUpperCase()
+					return row.filter.includes(upperCaseFilter)
+				})
+			}
+			// Apply showOrderType filter
+			if (showOrderType !== 'all') {
+				mutatedData = mutatedData.filter(row => {
+					return row.status.includes(showOrderType)
+				})
+			}
+			// Apply date filters
+			if (!_.isNil(dateFrom)) {
+				let epochDateFrom = dateFrom.valueOf()
+				mutatedData = mutatedData.filter(row => { 
+					return Date.parse(row.orderDate) >= epochDateFrom 
+				})
+			}
+			if (!_.isNil(dateTo)) {
+				let epochDateTo = dateTo.valueOf()
+				mutatedData = mutatedData.filter(row => { 
+					return Date.parse(row.orderDate) <= epochDateTo 
+				})
+			}
+			setData(mutatedData)
+		}
+		didMountRef.current = true
+	}, [filter, showOrderType, dateFrom, dateTo])
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Order Date',
-        accessor: 'orderDate', // accessor is the "key" in the data
-      },
-      {
-        Header: 'Order #',
-        accessor: 'orderNumber',
-      },
-      {
-        Header: 'PO #',
-        accessor: 'poNo',
-      },
-      {
-        Header: 'Buyer',
-        accessor: 'buyer',
-      },
-      {
-        Header: 'Total',
-        accessor: 'total',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-      },
-      {
-        Header: 'Filter',
-        accessor: 'filter'
-      }
-    ],
-    [],
-  )
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows, //all rows
-    prepareRow,
-    page, // current page in rows
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable(    
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0, hiddenColumns: ['filter']},
-    },
-    useSortBy,
-    usePagination
-  )
+	const columns = useMemo(
+		() => [
+			{
+				Header: 'Order Date',
+				accessor: 'orderDate', // accessor is the "key" in the data
+			},
+			{
+				Header: 'Order #',
+				accessor: 'orderNumber',
+			},
+			{
+				Header: 'PO #',
+				accessor: 'poNo',
+			},
+			{
+				Header: 'Buyer',
+				accessor: 'buyer',
+			},
+			{
+				Header: 'Total',
+				accessor: 'total',
+			},
+			{
+				Header: 'Status',
+				accessor: 'status',
+			},
+			{
+				Header: 'Filter',
+				accessor: 'filter'
+			}
+		],
+		[],
+	)
+	const {
+		getTableProps,
+		getTableBodyProps,
+		headerGroups,
+		rows, //all rows
+		prepareRow,
+		page, // current page in rows
+		canPreviousPage,
+		canNextPage,
+		pageOptions,
+		pageCount,
+		gotoPage,
+		nextPage,
+		previousPage,
+		setPageSize,
+		state: { pageIndex, pageSize },
+	} = useTable(    
+		{
+			columns,
+			data,
+			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+		},
+		useSortBy,
+		usePagination
+	)
 
-  return(
-    <TableContainer>
-    <h4>Orders</h4>
-    <DivRow>
-      <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
-      <Select style={{width: "200px"}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
-        <option value='all'>All Orders</option>
-        <option value='Completed'>Completed Orders</option>
-        <option value='Open'>Open Orders</option>
-        <option value='Credit Hold'>Credit Hold Orders</option>
-      </Select>
-    </DivRow>
-    <DivRow>
-      <div>
-        {/* Date From */}
-        <DivRowDate>
-          <DivSpacer>
-            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-          </DivSpacer>
-          <Pdate>Date from:</Pdate>
-          <DatePicker
-            selected={Date.parse(dateFrom)}
-            onChange={(value)=>setDateFrom(value)}
-          />
-          <DivSpacer onClick={()=>{setDateFrom(null)}}>
-            <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-          </DivSpacer>
-        </DivRowDate>
-        {/* Date To */}
-        <DivRowDate>
-          <DivSpacer>
-            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-          </DivSpacer>
-          <Pdate>Date to:</Pdate>
-          <DatePicker
-            selected={Date.parse(dateTo)}
-            onChange={(value)=>setDateTo(value)}
-          />
-          <DivSpacer onClick={()=>{setDateTo(null)}}>
-            <FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-          </DivSpacer>
-        </DivRowDate>
-      </div>
-      <DivRow>
-        <ButtonExport>
-          <FontAwesomeIcon size='lg' icon="copy" color="grey"/>
-        </ButtonExport> 
-        <ButtonExport>
-          <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
-        </ButtonExport>      
-        <ButtonExport>
-          <FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
-        </ButtonExport>
-        <ButtonExport>
-          <FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
-        </ButtonExport>
-      </DivRow>
-    </DivRow>
-    <Table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <TRheader {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render('Header')}
-                <SpanSort>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
-                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
-                      : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-                </SpanSort>
-              </THheader>
-            ))}
-          </TRheader>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {page.map(row => {
-          prepareRow(row)
-          return (
-            <TRrow {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                if(cell.column.id === 'orderNumber') {
-                  return (
-                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
-                      {cell.render('Cell')}
-                    </TDrow>
-                  )
-                } else {
-                  return (
-                    <TDrow {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </TDrow>
-                  )
-                }
-              })}
-            </TRrow>
-          )
-        })}
-      </tbody>
-    </Table>
-          {/* 
+	return(
+		<TableContainer>
+			<h4>Orders</h4>
+			<DivRow>
+				<AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
+				<Select style={{width: '200px'}} value={showOrderType} onChange={(e)=>setShowOrderType(e.target.value)}>
+					<option value='all'>All Orders</option>
+					<option value='Completed'>Completed Orders</option>
+					<option value='Open'>Open Orders</option>
+					<option value='Credit Hold'>Credit Hold Orders</option>
+				</Select>
+			</DivRow>
+			<DivRow>
+				<div>
+					{/* Date From */}
+					<DivRowDate>
+						<DivSpacer>
+							<FontAwesomeIcon icon="calendar" color="lightgrey"/>
+						</DivSpacer>
+						<Pdate>Date from:</Pdate>
+						<DatePicker
+							selected={Date.parse(dateFrom)}
+							onChange={(value)=>setDateFrom(value)}
+						/>
+						<DivSpacer onClick={()=>{setDateFrom(null)}}>
+							<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+						</DivSpacer>
+					</DivRowDate>
+					{/* Date To */}
+					<DivRowDate>
+						<DivSpacer>
+							<FontAwesomeIcon icon="calendar" color="lightgrey"/>
+						</DivSpacer>
+						<Pdate>Date to:</Pdate>
+						<DatePicker
+							selected={Date.parse(dateTo)}
+							onChange={(value)=>setDateTo(value)}
+						/>
+						<DivSpacer onClick={()=>{setDateTo(null)}}>
+							<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+						</DivSpacer>
+					</DivRowDate>
+				</div>
+				<DivRow>
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="copy" color="grey"/>
+					</ButtonExport> 
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
+					</ButtonExport>      
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
+					</ButtonExport>
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
+					</ButtonExport>
+				</DivRow>
+			</DivRow>
+			<Table {...getTableProps()}>
+				<thead>
+					{headerGroups.map(headerGroup => (
+						<TRheader {...headerGroup.getHeaderGroupProps()}>
+							{headerGroup.headers.map(column => (
+								<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+									{column.render('Header')}
+									<SpanSort>
+										{column.isSorted
+											? column.isSortedDesc
+												?  <FontAwesomeIcon icon="caret-up" color="black"/>
+												:  <FontAwesomeIcon icon="caret-down" color="black"/>
+											: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+									</SpanSort>
+								</THheader>
+							))}
+						</TRheader>
+					))}
+				</thead>
+				<tbody {...getTableBodyProps()}>
+					{page.map(row => {
+						prepareRow(row)
+						return (
+							<TRrow {...row.getRowProps()}>
+								{row.cells.map(cell => {
+									if(cell.column.id === 'orderNumber') {
+										return (
+											<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									} else {
+										return (
+											<TDrow {...cell.getCellProps()}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									}
+								})}
+							</TRrow>
+						)
+					})}
+				</tbody>
+			</Table>
+			{/* 
         Pagination can be built however you'd like. 
         This is just a very basic UI implementation:
       */}
-      <div>
-        <ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </ButtonPagination>{' '}
-        <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </ButtonPagination>{' '}
-        <span>
+			<div>
+				<ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+					{'<<'}
+				</ButtonPagination>{' '}
+				<ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
+					{'<'}
+				</ButtonPagination>{' '}
+				<span>
           Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </ButtonPagination>{' '}
-        <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </ButtonPagination>{' '}
-        <span>
+					<strong>
+						{pageIndex + 1} of {pageOptions.length}
+					</strong>{' '}
+				</span>
+				<ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
+					{'>'}
+				</ButtonPagination>{' '}
+				<ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+					{'>>'}
+				</ButtonPagination>{' '}
+				<span>
           | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
-            }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[10, 25, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
+					<input
+						type="number"
+						defaultValue={pageIndex + 1}
+						onChange={e => {
+							const page = e.target.value ? Number(e.target.value) - 1 : 0
+							gotoPage(page)
+						}}
+						style={{ width: '100px' }}
+					/>
+				</span>{' '}
+				<select
+					value={pageSize}
+					onChange={e => {
+						setPageSize(Number(e.target.value))
+					}}
+				>
+					{[10, 25, 50].map(pageSize => (
+						<option key={pageSize} value={pageSize}>
               Show {pageSize}
-            </option>
-          ))}
-        </select>
-        <p>Results: {rows.length}</p>
-        </div>
-      </TableContainer>
-  )
+						</option>
+					))}
+				</select>
+				<p>Results: {rows.length}</p>
+			</div>
+		</TableContainer>
+	)
 }

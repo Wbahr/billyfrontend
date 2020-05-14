@@ -34,42 +34,42 @@ const MainInput = styled(FormikField)`
 `
 
 export default function CheckBox({disabled, name, label, changeFunction}){
-  const { values, setFieldValue } = useFormikContext()
-  let isChecked = 'values.' + name
-  if(_.isNil(changeFunction)){
-    return(
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput 
-          type="checkbox" 
-          name={name} 
-          disabled={disabled} 
-          style={{cursor: 'pointer', width: '25px'}}
-          checked={eval(isChecked)}
-          onChange={(e)=>setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0)}
-        />
-      </DivContainer>
-    )
-  } else if(!_.isNil(changeFunction)){
-    return(
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput 
-          type="checkbox" 
-          name={name} 
-          disabled={disabled} 
-          style={{cursor: 'pointer', width: '25px'}}
-          checked={eval(isChecked)}
-          onChange={(e)=>setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0)}
-        />
-      </DivContainer>
-    )
-  }
+	const { values, setFieldValue } = useFormikContext()
+	let isChecked = 'values.' + name
+	if(_.isNil(changeFunction)){
+		return(
+			<DivContainer>
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				<MainInput 
+					type="checkbox" 
+					name={name} 
+					disabled={disabled} 
+					style={{cursor: 'pointer', width: '25px'}}
+					checked={eval(isChecked)}
+					onChange={(e)=>setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0)}
+				/>
+			</DivContainer>
+		)
+	} else if(!_.isNil(changeFunction)){
+		return(
+			<DivContainer>
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				<MainInput 
+					type="checkbox" 
+					name={name} 
+					disabled={disabled} 
+					style={{cursor: 'pointer', width: '25px'}}
+					checked={eval(isChecked)}
+					onChange={(e)=>setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0)}
+				/>
+			</DivContainer>
+		)
+	}
 }
 
 CheckBox.propTypes = {
-  name: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  label: PropTypes.string,
-  onChange: PropTypes.string
+	name: PropTypes.string.isRequired,
+	disabled: PropTypes.bool,
+	label: PropTypes.string,
+	onChange: PropTypes.string
 }

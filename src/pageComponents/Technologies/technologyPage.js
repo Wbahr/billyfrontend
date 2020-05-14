@@ -16,27 +16,27 @@ const Div = styled.div`
   background-color: grey;
 `
 export default function TechnologyPage({ history }) {
-  const [pageComponent, setPageComponent] = useState()
-  let { page } = useParams()
+	const [pageComponent, setPageComponent] = useState()
+	let { page } = useParams()
   
-  const technologyTypePages = [
-    {
-      'label': 'FoodBeverage',
-      'page': 'food-beverage'
-    }
-  ]
-  useEffect(() => {
-    if (page === 'food-beverage') {
-      setPageComponent(<FoodBeverage />)
-    }
-  }, [page])
+	const technologyTypePages = [
+		{
+			'label': 'FoodBeverage',
+			'page': 'food-beverage'
+		}
+	]
+	useEffect(() => {
+		if (page === 'food-beverage') {
+			setPageComponent(<FoodBeverage />)
+		}
+	}, [page])
 
-  return (
+	return (
     <>
       {pageComponent}
     </>
-  )
+	)
 }
 TechnologyPage.propTypes = {
-  history: PropTypes.object.isRequired
+	history: PropTypes.object.isRequired
 }

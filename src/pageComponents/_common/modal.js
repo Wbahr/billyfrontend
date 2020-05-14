@@ -11,16 +11,16 @@ const CloseDiv = styled.div`
 `
 
 export default function Modal(props) {
-  const {
-    contentStyle,
-    onClose,
-    open
-  } = props
+	const {
+		contentStyle,
+		onClose,
+		open
+	} = props
 
-  return(
-    <Popup open={open} onClose={onClose} closeOnDocumentClick  contentStyle={contentStyle}>
-      <CloseDiv><FontAwesomeIcon style={{'cursor': 'pointer'}} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
-      {props.children}
-    </Popup>
-  )
+	return(
+		<Popup open={open} onClose={onClose} closeOnDocumentClick  contentStyle={contentStyle}>
+			<CloseDiv><FontAwesomeIcon style={{'cursor': 'pointer'}} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
+			{props.children}
+		</Popup>
+	)
 }

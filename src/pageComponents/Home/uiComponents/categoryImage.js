@@ -18,17 +18,17 @@ const DivContainer = styled.div`
 `
 
 function convertText(text){
-  let mutatedText = text.toLowerCase()
-  mutatedText = mutatedText.replace(/&\s/g,'') // remove &
-  mutatedText = mutatedText.replace(/\s/g, '-') // convert spaces to -
-  return(mutatedText)
+	let mutatedText = text.toLowerCase()
+	mutatedText = mutatedText.replace(/&\s/g,'') // remove &
+	mutatedText = mutatedText.replace(/\s/g, '-') // convert spaces to -
+	return(mutatedText)
 }
 
 export default function CategoryImage({text,src,history}) {
-  let urlText = convertText(text)
-  return(
-    <DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>
-      {text}
-    </DivContainer>
-  )
+	let urlText = convertText(text)
+	return(
+		<DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>
+			{text}
+		</DivContainer>
+	)
 }

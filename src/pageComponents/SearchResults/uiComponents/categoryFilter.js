@@ -55,51 +55,51 @@ const Acategory = styled.p`
 `
 
 export default function CategoryFilter({isUpdating, parentCategories, childCategories, updatedCategoriesFilter, selectedParent, selectedChild, removeParent, removeChild}) {
-  const [isOpen, setIsOpen] = useState(false)
-  let categorieslevel
-  let categories
-  if (_.isNil(childCategories)){
-    categorieslevel = 'parent'
-    categories = parentCategories
-  } else {
-    categorieslevel = 'child'
-    categories = childCategories
-  }
-  let FilterName = 'Categories'
-  let CategoryOptions = _.map(categories, option => {
-    if (_.isNil(childCategories)) {
-      return (
-        <DivOptionRow>
-          <Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
-        </DivOptionRow>
-      )
-    } else if (selectedChild.length > 0 && !isUpdating) {
-      return (
-        <DivOptionRow>
-          <DivRow>
-            <Acategory value={option.childCategoryName}>{option.childCategoryDisplayName} </Acategory>
-            <span onClick={()=>removeChild()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span>
-          </DivRow>
-        </DivOptionRow>
-      )
-    } else {
-      return (
-        <DivOptionRow>
-          <Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
-        </DivOptionRow>
-      )   
-    }
-  })
+	const [isOpen, setIsOpen] = useState(false)
+	let categorieslevel
+	let categories
+	if (_.isNil(childCategories)){
+		categorieslevel = 'parent'
+		categories = parentCategories
+	} else {
+		categorieslevel = 'child'
+		categories = childCategories
+	}
+	let FilterName = 'Categories'
+	let CategoryOptions = _.map(categories, option => {
+		if (_.isNil(childCategories)) {
+			return (
+				<DivOptionRow>
+					<Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
+				</DivOptionRow>
+			)
+		} else if (selectedChild.length > 0 && !isUpdating) {
+			return (
+				<DivOptionRow>
+					<DivRow>
+						<Acategory value={option.childCategoryName}>{option.childCategoryDisplayName} </Acategory>
+						<span onClick={()=>removeChild()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span>
+					</DivRow>
+				</DivOptionRow>
+			)
+		} else {
+			return (
+				<DivOptionRow>
+					<Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
+				</DivOptionRow>
+			)   
+		}
+	})
 
-  return(
+	return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{FilterName}</P>
-        {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+      	<P>{FilterName}</P>
+      	{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {(isOpen && !_.isNil(childCategories) && childCategories.length > 0) &&<DivRow><PparentTitle>{selectedParent} <span onClick={()=>removeParent()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span></PparentTitle></DivRow>}
       {(isOpen && !isUpdating) && CategoryOptions}
       {(isUpdating && isOpen) && <Loader/>}
     </>
-  )
+	)
 }

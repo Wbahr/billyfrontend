@@ -13,14 +13,14 @@ const DivConfirmationBox = styled.div`
 `
 
 export default function OrderCompletePage(props) {
-  let { orderId, confirmationEmail } = useParams()
+	let { orderId, confirmationEmail } = useParams()
 
-  return(
+	return(
     <>
       <DivConfirmationBox>
-        <p>Order Number ({orderId}) Confirmed</p>
-        <p>We'll be sending out a confirmation email to {confirmationEmail} shortly.</p> 
+      	<p>Order Number ({orderId}) Confirmed</p>
+      	<p>We'll be sending out a confirmation email to {confirmationEmail} shortly.</p> 
       </DivConfirmationBox>
     </>
-  )
+	)
 }

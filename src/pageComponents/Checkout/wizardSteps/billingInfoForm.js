@@ -28,39 +28,39 @@ const FormRow = styled.div`
 `
 
 function BillingInfoForm(props) {
-  const {
-    values,
-    stripe
-  } = props
+	const {
+		values,
+		stripe
+	} = props
   
-  return (
-    <WrapForm>
-      <FormRow>
-        <label htmlFor="paymentMethod">How would you like to pay?*</label>
-        <Field 
-          name="billing.paymentMethod" 
-          component={SelectField} 
-          options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
-          placeholder="Select a Payment Method"
-          isSearchable={false}
-        /> 
-      </FormRow>
-      {values.billing.paymentMethod === "credit_card" &&
+	return (
+		<WrapForm>
+			<FormRow>
+				<label htmlFor="paymentMethod">How would you like to pay?*</label>
+				<Field 
+					name="billing.paymentMethod" 
+					component={SelectField} 
+					options={[{'label': 'Purchase Order', 'value': 'purchase_order'},{'label': 'Credit Card', 'value': 'credit_card'}]}
+					placeholder="Select a Payment Method"
+					isSearchable={false}
+				/> 
+			</FormRow>
+			{values.billing.paymentMethod === 'credit_card' &&
         <FormRow>
-        <label htmlFor="card_type">New or Saved Card?*</label>
-        <Field 
-          name="billing.cardType" 
-          component={SelectField} 
-          options={[{'label': 'New Card', 'value': 'new_card'},{'label': 'Saved Card', 'value': 'saved_card'}]}
-          isSearchable={false}
-        /> 
-      </FormRow>
-      }
-      {values.billing.paymentMethod === "purchase_order" && <PurchaseOrderSection {...props}/>}
-      {(values.billing.paymentMethod === "credit_card" && values.billing.cardType === "new_card") && <NewCardSection {...props}/>}
-      {(values.billing.paymentMethod === "credit_card" && values.billing.cardType === "saved_card") && <SavedCardSection {...props}/>}
-    </WrapForm>
-  )
+        	<label htmlFor="card_type">New or Saved Card?*</label>
+        	<Field 
+        		name="billing.cardType" 
+        		component={SelectField} 
+        		options={[{'label': 'New Card', 'value': 'new_card'},{'label': 'Saved Card', 'value': 'saved_card'}]}
+        		isSearchable={false}
+        	/> 
+        </FormRow>
+			}
+			{values.billing.paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
+			{(values.billing.paymentMethod === 'credit_card' && values.billing.cardType === 'new_card') && <NewCardSection {...props}/>}
+			{(values.billing.paymentMethod === 'credit_card' && values.billing.cardType === 'saved_card') && <SavedCardSection {...props}/>}
+		</WrapForm>
+	)
 }
 
 export default injectStripe(BillingInfoForm)

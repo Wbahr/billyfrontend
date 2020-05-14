@@ -48,36 +48,36 @@ const ShowMoreBtn = styled.button`
   text-align: left;
 `
 export default function ProductItems(props) {
-    const [showText, setShowText] = useState(false)
-    const {
-        text,
-        src,
-        additionalText,
-        title,
-        reverse,
-    } = props
-    const ProductsDiv = styled.div`
+	const [showText, setShowText] = useState(false)
+	const {
+		text,
+		src,
+		additionalText,
+		title,
+		reverse,
+	} = props
+	const ProductsDiv = styled.div`
     display: flex;  
     flex-wrap: nowrap;
     margin: 20px 0 20px 0;
     background-color:  #f2f3f4;
     padding: 15px;
     width: 100%;
-    flex-direction: ${ reverse ? "row-reverse" : "row"}; 
+    flex-direction: ${ reverse ? 'row-reverse' : 'row'}; 
   `
-    return (
-        <ProductsDiv>
-            <ImgDiv><Img src={src} /></ImgDiv>
-            <ProductsDetails>
-                <ProductsH4 href="#">{title}</ProductsH4>
-                {text}
-                {!_.isNil(additionalText) &&
+	return (
+		<ProductsDiv>
+			<ImgDiv><Img src={src} /></ImgDiv>
+			<ProductsDetails>
+				<ProductsH4 href="#">{title}</ProductsH4>
+				{text}
+				{!_.isNil(additionalText) &&
                     <ShowMoreBtn onClick={() => setShowText(!showText)}>{showText ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>}</ShowMoreBtn>
-                }
-                {showText && additionalText}
-                <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop for {title}</ShopProducts>
-            </ProductsDetails>
-        </ProductsDiv>
+				}
+				{showText && additionalText}
+				<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop for {title}</ShopProducts>
+			</ProductsDetails>
+		</ProductsDiv>
 
-    )
+	)
 }

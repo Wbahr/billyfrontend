@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 const Container = styled.div`
   display: flex;
@@ -198,145 +198,145 @@ const ShopProducts = styled.a`
 `
 
 export default function FoodBeverage() {
-  const [showText1, setShowText1] = useState(false);
-  const [showText2, setShowText2] = useState(false);
+	const [showText1, setShowText1] = useState(false)
+	const [showText2, setShowText2] = useState(false)
 
-  return (
-    <Container>
-        <FeaturedBrandLogo>
-      </FeaturedBrandLogo>
-      <BrandDetailsContainer>
-        <AirlineDistributorH1>Food and Beverage
-        </AirlineDistributorH1>
-        <DistributorDetails>ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration.</DistributorDetails>
-        <Div>
-          <ShopAbbButton>Shop for ABB Products </ShopAbbButton>
-        </Div>
+	return (
+		<Container>
+			<FeaturedBrandLogo>
+			</FeaturedBrandLogo>
+			<BrandDetailsContainer>
+				<AirlineDistributorH1>Food and Beverage
+				</AirlineDistributorH1>
+				<DistributorDetails>ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration.</DistributorDetails>
+				<Div>
+					<ShopAbbButton>Shop for ABB Products </ShopAbbButton>
+				</Div>
 
-        {/*............................... PRODUCTS................................... */}
+				{/*............................... PRODUCTS................................... */}
 
-        <Div>
-          <ProductsTitle>applications</ProductsTitle>
-          <BorderBottom></BorderBottom>
-        </Div>
-        <ProductsDiv>
-          <img src="https://base.imgix.net/files/base/ebm/machinedesign/image/2019/04/machinedesign_11709_wtdmotors_promo.png?auto=format&fit=crop&h=432&w=768" width="450px" height="250px" />
-          <ProductsDetails>
-            <ProductsH4 href="#">Drives</ProductsH4>
+				<Div>
+					<ProductsTitle>applications</ProductsTitle>
+					<BorderBottom></BorderBottom>
+				</Div>
+				<ProductsDiv>
+					<img src="https://base.imgix.net/files/base/ebm/machinedesign/image/2019/04/machinedesign_11709_wtdmotors_promo.png?auto=format&fit=crop&h=432&w=768" width="450px" height="250px" />
+					<ProductsDetails>
+						<ProductsH4 href="#">Drives</ProductsH4>
             ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks.
-            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Drives Products</ShopProducts>
-          </ProductsDetails>
-        </ProductsDiv>
-        <ProductsDiv>
-          <ProductsDetails>
-            <ProductsH4 href="#">Motors and Generators</ProductsH4>
+						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Drives Products</ShopProducts>
+					</ProductsDetails>
+				</ProductsDiv>
+				<ProductsDiv>
+					<ProductsDetails>
+						<ProductsH4 href="#">Motors and Generators</ProductsH4>
             ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages.
-            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Motors and Generators Products</ShopProducts>
-          </ProductsDetails>
-          <img src="https://www07.abb.com/images/librariesprovider100/pg-iec-lv-motors/group-photo-of-iec-lv-motors_crop.jpg?sfvrsn=c1785e14_1" width="450px" height="250px" />
-        </ProductsDiv>
-        <ProductsDiv>
-          <img src="https://img.directindustry.com/images_di/photo-g/19831-10658086.jpg" width="450px" height="250px" />
-          <ProductsDetails>
-            <ProductsH4 href="#">Transformers</ProductsH4>
+						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Motors and Generators Products</ShopProducts>
+					</ProductsDetails>
+					<img src="https://www07.abb.com/images/librariesprovider100/pg-iec-lv-motors/group-photo-of-iec-lv-motors_crop.jpg?sfvrsn=c1785e14_1" width="450px" height="250px" />
+				</ProductsDiv>
+				<ProductsDiv>
+					<img src="https://img.directindustry.com/images_di/photo-g/19831-10658086.jpg" width="450px" height="250px" />
+					<ProductsDetails>
+						<ProductsH4 href="#">Transformers</ProductsH4>
             ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers.
-            <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Transformers Products</ShopProducts>
-          </ProductsDetails>
-        </ProductsDiv>
+						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Transformers Products</ShopProducts>
+					</ProductsDetails>
+				</ProductsDiv>
         
-        {/*.................................. ARTICLES................................... */}
-        <Div>
-          <ProductsTitle>Articles & Videos</ProductsTitle>
-          <BorderBottom></BorderBottom>
-        </Div>
-        <SmallArticlesContent>
-          <ArticlesContentDiv>
-            <ArticlesImgDiv>
-              <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" />
-            </ArticlesImgDiv>
-            <ArticlesTopic>
+				{/*.................................. ARTICLES................................... */}
+				<Div>
+					<ProductsTitle>Articles & Videos</ProductsTitle>
+					<BorderBottom></BorderBottom>
+				</Div>
+				<SmallArticlesContent>
+					<ArticlesContentDiv>
+						<ArticlesImgDiv>
+							<ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1" />
+						</ArticlesImgDiv>
+						<ArticlesTopic>
               Thermistor protection modules for ACS880 drives
-              <ArticlesShortLine></ArticlesShortLine>
-            </ArticlesTopic>
-            <ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
-          </ArticlesContentDiv>
-        </SmallArticlesContent>
-        <SmallArticlesContent>
-          <ArticlesContentDiv>
-            <ArticlesImgDiv>
-              <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1" />
-            </ArticlesImgDiv>
-            <ArticlesTopic>
+							<ArticlesShortLine></ArticlesShortLine>
+						</ArticlesTopic>
+						<ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
+					</ArticlesContentDiv>
+				</SmallArticlesContent>
+				<SmallArticlesContent>
+					<ArticlesContentDiv>
+						<ArticlesImgDiv>
+							<ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-abb-drive-installed.jpg?sfvrsn=1" />
+						</ArticlesImgDiv>
+						<ArticlesTopic>
               Drives give South African farmer 40% energy savings, smoother operation and less work
-              <ArticlesShortLine></ArticlesShortLine>
-            </ArticlesTopic>
-            <ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
-            </ArticlesContentDetails>
-          </ArticlesContentDiv>
-        </SmallArticlesContent>
-        <SmallArticlesContent>
-          <ArticlesContentDiv>
-          <ArticlesImgDiv> 
-            <ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1" />
-            </ArticlesImgDiv> 
-            <ArticlesTopic>
+							<ArticlesShortLine></ArticlesShortLine>
+						</ArticlesTopic>
+						<ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
+						</ArticlesContentDetails>
+					</ArticlesContentDiv>
+				</SmallArticlesContent>
+				<SmallArticlesContent>
+					<ArticlesContentDiv>
+						<ArticlesImgDiv> 
+							<ArticlesPicture src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1" />
+						</ArticlesImgDiv> 
+						<ArticlesTopic>
               Lorem ipsum dolor sit amet
-              <ArticlesShortLine></ArticlesShortLine>
-            </ArticlesTopic>
-            <ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
-          </ArticlesContentDiv>
-        </SmallArticlesContent>
-        <VideoDiv>
-          <ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
-          <ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
-        </VideoDiv>
+							<ArticlesShortLine></ArticlesShortLine>
+						</ArticlesTopic>
+						<ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
+					</ArticlesContentDiv>
+				</SmallArticlesContent>
+				<VideoDiv>
+					<ArticlesVideo src="https://www.youtube.com/embed/DOM7Eqg5Pzg"></ArticlesVideo>
+					<ArticlesVideo src="https://www.youtube.com/embed/9YwszNopXY4"></ArticlesVideo>
+					<ArticlesVideo src="https://www.youtube.com/embed/BLV5Qbkks6U"></ArticlesVideo>
+				</VideoDiv>
        
-        {/*.............................. RELATED LINK ................................... */}
-        <Div>
-          <ProductsTitle>Related Links</ProductsTitle>
-          <BorderBottom></BorderBottom>
-        </Div>
-        <Div>
-          <RelatedLinkCircle>
-            <LinkStyleDiv>
-              <LinkStyle href="https://new.abb.com/us" target="_blank">
-                <FontAwesomeDiv>
-                  <FontAwesomeIcon icon='globe-americas' size='4x' />
-                </FontAwesomeDiv>
+				{/*.............................. RELATED LINK ................................... */}
+				<Div>
+					<ProductsTitle>Related Links</ProductsTitle>
+					<BorderBottom></BorderBottom>
+				</Div>
+				<Div>
+					<RelatedLinkCircle>
+						<LinkStyleDiv>
+							<LinkStyle href="https://new.abb.com/us" target="_blank">
+								<FontAwesomeDiv>
+									<FontAwesomeIcon icon='globe-americas' size='4x' />
+								</FontAwesomeDiv>
                 ABB's US Website</LinkStyle>
-            </LinkStyleDiv>
-          </RelatedLinkCircle>
-          <RelatedLinkCircle>
-            <LinkStyleDiv>
-              <LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">
-                <FontAwesomeDiv>
-                  <FontAwesomeIcon icon={faYoutube} size='4x' />
-                </FontAwesomeDiv>
+						</LinkStyleDiv>
+					</RelatedLinkCircle>
+					<RelatedLinkCircle>
+						<LinkStyleDiv>
+							<LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">
+								<FontAwesomeDiv>
+									<FontAwesomeIcon icon={faYoutube} size='4x' />
+								</FontAwesomeDiv>
                 Videos</LinkStyle>
-            </LinkStyleDiv>
-          </RelatedLinkCircle>
-          <RelatedLinkCircle>
-            <LinkStyleDiv>
-              <LinkStyle href="#" target="_blank">
-                <FontAwesomeDiv>
-                  <FontAwesomeIcon icon='shopping-cart' size='4x' />
-                </FontAwesomeDiv>
+						</LinkStyleDiv>
+					</RelatedLinkCircle>
+					<RelatedLinkCircle>
+						<LinkStyleDiv>
+							<LinkStyle href="#" target="_blank">
+								<FontAwesomeDiv>
+									<FontAwesomeIcon icon='shopping-cart' size='4x' />
+								</FontAwesomeDiv>
                 shop abb products</LinkStyle>
-            </LinkStyleDiv>
-          </RelatedLinkCircle>
-          <RelatedLinkCircle>
-            <LinkStyleDiv>
-              <LinkStyle href="#" target="_blank">
-                <FontAwesomeDiv>
-                  <FontAwesomeIcon icon='address-book' size='4x' />
-                </FontAwesomeDiv>
+						</LinkStyleDiv>
+					</RelatedLinkCircle>
+					<RelatedLinkCircle>
+						<LinkStyleDiv>
+							<LinkStyle href="#" target="_blank">
+								<FontAwesomeDiv>
+									<FontAwesomeIcon icon='address-book' size='4x' />
+								</FontAwesomeDiv>
                 abb Catalogs</LinkStyle>
-            </LinkStyleDiv>
-          </RelatedLinkCircle>
-        </Div>
-      </BrandDetailsContainer>
-    </Container >
-  );
+						</LinkStyleDiv>
+					</RelatedLinkCircle>
+				</Div>
+			</BrandDetailsContainer>
+		</Container >
+	)
 }
 

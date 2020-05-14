@@ -71,24 +71,24 @@ const ImgDetailsDiv = styled.div`
 `
 export default function ShopOurProducts(props) {
 
-  function handleSearch(searchTerm) {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+	function handleSearch(searchTerm) {
+		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
 
-  }
+	}
 
-  return (
+	return (
     <>
       <div>
-        <div>
-          <SectionHeader
-            text='Shop by Categories'
-          />
-        </div>
-        <Div>
-          <CategoryGrid
-            history={props.history}
-          />
-        </Div>
+      	<div>
+      		<SectionHeader
+      			text='Shop by Categories'
+      		/>
+      	</div>
+      	<Div>
+      		<CategoryGrid
+      			history={props.history}
+      		/>
+      	</Div>
       </div>
 
       {/* <Wrapper>
@@ -130,5 +130,5 @@ export default function ShopOurProducts(props) {
       </Wrapper> */}
 
     </>
-  )
+	)
 }

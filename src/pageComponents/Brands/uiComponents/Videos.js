@@ -17,9 +17,9 @@ const Container = styled.div`
     display: flex
 `
 export default function Videos(props) {
-    return (
+	return (
         
-          <Video><ArticlesVideo src={props.src}></ArticlesVideo></Video>
+		<Video><ArticlesVideo src={props.src}></ArticlesVideo></Video>
      
-    )
+	)
 }

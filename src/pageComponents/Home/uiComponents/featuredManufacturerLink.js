@@ -14,7 +14,7 @@ const Brandsdiv = styled.div`
   margin: 25px 35px;
   align-items: center;
   text-align: center;
-  transform: ${props => (props.pop ? "scale(1.2)" : "scale(1)")};
+  transform: ${props => (props.pop ? 'scale(1.2)' : 'scale(1)')};
   transition: all 0.3s;
   &:hover {
     transform: scale(1.2);
@@ -22,17 +22,17 @@ const Brandsdiv = styled.div`
 `
 
 export default function FeaturedManufacturerLink(props) {
-  const {
-    brandPagePath, 
-    logo, 
-    pop
-  } = props
+	const {
+		brandPagePath, 
+		logo, 
+		pop
+	} = props
   
-  return (
-    <Brandsdiv pop={pop}>
-      <a href={brandPagePath}>
-        <LogoImg src={logo} />
-      </a>
-    </Brandsdiv>
-  )
+	return (
+		<Brandsdiv pop={pop}>
+			<a href={brandPagePath}>
+				<LogoImg src={logo} />
+			</a>
+		</Brandsdiv>
+	)
 }

@@ -46,56 +46,56 @@ const GET_ORDER_DATA = gql`
 `
 
 export default function OrderDatapage() {
-  const [orderNumber, setOrderNumber] = useState('')
-  const [orderData, setOrderData] = useState(null)
+	const [orderNumber, setOrderNumber] = useState('')
+	const [orderData, setOrderData] = useState(null)
 
-  const [getOrderData, {loading}] = useLazyQuery(GET_ORDER_DATA, {
-    fetchPolicy: 'no-cache',
-    variables: { orderNumber },
-    onCompleted: result => {
-      if (!_.isNil(result.customerPartNumbers)) {
-        setOrderNumber('')
-        setOrderData(null)
-      } else {
-        setOrderData(null)
-      }
-    }
-  })
+	const [getOrderData, {loading}] = useLazyQuery(GET_ORDER_DATA, {
+		fetchPolicy: 'no-cache',
+		variables: { orderNumber },
+		onCompleted: result => {
+			if (!_.isNil(result.customerPartNumbers)) {
+				setOrderNumber('')
+				setOrderData(null)
+			} else {
+				setOrderData(null)
+			}
+		}
+	})
 
-  return(
-    <ContentScreenContainer>
-      <DivSearchInputWrapper>
-      <DivSpacer>
-        <AirlineInput 
-          label="Order Number:"
-          type="text"
-          placeholder="Enter Order Number"
-          name="orderNumber"
-          value={orderNumber}
-          onChange={e => setOrderNumber(e.target.value)}
-        />
-      </DivSpacer>
-    </DivSearchInputWrapper>
-    <ButtonContainer>
-      <Button variant="contained" color="secondary" disabled={false} onClick={() => { setOrderNumber(''), setOrderData(null)}}>
+	return(
+		<ContentScreenContainer>
+			<DivSearchInputWrapper>
+				<DivSpacer>
+					<AirlineInput 
+						label="Order Number:"
+						type="text"
+						placeholder="Enter Order Number"
+						name="orderNumber"
+						value={orderNumber}
+						onChange={e => setOrderNumber(e.target.value)}
+					/>
+				</DivSpacer>
+			</DivSearchInputWrapper>
+			<ButtonContainer>
+				<Button variant="contained" color="secondary" disabled={false} onClick={() => { setOrderNumber(''), setOrderData(null)}}>
         Clear
-      </Button>
-      <Button variant="contained" color="primary" disabled={loading} onClick={() => {getOrderData()}}>
-        {loading ? 'Searching..' : 'Get Data'}
-      </Button>
-    </ButtonContainer>
-    <AirlineInput 
-      type="text"
-      placeholder="Order Data"
-      name="orderData"
-      value={orderData}
-      disabled={true}
-    />
-    <ButtonContainer>
-      <CopyToClipboard text={orderData}>
-        <Button disabled={_.isNil(orderData)}variant="contained" color="secondary">Copy Data</Button>
-      </CopyToClipboard>
-    </ButtonContainer>
-  </ContentScreenContainer>
-  )
+				</Button>
+				<Button variant="contained" color="primary" disabled={loading} onClick={() => {getOrderData()}}>
+					{loading ? 'Searching..' : 'Get Data'}
+				</Button>
+			</ButtonContainer>
+			<AirlineInput 
+				type="text"
+				placeholder="Order Data"
+				name="orderData"
+				value={orderData}
+				disabled={true}
+			/>
+			<ButtonContainer>
+				<CopyToClipboard text={orderData}>
+					<Button disabled={_.isNil(orderData)}variant="contained" color="secondary">Copy Data</Button>
+				</CopyToClipboard>
+			</ButtonContainer>
+		</ContentScreenContainer>
+	)
 }

@@ -28,26 +28,26 @@ const Label = styled.label`
 
 export default function StripePaymentSection({stripe}) {
 
-  function handleTestCC(){
-    if(!_.isNil(stripe)){
-      stripe.PaymentMethod.create(type="card").then(function(result) {
-        console.log('stripe test', result)
-      })
-    }
-  }
-  return(
-    <Container>
-      <Label>Credit Card</Label>
-      <Div>
-        <CardElement style={{
-          base: {
-            fontSize: '18px',
-            backgroundColor: 'white'
-          }
-        }} 
-        />
-      </Div>
-      {/* <button onClick={()=>handleTestCC()}>Test Credit Card</button> */}
-    </Container>
-  )
+	function handleTestCC(){
+		if(!_.isNil(stripe)){
+			stripe.PaymentMethod.create(type='card').then(function(result) {
+				console.log('stripe test', result)
+			})
+		}
+	}
+	return(
+		<Container>
+			<Label>Credit Card</Label>
+			<Div>
+				<CardElement style={{
+					base: {
+						fontSize: '18px',
+						backgroundColor: 'white'
+					}
+				}} 
+				/>
+			</Div>
+			{/* <button onClick={()=>handleTestCC()}>Test Credit Card</button> */}
+		</Container>
+	)
 }

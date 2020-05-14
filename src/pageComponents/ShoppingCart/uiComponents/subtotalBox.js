@@ -79,52 +79,52 @@ const DivOrderTotalCol = styled.div`
 
 
 export default function SubtotalBox({history}) {
-  const [price, setPrice] = useState(0)
-  const context = useContext(Context)
+	const [price, setPrice] = useState(0)
+	const context = useContext(Context)
 
-  return(
-    <Container>
-      <Context.Consumer>
-        {({ setOrderNotes, orderNotes }) => (
-          <DebounceInput
-            element="textarea"
-            minLength={2}
-            debounceTimeout={300}
-            onChange={e => setOrderNotes(e.target.value)} 
-            placeholder='Type Order Notes here'
-            style={{'width': '600px'}}
-            value={orderNotes}
-          />
-        )}
-      </Context.Consumer>
+	return(
+		<Container>
+			<Context.Consumer>
+				{({ setOrderNotes, orderNotes }) => (
+					<DebounceInput
+						element="textarea"
+						minLength={2}
+						debounceTimeout={300}
+						onChange={e => setOrderNotes(e.target.value)} 
+						placeholder='Type Order Notes here'
+						style={{'width': '600px'}}
+						value={orderNotes}
+					/>
+				)}
+			</Context.Consumer>
 
-      <Div>
-        <h5>Subtotal: {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</h5>
-        { context.cart.length > 0 &&
+			<Div>
+				<h5>Subtotal: {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</h5>
+				{ context.cart.length > 0 &&
           <>
             <Context.Consumer>
-              {({userInfo}) => {
-                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== "AirlineEmployee")){
-                  return(
-                    <DivCheckoutButton onClick={()=>history.push('/checkout')}>
-                      <FontAwesomeIcon icon="lock" color="white"/>
-                      <p>Start Secure Checkout</p>
-                    </DivCheckoutButton>
-                  )
-                }
-              }}        
+            	{({userInfo}) => {
+            		if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== 'AirlineEmployee')){
+            			return(
+            				<DivCheckoutButton onClick={()=>history.push('/checkout')}>
+            					<FontAwesomeIcon icon="lock" color="white"/>
+            					<p>Start Secure Checkout</p>
+            				</DivCheckoutButton>
+            			)
+            		}
+            	}}        
             </Context.Consumer>
             <Context.Consumer>
-              {({userInfo}) => {
-                if (!_.isNil(userInfo) && (userInfo.role === "AirlineEmployee" || userInfo.role === "Impersonator")){
-                  return(
-                    <DivQuoteButton onClick={()=>history.push('/create-quote')}>
-                      <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-                      <p>Create a Quote</p>
-                    </DivQuoteButton>
-                  )
-                }
-              }}        
+            	{({userInfo}) => {
+            		if (!_.isNil(userInfo) && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')){
+            			return(
+            				<DivQuoteButton onClick={()=>history.push('/create-quote')}>
+            					<FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+            					<p>Create a Quote</p>
+            				</DivQuoteButton>
+            			)
+            		}
+            	}}        
             </Context.Consumer>
             {/* <Context.Consumer>
               {({userInfo}) => {
@@ -138,8 +138,8 @@ export default function SubtotalBox({history}) {
               }}        
             </Context.Consumer> */}
          </>
-        }
-      </Div>
-    </Container>
-  )
+				}
+			</Div>
+		</Container>
+	)
 }

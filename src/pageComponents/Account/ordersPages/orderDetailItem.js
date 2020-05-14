@@ -11,7 +11,7 @@ import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import Input from '../../_common/form/inputv2'
 
-  const DivContainer = styled.div`
+const DivContainer = styled.div`
     display: flex;
     border-top: 2px whitesmoke solid;
     border-bottom: 2px whitesmoke solid;
@@ -21,30 +21,30 @@ import Input from '../../_common/form/inputv2'
     background-color: white;
   `
 
-  const DivRow = styled.div`
+const DivRow = styled.div`
     display: flex;
     margin-top: 8px;
   `
 
-  const DivItem = styled.div`
+const DivItem = styled.div`
     display: flex;
     flex-direction: column;
   `
 
-  const DivCard = styled.div`
+const DivCard = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
   `
 
-  const DivQuantity = styled.div`
+const DivQuantity = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
   `
 
-  const DivDivide = styled.div`
+const DivDivide = styled.div`
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -56,7 +56,7 @@ import Input from '../../_common/form/inputv2'
     opacity: 0.5;
   `
 
-  const DivRemove = styled.div`
+const DivRemove = styled.div`
     cursor: pointer;
     display: flex;
     width: auto;
@@ -64,7 +64,7 @@ import Input from '../../_common/form/inputv2'
     align-items: center;
   `
 
-  const DivSplitLine = styled(DivRemove)`
+const DivSplitLine = styled(DivRemove)`
     padding: 0 3px;
     // border: 1px solid #328EFC;
     margin: 0;
@@ -76,7 +76,7 @@ import Input from '../../_common/form/inputv2'
     font-weight: 600;
   `
 
-  const DivMove = styled.div`
+const DivMove = styled.div`
     cursor: move;
     display: flex;
     height: 100%;
@@ -84,12 +84,12 @@ import Input from '../../_common/form/inputv2'
     padding: 0 12px;
   `
 
-  const DivCol1 = styled.div`
+const DivCol1 = styled.div`
     display: flex;
     width: 100px;
   `
 
-  const DivCol2 = styled.div`
+const DivCol2 = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -102,18 +102,18 @@ import Input from '../../_common/form/inputv2'
     }
   `
 
-  const DivCol3 = styled.div`
+const DivCol3 = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     flex-grow: 99;
   `
 
-  const Img = styled.img`
+const Img = styled.img`
     margin: 0 4px;
   `
 
-  const DivTotalPrice = styled.div`
+const DivTotalPrice = styled.div`
     display: flex;
     width: 150px;
     align-items: center;
@@ -126,44 +126,44 @@ import Input from '../../_common/form/inputv2'
     }
   `
 
-  const Label = styled.label`
+const Label = styled.label`
     margin: 0;
     font-size: 12px;
     font-style: italic;
   `
 
-  const Peach = styled.p`
+const Peach = styled.p`
     margin: 0;
     padding-right: 8px;
   `
 
-  const DivEditPrice = styled.div`
+const DivEditPrice = styled.div`
     cursor: pointer;
   `
 
-  const P1 = styled.p`
+const P1 = styled.p`
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
   `
 
-  const TextRow = styled.div`
+const TextRow = styled.div`
     display: flex;
   `
 
-  const P2 = styled.p`
+const P2 = styled.p`
     cursor: pointer;
     color: grey;
     font-size: 12px !important;
     padding: 0 2px;
   `
 
-  const P3 = styled.p`
+const P3 = styled.p`
     color: black;
     font-size: 12px !important;
   `
 
-  const ButtonSmall = styled.button`
+const ButtonSmall = styled.button`
     background-color: #b51029;
     color: white;
     font-weight: 600;
@@ -181,60 +181,60 @@ import Input from '../../_common/form/inputv2'
   `
 
 export default function OrderDetailItem({ item }) {
-  const context = useContext(Context)
-  const didMountRef = useRef(false)
-  const [quantity, setQuantity] = useState('1')
-  const [isListView, setIsListView] = useState(true)
-  const [data, setData] = useState({})
+	const context = useContext(Context)
+	const didMountRef = useRef(false)
+	const [quantity, setQuantity] = useState('1')
+	const [isListView, setIsListView] = useState(true)
+	const [data, setData] = useState({})
 
-  return(
-    <DivContainer>
-      <DivCard>
-        <DivCol1>
-          {/* <Img max-height='100%' max-width='100%' src={imagePath} /> */}
-        </DivCol1>
-        <DivCol2>
-          <CopyToClipboard text={item.itemCode}>
-            <P1>{item.itemCode}</P1>
-          </CopyToClipboard>
-          <TextRow>
-          <CopyToClipboard text={`AHC${item.invMastUid}`}>
-              <P2>AHC{item.invMastUid}</P2>
-            </CopyToClipboard>
-            <P2>|</P2>
-            <CopyToClipboard text={item.customerPartNumber}>
-              <P2>{item.customerPartNumber}</P2>
-            </CopyToClipboard>
-          </TextRow>
-          <P2>Quantity Received: {item.quantityOpen}</P2>
-          <P2>Quantity Ordered: {item.quantityOrdered}</P2>
-        </DivCol2>
-        <DivCol2>
-          <P2>Promise Date: {item.quantityOrdered}</P2>
-          <P2>{item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
-          <P2>Unit Price: {item.unitPrice}</P2>
-          <P2>Total Price: {item.totalPrice}</P2>
-        </DivCol2>
-        <DivCol3>
-          <p>Quantity:</p>
-          <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
-          <Context.Consumer>
-            {({addItem}) => (
-              <ButtonSmall onClick={()=>{
-                addItem({
-                  'frecno': item.invMastUid,
-                  'quantity': parseInt(quantity, 10),
-                  'itemNotes': '',
-                  'itemUnitPriceOverride': null,
-                  'customerPartNumberId': item.customerPartNumberId
-                })
-                }}>Add to Cart</ButtonSmall>
-            )}
-          </Context.Consumer>
-        </DivCol3>
-      </DivCard>
-    </DivContainer>
-  )
+	return(
+		<DivContainer>
+			<DivCard>
+				<DivCol1>
+					{/* <Img max-height='100%' max-width='100%' src={imagePath} /> */}
+				</DivCol1>
+				<DivCol2>
+					<CopyToClipboard text={item.itemCode}>
+						<P1>{item.itemCode}</P1>
+					</CopyToClipboard>
+					<TextRow>
+						<CopyToClipboard text={`AHC${item.invMastUid}`}>
+							<P2>AHC{item.invMastUid}</P2>
+						</CopyToClipboard>
+						<P2>|</P2>
+						<CopyToClipboard text={item.customerPartNumber}>
+							<P2>{item.customerPartNumber}</P2>
+						</CopyToClipboard>
+					</TextRow>
+					<P2>Quantity Received: {item.quantityOpen}</P2>
+					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
+				</DivCol2>
+				<DivCol2>
+					<P2>Promise Date: {item.quantityOrdered}</P2>
+					<P2>{item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
+					<P2>Unit Price: {item.unitPrice}</P2>
+					<P2>Total Price: {item.totalPrice}</P2>
+				</DivCol2>
+				<DivCol3>
+					<p>Quantity:</p>
+					<Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
+					<Context.Consumer>
+						{({addItem}) => (
+							<ButtonSmall onClick={()=>{
+								addItem({
+									'frecno': item.invMastUid,
+									'quantity': parseInt(quantity, 10),
+									'itemNotes': '',
+									'itemUnitPriceOverride': null,
+									'customerPartNumberId': item.customerPartNumberId
+								})
+							}}>Add to Cart</ButtonSmall>
+						)}
+					</Context.Consumer>
+				</DivCol3>
+			</DivCard>
+		</DivContainer>
+	)
 }
 
 {/* <DivQuantity>

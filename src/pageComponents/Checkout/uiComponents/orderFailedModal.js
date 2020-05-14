@@ -19,12 +19,12 @@ const Container = styled.div`
 
 export default function OrderFailedModal() {
 
-  return(
-    <Popup open={true} closeOnDocumentClick={true} contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
-      <Container>
-        <h5>Order Failed</h5>
-        <p>Please Contact us at 1-800-999-7378.</p>
-      </Container>
-    </Popup>
-  )
+	return(
+		<Popup open={true} closeOnDocumentClick={true} contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+			<Container>
+				<h5>Order Failed</h5>
+				<p>Please Contact us at 1-800-999-7378.</p>
+			</Container>
+		</Popup>
+	)
 }

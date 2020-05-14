@@ -20,21 +20,21 @@ const FormRow = styled.div`
 `
 
 export default function SavedCardSection(props) {
-  const {
-    values,
-    stripe
-  } = props
-  return (
+	const {
+		values,
+		stripe
+	} = props
+	return (
     <>
       <Field 
-        name="billing.saved_card_token" 
-        component={SelectField} 
-        options={StateList}
-        placeholder="Select a Saved Card"
-        label="Saved Card"
-        isSearchable={false}
+      	name="billing.saved_card_token" 
+      	component={SelectField} 
+      	options={StateList}
+      	placeholder="Select a Saved Card"
+      	label="Saved Card"
+      	isSearchable={false}
       /> 
       <FormikInput label="PO Number" name="billing.po" />
     </>
-  )
+	)
 }

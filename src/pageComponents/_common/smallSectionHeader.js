@@ -27,11 +27,11 @@ class smallSectionHeader extends React.Component {
 		} = this.props
 
 		return(
-      <Div>
-        <StyledHeaderDiv>
-          <H4>{text}</H4>
-        </StyledHeaderDiv>
-      </Div>
+			<Div>
+				<StyledHeaderDiv>
+					<H4>{text}</H4>
+				</StyledHeaderDiv>
+			</Div>
 		)
 	}
 }

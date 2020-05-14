@@ -74,32 +74,32 @@ const DivLineItemTotal = styled(DivLineItem)`
 `
 
 export default function CheckoutOrderSummary({history}) {
-  const context = useContext(Context)
+	const context = useContext(Context)
 
-  return(
+	return(
     <>
       <Div>
-        <H4>Quote Summary</H4>
-        <DivLineItem>
-          <p>Subtotal</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Tariff</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-        </DivLineItem>        
-        <DivLineItem>
-          <p>Tax</p>
-          <p>(TBD)</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Shipping</p>
-          <p>(TBD)</p>
-        </DivLineItem>
-        <DivLineItemTotal>
-          <p>Total {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-        </DivLineItemTotal>
+      	<H4>Quote Summary</H4>
+      	<DivLineItem>
+      		<p>Subtotal</p>
+      		<p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+      	</DivLineItem>
+      	<DivLineItem>
+      		<p>Tariff</p>
+      		<p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+      	</DivLineItem>        
+      	<DivLineItem>
+      		<p>Tax</p>
+      		<p>(TBD)</p>
+      	</DivLineItem>
+      	<DivLineItem>
+      		<p>Shipping</p>
+      		<p>(TBD)</p>
+      	</DivLineItem>
+      	<DivLineItemTotal>
+      		<p>Total {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+      	</DivLineItemTotal>
       </Div>
     </>
-  )
+	)
 }

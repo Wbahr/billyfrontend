@@ -35,15 +35,15 @@ const Pblue = styled.p`
 
 export default function ResultsSummary({searchTerm, totalResults, isSearching, currentPage}) {
 
-  let ResultsText
-  if (isSearching && currentPage === 0){
-    ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-  } else {
-    ResultsText = (<><Pgrey>{totalResults === 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-  }
-  return(
-    <DivResultsSummaryContainer>
-      <Div>{ResultsText}</Div>
-    </DivResultsSummaryContainer>
-  )
+	let ResultsText
+	if (isSearching && currentPage === 0){
+		ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+	} else {
+		ResultsText = (<><Pgrey>{totalResults === 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+	}
+	return(
+		<DivResultsSummaryContainer>
+			<Div>{ResultsText}</Div>
+		</DivResultsSummaryContainer>
+	)
 }

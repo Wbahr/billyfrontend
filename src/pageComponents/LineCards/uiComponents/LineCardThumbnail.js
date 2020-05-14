@@ -20,14 +20,14 @@ const P = styled.p`
 `
 export default function LineCardThumbnail(props) {
       
-    return (
+	return (
         <>
             <ThumbnailImgDiv>
-                <ThumbnailImg src={props.src} />
+            	<ThumbnailImg src={props.src} />
             </ThumbnailImgDiv>
             <LineCardsNameDiv>
-                <P>{props.text}</P>
+            	<P>{props.text}</P>
             </LineCardsNameDiv>
         </>
-    )
+	)
 }

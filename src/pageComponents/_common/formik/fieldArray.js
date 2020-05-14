@@ -53,52 +53,52 @@ const DivAddMore = styled.div`
 `
 
 export default function FormikFieldArray({name, label, addMore}){
-  const { values } = useFormikContext()
+	const { values } = useFormikContext()
 
-  let valueArray = 'values.' + name
-  valueArray = eval(valueArray)
-  return(
-    <FieldArray
-      name={name}
-      render={arrayHelpers => (
-        <div>
-          <Label>{label}:</Label>
-          {valueArray && valueArray.length > 0 ? (
-            valueArray.map((elem, index) => (
-              <FieldContainer key={index}>
-                <MainInput name={`${name}.${index}`} />
-                <ButtonContainer>
+	let valueArray = 'values.' + name
+	valueArray = eval(valueArray)
+	return(
+		<FieldArray
+			name={name}
+			render={arrayHelpers => (
+				<div>
+					<Label>{label}:</Label>
+					{valueArray && valueArray.length > 0 ? (
+						valueArray.map((elem, index) => (
+							<FieldContainer key={index}>
+								<MainInput name={`${name}.${index}`} />
+								<ButtonContainer>
+									<div
+										onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+									>
+										<FontAwesomeIcon icon="minus-circle" color="grey"/>
+									</div>
+									{ ((index + 1) === valueArray.length && index < 4) &&
                   <div
-                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                  	onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
                   >
-                    <FontAwesomeIcon icon="minus-circle" color="grey"/>
+                  	<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
                   </div>
-                  { ((index + 1) === valueArray.length && index < 4) &&
-                  <div
-                    onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                  >
-                    <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
-                  </div>
-                  }
-                </ButtonContainer>
+									}
+								</ButtonContainer>
 
-              </FieldContainer>
-            ))
-          ) : (
-            <DivAddMore
-            onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-            >
-              {addMore} <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
-            </DivAddMore>
-          )}
-        </div>
-      )}
-    />
-  )
+							</FieldContainer>
+						))
+					) : (
+						<DivAddMore
+							onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+						>
+							{addMore} <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
+						</DivAddMore>
+					)}
+				</div>
+			)}
+		/>
+	)
 }
 
 FormikFieldArray.propTypes = {
-  name: PropTypes.string.isRequired,
-  addMore: PropTypes.string.isRequired,
-  label: PropTypes.string,
+	name: PropTypes.string.isRequired,
+	addMore: PropTypes.string.isRequired,
+	label: PropTypes.string,
 }

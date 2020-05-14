@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag';
+import { useLazyQuery } from '@apollo/client'
+import gql from 'graphql-tag'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
@@ -171,215 +171,215 @@ const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
 `
 
 export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
-  const {
-    itemDetails,
-    customerPartNumbers
-  } = displayItem
-  const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
-  const itemId = parseInt(item.frecno,10)
+	const {
+		itemDetails,
+		customerPartNumbers
+	} = displayItem
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
+	const itemId = parseInt(item.frecno,10)
 
-  const context = useContext(Context)
-  useEffect(()=> {
-    if (item.customerPartNumberId !== selectedCustomerPartNumber) {
-      getUpdatedCustomerPartNumbers()
-    }
-  }, [item.customerPartNumberId])
+	const context = useContext(Context)
+	useEffect(()=> {
+		if (item.customerPartNumberId !== selectedCustomerPartNumber) {
+			getUpdatedCustomerPartNumbers()
+		}
+	}, [item.customerPartNumberId])
 
-  const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
-    fetchPolicy: 'no-cache',
-    variables: { itemId },
-    onCompleted: result => {
-      if (!_.isNil(result.customerPartNumbers)) {
-        context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-        setSelectedCustomerPartNumber(item.customerPartNumberId)
-      }
-    }
-  })
+	const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
+		fetchPolicy: 'no-cache',
+		variables: { itemId },
+		onCompleted: result => {
+			if (!_.isNil(result.customerPartNumbers)) {
+				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
+				setSelectedCustomerPartNumber(item.customerPartNumberId)
+			}
+		}
+	})
 
-  function selectCustomerPartNumber(value){
+	function selectCustomerPartNumber(value){
 
-    if (value === "-1") {
-      setSelectedCustomerPartNumber(null) // Reset Dropdown
-      context.updateItem(index, 'customerPartNumberId', null)
-      showCustomerPartModal(index)
-    } else if (value === "0") {
-      setSelectedCustomerPartNumber(value)
-      context.updateItem(index, 'customerPartNumberId', null)
-    } else {
-      setSelectedCustomerPartNumber(value)
-      context.updateItem(index, 'customerPartNumberId', Number(value))
-    }
-  }
+		if (value === '-1') {
+			setSelectedCustomerPartNumber(null) // Reset Dropdown
+			context.updateItem(index, 'customerPartNumberId', null)
+			showCustomerPartModal(index)
+		} else if (value === '0') {
+			setSelectedCustomerPartNumber(value)
+			context.updateItem(index, 'customerPartNumberId', null)
+		} else {
+			setSelectedCustomerPartNumber(value)
+			context.updateItem(index, 'customerPartNumberId', Number(value))
+		}
+	}
 
-  function clearCustomerPartNumber(){
-    selectCustomerPartNumber("0")
-  }
+	function clearCustomerPartNumber(){
+		selectCustomerPartNumber('0')
+	}
 
-  function handleShowModal(type){
-    switch(type){
-      case 'split-line':
-        handleSetModalData({
-          modalType: type
-        })
-        showSplitLineModal(index)
-        break
-      case 'factory-stock':
-        handleSetModalData({
-          modalType: type,
-          name: itemDetails.itemDesc,
-          frecno: itemId
-        })
-        showFactoryStockModal(index)
-        break
-      case 'edit-price':
-        handleSetModalData({
-          modalType: type,
-          originalItemPrice: <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-          itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={context.cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-          airlineCost: <NumberFormat value={1} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
-        })
-        showEditPriceModal(index)
-        break
-      case 'customer-part':
-        showCustomerPartModal(index)
-        break
-    }
-  }
+	function handleShowModal(type){
+		switch(type){
+		case 'split-line':
+			handleSetModalData({
+				modalType: type
+			})
+			showSplitLineModal(index)
+			break
+		case 'factory-stock':
+			handleSetModalData({
+				modalType: type,
+				name: itemDetails.itemDesc,
+				frecno: itemId
+			})
+			showFactoryStockModal(index)
+			break
+		case 'edit-price':
+			handleSetModalData({
+				modalType: type,
+				originalItemPrice: <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={context.cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+				airlineCost: <NumberFormat value={1} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+			})
+			showEditPriceModal(index)
+			break
+		case 'customer-part':
+			showCustomerPartModal(index)
+			break
+		}
+	}
 
-  let Content
-  if(_.isNil(itemDetails)) {
-    Content = (<p>{item.freqno}</p>)
-  } else {
-    let imagePath
-    let resultImage = _.get(itemDetails,`image[0].path`,null)
-    if (_.isNil(resultImage)){
-      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-    } else {
-      let imagePathArray = resultImage.split("\\")
-      let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 't.jpg'
-      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-    }
+	let Content
+	if(_.isNil(itemDetails)) {
+		Content = (<p>{item.freqno}</p>)
+	} else {
+		let imagePath
+		let resultImage = _.get(itemDetails,'image[0].path',null)
+		if (_.isNil(resultImage)){
+			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+		} else {
+			let imagePathArray = resultImage.split('\\')
+			let imageFile = imagePathArray[imagePathArray.length - 1]
+			imageFile = imageFile.slice(0, -5) + 't.jpg'
+			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+		}
 
-    let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-      return(<option value={elem.id}>{elem.customerPartNumber}</option>)
-    })
-    Content = (
-      <DivCard>
-        <DivMove>
-          <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
-        </DivMove>
-        <DivCol1>
-          <Img max-height='100%' max-width='100%' src={imagePath} />
-        </DivCol1>
-        <DivCol2>
-          <CopyToClipboard text={itemDetails.itemDesc}>
-            <P1>{itemDetails.itemDesc}</P1>
-          </CopyToClipboard>
-          <TextRow>
-            <CopyToClipboard text={itemDetails.itemCode}>
-              <P2>{itemDetails.itemCode}</P2>
-            </CopyToClipboard> <P2>|</P2>
-            <CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
-              <P2>AHC{itemDetails.invMastUid}</P2>
-            </CopyToClipboard>
-          </TextRow>
-          <TextRow>
-            <select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
-              <option value="0">Customer Part#</option>
-              {CustomerPartOptions}
-              <option value="-1">Create Part#</option>
-            </select>
-            { selectedCustomerPartNumber !== "0" &&
+		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
+			return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+		})
+		Content = (
+			<DivCard>
+				<DivMove>
+					<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+				</DivMove>
+				<DivCol1>
+					<Img max-height='100%' max-width='100%' src={imagePath} />
+				</DivCol1>
+				<DivCol2>
+					<CopyToClipboard text={itemDetails.itemDesc}>
+						<P1>{itemDetails.itemDesc}</P1>
+					</CopyToClipboard>
+					<TextRow>
+						<CopyToClipboard text={itemDetails.itemCode}>
+							<P2>{itemDetails.itemCode}</P2>
+						</CopyToClipboard> <P2>|</P2>
+						<CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
+							<P2>AHC{itemDetails.invMastUid}</P2>
+						</CopyToClipboard>
+					</TextRow>
+					<TextRow>
+						<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+							<option value="0">Customer Part#</option>
+							{CustomerPartOptions}
+							<option value="-1">Create Part#</option>
+						</select>
+						{ selectedCustomerPartNumber !== '0' &&
               <div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
-                <FontAwesomeIcon icon="times" color="grey" />
+              	<FontAwesomeIcon icon="times" color="grey" />
               </div>
-            }
-          </TextRow>
-          <DivRow>
-            <Context.Consumer>
-              {({ updateItem, cart }) => (
-                <P3>Availability: {itemDetails.availability} {(cart[index].quantity > itemDetails.availability)&& '| '  + itemDetails.availabilityMessage }</P3>
-              )}
-            </Context.Consumer>
-          </DivRow>
-          <DivRow>
-            <DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
-            <DivSplitLine>|</DivSplitLine>
-            <DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
-            <DivSplitLine>|</DivSplitLine>
-            <DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
-          </DivRow>
-        </DivCol2>
-        <DivCol3>
-          <DivQuantity>
-            <DivItem>
-              <Label>Qty:</Label>
-                  <Context.Consumer>
-                    {({ updateItem, cart }) => (
-                      <input
-                        onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
-                        style={{'width': '50px'}}
-                        value={cart[index].quantity}
-                      />
-                    )}
-                  </Context.Consumer>
-            </DivItem>
-            <DivItem>
-              <DivRow>
-                <Context.Consumer>
-                  {({ cart }) => (
+						}
+					</TextRow>
+					<DivRow>
+						<Context.Consumer>
+							{({ updateItem, cart }) => (
+								<P3>Availability: {itemDetails.availability} {(cart[index].quantity > itemDetails.availability)&& '| '  + itemDetails.availabilityMessage }</P3>
+							)}
+						</Context.Consumer>
+					</DivRow>
+					<DivRow>
+						<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
+						<DivSplitLine>|</DivSplitLine>
+						<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
+						<DivSplitLine>|</DivSplitLine>
+						<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
+					</DivRow>
+				</DivCol2>
+				<DivCol3>
+					<DivQuantity>
+						<DivItem>
+							<Label>Qty:</Label>
+							<Context.Consumer>
+								{({ updateItem, cart }) => (
+									<input
+										onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
+										style={{'width': '50px'}}
+										value={cart[index].quantity}
+									/>
+								)}
+							</Context.Consumer>
+						</DivItem>
+						<DivItem>
+							<DivRow>
+								<Context.Consumer>
+									{({ cart }) => (
                     <>
                       <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>/each}</Peach>
-                      <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? "#328EFC" : "grey"} /></DivEditPrice>
+                      <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
                     </>
-                  )}
-                </Context.Consumer>
-              </DivRow>
-            </DivItem>
-            <DivItem>
-              <Context.Consumer>
-                {({ cart }) => (
-                  <DivTotalPrice>
-                    <p>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={_.get(itemDetails,`listPrice`,'0').toFixed(2) * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-                  </DivTotalPrice>
-                )}
-              </Context.Consumer>
-            </DivItem>
-          </DivQuantity>
-          <DivQuantity>
-            <DivItem>
-              <Label>Item Notes:</Label>
-              <Context.Consumer>
-                    {({ updateItem, cart }) => (
-                      <DebounceInput
-                        placeholder='Type item notes here'
-                        minLength={0}
-                        debounceTimeout={300}
-                        onChange={(e) => updateItem(index, 'notes', e.target.value)} 
-                        style={{'width': '300px'}}
-                        value={cart[index].itemNotes}
-                      />
-                    )}
-              </Context.Consumer>
-            </DivItem>
-          </DivQuantity>
-        </DivCol3>
-            <Context.Consumer>
-              {({ removeItem }) => (
+									)}
+								</Context.Consumer>
+							</DivRow>
+						</DivItem>
+						<DivItem>
+							<Context.Consumer>
+								{({ cart }) => (
+									<DivTotalPrice>
+										<p>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={_.get(itemDetails,'listPrice','0').toFixed(2) * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+									</DivTotalPrice>
+								)}
+							</Context.Consumer>
+						</DivItem>
+					</DivQuantity>
+					<DivQuantity>
+						<DivItem>
+							<Label>Item Notes:</Label>
+							<Context.Consumer>
+								{({ updateItem, cart }) => (
+									<DebounceInput
+										placeholder='Type item notes here'
+										minLength={0}
+										debounceTimeout={300}
+										onChange={(e) => updateItem(index, 'notes', e.target.value)} 
+										style={{'width': '300px'}}
+										value={cart[index].itemNotes}
+									/>
+								)}
+							</Context.Consumer>
+						</DivItem>
+					</DivQuantity>
+				</DivCol3>
+				<Context.Consumer>
+					{({ removeItem }) => (
                 <>
                   <DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
-                    <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                  	<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
                   </DivRemove>
                 </>
-              )}
-            </Context.Consumer>
-      </DivCard>
-    )
-  }
-  return(
-    <DivContainer>
-      {Content}
-    </DivContainer>
-  )
+					)}
+				</Context.Consumer>
+			</DivCard>
+		)
+	}
+	return(
+		<DivContainer>
+			{Content}
+		</DivContainer>
+	)
 }

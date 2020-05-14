@@ -67,94 +67,94 @@ const MODIFY_FACTORY_STOCK = gql`
 `
 
 export default function FactoryStockModal({open, product, hideFactoryStockModal}) {
-  const [qtyAvailable, setQtyAvailable] = useState(0)
-  const [leadTime, setLeadTime] = useState(0)
-  const [lastModified, setLastModified] = useState('--')
-  const [lastModifiedBy, setLastModifiedBy] = useState('--')
-  const [factoryStockDetails, setFactoryStockDetails] = useState(null)
+	const [qtyAvailable, setQtyAvailable] = useState(0)
+	const [leadTime, setLeadTime] = useState(0)
+	const [lastModified, setLastModified] = useState('--')
+	const [lastModifiedBy, setLastModifiedBy] = useState('--')
+	const [factoryStockDetails, setFactoryStockDetails] = useState(null)
 
-  useEffect(() => {
-    if(open) {
-      getFactoryStock()
-    }
-  }, [open])
+	useEffect(() => {
+		if(open) {
+			getFactoryStock()
+		}
+	}, [open])
 
-  useEffect(() => {
-    if(!_.isNil(factoryStockDetails)){
-      setLeadTime(factoryStockDetails.leadTimeDays)
-      setQtyAvailable(factoryStockDetails.factoryAvailability)
-      setLastModified(factoryStockDetails.modifiedDate)
-      setLastModifiedBy(factoryStockDetails.modifiedBy)
-    }
-  }, [factoryStockDetails])
+	useEffect(() => {
+		if(!_.isNil(factoryStockDetails)){
+			setLeadTime(factoryStockDetails.leadTimeDays)
+			setQtyAvailable(factoryStockDetails.factoryAvailability)
+			setLastModified(factoryStockDetails.modifiedDate)
+			setLastModifiedBy(factoryStockDetails.modifiedBy)
+		}
+	}, [factoryStockDetails])
 
-  const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
-    fetchPolicy: 'no-cache',
-    variables: {
-      invMastUid: _.get(product,`frecno`,0)
-    },
-    onCompleted: data => {
-      setFactoryStockDetails(data.factoryStock)
-    }
-  })
+	const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
+		fetchPolicy: 'no-cache',
+		variables: {
+			invMastUid: _.get(product,'frecno',0)
+		},
+		onCompleted: data => {
+			setFactoryStockDetails(data.factoryStock)
+		}
+	})
 
-  const [modifyFactoryStock, {loading}] = useMutation(MODIFY_FACTORY_STOCK, {
-    fetchPolicy: 'no-cache',
-    onCompleted: data => {
-      setFactoryStockDetails(data.factoryStock)
-    }
-  })
-  function handleClose(){
-    hideFactoryStockModal()
-  }
+	const [modifyFactoryStock, {loading}] = useMutation(MODIFY_FACTORY_STOCK, {
+		fetchPolicy: 'no-cache',
+		onCompleted: data => {
+			setFactoryStockDetails(data.factoryStock)
+		}
+	})
+	function handleClose(){
+		hideFactoryStockModal()
+	}
 
-  function handleUpdate(){
-    modifyFactoryStock(
-      {
-        variables: {
-          "stockInput": {
-            "invMastUid": Number(_.get(product,`frecno`,0)),
-            "factoryAvailability": Number(qtyAvailable),
-            "leadTimeDays": Number(leadTime)
-          }
-        }
-      }
-    )
-  }
+	function handleUpdate(){
+		modifyFactoryStock(
+			{
+				variables: {
+					'stockInput': {
+						'invMastUid': Number(_.get(product,'frecno',0)),
+						'factoryAvailability': Number(qtyAvailable),
+						'leadTimeDays': Number(leadTime)
+					}
+				}
+			}
+		)
+	}
 
-  function handleChange(e){
-    if( e.target.id === "qtyAvailable"){
-      setQtyAvailable(e.target.value)
-    } else if( e.target.id === "leadTime") {
-      setLeadTime(e.target.value)
-    }
-  }
+	function handleChange(e){
+		if( e.target.id === 'qtyAvailable'){
+			setQtyAvailable(e.target.value)
+		} else if( e.target.id === 'leadTime') {
+			setLeadTime(e.target.value)
+		}
+	}
   
-  return(
-    <Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
-      <Container>
-        <h4>Factory Stock</h4>
-        <h6>{_.get(product,`name`,'')}</h6>
-        <DivRow>
-          <DivItem>
-            <Label>Factory Availability: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
-          </DivItem>
-          <DivItem>
-            <Label>Est. Lead Time (days): </Label><input id="leadTime" type="number" value={leadTime} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
-          </DivItem>
-        </DivRow>
-        <DivRow>
-          <DivItem>
-            <Label>Last Modified: </Label><input disabled value={lastModified} style={{'width': '250px'}}/>
-          </DivItem>
-        </DivRow>
-        <DivRow>
-          <DivItem>
-            <Label>Modified By: </Label><input disabled value={lastModifiedBy} style={{'width': '250px'}}/>
-          </DivItem>
-        </DivRow>
-        <ButtonBlack disabled={loading} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
-      </Container>
-    </Modal>
-  )
+	return(
+		<Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
+			<Container>
+				<h4>Factory Stock</h4>
+				<h6>{_.get(product,'name','')}</h6>
+				<DivRow>
+					<DivItem>
+						<Label>Factory Availability: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
+					</DivItem>
+					<DivItem>
+						<Label>Est. Lead Time (days): </Label><input id="leadTime" type="number" value={leadTime} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
+					</DivItem>
+				</DivRow>
+				<DivRow>
+					<DivItem>
+						<Label>Last Modified: </Label><input disabled value={lastModified} style={{'width': '250px'}}/>
+					</DivItem>
+				</DivRow>
+				<DivRow>
+					<DivItem>
+						<Label>Modified By: </Label><input disabled value={lastModifiedBy} style={{'width': '250px'}}/>
+					</DivItem>
+				</DivRow>
+				<ButtonBlack disabled={loading} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
+			</Container>
+		</Modal>
+	)
 }

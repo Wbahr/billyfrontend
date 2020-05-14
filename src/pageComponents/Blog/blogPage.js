@@ -11,9 +11,9 @@ const DivContainer = styled.div`
 
 export default function BlogPage({history}) {
 
-  return(
-    <DivContainer>
-      <p>insert blog here</p>
-    </DivContainer>
-  )
+	return(
+		<DivContainer>
+			<p>insert blog here</p>
+		</DivContainer>
+	)
 }

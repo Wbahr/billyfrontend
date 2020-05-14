@@ -47,31 +47,31 @@ const A = styled.a`
 `
 export default function LineCards() {
 
-    return (
+	return (
         <>
             <SectionHeader
-                text='Line Card & Catalogs'
+            	text='Line Card & Catalogs'
             />
             <LineCardWrapper>
-                <LineCardDiv>
-                    <A href="#">
-                        <ImgDiv><Img src={LineCard} /></ImgDiv>
-                        <NameDiv><P>Line Card</P></NameDiv>
-                    </A>
-                </LineCardDiv>
-                <LineCardDiv>
-                    <A href="#">
-                        <ImgDiv><Img src={Hydraulic} /></ImgDiv>
-                        <NameDiv><P>Hydraulic Catalog</P></NameDiv>
-                    </A>
-                </LineCardDiv>
-                <LineCardDiv>
-                    <A href="#">
-                        <ImgDiv><Img src={Automation} /></ImgDiv>
-                        <NameDiv><P>Automation Catalog</P></NameDiv>
-                    </A>
-                </LineCardDiv>
+            	<LineCardDiv>
+            		<A href="#">
+            			<ImgDiv><Img src={LineCard} /></ImgDiv>
+            			<NameDiv><P>Line Card</P></NameDiv>
+            		</A>
+            	</LineCardDiv>
+            	<LineCardDiv>
+            		<A href="#">
+            			<ImgDiv><Img src={Hydraulic} /></ImgDiv>
+            			<NameDiv><P>Hydraulic Catalog</P></NameDiv>
+            		</A>
+            	</LineCardDiv>
+            	<LineCardDiv>
+            		<A href="#">
+            			<ImgDiv><Img src={Automation} /></ImgDiv>
+            			<NameDiv><P>Automation Catalog</P></NameDiv>
+            		</A>
+            	</LineCardDiv>
             </LineCardWrapper>
         </>
-    )
+	)
 }

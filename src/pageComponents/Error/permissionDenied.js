@@ -23,10 +23,10 @@ const Container = styled.div`
 
 export default function PermissionDeniedPage({history}) {
 
-  return(
-    <Container>
-      <img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
-      <h1>Permission Denied.</h1>
-    </Container>
-  )
+	return(
+		<Container>
+			<img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
+			<h1>Permission Denied.</h1>
+		</Container>
+	)
 }

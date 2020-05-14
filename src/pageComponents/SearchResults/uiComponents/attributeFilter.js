@@ -51,118 +51,118 @@ const InputSearch = styled.input`
 `
 
 const defaultStyle = {
-  transition: `opacity 300ms ease-in-out`,
-  opacity: 0,
+	transition: 'opacity 300ms ease-in-out',
+	opacity: 0,
 }
 
 const transitionStyles = {
-  entering: { opacity: 1 },
-  entered:  { opacity: 1 },
-  exiting:  { opacity: 0 },
-  exited:  { opacity: 0 },
-};
+	entering: { opacity: 1 },
+	entered:  { opacity: 1 },
+	exiting:  { opacity: 0 },
+	exited:  { opacity: 0 },
+}
 
 export default function AttributeFilter({categoryAttribute, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
-  const [isOpen, setIsOpen] = useState(open)
-  const [filter, setFilter] = useState('')
-  const [attribute, setAttribute] = useState(null)
-  const [filteredAttributeValues, setFilteredAttributeValues] = useState([])
-  const [] = useState(false)
+	const [isOpen, setIsOpen] = useState(open)
+	const [filter, setFilter] = useState('')
+	const [attribute, setAttribute] = useState(null)
+	const [filteredAttributeValues, setFilteredAttributeValues] = useState([])
+	const [] = useState(false)
 
-  useEffect(() => {
-    let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === categoryAttribute.categoryName)
-    filteredAttributeCategories.map(filterAttrObj => {
-      if(filterAttrObj.categoryName === categoryAttribute.categoryName) {
-        let newAttributeFeatureNames = [] 
-        filterAttrObj.features.map(feature => {
-          newAttributeFeatureNames.push(feature.featureName)
-        })
-        setFilteredAttributeValues(newAttributeFeatureNames)
-      } else {
-        setFilteredAttributeValues([])
-      }
-    })
+	useEffect(() => {
+		let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === categoryAttribute.categoryName)
+		filteredAttributeCategories.map(filterAttrObj => {
+			if(filterAttrObj.categoryName === categoryAttribute.categoryName) {
+				let newAttributeFeatureNames = [] 
+				filterAttrObj.features.map(feature => {
+					newAttributeFeatureNames.push(feature.featureName)
+				})
+				setFilteredAttributeValues(newAttributeFeatureNames)
+			} else {
+				setFilteredAttributeValues([])
+			}
+		})
     
-    setAttribute({
-      field: categoryAttribute.categoryName,
-      values: inputAttribute ? [...inputAttribute.values] : []
-    })
+		setAttribute({
+			field: categoryAttribute.categoryName,
+			values: inputAttribute ? [...inputAttribute.values] : []
+		})
 
-  }, [attributeFeatureToggleStates])
+	}, [attributeFeatureToggleStates])
 
-  const handleFeatureToggle = (e, option) => {
-    var newAttribute = {
-      ...attribute
-    };
+	const handleFeatureToggle = (e, option) => {
+		var newAttribute = {
+			...attribute
+		}
     
-    //Add or remove the feature from the field category, depending on the checked status.
-    if(e.target.checked){
-      newAttribute.values = [...new Set([...newAttribute.values, option.featureName])]
-    } else {
-      newAttribute.values = newAttribute.values.filter(val => val !== option.featureName)
-    }
+		//Add or remove the feature from the field category, depending on the checked status.
+		if(e.target.checked){
+			newAttribute.values = [...new Set([...newAttribute.values, option.featureName])]
+		} else {
+			newAttribute.values = newAttribute.values.filter(val => val !== option.featureName)
+		}
 
-    //Create a new array with all the attribute category filter selections.
-    //Temporarily remove this attribute category
-    var newToggleStates = [
-      ...attributeFeatureToggleStates.filter(f => f.field !== newAttribute.field)
-    ]
+		//Create a new array with all the attribute category filter selections.
+		//Temporarily remove this attribute category
+		var newToggleStates = [
+			...attributeFeatureToggleStates.filter(f => f.field !== newAttribute.field)
+		]
 
-    //Re-add the new category attribute values if any features of the category are
-    //selected for filtering
-    if(newAttribute.values.length !== 0){
-      newToggleStates = [
-        ...newToggleStates,
-        newAttribute
-      ]
-    }
+		//Re-add the new category attribute values if any features of the category are
+		//selected for filtering
+		if(newAttribute.values.length !== 0){
+			newToggleStates = [
+				...newToggleStates,
+				newAttribute
+			]
+		}
 
-    updatedFeatureToggleEvent(newToggleStates)
-  }
+		updatedFeatureToggleEvent(newToggleStates)
+	}
 
-  let AttributeOptions = categoryAttribute.features.map((feature, index) => {
-    let disable = filteredAttributeValues.includes(feature)
+	let AttributeOptions = categoryAttribute.features.map((feature, index) => {
+		let disable = filteredAttributeValues.includes(feature)
 
-    if(feature.featureName.toLowerCase() !== 'null' && _.startsWith(feature.featureNameDisplay.toLowerCase(), filter)){
-      return (
-        <DivOptionRow key={index}>
-          <input type="checkbox" 
-            checked={attribute && attribute.values.indexOf(feature.featureName) > -1}
-            onChange={(e) => handleFeatureToggle(e, feature)}
-            disabled={disable}
-          />
-          {disable ?
-            <DisabledLabel htmlFor={feature.featureName}>{feature.featureNameDisplay}</DisabledLabel>
-          :
-            <Label htmlFor={feature.featureName}>{feature.featureNameDisplay}</Label>
-          }
-        </DivOptionRow>
-      )
-    }
-  })
+		if(feature.featureName.toLowerCase() !== 'null' && _.startsWith(feature.featureNameDisplay.toLowerCase(), filter)){
+			return (
+				<DivOptionRow key={index}>
+					<input type="checkbox" 
+						checked={attribute && attribute.values.indexOf(feature.featureName) > -1}
+						onChange={(e) => handleFeatureToggle(e, feature)}
+						disabled={disable}
+					/>
+					{disable ?
+						<DisabledLabel htmlFor={feature.featureName}>{feature.featureNameDisplay}</DisabledLabel>
+						:
+						<Label htmlFor={feature.featureName}>{feature.featureNameDisplay}</Label>
+					}
+				</DivOptionRow>
+			)
+		}
+	})
 
-  return(
+	return(
     <>
       <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-        <P>{categoryAttribute.categoryNameDisplay}</P>
-        {isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+      	<P>{categoryAttribute.categoryNameDisplay}</P>
+      	{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
       </DivTitle>
       {isOpen && 
         <>
           <div>
-            {categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
+          	{categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
           </div>
           <DivOptions>
-            {AttributeOptions}
+          	{AttributeOptions}
           </DivOptions>
         </>
       }
     </>
-  )
+	)
 }
 
 AttributeFilter.propTypes = {
-  categoryAttribute: PropTypes.object.isRequired,
-  open: PropTypes.bool,
-  toggleAttribute: PropTypes.func
+	categoryAttribute: PropTypes.object.isRequired,
+	open: PropTypes.bool,
+	toggleAttribute: PropTypes.func
 }

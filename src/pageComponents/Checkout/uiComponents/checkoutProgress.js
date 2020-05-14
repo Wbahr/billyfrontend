@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function CheckoutProgress({stepLabels, step, clickMoveToStep, stepValidated}) {
 
-  const UlProgressBar = styled.ul`
+	const UlProgressBar = styled.ul`
     margin: 0;
     
     li {
@@ -47,35 +47,35 @@ export default function CheckoutProgress({stepLabels, step, clickMoveToStep, ste
     }
   ` 
 
-  let Steps = stepLabels.map((stepName, index) =>{
-    let LI = styled.li`
-      cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
+	let Steps = stepLabels.map((stepName, index) =>{
+		let LI = styled.li`
+      cursor: ${(stepValidated[index] || (index === step)) ? 'pointer' : 'default'};
       :before {
-        background-color: ${stepValidated[index] ? "#000080" : "white"};
+        background-color: ${stepValidated[index] ? '#000080' : 'white'};
       }
     `
 
-    const LiSelected = styled.li`
+		const LiSelected = styled.li`
     color: #535353 !important; 
     font-weight: 500;
-    cursor: ${(stepValidated[index] || (index === step)) ? "pointer" : "default"};
+    cursor: ${(stepValidated[index] || (index === step)) ? 'pointer' : 'default'};
     :before {
       border-color: #007bff !important;
-      background-color: ${stepValidated[index] ? "#afd5ff" : "white"};
+      background-color: ${stepValidated[index] ? '#afd5ff' : 'white'};
     }
   `
 
-    if (index === step) {
-      return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
-    } else {
-      return(<LI onClick={()=>clickMoveToStep(index)}>{stepName}</LI>)
-    }
-  })
-  return(
+		if (index === step) {
+			return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
+		} else {
+			return(<LI onClick={()=>clickMoveToStep(index)}>{stepName}</LI>)
+		}
+	})
+	return(
     <>
       <UlProgressBar>
-        {Steps}
+      	{Steps}
       </UlProgressBar>
     </>
-  )
+	)
 }

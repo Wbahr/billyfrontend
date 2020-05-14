@@ -39,36 +39,36 @@ const ButtonSearch = styled.button`
 `
 
 export default function ResultsSearch({updateSearchTerm, updateSortType, sortType, clearInnerSearch, handleClearedInnerSearch}) {
-  const [searchTerm, setSearchTerm] = useState('')
+	const [searchTerm, setSearchTerm] = useState('')
 
-  function handleUpdateSearchTerm(){
-    updateSearchTerm(searchTerm)
-  }
+	function handleUpdateSearchTerm(){
+		updateSearchTerm(searchTerm)
+	}
 
-  function handleSetSearchTerm(value){
-    setSearchTerm(value)
-  }
+	function handleSetSearchTerm(value){
+		setSearchTerm(value)
+	}
 
-  useEffect(() => {
-    if(clearInnerSearch){
-      handleClearedInnerSearch()
-      setSearchTerm('')
-    }
-  })
+	useEffect(() => {
+		if(clearInnerSearch){
+			handleClearedInnerSearch()
+			setSearchTerm('')
+		}
+	})
 
 
-  return(
-    <Div>
-      <DivResultsSearch>
-        <InputSearch placeholder="Add keywords to refine these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
-      </DivResultsSearch>
-      <DivResultsSearch>
-        <select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>
-          <option value={'relevancy'}>Sort by Relevance</option>
-          <option value={'availability'}>Sort by Availability</option>
-          <option value={'popularity'}>Sort by Popularity</option>
-        </select>
-      </DivResultsSearch>
-    </Div>
-  )
+	return(
+		<Div>
+			<DivResultsSearch>
+				<InputSearch placeholder="Add keywords to refine these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
+			</DivResultsSearch>
+			<DivResultsSearch>
+				<select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>
+					<option value={'relevancy'}>Sort by Relevance</option>
+					<option value={'availability'}>Sort by Availability</option>
+					<option value={'popularity'}>Sort by Popularity</option>
+				</select>
+			</DivResultsSearch>
+		</Div>
+	)
 }

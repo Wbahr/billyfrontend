@@ -21,22 +21,22 @@ const ContentScreenContainer = styled.div`
 `
 class HomePage extends React.Component {
 
-  render() {
-    return (
+	render() {
+		return (
       <>
         {/* <SuggestedSearch /> */}
         <ContentScreenContainer>
-        <Banner />
-          <ShopOurProducts {...this.props} />
-          <TechnicallySpeaking />
+        	<Banner />
+        	<ShopOurProducts {...this.props} />
+        	<TechnicallySpeaking />
 
-          <FeaturedManufacturers />
-          <LineCards />
+        	<FeaturedManufacturers />
+        	<LineCards />
           
         </ContentScreenContainer>
       </>
-    )
-  }
+		)
+	}
 }
 
 export default HomePage

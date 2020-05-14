@@ -5,17 +5,17 @@ import { CardElement } from 'react-stripe-elements'
 
 function PaymentManagerComponent() {
 
-  return(
+	return(
     <>
       <CardElement style={{
-        base: {
-          fontSize: '18px',
-          backgroundColor: 'white'
-        }}} 
+      	base: {
+      		fontSize: '18px',
+      		backgroundColor: 'white'
+      	}}} 
       />
       <button>Save Card</button>
     </>
-  )
+	)
 }
 
 export default PaymentManagerComponent

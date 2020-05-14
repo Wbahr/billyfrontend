@@ -45,31 +45,31 @@ const DivScheduleHeader = styled.div`
 `
 
 export function ShippingScheduleForm(props){
-  const {
-    values, 
-    setFieldValue
-  } = props
+	const {
+		values, 
+		setFieldValue
+	} = props
   
-  function handlePackingBasisChange(name, value){
-    setFieldValue(name, value)
-    let packingBasisIndex = packingBasis.findIndex(elem => elem.value === value)
-    let packingBasisName = packingBasis[packingBasisIndex].apiValue
-    setFieldValue('schedule.packingBasis', packingBasisName)
-  }
-  return(
+	function handlePackingBasisChange(name, value){
+		setFieldValue(name, value)
+		let packingBasisIndex = packingBasis.findIndex(elem => elem.value === value)
+		let packingBasisName = packingBasis[packingBasisIndex].apiValue
+		setFieldValue('schedule.packingBasis', packingBasisName)
+	}
+	return(
     <>
       <FormRow>
-        <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
-        <div style={{flexGrow: 99}}>
-          <Field 
-            name="schedule.packingBasisName" 
-            component={SelectField} 
-            options={packingBasis} 
-            isSearchable={false}
-            changeFunction={handlePackingBasisChange}
-          /> 
-          <FormikInput type="hidden" name="schedule.packingBasis" />
-        </div>
+      	<label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
+      	<div style={{flexGrow: 99}}>
+      		<Field 
+      			name="schedule.packingBasisName" 
+      			component={SelectField} 
+      			options={packingBasis} 
+      			isSearchable={false}
+      			changeFunction={handlePackingBasisChange}
+      		/> 
+      		<FormikInput type="hidden" name="schedule.packingBasis" />
+      	</div>
       </FormRow>
       {values.schedule.packingBasisName === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
       {values.schedule.packingBasisName === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>}
@@ -82,20 +82,20 @@ export function ShippingScheduleForm(props){
       )}
       {values.schedule.packingBasisName === 4 &&
         <FieldArray
-          name="schedule.cartWithDates"
-          render={arrayHelpers => (
-            <div>
-              {(values.schedule.cartWithDates && values.schedule.cartWithDates.length > 0) ? (
-                values.schedule.cartWithDates.map((item, index) => (
-                  <ShippingScheduleLine item={item} index={index}/>
-                ))
-              ) : (
-                <p>No Cart Items</p>
-              )}
-            </div>
-          )}
+        	name="schedule.cartWithDates"
+        	render={arrayHelpers => (
+        		<div>
+        			{(values.schedule.cartWithDates && values.schedule.cartWithDates.length > 0) ? (
+        				values.schedule.cartWithDates.map((item, index) => (
+        					<ShippingScheduleLine item={item} index={index}/>
+        				))
+        			) : (
+        				<p>No Cart Items</p>
+        			)}
+        		</div>
+        	)}
         />
       }
     </>
-  )
+	)
 }

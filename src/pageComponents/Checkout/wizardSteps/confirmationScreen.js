@@ -67,86 +67,86 @@ const DivTextRow = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-  const {
-    values:{
-      schedule,
-      shipto,
-      billing
-    },
-    checkoutDropdownDataLabels
-  } = props
+	const {
+		values:{
+			schedule,
+			shipto,
+			billing
+		},
+		checkoutDropdownDataLabels
+	} = props
 
-  let CartDates = schedule.cartWithDates.map((item, index) => (
-    <ShippingScheduleLineDisplay item={item} index={index}/>
-  ))
+	let CartDates = schedule.cartWithDates.map((item, index) => (
+		<ShippingScheduleLineDisplay item={item} index={index}/>
+	))
 
-  let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)
-  let packingBasisName = packingBasis[packingBasisIndex].label
+	let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)
+	let packingBasisName = packingBasis[packingBasisIndex].label
 
-  let carrierIdIndex = checkoutDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierId)
-  let carrierName = checkoutDropdownDataLabels.carriers[carrierIdIndex].label
+	let carrierIdIndex = checkoutDropdownDataLabels.carriers.findIndex(elem => elem.value === shipto.carrierId)
+	let carrierName = checkoutDropdownDataLabels.carriers[carrierIdIndex].label
 
-  return(
+	return(
     <>
       <Context.Consumer>
-        {({userInfo}) => {
-          if (!_.isNil(userInfo) && (userInfo.role === "Impersonator" || userInfo.role === "AirlineEmployee")){
-            return(
-              <SectionContainerBlue>
-                <SectionTitle>Confirmation Email</SectionTitle>
-                <FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
-                <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
-              </SectionContainerBlue>
-            )
-          }
-        }}        
+      	{({userInfo}) => {
+      		if (!_.isNil(userInfo) && (userInfo.role === 'Impersonator' || userInfo.role === 'AirlineEmployee')){
+      			return(
+      				<SectionContainerBlue>
+      					<SectionTitle>Confirmation Email</SectionTitle>
+      					<FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
+      					<FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
+      				</SectionContainerBlue>
+      			)
+      		}
+      	}}        
       </Context.Consumer>
       <SectionRow>
-        <SectionContainerHalf>
-          <SectionTitle>Ship To</SectionTitle>
-          <SectionFields>
-            <DivAddressSection>
-              <Pbold>{shipto.firstName} {shipto.lastName}</Pbold>
-              <Pbold>{shipto.address1}</Pbold>
-              <Pbold>{shipto.address2}</Pbold>
-              <Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
-            </DivAddressSection>
-            <p>{shipto.phone}</p>
-            <p>{shipto.email}</p>
-            <DivTextRow><P>Carrier:</P><p>{carrierName}</p></DivTextRow>
-            <DivTextRow><P>Is Collect?</P><p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p></DivTextRow>
-            {shipto.isCollect === 1 && <DivTextRow><P>Collect Number:</P><p>{shipto.collectNumber}</p></DivTextRow>}
-          </SectionFields>
-        </SectionContainerHalf>
-        <SectionContainerHalf>
-          <SectionTitle>Bill To</SectionTitle>
-          <SectionFields>
-            <DivAddressSection>
-              <Pbold>{billing.firstName} {billing.lastName}</Pbold>
-              <Pbold>{billing.address1}</Pbold>
-              <Pbold>{billing.address2}</Pbold>
-              <Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
-            </DivAddressSection>
-            <p>{billing.phone}</p>
-            <p>{billing.email}</p>
-            <DivTextRow><P>Payment Method:</P><p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p></DivTextRow>
-            {billing.paymentMethod === 'credit_card' && <DivTextRow><P>Card Type:</P><p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p></DivTextRow>}
-            <DivTextRow><P>Purchase Order:</P><p>{billing.purchaseOrder}</p></DivTextRow>
-          </SectionFields>
-        </SectionContainerHalf>
+      	<SectionContainerHalf>
+      		<SectionTitle>Ship To</SectionTitle>
+      		<SectionFields>
+      			<DivAddressSection>
+      				<Pbold>{shipto.firstName} {shipto.lastName}</Pbold>
+      				<Pbold>{shipto.address1}</Pbold>
+      				<Pbold>{shipto.address2}</Pbold>
+      				<Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+      			</DivAddressSection>
+      			<p>{shipto.phone}</p>
+      			<p>{shipto.email}</p>
+      			<DivTextRow><P>Carrier:</P><p>{carrierName}</p></DivTextRow>
+      			<DivTextRow><P>Is Collect?</P><p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p></DivTextRow>
+      			{shipto.isCollect === 1 && <DivTextRow><P>Collect Number:</P><p>{shipto.collectNumber}</p></DivTextRow>}
+      		</SectionFields>
+      	</SectionContainerHalf>
+      	<SectionContainerHalf>
+      		<SectionTitle>Bill To</SectionTitle>
+      		<SectionFields>
+      			<DivAddressSection>
+      				<Pbold>{billing.firstName} {billing.lastName}</Pbold>
+      				<Pbold>{billing.address1}</Pbold>
+      				<Pbold>{billing.address2}</Pbold>
+      				<Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+      			</DivAddressSection>
+      			<p>{billing.phone}</p>
+      			<p>{billing.email}</p>
+      			<DivTextRow><P>Payment Method:</P><p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p></DivTextRow>
+      			{billing.paymentMethod === 'credit_card' && <DivTextRow><P>Card Type:</P><p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p></DivTextRow>}
+      			<DivTextRow><P>Purchase Order:</P><p>{billing.purchaseOrder}</p></DivTextRow>
+      		</SectionFields>
+      	</SectionContainerHalf>
       </SectionRow>
       <SectionContainer>
-        <SectionTitle>Shipping Schedule</SectionTitle>
-        <SectionFields>
-        <DivTextRow><P>Packing Basis:</P><p>{packingBasisName}</p></DivTextRow>
-        </SectionFields>
+      	<SectionTitle>Shipping Schedule</SectionTitle>
+      	<SectionFields>
+      		<DivTextRow><P>Packing Basis:</P><p>{packingBasisName}</p></DivTextRow>
+      	</SectionFields>
       </SectionContainer>
       <SectionContainer>
-        <SectionTitle>Items</SectionTitle>
-        <SectionFields>
-          {CartDates}
-        </SectionFields>
+      	<SectionTitle>Items</SectionTitle>
+      	<SectionFields>
+      		{CartDates}
+      	</SectionFields>
       </SectionContainer>
     </>
-  )
+	)
 }

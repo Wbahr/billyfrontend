@@ -50,45 +50,45 @@ const Button = styled.button`
 `
 
 export default function LoginPage({history}) {
-  const [customerType, setCustomerType] = useState('')
+	const [customerType, setCustomerType] = useState('')
 
-  const renderContent = () => {
-    if (customerType === 'existing') {
-      return (
-        <ExistingCustomer />
-      )
-    } else if (customerType === 'new') {
-      return (
-        <NewCustomer />
-      )
-    } else {
-      return(
-        <CustomerSelect 
-          selectCustomer={(value)=> handleCustomerSelect(value)}
-        />
-      )
-    }
-  }
+	const renderContent = () => {
+		if (customerType === 'existing') {
+			return (
+				<ExistingCustomer />
+			)
+		} else if (customerType === 'new') {
+			return (
+				<NewCustomer />
+			)
+		} else {
+			return(
+				<CustomerSelect 
+					selectCustomer={(value)=> handleCustomerSelect(value)}
+				/>
+			)
+		}
+	}
 
-  function handleCustomerSelect(value){
-    if(value === 'existing'){
-      setCustomerType('existing')
-    } else {
-      setCustomerType('new')
-    }
-    selectCustomerType(true)
-  }
+	function handleCustomerSelect(value){
+		if(value === 'existing'){
+			setCustomerType('existing')
+		} else {
+			setCustomerType('new')
+		}
+		selectCustomerType(true)
+	}
 
-  return(
-    <SignupPageContainer>
-      <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
-      <P>Airline Hydraulics Signup</P>
-      {renderContent()}
-      <A onClick={()=> history.push('/login')}>Have an Account? Login</A>
-    </SignupPageContainer>
-  )
+	return(
+		<SignupPageContainer>
+			<Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
+			<P>Airline Hydraulics Signup</P>
+			{renderContent()}
+			<A onClick={()=> history.push('/login')}>Have an Account? Login</A>
+		</SignupPageContainer>
+	)
 }
 
 LoginPage.propTypes = {
-  history: PropTypes.object.isRequired
+	history: PropTypes.object.isRequired
 }

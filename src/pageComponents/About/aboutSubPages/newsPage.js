@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 export default function News() {
-    return (
-        <div>
+	return (
+		<div>
             News
-        </div>
-    )
+		</div>
+	)
 }

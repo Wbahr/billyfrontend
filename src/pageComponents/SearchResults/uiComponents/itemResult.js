@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
-import styled from "styled-components"
-import { useQuery, useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag';
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { useQuery, useLazyQuery } from '@apollo/client'
+import gql from 'graphql-tag'
 import Context from '../../../config/context'
 
 const DivItemResultContainer = styled.div`
@@ -171,95 +171,95 @@ const Img = styled.img`
 `
 
 export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
-  const [quantity, setQuantity] = useState(1)
-  const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id)
+	const [quantity, setQuantity] = useState(1)
+	const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id)
 
-  const mutatedItemId = mutateItemId(result.item_id) 
-  function mutateItemId(itemId){
-    let mutatedItemId = itemId.replace(/\s/g, '-')
-    return(mutatedItemId)
-  }
+	const mutatedItemId = mutateItemId(result.item_id) 
+	function mutateItemId(itemId){
+		let mutatedItemId = itemId.replace(/\s/g, '-')
+		return(mutatedItemId)
+	}
 
-  function handleSetQuantity(quantity){
-    if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
-      setQuantity(quantity)
-    }
-  }
+	function handleSetQuantity(quantity){
+		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
+			setQuantity(quantity)
+		}
+	}
 
-  let imagePath
-  if (_.isNil(result.thumbnail_image_path)){
-    imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-  } else {
-    let imagePathArray = result.thumbnail_image_path.split("\\")
-    let imageFile = imagePathArray[imagePathArray.length - 1]
-    imageFile = imageFile.slice(0, -5) + 'l.jpg'
-    imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-  }
+	let imagePath
+	if (_.isNil(result.thumbnail_image_path)){
+		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+	} else {
+		let imagePathArray = result.thumbnail_image_path.split('\\')
+		let imageFile = imagePathArray[imagePathArray.length - 1]
+		imageFile = imageFile.slice(0, -5) + 'l.jpg'
+		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+	}
 
-  let CustomerPartOptions 
-  if (!_.isNil(result.customer_part_numbers)){
-    CustomerPartOptions = _.map(result.customer_part_numbers, elem => {
-      return(<option value={elem.customer_part_number_id}>{elem.customer_part_number}</option>)
-    })
-  }
+	let CustomerPartOptions 
+	if (!_.isNil(result.customer_part_numbers)){
+		CustomerPartOptions = _.map(result.customer_part_numbers, elem => {
+			return(<option value={elem.customer_part_number_id}>{elem.customer_part_number}</option>)
+		})
+	}
 
-  return(
-      <DivItemResultContainer>
-        <DivPartDetailsRow>
-          <DivPartImg>
-            <Img src={imagePath}/>
-          </DivPartImg>
-          <ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno, result.item_id)}}>Quick Look</ButtonBlack>
-          <DivPartDetails>
-            <PpartTitle onClick={()=>{
-              if (_.isNil(customerPartNumber)){
-                history.push(`/product/${mutatedItemId}/${result.frecno}`)
-              } else {
-                history.push(`/product/${mutatedItemId}/${result.frecno}/${customerPartNumber}`)
-              }
-            }}>{result.item_desc}</PpartTitle>
-          </DivPartDetails>
-          <DivPartNumberRow>
-            <PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
-          </DivPartNumberRow>
-          <DivPartNumberRow>
-            <PpartAvailability>Customer Part #: 
-              <select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
-                <option>Select a Part No.</option>
-                {CustomerPartOptions}
-              </select>
-            </PpartAvailability>
-          </DivPartNumberRow>
-          <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-            {result.availability !== 0 ? 
-              <DivRow>
-                <PBlue>{result.availability}</PBlue>
-                <PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
-              </DivRow> 
-            : 
-              <PBlue>{result.availability_message}</PBlue>
-            }
-          </DivPartNumberRow>
-          <DivPartNumberRowSpread>
-            <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-            {(!_.isNil(result.unit_price) && result.unit_price !== 0) ? <Div><Pprice>${result.unit_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-          </DivPartNumberRowSpread>
-          <DivSpace>
-            <Context.Consumer>
-              {({addItem}) => (
-                <ButtonRed onClick={()=>{
-                  addItem({
-                    'frecno': result.frecno,
-                    'quantity': parseInt(quantity, 10),
-                    'itemNotes': '',
-                    'itemUnitPriceOverride': null,
-                    'customerPartNumberId': customerPartNumber
-                  }), addedToCart(), setQuantity(1)
-                  }}>Add to Cart</ButtonRed>
-              )}
-            </Context.Consumer>
-          </DivSpace>
-        </DivPartDetailsRow>
-      </DivItemResultContainer>
-  )
+	return(
+		<DivItemResultContainer>
+			<DivPartDetailsRow>
+				<DivPartImg>
+					<Img src={imagePath}/>
+				</DivPartImg>
+				<ButtonBlack onClick={()=>{toggleDetailsModal(result.frecno, result.item_id)}}>Quick Look</ButtonBlack>
+				<DivPartDetails>
+					<PpartTitle onClick={()=>{
+						if (_.isNil(customerPartNumber)){
+							history.push(`/product/${mutatedItemId}/${result.frecno}`)
+						} else {
+							history.push(`/product/${mutatedItemId}/${result.frecno}/${customerPartNumber}`)
+						}
+					}}>{result.item_desc}</PpartTitle>
+				</DivPartDetails>
+				<DivPartNumberRow>
+					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
+				</DivPartNumberRow>
+				<DivPartNumberRow>
+					<PpartAvailability>Customer Part #: 
+						<select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
+							<option>Select a Part No.</option>
+							{CustomerPartOptions}
+						</select>
+					</PpartAvailability>
+				</DivPartNumberRow>
+				<DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+					{result.availability !== 0 ? 
+						<DivRow>
+							<PBlue>{result.availability}</PBlue>
+							<PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
+						</DivRow> 
+						: 
+						<PBlue>{result.availability_message}</PBlue>
+					}
+				</DivPartNumberRow>
+				<DivPartNumberRowSpread>
+					<Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+					{(!_.isNil(result.unit_price) && result.unit_price !== 0) ? <Div><Pprice>${result.unit_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+				</DivPartNumberRowSpread>
+				<DivSpace>
+					<Context.Consumer>
+						{({addItem}) => (
+							<ButtonRed onClick={()=>{
+								addItem({
+									'frecno': result.frecno,
+									'quantity': parseInt(quantity, 10),
+									'itemNotes': '',
+									'itemUnitPriceOverride': null,
+									'customerPartNumberId': customerPartNumber
+								}), addedToCart(), setQuantity(1)
+							}}>Add to Cart</ButtonRed>
+						)}
+					</Context.Consumer>
+				</DivSpace>
+			</DivPartDetailsRow>
+		</DivItemResultContainer>
+	)
 }

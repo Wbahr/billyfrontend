@@ -20,13 +20,13 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HeaderFooterLayoutExpanded(props) {
-  return(
-    <Div>
-      <Header {...props}/>
-      <ContentScreenContainer {...props}>
-        {props.children}
-      </ContentScreenContainer>
-      <Footer />
-    </Div>
-  )
+	return(
+		<Div>
+			<Header {...props}/>
+			<ContentScreenContainer {...props}>
+				{props.children}
+			</ContentScreenContainer>
+			<Footer />
+		</Div>
+	)
 }

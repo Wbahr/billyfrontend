@@ -66,68 +66,68 @@ const MainCurrencyInput = styled(CurrencyInput)`
 `
 
 export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength}){
-  if(type === "text" && _.isNil(changeFunction)){
-    return(
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput 
-          type="text" 
-          name={name} 
-          placeholder={placeholder} 
-          disabled={disabled} 
-          style={{width: width || "400px"}}
-          maxLength={maxlength}
-        />
-      </DivContainer>
-    )
-  } else if(type === "text" && !_.isNil(changeFunction)){
-    return(
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-        <MainInput 
-          type="text" 
-          name={name} 
-          placeholder={placeholder} 
-          disabled={disabled} 
-          style={{width: width || "400px"}}
-          onChange={(e)=>changeFunction(name, e.target.value)}
-          maxLength={maxlength}
-        />
-      </DivContainer>
-    )
-  } else if(type === "currency") {
-    return(
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-          <FormikField name={name}>
-            {({
-              field, // { name, value, onChange, onBlur }
-              form: {touched, errors}, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-              form
-            }) => (
-              <MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || "400px"}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
-            )}
-          </FormikField>
-      </DivContainer>
-    )
-  } else {
-    return(
-      <FormikField type={type} name={name} />
-    )
-  }
+	if(type === 'text' && _.isNil(changeFunction)){
+		return(
+			<DivContainer>
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				<MainInput 
+					type="text" 
+					name={name} 
+					placeholder={placeholder} 
+					disabled={disabled} 
+					style={{width: width || '400px'}}
+					maxLength={maxlength}
+				/>
+			</DivContainer>
+		)
+	} else if(type === 'text' && !_.isNil(changeFunction)){
+		return(
+			<DivContainer>
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				<MainInput 
+					type="text" 
+					name={name} 
+					placeholder={placeholder} 
+					disabled={disabled} 
+					style={{width: width || '400px'}}
+					onChange={(e)=>changeFunction(name, e.target.value)}
+					maxLength={maxlength}
+				/>
+			</DivContainer>
+		)
+	} else if(type === 'currency') {
+		return(
+			<DivContainer>
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				<FormikField name={name}>
+					{({
+						field, // { name, value, onChange, onBlur }
+						form: {touched, errors}, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+						form
+					}) => (
+						<MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
+					)}
+				</FormikField>
+			</DivContainer>
+		)
+	} else {
+		return(
+			<FormikField type={type} name={name} />
+		)
+	}
 }
 
 Input.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  disabled: PropTypes.bool,
-  label: PropTypes.string,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.string
+	name: PropTypes.string.isRequired,
+	type: PropTypes.string,
+	disabled: PropTypes.bool,
+	label: PropTypes.string,
+	placeholder: PropTypes.string,
+	onChange: PropTypes.string
 }
 
 Input.defaultProps = {
-  type: 'text',
-  placeholder: '',
-  maxlength: 'none'
+	type: 'text',
+	placeholder: '',
+	maxlength: 'none'
 }
