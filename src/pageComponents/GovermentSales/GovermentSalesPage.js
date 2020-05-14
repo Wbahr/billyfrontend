@@ -111,7 +111,7 @@ const Img = styled.img`
 export default function GovermentSalesPage() {
     return (
         <Container>
-            <Header text="Goverment sales" />
+            <Header text="Government sales" />
             <Detail>Airline provides innovative solutions for our customers who represent many different types of industries. In the government and defense sector, we provide fluid power and automation components, assemblies and systems to major defense contractors as a second- or third-tier supplier and also supply directly to U.S. government agencies as a small business.</Detail>
             <MainDiv>
                 <Div_1>
