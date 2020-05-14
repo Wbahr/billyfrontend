@@ -61,7 +61,7 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
 	const [factoryStock, setFactoryStock] = useState([])
 	const searchSent = useRef(false) 
 
-	const [getStockAvailability, { loading, error, data }] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
+	const [getStockAvailability] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
 		variables: { 
 			'invMastUid': invMastUid 
 		},

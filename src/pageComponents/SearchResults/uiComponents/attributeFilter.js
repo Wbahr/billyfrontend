@@ -6,68 +6,55 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { Transition } from "react-transition-group"
 
 const DivTitle = styled.div`
-  display: flex;
-  cursor: pointer;
-  width: 280px;
-  height: 36px;
-  padding: 0 16px;
-  background-color: #f3f3f3;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 8px;
+	display: flex;
+	cursor: pointer;
+	width: 280px;
+	height: 36px;
+	padding: 0 16px;
+	background-color: #f3f3f3;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 8px;
 `
 const DivOptions = styled.div`
-  display: flex; 
-  flex-direction: column;
-  max-height: 250px;
-  overflow: scroll;
+	display: flex; 
+	flex-direction: column;
+	max-height: 250px;
+	overflow: scroll;
 `
 
 const DivOptionRow = styled.div`
-  display: flex; 
-  width: 250px;
-  align-items: center;
-  margin: 8px 0 0 24px;
+	display: flex; 
+	width: 250px;
+	align-items: center;
+	margin: 8px 0 0 24px;
 `
 
 const P = styled.p`
-  margin: 0;
+	margin: 0;
 `
 
 const Label = styled.label`
-  margin: 0;
-  color: #535353;
-  font-size: 12px;
-  margin-left: 4px;
+	margin: 0;
+	color: #535353;
+	font-size: 12px;
+	margin-left: 4px;
 `
 
 const DisabledLabel = styled(Label)`
-  color: whitesmoke;
+	color: whitesmoke;
 `
 
 const InputSearch = styled.input`
-  margin: 4px 16px;
-  width: 240px;
+	margin: 4px 16px;
+	width: 240px;
 `
-
-const defaultStyle = {
-	transition: 'opacity 300ms ease-in-out',
-	opacity: 0,
-}
-
-const transitionStyles = {
-	entering: { opacity: 1 },
-	entered:  { opacity: 1 },
-	exiting:  { opacity: 0 },
-	exited:  { opacity: 0 },
-}
 
 export default function AttributeFilter({categoryAttribute, open, attributeFeatureToggleStates, updatedFeatureToggleEvent, filteredAttributeCategories}) {
 	const [isOpen, setIsOpen] = useState(open)
 	const [filter, setFilter] = useState('')
 	const [attribute, setAttribute] = useState(null)
 	const [filteredAttributeValues, setFilteredAttributeValues] = useState([])
-	const [] = useState(false)
 
 	useEffect(() => {
 		let inputAttribute = attributeFeatureToggleStates.find(attr => attr.field === categoryAttribute.categoryName)
@@ -82,7 +69,7 @@ export default function AttributeFilter({categoryAttribute, open, attributeFeatu
 				setFilteredAttributeValues([])
 			}
 		})
-    
+		
 		setAttribute({
 			field: categoryAttribute.categoryName,
 			values: inputAttribute ? [...inputAttribute.values] : []
@@ -94,7 +81,7 @@ export default function AttributeFilter({categoryAttribute, open, attributeFeatu
 		var newAttribute = {
 			...attribute
 		}
-    
+		
 		//Add or remove the feature from the field category, depending on the checked status.
 		if(e.target.checked){
 			newAttribute.values = [...new Set([...newAttribute.values, option.featureName])]
@@ -142,22 +129,22 @@ export default function AttributeFilter({categoryAttribute, open, attributeFeatu
 	})
 
 	return(
-    <>
-      <DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-      	<P>{categoryAttribute.categoryNameDisplay}</P>
-      	{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
-      </DivTitle>
-      {isOpen && 
-        <>
-          <div>
-          	{categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
-          </div>
-          <DivOptions>
-          	{AttributeOptions}
-          </DivOptions>
-        </>
-      }
-    </>
+		<>
+			<DivTitle onClick={()=>(setIsOpen(!isOpen))}>
+				<P>{categoryAttribute.categoryNameDisplay}</P>
+				{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+			</DivTitle>
+			{isOpen && 
+				<>
+					<div>
+						{categoryAttribute.features.length > 10 && <InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
+					</div>
+					<DivOptions>
+						{AttributeOptions}
+					</DivOptions>
+				</>
+			}
+		</>
 	)
 }
 

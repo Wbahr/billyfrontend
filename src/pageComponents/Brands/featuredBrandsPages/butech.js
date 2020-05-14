@@ -1,10 +1,8 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import BuTech from '../../../imgs/homepage/Butech.png'
+
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -127,55 +125,55 @@ const LinkStyle = styled.a`
     text-decoration: none;
   }
  `
-const VideoDiv = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin-bottom: 30px; 
-  justify-content: space-between;
-`
-const ArticlesVideo = styled.iframe`
-  width: 100%;
+// const VideoDiv = styled.div`
+//   display: flex;
+//   flex-wrap: nowrap;
+//   width: 100%;
+//   margin-bottom: 30px; 
+//   justify-content: space-between;
+// `
+// const ArticlesVideo = styled.iframe`
+//   width: 100%;
 
-`
-const ArticlesContentDiv = styled.div`
-  text-align: center;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-`
-const ArticlesPicture = styled.img`
-  width: 100%;
-  min-height: 100%;
-`
-const ArticlesShortLine = styled.div`
-  display: flex;
-  border-bottom: 2px solid #555555;
-  width: 15%;
-  margin: 25px 0 0;
-  `
-const ArticlesTopic = styled.h6`
-  color: #B51F2B;
-  font-weight: bold;
-  margin: 25px 15px;
-  font-size: 18px;
-  text-align: left;
-`
-const ArticlesImgDiv = styled.div`
-  max-width: 350px;
-  padding: 20px;
-  height: 300px;
-  overflow: hidden;
-`
+// `
+// const ArticlesContentDiv = styled.div`
+//   text-align: center;
+//   padding: 15px;
+//   display: flex;
+//   flex-direction: column;
+//   flex: 1;
+//   width: 100%;
+// `
+// const ArticlesPicture = styled.img`
+//   width: 100%;
+//   min-height: 100%;
+// `
+// const ArticlesShortLine = styled.div`
+//   display: flex;
+//   border-bottom: 2px solid #555555;
+//   width: 15%;
+//   margin: 25px 0 0;
+//   `
+// const ArticlesTopic = styled.h6`
+//   color: #B51F2B;
+//   font-weight: bold;
+//   margin: 25px 15px;
+//   font-size: 18px;
+//   text-align: left;
+// `
+// const ArticlesImgDiv = styled.div`
+//   max-width: 350px;
+//   padding: 20px;
+//   height: 300px;
+//   overflow: hidden;
+// `
 
-const SmallArticlesContent = styled.div`
-  display: flex
-  flex-wrap: nowrap;
-  max-width: 380px;
-  margin-bottom: 30px;
-`
+// const SmallArticlesContent = styled.div`
+//   display: flex
+//   flex-wrap: nowrap;
+//   max-width: 380px;
+//   margin-bottom: 30px;
+// `
 const FontAwesomeDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -191,11 +189,11 @@ const LinkStyleDiv = styled.div`
   justify-content: center;
   color: white;
 `
-const ArticlesContentDetails = styled.p`
-  margin: 0 15px;
-  text-align: left;
-  font-size: 14px;
-`
+// const ArticlesContentDetails = styled.p`
+//   margin: 0 15px;
+//   text-align: left;
+//   font-size: 14px;
+// `
 const ShopProducts = styled.a`
   color: #246696;
   font-size: 14px;
@@ -214,36 +212,33 @@ const RelatedLinkDiv = styled.div`
   width: 100%;
   height: 350px;
 `
-const Video = styled.div`
-  display: flex;
-  flex: 1;
-  max-width: 380px;
-  height: 250px;
-`
-const ArticlesDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`
+// const Video = styled.div`
+//   display: flex;
+//   flex: 1;
+//   max-width: 380px;
+//   height: 250px;
+// `
+// const ArticlesDiv = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   width: 100%;
+// `
 const RelatedContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
 `
-const BannerDiv = styled.div`
-  
-`
+
 const BannerImg = styled.img`
   width: 250px;
 `
-
 
 export default function Butech() {
 
 	return (
 		<Container>
 			<FeaturedBrandLogo>
-				<BannerDiv> <BannerImg src={BuTech} /></BannerDiv>
+				<div> <BannerImg src={BuTech} /></div>
 			</FeaturedBrandLogo>
 			<BrandDetailsContainer>
 				<AirlineDistributorH1>BuTech

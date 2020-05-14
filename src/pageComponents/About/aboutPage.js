@@ -1,25 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { StyledText0 } from '../../styles/fonts'
 import Locations from './aboutSubPages/locationsPage'
 import News from './aboutSubPages/newsPage'
 
-export default function AboutPage({ history }) {
+export default function AboutPage() {
 	const [pageComponent, setPageComponent] = useState()
 	let { page } = useParams()
 
-	const aboutPages = [
-		{
-			'label': 'Locations',
-			'page': 'locations'
-		},
-		{
-			'label': 'News',
-			'page': 'news'
-		}
-	]
 	useEffect(() => {
 		if (page === 'locations') {
 			setPageComponent(<Locations />)
@@ -30,11 +18,12 @@ export default function AboutPage({ history }) {
 	}, [page])
 
 	return (
-        <>
-            {pageComponent}
-        </>
+    <>
+      {pageComponent}
+    </>
 	)
 }
+
 AboutPage.propTypes = {
 	history: PropTypes.object.isRequired
 }

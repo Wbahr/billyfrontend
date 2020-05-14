@@ -10,66 +10,64 @@ import BrandFilter from './uiComponents/brandFilter'
 import CategoryFilter from './uiComponents/categoryFilter'
 import LocationsModal from './uiComponents/locationsModal'
 import DetailsModal from './uiComponents/detailsModal'
-import AddedToCartModal from './uiComponents/addedToCartModal'
 import AddedModal from './uiComponents/addedModal'
-import Loader from '../_common/loader'
 import InfiniteScroll from 'react-infinite-scroller'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import  SkeletonItem from './uiComponents/skeletonItem'
 
 const DivContainer = styled.div`
-  display: flex;
+	display: flex;
 `
 
 const ResultsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  margin-left: 8px;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	margin-left: 8px;
 `
 
 const DivResultSummary = styled.div`
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 `
 
 const DivSearchResultsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
 `
 
 const QUERY_ITEM_SEARCH = gql`
-  query ItemSearch($searchParams: ElasticSearchItemRequest!){
-    itemSearch(searchParams: $searchParams){
-      result
-      count
-      parentCategories {
-        parentCategoryCount
-        parentCategoryDisplayName
-        parentCategoryName
-      }
-      childCategories {
-        childCategoryCount
-        childCategoryDisplayName
-        childCategoryName
-      }
-      attributeCategories{
-        categoryName
-        categoryNameDisplay
-        features{
-          featureName
-          featureNameDisplay
-          itemCount
-        }
-      }
-      brands{
-        brandCount
-        brandName
-        brandNameDisplay
-      }
-    }
-  }
+	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+		itemSearch(searchParams: $searchParams){
+			result
+			count
+			parentCategories {
+				parentCategoryCount
+				parentCategoryDisplayName
+				parentCategoryName
+			}
+			childCategories {
+				childCategoryCount
+				childCategoryDisplayName
+				childCategoryName
+			}
+			attributeCategories{
+				categoryName
+				categoryNameDisplay
+				features{
+					featureName
+					featureNameDisplay
+					itemCount
+				}
+			}
+			brands{
+				brandCount
+				brandName
+				brandNameDisplay
+			}
+		}
+	}
 `
 
 export default function SearchResultsPage(props) {
@@ -100,7 +98,6 @@ export default function SearchResultsPage(props) {
 	const [detailsModalItem, setDetailsModalItem] = useState(null)
 	const [detailsModalItemCode, setDetailsModalItemCode] = useState(null)
 	const [showLocationsModal, setShowLocationsModal] = useState(false)
-	const [showAddedModal, setShowAddedModal] = useState(false)
 	const [clearInnerSearch, setClearInnerSearch] = useState(false)
 	const [newAttributeCategories, setNewAttributeCategories] = useState([])
 	const [isSetNewCategories, setIsSetNewCategories] = useState(false)
@@ -124,7 +121,7 @@ export default function SearchResultsPage(props) {
 		}
 	})
 
-	const [performItemSearch, { loading, error, data }] = useLazyQuery(QUERY_ITEM_SEARCH, {
+	const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
 			var itemSearchResult = data.itemSearch
@@ -224,7 +221,7 @@ export default function SearchResultsPage(props) {
 			}
 			setSearchResults([...searchResults, ...additionalSearchResults])
 		}
-    
+		
 		setTotalResults(itemSearchData.count)
 
 	}
@@ -275,7 +272,7 @@ export default function SearchResultsPage(props) {
 		const search = queryString.parse(location.search)
 
 		var resultSize = searchResults.length === 0 ? parseInt(search.resultSize) : 24
-    
+		
 		setSearching(true)
 		performItemSearch({
 			variables: {
@@ -312,7 +309,6 @@ export default function SearchResultsPage(props) {
 	}
 
 	function handleShowDetailsModal(freqno, itemCode){
-		console.log('freqno, itemCode',freqno, itemCode)
 		setDetailsModalItem(freqno)
 		setDetailsModalItemCode(itemCode)
 		setShowDetailsModal(true)
@@ -394,10 +390,10 @@ export default function SearchResultsPage(props) {
 					removeChild={()=>setChildCategory('')}
 				/>
 				{ brands.length > 0 &&
-          <BrandFilter 
-          	brands={brands}
-          	updatedBrandFilter={handleUpdatedBrandToggle}
-          />
+					<BrandFilter 
+						brands={brands}
+						updatedBrandFilter={handleUpdatedBrandToggle}
+					/>
 				}
 
 				{AttributeFilters}
@@ -420,7 +416,7 @@ export default function SearchResultsPage(props) {
 				</DivResultSummary>
 				<InfiniteScroll
 					pageStart={0}
-					loadMore={(newPage) => {
+					loadMore={() => {
 						setInfiniteScrollHasMore(false)
 						setCurrentPage(currentPage + 1)
 					}}
@@ -430,20 +426,20 @@ export default function SearchResultsPage(props) {
 					<DivSearchResultsContainer>          
 						{SearchResults}
 						{(SearchResults.length < totalResults || totalResults === '--') &&
-              <>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-                <SkeletonItem/>
-              </>
+							<>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+								<SkeletonItem/>
+							</>
 						}
 					</DivSearchResultsContainer>
 				</InfiniteScroll>

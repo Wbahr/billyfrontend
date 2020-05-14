@@ -19,12 +19,6 @@ const Pgrey = styled.p`
   font-weight: 700;
 `
 
-const Pgrey2 = styled.p`
-  font-size: 16px;
-  color: #404040;
-  margin: 0;
-`
-
 const Pblue = styled.p`
   font-size: 20px;
   color: rgb(219, 22, 51);

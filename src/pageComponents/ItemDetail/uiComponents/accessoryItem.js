@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef} from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import _ from 'lodash'
 import Loader from '../../_common/loader'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
@@ -72,11 +72,6 @@ const P = styled.p`
   margin: 0 4px;
 `
 
-const Pred = styled(P)`
-  font-weight: 600;
-  margin: 0;
-`
-
 const DivPartDetailsRow = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,22 +107,9 @@ const PpartTitle = styled.p`
   }
 `
 
-const PpartDesc = styled.p`
-  margin: 0 0 auto 0;
-  font-size: 13px;
-`
-
 const PpartAvailability = styled.p`
   margin: 0;
   font-size: 13px;
-`
-
-const DivPartAction = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: auto;
-  padding: 4px 8px;
-  align-items: flex-end;
 `
 
 const ButtonRed = styled.button`
@@ -145,15 +127,6 @@ const ButtonRed = styled.button`
     background-color: #b51029;
     box-shadow: 0px 0px 1px #000;
   }
-`
-const ButtonBlack = styled.button`
-  width: max-content;
-  background-color: white;
-  color: #328EFC;
-  font-weight: 600;
-  font-size: 12px;
-  border: 0;
-  margin-top: 4px;
 `
 
 const Div = styled.div`
@@ -204,7 +177,6 @@ const Img = styled.img`
 `
 
 export default function AccessoryItem({associatedItemId, history}) {
-	const didMountRef = useRef(false)
 	const [quantity, setQuantity] = useState(1)
 	const [item, setItem] = useState(null)
   
@@ -213,11 +185,7 @@ export default function AccessoryItem({associatedItemId, history}) {
 		return(mutatedItemId)
 	}
 
-	const { 
-		loading, 
-		error, 
-		data 
-	} = useQuery(GET_ITEM_BY_ID, {
+	useQuery(GET_ITEM_BY_ID, {
 		variables: { associatedItemId },
 		onCompleted: result => {
 			if (result.itemDetails.length) {

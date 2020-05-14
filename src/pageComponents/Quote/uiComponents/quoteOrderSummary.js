@@ -25,31 +25,6 @@ const H4 = styled.h4`
 	padding-left: 4px;
 `
 
-const DivButtonContainer = styled.div `
-	margin: auto auto 0 auto;
-`
-
-const DivCheckoutButton = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: #db1633;
-	background-image: linear-gradient(to top left, #950f23, #DB1633);
-	color: white;
-	padding: 8px 16px;
-	cursor: pointer;
-	width: 250px;
-	margin: 8px 0;
-	box-shadow: 1px 1px 2px #000;
-	
-	p {
-		margin: 0;
-		margin-left: 8px;
-		font-size: 18px;
-		font-weight: 500;
-	}
-`
-
 const DivLineItem = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -72,7 +47,7 @@ const DivLineItemTotal = styled(DivLineItem)`
 	}
 `
 
-export default function CheckoutOrderSummary({history}) {
+export default function CheckoutOrderSummary() {
 	const context = useContext(Context)
 
 	return(

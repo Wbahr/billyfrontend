@@ -1,9 +1,10 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
+import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Context from '../config/context'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	root: {
 		display: 'flex',
 		alignItems: 'center',
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default function AppHeader(props) {
+export default function AppHeader() {
 	let { tool } = useParams()
 	const classes = useStyles()
 	const context = useContext(Context)

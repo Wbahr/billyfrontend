@@ -9,9 +9,6 @@ const Header = styled.h1`
 `
 export default function H1(props) {
 	return (
- 
 		<Header>{props.text}</Header>
-          
-     
 	)
 }

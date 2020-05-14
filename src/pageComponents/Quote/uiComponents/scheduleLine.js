@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -124,11 +124,7 @@ export default function ShippingScheduleItem({item, index}) {
 	const [itemDetails, setItem] = useState(null)
 	const itemId = parseInt(item.frecno,10)
 
-	const { 
-		loading, 
-		error, 
-		data 
-	} = useQuery(GET_ITEM_BY_ID, {
+	useQuery(GET_ITEM_BY_ID, {
 		variables: { itemId },
 		onCompleted: result => {
 			if (!_.isNil(result.itemDetails)) {
@@ -179,9 +175,7 @@ export default function ShippingScheduleItem({item, index}) {
 					<Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
 						{({
 							field,
-							form,
-							form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-							meta
+							form
 						}) => (
 							<DivRow>
 								<DivSpacer>

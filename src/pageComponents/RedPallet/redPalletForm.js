@@ -63,10 +63,10 @@ const Inputsm = styled(Input)`
 	min-width: 100px;
 `
 
-const Inputxsm = styled(Input)`
-	width: 50px;
-	min-width: 50px;
-`
+// const Inputxsm = styled(Input)`
+// 	width: 50px;
+// 	min-width: 50px;
+// `
 
 const SelectInput = styled.select`
 	padding: 0 8px;
@@ -169,7 +169,7 @@ const DivSubmitContainer = styled.div`
 	}
 `
 
-const validate = (values) => {
+const validate = () => {
 	// console.log('values',JSON.stringify(values))
 }
 
@@ -213,7 +213,7 @@ const RMAform = ({initValues, emptyItem}) => (
 			validate={validate}
 			validateOnBlur={false}
 			validateOnChange={false}
-			onSubmit={values => clickedContinue(values)}
+			onSubmit={values => console.log(values)}
 			render={({ values }) => (
 				<Form>
 					<Header text={'General Information'} />
@@ -234,7 +234,7 @@ const RMAform = ({initValues, emptyItem}) => (
 						)}
 					</Field>
 					<Field name={'Email'}>
-						{({ field, form}) => (
+						{({ field }) => (
 							<Input {...field}
 								component='input'
 								placeholder='Email*'
@@ -349,14 +349,14 @@ const RMAform = ({initValues, emptyItem}) => (
 								)}
 							</Field>
 							<Field name={'zip'}>
-								{({ field, form}) => (
+								{({ field }) => (
 									<Inputsm {...field}
 										component='input'
 										placeholder='Zip*' />
 								)}
 							</Field>
 							<Field name={'phone'}>
-								{({ field, form}) => (
+								{({ field }) => (
 									<Inputm {...field}
 										component='input'
 										placeholder='Phone*' />
@@ -368,7 +368,7 @@ const RMAform = ({initValues, emptyItem}) => (
 					<DivLeftAlign>
 						<DivSelectContainer>
 							<Field name={'pickup'}>
-								{({ field, form}) => (
+								{({ field }) => (
 									<>
 									<FormText1>Shipped via*:</FormText1>
 										<SelectInput
@@ -420,7 +420,7 @@ const RMAform = ({initValues, emptyItem}) => (
 											<DivRow>
 												<DivSelectContainer>
 													<Field name={`RepairItems.${index}.repairType`}>
-														{({ field, form}) => (
+														{({ field }) => (
 															<>
 															<FormText1>Type of Repair*:</FormText1>
 																<SelectInput
@@ -447,7 +447,7 @@ const RMAform = ({initValues, emptyItem}) => (
 												</DivSelectContainer>
 												<DivSelectContainer>
 													<Field name={`RepairItems.${index}.urgency`}>
-														{({ field, form}) => (
+														{({ field }) => (
 															<>
 															<FormText1>Urgency:</FormText1>
 																<SelectInput
@@ -491,7 +491,7 @@ const RMAform = ({initValues, emptyItem}) => (
 											{ item.fluidType === 'other' &&
 												<DivLeftAlign>
 													<Field name={`RepairItems.${index}.fluidOther`}>
-														{({ field, form}) => (
+														{({ field }) => (
 																<>
 																	<Inputm {...field}
 																		component='input'
@@ -503,14 +503,14 @@ const RMAform = ({initValues, emptyItem}) => (
 											}
 											<DivLeftAlign>
 												<Field name={`RepairItems.${index}.po`}>
-													{({ field, form}) => (
+													{({ field }) => (
 														<Inputm {...field}
 															component='input'
 															placeholder='PO #*' />
 													)}
 												</Field>
 												<Field name={`RepairItems.${index}.part`}>
-													{({ field, form}) => (
+													{({ field }) => (
 														<Inputm {...field}
 															component='input'
 															placeholder='Part #' />
@@ -519,14 +519,14 @@ const RMAform = ({initValues, emptyItem}) => (
 											</DivLeftAlign>
 											<DivLeftAlign>
 												<Field name={`RepairItems.${index}.manufacturer`}>
-													{({ field, form}) => (
+													{({ field }) => (
 														<Inputm {...field}
 															component='input'
 															placeholder='Manufacturer' />
 													)}
 												</Field>
 												<Field name={`RepairItems.${index}.model`}>
-													{({ field, form}) => (
+													{({ field }) => (
 														<Inputm {...field}
 															component='input'
 															placeholder='Model' />
@@ -536,7 +536,7 @@ const RMAform = ({initValues, emptyItem}) => (
 											<DivLeftAlign>
 												<DivSelectContainer>
 													<Field name={`RepairItems.${index}.quantity`}>
-														{({ field, form}) => (
+														{({ field }) => (
 															<>
 															<FormText1>Quantity:</FormText1>
 																<SelectInput
@@ -575,7 +575,7 @@ const RMAform = ({initValues, emptyItem}) => (
 											<DivLeftAlign>
 												<DivSelectContainer>
 													<Field name={`RepairItems.${index}.warrantyRequest`}>
-														{({ field, form}) => (
+														{({ field }) => (
 															<>
 															<FormText1>Warranty Request:</FormText1>
 																<SelectInput
@@ -590,7 +590,7 @@ const RMAform = ({initValues, emptyItem}) => (
 												</DivSelectContainer>
 												{ item.warrantyRequest === 'true' &&
 													<Field name={`RepairItems.${index}.warrantyInfo`}>
-														{({ field, form}) => (
+														{({ field }) => (
 															<Inputm {...field}
 																component='input'
 																placeholder='Original Order or PO #' />
@@ -599,7 +599,7 @@ const RMAform = ({initValues, emptyItem}) => (
 												}
 											</DivLeftAlign>
 											<Field component='textarea' name={`RepairItems.${index}.issue`}>
-												{({ field, form}) => (
+												{({ field }) => (
 													<StyledTextArea1 {...field}
 														component='textarea'
 														rows='3'
@@ -622,7 +622,7 @@ const RMAform = ({initValues, emptyItem}) => (
 						)}
 					/>
 					<Field component='textarea' name={'additionalNotes'}>
-						{({ field, form}) => (
+						{({ field }) => (
 							<StyledTextArea {...field}
 								component='textarea'
 								rows='3'

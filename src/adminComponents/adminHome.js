@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -87,7 +86,7 @@ function ListItemLink(props) {
 }
 
 
-export default function AdminHome(props) {
+export default function AdminHome() {
 	let { tool } = useParams()
 	const classes = useStyles()
 

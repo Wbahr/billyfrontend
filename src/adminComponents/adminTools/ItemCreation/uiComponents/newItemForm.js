@@ -1,6 +1,5 @@
 // Render Prop
 import React, { useState } from 'react'
-import _ from 'lodash'
 import { Formik, Form as FormikForm, Field } from 'formik'
 import styled from 'styled-components'
 import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
@@ -99,7 +98,7 @@ export default function NewItemForm(props) {
 		SearchTerm = supplierList[index].prefix + ' ' + searchTerm
 	}
 
-	const [executeCreateItem, { loading, error, data }] = useMutation(CREATE_ITEM, {
+	const [executeCreateItem] = useMutation(CREATE_ITEM, {
 		onCompleted: data => {
 			setFormIsSubmitting(false)
 			showModal(data.itemCreate)
@@ -135,7 +134,7 @@ export default function NewItemForm(props) {
 				executeCreateItem({ variables: { item: mutatedValues } })
 			}}
 		>
-			{({ values, isSubmitting, errors }) => (
+			{({ values, errors }) => (
 				<Form>
 					<H2>Item Creation Form</H2>
 					<DivFormContainer>

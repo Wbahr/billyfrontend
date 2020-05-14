@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements'
@@ -17,66 +15,66 @@ import formatDropdownData from './helpers/formatQuoteDropdownData'
 import Context from '../../config/context'
 
 const GET_CHECKOUT_DATA = gql`
-  query RetrieveCheckoutData {
-    getCheckoutDropdownData{
-      shipToAddresses{
-        id
-        name
-        companyName
-        mailAddress1
-        mailAddress2
-        mailAddress3
-        mailCity
-        mailCountry
-        mailPostalCode
-        mailState
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-        collectNumberUps
-      }
-      carriers{
-        freightMultiplier
-        noAutoAllocation
-        otherShippingMethodFlag
-        shippingMethodName
-        shippingMethodUid
-        shippingMethodValue
-        showInListFlag
-      }
-      contacts{
-        id
-        firstName
-        lastName
-        phoneNumber
-        email
-      }
-      termsDescription
-      customerPhysicalAddress{
-        id
-        name
-        companyName
-        mailAddress1
-        mailAddress2
-        mailAddress3
-        mailCity
-        mailCountry
-        mailPostalCode
-        mailState
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-      }
-    }
-  }
+	query RetrieveCheckoutData {
+		getCheckoutDropdownData{
+			shipToAddresses{
+				id
+				name
+				companyName
+				mailAddress1
+				mailAddress2
+				mailAddress3
+				mailCity
+				mailCountry
+				mailPostalCode
+				mailState
+				physAddress1
+				physAddress2
+				physAddress3
+				physCity
+				physState
+				physPostalCode
+				physCountry
+				collectNumberUps
+			}
+			carriers{
+				freightMultiplier
+				noAutoAllocation
+				otherShippingMethodFlag
+				shippingMethodName
+				shippingMethodUid
+				shippingMethodValue
+				showInListFlag
+			}
+			contacts{
+				id
+				firstName
+				lastName
+				phoneNumber
+				email
+			}
+			termsDescription
+			customerPhysicalAddress{
+				id
+				name
+				companyName
+				mailAddress1
+				mailAddress2
+				mailAddress3
+				mailCity
+				mailCountry
+				mailPostalCode
+				mailState
+				physAddress1
+				physAddress2
+				physAddress3
+				physCity
+				physState
+				physPostalCode
+				physCountry
+			}
+		}
+	}
 `
 
 export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, showOrderFailedModal, YupSchema}) {
@@ -109,12 +107,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 		}
 	},[shoppingCart])
 
-
-	const { 
-		loading, 
-		error, 
-		data 
-	} = useQuery(GET_CHECKOUT_DATA, {
+	useQuery(GET_CHECKOUT_DATA, {
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)

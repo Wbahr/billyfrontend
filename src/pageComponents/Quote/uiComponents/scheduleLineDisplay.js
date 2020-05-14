@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
-
+import NumberFormat from 'react-number-format'
 
 const DivContainer = styled.div`
   display: flex;
@@ -11,11 +11,6 @@ const DivContainer = styled.div`
   padding: 8px 16px;
   margin: 8px 0;
   height: 70px;
-`
-
-const DivRow = styled.div`
-  display: flex;
-  align-items: center;
 `
 
 const DivItem = styled.div`
@@ -85,7 +80,7 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
-export default function ShippingScheduleItem({item, index}) {
+export default function ShippingScheduleItem({item}) {
 	const itemId = parseInt(item.frecno,10)
 	const context = useContext(Context)
 	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
