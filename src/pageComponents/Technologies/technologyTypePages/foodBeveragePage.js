@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 // import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -181,16 +180,16 @@ const ArticlesContentDetails = styled.p`
   text-align: left;
   font-size: 14px;
 `
-const ShowMoreBtn1 = styled.button`
-  // background-color:  #246696;
-  font-size: 12px;
-  // color: white;
-  border: none;
-  border-radius:2em;
-  padding: 4px 10px;
-  margin: 0 auto;
-  outline: none;
-`
+// const ShowMoreBtn1 = styled.button`
+//   // background-color:  #246696;
+//   font-size: 12px;
+//   // color: white;
+//   border: none;
+//   border-radius:2em;
+//   padding: 4px 10px;
+//   margin: 0 auto;
+//   outline: none;
+// `
 const ShopProducts = styled.a`
   color: #246696;
   font-size: 14px;
@@ -198,8 +197,8 @@ const ShopProducts = styled.a`
 `
 
 export default function FoodBeverage() {
-	const [showText1, setShowText1] = useState(false)
-	const [showText2, setShowText2] = useState(false)
+	// const [showText1, setShowText1] = useState(false)
+	// const [showText2, setShowText2] = useState(false)
 
 	return (
 		<Container>

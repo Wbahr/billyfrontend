@@ -1,10 +1,5 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import CategoryImage from './categoryImage'
-import gql from 'graphql-tag'
-import { useQuery, useLazyQuery } from '@apollo/client'
-import Loader from 'pageComponents/_common/loader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import framing from '../../../imgs/homepage/framing 1.png'
 import hydraulic from '../../../imgs/homepage/hydraulics 1.png'
@@ -71,7 +66,7 @@ const CategoryDiv = styled.div`
 const Img = styled.img`
   max-width: 100%;
 `
-export default function CategoryGrid({ history }) {
+export default function CategoryGrid() {
 
 	return (
 		<DivContainer>

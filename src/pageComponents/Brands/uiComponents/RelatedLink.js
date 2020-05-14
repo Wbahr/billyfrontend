@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const RelatedLinkCircle = styled.div`
   margin: 0 auto;

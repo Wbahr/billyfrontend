@@ -1,8 +1,5 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 
 const H1Div = styled.div`
     width: 100%;
