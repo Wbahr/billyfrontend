@@ -60,7 +60,6 @@ class RedPalletPage extends React.Component {
 
     mutatedResponse.RepairItems = [emptyItem]
     mutatedResponse.Company = response.CustomerName
-    console.log('mutatedResponse',mutatedResponse)
     return mutatedResponse
   }
   componentWillMount() {

@@ -186,7 +186,6 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 			validate={(values)=>handleValidateFields(values)}
 		>
 			{formikProps => (
-				console.log('errors',formikProps.errors),
 				<Elements>
 					<form name="quoteForm" {...formikProps}>
 						<FormStep {...formikProps} quoteDropdownDataLabels={quoteDropdownDataLabels} quoteDropdownData={quoteDropdownData}/>

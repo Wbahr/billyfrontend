@@ -39,7 +39,6 @@ export default function ShoppingCartPage(props) {
 	const [modalData, setModalData] = useState(null)
 
 	function handleSetModalData(data){
-		console.log('handleSetModalData', data)
 		setModalData(data)
 	}
 

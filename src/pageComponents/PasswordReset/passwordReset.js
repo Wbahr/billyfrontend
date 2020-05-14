@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useMutation } from '@apollo/client'
@@ -92,9 +92,8 @@ export default function PasswordResetPage({history}) {
 	let { passwordToken } = useParams()
 
 
-	const [executePasswordReset, { loading, error, data }] = useMutation(MUTATION_PASSWORD_RESET, {
+	const [executePasswordReset, { loading, error }] = useMutation(MUTATION_PASSWORD_RESET, {
 		onCompleted: data => {
-			console.log('executePasswordReset', data)
 			let responseData = data.submitPasswordReset
 			if(responseData.success){
 				setUsername('')

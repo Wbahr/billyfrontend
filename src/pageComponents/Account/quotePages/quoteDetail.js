@@ -37,7 +37,6 @@ export default function OrderDetail({ history, orderId }) {
 			context.getOrders()
 		} else if (context.ordersCache.length > 0) {
 			let mutatedData = formatTableData('order-detail', context.ordersCache, orderId)
-			console.log('mutatedData', mutatedData)
 			setData(mutatedData)
 		}
 	}, [context.ordersCache])
