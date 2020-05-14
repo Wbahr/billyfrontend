@@ -1,8 +1,6 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Banner from '../../../imgs/locationPage/map1.png'
 
 const Container = styled.div`
@@ -141,14 +139,7 @@ const Underline = styled.div`
     width: 60px;
     border: 1px solid #f2f3f4;
 `
-const EachSectionDiv = styled.div`
-    display: flex;
-`
-const List = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-`
+
 const LocationDiv = styled.div`
     display: flex;
     margin-bottom: 60px;

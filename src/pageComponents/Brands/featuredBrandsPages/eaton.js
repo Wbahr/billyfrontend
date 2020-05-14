@@ -417,7 +417,7 @@ export default function Eaton() {
                 Managing complexities to prepare the grid of the future
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>The electrical grid has served businesses and consumers for over 100 years. Utility system planners, operators and maintenance personnel have always faced challenges, but never have they compounded as rapidly as they are now. <a href="https://www.eaton.com/us/en-us/company/news-insights/grid-modernization.html" target="_blank"> Read more >> </a></ArticlesContentDetails>
+							<ArticlesContentDetails>The electrical grid has served businesses and consumers for over 100 years. Utility system planners, operators and maintenance personnel have always faced challenges, but never have they compounded as rapidly as they are now. <a href="https://www.eaton.com/us/en-us/company/news-insights/grid-modernization.html" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
 					<SmallArticlesContent>
@@ -429,7 +429,7 @@ export default function Eaton() {
                 Innovation that enables dynamic machine control
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>The industry is moving to smarter, more efficient machines. It’s no longer just about components, it’s about how those components connect to create intelligent subsystems that dynamically adapt and respond. <a href="https://www.eaton.com/us/en-us/services/dynamic-machine-control.html" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>The industry is moving to smarter, more efficient machines. It’s no longer just about components, it’s about how those components connect to create intelligent subsystems that dynamically adapt and respond. <a href="https://www.eaton.com/us/en-us/services/dynamic-machine-control.html" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -463,7 +463,7 @@ export default function Eaton() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.eaton.com/" target="_blank">
+								<LinkStyle href="http://www.eaton.com/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -472,7 +472,7 @@ export default function Eaton() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.youtube.com/channel/UCF7vz2IAPNHv7BKTiFC9Xhw" target="_blank">
+								<LinkStyle href="https://www.youtube.com/channel/UCF7vz2IAPNHv7BKTiFC9Xhw" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon={faYoutube} size='4x' />
 									</FontAwesomeDiv>
@@ -481,7 +481,7 @@ export default function Eaton() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="#" target="_blank">
+								<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -490,7 +490,7 @@ export default function Eaton() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

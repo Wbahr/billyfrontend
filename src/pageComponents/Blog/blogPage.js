@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 
 const DivContainer = styled.div`
   display: flex;
@@ -9,7 +8,7 @@ const DivContainer = styled.div`
   flex-grow: inherit;
 `
 
-export default function BlogPage({history}) {
+export default function BlogPage() {
 
 	return(
 		<DivContainer>

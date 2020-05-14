@@ -201,7 +201,7 @@ export default function ItemCreationPage() {
 				<img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.item_id} ></img>
 				<h6>{element.item_id}</h6>
 				<p>{element.item_desc}</p>
-				<a href={`/product/${mutatedItemId}/${element.frecno}`} target="_blank">View Details</a>
+				<a href={`/product/${mutatedItemId}/${element.frecno}`} target="_blank" rel="noopener noreferrer">View Details</a>
 			</DivSearchItemContainer>
 		)
 	})

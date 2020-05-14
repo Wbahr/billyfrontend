@@ -1,9 +1,8 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext} from 'react'
 import _ from 'lodash'
-import styled from 'styled-components'
 import Context from '../../../config/context'
 
-export default function AccountManagementPage({history}) {
+export default function AccountManagementPage() {
 	const context = useContext(Context)
 
 	return(

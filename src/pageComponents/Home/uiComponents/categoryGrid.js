@@ -76,7 +76,7 @@ export default function CategoryGrid({ history }) {
 	return (
 		<DivContainer>
 			<Icon>
-				{/* <Icon href="#" target="_blank"> dont nest divs inside a tags */}
+				{/* <Icon href="#" target="_blank" rel="noopener noreferrer"> dont nest divs inside a tags */}
 				<CategoryDiv>
 					<ImgDiv>
 						<Img src={framing} />
@@ -169,7 +169,7 @@ export default function CategoryGrid({ history }) {
 					<ImgDiv >
 						<FontAwesomeIcon icon='tools' size='4x' />
 					</ImgDiv>
-					<CategoryName> <P href="#" target="_blank">SMC ETech</P> </CategoryName>
+					<CategoryName> <P href="#" target="_blank" rel="noopener noreferrer">SMC ETech</P> </CategoryName>
 				</CategoryDiv>
 			</Icon>
 		</DivContainer>

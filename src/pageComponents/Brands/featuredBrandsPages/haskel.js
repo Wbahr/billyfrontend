@@ -346,7 +346,7 @@ export default function Haskel() {
                 Embracing the Industrial IoT to Advance High-Pressure Manufacturing
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?). <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank"> Read more >> </a></ArticlesContentDetails>
+							<ArticlesContentDetails>The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?). <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
 					<SmallArticlesContent>
@@ -358,7 +358,7 @@ export default function Haskel() {
                 A Quiet Change in Compression Technology has Arrived
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>When it comes to workplace noise levels, how loud is too loud? Ear-damaging workplace noise is a widespread problem that impacts employees in many lines of work. According to the Occupational Safety and Health Organization (OSHA), at least 22 million workers are exposed to potentially damaging noise every year. <a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>When it comes to workplace noise levels, how loud is too loud? Ear-damaging workplace noise is a widespread problem that impacts employees in many lines of work. According to the Occupational Safety and Health Organization (OSHA), at least 22 million workers are exposed to potentially damaging noise every year. <a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -371,7 +371,7 @@ export default function Haskel() {
                 4 Steps for Planning Your High-Pressure Gas & Liquid System Purchase
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Designing a system for delivering highly pressurized gas and liquids requires engineers to successfully meet the challenge of achieving necessary flow input while mitigating potentially dangerous flow failure situations. The unique needs of the application the system is being used in must be carefully considered prior to the purchase of system equipment. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>Designing a system for delivering highly pressurized gas and liquids requires engineers to successfully meet the challenge of achieving necessary flow input while mitigating potentially dangerous flow failure situations. The unique needs of the application the system is being used in must be carefully considered prior to the purchase of system equipment. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -387,7 +387,7 @@ export default function Haskel() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.haskel.com/" target="_blank">
+								<LinkStyle href="http://www.haskel.com/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -396,7 +396,7 @@ export default function Haskel() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="#" target="_blank">
+								<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -405,7 +405,7 @@ export default function Haskel() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

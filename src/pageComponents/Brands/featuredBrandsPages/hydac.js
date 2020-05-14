@@ -373,7 +373,7 @@ export default function Hydac() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.hydacusa.com/" target="_blank">
+								<LinkStyle href="http://www.hydacusa.com/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -382,7 +382,7 @@ export default function Hydac() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank">
+								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon={faYoutube} size='4x' />
 									</FontAwesomeDiv>
@@ -391,7 +391,7 @@ export default function Hydac() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=HYDAC&x=0&y=0" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=HYDAC&x=0&y=0" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -400,7 +400,7 @@ export default function Hydac() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="#" target="_blank">
+								<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

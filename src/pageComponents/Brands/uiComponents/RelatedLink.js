@@ -51,7 +51,7 @@ export default function RelatedLink(props) {
 	return (
 		<RelatedLinkCircle>
 			<LinkStyleDiv>
-				<LinkStyle href={href} target="_blank">
+				<LinkStyle href={href} target="_blank" rel="noopener noreferrer">
 					<FontAwesomeDiv>
 						<FontAwesomeIcon icon={icon} size='4x' />
 					</FontAwesomeDiv>

@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
-import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
-import { formatTableData, clipboardData } from '../helpers/mutators'
-import AirlineInput from '../../_common/form/inputv2'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import DatePicker from 'react-datepicker'
+import _ from 'lodash'
+import { formatTableData } from '../helpers/mutators'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import OrderDetailItem from './orderDetailItem'
@@ -92,7 +88,6 @@ export default function OrderDetail({ history, orderId }) {
 
 	let itemDetails = []
 	if(isListView){
-		console.log('data.lineItems', data.lineItems)
 		let filteredListItems = matchSorter(data.lineItems, filter, {keys: ['itemCode']})
 		itemDetails = _.map(filteredListItems, (item) => {
 			return(

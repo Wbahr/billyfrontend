@@ -317,7 +317,7 @@ export default function Aventics() {
                 The Internet of Things
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics.<a href="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/" target="_blank"> Read more >> </a></ArticlesContentDetails>
+							<ArticlesContentDetails>Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics.<a href="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
 					<SmallArticlesContent>
@@ -329,7 +329,7 @@ export default function Aventics() {
                 ES05 – the simple solution for elementary pneumatics
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. <a href="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. <a href="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -363,7 +363,7 @@ export default function Aventics() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.aventics.us/en/homepage/" target="_blank">
+								<LinkStyle href="http://www.aventics.us/en/homepage/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -372,7 +372,7 @@ export default function Aventics() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank">
+								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon={faYoutube} size='4x' />
 									</FontAwesomeDiv>
@@ -381,7 +381,7 @@ export default function Aventics() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=Aventics&x=0&y=0" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=Aventics&x=0&y=0" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -390,7 +390,7 @@ export default function Aventics() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Aventics%20(Bosch%20Rexroth)" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Aventics%20(Bosch%20Rexroth)" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

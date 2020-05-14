@@ -356,7 +356,7 @@ export default function Clippard() {
                 6 Ways Clippard's New Cordis EPR is Revolutionizing Electronic Pressure Control
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>The future of proportional control has arrived—and it's digital! The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant.<a href="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control" target="_blank"> Read more >> </a></ArticlesContentDetails>
+							<ArticlesContentDetails>The future of proportional control has arrived—and it's digital! The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant.<a href="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
 					<SmallArticlesContent>
@@ -368,7 +368,7 @@ export default function Clippard() {
                 How Stepper Motors Provide Precision Control
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Stepper motors are used in a variety of applications to provide a means for tightly controlled motion. But what is a stepper motor, and how does it work? <a href="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>Stepper motors are used in a variety of applications to provide a means for tightly controlled motion. But what is a stepper motor, and how does it work? <a href="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -381,7 +381,7 @@ export default function Clippard() {
                 Press Release: New Cordis Proportional Pressure Controls
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Clippard Releases New High Resolution Digital Proportional Pressure Controls <a href="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>Clippard Releases New High Resolution Digital Proportional Pressure Controls <a href="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -402,7 +402,7 @@ export default function Clippard() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.clippard.com/" target="_blank">
+								<LinkStyle href="http://www.clippard.com/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -411,7 +411,7 @@ export default function Clippard() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.youtube.com/playlist?list=PLZbHgsYLXoyypueELRwWRNdFQnrm-Mv5-" target="_blank">
+								<LinkStyle href="http://www.youtube.com/playlist?list=PLZbHgsYLXoyypueELRwWRNdFQnrm-Mv5-" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon={faYoutube} size='4x' />
 									</FontAwesomeDiv>
@@ -420,7 +420,7 @@ export default function Clippard() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=Clippard&x=0&y=0" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=Clippard&x=0&y=0" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -429,7 +429,7 @@ export default function Clippard() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Clippard" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Clippard" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

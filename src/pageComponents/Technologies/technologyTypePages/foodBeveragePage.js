@@ -258,7 +258,7 @@ export default function FoodBeverage() {
               Thermistor protection modules for ACS880 drives
 							<ArticlesShortLine></ArticlesShortLine>
 						</ArticlesTopic>
-						<ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank"> Read more >> </a></ArticlesContentDetails>
+						<ArticlesContentDetails>The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation.<a href="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 					</ArticlesContentDiv>
 				</SmallArticlesContent>
 				<SmallArticlesContent>
@@ -270,7 +270,7 @@ export default function FoodBeverage() {
               Drives give South African farmer 40% energy savings, smoother operation and less work
 							<ArticlesShortLine></ArticlesShortLine>
 						</ArticlesTopic>
-						<ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank"> Read more >> </a>
+						<ArticlesContentDetails>Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier. <a href="https://new.abb.com/drives/media/customer-case-riecor-farming" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 						</ArticlesContentDetails>
 					</ArticlesContentDiv>
 				</SmallArticlesContent>
@@ -283,7 +283,7 @@ export default function FoodBeverage() {
               Lorem ipsum dolor sit amet
 							<ArticlesShortLine></ArticlesShortLine>
 						</ArticlesTopic>
-						<ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank"> Read more >> </a> </ArticlesContentDetails>
+						<ArticlesContentDetails>Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis,  <a href="#" target="_blank" rel="noopener noreferrer"> Read more >> </a> </ArticlesContentDetails>
 					</ArticlesContentDiv>
 				</SmallArticlesContent>
 				<VideoDiv>
@@ -300,7 +300,7 @@ export default function FoodBeverage() {
 				<Div>
 					<RelatedLinkCircle>
 						<LinkStyleDiv>
-							<LinkStyle href="https://new.abb.com/us" target="_blank">
+							<LinkStyle href="https://new.abb.com/us" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeDiv>
 									<FontAwesomeIcon icon='globe-americas' size='4x' />
 								</FontAwesomeDiv>
@@ -309,7 +309,7 @@ export default function FoodBeverage() {
 					</RelatedLinkCircle>
 					<RelatedLinkCircle>
 						<LinkStyleDiv>
-							<LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank">
+							<LinkStyle href="https://www.youtube.com/playlist?list=PLZbHgsYLXoyyGUCZ0_XgWc3-7agdSwrNX" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeDiv>
 									<FontAwesomeIcon icon={faYoutube} size='4x' />
 								</FontAwesomeDiv>
@@ -318,7 +318,7 @@ export default function FoodBeverage() {
 					</RelatedLinkCircle>
 					<RelatedLinkCircle>
 						<LinkStyleDiv>
-							<LinkStyle href="#" target="_blank">
+							<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeDiv>
 									<FontAwesomeIcon icon='shopping-cart' size='4x' />
 								</FontAwesomeDiv>
@@ -327,7 +327,7 @@ export default function FoodBeverage() {
 					</RelatedLinkCircle>
 					<RelatedLinkCircle>
 						<LinkStyleDiv>
-							<LinkStyle href="#" target="_blank">
+							<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 								<FontAwesomeDiv>
 									<FontAwesomeIcon icon='address-book' size='4x' />
 								</FontAwesomeDiv>

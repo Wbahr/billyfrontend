@@ -147,7 +147,7 @@ export default function AcmeElectric() {
 			<Div>
 				<LinkDetailDiv>
 					<LinkStyleDiv>
-						<LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank">
+						<LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank" rel="noopener noreferrer">
 							<IconDiv>
 								<FontAwesomeIcon icon='globe-americas' size='2x' />
 							</IconDiv>
@@ -157,7 +157,7 @@ export default function AcmeElectric() {
 
 				<LinkDetailDiv>
 					<LinkStyleDiv>
-						<LinkStyle href="#" target="_blank">
+						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 							<IconDiv>
 								<FontAwesomeIcon icon='shopping-cart' size='2x' />
 							</IconDiv>
@@ -168,7 +168,7 @@ export default function AcmeElectric() {
 
 				<LinkDetailDiv>
 					<LinkStyleDiv>
-						<LinkStyle href="#" target="_blank">
+						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 							<IconDiv>
 								<FontAwesomeIcon icon='address-book' size='2x' />
 							</IconDiv>

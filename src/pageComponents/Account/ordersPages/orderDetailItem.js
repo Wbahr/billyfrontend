@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
-import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
-import { formatTableData, clipboardData } from '../helpers/mutators'
-import AirlineInput from '../../_common/form/inputv2'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
@@ -181,11 +175,7 @@ const ButtonSmall = styled.button`
   `
 
 export default function OrderDetailItem({ item }) {
-	const context = useContext(Context)
-	const didMountRef = useRef(false)
 	const [quantity, setQuantity] = useState('1')
-	const [isListView, setIsListView] = useState(true)
-	const [data, setData] = useState({})
 
 	return(
 		<DivContainer>

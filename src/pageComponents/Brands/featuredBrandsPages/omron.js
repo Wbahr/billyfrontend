@@ -414,7 +414,7 @@ export default function Omron() {
               Five essential requirements for the behavior of emergency stop devices
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Emergency stops are a must-have for any safety system, as they are often the last resort for stopping or mitigating a major accident on the factory floor. We’ve discussed the specific requirements for the layout, color and shape of an E-stop pushbutton in a previous blog post, but there are also several requirements for E-stop behavior that we will go over now. <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank"> Read more >> </a></ArticlesContentDetails>
+							<ArticlesContentDetails>Emergency stops are a must-have for any safety system, as they are often the last resort for stopping or mitigating a major accident on the factory floor. We’ve discussed the specific requirements for the layout, color and shape of an E-stop pushbutton in a previous blog post, but there are also several requirements for E-stop behavior that we will go over now. <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
 					<SmallArticlesContent>
@@ -426,7 +426,7 @@ export default function Omron() {
               The importance of label verification in automotive manufacturing
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>As many as 20,000 individual parts go into the production of a single vehicle, and each of these parts must be subjected to rigorous tracking. There are many ways to mark a part – including laser marking, dot peening, inkjet marking and labeling – and automakers generally use several of these, depending on the situation.<a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>As many as 20,000 individual parts go into the production of a single vehicle, and each of these parts must be subjected to rigorous tracking. There are many ways to mark a part – including laser marking, dot peening, inkjet marking and labeling – and automakers generally use several of these, depending on the situation.<a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -439,7 +439,7 @@ export default function Omron() {
               Four major safety-related benefits of robots
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
-							<ArticlesContentDetails>Manufacturing facilities employ a variety of hazardous machines, and safeguarding is paramount. While traditional safety strategies are designed to mitigate risk in hazardous situations, it’s possible to eliminate this risk altogether by letting robots cover the dangerous tasks. Let’s take a look at a few ways that robots make manufacturing safer overall. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank"> Read more >> </a>
+							<ArticlesContentDetails>Manufacturing facilities employ a variety of hazardous machines, and safeguarding is paramount. While traditional safety strategies are designed to mitigate risk in hazardous situations, it’s possible to eliminate this risk altogether by letting robots cover the dangerous tasks. Let’s take a look at a few ways that robots make manufacturing safer overall. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank" rel="noopener noreferrer"> Read more >> </a>
 							</ArticlesContentDetails>
 						</ArticlesContentDiv>
 					</SmallArticlesContent>
@@ -460,7 +460,7 @@ export default function Omron() {
 					<RelatedContainer>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="http://www.hydacusa.com/" target="_blank">
+								<LinkStyle href="http://www.hydacusa.com/" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
@@ -469,7 +469,7 @@ export default function Omron() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank">
+								<LinkStyle href="https://www.youtube.com/user/aventics" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon={faYoutube} size='4x' />
 									</FontAwesomeDiv>
@@ -478,7 +478,7 @@ export default function Omron() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=HYDAC&x=0&y=0" target="_blank">
+								<LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=HYDAC&x=0&y=0" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
@@ -487,7 +487,7 @@ export default function Omron() {
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
 							<LinkStyleDiv>
-								<LinkStyle href="#" target="_blank">
+								<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>

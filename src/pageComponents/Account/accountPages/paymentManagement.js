@@ -1,7 +1,4 @@
-import React, {useState, useContext} from 'react'
-import _ from 'lodash'
-import styled from 'styled-components'
-// import Context from '../../../config/context'
+import React, { useState } from 'react'
 import { injectStripe } from 'react-stripe-elements'
 import PaymentManagerComponent from '../uiComponents/paymentManager'
 import Select from '../../_common/form/select'

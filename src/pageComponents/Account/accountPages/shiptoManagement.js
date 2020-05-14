@@ -1,7 +1,5 @@
-import React, {useState, useContext} from 'react'
-import _ from 'lodash'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import Select from '../../_common/form/select'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { Formik, Form, Field } from 'formik'
@@ -26,22 +24,21 @@ function ShiptoManagementPage() {
 	const [addingNewShipTo, setAddingNewShipTo] = useState(false)
 
 	function handleSetDefault(index){
-		console.log('set default shipping location',index)
+		// console.log('set default shipping location',index)
 	}
 
 	function handleDeleteLocation(){
-		console.log('delete location')
+		// console.log('delete location')
 	}
 
-	let AddressCards = []
 	//       <AddressCard setDefault={handleSetDefault} location={location}/>
 
 	return(
     <>
       {/* {AddressCards} */}
       <CardContainer>
-      	<AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={true}/>
-      	<AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={false}/>
+        <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={true}/>
+        <AddressCard setDefault={handleSetDefault} location={'test location'} deleteLocation={handleDeleteLocation} defaultLocation={false}/>
       </CardContainer>
       {!addingNewShipTo && <p onClick={()=>setAddingNewShipTo(true)}>Enter a New Address</p>}
       {addingNewShipTo &&
@@ -101,7 +98,7 @@ function ShiptoManagementPage() {
         				<button type="submit" disabled={isSubmitting}>Save Ship To</button>
         			</Form>
         		)}
-        	</Formik>
+      	</Formik>
         </FormContainer>
       }
     </>

@@ -1,20 +1,14 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import _ from 'lodash'
-import styled from 'styled-components'
-// import Context from '../../../config/context'
-import { injectStripe } from 'react-stripe-elements'
-import PaymentManagerComponent from '../uiComponents/paymentManager'
 import Select from '../../_common/form/select'
 
 export default function ShoppingListManagementPage() {
-	// const context = useContext(Context);
 	const [defaultShipTo, setDefaultShipTo] = useState(null)
 	const [confirmDelete, setConfirmDelete] = useState(false)
 
 
 	function handleDeleteShoppingList(){
 		if(confirmDelete){
-			console.log('deleting shopping list...')
 			setConfirmDelete(false)
 		} else {
 			setConfirmDelete(true)
