@@ -410,6 +410,10 @@ export default function HeaderComponent(props) {
                   {
                     'label': 'Line Cards & Brochures',
                     'link' : '/linecards'
+                  },
+                  {
+                    'label': 'Apps',
+                    'link' : '/apps'
                   }
                 ]}
               />

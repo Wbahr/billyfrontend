@@ -8,6 +8,7 @@ import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfoo
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
 import About from '../pageComponents/About/aboutPage'
+import Apps from '../pageComponents/Apps/appsPage'
 import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import contactPage from '../pageComponents/ContactUs/contactUsPage'
@@ -85,6 +86,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
         <WrapperRoute exact path='/about/:page' component={About} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/apps' component={Apps} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
         <WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>

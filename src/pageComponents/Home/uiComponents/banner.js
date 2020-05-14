@@ -134,7 +134,7 @@ class Banner extends React.Component {
               </AboutAirline>
             </BannerDiv>
             <BannerDiv>
-            <ImgDiv> <Img src="https://crescentind.com/wp-content/uploads/2018/01/ESOP-logo.png" /></ImgDiv>
+            <ImgDiv> <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
                 <AboutAirline>
                   <P> We're 100% Employee Owned and pround of it! </P>
                 </AboutAirline>
