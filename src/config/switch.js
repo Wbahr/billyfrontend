@@ -17,6 +17,7 @@ import FramingRequest from '../pageComponents/FramingRequest/FramingRequestPage'
 import GovermentSale from '../pageComponents/GovermentSales/GovermentSalesPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
+import KnowledgeCenter from '../pageComponents/KnowledgeCenter/knowledgeCenterPage'
 import LineCards from '../pageComponents/LineCards/lineCardsPage'
 import Login from '../pageComponents/Login/loginPage'
 import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
@@ -43,6 +44,7 @@ import AdminHome from '../adminComponents/adminHome'
 import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
+import knowledgeCenterPage from 'pageComponents/KnowledgeCenter/knowledgeCenterPage'
 
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -100,6 +102,7 @@ class App extends React.Component {
         <WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/knowledge-center-and-faq' component={KnowledgeCenter} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
         <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>

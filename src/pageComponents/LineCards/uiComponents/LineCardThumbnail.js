@@ -17,6 +17,7 @@ const LineCardsNameDiv = styled.div`
     padding: 5px;
 `
 const P = styled.p`
+    font-weight: bold;
 `
 export default function LineCardThumbnail(props) {
       

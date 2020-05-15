@@ -25,7 +25,7 @@ const ApplicationDiv = styled.div`
     width: 200px;
 `
 const AppImgDiv = styled.div`
-    width: 96px;
+    width: 80px;
     margin-bottom: 15px;
 `
 const Img = styled.img`
@@ -37,8 +37,10 @@ const AppName = styled.p`
 `
 const IOS = styled.a`
     margin-bottom: 0;
+    font-size: 14px;
 `
 const AndroidDownload = styled.a`
+    font-size: 14px;
 `
 export default function Apps() {
     return (
@@ -116,104 +118,104 @@ export default function Apps() {
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Parker-Fitting-Finder.jpg" />
                         </AppImgDiv>
                         <AppName>Fitting Finder</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="https://apps.apple.com/us/app/parker-fitting-finder/id573942435" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=com.parker.tubefitter" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Phoenix-Contact-Catalog.jpg" />
                         </AppImgDiv>
                         <AppName>Phoenix Catalog</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="https://apps.apple.com/us/app/phoenix-contact-catalog/id426916389" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Phoenix-Contact-USA.jpg" />
                         </AppImgDiv>
                         <AppName>Phoenix USA</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="#" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Phoenix-Contact-Mini.jpg" />
                         </AppImgDiv>
                         <AppName>MINI Analog Pro</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="https://apps.apple.com/us/app/id943455634" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=com.phoenixcontact.minianalogpro" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Phoenix-Contact-Quint.jpg" />
                         </AppImgDiv>
                         <AppName>Quint Power</AppName>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=com.phoenixcontact.quint4config" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/QC-Industries-Conveyor-Guide.jpg" />
                         </AppImgDiv>
                         <AppName>Conveyor Guide</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="#" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Rittal-RiTherm.jpg" />
                         </AppImgDiv>
                         <AppName>RiTherm</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="https://apps.apple.com/us/app/ritherm/id519087469" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=de.rittal.ritherm" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Rittal-RiMatrix.jpg" />
                         </AppImgDiv>
                         <AppName>RiMatrix S</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="https://apps.apple.com/us/app/rimatrix-s/id671017975" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=de.rittal.rimatrixs" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Rittal-WM-Tool.jpg" />
                         </AppImgDiv>
                         <AppName>WM Tool</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="#" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Rittal-TS-IT-Selector.jpg" />
                         </AppImgDiv>
                         <AppName>TS IT Selector</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="#" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="#" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/Schmersal-Application-Finder.jpg" />
                         </AppImgDiv>
                         <AppName>Application Finder</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="https://apps.apple.com/us/app/schmersal-application-finder/id627399467" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/SKF-Shelf.jpg" />
                         </AppImgDiv>
                         <AppName>SKF Shelf</AppName>
-                        <IOS>ios Download</IOS>
-                        <AndroidDownload>Android Download</AndroidDownload>
+                        <IOS href="#" target="_blank">ios Download</IOS>
+                        <AndroidDownload href="#" target="_blank">Android Download</AndroidDownload>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/WEG-Motor-Cross.jpg" />
                         </AppImgDiv>
                         <AppName>Application Finder</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="#" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
                             <Img src="https://www.airlinehyd.com/customer/aihyco/images/apps/WEG-ECatalog.jpg" />
                         </AppImgDiv>
                         <AppName>Application Finder</AppName>
-                        <IOS>ios Download</IOS>
+                        <IOS href="#" target="_blank">ios Download</IOS>
                     </ApplicationDiv>
                 </MainAppDiv>
             </Container>

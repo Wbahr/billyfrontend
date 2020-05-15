@@ -404,8 +404,8 @@ export default function HeaderComponent(props) {
                     'link': '/blog'
                   },
                   {
-                    'label': 'FAQ',
-                    'link': '/resources/faq'
+                    'label': 'Knowledge Center & FAQ',
+                    'link': '/knowledge-center-and-faq'
                   },
                   {
                     'label': 'Line Cards & Brochures',
