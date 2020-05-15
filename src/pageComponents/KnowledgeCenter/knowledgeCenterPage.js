@@ -33,9 +33,9 @@ const Img = styled.img`
 const List = styled.p`
     margin-top: 10px;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
+    // text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.5px;
 `
 export default function knowledgeCenterPage() {
     return (
