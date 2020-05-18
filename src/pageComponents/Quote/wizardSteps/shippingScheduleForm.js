@@ -83,11 +83,11 @@ export function ShippingScheduleForm(props){
 		{values.schedule.packingBasis === 4 &&
 			<FieldArray
 				name="schedule.cartWithDates"
-				render={arrayHelpers => (
+				render={() => (
 					<div>
 						{(values.schedule.cartWithDates && values.schedule.cartWithDates.length > 0) ? (
 							values.schedule.cartWithDates.map((item, index) => (
-								<ShippingScheduleLine item={item} index={index}/>
+								<ShippingScheduleLine key={`shipping-schedule-line-${index}`}item={item} index={index}/>
 							))
 						) : (
 							<p>No Cart Items</p>

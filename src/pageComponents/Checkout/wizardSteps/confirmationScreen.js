@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/checkoutDropdownData'
-import FormikInput from '../../_common/formik/input_v2'
 import FormikFieldArray from '../../_common/formik/fieldArray'
 import FormikCheckbox from '../../_common/formik/checkBox'
 import Context from '../../../config/context'
@@ -77,7 +76,7 @@ export default function ConfirmationScreen(props) {
 	} = props
 
 	let CartDates = schedule.cartWithDates.map((item, index) => (
-		<ShippingScheduleLineDisplay item={item} index={index}/>
+		<ShippingScheduleLineDisplay key={`shipping-schedule-line-display-${index}`} item={item} index={index}/>
 	))
 
 	let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)

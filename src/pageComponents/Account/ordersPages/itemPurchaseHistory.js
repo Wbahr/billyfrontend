@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
-import OrderDatapage from 'adminComponents/adminTools/OrderData/orderData'
-import { formatTableData, clipboardData } from '../helpers/mutators'
+import { useTable, usePagination, useSortBy  } from 'react-table'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const TableContainer = styled.div`
   display: flex;

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useLazyQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/quoteOrderSummary'
@@ -63,12 +62,6 @@ const H3 = styled.h3`
   margin: 0 0 2px 4px;
 `
 
-const Pstep = styled.span`
-  font-family: ProximaBold;
-  text-transform: uppercase;
-  font-size: 20px;
-`
-
 const DivNavigation = styled.div`
   display: flex;
   justify-content: space-between;
@@ -125,7 +118,7 @@ export default function CheckoutPage({history}) {
 	}
 
 	function handleValidateFields(values){
-		YupSchema[currentStep].isValid(values).then(function(valid) {
+		YupSchema[currentStep].isValid(values).then(function() {
 			setStepValidated({
 				...stepValidated,
 				[currentStep]: values

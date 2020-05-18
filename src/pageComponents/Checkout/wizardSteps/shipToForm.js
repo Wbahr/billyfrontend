@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -34,11 +35,7 @@ const ContactSection = styled.div`
 
 export function ShipToForm(props) {
 	const {
-		handleSubmit, 
-		handleChange, 
-		handleBlur, 
 		values, 
-		errors, 
 		checkoutDropdownDataLabels, 
 		checkoutDropdownData,
 		setFieldValue,
