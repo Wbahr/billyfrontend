@@ -9,6 +9,7 @@ import Input from '../../_common/form/inputv2'
 import ToggleSwitch from '../../_common/toggleSwitch'
 import matchSorter from 'match-sorter'
 import { format as dateFormat } from 'date-fns'
+import NumberFormat from 'react-number-format'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -63,9 +64,8 @@ export default function OrderDetail({ history, orderId }) {
 	const context = useContext(Context)
 	const didMountRef = useRef(false)
 	const [filter, setFilter] = useState('')
-	const [isListView, setIsListView] = useState(true)
+	const [isListView, setIsListView] = useState(false)
 	const [data, setData] = useState({})
-	const [toggled, setToggled] = useState(false)
 
 	useEffect(() => {
 		if (!didMountRef.current && context.ordersCache.length === 0) {
@@ -147,7 +147,7 @@ export default function OrderDetail({ history, orderId }) {
 					<p>P.O. Number: {poNo}</p>
 					<p>Status: {status}</p>
 					<p>Packing Basis: {packingBasis}</p>
-					<p>Order Total: ${total}</p>
+					<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
 				</DivOrderInfo>
 				<DivOrderInfo>
 					<p>Ship-to-Address:</p>
@@ -163,8 +163,8 @@ export default function OrderDetail({ history, orderId }) {
 					label='View:'
 					text='List'
 					text2='Grid'
-					toggled={toggled}
-					setToggled={(value)=>setToggled(value)}
+					toggled={isListView}
+					setToggled={(value)=>setIsListView(value)}
 				/>
 				<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
 			</div>
