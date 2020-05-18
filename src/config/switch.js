@@ -36,6 +36,7 @@ import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
 import technologyPage from 'pageComponents/Technologies/technologyPage'
 import MyAccountPage from '../pageComponents/Account/myAccountPage'
+import PlantServices from '../pageComponents/Services/plantServices'
 
 
 // Supporting Components
@@ -118,10 +119,12 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
         <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
+
 
         {/* ADMIN INTERNAL TOOLS */}
         <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>

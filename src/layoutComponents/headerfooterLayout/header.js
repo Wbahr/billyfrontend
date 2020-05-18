@@ -265,17 +265,18 @@ export default function HeaderComponent(props) {
               <Dropdown open={showDropdown.services} history={props.history}
                 options={[
                   {
-                    'label': 'All Brands',
-                    'link': '/brands'
+                    'label': 'Arc Flash Safety',
+                    'link': '/services/plant-services/arc-flash-safety'
                   },
                   {
-                    'label': 'ABB',
-                    'link': '/brands/featured/abb'
+                    'label': 'Machine Safeguarding',
+                    'link': '/services/plant-services/machine-safeguarding'
                   },
                   {
-                    'label': 'Aventics',
-                    'link': '/brands/featured/aventics'
-                  }
+                    'label': 'Fluid Cleanliness & Maintenance/Preventive Maintenance',
+                    'link': '/services/plant-services/fluid-cleanliness-and-maintenance'
+                  },
+                 
                 ]}
               />
             </div>
