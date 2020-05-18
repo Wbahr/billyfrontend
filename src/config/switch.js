@@ -13,6 +13,8 @@ import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import contactPage from '../pageComponents/ContactUs/contactUsPage'
 import CreditApplication from '../pageComponents/CreditApplication/CreditApplicationPage'
+import EngineeredSystemsAndAssemblies from '../pageComponents/Services/engineeredSystemsAndAssemblies'
+import EngineeredSystems from '../pageComponents/Services/engineeredSystems'
 import FramingRequest from '../pageComponents/FramingRequest/FramingRequestPage'
 import GovermentSale from '../pageComponents/GovermentSales/GovermentSalesPage'
 import Home from '../pageComponents/Home/homePage'
@@ -22,8 +24,9 @@ import LineCards from '../pageComponents/LineCards/lineCardsPage'
 import Login from '../pageComponents/Login/loginPage'
 import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
-import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
+import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
@@ -36,7 +39,6 @@ import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
 import technologyPage from 'pageComponents/Technologies/technologyPage'
 import MyAccountPage from '../pageComponents/Account/myAccountPage'
-import PlantServices from '../pageComponents/Services/plantServices'
 
 
 // Supporting Components
@@ -119,6 +121,8 @@ class App extends React.Component {
         <WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+        <WrapperRoute exact path='/services/engineered-systems-and-assemblies' component={EngineeredSystemsAndAssemblies} layout={HeaderFooterLayoutExpanded}/>
+        <WrapperRoute exact path='/services/engineered-systems-and-assemblies/:page' component={EngineeredSystems} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
         <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>

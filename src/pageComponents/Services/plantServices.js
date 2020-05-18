@@ -23,7 +23,7 @@ export default function PlantServicesPage({ history }) {
         {
             'label': 'Arc Flash Safety',
             'page': 'arc-flash-safety'
-        }  
+        }
     ]
     useEffect(() => {
         if (page === 'machine-safeguarding') {
@@ -32,7 +32,7 @@ export default function PlantServicesPage({ history }) {
         else if (page === 'fluid-cleanliness-and-maintenance') {
             setPageComponent(<FluidCleanliness />)
         }
-        else if (page === 'Arc Flash Safety') {
+        else if (page === 'arc-flash-safety') {
             setPageComponent(<ArcFlashSafety />)
         }
         

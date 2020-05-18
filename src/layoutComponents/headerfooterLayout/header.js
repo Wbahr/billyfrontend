@@ -276,7 +276,10 @@ export default function HeaderComponent(props) {
                     'label': 'Fluid Cleanliness & Maintenance/Preventive Maintenance',
                     'link': '/services/plant-services/fluid-cleanliness-and-maintenance'
                   },
-                 
+                  {
+                    'label': 'Engineered Systems & Assemblies',
+                    'link': '/services/engineered-systems-and-assemblies'
+                  }
                 ]}
               />
             </div>
