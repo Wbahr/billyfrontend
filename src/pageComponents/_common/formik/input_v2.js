@@ -1,7 +1,8 @@
 import React from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field as FormikField, ErrorMessage } from 'formik'
+import { Field as FormikField } from 'formik'
 import CurrencyInput from 'react-currency-input'
 
 const DivContainer = styled.div`
@@ -22,13 +23,6 @@ const Label = styled.label`
   width: max-content;
   padding: 2px;
   margin-left: 7px;
-`
-
-const DivError = styled.div`
-  color: #DB1633;
-  font-size: 12px;
-  font-weight: 500;
-  padding-left: 8px;
 `
 
 const MainInput = styled(FormikField)`
@@ -102,7 +96,6 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 				<FormikField name={name}>
 					{({
 						field, // { name, value, onChange, onBlur }
-						form: {touched, errors}, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 						form
 					}) => (
 						<MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>

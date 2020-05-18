@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field, ErrorMessage } from 'formik'
+import { Field } from 'formik'
 
 const DivContainer = styled.div`
     display flex;
@@ -44,12 +44,10 @@ export default function Input({
 			<Field name={name}>
 				{({
 					field,
-					form,
-					form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
 					meta,
 				}) => (
               <>
-              <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={(e)=>{eval(onChange)}} />
+              <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={()=>{eval(onChange)}} />
               {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
               </>
 				)}

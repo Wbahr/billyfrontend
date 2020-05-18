@@ -28,6 +28,7 @@ const SelectComponent = ({
 	width,
 	value,
 	setValue,
+	field,
 	...props
 }) => {
 

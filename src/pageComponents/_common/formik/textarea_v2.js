@@ -1,7 +1,8 @@
 import React from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field as FormikField, ErrorMessage } from 'formik'
+import { Field as FormikField } from 'formik'
 
 const DivContainer = styled.div`
   display flex;
@@ -20,13 +21,6 @@ const Label = styled.label`
   width: max-content;
   padding: 2px;
   margin-left: 7px;
-`
-
-const DivError = styled.div`
-  color: #DB1633;
-  font-size: 12px;
-  font-weight: 500;
-  padding-left: 8px;
 `
 
 const MainInput = styled(FormikField)`

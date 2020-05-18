@@ -10,266 +10,266 @@ import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 
 const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: Int){
-        customerPartNumbers(frecno: $itemId){
-          customerPartNumber
-          id
-        }
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            assembly
-            availability
-            availabilityMessage
-            cBrandId
-            dateCreated
-            dateModified
-            extendedDesc
-            filters
-            hideOnWeb
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            p21ItemDesc
-            p21NonWeb
-            popularity
-            preferredSourceLoc
-            relevancy
-            restrictedCustomerCodes
-            rootCategoryUids
-            showPrice
-            supplierId
-            tariff
-            unitSizeMultiple
-            feature {
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                modifiedBy
-                sequence
-                text
-                type
-                id
-              }
-              image {
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                modifiedBy
-                path
-                sequence
-                type
-                id
-              }
-              associatedItems {
-                associatedInvMastUid
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                modifiedBy
-                quantity
-                type
-                id
-              }
-              itemLink {
-                audienceType
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                linkPath
-                linkType
-                modifiedBy
-                sequence
-                thumbnail
-                title
-                id
-              }
-              techSpec {
-                attributeId
-                createDate
-                createdBy
-                invMastUid
-                lastModifiedDate
-                modifiedBy
-                name
-                sequence
-                id
-                value
-              }
-        }
-    }
+		query ItemById($itemId: Int){
+				customerPartNumbers(frecno: $itemId){
+					customerPartNumber
+					id
+				}
+				itemDetails(invMastUid: $itemId) {
+						anonPrice
+						assembly
+						availability
+						availabilityMessage
+						cBrandId
+						dateCreated
+						dateModified
+						extendedDesc
+						filters
+						hideOnWeb
+						invMastUid
+						itemCode
+						itemDesc
+						listPrice
+						mfgPartNo
+						modelCode
+						p21ItemDesc
+						p21NonWeb
+						popularity
+						preferredSourceLoc
+						relevancy
+						restrictedCustomerCodes
+						rootCategoryUids
+						showPrice
+						supplierId
+						tariff
+						unitSizeMultiple
+						feature {
+								createDate
+								createdBy
+								invMastUid
+								lastModifiedDate
+								modifiedBy
+								sequence
+								text
+								type
+								id
+							}
+							image {
+								createDate
+								createdBy
+								invMastUid
+								lastModifiedDate
+								modifiedBy
+								path
+								sequence
+								type
+								id
+							}
+							associatedItems {
+								associatedInvMastUid
+								createDate
+								createdBy
+								invMastUid
+								lastModifiedDate
+								modifiedBy
+								quantity
+								type
+								id
+							}
+							itemLink {
+								audienceType
+								createDate
+								createdBy
+								invMastUid
+								lastModifiedDate
+								linkPath
+								linkType
+								modifiedBy
+								sequence
+								thumbnail
+								title
+								id
+							}
+							techSpec {
+								attributeId
+								createDate
+								createdBy
+								invMastUid
+								lastModifiedDate
+								modifiedBy
+								name
+								sequence
+								id
+								value
+							}
+				}
+		}
 `
 
 const GET_ITEM_PRICE = gql`
 query ItemSearch($items: [ItemQuantityInput]){
-  getItemPrices(items: $items){
-    invMastUid
-    itemCode
-    quantity
-    totalPrice
-  }
+	getItemPrices(items: $items){
+		invMastUid
+		itemCode
+		quantity
+		totalPrice
+	}
 }
 `
 
 const ItemDetailPageContainer = styled.div`
-  display: flex;
-  width: 100%;  
+	display: flex;
+	width: 100%;  
 `
 
 const DivPhoto = styled.div`
-  width: 400px;
-  height: 400px;
-  margin: 0px 8px;
+	width: 400px;
+	height: 400px;
+	margin: 0px 8px;
 `
 
 const Img = styled.img`
-  max-height:100%; 
-  max-width:100%;    
+	max-height:100%; 
+	max-width:100%;    
 `
 
 const DivDetails = styled.div`
-  width: 500px;
-  padding: 0 32px;
-  flex-grow: 99;
+	width: 500px;
+	padding: 0 32px;
+	flex-grow: 99;
 `
 
 const DivPurchaseInfo = styled.div`
-  position: -webkit-sticky;
-  position: sticky;
-  top: 125px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 300px;
-  height: 300px;
-  margin: 30px 8px 0 12px;
-  padding: 8px 16px
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	position: -webkit-sticky;
+	position: sticky;
+	top: 125px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 300px;
+	height: 300px;
+	margin: 30px 8px 0 12px;
+	padding: 8px 16px
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
 const Div = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-content: center;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-content: center;
 `
 
 const Row = styled.div`
-  display: flex;
-  width: 100%;  
-  align-items: flex-end;
+	display: flex;
+	width: 100%;  
+	align-items: flex-end;
 `
 
 const RowEnd = styled(Row)`
-  justify-content: flex-end;
+	justify-content: flex-end;
 `
 
 const RowSpaced = styled(Row)`
-  justify-content: space-between;
+	justify-content: space-between;
 `
 
 const P = styled.p`
-  margin: 0;
+	margin: 0;
 `
 
 const Pbold = styled(P)`
-  font-weight: bold;
+	font-weight: bold;
 `
 
 const H4 = styled.h5`
-  margin: 12px 0 0 0;
-  font-weight: 600;
+	margin: 12px 0 0 0;
+	font-weight: 600;
 `
 
 const DivSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 24px;
+	display: flex;
+	flex-direction: column;
+	margin-left: 24px;
 `
 
 const DivAccessoryItems = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 `
 
 const H2ItemTitle = styled.h2`
-  font-size: 25px;
-  font-weight: 600;
+	font-size: 25px;
+	font-weight: 600;
 `
 
 const PItemExtendedDescription = styled.p`
-  font-size: 16px;
+	font-size: 16px;
 `
 
 const ButtonRed = styled.button`
-  background-color: #b51029;
-  width: 90%
-  color: white;
-  font-weight: 600;
-  border: 0;
-  box-shadow: 1px 1px 2px #000;
-  margin: 4px auto;
-  padding: 4px 0;
-  &:hover{
-    background-color: rgb(219, 22, 51);
-  }
-  &:active{
-    background-color: #b51029;
-    box-shadow: 0px 0px 1px #000;
-  }
+	background-color: #b51029;
+	width: 90%
+	color: white;
+	font-weight: 600;
+	border: 0;
+	box-shadow: 1px 1px 2px #000;
+	margin: 4px auto;
+	padding: 4px 0;
+	&:hover{
+		background-color: rgb(219, 22, 51);
+	}
+	&:active{
+		background-color: #b51029;
+		box-shadow: 0px 0px 1px #000;
+	}
 `
 
 const Table = styled.table`
-  margin: 0 16px;
-  table-layout: fixed;
-  width: 100%;
+	margin: 0 16px;
+	table-layout: fixed;
+	width: 100%;
 `
 
 const TR = styled.tr`
-  border-bottom: 1px whitesmoke solid;
+	border-bottom: 1px whitesmoke solid;
 `
 
 const TD = styled.td`
-  word-wrap:break-word;
-  padding-right: 8px;
+	word-wrap:break-word;
+	padding-right: 8px;
 `
 
 const Pprice = styled.p`
-  color: #328EFC;
-  font-size: 18px;
-  font-weight: 700;
-  padding-right: 4px;
-  margin: 0;
+	color: #328EFC;
+	font-size: 18px;
+	font-weight: 700;
+	padding-right: 4px;
+	margin: 0;
 `
 
 const InputQuantity = styled.input`
-  width: 50px;
-  height: 25px;
-  margin-left: 4px;
+	width: 50px;
+	height: 25px;
+	margin-left: 4px;
 `
 
 const TABLE = styled.table`
-  margin-top: 20px;
+	margin-top: 20px;
 `
 
 const TR2 = styled.tr`
-  border-top: 1px lightgrey solid;
-  border-bottom: 1px lightgrey solid;
+	border-top: 1px lightgrey solid;
+	border-bottom: 1px lightgrey solid;
 `
 
 const TDGrey = styled.td`
-  text-align: right;
-  padding: 4px 8px 4px 24px;
-  font-weight: 500;
-  background-color: whitesmoke;
+	text-align: right;
+	padding: 4px 8px 4px 24px;
+	font-weight: 500;
+	background-color: whitesmoke;
 `
 
 const TDWhite = styled.td`
@@ -277,7 +277,7 @@ padding: 4px 24px 4px 8px;
 `
 
 const IMG = styled.img`
-  opacity: 0.6;
+	opacity: 0.6;
 `
 
 export default function ItemDetailPage({history}){
@@ -343,7 +343,7 @@ export default function ItemDetailPage({history}){
 			imageFile = imageFile.slice(0, -5) + 'o.jpg'
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
-    
+		
 		let FeatureItems = item.feature.map(elem => {
 			return(
 				<li>{elem.text}</li>
@@ -367,7 +367,7 @@ export default function ItemDetailPage({history}){
 				{FeatureItems}
 			</ul>
 		)
-    
+		
 		let TechSpecs = (
 			<div>
 				<Table>

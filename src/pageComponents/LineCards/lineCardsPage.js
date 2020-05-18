@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import LineCardName from './uiComponents/lineCardName'
 import LineCardThumbnail from './uiComponents/LineCardThumbnail'
 
@@ -30,8 +29,7 @@ const ShortBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
 `
-const CardList = styled.div`
-`
+
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
@@ -92,8 +90,7 @@ const CallUs = styled.p`
     font-size: 14px;
     text-align: left;
 `
-const Number = styled.a`
-`
+
 const Button = styled.a`
     border: 0;
     background-color: #B51F2B;
@@ -113,7 +110,7 @@ const ButtonDiv = styled.div`
         transform: scale(1.1);
         }
 `
-export default function BlogPage({ history }) {
+export default function BlogPage() {
 	return (
 		<DivContainer>
 			<HeaderDivDiv>

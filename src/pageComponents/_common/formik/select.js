@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Formik, Form, Field, FieldProps } from 'formik'
+import _ from 'lodash'
 import Select from 'react-select'
 import styled from '@emotion/styled'
 
@@ -34,7 +34,6 @@ const CustomSelectComponent = ({
 	form: { touched, errors, setFieldValue },
 	options,
 	width,
-	useDefaultChange,
 	changeFunction,
 	...props
 }) => {
