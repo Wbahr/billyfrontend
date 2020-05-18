@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import DatePicker from 'react-datepicker'
@@ -137,9 +137,7 @@ export default function ShippingScheduleItem({item, index}) {
 					<Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
 						{({
 							field,
-							form,
-							form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-							meta
+							form
 						}) => (
 							<DivRow>
 								<DivSpacer>

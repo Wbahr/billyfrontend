@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import ShoppingCart from './uiComponents/shoppingCart'
 import SubtotalBox from './uiComponents/subtotalBox'
 import OrderSummary from './uiComponents/orderSummary'

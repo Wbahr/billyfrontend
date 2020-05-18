@@ -15,7 +15,7 @@ const DivContainer = styled.div`
   border-bottom: 2px whitesmoke solid;
   padding: 8px 16px;
   margin: 8px 0;
-  height: 135px;
+  min-height: 135px;
   background-color: white;
 `
 
