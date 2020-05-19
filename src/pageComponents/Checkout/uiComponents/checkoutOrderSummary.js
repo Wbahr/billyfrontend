@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Context from '../../../config/context'
 import NumberFormat from 'react-number-format'
 

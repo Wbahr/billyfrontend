@@ -1,89 +1,92 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter, usePagination, useFilters, useSortBy  } from 'react-table'
+import { useTable, usePagination, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
-import { formatTableData, clipboardData } from '../helpers/mutators'
+import { formatTableData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { GET_INVOICES } from '../../../config/providerGQL'
+import { format as dateFormat } from 'date-fns'
 
 const TableContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 1200px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 20px 40px;
-  margin: 0 auto 0 0;
+	display: flex;
+	flex-direction: column;
+	width: 1200px;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+	padding: 20px 40px;
+	margin: 0 auto 0 0;
 `
 
 const Table = styled.table`
-  margin: 16px;
+	margin: 16px;
 `
 
 const TRheader = styled.tr`
-  border-bottom: 1px solid gray;
+	border-bottom: 1px solid gray;
 `
 
 const THheader = styled.th`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 500;
+	font-size: 15px;
 `
 
 const TRrow = styled.tr`
-  border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
 `
 
 const TDrow = styled.td`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
-  font-size: 15px;
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-size: 15px;
+	color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
+	font-weight: ${props => props.isOrderDetail ? 400 : 300};
+	cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
 `
 
 const ButtonPagination = styled.button`
-  cursor: pointer;
-  background-color: black;
-  color: white;
-  border: 1px solid black;
-  border-radius: 1px;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	border-radius: 1px;
 `
 
 const SpanSort = styled.span`
-  margin-left: 4px;
+	margin-left: 4px;
 `
 
 const DivSpacer = styled.div`
-  margin: 0 8px;
+	margin: 0 8px;
 `
 
 const DivRow = styled.div`
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 `
 
 const DivRowDate = styled(DivRow)`
-  margin-top: 16px;
+	margin-top: 16px;
 `
 
 const Pdate = styled.p`
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  margin: 0;
-  margin-right: 4px;
-  padding-top: 6px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	margin: 0;
+	margin-right: 4px;
+	padding-top: 6px;
 `
 
 const Select = styled.select`
-  margin-left: 16px;
+	margin-left: 16px;
 `
 
-export default function InvoicesTable() {
+export default function InvoicesTable({history}) {
 	const didMountRef = useRef(false)
 	const [originalData, setOriginalData] = useState([])
 	const [data, setData] = useState([])
@@ -91,6 +94,15 @@ export default function InvoicesTable() {
 	const [showInvoiceType, setShowInvoiceType] = useState('all')
 	const [dateFrom, setDateFrom] = useState(null)
 	const [dateTo, setDateTo] = useState(null)
+	
+	useQuery(GET_INVOICES, {
+		fetchPolicy: 'no-cache',
+		onCompleted: result => {
+			let mutatedData = formatTableData('invoices', result.accountInvoices)
+			setOriginalData(mutatedData)
+			setData(mutatedData)
+		}
+	})
 
 	useEffect(() => {
 		if (didMountRef) {
@@ -129,8 +141,18 @@ export default function InvoicesTable() {
 	const columns = useMemo(
 		() => [
 			{
-				Header: 'Order Date',
-				accessor: 'orderDate', // accessor is the "key" in the data
+				Header: 'Due Date',
+				accessor: 'dueDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
+			},
+			{
+				Header: 'Invoice Date',
+				accessor: 'invoiceDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
+			},
+			{
+				Header: 'Invoice #',
+				accessor: 'invoiceNumber',
 			},
 			{
 				Header: 'Order #',
@@ -141,16 +163,16 @@ export default function InvoicesTable() {
 				accessor: 'poNo',
 			},
 			{
-				Header: 'Buyer',
-				accessor: 'buyer',
-			},
-			{
-				Header: 'Total',
-				accessor: 'total',
-			},
-			{
 				Header: 'Status',
 				accessor: 'status',
+			},
+			{
+				Header: 'Amount Due',
+				accessor: 'amountDue',
+			},
+			{
+				Header: 'Amount Paid',
+				accessor: 'amountPaid',
 			},
 			{
 				Header: 'Filter',
@@ -179,7 +201,16 @@ export default function InvoicesTable() {
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+			initialState: { 
+				pageIndex: 0, 
+				hiddenColumns: ['filter'],
+				sortBy: [
+					{
+						id: 'dueDate',
+						desc: true
+					}
+				]
+			},
 		},
 		useSortBy,
 		usePagination
@@ -249,11 +280,19 @@ export default function InvoicesTable() {
 						return (
 							<TRrow {...row.getRowProps()}>
 								{row.cells.map(cell => {
-									return (
-										<TDrow {...cell.getCellProps()}>
-											{cell.render('Cell')}
-										</TDrow>
-									)
+									if(cell.column.id === 'orderNumber') {
+										return (
+											<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									} else {
+										return (
+											<TDrow {...cell.getCellProps()}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									}
 								})}
 							</TRrow>
 						)
@@ -261,9 +300,9 @@ export default function InvoicesTable() {
 				</tbody>
 			</Table>
 			{/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
+				Pagination can be built however you'd like. 
+				This is just a very basic UI implementation:
+			*/}
 			<div>
 				<ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
 					{'<<'}
@@ -272,7 +311,7 @@ export default function InvoicesTable() {
 					{'<'}
 				</ButtonPagination>{' '}
 				<span>
-          Page{' '}
+					Page{' '}
 					<strong>
 						{pageIndex + 1} of {pageOptions.length}
 					</strong>{' '}
@@ -284,7 +323,7 @@ export default function InvoicesTable() {
 					{'>>'}
 				</ButtonPagination>{' '}
 				<span>
-          | Go to page:{' '}
+					| Go to page:{' '}
 					<input
 						type="number"
 						defaultValue={pageIndex + 1}
@@ -303,7 +342,7 @@ export default function InvoicesTable() {
 				>
 					{[10, 25, 50].map(pageSize => (
 						<option key={pageSize} value={pageSize}>
-              Show {pageSize}
+							Show {pageSize}
 						</option>
 					))}
 				</select>

@@ -18,12 +18,10 @@ export function formatTableData(type, data, orderId){
 				let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
 				filterField = filterField.toUpperCase()
 				let displayTotal = <NumberFormat value={elem.total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
-				let epoch = Date.parse(elem.orderDate)
-				let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
 				mutatedData.push(
 					{
 						'orderNumber': elem.orderNumber,
-						'orderDate': formattedDate,
+						'orderDate': elem.orderDate,
 						'poNo': elem.poNo,
 						'status': elem.status,
 						'buyer': elem.buyer,
@@ -39,19 +37,17 @@ export function formatTableData(type, data, orderId){
 		for(let i = 0; i < data.length; i++) {
 			let elem = data[i]
 			if(!elem.isQuote && elem.status === 'Open'){
-				let epoch = Date.parse(elem.orderDate)
-				let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
 				for(let j = 0; j < elem.lineItems.length ;j++) {
 					let lineItem = elem.lineItems[j]
 					let unitPrice = <NumberFormat value={lineItem.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
 					let extPrice = 
-            <NumberFormat value={lineItem.unitPrice * lineItem.quantityOrdered} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+						<NumberFormat value={lineItem.unitPrice * lineItem.quantityOrdered} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
 					let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
 					filterField = filterField.toUpperCase()
 					mutatedData.push(
 						{
 							'orderNumber': elem.orderNumber,
-							'orderDate': formattedDate,
+							'orderDate': elem.orderDate,
 							'line': j + 1,
 							'poNo': elem.poNo,
 							'promiseDate': '1/1/2020',
@@ -79,12 +75,10 @@ export function formatTableData(type, data, orderId){
 				let filterField = elem.orderNumber + ' ' + partNumbers
 				filterField = filterField.toUpperCase()
 				let displayTotal = '$' + elem.total.toFixed(2)
-				let epoch = Date.parse(elem.orderDate)
-				let formattedDate = dateFormat(new Date(epoch), 'MM/dd/yyyy')
 				mutatedData.push(
 					{
 						'quoteNumber': elem.orderNumber,
-						'quoteDate': formattedDate,
+						'quoteDate': elem.orderDate,
 						'quoteRefNo': 'quoteRefNo',
 						'total': displayTotal,
 						'filter': filterField,
@@ -102,6 +96,32 @@ export function formatTableData(type, data, orderId){
 			}
 		}
 		break
+	case 'invoices':
+		for(let i = 0; i < data.length; i++) {
+			let elem = data[i]
+			let partNumbers = ''
+			for(let j = 0; j < elem.lineItems.length ;j++) {
+				let lineItem = elem.lineItems[j]
+				partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
+			}
+			let filterField = elem.orderNumber + ' ' + elem.invoiceNumber + ' ' + elem.poNo + ' ' + partNumbers
+			filterField = filterField.toUpperCase()
+			let amountPaid = '$' + elem.amountPaid.toFixed(2)
+			let amountDue = '$' + elem.amountDue.toFixed(2)
+			mutatedData.push(
+				{
+					'dueDate': elem.netDueDate,
+					'invoiceDate': elem.invoiceDate,
+					'invoiceNumber': elem.invoiceNumber,
+					'orderNumber': elem.orderNumber,
+					'poNo': elem.poNo,
+					'status': elem.status,
+					'amountPaid': amountPaid,
+					'amountDue': amountDue,
+					'filter': filterField,
+				}
+			)
+		}		break
 	}
 	return mutatedData
 }

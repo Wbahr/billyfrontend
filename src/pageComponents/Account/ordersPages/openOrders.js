@@ -1,4 +1,6 @@
+/* eslint-disable react/display-name */
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import { formatTableData } from '../helpers/mutators'
@@ -7,80 +9,81 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
+import { format as dateFormat } from 'date-fns'
 
 const TableContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 1200px;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-  padding: 20px 40px;
-  margin: 0 auto 0 0;
+	display: flex;
+	flex-direction: column;
+	width: 1200px;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+	padding: 20px 40px;
+	margin: 0 auto 0 0;
 `
 
 const Table = styled.table`
-  margin: 16px;
+	margin: 16px;
 `
 
 const TRheader = styled.tr`
-  border-bottom: 1px solid gray;
+	border-bottom: 1px solid gray;
 `
 
 const THheader = styled.th`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 500;
+	font-size: 15px;
 `
 
 const TRrow = styled.tr`
-  border-bottom: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
 `
 
 const TDrow = styled.td`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-size: 15px;
-  color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
-  font-weight: ${props => props.isOrderDetail ? 400 : 300};
-  cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-size: 15px;
+	color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
+	font-weight: ${props => props.isOrderDetail ? 400 : 300};
+	cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
 `
 
 const ButtonPagination = styled.button`
-  cursor: pointer;
-  background-color: black;
-  color: white;
-  border: 1px solid black;
-  border-radius: 1px;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	border-radius: 1px;
 `
 
 const SpanSort = styled.span`
-  margin-left: 4px;
+	margin-left: 4px;
 `
 
 const DivSpacer = styled.div`
-  margin: 0 8px;
+	margin: 0 8px;
 `
 
 const DivRow = styled.div`
-  display: flex;
-  align-items: center;
+	display: flex;
+	align-items: center;
 `
 
 const DivRowDate = styled(DivRow)`
-  margin-top: 16px;
+	margin-top: 16px;
 `
 
 const Pdate = styled.p`
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  margin: 0;
-  margin-right: 4px;
-  padding-top: 6px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	margin: 0;
+	margin-right: 4px;
+	padding-top: 6px;
 `
 
 const Select = styled.select`
-  margin-left: 16px;
+	margin-left: 16px;
 `
 
 export default function OpenOrdersTable({history}) {
@@ -140,6 +143,7 @@ export default function OpenOrdersTable({history}) {
 			{
 				Header: 'Order Date',
 				accessor: 'orderDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
 			},
 			{
 				Header: 'Order #',
@@ -204,7 +208,16 @@ export default function OpenOrdersTable({history}) {
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+			initialState: { 
+				pageIndex: 0, 
+				hiddenColumns: ['filter'],
+				sortBy: [
+					{
+						id: 'orderDate',
+						desc: true
+					}
+				]
+			},
 		},
 		useSortBy,
 		usePagination
@@ -215,8 +228,8 @@ export default function OpenOrdersTable({history}) {
 		<TableContainer>
 			<h4>Open Orders</h4>
 			{/* <CopyToClipboard text={copyData}>
-        <button>copy</button>
-    </CopyToClipboard> */}
+				<button>copy</button>
+		</CopyToClipboard> */}
 			<DivRow>
 				<AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
 			</DivRow>
@@ -293,9 +306,9 @@ export default function OpenOrdersTable({history}) {
 				</tbody>
 			</Table>
 			{/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
+				Pagination can be built however you'd like. 
+				This is just a very basic UI implementation:
+			*/}
 			<div>
 				<ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
 					{'<<'}
@@ -304,7 +317,7 @@ export default function OpenOrdersTable({history}) {
 					{'<'}
 				</ButtonPagination>{' '}
 				<span>
-          Page{' '}
+					Page{' '}
 					<strong>
 						{pageIndex + 1} of {pageOptions.length}
 					</strong>{' '}
@@ -316,7 +329,7 @@ export default function OpenOrdersTable({history}) {
 					{'>>'}
 				</ButtonPagination>{' '}
 				<span>
-          | Go to page:{' '}
+					| Go to page:{' '}
 					<input
 						type="number"
 						defaultValue={pageIndex + 1}
@@ -335,7 +348,7 @@ export default function OpenOrdersTable({history}) {
 				>
 					{[10, 25, 50].map(pageSize => (
 						<option key={pageSize} value={pageSize}>
-              Show {pageSize}
+							Show {pageSize}
 						</option>
 					))}
 				</select>
