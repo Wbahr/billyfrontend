@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import Banner from '../uiComponents/banner'
+import Header from '../../_common/header'
 
 const Container = styled.div`
     max-width: 1300px;
@@ -36,7 +36,7 @@ const Div1 = styled.div`
 export default function fluidCleanliness() {
     return (
         <>
-            <Banner text="Fluid Cleanliness" />
+            <Header text="Fluid Cleanliness" />
             <Container>
                 <Div>
                     <ImgDiv>
