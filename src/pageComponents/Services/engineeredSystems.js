@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import HydraulicEngineered from './engineeredSystemsPages/hydraulicEngineered'
 import LubricationSystems from './engineeredSystemsPages/lubricationSystems'
 import AutomationEngineered from './engineeredSystemsPages/automationEngineered'
+import LiquidAndGasPressure from './engineeredSystemsPages/liquidAndGasPressure'
 
 export default function EngineeredSystemsPage({ history }) {
     const [pageComponent, setPageComponent] = useState()
@@ -22,17 +23,24 @@ export default function EngineeredSystemsPage({ history }) {
         {
             'label': 'Automation Engineered Systems',
             'page': 'automation-engineered-systems'
+        },
+        {
+            'label': 'Liquid & Gas Pressure Systems',
+            'page': 'liquid-and-gas-pressure-systems'
         }
     ]
     useEffect(() => {
         if (page === 'hydraulic-engineered-systems') {
-            setPageComponent(<HydraulicEngineered/>)
+            setPageComponent(<HydraulicEngineered />)
         }
         else if (page === 'lubrication-systems') {
             setPageComponent(<LubricationSystems />)
         }
         else if (page === 'automation-engineered-systems') {
             setPageComponent(<AutomationEngineered />)
+        }
+        else if (page === 'liquid-and-gas-pressure-systems') {
+            setPageComponent(<LiquidAndGasPressure />)
         }
     }, [page])
 
