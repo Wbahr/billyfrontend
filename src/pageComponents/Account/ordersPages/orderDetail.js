@@ -64,7 +64,7 @@ export default function OrderDetail({ history, orderId }) {
 	const context = useContext(Context)
 	const didMountRef = useRef(false)
 	const [filter, setFilter] = useState('')
-	const [isListView, setIsListView] = useState(false)
+	const [isTableView, setIsTableView] = useState(false)
 	const [data, setData] = useState({})
 
 	useEffect(() => {
@@ -87,7 +87,7 @@ export default function OrderDetail({ history, orderId }) {
 	// }, [data])
 
 	let itemDetails = []
-	if(isListView){
+	if(!isTableView){
 		let filteredListItems = matchSorter(data.lineItems, filter, {keys: ['itemCode']})
 		itemDetails = _.map(filteredListItems, (item) => {
 			return(
@@ -161,10 +161,10 @@ export default function OrderDetail({ history, orderId }) {
 			<div>
 				<ToggleSwitch 
 					label='View:'
-					text='List'
-					text2='Grid'
-					toggled={isListView}
-					setToggled={(value)=>setIsListView(value)}
+					text='Table'
+					text2='List'
+					toggled={isTableView}
+					setToggled={(value)=>setIsTableView(value)}
 				/>
 				<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
 			</div>
