@@ -58,6 +58,9 @@ export default function AccountManagementPage({history}) {
 		case 'quote-detail':
 			setPageComponent(<QuoteDetail history={history} orderId={orderId}/>)
 			break
+		case 'invoice-detail':
+			setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
+			break
 		}
 	}, [page])
 

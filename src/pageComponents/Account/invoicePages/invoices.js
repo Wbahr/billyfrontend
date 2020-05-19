@@ -286,6 +286,12 @@ export default function InvoicesTable({history}) {
 												{cell.render('Cell')}
 											</TDrow>
 										)
+									} else if (cell.column.id === 'invoiceNumber') {
+										return (
+											<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/invoice-detail/${cell.value}`)}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
 									} else {
 										return (
 											<TDrow {...cell.getCellProps()}>
