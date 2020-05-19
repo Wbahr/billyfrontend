@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { GET_INVOICES } from '../../../config/providerGQL'
+import { format as dateFormat } from 'date-fns'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -41,8 +42,10 @@ const TRrow = styled.tr`
 const TDrow = styled.td`
 	padding: 8px 16px;
 	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-	font-weight: 300;
 	font-size: 15px;
+	color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
+	font-weight: ${props => props.isOrderDetail ? 400 : 300};
+	cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
 `
 
 const ButtonPagination = styled.button`
@@ -83,7 +86,7 @@ const Select = styled.select`
 	margin-left: 16px;
 `
 
-export default function InvoicesTable() {
+export default function InvoicesTable({history}) {
 	const didMountRef = useRef(false)
 	const [originalData, setOriginalData] = useState([])
 	const [data, setData] = useState([])
@@ -140,10 +143,12 @@ export default function InvoicesTable() {
 			{
 				Header: 'Due Date',
 				accessor: 'dueDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
 			},
 			{
 				Header: 'Invoice Date',
 				accessor: 'invoiceDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
 			},
 			{
 				Header: 'Invoice #',
@@ -196,7 +201,16 @@ export default function InvoicesTable() {
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+			initialState: { 
+				pageIndex: 0, 
+				hiddenColumns: ['filter'],
+				sortBy: [
+					{
+						id: 'dueDate',
+						desc: true
+					}
+				]
+			},
 		},
 		useSortBy,
 		usePagination
@@ -266,11 +280,19 @@ export default function InvoicesTable() {
 						return (
 							<TRrow {...row.getRowProps()}>
 								{row.cells.map(cell => {
-									return (
-										<TDrow {...cell.getCellProps()}>
-											{cell.render('Cell')}
-										</TDrow>
-									)
+									if(cell.column.id === 'orderNumber') {
+										return (
+											<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									} else {
+										return (
+											<TDrow {...cell.getCellProps()}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									}
 								})}
 							</TRrow>
 						)
