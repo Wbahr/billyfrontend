@@ -54,14 +54,14 @@ class RedPalletSerialNumbers extends  React.Component {
 				Fields.push(
 					<DivLeftAlign>
 						<Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
-							{({ field, form}) => (
+							{({ field }) => (
 								<Inputm {...field}
 									component='input'
 									placeholder='Serial #' />
 							)}
 						</Field>
 						<Field name={`RepairItems.${index}.serialNumber.${fieldNumber + 1}`}>
-							{({ field, form}) => (
+							{({ field }) => (
 								<Inputm {...field}
 									component='input'
 									placeholder='Serial #' />
@@ -74,7 +74,7 @@ class RedPalletSerialNumbers extends  React.Component {
 				Fields.push(
 					<DivLeftAlign>
 						<Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
-							{({ field, form}) => (
+							{({ field }) => (
 								<Inputm {...field}
 									component='input'
 									placeholder='Serial #' />

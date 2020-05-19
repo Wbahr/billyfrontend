@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
@@ -11,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, billToSchema } from './helpers/validationSchema'
-import { connect, getIn } from 'formik'
+import { connect } from 'formik'
 
 const DivContainer = styled.div`
   display: flex;
@@ -62,12 +61,6 @@ const H3 = styled.h3`
   text-transform: uppercase;
   padding-left: 8px;
   margin: 0 0 2px 4px;
-`
-
-const Pstep = styled.span`
-  font-family: ProximaBold;
-  text-transform: uppercase;
-  font-size: 20px;
 `
 
 const DivNavigation = styled.div`
@@ -123,8 +116,7 @@ const GET_TAX_AMOUNT = gql`
 
 function CheckoutPage(props) {
 	const {
-		history,
-		formik
+		history
 	} = props
 
 	const context = useContext(Context)
@@ -202,12 +194,10 @@ function CheckoutPage(props) {
 	}
 
 	function handleValidateFields(values){
-		console.log('handle validation->', values),
 		YupSchema[currentStep].validate(values).catch(function(err) {
 			console.log(err.name, err.errors)
 		})
 		YupSchema[currentStep].isValid(values).then(function(valid) {
-			console.log('valid', valid),
 			setStepValidated({
 				...stepValidated,
 				[currentStep]: valid

@@ -1,5 +1,4 @@
-import { yupToFormErrors } from 'formik'
-const { object, string, number, date } = require('yup')
+const { object, string } = require('yup')
 
 // Step 1
 export const shippingScheduleSchema = object({

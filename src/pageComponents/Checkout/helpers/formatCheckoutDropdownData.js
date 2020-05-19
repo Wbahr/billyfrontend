@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default function formatCheckoutDropdownData(data){
 	let mutatedShipTos = formatShipToData(data.shipToAddresses)
 	let mutatedCarriers = formatCarriers(data.carriers)

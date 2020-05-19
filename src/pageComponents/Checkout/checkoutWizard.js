@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import queryString from 'query-string'
 import _ from 'lodash'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery  } from '@apollo/client'
 import gql from 'graphql-tag'
 import {Formik, useFormikContext} from 'formik'
 import {Elements} from 'react-stripe-elements'
@@ -118,11 +116,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
 	},[shoppingCart])
 
 
-	const { 
-		loading, 
-		error, 
-		data 
-	} = useQuery(GET_CHECKOUT_DATA, {
+	useQuery(GET_CHECKOUT_DATA, {
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)

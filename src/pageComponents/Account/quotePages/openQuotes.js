@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import { formatTableData } from '../helpers/mutators'
