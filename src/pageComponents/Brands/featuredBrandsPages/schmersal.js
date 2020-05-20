@@ -37,9 +37,7 @@ const RelatedLinkDiv = styled.div`
 	height: 220px;
 	margin: 20px 0;
 `
-const Span = styled.span`
-	font-weight: bold;
-`
+
 export default function Schmersal() {
 
 	return (

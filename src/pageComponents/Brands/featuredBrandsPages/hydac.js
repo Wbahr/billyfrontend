@@ -238,7 +238,7 @@ const BannerImg = styled.img`
 const ShowMoreBtn1 = styled.button`
 	font-size: 14px;
 	border: none;
-  border-radius:2em;
+  border-radius: 2em;
 	padding: 4px 10px;
   margin: 0 auto;
 	outline: none;
@@ -353,8 +353,7 @@ export default function Hydac() {
 				<SectionDiv>
 					<ProductsTitle>Articles & Videos</ProductsTitle>
 					<BorderBottom></BorderBottom>
-				</SectionDiv>
-			 
+				</SectionDiv>	 
 				<VideoDiv>
 					<Video><ArticlesVideo src="https://www.youtube.com/embed/dNRz2Efm8o8"></ArticlesVideo></Video>
 					<Video><ArticlesVideo src="https://www.youtube.com/embed/M0yLeDeEStQ"></ArticlesVideo></Video>

@@ -1,8 +1,5 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import FeaturedBrandLogo from '../uiComponents/FeaturedBrandLogo'
 import H1 from '../uiComponents/H1'
@@ -10,7 +7,6 @@ import BrandDetail from '../uiComponents/BrandDetail'
 import ShopProductBtn from '../uiComponents/ShopProductBtn'
 import SectionHeader from '../uiComponents/SectionHeader'
 import ProductItems from '../uiComponents/ProductItems'
-import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
 
@@ -20,12 +16,6 @@ const Container = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	margin: 0 auto;
-`
-const ArticlesDiv = styled.div`
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
-	flex-wrap: wrap;
 `
 const VideoDiv = styled.div`
 	display: flex;
@@ -40,9 +30,7 @@ const RelatedLinkDiv = styled.div`
 	height: 220px;
 	margin: 20px 0;
 `
-const Span = styled.span`
-	font-weight: bold;
-`
+
 export default function SMC() {
 
 	return (

@@ -36,12 +36,6 @@ const RelatedLinkDiv = styled.div`
 	width: 100%;
 	height: 220px;
 	margin: 20px 0;
-
-`
-const ListDiv = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
 `
 export default function Phoenix() {
 

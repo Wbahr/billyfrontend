@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 
 
 const PageContainer = styled.div`
