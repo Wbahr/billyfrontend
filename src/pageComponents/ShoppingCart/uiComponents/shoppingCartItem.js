@@ -97,6 +97,8 @@ const DivCol3 = styled.div`
 
 const Img = styled.img`
 	margin: 0 4px;
+	max-width: 98% !important;
+	max-height: 98% !important;
 `
 
 const DivTotalPrice = styled.div`
@@ -258,7 +260,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 					<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
 				</DivMove>
 				<DivCol1>
-					<Img max-height='100%' max-width='100%' src={imagePath} />
+					<Img src={imagePath} />
 				</DivCol1>
 				<DivCol2>
 					<CopyToClipboard text={itemDetails.itemDesc}>
