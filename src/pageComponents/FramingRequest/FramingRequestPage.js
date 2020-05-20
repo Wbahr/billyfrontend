@@ -19,8 +19,6 @@ const Number_Div = styled.div`
 const Number = styled.img`
     width: 100%;
 `
-const Topic_Div = styled.div`
-`
 const Topic = styled.p`
     font-weight: bold;
     font-size: 22px;
@@ -50,14 +48,11 @@ const DetailDiv = styled.div`
     background-color: #f2f3f4;
     padding: 20px;
     height: 248px;
-
 `
 const ContactDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-self: start;
-`
-const Detail = styled.p`
 `
 const SubTitle = styled.div`
     text-align: center;
@@ -70,7 +65,6 @@ const H5 = styled.h4`
 `
 const ContactSection = styled.div`
     display: flex;
-
 `
 
 export default function FramingRequestPage() {
@@ -87,17 +81,17 @@ export default function FramingRequestPage() {
 						<Number_Div>
 							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-1.jpg" />
 						</Number_Div>
-						<Topic_Div>
+						<div>
 							<Topic>Design</Topic>
-						</Topic_Div>
+						</div>
 					</Title_Div>
 					<ImgDiv>
 						<Img src="https://www.airlinehyd.com/customer/aihyco/images/sketch.jpg" />
 					</ImgDiv>
 					<DetailDiv>
-						<Detail>
+						<p>
                After completing the form below, an Airline Application Engineer will consult with you and develop concepts based on your needs. At Airline, an AutoCAD or Inventor drawing and proposal are generated for your review and approval. Once the order is placed; the design, BOM and details for production are finalized.
-						</Detail>
+						</p>
 					</DetailDiv>
 				</Div>
 				<Div>
@@ -105,17 +99,17 @@ export default function FramingRequestPage() {
 						<Number_Div>
 							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-2.jpg" />
 						</Number_Div>
-						<Topic_Div>
+						<div>
 							<Topic>Fabrication</Topic>
-						</Topic_Div>
+						</div>
 					</Title_Div>
 					<ImgDiv>
 						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingFabrication.jpg" />
 					</ImgDiv>
 					<DetailDiv>
-						<Detail>
+						<p>
               Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
-						</Detail>
+						</p>
 					</DetailDiv>
 				</Div>
 				<Div>
@@ -123,17 +117,17 @@ export default function FramingRequestPage() {
 						<Number_Div>
 							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-3.jpg" />
 						</Number_Div>
-						<Topic_Div>
+						<div>
 							<Topic>Delivery/Installation</Topic>
-						</Topic_Div>
+						</div>
 					</Title_Div>
 					<ImgDiv>
 						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingDelivery.jpg" />
 					</ImgDiv>
 					<DetailDiv>
-						<Detail>
+						<p>
                If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
-						</Detail>
+						</p>
 					</DetailDiv>
 				</Div>
 			</SectionDiv>

@@ -11,10 +11,6 @@ const FramingDiv = styled.a`
 			transform: scale(1.1);
     }
 `
-const ImgDiv = styled.div`
-`
-const Img = styled.img`
-`
 const P = styled.p`
     margin-top: 10px;
     font-weight: bold;;
@@ -31,9 +27,9 @@ export default function framing(props) {
 	return (
 		<>
 			<FramingDiv href={link} target="_blank">
-				<ImgDiv>
-					<Img src={src} />
-				</ImgDiv>
+				<div>
+					<img src={src} />
+				</div>
 				<P>{text}</P>
 			</FramingDiv>
 		</>

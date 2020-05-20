@@ -16,7 +16,6 @@ const Detail = styled.div`
 const ImgDiv = styled.div`
     width: 220px;
     margin: 0 30px;
-  
 `
 const Img = styled.img`
     width: 100%;
@@ -30,7 +29,6 @@ const Div = styled.div`
 const Div1 = styled.div`
     display: flex;
     align-items: center;
-
 `
 export default function fluidCleanliness() {
 	return (

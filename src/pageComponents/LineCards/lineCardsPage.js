@@ -5,8 +5,7 @@ import LineCardThumbnail from './uiComponents/LineCardThumbnail'
 
 const DivContainer = styled.div`
     width: 1300px;
-    margin: 50px auto;
-    
+    margin: 50px auto;   
 `
 const HeaderDivDiv = styled.div`
     display: flex;
@@ -28,7 +27,6 @@ const ShortBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
 `
-
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;

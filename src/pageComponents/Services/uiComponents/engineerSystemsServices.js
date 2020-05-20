@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ImgDiv = styled.div`
-`
 const Img = styled.img`
     width: 250px;
     height: 150px;
@@ -29,9 +27,9 @@ export default function engineerSystemsServices(props) {
 	} = props
 	return (
 		<>
-			<ImgDiv>
+			<div>
 				<Img src={src} />
-			</ImgDiv>
+			</div>
 			<TitleDiv>
 				<Title>{title}</Title>
 				<TittleDetail>{text}</TittleDetail>

@@ -20,12 +20,12 @@ const BrandHeaderH1 = styled.h1`
     font-weight: bold;
 `
 const ShortLine = styled.div`
-  display: flex;
-  border-bottom: 2px solid #555555;
-  width: 20%;
-  margin: 0 auto;
-  margin-top: 20px;
-  `
+    display: flex;
+    border-bottom: 2px solid #555555;
+    width: 20%;
+    margin: 0 auto;
+    margin-top: 20px;
+    `
 const BrandDetailsDiv = styled.div`
     display: flex;
     flex-wrap: nowrap;
@@ -45,14 +45,13 @@ const BrandNameSpan = styled.span`
     font-weight: bold;
 `
 const LinkDetailDiv = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  color: #DB1633;
-  margin: 0 30px;
-//   position: relative;
-  &:hover{
-  color: #555555;   
-`
+    display: flex;
+    flex-wrap: wrap;
+    color: #DB1633;
+    margin: 0 30px;
+    &:hover{
+    color: #555555;   
+  `
 const Div = styled.div`
     display: flex;
     flex-wrap: nowrap; 
@@ -61,29 +60,29 @@ const Div = styled.div`
     margin-top: 40px;
 `
 const IconDiv = styled.div`
-display: flex;
-  justify-content: center;
-  color: #555555;
-  padding-bottom: 10px;
-  &:hover{
-  color: #DB1633 ; 
-  }
-`
+    display: flex;
+    justify-content: center;
+    color: #555555;
+    padding-bottom: 10px;
+    &:hover{
+    color: #DB1633 ; 
+    }
+  `
 const LinkStyleDiv = styled.div`
-  display: flex;
-  justify-content: center;
-`
+    display: flex;
+    justify-content: center;
+  `
 const LinkStyle = styled.a`
-color: #246696;
-  font-size: 12px;
-  text-transform: capitalize;
-  font-weight: bold;
-  text-align: center;
-  &:hover{
-    color: #133752 ;
-    text-decoration: none;
-  }
-`
+    color: #246696;
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: bold;
+    text-align: center;
+    &:hover{
+      color: #133752 ;
+      text-decoration: none;
+    }
+  `
 const RelatedLinkDiv = styled.div`
     margin: 0 auto;
     display: flex;

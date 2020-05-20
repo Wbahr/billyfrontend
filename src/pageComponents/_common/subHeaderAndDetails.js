@@ -8,9 +8,6 @@ const H5 = styled.h5`
     font-weight: bold;
     color: #555555;
 `
-const P = styled.p`
-    
-`
 export default function subHeaderAndDetails(props) {
 	const {
 		text,
@@ -19,7 +16,7 @@ export default function subHeaderAndDetails(props) {
 	return (
 		<Header>
 			<H5>{text}</H5>
-			<P>{details}</P>
+			<p>{details}</p>
 		</Header>
 	)
 }

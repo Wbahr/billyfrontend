@@ -5,8 +5,6 @@ const HeaderDetail = styled.div`
     display: flex;
     flex-direction: column;
 `
-const Detail = styled.p`
-`
 const Title = styled.p`
     font-weight: bold;
 `
@@ -19,7 +17,7 @@ export default function productLayout(props) {
 		<>
 			<HeaderDetail>
 				<Title>{title}</Title>
-				<Detail>{text}</Detail>
+				<p>{text}</p>
 			</HeaderDetail>
 		</>
 	)

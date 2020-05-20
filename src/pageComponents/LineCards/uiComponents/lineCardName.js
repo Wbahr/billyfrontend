@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const List = styled.div`
-
-`
 const Name = styled.p`
     font-weight: bold;
     text-transform: uppercase;
@@ -13,9 +10,9 @@ const Name = styled.p`
 export default function lineCardName(props) {
 	return (
 		<div>
-			<List>
+			<div>
 				<Name>{props.text}</Name>
-			</List>
+			</div>
 		</div>
 	)
 }

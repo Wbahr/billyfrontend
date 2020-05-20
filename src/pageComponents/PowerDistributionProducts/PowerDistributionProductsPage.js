@@ -186,8 +186,6 @@ const LogoText = styled.p`
     color: #B51F2B;
     font-weight: bold;
 `
-const BtnDiv = styled.div`
-`
 const LogoBtn = styled.button`
     background-color: #246696;
     color: white;
@@ -219,10 +217,6 @@ const ServiceName = styled.p`
     margin-bottom: 5px;
     font-weight: bold;
 `
-const ServiceList = styled.ul`   
-`
-const List = styled.li`
-`
 const SubText = styled.p`
     text-align: center;
     font-weight: bold;
@@ -248,12 +242,12 @@ export default function PowerDistributionProducts() {
 						<LogoDiv>
 							<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
 							<LogoText>Interested in Eaton?</LogoText>
-							<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+							<div><LogoBtn>Request more information</LogoBtn></div>
 						</LogoDiv>
 						<LogoDiv>
 							<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
 							<LogoText>Interested in Rittal?</LogoText>
-							<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+							<div><LogoBtn>Request more information</LogoBtn></div>
 						</LogoDiv>
 					</DistributorDetails>
 				</BrandDiv>
@@ -815,12 +809,12 @@ export default function PowerDistributionProducts() {
 					<LogoDiv>
 						<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
 						<LogoText>Interested in Eaton?</LogoText>
-						<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+						<div><LogoBtn>Request more information</LogoBtn></div>
 					</LogoDiv>
 					<LogoDiv>
 						<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
 						<LogoText>Interested in Rittal?</LogoText>
-						<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+						<div><LogoBtn>Request more information</LogoBtn></div>
 					</LogoDiv>
 				</InfoDiv>
 
@@ -837,67 +831,67 @@ export default function PowerDistributionProducts() {
 					<ServiceMainDiv>
 						<Services>
 							<ServiceName>Predictive and preventive maintenance for generation equipment</ServiceName>
-							<ServiceList>
-								<List>Preventive maintenance and test of transformers, OCBs, SF6 breakers, circuit interrupters, cutouts, relays, switchgear, PTs, CPTs, CTs, reactors, grounding systems and lightning arresters</List>
-								<List>Transformer and breaker oil analysis</List>
-								<List>Preventive-maintenance program design and implementation</List>
-								<List>Partial-discharge testingvand analysis</List>
-								<List>Maintenance contracts</List>
-								<List>Thermographic surveys</List>
-								<List>Performance-based maintenance programs</List>
-							</ServiceList>
+							<ul>
+								<li>Preventive maintenance and test of transformers, OCBs, SF6 breakers, circuit interrupters, cutouts, relays, switchgear, PTs, CPTs, CTs, reactors, grounding systems and lightning arresters</li>
+								<li>Transformer and breaker oil analysis</li>
+								<li>Preventive-maintenance program design and implementation</li>
+								<li>Partial-discharge testingvand analysis</li>
+								<li>Maintenance contracts</li>
+								<li>Thermographic surveys</li>
+								<li>Performance-based maintenance programs</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Substation turnkey design capabilities</ServiceName>
-							<ServiceList>
-								<List>Crisis response—nationwide</List>
-								<List>Substation commissioning and startup</List>
-								<List>Substation operation and maintenance</List>
-								<List>Integrated project solutions</List>
-								<List>New substation design and construction</List>
-								<List>Energy management</List>
-								<List>Project management</List>
-							</ServiceList>
+							<ul>
+								<li>Crisis response—nationwide</li>
+								<li>Substation commissioning and startup</li>
+								<li>Substation operation and maintenance</li>
+								<li>Integrated project solutions</li>
+								<li>New substation design and construction</li>
+								<li>Energy management</li>
+								<li>Project management</li>
+							</ul>
 							<ServiceName>Power system design and analysis capabilities</ServiceName>
-							<ServiceList>
-								<List>Arc flash studies</List>
-								<List>NERC compliance reporting</List>
-								<List>Coordination / short circuit/ fault current studies</List>
-								<List>Load flow / power factor studies</List>
-								<List>Grounding analysis/ ground grid design</List>
-								<List>Transient stability studies</List>
-							</ServiceList>
+							<ul>
+								<li>Arc flash studies</li>
+								<li>NERC compliance reporting</li>
+								<li>Coordination / short circuit/ fault current studies</li>
+								<li>Load flow / power factor studies</li>
+								<li>Grounding analysis/ ground grid design</li>
+								<li>Transient stability studies</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Equipment life extension</ServiceName>
-							<ServiceList>
-								<List>Medium-voltage vacuum replacement breaker designs for most OEM’s breakers</List>
-								<List>Generator breaker replacements</List>
-								<List>More than 200 ANSIapproved designs</List>
-								<List>Switchgear modifications, bus-bracing analysis</List>
-								<List>Protective relay upgrades, retrofits and redesign; new doors, etc.</List>
-								<List>Add to existing switchgear</List>
-								<List>Energy management, PLC control and load shedding</List>
-								<List>System metering and control</List>
-								<List>Power breaker centers dedicated to the reconditioning of low- and medium-voltage breakers and contactors per ANSI C37.59-2002</List>
-								<List>Excitation system replacement and upgrades</List>
-								<List>High-resistance grounding system design and installation</List>
-								<List>Low-voltage replacement breaker (LVAR) and vacuum starter replacement (VSR)</List>
-							</ServiceList>
+							<ul>
+								<li>Medium-voltage vacuum replacement breaker designs for most OEM’s breakers</li>
+								<li>Generator breaker replacements</li>
+								<li>More than 200 ANSIapproved designs</li>
+								<li>Switchgear modifications, bus-bracing analysis</li>
+								<li>Protective relay upgrades, retrofits and redesign; new doors, etc.</li>
+								<li>Add to existing switchgear</li>
+								<li>Energy management, PLC control and load shedding</li>
+								<li>System metering and control</li>
+								<li>Power breaker centers dedicated to the reconditioning of low- and medium-voltage breakers and contactors per ANSI C37.59-2002</li>
+								<li>Excitation system replacement and upgrades</li>
+								<li>High-resistance grounding system design and installation</li>
+								<li>Low-voltage replacement breaker (LVAR) and vacuum starter replacement (VSR)</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Transformer capabilities</ServiceName>
-							<ServiceList>
-								<List>Bushing monitoring systems</List>
-								<List>Oil processing rigs—oil-fill/degasification/vacuum-fill</List>
-								<List>Transformer internal inspections, reblocking, rewinding, etc.</List>
-								<List>PCB disposal</List>
-								<List>Dress out / startup</List>
-								<List>On-site repairs</List>
-								<List>Power factor (Doble) testing</List>
-								<List>Tap changer repairs and replacements</List>
-								<List>EnvirotempE FR3E fluid retrofil</List>
-							</ServiceList>
+							<ul>
+								<li>Bushing monitoring systems</li>
+								<li>Oil processing rigs—oil-fill/degasification/vacuum-fill</li>
+								<li>Transformer internal inspections, reblocking, rewinding, etc.</li>
+								<li>PCB disposal</li>
+								<li>Dress out / startup</li>
+								<li>On-site repairs</li>
+								<li>Power factor (Doble) testing</li>
+								<li>Tap changer repairs and replacements</li>
+								<li>EnvirotempE FR3E fluid retrofil</li>
+							</ul>
 						</Services>
 					</ServiceMainDiv>
 					<SubHeaderDiv>
@@ -906,32 +900,32 @@ export default function PowerDistributionProducts() {
 					<ServiceMainDiv>
 						<Services>
 							<ServiceName>On-site repairs</ServiceName>
-							<ServiceList>
-								<List>Fast expert assistance</List>
-								<List>Qualified technicians to handle any problems</List>
-							</ServiceList>
+							<ul>
+								<li>Fast expert assistance</li>
+								<li>Qualified technicians to handle any problems</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Maintenance and spare parts</ServiceName>
-							<ServiceList>
-								<List>Preventative maintenance to safeguard the performance of your equipment</List>
-								<List>Worldwide availability of spare parts and multiple regional stocking locations</List>
-								<List>Customer-specific inventory of spare parts with service contract</List>
-								<List>Approved, OEM spare parts shipped direct from Rittal</List>
-							</ServiceList>
+							<ul>
+								<li>Preventative maintenance to safeguard the performance of your equipment</li>
+								<li>Worldwide availability of spare parts and multiple regional stocking locations</li>
+								<li>Customer-specific inventory of spare parts with service contract</li>
+								<li>Approved, OEM spare parts shipped direct from Rittal</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Rittal Climate Inspections</ServiceName>
-							<ServiceList>
-								<List>Rittal Service expert will come to your site to inventory, document, and evaluate the state of the operating environment.</List>
-								<List>Enclosure cooling equipment will be checked for cleanliness, function, and serviceability.</List>
-							</ServiceList>
+							<ul>
+								<li>Rittal Service expert will come to your site to inventory, document, and evaluate the state of the operating environment.</li>
+								<li>Enclosure cooling equipment will be checked for cleanliness, function, and serviceability.</li>
+							</ul>
 						</Services>
 						<Services>
 							<ServiceName>Installation and Start-Up:</ServiceName>
-							<ServiceList>
-								<List>Installation/assembly and commissioning of individual devices or complete systems</List>
-							</ServiceList>
+							<ul>
+								<li>Installation/assembly and commissioning of individual devices or complete systems</li>
+							</ul>
 						</Services>
 					</ServiceMainDiv>
 				</ServiceSection>

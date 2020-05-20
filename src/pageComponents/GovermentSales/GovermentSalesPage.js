@@ -7,8 +7,6 @@ const Container = styled.div`
     max-width: 1300px;
     margin: 0 auto;
 `
-const Detail = styled.p`   
-`
 const SubTitle = styled.div`
     padding: 5px 0;
     // margin-bottom: 15px;
@@ -32,7 +30,6 @@ const QuestionDiv = styled.div`
 const Question = styled.p`
     font-weight: bold;
     margin-bottom: 5px;
-
 `
 const Div_1 = styled.div`
     border-right: 3px solid #f2f3f4;
@@ -90,14 +87,11 @@ const Info = styled.p`
     font-weight: bold;
     text-align: center;
     margin-bottom: 0;
-
 `
 const InfoDetail = styled.p`
     text-align: center;
     font-size: 14px;
     padding: 0 15px;
-`
-const Click = styled.a`
 `
 const SaleImgDiv = styled.div`
     height: 100px;
@@ -111,7 +105,7 @@ export default function GovermentSalesPage() {
 	return (
 		<Container>
 			<Header text="Government sales" />
-			<Detail>Airline provides innovative solutions for our customers who represent many different types of industries. In the government and defense sector, we provide fluid power and automation components, assemblies and systems to major defense contractors as a second- or third-tier supplier and also supply directly to U.S. government agencies as a small business.</Detail>
+			<p>Airline provides innovative solutions for our customers who represent many different types of industries. In the government and defense sector, we provide fluid power and automation components, assemblies and systems to major defense contractors as a second- or third-tier supplier and also supply directly to U.S. government agencies as a small business.</p>
 			<MainDiv>
 				<Div_1>
 					<SpecialistDiv>
@@ -130,7 +124,7 @@ export default function GovermentSalesPage() {
 						<MoreInfo>
 							<Info>Need more information?</Info>
 						</MoreInfo>
-						<InfoDetail><Click href="#">click here</Click> to contact an Airline representative, or call us at (800) 999-7378</InfoDetail>
+						<InfoDetail><a href="#">Click here</a> to contact an Airline representative, or call us at (800) 999-7378</InfoDetail>
 					</InfoDiv>
 
 				</Div_1>

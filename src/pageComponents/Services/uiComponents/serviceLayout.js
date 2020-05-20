@@ -6,8 +6,6 @@ const Div = styled.div`
     width: 280px;
     margin: 12px;
 `
-const ImgDiv = styled.div`
-`
 const Img = styled.img`
     width: 100%;
 `
@@ -31,12 +29,12 @@ export default function serviceLayout(props) {
 	return (
 		<>
 			<Div>
-				<ImgDiv>
+				<div>
 					<Img src={src} />
 					<DetailDiv>
 						<Detail><Span>{title} </Span> {text}</Detail>
 					</DetailDiv>
-				</ImgDiv>
+				</div>
 			</Div>
 		</>
 	)
