@@ -13,7 +13,9 @@ const Container = styled.div`
 const Div = styled.div`
     display: flex;
     margin: 20px 0;
-    align-items: center;
+		align-items: center;
+		background-color: #f2f3f4;
+    padding: 10px;
 `
 const ImgDiv = styled.div`
     margin: 0 20px;
@@ -46,7 +48,7 @@ export default function liquidAndGasPressure() {
 									<li>Inlet and Outlet Gauges</li>
 									<li>Roll Bar Frame Made of Painted Steel or Stainless Steel</li>
 								</ul>
-                                You can count on us for fast delivery of all Haskel components or customized turnkey systems, as well as high-pressure valves and fittings (for pressures up to 100,000 psi) from Haskel’s sister company, BuTech. We also offer installation and repair on allHaskel components and systems.
+                    You can count on us for fast delivery of all Haskel components or customized turnkey systems, as well as high-pressure valves and fittings (for pressures up to 100,000 psi) from Haskel’s sister company, BuTech. We also offer installation and repair on allHaskel components and systems.
 							</div>}
 						/>
 					</Div>
@@ -54,7 +56,7 @@ export default function liquidAndGasPressure() {
 						<ProductLayout
 							title="Air pressure amplifiers"
 							text={<div>
-                                Haskel Air Amplifiers offer an alternative to purchasing dedicated high-pressure compressors. They are compact, require no electrical or mechanical drive connections, are powered by the same air they amplify and can be mounted in any position. Key features include:
+                  Haskel Air Amplifiers offer an alternative to purchasing dedicated high-pressure compressors. They are compact, require no electrical or mechanical drive connections, are powered by the same air they amplify and can be mounted in any position. Key features include:
 								<ul>
 									<li>Infinitely variable outlet pressure and flow capability</li>
 									<li>No heat, flame or spark risk</li>
@@ -76,7 +78,7 @@ export default function liquidAndGasPressure() {
 						<ProductLayout
 							title="Air-driven liquid pumps"
 							text={<div>
-                                Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water.
+                  Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water.
 							</div>}
 						/>
 					</Div>
@@ -84,7 +86,7 @@ export default function liquidAndGasPressure() {
 						<ProductLayout
 							title="Air & hydraulic-driven gas boosters"
 							text={<div>
-                                Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk. Gas Boosters are ideal for increasing gas pressure, transferring high-pressure gas, charging cylinders and scavenging. Key features include:
+                  Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk. Gas Boosters are ideal for increasing gas pressure, transferring high-pressure gas, charging cylinders and scavenging. Key features include:
 								<ul>
 									<li>Air driven - no electricity required</li>
 									<li>No airline lubricator required</li>
