@@ -186,7 +186,16 @@ export default function QuotesTable({history}) {
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+			initialState: { 
+				pageIndex: 0, 
+				hiddenColumns: ['filter'],
+				sortBy: [
+					{
+						id: 'quoteDate',
+						desc: true
+					}
+				]
+			},
 		},
 		useSortBy,
 		usePagination
