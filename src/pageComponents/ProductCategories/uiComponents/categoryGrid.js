@@ -39,7 +39,7 @@ export default function CategoryGrid({history}) {
 	const [selectedParent, setSeletedParent] = useState('')
 	const loadingChildren = useRef(false)
 	
-	const { loading, error, data }= useQuery(GET_CATEGORY_SEARCH, {
+	useQuery(GET_CATEGORY_SEARCH, {
 		onCompleted: data => {
 			var getCategory = data.getCategory
 			setChildGrid(getCategory.children)

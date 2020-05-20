@@ -121,7 +121,17 @@ export function formatTableData(type, data, orderId){
 					'filter': filterField,
 				}
 			)
-		}		break
+		}		
+		break
+	case 'invoice-detail':
+		for(let i = 0; i < data.length; i++) {
+			let elem = data[i]
+			if(elem.invoiceNumber === orderId){
+				mutatedData = elem
+				break
+			}
+		}
+		break
 	}
 	return mutatedData
 }

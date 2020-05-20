@@ -11,6 +11,7 @@ import OpenQuotesTable from './quotePages/openQuotes'
 import InvoicesTable from './invoicePages/invoices'
 import OrderDetail from './ordersPages/orderDetail'
 import QuoteDetail from './quotePages/quoteDetail'
+import InvoiceDetail from './invoicePages/invoiceDetail'
 
 const Container = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ export default function AccountManagementPage({history}) {
 			setPageComponent(<QuoteDetail history={history} orderId={orderId}/>)
 			break
 		case 'invoice-detail':
-			setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
+			setPageComponent(<InvoiceDetail history={history} invoiceId={orderId}/>)
 			break
 		}
 	}, [page])

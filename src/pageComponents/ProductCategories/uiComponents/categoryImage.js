@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 
 const DivContainer = styled.div`
   display: flex;
@@ -24,7 +23,7 @@ function convertText(text){
 	return(mutatedText)
 }
 
-export default function CategoryImage({text,src,history}) {
+export default function CategoryImage({text, history}) {
 	let urlText = convertText(text)
 	return(
 		<DivContainer onClick={()=>history.push(`/search/categories/${urlText}`)}>

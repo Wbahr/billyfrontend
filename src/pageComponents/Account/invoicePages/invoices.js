@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, { useState, useEffect, useContext, useRef, useMemo } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
-import { useQuery } from '@apollo/client'
 import { formatTableData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { GET_INVOICES } from '../../../config/providerGQL'
 import { format as dateFormat } from 'date-fns'
+import Context from '../../../config/context'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -87,26 +86,26 @@ const Select = styled.select`
 `
 
 export default function InvoicesTable({history}) {
+	const context = useContext(Context)
 	const didMountRef = useRef(false)
-	const [originalData, setOriginalData] = useState([])
 	const [data, setData] = useState([])
 	const [filter, setFilter] = useState('')
 	const [showInvoiceType, setShowInvoiceType] = useState('all')
 	const [dateFrom, setDateFrom] = useState(null)
 	const [dateTo, setDateTo] = useState(null)
-	
-	useQuery(GET_INVOICES, {
-		fetchPolicy: 'no-cache',
-		onCompleted: result => {
-			let mutatedData = formatTableData('invoices', result.accountInvoices)
-			setOriginalData(mutatedData)
+
+	useEffect(() => {
+		if (!didMountRef.current && context.invoiceCache.length === 0) {
+			context.getInvoices()
+		} else if (context.invoiceCache.length > 0) {
+			let mutatedData = formatTableData('invoices', context.invoiceCache)
 			setData(mutatedData)
 		}
-	})
+	}, [context.invoiceCache])
 
 	useEffect(() => {
 		if (didMountRef) {
-			let mutatedData = originalData
+			let mutatedData = formatTableData('invoices', context.invoiceCache)
 			// Apply search filter
 			if (filter.length > 0) {
 				mutatedData = mutatedData.filter(row => {

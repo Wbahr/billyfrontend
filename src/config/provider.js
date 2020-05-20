@@ -3,7 +3,7 @@ import _ from 'lodash'
 import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS } from './providerGQL'
+import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_INVOICES } from './providerGQL'
 
 export default function Provider(props) {
 	const didMountRef = useRef(false)
@@ -18,6 +18,7 @@ export default function Provider(props) {
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''}) 
 	const [timeoutId, setTimeoutId] = useState(null)
 	const [ordersCache, setOrdersCache] = useState([])
+	const [invoiceCache, setInvoiceCache] = useState([])
 
 	useEffect(() => {
 		if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -152,6 +153,14 @@ export default function Provider(props) {
 		onCompleted: data => {
 			let requestData = data.accountOrders
 			setOrdersCache(requestData)
+		}
+	})
+
+	const [handleGetInvoices] = useLazyQuery(GET_INVOICES, {
+		fetchPolicy: 'no-cache',
+		onCompleted: data => {
+			let requestData = data.accountInvoices
+			setInvoiceCache(requestData)
 		}
 	})
 
@@ -375,6 +384,10 @@ export default function Provider(props) {
 		handleGetOrders()
 	}
 
+	function handleUpdateInvoices() {
+		handleGetInvoices()
+	}
+
 	return (
 		<Context.Provider
 			value={{
@@ -441,6 +454,10 @@ export default function Provider(props) {
 				ordersCache: ordersCache,
 				getOrders: () => {
 					handleUpdateOrders()
+				},
+				invoiceCache: invoiceCache,
+				getInvoices: () => {
+					handleUpdateInvoices()
 				}
 			}}
 		>
