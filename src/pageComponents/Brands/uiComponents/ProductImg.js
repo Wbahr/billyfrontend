@@ -12,9 +12,9 @@ const Img = styled.img`
   object-fit: contain;
 `
 export default function ProductImg(props) {
-    return (
-       <ImgDiv>
-            <Img src={props.src} />
-       </ImgDiv>
-    )
+	return (
+		<ImgDiv>
+			<Img src={props.src} />
+		</ImgDiv>
+	)
 }

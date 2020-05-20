@@ -259,7 +259,7 @@ export default function PowerDistributionProducts() {
                     </DistributorDetails>
                 </BrandDiv>
 
-                {/*............................... INDUSTRY................................... */}
+				{/*............................... INDUSTRY................................... */}
 
                 <SectionDiv>
                     <ProductsTitle> industries</ProductsTitle>
@@ -305,7 +305,7 @@ export default function PowerDistributionProducts() {
                     </IndustryColDiv>
                 </Industry>
 
-                {/*............................... PRODUCTS................................... */}
+				{/*............................... PRODUCTS................................... */}
 
                 <SectionDiv>
                     <ProductsTitle>Products</ProductsTitle>
@@ -806,7 +806,7 @@ export default function PowerDistributionProducts() {
                     </ProductDiv>
                 </ProductSection>
 
-                {/*.............................. NEED MORE INFO................................... */}
+				{/*.............................. NEED MORE INFO................................... */}
 
                 <SectionDiv>
                     <ProductsTitle>Need more information</ProductsTitle>

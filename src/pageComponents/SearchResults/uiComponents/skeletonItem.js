@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
 const gradientAnimation = keyframes`
@@ -92,15 +92,15 @@ const Button = styled.div`
 
 
 export default function SkeletonItem(){
-  return(
-    <SkeletonDiv>
-      <Image />
-      <QuickLook />
-      <Title />
-      <Detail1 />
-      <Detail2 />
-      <Detail3 />
-      <Button />
-    </SkeletonDiv>
-  )
+	return(
+		<SkeletonDiv>
+			<Image />
+			<QuickLook />
+			<Title />
+			<Detail1 />
+			<Detail2 />
+			<Detail3 />
+			<Button />
+		</SkeletonDiv>
+	)
 }

@@ -11,11 +11,11 @@ const Name = styled.p`
 
 `
 export default function lineCardName(props) {
-    return (
-        <div>
-            <List>
-                <Name>{props.text}</Name>
-            </List>
-        </div>
-    )
+	return (
+		<div>
+			<List>
+				<Name>{props.text}</Name>
+			</List>
+		</div>
+	)
 }

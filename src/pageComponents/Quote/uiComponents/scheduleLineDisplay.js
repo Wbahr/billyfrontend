@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
 import Context from '../../../config/context'
-
+import NumberFormat from 'react-number-format'
 
 const DivContainer = styled.div`
   display: flex;
@@ -12,11 +11,6 @@ const DivContainer = styled.div`
   padding: 8px 16px;
   margin: 8px 0;
   height: 70px;
-`
-
-const DivRow = styled.div`
-  display: flex;
-  align-items: center;
 `
 
 const DivItem = styled.div`
@@ -86,67 +80,67 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
-export default function ShippingScheduleItem({item, index}) {
-  const itemId = parseInt(item.frecno,10)
-  const context = useContext(Context)
-  let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
-  const {
-    itemDetails,
-    customerPartNumbers
-  } = displayItem
+export default function ShippingScheduleItem({item}) {
+	const itemId = parseInt(item.frecno,10)
+	const context = useContext(Context)
+	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
+	const {
+		itemDetails,
+		customerPartNumbers
+	} = displayItem
 
-  let Content
-  if(_.isNil(itemDetails)) {
-    Content = (<p>{item.freqno}</p>)
-  } else {
-    let imagePath
-    let resultImage = _.get(itemDetails,`image[0].path`,null)
-    if (_.isNil(resultImage)){
-      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-    } else {
-      let imagePathArray = resultImage.split("\\")
-      let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 't.jpg'
-      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-    }
-    let date = item.requestedShipDate
-    date = (date.getMonth() + 1) + '/' +  date.getDate() + '/' +  date.getFullYear()
+	let Content
+	if(_.isNil(itemDetails)) {
+		Content = (<p>{item.freqno}</p>)
+	} else {
+		let imagePath
+		let resultImage = _.get(itemDetails,'image[0].path',null)
+		if (_.isNil(resultImage)){
+			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+		} else {
+			let imagePathArray = resultImage.split('\\')
+			let imageFile = imagePathArray[imagePathArray.length - 1]
+			imageFile = imageFile.slice(0, -5) + 't.jpg'
+			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+		}
+		let date = item.requestedShipDate
+		date = (date.getMonth() + 1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
-    let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
+		let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
 
-    Content = (
-      <DivCard>
-        <DivCol1>
-          <Img height='65px'  src={imagePath} />
-        </DivCol1>
-        <DivCol2>
-          <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
-          <P2>Requested Date: {date}</P2>
-        </DivCol2>
-        <DivCol3>
-          <DivQuantity>
-            <DivItem>
-              <Label>{formatCurrency(itemDetails.listPrice)}/each</Label>
-            </DivItem>
-          </DivQuantity>
-          <DivQuantity>
-            <DivItem>
-              <Label>Qty: {item.quantity}</Label>
-            </DivItem>
-          </DivQuantity>
-          <DivQuantity>
-            <DivItem>
-              <LabelBold>{formatCurrency(Number(item.quantity) * Number(itemDetails.listPrice))}</LabelBold>
-            </DivItem>
-          </DivQuantity>
-        </DivCol3>
-      </DivCard>
-    )
-  }
-  return(
-    <DivContainer>
-      {Content}
-    </DivContainer>
-  )
+		Content = (
+			<DivCard>
+				<DivCol1>
+					<Img height='65px'  src={imagePath} />
+				</DivCol1>
+				<DivCol2>
+					<P1>{itemDetails.itemDesc}</P1>
+					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+					<P2>Requested Date: {date}</P2>
+				</DivCol2>
+				<DivCol3>
+					<DivQuantity>
+						<DivItem>
+							<Label>{<NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}/each</Label>
+						</DivItem>
+					</DivQuantity>
+					<DivQuantity>
+						<DivItem>
+							<Label>Qty: {item.quantity}</Label>
+						</DivItem>
+					</DivQuantity>
+					<DivQuantity>
+						<DivItem>
+							<LabelBold>{<NumberFormat value={Number(item.quantity) * Number(itemDetails.listPrice)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</LabelBold>
+						</DivItem>
+					</DivQuantity>
+				</DivCol3>
+			</DivCard>
+		)
+	}
+	return(
+		<DivContainer>
+			{Content}
+		</DivContainer>
+	)
 }

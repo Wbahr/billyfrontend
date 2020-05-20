@@ -171,3 +171,108 @@ const QUERY_LOGIN = gql`
     }
   }
 `
+
+export const GET_ORDERS = gql`
+  query {
+    accountOrders{
+      orderDate
+      orderNumber
+      poNo
+      isQuote
+      orderType
+      status
+      packingBasis
+      total
+      buyer
+      shipToName
+      shipToAddress1
+      shipToAddress2
+      shipToAddress3
+      shipToCity
+      shipToState
+      shipToZip
+      shipToCountry
+      lineItems{
+        invMastUid
+        itemCode
+        customerPartNumber
+        customerPartNumberId
+        quantityOrdered
+        quantityOpen
+        unitPrice
+        totalPrice
+        trackingNumbers{
+          trackingNumber
+          carrierId
+        }
+      }
+    }
+  }
+`
+
+export const GET_INVOICES = gql`
+  query {
+    accountInvoices{
+      invoiceNumber
+      orderNumber
+      orderDate
+      invoiceDate
+      termsDueDate
+      netDueDate
+      discDueDate
+      orderedBy
+      taker
+      poNo
+      totalAmount
+      status
+      discountAmount
+      amountPaid
+      isMine
+      terms
+      shipToName
+      shipToAddress1
+      shipToAddress2
+      shipToAddress3
+      shipToCity
+      shipToState
+      shipToZip
+      shipToCountry
+      billingName
+      billingAddress1
+      billingAddress2
+      billingAddress3
+      billingCity
+      billingState
+      billingZip
+      billingCountry
+      subTotal
+      totalTax
+      amountDue
+      lineItems {
+        invoiceLineId
+        orderNumber
+        isTaxItem
+        isOtherItem
+        invoiceLineType
+        invoiceLineNumber
+        orderLineNumber
+        quantityRequested
+        quantityShipped
+        pricingQuantity
+        invMastUid
+        itemCode
+        itemDescription
+        customerPartNumber
+        customerPartNumberId
+        unitPrice
+        itemTotalPrice
+        trackingNumbers{
+          trackingNumber
+          carrierId
+          carrierName
+          trackingUrl
+        }
+      }
+    }
+  }
+`

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useMutation } from '@apollo/client'
@@ -81,85 +81,84 @@ const MUTATION_PASSWORD_RESET = gql`
 `
 
 export default function PasswordResetPage({history}) {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [infoMessage, setInfoMessage] = useState('')
-  const [showResendToken, setShowResendToken] = useState(false)
-  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
-  const [passwordIsValid, setPasswordIsValid] = useState(false)
-  let { passwordToken } = useParams()
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
+	const [errorMessage, setErrorMessage] = useState('')
+	const [infoMessage, setInfoMessage] = useState('')
+	const [showResendToken, setShowResendToken] = useState(false)
+	const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
+	const [passwordIsValid, setPasswordIsValid] = useState(false)
+	let { passwordToken } = useParams()
 
 
-  const [executePasswordReset, { loading, error, data }] = useMutation(MUTATION_PASSWORD_RESET, {
-    onCompleted: data => {
-      console.log('executePasswordReset', data)
-      let responseData = data.submitPasswordReset
-      if(responseData.success){
-        setUsername('')
-        setShowResendToken('')
-        setErrorMessage('')
-        setInfoMessage(responseData.message)
-        setTimeout(()=>{history.push('/login')}, 1500)
-      } else {
-        setErrorMessage(responseData.message)
-        setShowResendToken(true)
-        setPassword('')
-        setConfirmPassword('')
-      }
-    }
-  })
+	const [executePasswordReset, { loading, error }] = useMutation(MUTATION_PASSWORD_RESET, {
+		onCompleted: data => {
+			let responseData = data.submitPasswordReset
+			if(responseData.success){
+				setUsername('')
+				setShowResendToken('')
+				setErrorMessage('')
+				setInfoMessage(responseData.message)
+				setTimeout(()=>{history.push('/login')}, 1500)
+			} else {
+				setErrorMessage(responseData.message)
+				setShowResendToken(true)
+				setPassword('')
+				setConfirmPassword('')
+			}
+		}
+	})
 
-  function handlePasswordReset(){
-    if(password !== confirmPassword) {
-      setErrorMessage('Passwords Do Not Match')
-    } else {
-      executePasswordReset(
-        {
-          variables: {
-            "passwordInfo": {
-              "token": passwordToken,
-              "username": username,
-              "newPassword": password
-            }
-          }
-        }
-      )
-    }
-  }
+	function handlePasswordReset(){
+		if(password !== confirmPassword) {
+			setErrorMessage('Passwords Do Not Match')
+		} else {
+			executePasswordReset(
+				{
+					variables: {
+						'passwordInfo': {
+							'token': passwordToken,
+							'username': username,
+							'newPassword': password
+						}
+					}
+				}
+			)
+		}
+	}
 
-  return(
-    <PasswordResetPageContainer>
-      <PasswordResetModal 
-        open={showPasswordResetModal} 
-        hideModal={()=>{setShowPasswordResetModal(false)}}
-      />
-      <Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
-      <P>Airline Hydraulics Password Reset</P>
-      {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
-      {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
-      {showResendToken && <A onClick={()=>{setShowPasswordResetModal(true)}}>Token Expired? Click here to send a new one</A>}
-      {error && <ErrorAlert>An unexpected error has occured. Please try again or contact us.</ErrorAlert>}
-      <DivInput>
-        <Label htmlFor='username'>Username</Label>
-        <Input id='username' onChange={(e)=>setUsername(e.target.value)} value={username}/>
-      </DivInput>
-      <DivInput>
-        <Label htmlFor='password'>Password</Label>
-        <Input id='password' type='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ""))}} value={password}/>
-      </DivInput>
-      <DivInput>
-        <Label htmlFor='confirm_password'>Confirm Password</Label>
-        <Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ""))} value={confirmPassword}/>
-      </DivInput>
-      <PasswordRequirements
-        password={password}
-        confirmPassword={confirmPassword} 
-        isValidPassword={(isValid)=>setPasswordIsValid(isValid)}
-      />
-      <Button disabled={loading || !passwordIsValid} onClick={()=>handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
-      <A onClick={()=> history.push('/signup')}>Create an Account</A>
-    </PasswordResetPageContainer>
-  )
+	return(
+		<PasswordResetPageContainer>
+			<PasswordResetModal 
+				open={showPasswordResetModal} 
+				hideModal={()=>{setShowPasswordResetModal(false)}}
+			/>
+			<Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
+			<P>Airline Hydraulics Password Reset</P>
+			{errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
+			{infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
+			{showResendToken && <A onClick={()=>{setShowPasswordResetModal(true)}}>Token Expired? Click here to send a new one</A>}
+			{error && <ErrorAlert>An unexpected error has occured. Please try again or contact us.</ErrorAlert>}
+			<DivInput>
+				<Label htmlFor='username'>Username</Label>
+				<Input id='username' onChange={(e)=>setUsername(e.target.value)} value={username}/>
+			</DivInput>
+			<DivInput>
+				<Label htmlFor='password'>Password</Label>
+				<Input id='password' type='password' onChange={(e)=>{setPassword(e.target.value.replace(/\s/g, ''))}} value={password}/>
+			</DivInput>
+			<DivInput>
+				<Label htmlFor='confirm_password'>Confirm Password</Label>
+				<Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ''))} value={confirmPassword}/>
+			</DivInput>
+			<PasswordRequirements
+				password={password}
+				confirmPassword={confirmPassword} 
+				isValidPassword={(isValid)=>setPasswordIsValid(isValid)}
+			/>
+			<Button disabled={loading || !passwordIsValid} onClick={()=>handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
+			<A onClick={()=> history.push('/signup')}>Create an Account</A>
+		</PasswordResetPageContainer>
+	)
 }

@@ -36,22 +36,22 @@ const P = styled.p`
 `
 
 export default function Modal({open, text, onClose, timeout}) {
-  useEffect(()=>{
-    if(open){
-      window.setTimeout(onClose, timeout)
-    }
-  })
+	useEffect(()=>{
+		if(open){
+			window.setTimeout(onClose, timeout)
+		}
+	})
 
-  if(open){
-    return(
-      <Div onClick={()=>onClose()}>
-        <Container>
-          <FontAwesomeIcon icon="shopping-cart" size="5x" color="#328EFC" />
-          <P>{text}</P>
-        </Container>
-      </Div>
-    )
-  } else {
-    return null
-  }
+	if(open){
+		return(
+			<Div onClick={()=>onClose()}>
+				<Container>
+					<FontAwesomeIcon icon="shopping-cart" size="5x" color="#328EFC" />
+					<P>{text}</P>
+				</Container>
+			</Div>
+		)
+	} else {
+		return null
+	}
 }

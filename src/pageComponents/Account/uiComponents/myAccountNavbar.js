@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -10,7 +10,7 @@ const NavbarContainer = styled.div`
   flex-direction: column;
 `
 
- const H3 = styled.h3`
+const H3 = styled.h3`
   font-family: ProximaBold;
   text-transform: uppercase;
   padding-left: 15px;
@@ -33,31 +33,31 @@ const Pselected = styled.p`
 `
 
 export default function MyAccountNavbar({history, page, AccountPages}) {
-  const [navbarLinks, setNavbarLinks] = useState([])
+	const [navbarLinks, setNavbarLinks] = useState([])
 
-  useEffect(() => {
-    let tempNavbarLinks = []
-    for(let i=0; AccountPages.length > i; i++){
-      if(page === AccountPages[i].page) {
-        tempNavbarLinks.push(<Pselected key={i}>{AccountPages[i].label}</Pselected>)
-      } else {
-        tempNavbarLinks.push(<p key={i} onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
-      }
-    }
-    setNavbarLinks(tempNavbarLinks)
-  }, [page])
+	useEffect(() => {
+		let tempNavbarLinks = []
+		for(let i=0; AccountPages.length > i; i++){
+			if(page === AccountPages[i].page) {
+				tempNavbarLinks.push(<Pselected key={i}>{AccountPages[i].label}</Pselected>)
+			} else {
+				tempNavbarLinks.push(<p key={i} onClick={()=>history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
+			}
+		}
+		setNavbarLinks(tempNavbarLinks)
+	}, [page])
 
-  return(
-    <NavbarContainer>
-      <H3>My Account</H3>
-      <DivNavbar>
-        {navbarLinks}
-      </DivNavbar>
-    </NavbarContainer>
-  )
+	return(
+		<NavbarContainer>
+			<H3>Account Settings</H3>
+			<DivNavbar>
+				{navbarLinks}
+			</DivNavbar>
+		</NavbarContainer>
+	)
 }
 
 MyAccountNavbar.propTypes = {
-  history: PropTypes.object.isRequired,
-  page: PropTypes.string.isRequired
+	history: PropTypes.object.isRequired,
+	page: PropTypes.string.isRequired
 }

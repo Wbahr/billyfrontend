@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Banner from '../../../imgs/locationPage/map1.png'
@@ -82,11 +81,7 @@ const SubDetail = styled.p`
 const Span = styled.span`
     font-weight: 500;
 `
-const Border = styled.div`
-    border-right: 3px solid #f2f3f4;
-    height: 70px;
-    margin: 20px;
-`
+
 const Blog = styled.div`
     display: flex;
     flex-direction: column;
@@ -121,14 +116,7 @@ const Underline = styled.div`
     width: 60px;
     border: 1px solid #f2f3f4;
 `
-const EachSectionDiv = styled.div`
-    display: flex;
-`
-const List = styled.div`
-    display: flex;
-    flex-direction: column;
-    flex: 2;
-`
+
 const LocationDiv = styled.div`
     display: flex;
     margin-bottom: 60px;

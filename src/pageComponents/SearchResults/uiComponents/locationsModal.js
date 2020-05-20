@@ -57,81 +57,81 @@ const QUERY_STOCK_AVAILABILITY = gql`
 `
 
 export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
-  const [airlineStock, setAirlineStock] = useState([])
-  const [factoryStock, setFactoryStock] = useState([])
-  const searchSent = useRef(false); 
+	const [airlineStock, setAirlineStock] = useState([])
+	const [factoryStock, setFactoryStock] = useState([])
+	const searchSent = useRef(false) 
 
-  const [getStockAvailability, { loading, error, data }] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
-    variables: { 
-      'invMastUid': invMastUid 
-    },
-    onCompleted: data => {
-      setAirlineStock(data.airlineStock)
-      setFactoryStock(data.factoryStock)
-    }
-  })
+	const [getStockAvailability] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
+		variables: { 
+			'invMastUid': invMastUid 
+		},
+		onCompleted: data => {
+			setAirlineStock(data.airlineStock)
+			setFactoryStock(data.factoryStock)
+		}
+	})
 
-  if(open && !_.isNil(invMastUid) && !searchSent.current){
-    searchSent.current = true
-    getStockAvailability()
-  } else if (!open && searchSent.current || !open && (airlineStock.length > 0 || factoryStock.length > 0)) {
-    searchSent.current = false
-    setAirlineStock([])
-    setFactoryStock([])
-  }
+	if(open && !_.isNil(invMastUid) && !searchSent.current){
+		searchSent.current = true
+		getStockAvailability()
+	} else if (!open && searchSent.current || !open && (airlineStock.length > 0 || factoryStock.length > 0)) {
+		searchSent.current = false
+		setAirlineStock([])
+		setFactoryStock([])
+	}
 
-  let AirlineStockRows
-  if(airlineStock.length > 0){
-    AirlineStockRows = _.map(airlineStock, location => {
-      if(location.quantityAvailable > 0){
-        return(
-          <TR>
-            <TDGrey>{location.locationName}</TDGrey>
-            <TDWhite>{location.quantityAvailable}</TDWhite>
-          </TR>
-        )
-      }
-    })
-  }
+	let AirlineStockRows
+	if(airlineStock.length > 0){
+		AirlineStockRows = _.map(airlineStock, location => {
+			if(location.quantityAvailable > 0){
+				return(
+					<TR>
+						<TDGrey>{location.locationName}</TDGrey>
+						<TDWhite>{location.quantityAvailable}</TDWhite>
+					</TR>
+				)
+			}
+		})
+	}
 
-  let FactoryStockRows 
-  if(factoryStock.factoryAvailability > 0){
-    FactoryStockRows = (
-      <TR>
-        <TDGrey>Factory Stock</TDGrey>
-        <TDWhite>{factoryStock.factoryAvailability}</TDWhite>
-      </TR>
-    )
-  }
+	let FactoryStockRows 
+	if(factoryStock.factoryAvailability > 0){
+		FactoryStockRows = (
+			<TR>
+				<TDGrey>Factory Stock</TDGrey>
+				<TDWhite>{factoryStock.factoryAvailability}</TDWhite>
+			</TR>
+		)
+	}
 
-  let PopupContent
+	let PopupContent
 
-  if (airlineStock.length === 0 && factoryStock.length === 0) {
-    PopupContent = (
-      <Div>
-        <p>Searching our warehouses..</p>
-        <Loader/>
-      </Div>
-    )
-  } else {
-    PopupContent = (
-      <Table>
-        <tbody>
-          <tr>
-            <th>Location</th>
-            <th>Quantity Available</th>
-          </tr>
-          {AirlineStockRows}
-          {FactoryStockRows}
-        </tbody>
-      </Table>
-    )
-  }
+	if (airlineStock.length === 0 && factoryStock.length === 0) {
+		PopupContent = (
+			<Div>
+				<p>Searching our warehouses..</p>
+				<Loader/>
+			</Div>
+		)
+	} else {
+		PopupContent = (
+			<Table>
+				<tbody>
+					<tr>
+						<th>Location</th>
+						<th>Quantity Available</th>
+					</tr>
+					{AirlineStockRows}
+					{FactoryStockRows}
+				</tbody>
+			</Table>
+		)
+	}
 
 
-  return(
-    <AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px', 'padding': '16px'}}>
-      {PopupContent}
-    </AirlineModal>
-  )
+	return(
+		<AirlineModal open={open} onClose={()=>{hideLocationsModal()}} contentStyle={(airlineStock.length === 0 && factoryStock.length === 0) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px', 'padding': '16px'}}>
+			{PopupContent}
+		</AirlineModal>
+	)
 }

@@ -46,28 +46,28 @@ const ArticlesContentDetails = styled.p`
 const A = styled.a`
 `
 export default function Articles(props) {
-  const {
-    text,
-    src,
-    detail,
-    Link,
-  } = props
+	const {
+		text,
+		src,
+		detail,
+		Link,
+	} = props
 
-  return (
+	return (
 
-    <SmallArticlesContent>
-      <ArticlesContentDiv>
-        <ArticlesImgDiv>
-          <ArticlesPicture src={src} />
-        </ArticlesImgDiv>
-        <ArticlesTopic>
-          {text}
-          <ArticlesShortLine></ArticlesShortLine>
-        </ArticlesTopic>
-        <ArticlesContentDetails>{detail}</ArticlesContentDetails>
-        <A href={Link}>Read More >></A>
-      </ArticlesContentDiv>
-    </SmallArticlesContent>
+		<SmallArticlesContent>
+			<ArticlesContentDiv>
+				<ArticlesImgDiv>
+					<ArticlesPicture src={src} />
+				</ArticlesImgDiv>
+				<ArticlesTopic>
+					{text}
+					<ArticlesShortLine></ArticlesShortLine>
+				</ArticlesTopic>
+				<ArticlesContentDetails>{detail}</ArticlesContentDetails>
+				<A href={Link}>Read More >></A>
+			</ArticlesContentDiv>
+		</SmallArticlesContent>
 
-  )
+	)
 }

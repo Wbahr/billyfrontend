@@ -2,8 +2,8 @@ import React, {useState, useRef} from 'react'
 import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
-import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client'
+import gql from 'graphql-tag'
 import AirlineInput from '../form/inputv2'
 
 const MUTATION_RESET_PASSWORD_REQUEST = gql`
@@ -22,55 +22,55 @@ const DivContainer = styled.div`
 `
 
 export default function ResetPasswordModal({open, hideModal}) {
-  const [username, setUsername] = useState('')
-  const [message, setMessage] = useState('')
+	const [username, setUsername] = useState('')
+	const [message, setMessage] = useState('')
 
-  const [executePasswordResetRequest, { loading, error, data }] = useMutation(MUTATION_RESET_PASSWORD_REQUEST, {
-    onCompleted: data => {
-      let requestData = data.requestPasswordReset
-      if(requestData.success){
-        setMessage(requestData.message)
-        setTimeout(()=>{handleClose(), history.push('/login')}, 5000)
-      } else {
-        setMessage(`An error has occured. Please check your email/username and try again or contact us.`)
-        setUsername('')
-      }
-    }
-  })
+	const [executePasswordResetRequest, { loading, error, data }] = useMutation(MUTATION_RESET_PASSWORD_REQUEST, {
+		onCompleted: data => {
+			let requestData = data.requestPasswordReset
+			if(requestData.success){
+				setMessage(requestData.message)
+				setTimeout(()=>{handleClose(), history.push('/login')}, 5000)
+			} else {
+				setMessage('An error has occured. Please check your email/username and try again or contact us.')
+				setUsername('')
+			}
+		}
+	})
 
-  function handleClose(){
-    hideModal()
-    setUsername('')
-    setMessage('')
-  }
+	function handleClose(){
+		hideModal()
+		setUsername('')
+		setMessage('')
+	}
 
-  function handleResetPassword(){
-    executePasswordResetRequest(
-      {
-        variables: {
-          "resetInfo": {
-            "username": username
-          }
-        }
-      }
-    )
-  }
+	function handleResetPassword(){
+		executePasswordResetRequest(
+			{
+				variables: {
+					'resetInfo': {
+						'username': username
+					}
+				}
+			}
+		)
+	}
   
-  return(
-    <Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
-      <DivContainer>
-        <p>Reset Password</p>
-        {message && <p>{message}</p>}
-        <AirlineInput 
-          label="Username / Email:"
-          type="text"
-          name="username"
-          value={username}
-          width='300px'
-          onChange={(e)=> setUsername(e.target.value)}
-        />
-        <button onClick={()=>{handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
-      </DivContainer>
-    </Popup>
-  )
+	return(
+		<Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+			<DivContainer>
+				<p>Reset Password</p>
+				{message && <p>{message}</p>}
+				<AirlineInput 
+					label="Username / Email:"
+					type="text"
+					name="username"
+					value={username}
+					width='300px'
+					onChange={(e)=> setUsername(e.target.value)}
+				/>
+				<button onClick={()=>{handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
+			</DivContainer>
+		</Popup>
+	)
 }

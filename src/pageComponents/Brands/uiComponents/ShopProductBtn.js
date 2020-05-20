@@ -20,9 +20,9 @@ const ShopBtn = styled.button`
   outline: none;
   `
 export default function ShopProductBtn(props) {
-    return (
-       <Div>
-           <ShopBtn>{props.text}</ShopBtn>
-       </Div>
-    )
+	return (
+		<Div>
+			<ShopBtn>{props.text}</ShopBtn>
+		</Div>
+	)
 }

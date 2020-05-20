@@ -27,44 +27,44 @@ const Form = styled.form`
 `
 
 const initValues = {
-  firstName: '',
-  lastName: '',
-  jobTitle: '',
-  company: '',
-  city: '',
-  state: '',
-  zip: '',
-  email: '',
-  phone: '',
-  jobOrder: '',
-  message: '',
-  subMailingList: '0'
+	firstName: '',
+	lastName: '',
+	jobTitle: '',
+	company: '',
+	city: '',
+	state: '',
+	zip: '',
+	email: '',
+	phone: '',
+	jobOrder: '',
+	message: '',
+	subMailingList: '0'
 }
 
 export default function ContactUsForm() {
-  return (
-    <FormContainer>
-      <Formik 
-        initialValues={initValues}
-      >
-        {formikProps => (
-          <Form name="contactUsForm" {...formikProps}>
-            <FormikInput label="First Name*" name="firstName" />
-            <FormikInput label="Last Name*" name="lastName" />
-            <FormikInput label="Job Title*" name="jobTitle" />
-            <FormikInput label="Company*" name="company" />
-            <FormikInput label="City*" name="city" />
-            <FormikInput label="State*" name="state" />
-            <FormikInput label="Zip Code*" name="zip" />
-            <FormikInput label="Email*" name="email" />
-            <FormikInput label="Phone Number*" name="phone" />
-            <FormikInput label="Job PO Number*" name="jobOrder" />
-            <FormikTextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
-            <Button type="submit" color="main" text="Submit"/>
-            <FormikCheckbox label="Subscribe to our Mailing List?" name="subMailingList"/>
-          </Form>
-        )}
-      </Formik>
-    </FormContainer>
-  )
+	return (
+		<FormContainer>
+			<Formik 
+				initialValues={initValues}
+			>
+				{formikProps => (
+					<Form name="contactUsForm" {...formikProps}>
+						<FormikInput label="First Name*" name="firstName" />
+						<FormikInput label="Last Name*" name="lastName" />
+						<FormikInput label="Job Title*" name="jobTitle" />
+						<FormikInput label="Company*" name="company" />
+						<FormikInput label="City*" name="city" />
+						<FormikInput label="State*" name="state" />
+						<FormikInput label="Zip Code*" name="zip" />
+						<FormikInput label="Email*" name="email" />
+						<FormikInput label="Phone Number*" name="phone" />
+						<FormikInput label="Job PO Number*" name="jobOrder" />
+						<FormikTextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
+						<Button type="submit" color="main" text="Submit"/>
+						<FormikCheckbox label="Subscribe to our Mailing List?" name="subMailingList"/>
+					</Form>
+				)}
+			</Formik>
+		</FormContainer>
+	)
 }

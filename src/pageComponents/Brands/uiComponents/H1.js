@@ -8,10 +8,7 @@ const Header = styled.h1`
   margin-top: 40px;
 `
 export default function H1(props) {
-    return (
- 
-            <Header>{props.text}</Header>
-          
-     
-    )
+	return (
+		<Header>{props.text}</Header>
+	)
 }

@@ -22,34 +22,34 @@ const Container = styled.div`
 `
 
 export default class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+	constructor(props) {
+		super(props)
+		this.state = { hasError: false }
+	}
 
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
-    return { hasError: true };
-  }
+	static getDerivedStateFromError() {
+		// Update state so the next render will show the fallback UI.
+		return { hasError: true }
+	}
 
-  componentDidCatch(error, errorInfo) {
-    // You can also log the error to an error reporting service
-    // logErrorToMyService(error, errorInfo);
-  }
+	componentDidCatch() {
+		// You can also log the error to an error reporting service
+		// logErrorToMyService(error, errorInfo);
+	}
 
-  render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return(
-        <Container>
-          <img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
-          <h1>Something went wrong..</h1>
-          <h4>But we're on it!</h4>
-          <p>If you need immediate assistance, please call 800-999-7378.</p>
-        </Container>
-      )
-    }
+	render() {
+		if (this.state.hasError) {
+			// You can render any custom fallback UI
+			return(
+				<Container>
+					<img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
+					<h1>Something went wrong..</h1>
+					<h4>But we're on it!</h4>
+					<p>If you need immediate assistance, please call 800-999-7378.</p>
+				</Container>
+			)
+		}
 
-    return this.props.children; 
-  }
+		return this.props.children 
+	}
 }

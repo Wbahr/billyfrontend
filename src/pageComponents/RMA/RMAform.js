@@ -6,137 +6,137 @@ import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Button from '../_common/button'
 
 const StyledRMAList = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  padding-left: 10px;
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	padding-left: 10px;
 `
 
 const StyledRMAListGrey = styled(StyledRMAList)`
-  background-color: #E9E6E5;
-  width: 40%;
-  padding-top: 10px;
-  @media (max-width: 700px) {
-    width: auto;
-  }
+	background-color: #E9E6E5;
+	width: 40%;
+	padding-top: 10px;
+	@media (max-width: 700px) {
+		width: auto;
+	}
 `
 
 const StyledRMAListGrey2 = styled(StyledRMAListGrey)`
-  @media (max-width: 700px) {
-    padding-top: 0;
-  }
+	@media (max-width: 700px) {
+		padding-top: 0;
+	}
 `
 
 const StyledRMAItemDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 12px;
 `
 
 const StyledRMAItemDetailHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  height: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 12px;
+	height: 20px;
  
-  background-color: #404040;
-  color: white;
-  font-family: verdana;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 20px;
+	background-color: #404040;
+	color: white;
+	font-family: verdana;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 20px;
 `
 
 const StyledRMAItemPhotoContainer = styled.div`
-  width: 20%;
-  @media (max-width: 768px) {
-    display: none;
-  }
+	width: 20%;
+	@media (max-width: 768px) {
+		display: none;
+	}
 `
 
 const StyledRMAItemDetailsContainer = styled.div`
-  display: flex;
-  
-  @media (max-width: 700px) {
-    flex-direction: column;
-  }
+	display: flex;
+	
+	@media (max-width: 700px) {
+		flex-direction: column;
+	}
 `
 
 const StyledRMAItemActionsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  background-color: #bbbbbb;
-  height: 45px;
+	display: flex;
+	align-items: center;
+	padding: 0 24px;
+	background-color: #bbbbbb;
+	height: 45px;
 `
 
 const StyledRMAReturnReasonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  background-color: #ccc;
-  height: 45px;
-  
-  @media (max-width: 700px) {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    padding: 8px 0;
-  }
+	display: flex;
+	align-items: center;
+	padding: 0 24px;
+	background-color: #ccc;
+	height: 45px;
+	
+	@media (max-width: 700px) {
+		flex-direction: column;
+		align-items: flex-start;
+		height: auto;
+		padding: 8px 0;
+	}
 `
 
 const StyledSubmitButtonContainer = styled.div`
-  display: flex;
-  padding: 10px;
-  justify-content: flex-end;
-  
-  @media (max-width: 700px) {
-    flex-direction: column;
-    align-items: center;
-  }
+	display: flex;
+	padding: 10px;
+	justify-content: flex-end;
+	
+	@media (max-width: 700px) {
+		flex-direction: column;
+		align-items: center;
+	}
 `
 
 const DivErrors = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  background-color: #ff5252;
-  color: white;
-  border: 1px solid red;
-  border-radius: 3px;
-  padding: 8px;
-  margin: 0 auto 8px auto;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+	background-color: #ff5252;
+	color: white;
+	border: 1px solid red;
+	border-radius: 3px;
+	padding: 8px;
+	margin: 0 auto 8px auto;
+	text-align: center;
 `
 
 const StyledCheckbox = styled.input`
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-  padding-right: 18px;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	padding-right: 18px;
 `
 
 const StyledInput = styled.input`
-  width: 48px;
-  height: 20px;
-  border: 1px solid #404040;
-  border-radius: 3px;
-  margin: 0 8px;
-  padding: 0 8px;
+	width: 48px;
+	height: 20px;
+	border: 1px solid #404040;
+	border-radius: 3px;
+	margin: 0 8px;
+	padding: 0 8px;
 `
 
 const StyledInput2 = styled(StyledInput)`
-  width: 200px;
+	width: 200px;
 `
 
 const StyledTextArea = styled.textarea`
-  width: 300px; 
-  border: 1px solid #404040;
-  border-radius: 3px;
-  margin: 8px;
-  padding: 0 8px;
+	width: 300px; 
+	border: 1px solid #404040;
+	border-radius: 3px;
+	margin: 8px;
+	padding: 0 8px;
 `
 
 const validate = (values) => {
@@ -176,11 +176,11 @@ const RMAform = ({items, clickedContinue}) => (
 			validateOnBlur={false}
 			validateOnChange={false}
 			onSubmit={values => clickedContinue(values.items)}
-			render={({ values, handleChange, errors }) => (
+			render={({ values, errors }) => (
 				<Form>
 					<FieldArray
 						name="returnItems"
-						render={arrayHelpers => (
+						render={() => (
 							<div>
 								{values.items.map((item, index) => (
 									<StyledRMAItemDetailContainer key={index}>
@@ -205,7 +205,7 @@ const RMAform = ({items, clickedContinue}) => (
 										</StyledRMAItemDetailsContainer>
 										<StyledRMAItemActionsContainer>
 											<Field name={`items.${index}.willReturn`} >
-												{({ field, form}) => (
+												{({ field }) => (
 													<StyledCheckbox {...field} type='checkbox'/>
 												)}
 											</Field>
@@ -223,62 +223,62 @@ const RMAform = ({items, clickedContinue}) => (
 											/>
 											<p>Return
 												<Field name={`items.${index}.returnQuantity`}>
-													{({ field, form}) => (
+													{({ field }) => (
 														<StyledInput {...field} type='number' min='0'/>
 													)}
 												</Field>
-                        of {item.quantityShipped}
+												of {item.quantityShipped}
 											</p>
 										</StyledRMAItemActionsContainer>
 										{ item.willReturn ?
-                      <>
-                        <StyledRMAReturnReasonContainer>
-                        	<Field name={`items.${index}.returnReason`}>
-                        		{({ field, form}) => (
-                        			<select
-                        				{...field}
-                        				onChange={(e) => {form.setFieldValue(`items.${index}.returnReason`, e.target.value); form.setFieldValue(`items.${index}.refundType`, '') }}
-                        			>
-                        				<option value='' selected disabled hidden>Select Return Reason</option>
-                        				<option value='mistake'>Purchased by Mistake</option>
-                        				<option value='inaccurate'>Inaccurate Description / Recommendation</option>
-                        				<option value='damaged'>Product / Packaging arrived Damaged</option>
-                        				<option value='defective'>Item is Defective / Doesn't work</option>
-                        				<option value='late'>Item arrived too late</option>
-                        				<option value='incorrect'>Incorrect item sent</option>
-                        				<option value='excess'>Received more than ordered</option>
-                        				<option value='early'>Item arrived too early</option>
-                        				<option value='no_need'>No longer needed</option>
-                        				<option value='not_approved'>Customer did not approve purchase</option>
-                        				<option value='missing'>Missing items / Components</option>
-                        				<option value='other'>Other</option>
-                        			</select>
-                        		)}
-                        	</Field>
-                        	<Field name={`items.${index}.otherDesc`}>
-                        		{({ field, form}) => (
-                        			<StyledInput2 {...field} placeholder='Specify a Return Reason' hidden={item.returnReason !== 'other'} />
-                        		)}
-                        	</Field>
-                        	<Field component='textarea' name={`items.${index}.details`}>
-                        		{({ field, form}) => (
-                        			<StyledTextArea {...field}
-                        				component='textarea'
-                        				rows='3'
-                        				placeholder='Please give a short comment of how the description or recommendation was inaccurate'
-                        				hidden={item.returnReason !== 'inaccurate'} />
-                        		)}
-                        	</Field>
-                        </StyledRMAReturnReasonContainer>
-                        <StyledRMAReturnReasonContainer>
-                        	<Field component='select' name={`items.${index}.refundType`}>
-                        		<option value='' selected disabled hidden>Select Refund Type</option>
-                        		<option value='credit'>Airline Credit</option>
-                        		<option value='refund'>Refund</option>
-                        		{ _.includes(showReplacement, item.returnReason) && <option value='replacement'>Replacement</option>}
-                        	</Field>
-                        </StyledRMAReturnReasonContainer>
-                      </>
+											<>
+												<StyledRMAReturnReasonContainer>
+													<Field name={`items.${index}.returnReason`}>
+														{({ field, form}) => (
+															<select
+																{...field}
+																onChange={(e) => {form.setFieldValue(`items.${index}.returnReason`, e.target.value); form.setFieldValue(`items.${index}.refundType`, '') }}
+															>
+																<option value='' selected disabled hidden>Select Return Reason</option>
+																<option value='mistake'>Purchased by Mistake</option>
+																<option value='inaccurate'>Inaccurate Description / Recommendation</option>
+																<option value='damaged'>Product / Packaging arrived Damaged</option>
+																<option value='defective'>Item is Defective / Doesn't work</option>
+																<option value='late'>Item arrived too late</option>
+																<option value='incorrect'>Incorrect item sent</option>
+																<option value='excess'>Received more than ordered</option>
+																<option value='early'>Item arrived too early</option>
+																<option value='no_need'>No longer needed</option>
+																<option value='not_approved'>Customer did not approve purchase</option>
+																<option value='missing'>Missing items / Components</option>
+																<option value='other'>Other</option>
+															</select>
+														)}
+													</Field>
+													<Field name={`items.${index}.otherDesc`}>
+														{({ field }) => (
+															<StyledInput2 {...field} placeholder='Specify a Return Reason' hidden={item.returnReason !== 'other'} />
+														)}
+													</Field>
+													<Field component='textarea' name={`items.${index}.details`}>
+														{({ field }) => (
+															<StyledTextArea {...field}
+																component='textarea'
+																rows='3'
+																placeholder='Please give a short comment of how the description or recommendation was inaccurate'
+																hidden={item.returnReason !== 'inaccurate'} />
+														)}
+													</Field>
+												</StyledRMAReturnReasonContainer>
+												<StyledRMAReturnReasonContainer>
+													<Field component='select' name={`items.${index}.refundType`}>
+														<option value='' selected disabled hidden>Select Refund Type</option>
+														<option value='credit'>Airline Credit</option>
+														<option value='refund'>Refund</option>
+														{ _.includes(showReplacement, item.returnReason) && <option value='replacement'>Replacement</option>}
+													</Field>
+												</StyledRMAReturnReasonContainer>
+											</>
 											: null}
 									</StyledRMAItemDetailContainer>
 								))}

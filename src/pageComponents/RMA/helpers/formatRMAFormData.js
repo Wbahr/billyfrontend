@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 // This function readys the RMA Form data for display on the summary modal and for a POST to our api
 export function formatRMAFormData(formValues) {
-          mutatedFormValues[j].other = _.get(formValues[i],`otherDesc`,'')
+	mutatedFormValues[j].other = _.get(formValues[i],'otherDesc','')
 	let mutatedFormValues = []
 	let j = 0
 	for (let i = 0; i < formValues.length; i++) {

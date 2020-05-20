@@ -51,39 +51,39 @@ import knowledgeCenterPage from 'pageComponents/KnowledgeCenter/knowledgeCenterP
 
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
-  return (
-    <Route
-      {...otherProps}
-      render={routeProps => (
-        <Auth auth={auth} roles={roles} {...routeProps}>
-          <LayoutWrapperComponent {...routeProps}>
-            <ErrorBoundry>
-              <Component {...routeProps} />
-            </ErrorBoundry>
-          </LayoutWrapperComponent>
-        </Auth>
-      )}
-    />
-  );
+	return (
+		<Route
+			{...otherProps}
+			render={routeProps => (
+				<Auth auth={auth} roles={roles} {...routeProps}>
+					<LayoutWrapperComponent {...routeProps}>
+						<ErrorBoundry>
+							<Component {...routeProps} />
+						</ErrorBoundry>
+					</LayoutWrapperComponent>
+				</Auth>
+			)}
+		/>
+	)
 }
 
 class App extends React.Component {
-  // componentDidUpdate (prevProps) {
-    // if (this.props.location !== prevProps.location) {
-    //   // track google analytics page view
-    //   window.gtag('config', 'UA-57868840-4', {
-    //     'page_path': this.props.location.pathname
-    //   })
+	// componentDidUpdate (prevProps) {
+	// if (this.props.location !== prevProps.location) {
+	//   // track google analytics page view
+	//   window.gtag('config', 'UA-57868840-4', {
+	//     'page_path': this.props.location.pathname
+	//   })
 
-    //   // track adwords page view
-    //   window.gtag('config', 'AW-798297408', {
-    //     'page_path': this.props.location.pathname
-    //   })
+	//   // track adwords page view
+	//   window.gtag('config', 'AW-798297408', {
+	//     'page_path': this.props.location.pathname
+	//   })
 
-    //   // track facebook page view
-    //   window.fbq('track', 'PageView')
-    // }
-  // }
+	//   // track facebook page view
+	//   window.fbq('track', 'PageView')
+	// }
+	// }
 
   render () {
     return (
@@ -134,12 +134,12 @@ class App extends React.Component {
         <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
         <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
 
-        {/* Error Screens */}
-        <WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
-      </Switch>
-    )
-  }
+				{/* Error Screens */}
+				<WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute component={FourOFour} layout={HeaderFooterLayoutExpanded}/>
+			</Switch>
+		)
+	}
 }
 
 export default withRouter(App)

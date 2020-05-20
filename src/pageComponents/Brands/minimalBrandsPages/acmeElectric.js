@@ -13,19 +13,19 @@ const PageContainer = styled.div`
     flex-wrap: wrap;
     margin: 0 auto;
     // background-color: #ebe7e7;
-`;
+`
 const BrandHeaderDiv = styled.div`
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     margin-top: 47px;
     
-`;
+`
 
 const BrandHeaderH1 = styled.h1`
     font-weight: bold;
 
-`;
+`
 
 const ShortLine = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ const ShortLine = styled.div`
   margin-top: 20px;
  
   
-  `;
+  `
 
 const BrandDetailsDiv = styled.div`
     display: flex;
@@ -43,20 +43,20 @@ const BrandDetailsDiv = styled.div`
     align-items: center;
     justify-content: center;
     height: 204px;
-`;
+`
 const BrandLogo = styled.img`
     margin: 0 10px;
     height: 98%;
-`;
+`
 
 const BrandDetails = styled.p`
     width: 63%;
-    `;
+    `
 
 const BrandNameSpan = styled.span`
     font-size: 20px;
     font-weight: bold;
-`;
+`
 
 
 
@@ -77,7 +77,7 @@ const Div = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: 40px;
-`;
+`
 const IconDiv = styled.div`
 display: flex;
   justify-content: center;
@@ -87,13 +87,13 @@ display: flex;
   color: #DB1633 ;
     
   }
-`;
+`
 
 const LinkStyleDiv = styled.div`
   display: flex;
   justify-content: center;
   
-`;
+`
 
 const LinkStyle = styled.a`
 color: #246696;
@@ -106,7 +106,7 @@ color: #246696;
     text-decoration: none;
   }
  
-`;
+`
 
 const RelatedLinkDiv = styled.div`
     margin: 0 auto;
@@ -114,74 +114,74 @@ const RelatedLinkDiv = styled.div`
     flex-wrap: wrap;
     // margin-top: 47px;
     
-`;
+`
 
 const RelatedLinkH6 = styled.h6`
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
 
-`;
+`
 export default function AcmeElectric() {
-    return (
-        <PageContainer>
-            <BrandHeaderDiv>
-                <BrandHeaderH1>Acme Electric</BrandHeaderH1>
-                <ShortLine></ShortLine>
-            </BrandHeaderDiv>
+	return (
+		<PageContainer>
+			<BrandHeaderDiv>
+				<BrandHeaderH1>Acme Electric</BrandHeaderH1>
+				<ShortLine></ShortLine>
+			</BrandHeaderDiv>
 
-            <BrandDetailsDiv>
-                <BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"></BrandLogo>
-                <BrandDetails>
-                    <BrandNameSpan>Acme Electric</BrandNameSpan> is a manufacturer of dry-type distribution transformers that for decades has covered a full spectrum of applications including general commercial power distribution, high harmonic conditions, specific industrial motor drive/factory automation systems and low-voltage landscape lighting.
-            </BrandDetails>
-            </BrandDetailsDiv>
+			<BrandDetailsDiv>
+				<BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"></BrandLogo>
+				<BrandDetails>
+					<BrandNameSpan>Acme Electric</BrandNameSpan> is a manufacturer of dry-type distribution transformers that for decades has covered a full spectrum of applications including general commercial power distribution, high harmonic conditions, specific industrial motor drive/factory automation systems and low-voltage landscape lighting.
+				</BrandDetails>
+			</BrandDetailsDiv>
 
-            <RelatedLinkDiv>
-                <RelatedLinkH6>Related Links</RelatedLinkH6>
-              <ShortLine></ShortLine>
-            </RelatedLinkDiv> 
+			<RelatedLinkDiv>
+				<RelatedLinkH6>Related Links</RelatedLinkH6>
+				<ShortLine></ShortLine>
+			</RelatedLinkDiv> 
 
             
 
-            <Div>
-                <LinkDetailDiv>
-                    <LinkStyleDiv>
-                        <LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank">
-                            <IconDiv>
-                                <FontAwesomeIcon icon='globe-americas' size='2x' />
-                            </IconDiv>
+			<Div>
+				<LinkDetailDiv>
+					<LinkStyleDiv>
+						<LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank" rel="noopener noreferrer">
+							<IconDiv>
+								<FontAwesomeIcon icon='globe-americas' size='2x' />
+							</IconDiv>
                             Acme Electric's Website</LinkStyle>
-                    </LinkStyleDiv>
-                </LinkDetailDiv>
+					</LinkStyleDiv>
+				</LinkDetailDiv>
 
-                <LinkDetailDiv>
-                    <LinkStyleDiv>
-                        <LinkStyle href="#" target="_blank">
-                            <IconDiv>
-                            <FontAwesomeIcon icon='shopping-cart' size='2x' />
-                            </IconDiv>
+				<LinkDetailDiv>
+					<LinkStyleDiv>
+						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
+							<IconDiv>
+								<FontAwesomeIcon icon='shopping-cart' size='2x' />
+							</IconDiv>
                             Shop Acme Electric Products</LinkStyle>
-                    </LinkStyleDiv>
-                </LinkDetailDiv>
+					</LinkStyleDiv>
+				</LinkDetailDiv>
 
 
-                <LinkDetailDiv>
-                    <LinkStyleDiv>
-                        <LinkStyle href="#" target="_blank">
-                            <IconDiv>
-                            <FontAwesomeIcon icon='address-book' size='2x' />
-                            </IconDiv>
+				<LinkDetailDiv>
+					<LinkStyleDiv>
+						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
+							<IconDiv>
+								<FontAwesomeIcon icon='address-book' size='2x' />
+							</IconDiv>
                             Acme Electric Catalogs</LinkStyle>
-                    </LinkStyleDiv>
-                </LinkDetailDiv>
-            </Div>
-        </PageContainer>
+					</LinkStyleDiv>
+				</LinkDetailDiv>
+			</Div>
+		</PageContainer>
 
 
 
 
 
-    )
+	)
 }
 

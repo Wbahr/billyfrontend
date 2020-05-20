@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { Button } from '@material-ui/core'
@@ -23,33 +22,33 @@ const PpartTitle = styled.p`
 
 export default function ItemCreationModal({submitResponse, handleCloseModal}) {
 
-  let PopupContent
-  if(submitResponse.success){
-    PopupContent =(
-      <DivContainer>
-        <PpartTitle>Item Created!</PpartTitle>
-        <p>Item ID: {submitResponse.itemId}</p>
-        <a href={`/product/${submitResponse.itemId}/${submitResponse.invMastUid}`} target="_blank">View Details</a>
-        <Button variant="contained" color="secondary" onClick={()=>{handleCloseModal()}}>
+	let PopupContent
+	if(submitResponse.success){
+		PopupContent =(
+			<DivContainer>
+				<PpartTitle>Item Created!</PpartTitle>
+				<p>Item ID: {submitResponse.itemId}</p>
+				<a href={`/product/${submitResponse.itemId}/${submitResponse.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
+				<Button variant="contained" color="secondary" onClick={()=>{handleCloseModal()}}>
           Create New Item
-        </Button>
-      </DivContainer>
-    )
-  } else {
-    PopupContent =(
-      <DivContainer>
-        <PpartTitle>Item Creation Failed</PpartTitle>
-        <p>{submitResponse.message}</p>
-        <Button variant="contained" color="secondary" onClick={()=>{handleCloseModal()}}>
+				</Button>
+			</DivContainer>
+		)
+	} else {
+		PopupContent =(
+			<DivContainer>
+				<PpartTitle>Item Creation Failed</PpartTitle>
+				<p>{submitResponse.message}</p>
+				<Button variant="contained" color="secondary" onClick={()=>{handleCloseModal()}}>
           Edit Item
-        </Button>
-      </DivContainer>
-    )
-  }
+				</Button>
+			</DivContainer>
+		)
+	}
 
-  return(
-    <Popup open={true} onClose={()=>{handleCloseModal()}} closeOnDocumentClick  contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
-      {PopupContent}
-    </Popup>
-  )
+	return(
+		<Popup open={true} onClose={()=>{handleCloseModal()}} closeOnDocumentClick  contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
+			{PopupContent}
+		</Popup>
+	)
 }

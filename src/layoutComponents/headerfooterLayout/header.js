@@ -3,169 +3,169 @@ import styled from 'styled-components'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
 import Dropdown from './headerNavDropdown'
 
 const NavTop = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 100%;
-  height: 40px;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  background-color: #535353;
-  justify-content: center;
-  z-index: 89;
+	display: flex;
+	margin: 0 auto;
+	width: 100%;
+	height: 40px;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background-color: #535353;
+	justify-content: center;
+	z-index: 89;
 `
 
 const NavBottom = styled.div`
-  display: flex;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 40px;
-  margin: 0 auto;
-  width: 100%;
-  height: 70px;
-  background-color: white;
-  justify-content: center;
-  box-shadow: 0px 3px 4px #dadada;
-  z-index: 2;
+	display: flex;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 40px;
+	margin: 0 auto;
+	width: 100%;
+	height: 70px;
+	background-color: white;
+	justify-content: center;
+	box-shadow: 0px 3px 4px #dadada;
+	z-index: 2;
 `
 
 const LinkContainer = styled.div`
-  display: flex;
-  height: 100%;
-  width: 45%;
-  color: black !important;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
+	display: flex;
+	height: 100%;
+	width: 45%;
+	color: black !important;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	font-weight: 500;
 `
 const NavBottomContainer = styled.div`
-  display: flex;
-  height: 100%;
-  width: 1300px;
-  padding: 0 10px;
-  justify-content: space-between;
-  align-items: center;
-    @media (max-width: 800px) {
-    
-  }
+	display: flex;
+	height: 100%;
+	width: 1300px;
+	padding: 0 10px;
+	justify-content: space-between;
+	align-items: center;
+		@media (max-width: 800px) {
+		
+	}
 `
 
 const NavItem =styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  color: black !important;
-  font-weight: 400;
-  font-size: 16px;
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-  margin: 0 8px -3px 8px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	color: black !important;
+	font-weight: 400;
+	font-size: 16px;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+	margin: 0 8px -3px 8px;
 `
 const InputSearch = styled.input`
-  width: 360px;
-  height: 40px;
-  font-size: 15px;
-  border-color: #dadada;
-  border-top: 1px #dadada solid;
-  border-left: 1px #dadada solid;
-  border-bottom: 1px #e7e7e7 solid;
-  border-right: 0px;
-  padding: 0 8px;
-  &:focus{
-    border-top: 1px #b4b4b4 solid;
-    border-left: 1px #b4b4b4 solid;
-    border-bottom: 1px #b4b4b4 solid;
-  }
+	width: 360px;
+	height: 40px;
+	font-size: 15px;
+	border-color: #dadada;
+	border-top: 1px #dadada solid;
+	border-left: 1px #dadada solid;
+	border-bottom: 1px #e7e7e7 solid;
+	border-right: 0px;
+	padding: 0 8px;
+	&:focus{
+		border-top: 1px #b4b4b4 solid;
+		border-left: 1px #b4b4b4 solid;
+		border-bottom: 1px #b4b4b4 solid;
+	}
 `
 const ButtonSearch = styled.button`
-  width: 50px;
-  height: 40px;
-  background-image: linear-gradient(to top left, #950f23, #DB1633);
-  color: white;
-  font-weight: 500;
-  border: 0;
-  font-size: 14px;
-  border-radius: 0 5px 5px 0;
+	width: 50px;
+	height: 40px;
+	background-image: linear-gradient(to top left, #950f23, #DB1633);
+	color: white;
+	font-weight: 500;
+	border: 0;
+	font-size: 14px;
+	border-radius: 0 5px 5px 0;
 `
 
 const ButtonSearchType = styled.button`
-  width: 40px;
-  height: 40px;
-  background-image: linear-gradient(to top left, #404040, #272727);
-  border-radius: 3px 0px 0 3px;
-  color: white;
-  font-weight: 500;
-  border: 0;
-  font-size: 14px;
+	width: 40px;
+	height: 40px;
+	background-image: linear-gradient(to top left, #404040, #272727);
+	border-radius: 3px 0px 0 3px;
+	color: white;
+	font-weight: 500;
+	border: 0;
+	font-size: 14px;
 `
 const Div = styled.div`
-  display: flex;
+	display: flex;
 `
 const Puser = styled.p`
-  background-image: linear-gradient(to top left, #404040, #333);
-  color: #f3f3f3;
-  font-size: 11px;
-  margin: 0;
-  padding: 4px 8px;
-  border-radius: 30px;
-  font-weight: 600;
+	background-image: linear-gradient(to top left, #404040, #333);
+	color: #f3f3f3;
+	font-size: 11px;
+	margin: 0;
+	padding: 4px 8px;
+	border-radius: 30px;
+	font-weight: 600;
 `
 const PeUser = styled(Puser)`
-  color: #328EFC;
-  font-weight: 600;
+	color: #328EFC;
+	font-weight: 600;
 `
 const A = styled.p`
-  cursor: pointer;
-  color: #f3f3f3;
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 0 5px;
+	cursor: pointer;
+	color: #f3f3f3;
+	margin: 0;
+	font-size: 14px;
+	font-weight: 600;
+	padding: 0 5px;
 `
 const Aphone = styled(A)`
-  margin-right: 50px;
-  color: white;
+	margin-right: 50px;
+	color: white;
 `
 const DivCancelImpersonation = styled.div`
-  cursor: pointer;
-  margin: 0 8px;
+	cursor: pointer;
+	margin: 0 8px;
 `
 export default function HeaderComponent(props) {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchAsCustomer, setSearchAsCustomer] = useState(false)
-  const [showDropdown, setShowDropdown] = useState(
-    {
-      about: false,
-      brands: false,
-      contact: false,
-      resources: false,
-      services: false,
-      shop: false,
-      industries: false
-    }
-  )
+	const [searchTerm, setSearchTerm] = useState('')
+	const [searchAsCustomer, setSearchAsCustomer] = useState(false)
+	const [showDropdown, setShowDropdown] = useState(
+		{
+			about: false,
+			brands: false,
+			contact: false,
+			resources: false,
+			services: false,
+			shop: false,
+			industries: false
+		}
+	)
 
-  function handleSearch() {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}&nonce=${new Date().getTime()}`)
-  }
+	function handleSearch() {
+		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}&nonce=${new Date().getTime()}`)
+	}
 
-  function onHover(e) {
-    let target = e.target.id
-    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-    setShowDropdown({...mutatedShowDropdown, [target]: true})
-  }
+	function onHover(e) {
+		let target = e.target.id
+		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+		setShowDropdown({...mutatedShowDropdown, [target]: true})
+	}
 
-  function onExit(e) {
-    let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-    setShowDropdown({...mutatedShowDropdown})
-  }
+	function onExit() {
+		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
+		setShowDropdown({...mutatedShowDropdown})
+	}
 
   return(
     <>

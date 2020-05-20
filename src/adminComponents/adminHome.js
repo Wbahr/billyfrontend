@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
@@ -23,118 +22,118 @@ import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import OrderData from './adminTools/OrderData/orderData'
 import AppHeader from './appHeader'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'white',
-    color: 'black',
-    fontFamily: 'ProximaBold'
-  },
-  appSubBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'white',
-    color: 'black',
-    fontFamily: 'ProximaBold'
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    // backgroundColor: 'rgb(33,33,33,.75)',
-  },
-  content: {
-    flexGrow: 1,
-  },
-  toolbar: theme.mixins.toolbar,
-  avatar: {
-    height: '27px',
-    width: '27px'
-  },
-  listAvatar: {
-    minWidth: '40px'
-  },
-  linkItem: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0',
-    height: '50px'
-  }
-}));
+	root: {
+		display: 'flex',
+	},
+	appBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		backgroundColor: 'white',
+		color: 'black',
+		fontFamily: 'ProximaBold'
+	},
+	appSubBar: {
+		zIndex: theme.zIndex.drawer + 1,
+		backgroundColor: 'white',
+		color: 'black',
+		fontFamily: 'ProximaBold'
+	},
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+	},
+	drawerPaper: {
+		width: drawerWidth,
+		// backgroundColor: 'rgb(33,33,33,.75)',
+	},
+	content: {
+		flexGrow: 1,
+	},
+	toolbar: theme.mixins.toolbar,
+	avatar: {
+		height: '27px',
+		width: '27px'
+	},
+	listAvatar: {
+		minWidth: '40px'
+	},
+	linkItem: {
+		display: 'flex',
+		alignItems: 'center',
+		padding: '0',
+		height: '50px'
+	}
+}))
 
 function ListItemLink(props) {
-  const { icon, primary, to } = props;
+	const { icon, primary, to } = props
 
-  const renderLink = React.useMemo(
-    () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
-    [to],
-  );
+	const renderLink = React.useMemo(
+		() => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+		[to],
+	)
 
-  return (
-    <li>
-      <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={primary} />
-      </ListItem>
-    </li>
-  );
+	return (
+		<li>
+			<ListItem button component={renderLink}>
+				{icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+				<ListItemText primary={primary} />
+			</ListItem>
+		</li>
+	)
 }
 
 
-export default function AdminHome(props) {
-  let { tool } = useParams()
-  const classes = useStyles()
+export default function AdminHome() {
+	let { tool } = useParams()
+	const classes = useStyles()
 
-  let AdminTool
-  switch(tool){
-    case 'item-creation':
-      AdminTool = ItemCreation
-      break
-    case 'order-data':
-      AdminTool = OrderData
-      break
-    default:
-      AdminTool = AdminDashboard
-  }
+	let AdminTool
+	switch(tool){
+	case 'item-creation':
+		AdminTool = ItemCreation
+		break
+	case 'order-data':
+		AdminTool = OrderData
+		break
+	default:
+		AdminTool = AdminDashboard
+	}
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <Link component={RouterLink} to="/">
-          <img src={AirlineLogo} height="50px" style={{'paddingRight': '20px'}}/>
-          </Link>
-          <h4>Admin Tools</h4>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List aria-label="main mailbox folders">
-            <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
-            <Divider/>
-            <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
-            <Divider/>
-            <ListItemLink to="/admin-dashboard/order-data" primary="View Order Data" icon={<CodeIcon />} />
-            <Divider/>
-        </List>
-      </Drawer>
-      <main className={classes.content}>
-        <AppHeader />
-        <AdminTool />
-      </main>
-    </div>
-  );
+	return (
+		<div className={classes.root}>
+			<CssBaseline />
+			<AppBar position="fixed" className={classes.appBar}>
+				<Toolbar>
+					<Link component={RouterLink} to="/">
+						<img src={AirlineLogo} height="50px" style={{'paddingRight': '20px'}}/>
+					</Link>
+					<h4>Admin Tools</h4>
+				</Toolbar>
+			</AppBar>
+			<Drawer
+				className={classes.drawer}
+				variant="permanent"
+				classes={{
+					paper: classes.drawerPaper,
+				}}
+			>
+				<div className={classes.toolbar} />
+				<List aria-label="main mailbox folders">
+					<ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
+					<Divider/>
+					<ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
+					<Divider/>
+					<ListItemLink to="/admin-dashboard/order-data" primary="View Order Data" icon={<CodeIcon />} />
+					<Divider/>
+				</List>
+			</Drawer>
+			<main className={classes.content}>
+				<AppHeader />
+				<AdminTool />
+			</main>
+		</div>
+	)
 }

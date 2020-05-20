@@ -19,12 +19,6 @@ const Pgrey = styled.p`
   font-weight: 700;
 `
 
-const Pgrey2 = styled.p`
-  font-size: 16px;
-  color: #404040;
-  margin: 0;
-`
-
 const Pblue = styled.p`
   font-size: 20px;
   color: rgb(219, 22, 51);
@@ -35,15 +29,15 @@ const Pblue = styled.p`
 
 export default function ResultsSummary({searchTerm, totalResults, isSearching, currentPage}) {
 
-  let ResultsText
-  if (isSearching && currentPage === 0){
-    ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-  } else {
-    ResultsText = (<><Pgrey>{totalResults === 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-  }
-  return(
-    <DivResultsSummaryContainer>
-      <Div>{ResultsText}</Div>
-    </DivResultsSummaryContainer>
-  )
+	let ResultsText
+	if (isSearching && currentPage === 0){
+		ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+	} else {
+		ResultsText = (<><Pgrey>{totalResults === 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
+	}
+	return(
+		<DivResultsSummaryContainer>
+			<Div>{ResultsText}</Div>
+		</DivResultsSummaryContainer>
+	)
 }

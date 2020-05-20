@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -21,12 +21,12 @@ const Container = styled.div`
   }
 `
 
-export default function PermissionDeniedPage({history}) {
+export default function PermissionDeniedPage() {
 
-  return(
-    <Container>
-      <img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
-      <h1>Permission Denied.</h1>
-    </Container>
-  )
+	return(
+		<Container>
+			<img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
+			<h1>Permission Denied.</h1>
+		</Container>
+	)
 }

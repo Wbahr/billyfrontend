@@ -5,117 +5,101 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Header from '../../../imgs/homepage/new desktop art-02-03 copy.png'
 
 const BannerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 10px;
-  @media (max-width: 800px) {
-    max-width: 800px;
-  }
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px;
+	@media (max-width: 800px) {
+		max-width: 800px;
+	}
 `
 const Col = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 50px;
-  @media (max-width: 800px) {
-   
-  }
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 50px;
+	@media (max-width: 800px) {
+	 
+	}
 `
 const Img = styled.img`
-  max-width: 80%;
+	max-width: 80%;
 `
 const LgBanner = styled.div`
-  display: flex;
-  height: 280px;
-  @media (max-width: 800px) {
+	display: flex;
+	height: 280px;
+	@media (max-width: 800px) {
 
-  
-  }
+	
+	}
  
 `
 const LgImg = styled.img`
-  max-width: 100%;
-  object-fit: cover;
+	max-width: 100%;
+	object-fit: cover;
 `
 const SmBanner = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 15px 0;
-  justify-content: space-between;
-  @media (max-width: 800px) {
-    justify-content: space-between;
-    max-width: 800px;
-  }
+	display: flex;
+	flex-direction: row;
+	margin: 15px 0;
+	justify-content: space-between;
+	@media (max-width: 800px) {
+		justify-content: space-between;
+		max-width: 800px;
+	}
 `
 const BannerDiv = styled.div`
-  display: flex;
-  background-color: #f2f3f4;
-  width: 420px;
-  height: 180px;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 800px) {
-    width: 265px;
-    height: 220px;
-    flex-direction: column-reverse;
-    justify-content: start;
-    margin: 1px;
-  }
+	display: flex;
+	background-color: #f2f3f4;
+	width: 420px;
+	height: 180px;
+	align-items: center;
+	justify-content: center;
+	@media (max-width: 800px) {
+		width: 265px;
+		height: 220px;
+		flex-direction: column-reverse;
+		justify-content: start;
+		margin: 1px;
+	}
 `
 const P = styled.p`
-  margin: 0;
-  font-size: 16px;
-  max-width: 100%;
-  padding: 10px;
-  @media (max-width: 800px) {
-    font-size: 16px;
-  }
+	margin: 0;
+	font-size: 16px;
+	max-width: 100%;
+	padding: 10px;
+	@media (max-width: 800px) {
+		font-size: 16px;
+	}
 `
 const AboutAirline = styled.div`
-  width: 240px;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  @media (max-width: 800px) {
-    width: 250px;
-    font-size: 14px;
-    text-align: center;
-  }
+	width: 240px;
+	font-size: 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	@media (max-width: 800px) {
+		width: 250px;
+		font-size: 14px;
+		text-align: center;
+	}
 
 `
 const ImgDiv = styled.div`
-  width: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 800px) {
-    width: 100px;
-    padding: 10px;
-  }
+	width: 120px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	@media (max-width: 800px) {
+		width: 100px;
+		padding: 10px;
+	}
 `
 const H5 = styled.h5`
-  color: #B51F2B;
-  @media (max-width: 800px) {
-    font-size: 18px;
-  }
+	color: #B51F2B;
+	@media (max-width: 800px) {
+		font-size: 18px;
+	}
 `
-const A = styled.a`
-  display: flex;
-  color: #212529;
-  &:hover{
-    text-decoration: none;
-    color: #246696;
-  }
-  @media (max-width: 800px) {
-   margin: auto;
-  }
-  `
-const SideBorder = styled.div`
-  // border-right: 2px solid #f2f3f4;
-  height: 70px;
-  display: flex;
-  margin: auto;
-`
+
 class Banner extends React.Component {
 
   render() {

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Context from '../../../config/context'
-import { formatCurrency } from '../../_common/helpers/generalHelperFunctions'
+import NumberFormat from 'react-number-format'
 
 const Div = styled.div`
   display: flex;
@@ -74,31 +73,31 @@ const DivLineItemTotal = styled(DivLineItem)`
 `
 
 export default function CheckoutOrderSummary({currentStep, taxAmount}) {
-  const context = useContext(Context)
+	const context = useContext(Context)
 
-  return(
-    <Div>
-      <H4>Order Summary</H4>
-      <DivLineItem>
-        <p>Subtotal</p>
-        <p>{formatCurrency(context.cartPricing.subTotal)}</p>
-      </DivLineItem>
-      <DivLineItem>
-        <p>Tariff</p>
-        <p>{formatCurrency(context.cartPricing.tariff)}</p>
-      </DivLineItem>        
-      <DivLineItem>
-        <p>Tax</p>
-        {/* If past step 1 (ship to), show tax */}
-        { currentStep > 1 ? <p>{formatCurrency(taxAmount)}</p> : <p>(TBD)</p> }
-      </DivLineItem>
-      <DivLineItem>
-        <p>Shipping</p>
-        <p>(TBD)</p>
-      </DivLineItem>
-      <DivLineItemTotal>
-        <p>Total {formatCurrency(Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(taxAmount))}</p>
-      </DivLineItemTotal>
-    </Div>
-  )
+	return(
+		<Div>
+			<H4>Order Summary</H4>
+			<DivLineItem>
+				<p>Subtotal</p>
+				<p><NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+			</DivLineItem>
+			<DivLineItem>
+				<p>Tariff</p>
+				<p><NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+			</DivLineItem>        
+			<DivLineItem>
+				<p>Tax</p>
+				{/* If past step 1 (ship to), show tax */}
+				{ currentStep > 1 ? <p><NumberFormat value={taxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p> : <p>(TBD)</p> }
+			</DivLineItem>
+			<DivLineItem>
+				<p>Shipping</p>
+				<p>(TBD)</p>
+			</DivLineItem>
+			<DivLineItemTotal>
+				<p>Total <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(taxAmount)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+			</DivLineItemTotal>
+		</Div>
+	)
 }

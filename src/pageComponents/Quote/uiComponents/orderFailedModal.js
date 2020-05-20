@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 
@@ -19,12 +18,12 @@ const Container = styled.div`
 
 export default function QuoteFailedModal() {
 
-  return(
-    <Popup open={true} closeOnDocumentClick={true} contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
-      <Container>
-        <h5>Quote Failed</h5>
-        <p>Please call Zach Linsell.</p>
-      </Container>
-    </Popup>
-  )
+	return(
+		<Popup open={true} closeOnDocumentClick={true} contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
+			<Container>
+				<h5>Quote Failed</h5>
+				<p>Please call Zach Linsell.</p>
+			</Container>
+		</Popup>
+	)
 }

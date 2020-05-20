@@ -35,16 +35,16 @@ const Div = styled.div`
 
 export default function CustomerSelectPage({selectCustomer}) {
 
-  return(
-    <SignupPageContainer>
-      <Div onClick={()=>selectCustomer('existing')}>
-        <FontAwesomeIcon icon="user" color="white" size="6x"/>
-        <p>Existing Customer</p>
-      </Div>
-      <Div onClick={()=>selectCustomer('new')}>
-        <FontAwesomeIcon icon="user-plus" color="white" size="6x"/>
-        <p>New Customer</p>
-      </Div>
-    </SignupPageContainer>
-  )
+	return(
+		<SignupPageContainer>
+			<Div onClick={()=>selectCustomer('existing')}>
+				<FontAwesomeIcon icon="user" color="white" size="6x"/>
+				<p>Existing Customer</p>
+			</Div>
+			<Div onClick={()=>selectCustomer('new')}>
+				<FontAwesomeIcon icon="user-plus" color="white" size="6x"/>
+				<p>New Customer</p>
+			</Div>
+		</SignupPageContainer>
+	)
 }

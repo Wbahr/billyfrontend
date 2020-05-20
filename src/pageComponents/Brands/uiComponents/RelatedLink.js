@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const RelatedLinkCircle = styled.div`
   margin: 0 auto;
@@ -43,20 +42,20 @@ const FontAwesomeDiv = styled.div`
   }
 `
 export default function RelatedLink(props) {
-    const {
-        href,
-        icon,
-        text,
-    } = props
-    return (
-        <RelatedLinkCircle>
-            <LinkStyleDiv>
-                <LinkStyle href={href} target="_blank">
-                    <FontAwesomeDiv>
-                        <FontAwesomeIcon icon={icon} size='4x' />
-                    </FontAwesomeDiv>
-                    {text}</LinkStyle>
-            </LinkStyleDiv>
-        </RelatedLinkCircle>
-    )
+	const {
+		href,
+		icon,
+		text,
+	} = props
+	return (
+		<RelatedLinkCircle>
+			<LinkStyleDiv>
+				<LinkStyle href={href} target="_blank" rel="noopener noreferrer">
+					<FontAwesomeDiv>
+						<FontAwesomeIcon icon={icon} size='4x' />
+					</FontAwesomeDiv>
+					{text}</LinkStyle>
+			</LinkStyleDiv>
+		</RelatedLinkCircle>
+	)
 }
