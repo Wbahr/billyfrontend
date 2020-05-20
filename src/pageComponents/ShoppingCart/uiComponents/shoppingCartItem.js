@@ -97,8 +97,8 @@ const DivCol3 = styled.div`
 
 const Img = styled.img`
 	margin: 0 4px;
-	max-width: 100% !important;
-	max-height: 100% !important;
+	max-width: 98% !important;
+	max-height: 98% !important;
 `
 
 const DivTotalPrice = styled.div`
