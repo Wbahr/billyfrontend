@@ -10,11 +10,11 @@ const Container = styled.div`
     flex-direction: column;
 `
 export default function History() {
-    return (
-        <>
-         <Container>
-             <Header text="Our History"/>
-         </Container>
-        </>
-    )
+	return (
+		<>
+			<Container>
+				<Header text="Our History"/>
+			</Container>
+		</>
+	)
 }

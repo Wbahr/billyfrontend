@@ -14,9 +14,9 @@ export default function TechnologyPage() {
 	}, [page])
 
 	return (
-    <>
-      {pageComponent}
-    </>
+		<>
+			{pageComponent}
+		</>
 	)
 }
 TechnologyPage.propTypes = {

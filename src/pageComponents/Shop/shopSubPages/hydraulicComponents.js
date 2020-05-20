@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 export default function HydraulicComponents() {
-    return (
-        <div>
+	return (
+		<div>
             
-        </div>
-    )
+		</div>
+	)
 }

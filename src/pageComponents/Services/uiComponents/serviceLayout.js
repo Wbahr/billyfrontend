@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 
 const Div = styled.div`
     display: flex;
@@ -24,21 +23,21 @@ const Span = styled.span`
     font-weight: bold;
 `
 export default function serviceLayout(props) {
-    const {
-        src,
-        title,
-        text,
-    } = props
-    return (
-        <>
-            <Div>
-                <ImgDiv>
-                    <Img src={src} />
-                    <DetailDiv>
-                        <Detail><Span>{title} </Span> {text}</Detail>
-                    </DetailDiv>
-                </ImgDiv>
-            </Div>
-        </>
-    )
+	const {
+		src,
+		title,
+		text,
+	} = props
+	return (
+		<>
+			<Div>
+				<ImgDiv>
+					<Img src={src} />
+					<DetailDiv>
+						<Detail><Span>{title} </Span> {text}</Detail>
+					</DetailDiv>
+				</ImgDiv>
+			</Div>
+		</>
+	)
 }

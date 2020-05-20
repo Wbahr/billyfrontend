@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import ContactUsForm from './uiComponents/contactUsForm'
 import Sidebar from './uiComponents/contactUsSidebar'
@@ -34,18 +33,18 @@ const DetailsDiv = styled.div`
 `
 
 export default function ContactUsPage() {
-  return (
-    <ContactContainer>
-      <HeaderContainer>
-        <Header text="contact us" />
-        <DetailsDiv>
-          <p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
-        </DetailsDiv>
-      </HeaderContainer>
-      <ContentContainer>
-        <Sidebar />
-        <ContactUsForm />
-      </ContentContainer>
-    </ContactContainer>
-  )
+	return (
+		<ContactContainer>
+			<HeaderContainer>
+				<Header text="contact us" />
+				<DetailsDiv>
+					<p>You can contact us by phone, email or by submitting the form below. Our staff answers requests as promptly as possible during regular business hours.</p>
+				</DetailsDiv>
+			</HeaderContainer>
+			<ContentContainer>
+				<Sidebar />
+				<ContactUsForm />
+			</ContentContainer>
+		</ContactContainer>
+	)
 }

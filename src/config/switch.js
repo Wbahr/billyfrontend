@@ -85,54 +85,54 @@ class App extends React.Component {
 	// }
 	// }
 
-  render () {
-    return (
-      <Switch>
-        <WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
-        <WrapperRoute exact path='/about/:page' component={About} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/apps' component={Apps} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
-        <WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/credit-application' component={CreditApplication} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/knowledge-center-and-faq' component={KnowledgeCenter} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/quote-complete/:orderId' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
-        <WrapperRoute exact path='/services/engineered-systems-and-assemblies' component={EngineeredSystemsAndAssemblies} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/services/engineered-systems-and-assemblies/:page' component={EngineeredSystems} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
-        <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
-        <WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
+	render () {
+		return (
+			<Switch>
+				<WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
+				<WrapperRoute exact path='/about/:page' component={About} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/apps' component={Apps} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
+				<WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/credit-application' component={CreditApplication} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/knowledge-center-and-faq' component={KnowledgeCenter} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
+				<WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
+				<WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/quote-complete/:orderId' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
+				<WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/services/engineered-systems-and-assemblies' component={EngineeredSystemsAndAssemblies} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/services/engineered-systems-and-assemblies/:page' component={EngineeredSystems} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
+				<WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
 
 
-        {/* ADMIN INTERNAL TOOLS */}
-        <WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
-        <WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
+				{/* ADMIN INTERNAL TOOLS */}
+				<WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
+				<WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
 
 				{/* Error Screens */}
 				<WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>

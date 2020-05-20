@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 
 const ImgDiv = styled.div`
 `
@@ -23,20 +22,20 @@ const TittleDetail = styled.p`
     font-size: 14px;
 `
 export default function engineerSystemsServices(props) {
-    const {
-        src,
-        title,
-        text,
-    } = props
-    return (
-        <>
-            <ImgDiv>
-                <Img src={src} />
-            </ImgDiv>
-            <TitleDiv>
-                <Title>{title}</Title>
-                <TittleDetail>{text}</TittleDetail>
-            </TitleDiv>
-        </>
-    )
+	const {
+		src,
+		title,
+		text,
+	} = props
+	return (
+		<>
+			<ImgDiv>
+				<Img src={src} />
+			</ImgDiv>
+			<TitleDiv>
+				<Title>{title}</Title>
+				<TittleDetail>{text}</TittleDetail>
+			</TitleDiv>
+		</>
+	)
 }

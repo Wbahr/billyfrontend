@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 
 const Banner = styled.div`
     height: 200px;
@@ -18,9 +17,9 @@ const Title = styled.h1`
     letter-spacing: 2px;
 `
 export default function banner(props) {
-    return (
-        <Banner>
-            <Title>{props.text}</Title>
-        </Banner>
-    )
+	return (
+		<Banner>
+			<Title>{props.text}</Title>
+		</Banner>
+	)
 }

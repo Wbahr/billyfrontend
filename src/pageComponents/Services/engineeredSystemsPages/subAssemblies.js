@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import Header from '../uiComponents/Header'
+import Header from '../../_common/header'
+import ServiceHome from '../uiComponents/service'
 
 const Container = styled.div`
     max-width: 1300px;
@@ -9,11 +9,12 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 `
-export default function Events() {
+export default function subAssemblies() {
 	return (
 		<>
+			<Header text="Sub-Assemblies" />
 			<Container>
-				<Header text="Events"/>
+				<ServiceHome text="Sub-Assemblies" />
 			</Container>
 		</>
 	)

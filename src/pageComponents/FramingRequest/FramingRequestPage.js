@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Header from '../_common/header'
 import SubHeader from '../_common/subHeaderAndDetails'
 import ContactForm from './uiComponents/contactForm'
@@ -58,8 +57,6 @@ const ContactDiv = styled.div`
     flex-direction: column;
     align-self: start;
 `
-const ContactInfo = styled.p`
-`
 const Detail = styled.p`
 `
 const SubTitle = styled.div`
@@ -77,80 +74,80 @@ const ContactSection = styled.div`
 `
 
 export default function FramingRequestPage() {
-    return (
-        <Container>
-            <Header text="framing request" />
-            <SubHeader
-                text="Let Airline's engineering and manufacturing team transform your ideas into reality."
-                details="Structural framing can be configured to support a variety of applications including workstations, lean manufacturing cells, safety guards, large area enclosures, clean rooms, machine bases, solar racking an much more. Get the process started with a framing application in your facility by submitting the form below."
-            />
-            <SectionDiv>
-                <Div>
-                    <Title_Div>
-                        <Number_Div>
-                            <Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-1.jpg" />
-                        </Number_Div>
-                        <Topic_Div>
-                            <Topic>Design</Topic>
-                        </Topic_Div>
-                    </Title_Div>
-                    <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/sketch.jpg" />
-                    </ImgDiv>
-                    <DetailDiv>
-                        <Detail>
-                            After completing the form below, an Airline Application Engineer will consult with you and develop concepts based on your needs. At Airline, an AutoCAD or Inventor drawing and proposal are generated for your review and approval. Once the order is placed; the design, BOM and details for production are finalized.
-                    </Detail>
-                    </DetailDiv>
-                </Div>
-                <Div>
-                    <Title_Div>
-                        <Number_Div>
-                            <Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-2.jpg" />
-                        </Number_Div>
-                        <Topic_Div>
-                            <Topic>Fabrication</Topic>
-                        </Topic_Div>
-                    </Title_Div>
-                    <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingFabrication.jpg" />
-                    </ImgDiv>
-                    <DetailDiv>
-                        <Detail>
-                            Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
-                    </Detail>
-                    </DetailDiv>
-                </Div>
-                <Div>
-                    <Title_Div>
-                        <Number_Div>
-                            <Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-3.jpg" />
-                        </Number_Div>
-                        <Topic_Div>
-                            <Topic>Delivery/Installation</Topic>
-                        </Topic_Div>
-                    </Title_Div>
-                    <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingDelivery.jpg" />
-                    </ImgDiv>
-                    <DetailDiv>
-                        <Detail>
-                            If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
-                    </Detail>
-                    </DetailDiv>
-                </Div>
-            </SectionDiv>
-            <SubTitle>
-                <H5>Please enter the information about your guarding needs below. Required fields are marked with an asterisk (*)</H5>
-            </SubTitle>
-            <ContactSection>
-                <ContactDiv>
-                    <ContactForm text="Contact Information"/>
-                </ContactDiv>
-                <ContactDiv>
-                    <ProjectForm text="Project Requirements"/>
-                </ContactDiv>
-            </ContactSection>
-        </Container>
-    )
+	return (
+		<Container>
+			<Header text="framing request" />
+			<SubHeader
+				text="Let Airline's engineering and manufacturing team transform your ideas into reality."
+				details="Structural framing can be configured to support a variety of applications including workstations, lean manufacturing cells, safety guards, large area enclosures, clean rooms, machine bases, solar racking an much more. Get the process started with a framing application in your facility by submitting the form below."
+			/>
+			<SectionDiv>
+				<Div>
+					<Title_Div>
+						<Number_Div>
+							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-1.jpg" />
+						</Number_Div>
+						<Topic_Div>
+							<Topic>Design</Topic>
+						</Topic_Div>
+					</Title_Div>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/sketch.jpg" />
+					</ImgDiv>
+					<DetailDiv>
+						<Detail>
+               After completing the form below, an Airline Application Engineer will consult with you and develop concepts based on your needs. At Airline, an AutoCAD or Inventor drawing and proposal are generated for your review and approval. Once the order is placed; the design, BOM and details for production are finalized.
+						</Detail>
+					</DetailDiv>
+				</Div>
+				<Div>
+					<Title_Div>
+						<Number_Div>
+							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-2.jpg" />
+						</Number_Div>
+						<Topic_Div>
+							<Topic>Fabrication</Topic>
+						</Topic_Div>
+					</Title_Div>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingFabrication.jpg" />
+					</ImgDiv>
+					<DetailDiv>
+						<Detail>
+              Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
+						</Detail>
+					</DetailDiv>
+				</Div>
+				<Div>
+					<Title_Div>
+						<Number_Div>
+							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-3.jpg" />
+						</Number_Div>
+						<Topic_Div>
+							<Topic>Delivery/Installation</Topic>
+						</Topic_Div>
+					</Title_Div>
+					<ImgDiv>
+						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingDelivery.jpg" />
+					</ImgDiv>
+					<DetailDiv>
+						<Detail>
+               If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
+						</Detail>
+					</DetailDiv>
+				</Div>
+			</SectionDiv>
+			<SubTitle>
+				<H5>Please enter the information about your guarding needs below. Required fields are marked with an asterisk (*)</H5>
+			</SubTitle>
+			<ContactSection>
+				<ContactDiv>
+					<ContactForm text="Contact Information"/>
+				</ContactDiv>
+				<ContactDiv>
+					<ProjectForm text="Project Requirements"/>
+				</ContactDiv>
+			</ContactSection>
+		</Container>
+	)
 }

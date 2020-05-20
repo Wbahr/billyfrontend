@@ -7,11 +7,11 @@ const Container = styled.div`
   margin: 50px auto;
 `
 export default function PageContainer() {
-    return (
+	return (
    
-        <Container>
+		<Container>
             
-        </Container>
+		</Container>
      
-    )
+	)
 }

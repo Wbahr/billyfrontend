@@ -10,11 +10,11 @@ const Container = styled.div`
     flex-direction: column;
 `
 export default function News() {
-    return (
-        <>
-         <Container>
-             <Header text="News"/>
-         </Container>
-        </>
-    )
+	return (
+		<>
+			<Container>
+				<Header text="News"/>
+			</Container>
+		</>
+	)
 }

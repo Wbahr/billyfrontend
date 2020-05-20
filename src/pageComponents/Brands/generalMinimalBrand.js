@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { StyledText0 } from '../../styles/fonts'
 import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 // import AdaptallPage from './minimalBrandsPages/adaptall'
 // import AdsensPage from './minimalBrandsPages/adsens'
@@ -75,11 +74,11 @@ export default function GeneralMinimalBrand({history}) {
 	}, [page])
       
 	return(
-    <> 
-        {pageComponent}      
+		<> 
+			{pageComponent}      
   
 
-    </>
+		</>
 	)
 }
 

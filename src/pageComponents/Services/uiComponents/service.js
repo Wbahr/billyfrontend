@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const ServiceHomepageDiv = styled.div`
@@ -28,17 +27,17 @@ const ServiceName = styled.p`
     color: #555555;
 `
 export default function service(props) {
-    const {
-        text,
-    } = props
-    return (
-        <>
-            <ServiceHomepageDiv>
-                <FontAwesomeIcon icon='home' size="1x" color="#555555" />
-                <ServiceHomepage href="/services">Services &#10095; &#10095; </ServiceHomepage>
-                <EngineeredSystemHomepage href="/services/engineered-systems-and-assemblies"> Engineered Systems & Assemblies &#10095; &#10095; </EngineeredSystemHomepage>
-                <ServiceName>{props.text}</ServiceName>
-            </ServiceHomepageDiv>
-        </>
-    )
+	const {
+		text,
+	} = props
+	return (
+		<>
+			<ServiceHomepageDiv>
+				<FontAwesomeIcon icon='home' size="1x" color="#555555" />
+				<ServiceHomepage href="/services">Services &#10095; &#10095; </ServiceHomepage>
+				<EngineeredSystemHomepage href="/services/engineered-systems-and-assemblies"> Engineered Systems & Assemblies &#10095; &#10095; </EngineeredSystemHomepage>
+				<ServiceName>{text}</ServiceName>
+			</ServiceHomepageDiv>
+		</>
+	)
 }

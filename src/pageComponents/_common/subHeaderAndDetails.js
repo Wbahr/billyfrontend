@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 
 const Header = styled.div`  
@@ -13,14 +12,14 @@ const P = styled.p`
     
 `
 export default function subHeaderAndDetails(props) {
-    const {
-        text,
-        details,
-    } = props
-    return (
-        <Header>
-           <H5>{text}</H5>
-           <P>{details}</P>
-        </Header>
-    )
+	const {
+		text,
+		details,
+	} = props
+	return (
+		<Header>
+			<H5>{text}</H5>
+			<P>{details}</P>
+		</Header>
+	)
 }

@@ -18,9 +18,9 @@ export default function Auth(props) {
 	if(auth && !_.isNil(userInfo) && _.isNil(roles)){
 		// If the user is signed in and the route doesn't have role restrictions, take them to the requested page
 		return(
-      <>
-        {props.children}
-      </>
+			<>
+				{props.children}
+			</>
 		)
 	} else if (auth && _.isNil(userInfo)) {
 		// If the user isnt signed in and the route required login, take them to the login page

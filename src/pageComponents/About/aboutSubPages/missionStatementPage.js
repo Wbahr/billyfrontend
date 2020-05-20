@@ -16,14 +16,14 @@ const Img = styled.img`
     max-width: 100%;
 `
 export default class missionStatementPage extends Component {
-    render() {
-        return (
-            <MainContainer>
-                <Header text="Airline's core Values" />
-                <Img_Div>
-                    <Img src="https://www.airlinehyd.com/customer/aihyco/images/Airline-Core-Values.jpg" />
-                </Img_Div>
-            </MainContainer>
-        )
-    }
+	render() {
+		return (
+			<MainContainer>
+				<Header text="Airline's core Values" />
+				<Img_Div>
+					<Img src="https://www.airlinehyd.com/customer/aihyco/images/Airline-Core-Values.jpg" />
+				</Img_Div>
+			</MainContainer>
+		)
+	}
 }

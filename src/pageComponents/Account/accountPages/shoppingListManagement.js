@@ -26,9 +26,9 @@ export default function ShoppingListManagementPage() {
 			/>
 			{!_.isNil(null) &&
           <>
-            <p onClick={()=>handleDeleteShoppingList()}>{confirmDelete ? 'Confirm Delete?' : 'Delete this Shopping List'}</p>
-            <button>Copy to Cart</button>
-            <button>Share</button>
+          	<p onClick={()=>handleDeleteShoppingList()}>{confirmDelete ? 'Confirm Delete?' : 'Delete this Shopping List'}</p>
+          	<button>Copy to Cart</button>
+          	<button>Share</button>
           </>
 			}
 		</div>

@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 export default function ElectricalComponents() {
-    return (
-        <div>
+	return (
+		<div>
             
-        </div>
-    )
+		</div>
+	)
 }
