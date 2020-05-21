@@ -46,13 +46,13 @@ export function ShipToForm(props) {
 		if(value !== -1){
 			let index = checkoutDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
 			setFieldValue(name, value)
-			setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].mailCountry.toLowerCase())
+			setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].physCountry.toLowerCase())
 			setFieldValue('shipto.companyName', checkoutDropdownData.shipToAddresses[index].companyName)
-			setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].mailAddress1)
-			setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].mailAddress2)
-			setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].mailCity)
-			setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].mailState)
-			setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].mailPostalCode)
+			setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].physAddress1)
+			setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].physAddress2)
+			setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].physCity)
+			setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].physState)
+			setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].physPostalCode)
 			setFieldValue('shipto.saveShipTo',0) //If not a custom ship to, we can't save it so set this to false 0.
 			if(_.isNil(checkoutDropdownData.shipToAddresses[index].collectNumberUps)){
 				setFieldValue('shipto.isCollect', 0)

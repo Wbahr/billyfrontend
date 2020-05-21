@@ -186,6 +186,8 @@ export default function Provider(props) {
 			if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
 				props.history.push('/')
 			}
+			setItemDetailCache([])
+			setOrdersCache([])
 			setImpersonatedCompanyInfo(impersonationInfo)
 			currentUserType = 'Impersonator'
 			break
@@ -195,9 +197,11 @@ export default function Provider(props) {
 			setUserInfo(userInfo)
 			setImpersonatedCompanyInfo(null)
 			currentUserType = 'AirlineEmployee'
+			setItemDetailCache([])
 			setOrdersCache([])
 			break
 		case 'login':
+			setItemDetailCache([])
 			setUserInfo(userInfo)
 			currentUserType = userInfo.role
 			break
