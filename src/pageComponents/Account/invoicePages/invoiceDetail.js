@@ -64,10 +64,20 @@ export default function InvoiceDetail({ history, invoiceId }) {
 		shipToAddress3,
 		shipToCity,
 		shipToState,
-		shipToZip
+		shipToZip,
+		lineItems
 	} = data
 
-	let itemDetails
+	let itemDetails = _.map(lineItems, item => {
+		<div>
+			<div>
+				{item.itemDescription}
+			</div>
+			<div>
+				
+			</div>
+		</div>
+	})
 	return(
 		<div>
 			<DivHeader>

@@ -91,6 +91,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
 				<WrapperRoute exact path='/about/:page' component={About} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/account/:page/:orderId' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/apps' component={Apps} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
