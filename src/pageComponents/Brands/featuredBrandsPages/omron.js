@@ -242,18 +242,18 @@ const BannerImg = styled.img`
 const ShowMoreBtn1 = styled.button`
   font-size: 14px;
   border: none;
-  border-radius:2em;
+	border-radius:2em;
   padding: 4px 10px;
-  margin: 0 auto;
+	margin: 0 auto;
   outline: none;
   background-color: #f2f3f4;
 `
 const ShowMoreBtn2 = styled.button`
   font-size: 14px;
-  border: none;
-  border-radius:2em;
+	border: none;	
+	border-radius:2em;
   padding: 4px 10px;
-  margin: 0 auto;
+	margin: 0 auto;
   outline: none;
   background-color: #f2f3f4;
 `

@@ -1,7 +1,5 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import EatonImg from '../../../imgs/homepage/Eaton.png'
@@ -202,9 +200,9 @@ const ArticlesContentDetails = styled.p`
 const ShowMoreBtn1 = styled.button`
   font-size: 14px;
   border: none;
-  border-radius:2em;
+	border-radius:2em;
   padding: 4px 10px;
-  margin: 0 auto;
+	margin: 0 auto;
   outline: none;
   background-color: #f2f3f4;
 `

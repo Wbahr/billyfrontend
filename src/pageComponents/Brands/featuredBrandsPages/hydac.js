@@ -185,9 +185,9 @@ const BannerImg = styled.img`
 const ShowMoreBtn1 = styled.button`
 	font-size: 14px;
 	border: none;
-  border-radius: 2px;
+	border-radius: 2px;
 	padding: 4px 10px;
-  margin: 0 auto;
+	margin: 0 auto;
 	outline: none;
 	background-color: #f2f3f4;
 `

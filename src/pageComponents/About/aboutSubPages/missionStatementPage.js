@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Header from '../uiComponents/Header'
 
 const MainContainer = styled.div`

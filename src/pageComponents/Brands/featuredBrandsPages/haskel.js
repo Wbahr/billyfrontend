@@ -1,9 +1,6 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Container = styled.div`
   display: flex;
@@ -128,21 +125,6 @@ const LinkStyle = styled.a`
     text-decoration: none;
   }
  `
-const VideoDiv = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin-bottom: 30px;
-  flex-direction:s
-  margin: 0 auto;
-  position: relative;
-  justify-content: space-between;
-`
-const ArticlesVideo = styled.iframe`
-  width: 450px;
-  height: 250px;
-  margin: 0 15px 0 15px;
-`
 const ArticlesContentDiv = styled.div`
   margin-left: 20px;
   text-align: center;
@@ -202,9 +184,9 @@ const ArticlesContentDetails = styled.p`
 const ShowMoreBtn1 = styled.button`
   font-size: 14px;
   border: none;
-  border-radius:2em;
+	border-radius:2em;
   padding: 4px 10px;
-  margin: 0 auto;
+	margin: 0 auto;
   outline: none;
   background-color: #f2f3f4;
 `
@@ -249,12 +231,6 @@ const ArticlesDiv = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-`
-const Video = styled.div`
-  display: flex;
-  flex: 1;
-  max-width: 380px;
-  height: 250px;
 `
 export default function Haskel() {
 	const [showText1, setShowText1] = useState(false)

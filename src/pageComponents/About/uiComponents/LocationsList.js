@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -32,8 +32,7 @@ export default function LocationsList(props) {
 		city,
 		address,
 		phone,
-		fax,
-		tollFree,
+		fax
 	} = props
 	return (
 		<ListDiv>

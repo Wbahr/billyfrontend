@@ -15,65 +15,10 @@ import ProcessControl from './shopSubPages/processControl'
 import Winches from './shopSubPages/winchesAndGearDrives'
 import ProductSpotlights from './shopSubPages/productSpotlights'
 
-export default function ShopPage({ history }) {
+export default function ShopPage() {
 	const [pageComponent, setPageComponent] = useState()
 	let { page } = useParams()
 
-	const shopPages = [
-		{
-			'label': 'All Categories',
-			'page': 'all-categories'
-		},
-		{
-			'label': 'Aluminum Structural Framing',
-			'page': 'aluminum-structural-framing'
-		},
-		{
-			'label': 'Automation & Control',
-			'page': 'automation-and-control'
-		},
-		{
-			'label': 'Electrical Components',
-			'page': 'electrical-components'
-		},
-		{
-			'label': 'Hose & Connectors',
-			'page': 'hose-and-connectors'
-		},
-		{
-			'label': 'Hydraulic Components',
-			'page': 'hydraulic-components'
-		},
-		{
-			'label': 'Liquid & Gas Pressure',
-			'page': 'liquid-and-gas-pressure'
-		},
-		{
-			'label': 'Lubrication',
-			'page': 'lubrication'
-		},
-		{
-			'label': 'Machine Safety',
-			'page': 'machine-safety'
-		},
-		{
-			'label': 'Pneumatic Components',
-			'page': 'pneumatic-components'
-		},
-		{
-			'label': 'Process Control & Components',
-			'page': 'process-control-and-components'
-		},
-		{
-			'label': 'Winches & Gear Drives',
-			'page': 'winches-and-gear-drives'
-		},
-		{
-			'label': 'Product Spotlights',
-			'page': 'product-spotlights'
-		}
-        
-	]
 	useEffect(() => {
 		if (page === 'all-categories') {
 			setPageComponent(<AllCategories />)
@@ -123,6 +68,7 @@ export default function ShopPage({ history }) {
 		</>
 	)
 }
+
 ShopPage.propTypes = {
 	history: PropTypes.object.isRequired
 }

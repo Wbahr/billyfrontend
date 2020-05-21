@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import FeaturedBrandLogo from '../uiComponents/FeaturedBrandLogo'
 import H1 from '../uiComponents/H1'

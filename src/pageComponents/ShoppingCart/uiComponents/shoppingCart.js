@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Context from '../../../config/context'
@@ -51,17 +51,6 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
-const DivShoppingCartCol = styled.div`
-	display: flex;
-	flex-direction: column;
-`
-
-const DivOrderTotalCol = styled.div`
-	display: flex;
-	flex-direction: column;
-`
-
-
 export default function ShoppingCart({showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
 	const [savedCart, setSavedCart] = useState(false)
 	const context = useContext(Context)
@@ -79,7 +68,7 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 					let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
 					return(
 						<Draggable key={index} draggableId={String(index)} index={index}>
-							{(provided, snapshot) => (
+							{(provided) => (
 								<div
 									ref={provided.innerRef}
 									{...provided.draggableProps}
@@ -153,7 +142,7 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 			</Div>
 			<DragDropContext onDragEnd={(result)=>onDragEnd(result)}>
 				<Droppable  droppableId="droppable">
-					{(provided, snapshot) => (
+					{(provided) => (
 						<div
 							{...provided.droppableProps}
 							ref={provided.innerRef}

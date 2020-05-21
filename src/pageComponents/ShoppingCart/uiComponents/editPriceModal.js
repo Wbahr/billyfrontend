@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import _ from 'lodash'
+import React, { useState, useEffect } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import Context from '../../../config/context'
