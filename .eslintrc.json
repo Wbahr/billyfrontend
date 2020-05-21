@@ -18,6 +18,9 @@
         "react"
     ],
     "rules": {
+				"linebreak-style": [
+						"off"
+				],
 				"no-unused-vars": [
 						"error", 
 						{ "vars": "local" }
@@ -25,9 +28,6 @@
         "indent": [
             "error",
             "tab"
-        ],
-        "linebreak-style": [
-            "off"
         ],
         "quotes": [
             "error",

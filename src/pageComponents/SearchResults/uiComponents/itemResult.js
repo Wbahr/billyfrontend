@@ -200,6 +200,9 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 					}}>{result.item_desc}</PpartTitle>
 				</DivPartDetails>
 				<DivPartNumberRow>
+					<PpartAvailability>Item Id: {result.item_id}</PpartAvailability>
+				</DivPartNumberRow>
+				<DivPartNumberRow>
 					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
 				</DivPartNumberRow>
 				<DivPartNumberRow>
