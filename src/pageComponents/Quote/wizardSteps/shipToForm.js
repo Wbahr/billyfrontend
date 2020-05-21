@@ -32,6 +32,10 @@ const ContactSection = styled.div`
 	padding: 8px 0;
 `
 
+const SavedContactDiv = styled.div`
+	margin-left: 8px;
+`
+
 export function ShipToForm(props) {
 	const {
 		values, 
@@ -106,11 +110,6 @@ export function ShipToForm(props) {
 			setFieldValue('contact.phone', '')
 		}
 	}
-	
-	function handleContactChange(name, value){
-		setFieldValue(name, value)
-		setFieldValue('contact.savedContact', -1)
-	}
 
 	return (
 		<WrapForm>
@@ -128,12 +127,13 @@ export function ShipToForm(props) {
 									placeholder="Select an Order Contact"
 									changeFunction={handleSavedContactSelectChange}
 								/> 
-								{values.contact.savedContact !== '' &&
+								{values.contact.savedContact !== null &&
 									<>
-										<FormikInput label="Order Contact First Name*" name="contact.firstName" changeFunction={handleContactChange}/>
-										<FormikInput label="Order Contact Last Name*" name="contact.lastName" changeFunction={handleContactChange}/>
-										<FormikInput label="Order Contact Phone*" name="contact.phone" changeFunction={handleContactChange}/>
-										<FormikInput label="Order Contact Email*" name="contact.email" changeFunction={handleContactChange}/>
+										<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact First Name*" name="contact.firstName"/>
+										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Last Name*" name="contact.lastName"/>
+										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Phone*" name="contact.phone"/>
+										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Email*" name="contact.email"/>
+										{values.contact.savedContact !== -1 && <SavedContactDiv>Need to change your Saved Contact info? <a href={`https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`} target="_blank" rel="noopener noreferrer">Click here</a> - then refresh this page.</SavedContactDiv>}
 									</>
 								}
 							</ContactSection>
