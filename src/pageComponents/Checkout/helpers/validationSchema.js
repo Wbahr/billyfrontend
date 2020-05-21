@@ -78,13 +78,17 @@ export const billToSchema = object({
 			.max(20)
 			.required(),
 		firstName: string()
-			.min(3)
-			.max(50)
-			.required(),
+			.when('paymentMethod', {
+				is: 'purchase_order',
+				then: string().min(3).max(50).required(),
+				otherwise: string().min(3).max(50)
+			}),
 		lastName: string()
-			.min(3)
-			.max(50)
-			.required(),
+			.when('paymentMethod', {
+				is: 'purchase_order',
+				then: string().min(3).max(50).required(),
+				otherwise: string().min(3).max(50)
+			}),
 		address1: string()
 			.min(5)
 			.max(256)
