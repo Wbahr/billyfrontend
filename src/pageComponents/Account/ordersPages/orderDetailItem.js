@@ -179,6 +179,7 @@ export default function OrderDetailItem({ item }) {
 	const [quantity, setQuantity] = useState('1')
 	const context = useContext(Context)
 
+	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid)
 	let imagePath
 	let resultImage = _.get(displayItem,'itemDetails.image[0].path',null)
 	if (_.isNil(resultImage)){
