@@ -457,7 +457,7 @@ export default function HeaderComponent(props) {
 										'link': '/about/our-history'
 									},
 									{
-										'label': 'Mission/vision Statement',
+										'label': 'Our Mission',
 										'link': '/about/mission-statement'
 									}
 								]}

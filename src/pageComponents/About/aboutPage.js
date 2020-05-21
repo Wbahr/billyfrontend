@@ -14,41 +14,6 @@ export default function AboutPage() {
 	const [pageComponent, setPageComponent] = useState()
 	let { page } = useParams()
 
-	const aboutPages = [
-		{
-			'label': 'Locations',
-			'page': 'locations'
-		},
-		{
-			'label': 'News',
-			'page': 'news'
-		},
-		{
-			'label': 'Quality Policy',
-			'page': 'quality-policy'
-		},
-		{
-			'label': 'Transactional Services',
-			'page': 'transactional-services'
-		},
-		{
-			'label': 'Mission/vision Statement',
-			'page': 'mission-statement'
-		},
-		{
-			'label': 'Careers',
-			'page': 'careers'
-		},
-		{
-			'label': 'Events',
-			'page': 'events'
-		},
-		{
-			'label': 'Our History',
-			'page': 'our-history'
-		}
-        
-	]
 	useEffect(() => {
 		if (page === 'locations') {
 			setPageComponent(<Locations />)

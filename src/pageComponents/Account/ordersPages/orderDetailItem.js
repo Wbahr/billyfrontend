@@ -19,7 +19,6 @@ const DivContainer = styled.div`
 
 const DivRow = styled.div`
 		display: flex;
-		margin-top: 8px;
 	`
 
 const DivItem = styled.div`
@@ -180,7 +179,6 @@ export default function OrderDetailItem({ item }) {
 	const [quantity, setQuantity] = useState('1')
 	const context = useContext(Context)
 
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.freqno)
 	let imagePath
 	let resultImage = _.get(displayItem,'itemDetails.image[0].path',null)
 	if (_.isNil(resultImage)){
@@ -221,8 +219,9 @@ export default function OrderDetailItem({ item }) {
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
 				<DivCol3>
-					<p>Quantity:</p>
-					<Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/>
+					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
+					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
+					<DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/></DivRow>
 					<Context.Consumer>
 						{({addItem}) => (
 							<ButtonSmall onClick={()=>{
@@ -241,9 +240,3 @@ export default function OrderDetailItem({ item }) {
 		</DivContainer>
 	)
 }
-
-{/* <DivQuantity>
-<DivItem>
-	<Label>Qty:</Label>
-</DivItem>
-</DivQuantity> */}
