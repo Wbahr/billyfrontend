@@ -9,6 +9,7 @@ const FramingDiv = styled.a`
 		align-items: center;
     &:hover{
 			transform: scale(1.1);
+			transition: transform 400ms;
     }
 `
 const P = styled.p`

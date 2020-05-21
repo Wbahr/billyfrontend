@@ -17,8 +17,10 @@ const DetailDiv = styled.div`
 const Detail = styled.p`
     font-size: 13px;
 `
-const Span = styled.span`
-    font-weight: bold;
+const Span = styled.p`
+		font-weight: bold;
+		margin-bottom: 5px;
+		font-size: 13px;
 `
 export default function serviceLayout(props) {
 	const {
@@ -32,7 +34,8 @@ export default function serviceLayout(props) {
 				<div>
 					<Img src={src} />
 					<DetailDiv>
-						<Detail><Span>{title} </Span> {text}</Detail>
+						<Span>{title} </Span>
+						<Detail> {text}</Detail>
 					</DetailDiv>
 				</div>
 			</Div>
