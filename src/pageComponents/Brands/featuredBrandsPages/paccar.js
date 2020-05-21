@@ -1,7 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import FeaturedBrandLogo from '../uiComponents/FeaturedBrandLogo'
 import H1 from '../uiComponents/H1'
 import BrandDetail from '../uiComponents/BrandDetail'

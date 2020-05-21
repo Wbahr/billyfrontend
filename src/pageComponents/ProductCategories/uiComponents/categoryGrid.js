@@ -11,12 +11,10 @@ const DivContainer = styled.div`
 	flex-wrap: wrap;
 	max-width: 1200px;
 `
-
 const DivRow = styled.div`
 	display: flex;
 	width: 100%;
 `
-
 const GET_CATEGORY_SEARCH = gql`
 	{
 		getAllParentCategories {

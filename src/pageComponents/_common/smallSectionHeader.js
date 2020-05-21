@@ -8,16 +8,11 @@ const Div = styled.div`
   width: 100%;
 //   border-bottom: 1px solid #ccc;
   margin: 30px 0 20px ;
-  
 `
-
 const StyledHeaderDiv = styled.div`
 //    border-bottom: 3px solid #DB1633;
    width: max-content;
-   
-}
-
-
+ 
 `
 
 class smallSectionHeader extends React.Component {

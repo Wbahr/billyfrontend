@@ -245,7 +245,7 @@ export default function HeaderComponent(props) {
 								options={[
 									{
 										'label': 'All Brands',
-										'link': '/brands'
+										'link': '/shop/all-categories'
 									},
 									{
 										'label': 'ABB',
@@ -265,16 +265,20 @@ export default function HeaderComponent(props) {
 							<Dropdown open={showDropdown.services} history={props.history}
 								options={[
 									{
-										'label': 'All Brands',
-										'link': '/brands'
+										'label': 'Arc Flash Safety',
+										'link': '/services/plant-services/arc-flash-safety'
 									},
 									{
-										'label': 'ABB',
-										'link': '/brands/featured/abb'
+										'label': 'Machine Safeguarding',
+										'link': '/services/plant-services/machine-safeguarding'
 									},
 									{
-										'label': 'Aventics',
-										'link': '/brands/featured/aventics'
+										'label': 'Fluid Cleanliness & Maintenance/Preventive Maintenance',
+										'link': '/services/plant-services/fluid-cleanliness-and-maintenance'
+									},
+									{
+										'label': 'Engineered Systems & Assemblies',
+										'link': '/services/engineered-systems-and-assemblies'
 									}
 								]}
 							/>
@@ -404,12 +408,16 @@ export default function HeaderComponent(props) {
 										'link': '/blog'
 									},
 									{
-										'label': 'FAQ',
-										'link': '/resources/faq'
+										'label': 'Knowledge Center & FAQ',
+										'link': '/knowledge-center-and-faq'
 									},
 									{
 										'label': 'Line Cards & Brochures',
 										'link' : '/linecards'
+									},
+									{
+										'label': 'Apps',
+										'link' : '/apps'
 									}
 								]}
 							/>
@@ -442,14 +450,14 @@ export default function HeaderComponent(props) {
 									},
 									{
 										'label': 'Quality Policy',
-										'link': '/about/featured/aventics'
+										'link': '/about/quality-policy'
 									},
 									{
 										'label': 'Our History',
 										'link': '/about/our-history'
 									},
 									{
-										'label': 'Mission Statement',
+										'label': 'Mission/vision Statement',
 										'link': '/about/mission-statement'
 									}
 								]}

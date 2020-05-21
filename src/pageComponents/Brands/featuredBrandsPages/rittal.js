@@ -88,7 +88,6 @@ export default function Rittal() {
 					title="Interface Technology and Switching Devicess"
 					reverse
 				/>
-			 
 				<SectionHeader
 					text="Articles & Videos" />
 				<ArticlesDiv>

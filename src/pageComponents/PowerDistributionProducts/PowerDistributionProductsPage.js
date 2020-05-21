@@ -1,53 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import RittalLogo from '../../imgs/PowerDistributionPage/rittal-logo.jpg'
-import Food from '../../imgs/powerDistributionPage/food and bev.png'
-import PowerGeneration from '../../imgs/powerDistributionPage/power generation.png'
-import OEMDrives from '../../imgs/powerDistributionPage/OEM drives.jpg'
-import GeneralPurpose from '../../imgs/powerDistributionPage/General purpose drives.jpg'
-import HVAC from '../../imgs/powerDistributionPage/HVAC drives.jpg'
-import StandardEnclosed from '../../imgs/powerDistributionPage/Standard enclosed drives.jpg'
-import FlexCenter from '../../imgs/powerDistributionPage/Flex Center.jpg'
-import AdvancedVFD from '../../imgs/powerDistributionPage/Advanced VFD solutions.jpg'
-import XTContactor from '../../imgs/powerDistributionPage/XT contactors.jpg'
-import XTManual from '../../imgs/powerDistributionPage/XT manual motor.jpg'
-import EMS from '../../imgs/powerDistributionPage/EMS.jpg'
-import NEMA from '../../imgs/powerDistributionPage/NEMA power control.jpg'
-import PowerControl from '../../imgs/powerDistributionPage/Specialty power control.jpg'
-import SolidState from '../../imgs/powerDistributionPage/Solid-state.jpg'
-import MotorProtection from '../../imgs/powerDistributionPage/Motor protection.jpg'
-import Enclosed from '../../imgs/powerDistributionPage/Enclosed control1.jpg'
-import Aftermarke from '../../imgs/powerDistributionPage/Aftermarket.jpg'
-import Industrial from '../../imgs/powerDistributionPage/Industrial relays.jpg'
-import Programmable from '../../imgs/powerDistributionPage/Programmable.jpg'
-import Operator from '../../imgs/powerDistributionPage/Operator interface.jpg'
-import Intelligent from '../../imgs/powerDistributionPage/Intelligent wiring solutions.jpg'
-import SafetyProducts from '../../imgs/powerDistributionPage/Safety products.jpg'
-import TerminalBlocks from '../../imgs/powerDistributionPage/Terminal blocks.jpg'
-import PilotDevices from '../../imgs/powerDistributionPage/Pilot devices.jpg'
-import ControlStations from '../../imgs/powerDistributionPage/Control stations.jpg'
-import ControlPower from '../../imgs/powerDistributionPage/Control power.jpg'
-import Sensors from '../../imgs/powerDistributionPage/Sensors.jpg'
-import SignalTowers from '../../imgs/powerDistributionPage/Signal towers.jpg'
-import PowerDefense from '../../imgs/powerDistributionPage/Power Defense.jpg'
-import Bussmann from '../../imgs/powerDistributionPage/Bussmann.jpg'
-import Distribution from '../../imgs/powerDistributionPage/Distribution Transformers.jpg'
-import LVMedium from '../../imgs/powerDistributionPage/LV medium-low-voltage.jpg'
-import LvMotorControl from '../../imgs/powerDistributionPage/LV motor control.jpg'
-import LvDrive from '../../imgs/powerDistributionPage/LV Drive.jpg'
-import LvCapacitor from '../../imgs/powerDistributionPage/LV capacitor banks.jpg'
-import LvEHouse from '../../imgs/powerDistributionPage/LV house.jpg'
-import Wallmount from '../../imgs/powerDistributionPage/Wallmount.jpg'
-import Freestanding from '../../imgs/powerDistributionPage/Freestanding.jpg'
-import Floormount from '../../imgs/powerDistributionPage/Floormount Disconnect.jpg'
-import Fan from '../../imgs/powerDistributionPage/Fan.jpg'
-import Roofmount from '../../imgs/powerDistributionPage/Roofmount Air Conditioner.jpg'
-import PushButton from '../../imgs/powerDistributionPage/Push Button Box.jpg'
-import WallmountAir from '../../imgs/powerDistributionPage/Wallmount Air Conditioner.jpg'
-import Hygienic from '../../imgs/powerDistributionPage/Hygienic Design.jpg'
-import Modular from '../../imgs/powerDistributionPage/Modular Enclosures.jpg'
-import HMI from '../../imgs/powerDistributionPage/HMI.png'
 
 const Container = styled.div`
     display: flex;
@@ -59,7 +11,7 @@ const FeaturedBrandLogo = styled.div`
     width: 100%;
     justify-content: center;
     padding: 200px 0;
-    background-image: url('https://media.istockphoto.com/photos/fiberglass-production-industry-equipment-at-manufacture-background-picture-id1130458099?s=2048x2048');
+    background-image: url('https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/power-distribution2.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -142,7 +94,6 @@ const IndustryCol = styled.div`
     display: flex;
     flex-direction: column;
     margin: 0 20px;
-
 `
 const IndustryImgDiv = styled.div`
     width: 250px;
@@ -235,8 +186,6 @@ const LogoText = styled.p`
     color: #B51F2B;
     font-weight: bold;
 `
-const BtnDiv = styled.div`
-`
 const LogoBtn = styled.button`
     background-color: #246696;
     color: white;
@@ -246,12 +195,38 @@ const LogoBtn = styled.button`
 `
 const InfoDiv = styled.div`
     display: flex;
-    margin: 20px 0 80px;
+    margin: 20px 0 50px;
+`
+const ServiceSection = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+const ServiceMainDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+`
+const Services = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    margin: 0 20px;
+    font-size: 14px;
+`
+const ServiceName = styled.p`
+    margin-bottom: 5px;
+    font-weight: bold;
+`
+const SubText = styled.p`
+    text-align: center;
+    font-weight: bold;
+    color: #133752;
+    font-size: 25px;
+    margin-bottom: 0;
 `
 
 export default function PowerDistributionProducts() {
 	return (
-
 		<Container>
 			<FeaturedBrandLogo>
 			</FeaturedBrandLogo>
@@ -267,12 +242,12 @@ export default function PowerDistributionProducts() {
 						<LogoDiv>
 							<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
 							<LogoText>Interested in Eaton?</LogoText>
-							<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+							<div><LogoBtn>Request more information</LogoBtn></div>
 						</LogoDiv>
 						<LogoDiv>
-							<BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
+							<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
 							<LogoText>Interested in Rittal?</LogoText>
-							<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+							<div><LogoBtn>Request more information</LogoBtn></div>
 						</LogoDiv>
 					</DistributorDetails>
 				</BrandDiv>
@@ -298,7 +273,7 @@ export default function PowerDistributionProducts() {
 						</IndustryCol>
 						<IndustryCol>
 							<IndustryImgDiv>
-								<IndustryImg src={PowerGeneration} />
+								<IndustryImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Power%20Generation.png" />
 							</IndustryImgDiv>
 							<IndustryTextDiv>
 								<IndustryText>Power Generation</IndustryText>
@@ -306,7 +281,7 @@ export default function PowerDistributionProducts() {
 						</IndustryCol>
 						<IndustryCol>
 							<IndustryImgDiv>
-								<IndustryImg src={Food} />
+								<IndustryImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/food%20and%20bev.png" />
 							</IndustryImgDiv>
 							<IndustryTextDiv>
 								<IndustryText>Food & Beverage</IndustryText>
@@ -332,7 +307,7 @@ export default function PowerDistributionProducts() {
 				<ProductSection>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={OEMDrives} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/OEM%20drives.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>OEM drives</ProductHeader>
@@ -344,7 +319,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={GeneralPurpose} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/General%20purpose%20drives.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>General purpose drives</ProductHeader>
@@ -356,7 +331,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={HVAC} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/HVAC%20drives.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>HVAC drives</ProductHeader>
@@ -368,7 +343,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={StandardEnclosed} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Wallmount.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Wallmount Enclosures</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>NEMA protection ratings are ensured through a secure locking system, foamed-in-place gasket and knife edge perimeter. Features include a body constructed of cold rolled steel, steel doors and zinc-plated mounting panels.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Standard%20enclosed%20drives.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Standard enclosed drives</ProductHeader>
@@ -380,7 +367,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={FlexCenter} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Freestanding.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Freestanding Enclosures</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Select from raised and removable 12" floor mounts or freestanding enclosures with or without base/plinth panels.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Flex%20Center.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Flex Center</ProductHeader>
@@ -392,7 +391,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={AdvancedVFD} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Advanced%20VFD%20solutions.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Advanced VFD solutions</ProductHeader>
@@ -404,7 +403,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={XTContactor} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20contactors.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>XT contactors and starters</ProductHeader>
@@ -416,7 +415,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={XTManual} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/XT%20manual%20motor.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>XT manual motor protectors and combination motor controllers</ProductHeader>
@@ -428,7 +427,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={EMS} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/EMS.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Electronic motor starters (EMS)</ProductHeader>
@@ -440,7 +439,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={NEMA} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Floormount%20Disconnect.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Floormount Disconnect Enclosures</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>These enclosures provide personnel safety, protect electrical components and support the addition of a flange-mounted disconnect handle.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/NEMA%20power%20control.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>NEMA power control</ProductHeader>
@@ -452,7 +463,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={PowerControl} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Specialty%20power%20control.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Specialty power control</ProductHeader>
@@ -464,7 +475,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={SolidState} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Fan.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Fans</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Rittal filter fans are adaptable with filter blankets, hoods and louvers.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Solid-state.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Solid-state starters (soft starters)</ProductHeader>
@@ -476,7 +499,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={MotorProtection} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Motor%20protection.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Motor protection</ProductHeader>
@@ -488,7 +511,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Enclosed} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Enclosed%20control.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Enclosed control</ProductHeader>
@@ -500,7 +523,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Aftermarke} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Roofmount%20Air%20Conditioner.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Roofmount & Wallmount Air conditioners</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails> Rittal’s roof-mounted cooling units ensures doors, side panels and escape routes are kept free. Electrical condensate evaporation, nano-coated condenser.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Aftermarket.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Aftermarket and renewal parts</ProductHeader>
@@ -512,7 +547,19 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Industrial} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Push%20Button%20Box.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Push Button Boxes</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>The NEMA rated PB series pushbutton box enclosure is designed for indoor use to house pushbuttons, selector switches, and pilot lights. This enclosure protects equipment from dirt, dust, sprayed water, oil, and coolants.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Industrial%20relays.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Industrial relays</ProductHeader>
@@ -536,7 +583,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Operator} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Operator%20interface.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Operator interface</ProductHeader>
@@ -548,7 +595,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Intelligent} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Intelligent%20wiring%20solutions.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Intelligent wiring solutions</ProductHeader>
@@ -560,247 +607,7 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={SafetyProducts} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Safety products</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Created to enhance machine operator safety and machine motor control.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={TerminalBlocks} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Terminal blocks</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Built for years of use under demanding conditions, these terminal blocks are available in three simple and reliable terminal connection styles with universal accessories.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={PilotDevices} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Pilot devices</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Available in many shapes and sizes, these versatile pilot devices are ideal for applications in the North American (NEMA) and global (IEC) markets.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={ControlStations} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Control stations</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>General purpose and heavy-duty options with fixed element or modular design to suit virtually any industrial or commercial application.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={ControlPower} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Control power</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Wide selection of durable and reliable DIN rail power supplies, available in 12 and 24 Vdc, for general, compact and low-profile applications.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Sensors} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Sensors and limit switches</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Sensing option for many applications—from rugged, mechanically actuated switches to sophisticated, noncontact, sensing solutions.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={SignalTowers} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Signal towers</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Provide highly versatile, completely modular signaling for key processes—and with IP66 protection, these signal towers thrive indoors and out.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={PowerDefense} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Power Defense circuit breakers</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Eaton’s globally rated Power Defense circuit breakers increase personnel safety and provide a foundation for IoT, with embedded communications and metering functionality, helping to optimize your facility’s performance.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Bussmann} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Bussmann® series fuses, blocks, holders and disconnect switches</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Eaton develops and manufactures Bussmann series fusible circuit protection, power management and electrical safety products for industrial, commercial and alternative energy markets.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Distribution} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Power and distribution transformers and busway</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails></ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Request a quote</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={LVMedium} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Medium- and low-voltage switchgear</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails></ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Request a quote</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={LvMotorControl} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Medium- and low-voltage motor control centers</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails></ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Request a quote</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={LvDrive} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Medium- and low-voltage drives</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails></ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Request a quote</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Wallmount} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Wallmount Enclosures</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>NEMA protection ratings are ensured through a secure locking system, foamed-in-place gasket and knife edge perimeter. Features include a body constructed of cold rolled steel, steel doors and zinc-plated mounting panels.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Freestanding} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Freestanding Enclosures</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Select from raised and removable 12" floor mounts or freestanding enclosures with or without base/plinth panels.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Floormount} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Floormount Disconnect Enclosures</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>These enclosures provide personnel safety, protect electrical components and support the addition of a flange-mounted disconnect handle.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Fan} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Fans</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Rittal filter fans are adaptable with filter blankets, hoods and louvers.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Roofmount} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Roofmount Air Conditioners</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails> Rittal’s roof-mounted cooling units ensures doors, side panels and escape routes are kept free. Electrical condensate evaporation, nano-coated condenser.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={PushButton} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Push Button Boxes</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>The NEMA rated PB series pushbutton box enclosure is designed for indoor use to house pushbuttons, selector switches, and pilot lights. This enclosure protects equipment from dirt, dust, sprayed water, oil, and coolants.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={WallmountAir} />
-						</ProductImgDiv>
-						<ProductHeaderDiv>
-							<ProductHeader>Wallmount Air Conditioner</ProductHeader>
-						</ProductHeaderDiv>
-						<ProductDetailsDiv>
-							<ProductDetails>Rittal’s wallmount cooling units can be externally or internally mounted in doors and walls using standardized cut-outs.</ProductDetails>
-						</ProductDetailsDiv>
-						<ProductBtn>Shop products</ProductBtn>
-					</ProductDiv>
-					<ProductDiv>
-						<ProductImgDiv>
-							<ProductImg src={Hygienic} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Hygienic%20Design.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Hygienic Design Enclosures</ProductHeader>
@@ -812,7 +619,55 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={Modular} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Safety%20products.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Safety products</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Created to enhance machine operator safety and machine motor control.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Terminal%20blocks.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Terminal blocks</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Built for years of use under demanding conditions, these terminal blocks are available in three simple and reliable terminal connection styles with universal accessories.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Pilot%20devices.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Pilot devices</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Available in many shapes and sizes, these versatile pilot devices are ideal for applications in the North American (NEMA) and global (IEC) markets.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Control%20stations.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Control stations</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>General purpose and heavy-duty options with fixed element or modular design to suit virtually any industrial or commercial application.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Modular%20Enclosures.jpg" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>Modular Enclosures</ProductHeader>
@@ -824,7 +679,79 @@ export default function PowerDistributionProducts() {
 					</ProductDiv>
 					<ProductDiv>
 						<ProductImgDiv>
-							<ProductImg src={HMI} />
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Control%20power.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Control power</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Wide selection of durable and reliable DIN rail power supplies, available in 12 and 24 Vdc, for general, compact and low-profile applications.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Sensors.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Sensors and limit switches</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Sensing option for many applications—from rugged, mechanically actuated switches to sophisticated, noncontact, sensing solutions.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Signal%20towers.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Signal towers</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Provide highly versatile, completely modular signaling for key processes—and with IP66 protection, these signal towers thrive indoors and out.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Power%20Defense.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Power Defense circuit breakers</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Eaton’s globally rated Power Defense circuit breakers increase personnel safety and provide a foundation for IoT, with embedded communications and metering functionality, helping to optimize your facility’s performance.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/Bussmann.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Bussmann® series fuses, blocks, holders and disconnect switches</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails>Eaton develops and manufactures Bussmann series fusible circuit protection, power management and electrical safety products for industrial, commercial and alternative energy markets.</ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/distribution%20transformers.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Power and distribution transformers and busway</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails></ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Request a quote</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/HMI.png" />
 						</ProductImgDiv>
 						<ProductHeaderDiv>
 							<ProductHeader>HMI Arm Enclosures</ProductHeader>
@@ -833,6 +760,42 @@ export default function PowerDistributionProducts() {
 							<ProductDetails>Rittal offers HMI solutions for all types of applications: Pendant arm systems, PC enclosures, industrial workstations and consoles. All designed for user efficiency.</ProductDetails>
 						</ProductDetailsDiv>
 						<ProductBtn>Shop products</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20medium-low-voltage.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Medium- and low-voltage switchgear</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails></ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Request a quote</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20motor%20control.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Medium- and low-voltage motor control centers</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails></ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Request a quote</ProductBtn>
+					</ProductDiv>
+					<ProductDiv>
+						<ProductImgDiv>
+							<ProductImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/LV%20Drive.jpg" />
+						</ProductImgDiv>
+						<ProductHeaderDiv>
+							<ProductHeader>Medium- and low-voltage drives</ProductHeader>
+						</ProductHeaderDiv>
+						<ProductDetailsDiv>
+							<ProductDetails></ProductDetails>
+						</ProductDetailsDiv>
+						<ProductBtn>Request a quote</ProductBtn>
 					</ProductDiv>
 				</ProductSection>
 
@@ -846,17 +809,128 @@ export default function PowerDistributionProducts() {
 					<LogoDiv>
 						<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" /></BannerDiv>
 						<LogoText>Interested in Eaton?</LogoText>
-						<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+						<div><LogoBtn>Request more information</LogoBtn></div>
 					</LogoDiv>
 					<LogoDiv>
-						<BannerDiv><BannerImg src={RittalLogo} /></BannerDiv>
+						<BannerDiv><BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/powerDistributionPage/rittal-logo.jpg" /></BannerDiv>
 						<LogoText>Interested in Rittal?</LogoText>
-						<BtnDiv><LogoBtn>Request more information</LogoBtn></BtnDiv>
+						<div><LogoBtn>Request more information</LogoBtn></div>
 					</LogoDiv>
 				</InfoDiv>
+
+				{/*.............................. SERVICES................................... */}
+
+				<SectionDiv>
+					<ProductsTitle>services</ProductsTitle>
+					<BorderBottom></BorderBottom>
+				</SectionDiv>
+				<ServiceSection>
+					<SubHeaderDiv>
+						<SubText>Eaton’s Electrical Engineering Services</SubText>
+					</SubHeaderDiv>
+					<ServiceMainDiv>
+						<Services>
+							<ServiceName>Predictive and preventive maintenance for generation equipment</ServiceName>
+							<ul>
+								<li>Preventive maintenance and test of transformers, OCBs, SF6 breakers, circuit interrupters, cutouts, relays, switchgear, PTs, CPTs, CTs, reactors, grounding systems and lightning arresters</li>
+								<li>Transformer and breaker oil analysis</li>
+								<li>Preventive-maintenance program design and implementation</li>
+								<li>Partial-discharge testingvand analysis</li>
+								<li>Maintenance contracts</li>
+								<li>Thermographic surveys</li>
+								<li>Performance-based maintenance programs</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Substation turnkey design capabilities</ServiceName>
+							<ul>
+								<li>Crisis response—nationwide</li>
+								<li>Substation commissioning and startup</li>
+								<li>Substation operation and maintenance</li>
+								<li>Integrated project solutions</li>
+								<li>New substation design and construction</li>
+								<li>Energy management</li>
+								<li>Project management</li>
+							</ul>
+							<ServiceName>Power system design and analysis capabilities</ServiceName>
+							<ul>
+								<li>Arc flash studies</li>
+								<li>NERC compliance reporting</li>
+								<li>Coordination / short circuit/ fault current studies</li>
+								<li>Load flow / power factor studies</li>
+								<li>Grounding analysis/ ground grid design</li>
+								<li>Transient stability studies</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Equipment life extension</ServiceName>
+							<ul>
+								<li>Medium-voltage vacuum replacement breaker designs for most OEM’s breakers</li>
+								<li>Generator breaker replacements</li>
+								<li>More than 200 ANSIapproved designs</li>
+								<li>Switchgear modifications, bus-bracing analysis</li>
+								<li>Protective relay upgrades, retrofits and redesign; new doors, etc.</li>
+								<li>Add to existing switchgear</li>
+								<li>Energy management, PLC control and load shedding</li>
+								<li>System metering and control</li>
+								<li>Power breaker centers dedicated to the reconditioning of low- and medium-voltage breakers and contactors per ANSI C37.59-2002</li>
+								<li>Excitation system replacement and upgrades</li>
+								<li>High-resistance grounding system design and installation</li>
+								<li>Low-voltage replacement breaker (LVAR) and vacuum starter replacement (VSR)</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Transformer capabilities</ServiceName>
+							<ul>
+								<li>Bushing monitoring systems</li>
+								<li>Oil processing rigs—oil-fill/degasification/vacuum-fill</li>
+								<li>Transformer internal inspections, reblocking, rewinding, etc.</li>
+								<li>PCB disposal</li>
+								<li>Dress out / startup</li>
+								<li>On-site repairs</li>
+								<li>Power factor (Doble) testing</li>
+								<li>Tap changer repairs and replacements</li>
+								<li>EnvirotempE FR3E fluid retrofil</li>
+							</ul>
+						</Services>
+					</ServiceMainDiv>
+					<SubHeaderDiv>
+						<SubText>Rittal Services & Support</SubText>
+					</SubHeaderDiv>
+					<ServiceMainDiv>
+						<Services>
+							<ServiceName>On-site repairs</ServiceName>
+							<ul>
+								<li>Fast expert assistance</li>
+								<li>Qualified technicians to handle any problems</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Maintenance and spare parts</ServiceName>
+							<ul>
+								<li>Preventative maintenance to safeguard the performance of your equipment</li>
+								<li>Worldwide availability of spare parts and multiple regional stocking locations</li>
+								<li>Customer-specific inventory of spare parts with service contract</li>
+								<li>Approved, OEM spare parts shipped direct from Rittal</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Rittal Climate Inspections</ServiceName>
+							<ul>
+								<li>Rittal Service expert will come to your site to inventory, document, and evaluate the state of the operating environment.</li>
+								<li>Enclosure cooling equipment will be checked for cleanliness, function, and serviceability.</li>
+							</ul>
+						</Services>
+						<Services>
+							<ServiceName>Installation and Start-Up:</ServiceName>
+							<ul>
+								<li>Installation/assembly and commissioning of individual devices or complete systems</li>
+							</ul>
+						</Services>
+					</ServiceMainDiv>
+				</ServiceSection>
 			</BrandDetailsContainer>
 		</Container >
-
 	)
 }
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import { Formik } from 'formik'
 import styled from 'styled-components'
 import FormikInput from '../../_common/formik/input_v2'

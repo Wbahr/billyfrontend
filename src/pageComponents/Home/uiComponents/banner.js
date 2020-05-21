@@ -114,11 +114,11 @@ class Banner extends React.Component {
 							<ImgDiv> <Img src={otto} /></ImgDiv>
 							<AboutAirline>
 								<H5>About Airline Hydraulics</H5>
-								We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
+                We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
 							</AboutAirline>
 						</BannerDiv>
 						<BannerDiv>
-							<ImgDiv> <Img src="https://crescentind.com/wp-content/uploads/2018/01/ESOP-logo.png" /></ImgDiv>
+							<ImgDiv> <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
 							<AboutAirline>
 								<P> We're 100% Employee Owned and pround of it! </P>
 							</AboutAirline>

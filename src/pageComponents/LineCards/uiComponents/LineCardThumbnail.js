@@ -17,17 +17,18 @@ const LineCardsNameDiv = styled.div`
 		padding: 5px;
 `
 const P = styled.p`
+    font-weight: bold;
 `
 export default function LineCardThumbnail(props) {
 			
 	return (
-				<>
-						<ThumbnailImgDiv>
-							<ThumbnailImg src={props.src} />
-						</ThumbnailImgDiv>
-						<LineCardsNameDiv>
-							<P>{props.text}</P>
-						</LineCardsNameDiv>
-				</>
+		<>
+			<ThumbnailImgDiv>
+				<ThumbnailImg src={props.src} />
+			</ThumbnailImgDiv>
+			<LineCardsNameDiv>
+				<P>{props.text}</P>
+			</LineCardsNameDiv>
+		</>
 	)
 }

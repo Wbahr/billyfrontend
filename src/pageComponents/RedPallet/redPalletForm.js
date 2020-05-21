@@ -245,19 +245,19 @@ const RMAform = ({initValues, emptyItem}) => (
 						<DivSelectContainer>
 							<Field name={'shipto'}>
 								{({ field, form}) => (
-										<>
+									<>
 										<FormText1>Ship To*:</FormText1>
-											<SelectInput
-												{...field}
-												onChange={(e) => { setAddress(e.target.value, form); form.setFieldValue('pickup', '-1')}}
-											>
-												{values.ShipTos.map((shipto, index) => (
-													<option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
-												))
-												}
-												<option key={-1} value={-1}>New Address</option>
-											</SelectInput>
-										</>
+										<SelectInput
+											{...field}
+											onChange={(e) => { setAddress(e.target.value, form); form.setFieldValue('pickup', '-1')}}
+										>
+											{values.ShipTos.map((shipto, index) => (
+												<option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
+											))
+											}
+											<option key={-1} value={-1}>New Address</option>
+										</SelectInput>
+									</>
 								)}
 							</Field>
 						</DivSelectContainer>
@@ -288,7 +288,7 @@ const RMAform = ({initValues, emptyItem}) => (
 							<Field name={'state'}>
 								{({ field, form}) => (
 									<>
-									<FormText1>State*:</FormText1>
+										<FormText1>State*:</FormText1>
 										<SelectInput
 											{...field}
 											onChange={(e) => { form.setFieldValue('state', e.target.value); form.setFieldValue('pickup', '-1')}}
@@ -370,7 +370,7 @@ const RMAform = ({initValues, emptyItem}) => (
 							<Field name={'pickup'}>
 								{({ field }) => (
 									<>
-									<FormText1>Shipped via*:</FormText1>
+										<FormText1>Shipped via*:</FormText1>
 										<SelectInput
 											{...field}
 										>
@@ -392,203 +392,203 @@ const RMAform = ({initValues, emptyItem}) => (
 					<FieldArray
 						name="RepairItems"
 						render={arrayHelpers => (
-								<>
-									{values.RepairItems.map((item, index) => (
-										<DivRepairItemContainer key={index}>
-											<DivRow>
-												<DivSelectContainer>
-													<FormText1Bold>{`Repair Item ${index + 1}`}</FormText1Bold>
-												</DivSelectContainer>
-												{(index === 0 && values.RepairItems.length === 1) ? null :
-													<DivSubItem onClick={() => arrayHelpers.remove(index)}>
+							<>
+								{values.RepairItems.map((item, index) => (
+									<DivRepairItemContainer key={index}>
+										<DivRow>
+											<DivSelectContainer>
+												<FormText1Bold>{`Repair Item ${index + 1}`}</FormText1Bold>
+											</DivSelectContainer>
+											{(index === 0 && values.RepairItems.length === 1) ? null :
+												<DivSubItem onClick={() => arrayHelpers.remove(index)}>
 														Remove Item
-													</DivSubItem>
-												}
-											</DivRow>
-											<DivRow>
-												{ item.urgency === 'hot' &&
+												</DivSubItem>
+											}
+										</DivRow>
+										<DivRow>
+											{ item.urgency === 'hot' &&
 													<DivAlert>
 														<span>Urgency Hot - Additional charges WILL apply</span>
 													</DivAlert>
-												}
-												{ item.urgency === 'warm' &&
+											}
+											{ item.urgency === 'warm' &&
 													<DivAlert>
 														<span>Urgency Warm - Additional charges may apply</span>
 													</DivAlert>
-												}
-											</DivRow>
-											<DivRow>
-												<DivSelectContainer>
-													<Field name={`RepairItems.${index}.repairType`}>
-														{({ field }) => (
-															<>
+											}
+										</DivRow>
+										<DivRow>
+											<DivSelectContainer>
+												<Field name={`RepairItems.${index}.repairType`}>
+													{({ field }) => (
+														<>
 															<FormText1>Type of Repair*:</FormText1>
-																<SelectInput
-																	{...field}
-																>
-																	<option value='' selected disabled hidden>--</option>
-																	<option value='VALVE REPAIR'>Hydraulic Valve</option>
-																	<option value='PUMP REPAIR'>Hydraulic Pump</option>
-																	<option value='MOTOR FOR REPAIR'>Hydraulic Motor</option>
-																	<option value='ACCUMULATOR FOR REPAIR'>Hydraulic Accumulator</option>
-																	<option value='CYLINDER FOR REPAIR'>Hydraulic Cylinder</option>
-																	<option value='MOTOR REPAIR'>Electric Motor</option>
-																	<option value='GEARBOX'>Gearbox</option>
-																	<option value='RPR(R)-HASKEL REPAIR'>Haskel Pump</option>
-																	<option value='WINCH REPAIR'>Winch</option>
-																	<option value='HYDRAULIC HOSE'>Hydraulic Hose</option>
-																	<option value='BRC REPAIR'>Servo Drive</option>
-																	<option value='BRC REPAIR'>Servo Motor</option>
-																	<option value='GENERAL LINCOLN'>General Lincoln</option>
-																</SelectInput>
-															</>
-														)}
-													</Field>
-												</DivSelectContainer>
-												<DivSelectContainer>
-													<Field name={`RepairItems.${index}.urgency`}>
-														{({ field }) => (
-															<>
+															<SelectInput
+																{...field}
+															>
+																<option value='' selected disabled hidden>--</option>
+																<option value='VALVE REPAIR'>Hydraulic Valve</option>
+																<option value='PUMP REPAIR'>Hydraulic Pump</option>
+																<option value='MOTOR FOR REPAIR'>Hydraulic Motor</option>
+																<option value='ACCUMULATOR FOR REPAIR'>Hydraulic Accumulator</option>
+																<option value='CYLINDER FOR REPAIR'>Hydraulic Cylinder</option>
+																<option value='MOTOR REPAIR'>Electric Motor</option>
+																<option value='GEARBOX'>Gearbox</option>
+																<option value='RPR(R)-HASKEL REPAIR'>Haskel Pump</option>
+																<option value='WINCH REPAIR'>Winch</option>
+																<option value='HYDRAULIC HOSE'>Hydraulic Hose</option>
+																<option value='BRC REPAIR'>Servo Drive</option>
+																<option value='BRC REPAIR'>Servo Motor</option>
+																<option value='GENERAL LINCOLN'>General Lincoln</option>
+															</SelectInput>
+														</>
+													)}
+												</Field>
+											</DivSelectContainer>
+											<DivSelectContainer>
+												<Field name={`RepairItems.${index}.urgency`}>
+													{({ field }) => (
+														<>
 															<FormText1>Urgency:</FormText1>
-																<SelectInput
-																	{...field}
-																>
-																	<option value='normal' selected>Normal</option>
-																	<option value='warm'>Warm</option>
-																	<option value='hot'>Hot</option>
-																</SelectInput>
-															</>
-														)}
-													</Field>
-												</DivSelectContainer>
-											</DivRow>
-											<DivLeftAlign>
-												<DivSelectContainer>
-													<Field name={`RepairItems.${index}.fluidType`}>
-														{({ field, form }) => (
-															<>
+															<SelectInput
+																{...field}
+															>
+																<option value='normal' selected>Normal</option>
+																<option value='warm'>Warm</option>
+																<option value='hot'>Hot</option>
+															</SelectInput>
+														</>
+													)}
+												</Field>
+											</DivSelectContainer>
+										</DivRow>
+										<DivLeftAlign>
+											<DivSelectContainer>
+												<Field name={`RepairItems.${index}.fluidType`}>
+													{({ field, form }) => (
+														<>
 															<FormText1>Fluid Type*:</FormText1>
-																<SelectInput
-																	{...field}
-																	onChange={(e) => {
-																		form.setFieldValue(`RepairItems.${index}.fluidType`, e.target.value)
-																		form.setFieldValue(`RepairItems.${index}.fluidOther`, '')
-																	}}
-																>
-																	<option value='' selected disabled hidden>--</option>
-																	<option value='air'>Air</option>
-																	<option value='phosphateester'>Phosphate Ester</option>
-																	<option value='mineraloil'>Standard Mineral oil</option>
-																	<option value='waterglycol'>Water Glycol</option>
-																	<option value='grease'>Grease</option>
-																	<option value='other'>Other</option>
-																</SelectInput>
-															</>
-														)}
-													</Field>
-												</DivSelectContainer>
-											</DivLeftAlign>
-											{ item.fluidType === 'other' &&
+															<SelectInput
+																{...field}
+																onChange={(e) => {
+																	form.setFieldValue(`RepairItems.${index}.fluidType`, e.target.value)
+																	form.setFieldValue(`RepairItems.${index}.fluidOther`, '')
+																}}
+															>
+																<option value='' selected disabled hidden>--</option>
+																<option value='air'>Air</option>
+																<option value='phosphateester'>Phosphate Ester</option>
+																<option value='mineraloil'>Standard Mineral oil</option>
+																<option value='waterglycol'>Water Glycol</option>
+																<option value='grease'>Grease</option>
+																<option value='other'>Other</option>
+															</SelectInput>
+														</>
+													)}
+												</Field>
+											</DivSelectContainer>
+										</DivLeftAlign>
+										{ item.fluidType === 'other' &&
 												<DivLeftAlign>
 													<Field name={`RepairItems.${index}.fluidOther`}>
 														{({ field }) => (
-																<>
-																	<Inputm {...field}
-																		component='input'
-																		placeholder='Specify Other Fluid Type*' />
-																</>
+															<>
+																<Inputm {...field}
+																	component='input'
+																	placeholder='Specify Other Fluid Type*' />
+															</>
 														)}
 													</Field>
 												</DivLeftAlign>
-											}
-											<DivLeftAlign>
-												<Field name={`RepairItems.${index}.po`}>
+										}
+										<DivLeftAlign>
+											<Field name={`RepairItems.${index}.po`}>
+												{({ field }) => (
+													<Inputm {...field}
+														component='input'
+														placeholder='PO #*' />
+												)}
+											</Field>
+											<Field name={`RepairItems.${index}.part`}>
+												{({ field }) => (
+													<Inputm {...field}
+														component='input'
+														placeholder='Part #' />
+												)}
+											</Field>
+										</DivLeftAlign>
+										<DivLeftAlign>
+											<Field name={`RepairItems.${index}.manufacturer`}>
+												{({ field }) => (
+													<Inputm {...field}
+														component='input'
+														placeholder='Manufacturer' />
+												)}
+											</Field>
+											<Field name={`RepairItems.${index}.model`}>
+												{({ field }) => (
+													<Inputm {...field}
+														component='input'
+														placeholder='Model' />
+												)}
+											</Field>
+										</DivLeftAlign>
+										<DivLeftAlign>
+											<DivSelectContainer>
+												<Field name={`RepairItems.${index}.quantity`}>
 													{({ field }) => (
-														<Inputm {...field}
-															component='input'
-															placeholder='PO #*' />
-													)}
-												</Field>
-												<Field name={`RepairItems.${index}.part`}>
-													{({ field }) => (
-														<Inputm {...field}
-															component='input'
-															placeholder='Part #' />
-													)}
-												</Field>
-											</DivLeftAlign>
-											<DivLeftAlign>
-												<Field name={`RepairItems.${index}.manufacturer`}>
-													{({ field }) => (
-														<Inputm {...field}
-															component='input'
-															placeholder='Manufacturer' />
-													)}
-												</Field>
-												<Field name={`RepairItems.${index}.model`}>
-													{({ field }) => (
-														<Inputm {...field}
-															component='input'
-															placeholder='Model' />
-													)}
-												</Field>
-											</DivLeftAlign>
-											<DivLeftAlign>
-												<DivSelectContainer>
-													<Field name={`RepairItems.${index}.quantity`}>
-														{({ field }) => (
-															<>
+														<>
 															<FormText1>Quantity:</FormText1>
-																<SelectInput
-																	{...field}
-																>
-																	<option value='1' selected>1</option>
-																	<option value='2'>2</option>
-																	<option value='3'>3</option>
-																	<option value='4'>4</option>
-																	<option value='5'>5</option>
-																	<option value='6'>6</option>
-																	<option value='7'>7</option>
-																	<option value='8'>8</option>
-																	<option value='9'>9</option>
-																	<option value='10'>10</option>
-																	<option value='11'>11</option>
-																	<option value='12'>12</option>
-																	<option value='13'>13</option>
-																	<option value='14'>14</option>
-																	<option value='15'>15</option>
-																	<option value='16'>16</option>
-																	<option value='17'>17</option>
-																	<option value='18'>18</option>
-																	<option value='19'>19</option>
-																	<option value='20'>20</option>
-																</SelectInput>
-															</>
-														)}
-													</Field>
-												</DivSelectContainer>
-											</DivLeftAlign>
-											<SerialNumberFields
-												fieldCount={item.quantity}
-												index={index}
-											/>
-											<DivLeftAlign>
-												<DivSelectContainer>
-													<Field name={`RepairItems.${index}.warrantyRequest`}>
-														{({ field }) => (
-															<>
+															<SelectInput
+																{...field}
+															>
+																<option value='1' selected>1</option>
+																<option value='2'>2</option>
+																<option value='3'>3</option>
+																<option value='4'>4</option>
+																<option value='5'>5</option>
+																<option value='6'>6</option>
+																<option value='7'>7</option>
+																<option value='8'>8</option>
+																<option value='9'>9</option>
+																<option value='10'>10</option>
+																<option value='11'>11</option>
+																<option value='12'>12</option>
+																<option value='13'>13</option>
+																<option value='14'>14</option>
+																<option value='15'>15</option>
+																<option value='16'>16</option>
+																<option value='17'>17</option>
+																<option value='18'>18</option>
+																<option value='19'>19</option>
+																<option value='20'>20</option>
+															</SelectInput>
+														</>
+													)}
+												</Field>
+											</DivSelectContainer>
+										</DivLeftAlign>
+										<SerialNumberFields
+											fieldCount={item.quantity}
+											index={index}
+										/>
+										<DivLeftAlign>
+											<DivSelectContainer>
+												<Field name={`RepairItems.${index}.warrantyRequest`}>
+													{({ field }) => (
+														<>
 															<FormText1>Warranty Request:</FormText1>
-																<SelectInput
-																	{...field}
-																>
-																	<option value='false' selected>No</option>
-																	<option value='true'>Yes</option>
-																</SelectInput>
-															</>
-														)}
-													</Field>
-												</DivSelectContainer>
-												{ item.warrantyRequest === 'true' &&
+															<SelectInput
+																{...field}
+															>
+																<option value='false' selected>No</option>
+																<option value='true'>Yes</option>
+															</SelectInput>
+														</>
+													)}
+												</Field>
+											</DivSelectContainer>
+											{ item.warrantyRequest === 'true' &&
 													<Field name={`RepairItems.${index}.warrantyInfo`}>
 														{({ field }) => (
 															<Inputm {...field}
@@ -596,29 +596,29 @@ const RMAform = ({initValues, emptyItem}) => (
 																placeholder='Original Order or PO #' />
 														)}
 													</Field>
-												}
-											</DivLeftAlign>
-											<Field component='textarea' name={`RepairItems.${index}.issue`}>
-												{({ field }) => (
-													<StyledTextArea1 {...field}
-														component='textarea'
-														rows='3'
-														placeholder='Please enter a description of the repair needed'
-													/>
-												)}
-											</Field>
-											<Dropzone />
-										</DivRepairItemContainer>
-									))
-									}
-									{values.RepairItems.length < 10 &&
+											}
+										</DivLeftAlign>
+										<Field component='textarea' name={`RepairItems.${index}.issue`}>
+											{({ field }) => (
+												<StyledTextArea1 {...field}
+													component='textarea'
+													rows='3'
+													placeholder='Please enter a description of the repair needed'
+												/>
+											)}
+										</Field>
+										<Dropzone />
+									</DivRepairItemContainer>
+								))
+								}
+								{values.RepairItems.length < 10 &&
 										<DivLeftAlign>
 											<DivAddItem onClick={() => arrayHelpers.insert(values.RepairItems.length, emptyItem)}>
 												Add Item
 											</DivAddItem>
 										</DivLeftAlign>
-									}
-								</>
+								}
+							</>
 						)}
 					/>
 					<Field component='textarea' name={'additionalNotes'}>

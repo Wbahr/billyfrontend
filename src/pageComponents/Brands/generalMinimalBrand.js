@@ -1,24 +1,13 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { StyledText0 } from '../../styles/fonts'
 import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 // import AdaptallPage from './minimalBrandsPages/adaptall'
 // import AdsensPage from './minimalBrandsPages/adsens'
 
 // import _ from 'lodash'
 
-const Div = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
-`
+
 
 // class FullBrand extends React.Component {
 //   componentWillMount(){
@@ -75,11 +64,11 @@ export default function GeneralMinimalBrand({history}) {
 	}, [page])
       
 	return(
-    <> 
-        {pageComponent}      
+		<> 
+			{pageComponent}      
   
 
-    </>
+		</>
 	)
 }
 

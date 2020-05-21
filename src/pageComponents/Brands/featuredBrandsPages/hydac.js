@@ -8,7 +8,6 @@ const Container = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 `
-
 const FeaturedBrandLogo = styled.div`
 	display: flex;
 	width: 100%;
@@ -135,46 +134,7 @@ const VideoDiv = styled.div`
 `
 const ArticlesVideo = styled.iframe`
 	width: 100%;
-
 `
-// const ArticlesContentDiv = styled.div`
-//   text-align: center;
-//   padding: 15px;
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-//   width: 100%;
-// `
-// const ArticlesPicture = styled.img`
-//   width: 100%;
-//   min-height: 100%;
-// `
-// const ArticlesShortLine = styled.div`
-//   display: flex;
-//   border-bottom: 2px solid #555555;
-//   width: 15%;
-//   margin: 25px 0 0;
-//   `
-// const ArticlesTopic = styled.h6`
-//   color: #B51F2B;
-//   font-weight: bold;
-//   margin: 25px 15px;
-//   font-size: 18px;
-//   text-align: left;
-// `
-// const ArticlesImgDiv = styled.div`
-//   max-width: 350px;
-//   padding: 20px;
-//   height: 300px;
-//   overflow: hidden;
-// `
-
-// const SmallArticlesContent = styled.div`
-//   display: flex
-//   flex-wrap: nowrap;
-//   max-width: 380px;
-//   margin-bottom: 30px;
-// `
 const FontAwesomeDiv = styled.div`
 	display: flex;
 	justify-content: center;
@@ -190,11 +150,6 @@ const LinkStyleDiv = styled.div`
 	justify-content: center;
 	color: white;
 `
-// const ArticlesContentDetails = styled.p`
-//   margin: 0 15px;
-//   text-align: left;
-//   font-size: 14px;
-// `
 const ShopProducts = styled.a`
 	color: #246696;
 	font-size: 14px;
@@ -219,18 +174,10 @@ const Video = styled.div`
 	max-width: 380px;
 	height: 250px;
 `
-// const ArticlesDiv = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   width: 100%;
-// `
 const RelatedContainer = styled.div`
 	display: flex;
 	flex-wrap: nowrap;
 	width: 100%;
-`
-const BannerDiv = styled.div`
-
 `
 const BannerImg = styled.img`
 	width: 250px;
@@ -238,7 +185,7 @@ const BannerImg = styled.img`
 const ShowMoreBtn1 = styled.button`
 	font-size: 14px;
 	border: none;
-  border-radius:2em;
+  border-radius: 2px;
 	padding: 4px 10px;
   margin: 0 auto;
 	outline: none;
@@ -261,7 +208,7 @@ export default function Hydac() {
 	return (
 		<Container>
 			<FeaturedBrandLogo>
-				<BannerDiv> <BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" /></BannerDiv>
+				<div> <BannerImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" /></div>
 			</FeaturedBrandLogo>
 			<BrandDetailsContainer>
 				<AirlineDistributorH1>Hydac
@@ -353,8 +300,7 @@ export default function Hydac() {
 				<SectionDiv>
 					<ProductsTitle>Articles & Videos</ProductsTitle>
 					<BorderBottom></BorderBottom>
-				</SectionDiv>
-			 
+				</SectionDiv>	 
 				<VideoDiv>
 					<Video><ArticlesVideo src="https://www.youtube.com/embed/dNRz2Efm8o8"></ArticlesVideo></Video>
 					<Video><ArticlesVideo src="https://www.youtube.com/embed/M0yLeDeEStQ"></ArticlesVideo></Video>

@@ -186,11 +186,11 @@ export default function SkeletonItem({index}){
 				<Price />
 				<Context.Consumer>
 					{({ removeItem }) => (
-								<>
-									<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
-										<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-									</DivRemove>
-								</>
+						<>
+							<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
+								<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+							</DivRemove>
+						</>
 					)}
 				</Context.Consumer>
 			</DivCard>

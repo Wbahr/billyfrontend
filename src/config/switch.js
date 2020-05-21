@@ -7,22 +7,31 @@ import HeaderFooterHomepageLayout from '../layoutComponents/headerfooterLayout/h
 import HeaderFooterLayout from '../layoutComponents/headerfooterLayout/headerfooterLayout'
 import HeaderFooterLayoutExpanded from '../layoutComponents/headerfooterLayout/headerfooterLayoutExpanded'
 // Components
-import aboutPage from '../pageComponents/About/aboutPage'
+import About from '../pageComponents/About/aboutPage'
+import Apps from '../pageComponents/Apps/appsPage'
 import Blog from '../pageComponents/Blog/blogPage'
 import Checkout from '../pageComponents/Checkout/checkoutPage'
 import contactPage from '../pageComponents/ContactUs/contactUsPage'
+import CreditApplication from '../pageComponents/CreditApplication/CreditApplicationPage'
+import EngineeredSystemsAndAssemblies from '../pageComponents/Services/engineeredSystemsAndAssemblies'
+import EngineeredSystems from '../pageComponents/Services/engineeredSystems'
+import FramingRequest from '../pageComponents/FramingRequest/FramingRequestPage'
+import GovermentSale from '../pageComponents/GovermentSales/GovermentSalesPage'
 import Home from '../pageComponents/Home/homePage'
 import ItemDetail from '../pageComponents/ItemDetail/itemDetailPage'
+import KnowledgeCenter from '../pageComponents/KnowledgeCenter/knowledgeCenterPage'
 import LineCards from '../pageComponents/LineCards/lineCardsPage'
 import Login from '../pageComponents/Login/loginPage'
 import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
-import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
+import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import Shop from '../pageComponents/Shop/shopPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
 import generalMinimalBrand from '../pageComponents/Brands/generalMinimalBrand'
@@ -38,6 +47,7 @@ import AdminHome from '../adminComponents/adminHome'
 import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
+import knowledgeCenterPage from 'pageComponents/KnowledgeCenter/knowledgeCenterPage'
 
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -79,10 +89,9 @@ class App extends React.Component {
 		return (
 			<Switch>
 				<WrapperRoute exact path='/' component={Home} layout={HeaderFooterHomepageLayout}/>
-				<WrapperRoute exact path='/about/:page' component={aboutPage} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/account' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/about/:page' component={About} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/account/:page' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/account/:page/:orderId' auth component={MyAccountPage} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/apps' component={Apps} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/blog' component={Blog} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/blog/:slug' component={Blog} layout={HeaderFooterLayoutExpanded}/>  
 				<WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
@@ -92,7 +101,11 @@ class App extends React.Component {
 				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/credit-application' component={CreditApplication} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/industries' component={Home} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/knowledge-center-and-faq' component={KnowledgeCenter} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/order-complete/:orderId/:confirmationEmail' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
@@ -108,9 +121,14 @@ class App extends React.Component {
 				<WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/services/engineered-systems-and-assemblies' component={EngineeredSystemsAndAssemblies} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/services/engineered-systems-and-assemblies/:page' component={EngineeredSystems} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
+
 
 				{/* ADMIN INTERNAL TOOLS */}
 				<WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>

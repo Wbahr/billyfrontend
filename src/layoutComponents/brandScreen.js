@@ -26,9 +26,9 @@ class BrandScreen extends React.Component {
 			BrandComponent = <MinimalBrandPage brand={BrandData}/>
 		}
 		return(
-      <>
-        {BrandComponent}
-      </>
+			<>
+				{BrandComponent}
+			</>
 		)
 	}
 }

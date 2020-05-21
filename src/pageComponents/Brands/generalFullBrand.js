@@ -1,8 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { StyledText0 } from '../../styles/fonts'
 import RexrothPage  from './featuredBrandsPages/rexroth'
 import EatonPage from './featuredBrandsPages/eaton'
 import ParkerPage from './featuredBrandsPages/parker'
@@ -22,48 +20,6 @@ import OrientalmotorPage from './featuredBrandsPages/orientalmotor'
 import AventicsPage from './featuredBrandsPages/aventics'
 import PhoenixContactPage from './featuredBrandsPages/phoenixContact'
 // import _ from 'lodash'
-
-const DivRow = styled.div`
-  display: flex;
-`
-
-const DivColumn1 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-`
-
-const DivColumn2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: auto;
-`
-
-const DivProductShortcuts = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  top: 200px;
-  border: 2px solid black;
-  width: 200px;
-`
-
-const DivProductHeader = styled.div`
-  display: flex;
-  align-items: center;
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: #535353;
-  height: 35px;
-  width: 100%;
-  padding-left: 20px;
-`
-
-const DivProductDetail = styled.div`
-  padding: 0 25px;
-`
-
 
 export default function GeneralFullBrand({history}) {
 	const [pageComponent, setPageComponent] = useState()
@@ -185,10 +141,10 @@ export default function GeneralFullBrand({history}) {
 	}, [page])
       
 	return(
-    <> 
-        {pageComponent}      
+		<> 
+			{pageComponent}      
   
-    </>
+		</>
 	)
 }
 

@@ -87,9 +87,9 @@ class RedPalletSerialNumbers extends  React.Component {
 		}
 
 		return (
-      <>
-        {Fields}
-      </>
+			<>
+				{Fields}
+			</>
 		)
 	}
 }

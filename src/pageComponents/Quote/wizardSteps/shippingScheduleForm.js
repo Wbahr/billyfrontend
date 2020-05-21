@@ -71,16 +71,16 @@ export function ShippingScheduleForm(props){
 					<FormikInput type="hidden" name="schedule.packingBasis" />
 				</div>
 			</FormRow>
-		{values.schedule.packingBasis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
-		{values.schedule.packingBasis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>}
-		{values.schedule.packingBasis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
-		{values.schedule.packingBasis === 4 && (
-			<>
-				<Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
-				<DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
-			</>
-		)}
-		{values.schedule.packingBasis === 4 &&
+			{values.schedule.packingBasis === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
+			{values.schedule.packingBasis === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>}
+			{values.schedule.packingBasis === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
+			{values.schedule.packingBasis === 4 && (
+				<>
+					<Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
+					<DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
+				</>
+			)}
+			{values.schedule.packingBasis === 4 &&
 			<FieldArray
 				name="schedule.cartWithDates"
 				render={() => (
@@ -95,7 +95,7 @@ export function ShippingScheduleForm(props){
 					</div>
 				)}
 			/>
-		}
+			}
 		</>
 	)
 }

@@ -5,22 +5,20 @@ import LineCardThumbnail from './uiComponents/LineCardThumbnail'
 
 const DivContainer = styled.div`
     width: 1300px;
-    margin: 50px auto;
-    
+    margin: 50px auto;   
 `
 const HeaderDivDiv = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 40px 0 20px;
+    // margin: 40px 0 20px;
     align-items: center;
 `
-const H1 = styled.h1`
+const H1 = styled.h2`
     font-family: verdana;
     color: #333;
     margin: 0;
     text-transform: uppercase;
-    // font-size: 30px;
     letter-spacing: 1px;
     padding-bottom: 15px;
     letter-spacing: 2px;
@@ -29,7 +27,6 @@ const ShortBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
 `
-
 const SideDiv = styled.div`
     display: flex;
     flex-direction: column;

@@ -6,6 +6,5 @@ export const H4 = styled.h4`
   font-family: Verdana;
   text-transform: uppercase;
   font-size: 18px;
-//   letter-spacing: 2.4px;
-  // font-weight: bold;
+  letter-spacing: 2.4px;
 `
