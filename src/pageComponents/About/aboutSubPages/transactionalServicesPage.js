@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Header from '../uiComponents/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 

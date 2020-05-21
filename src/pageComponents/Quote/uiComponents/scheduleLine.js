@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { useQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Context from '../../../config/context'
 
 const DivContainer = styled.div`
   display: flex;
@@ -88,52 +87,15 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-// const CustomDatePicker = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   width: 110px;
-//   background-color: white;
-//   border: 1px solid lightgrey;
-//   margin: 0 8px;
-// `
-
-const GET_ITEM_BY_ID = gql`
-    query ItemById($itemId: Int){
-        itemDetails(invMastUid: $itemId) {
-            anonPrice
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            tariff
-            unitSizeMultiple
-            availability
-            availabilityMessage
-            image {
-              path
-              sequence
-              type
-            }
-        }
-    }
-`
-
 export default function ShippingScheduleItem({item, index}) {
-	const [itemDetails, setItem] = useState(null)
 	const itemId = parseInt(item.frecno,10)
+	const context = useContext(Context)
+	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
+	const {
+		itemDetails,
+		customerPartNumbers
+	} = displayItem
 
-	useQuery(GET_ITEM_BY_ID, {
-		variables: { itemId },
-		onCompleted: result => {
-			if (!_.isNil(result.itemDetails)) {
-				setItem(result.itemDetails)
-			} else {
-				setItem({})
-			}
-		}
-	})
 
 	let Content
 	if(_.isNil(itemDetails)) {
@@ -153,7 +115,7 @@ export default function ShippingScheduleItem({item, index}) {
 		let tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
-    
+		let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
 
 		Content = (
 			<DivCard>
@@ -162,7 +124,7 @@ export default function ShippingScheduleItem({item, index}) {
 				</DivCol1>
 				<DivCol2>
 					<P1>{itemDetails.itemDesc}</P1>
-					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid}</P2>
+					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
 				</DivCol2>
 				<DivCol3>
 					<DivQuantity>
@@ -195,7 +157,7 @@ export default function ShippingScheduleItem({item, index}) {
 		)
 	}
 	return(
-		<DivContainer>
+		<DivContainer key={index}>
 			{Content}
 		</DivContainer>
 	)
