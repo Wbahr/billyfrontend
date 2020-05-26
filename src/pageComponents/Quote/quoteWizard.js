@@ -21,13 +21,6 @@ const GET_CHECKOUT_DATA = gql`
 				id
 				name
 				companyName
-				mailAddress1
-				mailAddress2
-				mailAddress3
-				mailCity
-				mailCountry
-				mailPostalCode
-				mailState
 				physAddress1
 				physAddress2
 				physAddress3
@@ -58,13 +51,6 @@ const GET_CHECKOUT_DATA = gql`
 				id
 				name
 				companyName
-				mailAddress1
-				mailAddress2
-				mailAddress3
-				mailCity
-				mailCountry
-				mailPostalCode
-				mailState
 				physAddress1
 				physAddress2
 				physAddress3

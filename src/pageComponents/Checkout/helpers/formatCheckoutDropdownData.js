@@ -20,7 +20,7 @@ function formatShipToData(data){
 		for(let i=0;data.length > i;i++){
 			let element = data[i]
 			mutatedData.push({
-				'label': element.companyName + ' - ' + element.mailAddress1 + ' ' + element.mailCity +', ' + element.mailState + ' ' + element.mailPostalCode,
+				'label': element.companyName + ' - ' + element.physAddress1 + ' ' + element.physCity +', ' + element.physState + ' ' + element.physPostalCode,
 				'value': element.id
 			})
 		}
