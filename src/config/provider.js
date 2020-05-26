@@ -19,7 +19,8 @@ export default function Provider(props) {
 	const [timeoutId, setTimeoutId] = useState(null)
 	const [ordersCache, setOrdersCache] = useState([])
 	const [invoiceCache, setInvoiceCache] = useState([])
-
+	const [invoiceBatchNumber, setInvoiceBatchNumber] = useState(0)
+	const invoiceBatchSize = 5
 	useEffect(() => {
 		if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
 			manageUserInfo('load-context')
@@ -160,7 +161,11 @@ export default function Provider(props) {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
 			let requestData = data.accountInvoices
-			setInvoiceCache(requestData)
+			setInvoiceCache([...invoiceCache, ...requestData])
+			if (requestData.length >= invoiceBatchSize) {
+				setInvoiceBatchNumber(invoiceBatchNumber + 1)
+				handleUpdateInvoices()
+			}
 		}
 	})
 
@@ -389,7 +394,12 @@ export default function Provider(props) {
 	}
 
 	function handleUpdateInvoices() {
-		handleGetInvoices()
+		handleGetInvoices({
+			variables: {
+				'batchNumber': invoiceBatchNumber,
+				'batchSize': invoiceBatchSize
+			}
+		})
 	}
 
 	return (
