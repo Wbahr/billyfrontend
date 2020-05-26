@@ -130,11 +130,10 @@ export default function CheckoutPage({history}) {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
 			let orderId = _.get(data,'submitOrder.webReferenceId',null)
-			let confirmationEmail = _.get(data, 'submitOrder.confirmationEmailRecipient','')
 			if (!_.isNil(orderId)) {
 				localStorage.removeItem('shoppingCartToken')
 				context.emptyCart()
-				history.push(`/quote-complete/${orderId}/${confirmationEmail}`)
+				history.push(`/quote-complete/${orderId}`)
 			} else {
 				setShowOrderFailedModal(true)
 			}

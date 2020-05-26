@@ -12,13 +12,13 @@ const DivConfirmationBox = styled.div`
 `
 
 export default function QuoteCompletePage() {
-	let { orderId, confirmationEmail } = useParams()
+	let { orderId } = useParams()
 
 	return(
 		<>
 			<DivConfirmationBox>
 				<p>Quote Number ({orderId}) Confirmed</p>
-				<p>We'll be sending out a confirmation email to {confirmationEmail} shortly.</p> 
+				<p>We'll be sending out a confirmation email shortly.</p> 
 			</DivConfirmationBox>
 		</>
 	)

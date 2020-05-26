@@ -109,12 +109,12 @@ class App extends React.Component {
 				<WrapperRoute exact path='/knowledge-center-and-faq' component={KnowledgeCenter} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
-				<WrapperRoute exact path='/order-complete/:orderId/:confirmationEmail' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/quote-complete/:orderId/:confirmationEmail' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
+				<WrapperRoute exact path='/quote-complete/:orderId' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
