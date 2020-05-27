@@ -30,12 +30,12 @@ export default function PurchaseOrderSection(props) {
 	useEffect(() => {
 		if(!_.isNil(customerPhysicalAddress)){
 			setFieldValue('billing.companyName', customerPhysicalAddress.companyName)
-			setFieldValue('billing.address1', customerPhysicalAddress.mailAddress1)
-			setFieldValue('billing.address2', customerPhysicalAddress.mailAddress2)
-			setFieldValue('billing.city', customerPhysicalAddress.mailCity)
-			setFieldValue('billing.zip', customerPhysicalAddress.mailPostalCode)
-			setFieldValue('billing.stateOrProvince', customerPhysicalAddress.mailState)
-			setFieldValue('billing.country', customerPhysicalAddress.mailCountry.toLowerCase())
+			setFieldValue('billing.address1', customerPhysicalAddress.physAddress1)
+			setFieldValue('billing.address2', customerPhysicalAddress.physAddress2)
+			setFieldValue('billing.city', customerPhysicalAddress.physCity)
+			setFieldValue('billing.zip', customerPhysicalAddress.physPostalCode)
+			setFieldValue('billing.stateOrProvince', customerPhysicalAddress.physState)
+			setFieldValue('billing.country', customerPhysicalAddress.physCountry.toLowerCase())
 		}
 	}, [customerPhysicalAddress])
 	return (
