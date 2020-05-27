@@ -211,8 +211,8 @@ export const GET_ORDERS = gql`
 `
 
 export const GET_INVOICES = gql`
-  query {
-    accountInvoices{
+  query AccountInvoices($batchNumber: Int, $batchSize: Int){
+    accountInvoices(batchNumber: $batchNumber, batchSize: $batchSize){
       invoiceNumber
       orderNumber
       orderDate

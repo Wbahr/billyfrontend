@@ -8,6 +8,7 @@ import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITE
 export default function Provider(props) {
 	const didMountRef = useRef(false)
 	const justLoadedCart = useRef(false)
+	const invoicesLoaded = useRef(false)
 	const [shoppingCart, setShoppingCart] = useState([])
 	const [itemDetailCache, setItemDetailCache] = useState([])
 	const [orderNotes, setOrderNotes] = useState('')
@@ -20,7 +21,7 @@ export default function Provider(props) {
 	const [ordersCache, setOrdersCache] = useState([])
 	const [invoiceCache, setInvoiceCache] = useState([])
 	const [invoiceBatchNumber, setInvoiceBatchNumber] = useState(0)
-	const invoiceBatchSize = 5
+	const invoiceBatchSize = 1000
 	useEffect(() => {
 		if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
 			manageUserInfo('load-context')
@@ -163,8 +164,9 @@ export default function Provider(props) {
 			let requestData = data.accountInvoices
 			setInvoiceCache([...invoiceCache, ...requestData])
 			if (requestData.length >= invoiceBatchSize) {
-				setInvoiceBatchNumber(invoiceBatchNumber + 1)
 				handleUpdateInvoices()
+			} else {
+				invoicesLoaded.current = true
 			}
 		}
 	})
@@ -400,6 +402,7 @@ export default function Provider(props) {
 				'batchSize': invoiceBatchSize
 			}
 		})
+		setInvoiceBatchNumber(invoiceBatchNumber + 1)
 	}
 
 	return (
@@ -472,7 +475,8 @@ export default function Provider(props) {
 				invoiceCache: invoiceCache,
 				getInvoices: () => {
 					handleUpdateInvoices()
-				}
+				},
+				invoicesLoaded: invoicesLoaded
 			}}
 		>
 			{props.children}

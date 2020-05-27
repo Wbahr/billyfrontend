@@ -351,7 +351,7 @@ export default function InvoicesTable({history}) {
 						</option>
 					))}
 				</select>
-				<p>Results: {rows.length}</p>
+					<p>Results: {rows.length} {!context.invoicesLoaded && '(Loading more Invoices...)'}</p>
 			</div>
 		</TableContainer>
 	)
