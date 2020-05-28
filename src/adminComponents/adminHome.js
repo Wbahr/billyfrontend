@@ -19,7 +19,7 @@ import CodeIcon from '@material-ui/icons/Code'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
-import OrderData from './adminTools/OrderData/orderData'
+import OpenOrders from './adminTools/OpenOrders/openOrders'
 import AppHeader from './appHeader'
 
 const drawerWidth = 240
@@ -96,7 +96,7 @@ export default function AdminHome() {
 		AdminTool = ItemCreation
 		break
 	case 'order-data':
-		AdminTool = OrderData
+		AdminTool = OpenOrders
 		break
 	default:
 		AdminTool = AdminDashboard
@@ -126,7 +126,7 @@ export default function AdminHome() {
 					<Divider/>
 					<ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
 					<Divider/>
-					<ListItemLink to="/admin-dashboard/order-data" primary="View Order Data" icon={<CodeIcon />} />
+					<ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon />} />
 					<Divider/>
 				</List>
 			</Drawer>
