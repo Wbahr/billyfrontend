@@ -195,6 +195,7 @@ export default function Provider(props) {
 			}
 			setItemDetailCache([])
 			setOrdersCache([])
+			setInvoiceCache([])
 			setImpersonatedCompanyInfo(impersonationInfo)
 			currentUserType = 'Impersonator'
 			break
@@ -205,6 +206,7 @@ export default function Provider(props) {
 			setImpersonatedCompanyInfo(null)
 			currentUserType = 'AirlineEmployee'
 			setItemDetailCache([])
+			setInvoiceCache([])
 			setOrdersCache([])
 			break
 		case 'login':
@@ -219,6 +221,7 @@ export default function Provider(props) {
 			setImpersonatedCompanyInfo(null)
 			currentUserType = 'Anon'
 			setOrdersCache([])
+			setInvoiceCache([])
 			break
 		}
 		setUserType({'current': currentUserType, 'previous': _.isNil(userType.current) ? 'Anon' : userType.current})
@@ -476,7 +479,7 @@ export default function Provider(props) {
 				getInvoices: () => {
 					handleUpdateInvoices()
 				},
-				invoicesLoaded: invoicesLoaded
+				invoicesLoaded: invoicesLoaded.current
 			}}
 		>
 			{props.children}
