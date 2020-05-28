@@ -402,6 +402,9 @@ export default function Provider(props) {
 	}
 
 	function handleUpdateInvoices() {
+		if (invoiceBatchNumber === 0) {
+			invoicesLoaded.current = false
+		}
 		handleGetInvoices({
 			variables: {
 				'batchNumber': invoiceBatchNumber,
