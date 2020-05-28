@@ -99,43 +99,48 @@ export default function InvoicesTable({history}) {
 			context.getInvoices()
 		} else if (context.invoiceCache.length > 0) {
 			let mutatedData = formatTableData('invoices', context.invoiceCache)
-			setData(mutatedData)
+			filterData(mutatedData)
 		}
 	}, [context.invoiceCache])
 
 	useEffect(() => {
 		if (didMountRef) {
 			let mutatedData = formatTableData('invoices', context.invoiceCache)
-			// Apply search filter
-			if (filter.length > 0) {
-				mutatedData = mutatedData.filter(row => {
-					let upperCaseFilter = filter.toUpperCase()
-					return row.filter.includes(upperCaseFilter)
-				})
-			}
-			// Apply showInvoiceType filter
-			if (showInvoiceType !== 'all') {
-				mutatedData = mutatedData.filter(row => {
-					return row.status.includes(showInvoiceType)
-				})
-			}
-			// Apply date filters
-			if (!_.isNil(dateFrom)) {
-				let epochDateFrom = dateFrom.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) >= epochDateFrom 
-				})
-			}
-			if (!_.isNil(dateTo)) {
-				let epochDateTo = dateTo.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) <= epochDateTo 
-				})
-			}
-			setData(mutatedData)
+			filterData(mutatedData)
 		}
 		didMountRef.current = true
 	}, [filter, showInvoiceType, dateFrom, dateTo])
+
+	function filterData(data){
+		// Apply search filter
+		let mutatedData = data
+		if (filter.length > 0) {
+			mutatedData = mutatedData.filter(row => {
+				let upperCaseFilter = filter.toUpperCase()
+				return row.filter.includes(upperCaseFilter)
+			})
+		}
+		// Apply showInvoiceType filter
+		if (showInvoiceType !== 'all') {
+			mutatedData = mutatedData.filter(row => {
+				return row.status.includes(showInvoiceType)
+			})
+		}
+		// Apply date filters
+		if (!_.isNil(dateFrom)) {
+			let epochDateFrom = dateFrom.valueOf()
+			mutatedData = mutatedData.filter(row => { 
+				return Date.parse(row.orderDate) >= epochDateFrom 
+			})
+		}
+		if (!_.isNil(dateTo)) {
+			let epochDateTo = dateTo.valueOf()
+			mutatedData = mutatedData.filter(row => { 
+				return Date.parse(row.orderDate) <= epochDateTo 
+			})
+		}
+		setData(mutatedData)
+	}
 
 	const columns = useMemo(
 		() => [
