@@ -65,18 +65,46 @@ export default function InvoiceDetail({ history, invoiceId }) {
 		shipToCity,
 		shipToState,
 		shipToZip,
-		lineItems
+		billingName,
+		billingAddress1,
+		billingAddress2,
+		billingAddress3,
+		billingCity,
+		billingState,
+		billingZip,
+		lineItems,
+		terms,
+		taker,
+		orderNumber,
+		invoiceDate,
+		netDueDate,
+		discDueDate,
+		discountAmount
 	} = data
 
 	let itemDetails = _.map(lineItems, item => {
-		<div>
+		return (
 			<div>
-				{item.itemDescription}
+				<div>
+					{item.itemDescription}
+				</div>
+				<div>
+					{item.quantityRequested}
+				</div>
+				<div>
+					{item.quantityShipped}
+				</div>
+				<div>
+					{item.quantityRequested - item.quantityShipped}
+				</div>
+				<div>
+					<NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+				</div>
+				<div>
+					<NumberFormat value={item.itemTotalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+				</div>
 			</div>
-			<div>
-				
-			</div>
-		</div>
+		)
 	})
 	return(
 		<div>
@@ -87,11 +115,11 @@ export default function InvoiceDetail({ history, invoiceId }) {
 			<DivOrderInfoContainer>
 				<DivOrderInfo>
 					<p>Bill-to-Address:</p>
-					<p>{shipToName}</p>
-					<p>{shipToAddress1}</p>
-					{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-					{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
-					<p>{shipToCity}, {shipToState} {shipToZip}</p>
+					<p>{billingName}</p>
+					<p>{billingAddress1}</p>
+					{!_.isNil(billingAddress2) && <p>{billingAddress2}</p>}
+					{!_.isNil(billingAddress3) && <p>{billingAddress3}</p>}
+					<p>{billingCity}, {billingState} {billingZip}</p>
 				</DivOrderInfo>
 				<DivOrderInfo>
 					<p>Ship-to-Address:</p>
@@ -104,33 +132,30 @@ export default function InvoiceDetail({ history, invoiceId }) {
 			</DivOrderInfoContainer>
 			<DivOrderInfoContainer>
 				<DivOrderInfo>
-					<p>Invoice Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+					<p>Invoice Date: {_.isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</p>
 					<p>Invoice Number: {invoiceId}</p>
 					<p>P.O. Number: {poNo}</p>
-					<p>Order Number: {status}</p>
+					<p>Order Number: {orderNumber}</p>
 				</DivOrderInfo>
 				<DivOrderInfo>
 					<p>Status: {status}</p>
-					<p>Terms: {status}</p>
-					<p>Net Due Date: {status}</p>
-					<p>Disc Due Date: {status}</p>
-					<p>Discount Amount: {status}</p>
+					<p>Terms: {terms}</p>
+					<p>Net Due Date: {_.isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</p>
+					<p>Disc Due Date: {_.isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</p>
+					<p>Discount Amount: {discountAmount}</p>
 				</DivOrderInfo>
 				<DivOrderInfo>
-					<p>Order Date: {status}</p>
-					<p>Ordered By: {status}</p>
-					<p>Taker: {status}</p>
-					<p>Pick Ticket No: {status}</p>
-					<p>Carrier: {status}</p>
-					<p>Tracking No: {status}</p>
+					<p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+					<p>Ordered By: ???</p>
+					<p>Taker: {taker}</p>
 				</DivOrderInfo>
 			</DivOrderInfoContainer>
 			<DivOrderInfoContainer>
 				<DivOrderInfo>
-					<p>Delivery Instructions: {status}</p>
+					<p>Delivery Instructions: ???</p>
 				</DivOrderInfo>
 				<DivOrderInfo>
-					<p>Order Note: {status}</p>
+					<p>Order Note: ???</p>
 				</DivOrderInfo>
 			</DivOrderInfoContainer>
 			{itemDetails}

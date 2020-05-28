@@ -80,14 +80,14 @@ export const billToSchema = object({
 		firstName: string()
 			.when('paymentMethod', {
 				is: 'purchase_order',
-				then: string().min(3).max(50).required(),
-				otherwise: string().min(3).max(50)
+				then: string(),
+				otherwise: string().min(3).max(50).required()
 			}),
 		lastName: string()
 			.when('paymentMethod', {
 				is: 'purchase_order',
-				then: string().min(3).max(50).required(),
-				otherwise: string().min(3).max(50)
+				then: string(),
+				otherwise: string().min(3).max(50).required()
 			}),
 		address1: string()
 			.min(5)
