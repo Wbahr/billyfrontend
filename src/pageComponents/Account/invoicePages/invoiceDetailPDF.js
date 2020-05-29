@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
-import { formatTableData } from '../helpers/mutators'
 import 'react-datepicker/dist/react-datepicker.css'
-import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
-import { GET_INVOICE } from '../../../config/providerGQL'
-import { useLazyQuery } from '@apollo/client'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { MyDocument } from './invoiceDetailPDF'
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
 
-const PageContainer = styled.div`
-	padding: 16px 32px;
-	box-shadow: 8px 8px 6px -6px lightgray;
-	border: 1px solid whitesmoke;
-`
+// Create styles
+const styles = StyleSheet.create({
+	page: {
+		padding: '16px 32px'
+	},
+	section: {
+		margin: 10,
+		padding: 10,
+		flexGrow: 1
+	}
+})
 
 const DivOrderInfoContainer = styled.div`
 		display: flex;
@@ -96,43 +97,7 @@ const Row = styled.div`
 		display: flex;
 `
 
-const DivTotalContainer = styled.div`
-	width: 300px;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	padding: 5px 12px;
-	margin-left: auto;
-	margin-top: 16px;
-`
-
-export default function InvoiceDetail({ history, invoiceId }) {
-	const context = useContext(Context)
-	const didMountRef = useRef(false)
-	const [data, setData] = useState({})
-
-	useEffect(() => {
-		if (!didMountRef.current && context.invoiceCache.length === 0) {
-			handleGetInvoice(
-				{
-					variables: {
-						'invoiceNumber': invoiceId
-					}
-				}
-			)
-		} else if (context.invoiceCache.length > 0) {
-			let mutatedData = formatTableData('invoice-detail', context.invoiceCache, invoiceId)
-			setData(mutatedData)
-		}
-		didMountRef.current = true
-	}, [context.invoiceCache])
-
-	const [handleGetInvoice] = useLazyQuery(GET_INVOICE, {
-		fetchPolicy: 'no-cache',
-		onCompleted: result => {
-			let mutatedData = formatTableData('invoice-detail', result, invoiceId)
-			setData(mutatedData)
-		}
-	})
+export default function InvoiceDetailPDF({ invoiceId, data }) {
 
 	const {
 		orderDate,
@@ -160,10 +125,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
 		netDueDate,
 		discDueDate,
 		discountAmount,
-		orderedBy,
-		subTotal,
-		totalTax,
-		amountDue
+		orderedBy
 	} = data
 
 	let itemDetails = _.map(lineItems, item => {
@@ -200,21 +162,16 @@ export default function InvoiceDetail({ history, invoiceId }) {
 			</DivItemDetail>
 		)
 	})
-	if (_.isEmpty(data)) {
-		return(
-			<div>
-				<p>loading...</p>
-			</div>
-		)
-	} else {
-		return(
-			<PageContainer>
+
+	return(
+		<Document>
+			<Page size="A4" style={styles.page}>
 				<DivHeader>
 					<img src={AirlineLogo} height="40px"/>
 					<h4 style={{'paddingLeft': '8px'}}>Invoice #{invoiceId}</h4>
-					{/* <PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
+					<PDFDownloadLink document={<MyDocument />} fileName={`airline_invoice_${invoiceId}.pdf`}>
 						{({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
-					</PDFDownloadLink> */}
+					</PDFDownloadLink>
 					<p onClick={()=>{history.push('/account/invoices')}}>Back to Invoices</p>
 				</DivHeader>
 				<DivOrderInfoContainer>
@@ -284,12 +241,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
 					</DivItemDetailCell>
 				</DivItemDetailHeader>
 				{itemDetails}
-				<DivTotalContainer>
-					<Row><P1>Subtotal: </P1><NumberFormat value={subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
-					<Row><P1>Tax: </P1><NumberFormat value={totalTax} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
-					<Row><P1>Amount Due: </P1><NumberFormat value={amountDue} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
-				</DivTotalContainer>
-			</PageContainer>
-		)
-	}
+			</Page>
+		</Document>
+	)
 }
