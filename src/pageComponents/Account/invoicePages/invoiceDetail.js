@@ -10,7 +10,7 @@ import NumberFormat from 'react-number-format'
 import { GET_INVOICE } from '../../../config/providerGQL'
 import { useLazyQuery } from '@apollo/client'
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { MyDocument } from './invoiceDetailPDF'
+import MyDocument from './invoiceDetailPDF'
 
 const PageContainer = styled.div`
 	padding: 16px 32px;
@@ -212,9 +212,9 @@ export default function InvoiceDetail({ history, invoiceId }) {
 				<DivHeader>
 					<img src={AirlineLogo} height="40px"/>
 					<h4 style={{'paddingLeft': '8px'}}>Invoice #{invoiceId}</h4>
-					{/* <PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
+					<PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
 						{({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
-					</PDFDownloadLink> */}
+					</PDFDownloadLink>
 					<p onClick={()=>{history.push('/account/invoices')}}>Back to Invoices</p>
 				</DivHeader>
 				<DivOrderInfoContainer>

@@ -1,11 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from '@react-pdf/styled-components'
 import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
-import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer'
+import { Page, Text, View, Link, Image, Document, StyleSheet } from '@react-pdf/renderer'
 
 // Create styles
 const styles = StyleSheet.create({
@@ -16,85 +16,116 @@ const styles = StyleSheet.create({
 		margin: 10,
 		padding: 10,
 		flexGrow: 1
+	},
+	logo: {
+		height: '40px',
+		width: '133px',
+		marginRight: '4mm'
+	},
+	invoiceNumber: {
+		color: 'black',
+		paddingLeft: '8px',
+		fontSize: '16px',
+		fontWeight: '500'
+	},
+	headerView: {
+		display: 'flex',
+		color: 'black',
+		paddingLeft: '8px',
+		fontSize: '16px',
+		fontWeight: '500'
+	},
+	addressContainer: {
+		display: 'flex',
+		width: '100%'
 	}
 })
 
-const DivOrderInfoContainer = styled.div`
+const DivOrderInfoContainer = styled.View`
 		display: flex;
-		border-top: 1px solid black;
-		border-bottom: 1px solid black;
+		flex-direction: row;
+		border-top: 1pt solid black;
+		border-bottom: 1pt solid black;
 	`
 
-const DivOrderInfo = styled.div`
-		width: 300px;
+const DivOrderInfo = styled.View`
+		width: 50%;
 		display: flex;
 		flex-direction: column; 
-		margin: 8px 0;
-		p {
-			margin: 0;
-			margin-left: 8px;  
-		}
+		margin: 2mm 1mm;
 	`
 
-const DivHeader = styled.div`
+const DivOrderInfoSm = styled.View`
+		width: 30%;
 		display: flex;
-		align-items: center;
-		margin: 4px 0;
-		h4 {
-			margin: 0;
-		}
-		p {
-			cursor: pointer;
-			color: grey;
-			font-size: 14px;
-			margin: 0 0 0 auto;
-		}
+		flex-direction: column; 
+		margin: 2mm 1mm;
 	`
 
-const DivItemDetail = styled.div`
+const DivItemDetailHeader = styled.View`
 		display: flex;
-		min-height: 48px;
-		padding: 8px;
-		border-bottom: 1px solid whitesmoke;
+		flex-direction: row;
+		border-top: 1pt solid grey;
+		border-bottom: 1pt solid grey;
+		margin-top: 1mm;
+		padding: 2mm 2mm;
 	`
 
-const DivItemDetailHeader = styled(DivItemDetail)`
-		font-weight: 700;
-		border-bottom: 1px solid grey;
-		padding: 0;
-	`
-
-const DivItemDetailCell = styled.div`
-		flex: display;
+const DivItemDetailCell = styled.View`
+		display: flex;
 		flex-direction: column;
 		width: ${props => props.width};
 		align-self: center;
 		text-align: ${props => _.isNil(props.align) ? 'left' : props.align};
 	`
 
-const P1 = styled.p`
-		font-weight: bold;
-		margin: 0;
+const Header = styled.View`
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	margin: 2mm 0;
+	align-items: center;
+`
+
+const P0 = styled.Text`
+		font-size: 10pt;
+
+`
+const P1 = styled.Text`
+		font-size: 10pt;
 	`
 
-const P2 = styled.p`
-		margin: 0 0 0 8px;
-		font-size: 14px;
-		color: darkgrey;
+const P2 = styled.Text`
+		font-size: 10pt;
+		color: grey;
 	`
 
-const A = styled.a`
-		margin: 0 0 0 24px;
-		font-size: 14px;
+const P3 = styled.Text`
+	font-size: 18pt;
+`
+
+const DivItemDetail = styled.View`
+	display: flex;
+	flex-direction: row;
+	margin: 2mm 0;
+	padding: 1mm 2mm;
+	border-top: 1pt solid grey;
+	border-bottom: 1pt solid grey;
+`
+
+const A = styled.Link`
+		font-size: 8px;
+		padding-left: 2mm;
 	`
 
-const DivTracking = styled.div`
+const DivTracking = styled.View`
 		display: flex;
 		flex-direction: column;
 	`
 
-const Row = styled.div`
+const Row = styled.View`
 		display: flex;
+		flex-direction: row;
 `
 
 export default function InvoiceDetailPDF({ invoiceId, data }) {
@@ -131,7 +162,7 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 	let itemDetails = _.map(lineItems, item => {
 		return (
 			<DivItemDetail>
-				<DivItemDetailCell width='300px'>
+				<DivItemDetailCell width='31%'>
 					<P1>{item.itemDescription}</P1>
 					<P2>Item Code: {item.itemCode}</P2>
 					<P2>AHC#: {item.invMastUid}</P2>
@@ -139,25 +170,40 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 						return(
 							<DivTracking key={tracking.trackingNumber}>
 								<P2>{tracking.carrierName}: </P2>
-								<A href={tracking.trackingUrl} target='_blank' rel='noopener noreferrer'>{tracking.trackingNumber}</A>
+								<A src={tracking.trackingUrl}>{tracking.trackingNumber}</A>
 							</DivTracking>
 						)
 					})}
 				</DivItemDetailCell>
-				<DivItemDetailCell width='120px' align='center'>
-					{item.quantityRequested}
+				<DivItemDetailCell width='10%' align='center'>
+					<P0>
+						{item.quantityRequested}
+					</P0>
 				</DivItemDetailCell>
-				<DivItemDetailCell width='120px' align='center'>
-					{item.quantityShipped}
+				<DivItemDetailCell width='10%' align='center'>
+					<P0>
+						{item.quantityShipped}
+					</P0>
 				</DivItemDetailCell>
-				<DivItemDetailCell width='120px' align='center'>
-					{item.quantityRequested - item.quantityShipped}
+				<DivItemDetailCell width='10%' align='center'>
+					<P0>
+						{item.quantityRequested - item.quantityShipped}
+					</P0>
 				</DivItemDetailCell>
-				<DivItemDetailCell  width='100px' align='right'>
-					<NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+				<DivItemDetailCell  width='13%' align='right'>
+					<P0>
+					
+					</P0>
 				</DivItemDetailCell>
-				<DivItemDetailCell  width='100px' align='right'>
-					<NumberFormat value={item.itemTotalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+				<DivItemDetailCell  width='13%' align='right'>
+					<P0>
+						${item.unitPrice.toFixed(2)}
+					</P0>
+				</DivItemDetailCell>
+				<DivItemDetailCell  width='13%' align='right'>
+					<P0>
+						${item.itemTotalPrice.toFixed(2)}
+					</P0>
 				</DivItemDetailCell>
 			</DivItemDetail>
 		)
@@ -166,78 +212,77 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 	return(
 		<Document>
 			<Page size="A4" style={styles.page}>
-				<DivHeader>
-					<img src={AirlineLogo} height="40px"/>
-					<h4 style={{'paddingLeft': '8px'}}>Invoice #{invoiceId}</h4>
-					<PDFDownloadLink document={<MyDocument />} fileName={`airline_invoice_${invoiceId}.pdf`}>
-						{({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
-					</PDFDownloadLink>
-					<p onClick={()=>{history.push('/account/invoices')}}>Back to Invoices</p>
-				</DivHeader>
+				<Header style={styled.headerView}>
+					<Image src={AirlineLogo} style={styles.logo}/>
+					<P3>Invoice #{invoiceId}</P3>
+				</Header>
 				<DivOrderInfoContainer>
 					<DivOrderInfo>
 						<P1>Bill-to-Address:</P1>
-						<p>{billingName}</p>
-						<p>{billingAddress1}</p>
-						{!_.isNil(billingAddress2) && <p>{billingAddress2}</p>}
-						{!_.isNil(billingAddress3) && <p>{billingAddress3}</p>}
-						<p>{billingCity}, {billingState} {billingZip}</p>
+						<P0>{billingName}</P0>
+						<P0>{billingAddress1}</P0>
+						{!_.isNil(billingAddress2) && <P0>{billingAddress2}</P0>}
+						{!_.isNil(billingAddress3) && <P0>{billingAddress3}</P0>}
+						<P0>{billingCity}, {billingState} {billingZip}</P0>
 					</DivOrderInfo>
 					<DivOrderInfo>
 						<P1>Ship-to-Address:</P1>
-						<p>{shipToName}</p>
-						<p>{shipToAddress1}</p>
-						{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-						{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
-						<p>{shipToCity}, {shipToState} {shipToZip}</p>
+						<P0>{shipToName}</P0>
+						<P0>{shipToAddress1}</P0>
+						{!_.isNil(shipToAddress2) && <P0>{shipToAddress2}</P0>}
+						{!_.isNil(shipToAddress3) && <P0>{shipToAddress3}</P0>}
+						<P0>{shipToCity}, {shipToState} {shipToZip}</P0>
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
 				<DivOrderInfoContainer>
-					<DivOrderInfo>
-						<Row><P1>Invoice Date: </P1><p>{_.isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</p></Row>
-						<Row><P1>Invoice Number: </P1><p>{invoiceId}</p></Row>
-						<Row><P1>P.O. Number: </P1><p>{poNo}</p></Row>
-						<Row><P1>Order Number: </P1><p>{orderNumber}</p></Row>
-					</DivOrderInfo>
-					<DivOrderInfo>
-						<Row><P1>Status: </P1><p>{status}</p></Row>
-						<Row><P1>Terms: </P1><p>{terms}</p></Row>
-						<Row><P1>Net Due Date: </P1><p>{_.isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</p></Row>
-						<Row><P1>Disc Due Date: </P1><p>{_.isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</p></Row>
-						<Row><P1>Discount Amount: </P1><p>{discountAmount}</p></Row>
-					</DivOrderInfo>
-					<DivOrderInfo>
-						<Row><P1>Order Date: </P1><p>{_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p></Row>
-						<Row><P1>Ordered By: </P1><p>{orderedBy}</p></Row>
-						<Row><P1>Taker: </P1><p>{taker}</p></Row>
-					</DivOrderInfo>
+					<DivOrderInfoSm>
+						<Row><P1>Invoice Date: </P1><P0>{_.isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</P0></Row>
+						<Row><P1>Invoice Number: </P1><P0>{invoiceId}</P0></Row>
+						<Row><P1>P.O. Number: </P1><P0>{poNo}</P0></Row>
+						<Row><P1>Order Number: </P1><P0>{orderNumber}</P0></Row>
+					</DivOrderInfoSm>
+					<DivOrderInfoSm>
+						<Row><P1>Status: </P1><P0>{status}</P0></Row>
+						<Row><P1>Terms: </P1><P0>{terms}</P0></Row>
+						<Row><P1>Net Due Date: </P1><P0>{_.isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</P0></Row>
+						<Row><P1>Disc Due Date: </P1><P0>{_.isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</P0></Row>
+						<Row><P1>Discount Amount: </P1><P0>{discountAmount}</P0></Row>
+					</DivOrderInfoSm>
+					<DivOrderInfoSm>
+						<Row><P1>Order Date: </P1><P0>{_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
+						<Row><P1>Ordered By: </P1><P0>{orderedBy}</P0></Row>
+						<Row><P1>Taker: </P1><P0>{taker}</P0></Row>
+					</DivOrderInfoSm>
 				</DivOrderInfoContainer>
 				<DivOrderInfoContainer>
 					<DivOrderInfo>
-						<P1>Delivery Instructions:</P1><p> ???</p>
+						<P1>Delivery Instructions:</P1><P0> ???</P0>
 					</DivOrderInfo>
 					<DivOrderInfo>
-						<P1>Order Note:</P1><p></p>
+						<P1>Order Note:</P1><P0></P0>
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
 				<DivItemDetailHeader>
-					<DivItemDetailCell width='300px'>
-						Item Information
+					<DivItemDetailCell width='31%'>
+						<P0>Item Information</P0>
 					</DivItemDetailCell>
-					<DivItemDetailCell width='120px' align='center'>
-						Ordered
+					<DivItemDetailCell width='10%' align='center'>
+						<P0>Ordered</P0>
 					</DivItemDetailCell>
-					<DivItemDetailCell width='120px' align='center'>
-						Shipped
+					<DivItemDetailCell width='10%' align='center'>
+						<P0>Shipped</P0>
 					</DivItemDetailCell>
-					<DivItemDetailCell width='120px' align='center'>
-						Remaining
+					<DivItemDetailCell width='10%' align='center'>
+						<P0>Remaining</P0>
 					</DivItemDetailCell>
-					<DivItemDetailCell width='100px' align='right'>
-						Unit Price
+					<DivItemDetailCell width='13%' align='center'>
+						<P0>UOM</P0>
 					</DivItemDetailCell>
-					<DivItemDetailCell width='100px' align='right'>
-						Total Price
+					<DivItemDetailCell width='13%' align='right'>
+						<P0>Unit Price</P0>
+					</DivItemDetailCell>
+					<DivItemDetailCell width='13%' align='right'>
+						<P0>Total Price</P0>
 					</DivItemDetailCell>
 				</DivItemDetailHeader>
 				{itemDetails}

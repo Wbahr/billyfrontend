@@ -53,6 +53,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/react-transition-group": "^4.3.0",
     "@react-pdf/renderer": "^1.6.8",
+    "@react-pdf/styled-components": "^1.4.0",
     "apollo-boost": "^0.4.8",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.5.0",
