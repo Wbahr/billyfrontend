@@ -226,7 +226,7 @@ export default function OpenOrdersTable({history}) {
 	// let copyData = clipboardData(columns, data)
 	return(
 		<TableContainer>
-			<h4>Open Orders</h4>
+			<h4>Open Orders Report</h4>
 			{/* <CopyToClipboard text={copyData}>
 				<button>copy</button>
 		</CopyToClipboard> */}

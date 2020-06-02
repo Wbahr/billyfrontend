@@ -1,31 +1,13 @@
-import React, { useState } from 'react'
+// import _ from 'lodash'
+import React, { useState, useEffect, useContext, useRef, useMemo } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
-import { useLazyQuery } from '@apollo/client'
-import { Button } from '@material-ui/core'
-import AirlineInput from '../../../pageComponents/_common/form/inputv2'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-
-const DivSearchInputWrapper = styled.div`
-  max-width: 500px;
-`
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 12px auto;
-  button {
-    margin: 0 16px;
-  }
-`
-
-const DivSpacer = styled.div`
-  margin: 5px 0px;
-  display: flex;
-  flex-direction: column;
-`
+import { useQuery } from '@apollo/client'
+import { useTable, usePagination, useSortBy  } from 'react-table'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'react-datepicker/dist/react-datepicker.css'
+import { format as dateFormat } from 'date-fns'
 
 const ContentScreenContainer = styled.div`
   display: flex;
@@ -37,66 +19,266 @@ const ContentScreenContainer = styled.div`
   align-items: center;
 `
 
-const GET_ORDER_DATA = gql`
-  query ItemById($itemId: Int){
-    customerPartNumbers(frecno: $itemId){
-      customerPartNumber
-      id
+const TableContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 1200px;
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+	padding: 20px 40px;
+	margin: 0 auto 0 0;
+`
+
+const Table = styled.table`
+	margin: 16px;
+`
+
+const TRheader = styled.tr`
+	border-bottom: 1px solid gray;
+`
+
+const THheader = styled.th`
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 500;
+	font-size: 15px;
+`
+
+const TRrow = styled.tr`
+	border-bottom: 1px solid lightgray;
+`
+
+const TDrow = styled.td`
+	padding: 8px 16px;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-size: 15px;
+	color: ${props => props.isOrderDetail ? '#0056b3' : 'black'};
+	font-weight: ${props => props.isOrderDetail ? 400 : 300};
+	cursor: ${props => props.isOrderDetail ? 'pointer' : 'default'};
+`
+
+const ButtonPagination = styled.button`
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	border: 1px solid black;
+	border-radius: 1px;
+`
+
+const SpanSort = styled.span`
+	margin-left: 4px;
+`
+
+const DivSpacer = styled.div`
+	margin: 0 8px;
+`
+
+const DivRow = styled.div`
+	display: flex;
+	align-items: center;
+`
+
+const DivRowDate = styled(DivRow)`
+	margin-top: 16px;
+`
+
+const Pdate = styled.p`
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	margin: 0;
+	margin-right: 4px;
+	padding-top: 6px;
+`
+
+const Select = styled.select`
+	margin-left: 16px;
+`
+
+const GET_OPEN_ORDERS = gql`
+  query OrdersForEmployees{
+    ordersForEmployees{
+			orderNumber
+			orderDate
+			poNo
+			orderType
+			status
     }
   }
 `
 
 export default function OrderDatapage() {
-	const [orderNumber, setOrderNumber] = useState('')
-	const [orderData, setOrderData] = useState(null)
+	const [data, setOrderData] = useState([])
 
-	const [getOrderData, {loading}] = useLazyQuery(GET_ORDER_DATA, {
+	useQuery(GET_OPEN_ORDERS, {
 		fetchPolicy: 'no-cache',
-		variables: { orderNumber },
+		// variables: { orderNumber },
 		onCompleted: result => {
-			if (!_.isNil(result.customerPartNumbers)) {
-				setOrderNumber('')
-				setOrderData(null)
-			} else {
-				setOrderData(null)
-			}
+			setOrderData(result.ordersForEmployees)
 		}
 	})
 
+	const columns = useMemo(
+		() => [
+			{
+				Header: 'Order Date',
+				accessor: 'orderDate', // accessor is the "key" in the data
+				Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
+			},
+			{
+				Header: 'Order Type',
+				accessor: 'orderType',
+			},
+			{
+				Header: 'Order #',
+				accessor: 'orderNumber',
+			},
+			{
+				Header: 'PO #',
+				accessor: 'poNo',
+			},
+			{
+				Header: 'Status',
+				accessor: 'status',
+			},
+			{
+				Header: 'Filter',
+				accessor: 'filter'
+			}
+		],
+		[],
+	)
+	const {
+		getTableProps,
+		getTableBodyProps,
+		headerGroups,
+		rows, //all rows
+		prepareRow,
+		page, // current page in rows
+		canPreviousPage,
+		canNextPage,
+		pageOptions,
+		pageCount,
+		gotoPage,
+		nextPage,
+		previousPage,
+		setPageSize,
+		state: { pageIndex, pageSize },
+	} = useTable(    
+		{
+			columns,
+			data,
+			initialState: { 
+				pageIndex: 0, 
+				hiddenColumns: ['filter'],
+				sortBy: [
+					{
+						id: 'orderDate',
+						desc: true
+					}
+				]
+			},
+		},
+		useSortBy,
+		usePagination
+	)
+
 	return(
 		<ContentScreenContainer>
-			<DivSearchInputWrapper>
-				<DivSpacer>
-					<AirlineInput 
-						label="Order Number:"
-						type="text"
-						placeholder="Enter Order Number"
-						name="orderNumber"
-						value={orderNumber}
-						onChange={e => setOrderNumber(e.target.value)}
+			<Table {...getTableProps()}>
+				<thead>
+					{headerGroups.map(headerGroup => (
+						<TRheader {...headerGroup.getHeaderGroupProps()}>
+							{headerGroup.headers.map(column => (
+								<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+									{column.render('Header')}
+									<SpanSort>
+										{column.isSorted
+											? column.isSortedDesc
+												?  <FontAwesomeIcon icon="caret-up" color="black"/>
+												:  <FontAwesomeIcon icon="caret-down" color="black"/>
+											: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+									</SpanSort>
+								</THheader>
+							))}
+						</TRheader>
+					))}
+				</thead>
+				<tbody {...getTableBodyProps()}>
+					{page.map(row => {
+						prepareRow(row)
+						return (
+							<TRrow {...row.getRowProps()}>
+								{row.cells.map(cell => {
+									if(cell.column.id === 'orderNumber') {
+										return (
+											<TDrow {...cell.getCellProps()} isOrderDetail>
+												<a style={{cursor: 'pointer'}} href={`https://p21wc.airlinehyd.com/common/orderdetails.aspx?orderid=${cell.value}`} target='_blank' rel="noopener noreferrer">
+													{cell.render('Cell')}
+												</a>
+											</TDrow>
+										)
+									} else {
+										return (
+											<TDrow {...cell.getCellProps()}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									}
+								})}
+							</TRrow>
+						)
+					})}
+				</tbody>
+			</Table>
+			{/* 
+				Pagination can be built however you'd like. 
+				This is just a very basic UI implementation:
+			*/}
+			<div>
+				<ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+					{'<<'}
+				</ButtonPagination>{' '}
+				<ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
+					{'<'}
+				</ButtonPagination>{' '}
+				<span>
+					Page{' '}
+					<strong>
+						{pageIndex + 1} of {pageOptions.length}
+					</strong>{' '}
+				</span>
+				<ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
+					{'>'}
+				</ButtonPagination>{' '}
+				<ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+					{'>>'}
+				</ButtonPagination>{' '}
+				<span>
+					| Go to page:{' '}
+					<input
+						type="number"
+						defaultValue={pageIndex + 1}
+						onChange={e => {
+							const page = e.target.value ? Number(e.target.value) - 1 : 0
+							gotoPage(page)
+						}}
+						style={{ width: '100px' }}
 					/>
-				</DivSpacer>
-			</DivSearchInputWrapper>
-			<ButtonContainer>
-				<Button variant="contained" color="secondary" disabled={false} onClick={() => { setOrderNumber(''), setOrderData(null)}}>
-        Clear
-				</Button>
-				<Button variant="contained" color="primary" disabled={loading} onClick={() => {getOrderData()}}>
-					{loading ? 'Searching..' : 'Get Data'}
-				</Button>
-			</ButtonContainer>
-			<AirlineInput 
-				type="text"
-				placeholder="Order Data"
-				name="orderData"
-				value={orderData}
-				disabled={true}
-			/>
-			<ButtonContainer>
-				<CopyToClipboard text={orderData}>
-					<Button disabled={_.isNil(orderData)}variant="contained" color="secondary">Copy Data</Button>
-				</CopyToClipboard>
-			</ButtonContainer>
+				</span>{' '}
+				<select
+					value={pageSize}
+					onChange={e => {
+						setPageSize(Number(e.target.value))
+					}}
+				>
+					{[10, 25, 50, 100].map(pageSize => (
+						<option key={pageSize} value={pageSize}>
+							Show {pageSize}
+						</option>
+					))}
+				</select>
+				<p>Results: {_.isEmpty(data) ? 'Loading...' : rows.length}</p>
+			</div>
 		</ContentScreenContainer>
 	)
 }

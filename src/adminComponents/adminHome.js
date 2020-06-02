@@ -95,7 +95,7 @@ export default function AdminHome() {
 	case 'item-creation':
 		AdminTool = ItemCreation
 		break
-	case 'order-data':
+	case 'open-orders':
 		AdminTool = OpenOrders
 		break
 	default:
