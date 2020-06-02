@@ -130,7 +130,6 @@ const Row = styled.View`
 
 const DivTotalContainer = styled.View`
 		display: flex;
-		align-items: flex-end;
 		width: 30%;
 		margin-left: auto;
 		padding: 1mm 4mm;
@@ -300,9 +299,9 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 				</DivItemDetailHeader>
 				{itemDetails}
 				<DivTotalContainer>
-					<P0>Subtotal: {subTotal}</P0>
-					<P0>Total Tax: {totalTax}</P0>
-					<P0>Total: {subTotal + totalTax}</P0>
+					<P0>Subtotal: ${subTotal.toFixed(2)}</P0>
+					<P0>Total Tax: ${totalTax.toFixed(2)}</P0>
+					<P0>Amount Due: ${amountDue.toFixed(2)}</P0>
 				</DivTotalContainer>
 			</Page>
 		</Document>
