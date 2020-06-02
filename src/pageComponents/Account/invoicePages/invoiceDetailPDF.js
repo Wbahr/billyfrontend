@@ -128,6 +128,16 @@ const Row = styled.View`
 		flex-direction: row;
 `
 
+const DivTotalContainer = styled.View`
+		display: flex;
+		align-items: flex-end;
+		width: 30%;
+		margin-left: auto;
+		padding: 1mm 4mm;
+		border-top: 1pt solid black;
+		border-bottom: 1pt solid black;
+`
+
 export default function InvoiceDetailPDF({ invoiceId, data }) {
 
 	const {
@@ -156,7 +166,10 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 		netDueDate,
 		discDueDate,
 		discountAmount,
-		orderedBy
+		orderedBy,
+		subTotal,
+		totalTax,
+		amountDue
 	} = data
 
 	let itemDetails = _.map(lineItems, item => {
@@ -286,6 +299,11 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
 					</DivItemDetailCell>
 				</DivItemDetailHeader>
 				{itemDetails}
+				<DivTotalContainer>
+					<P0>Subtotal: {subTotal}</P0>
+					<P0>Total Tax: {totalTax}</P0>
+					<P0>Total: {subTotal + totalTax}</P0>
+				</DivTotalContainer>
 			</Page>
 		</Document>
 	)
