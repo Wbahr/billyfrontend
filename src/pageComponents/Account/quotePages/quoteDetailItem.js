@@ -1,11 +1,10 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef } from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
-import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 export default function OrderDetailItem({ item }) {
-	const context = useContext(Context)
 	const didMountRef = useRef(false)
 	const [quantity, setQuantity] = useState(1)
 	const [isListView, setIsListView] = useState(true)
@@ -187,7 +186,7 @@ export default function OrderDetailItem({ item }) {
 				</DivCol2>
 				<DivCol2>
 					<P2>Promise Date: {item.quantityOrdered}</P2>
-					<P2>{item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
+					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
 					<P2>Unit Price: {item.unitPrice}</P2>
 					<P2>Total Price: {item.totalPrice}</P2>
 				</DivCol2>

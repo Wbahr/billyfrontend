@@ -6,6 +6,7 @@ import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
+import AddedModal from '../../SearchResults/uiComponents/addedModal'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -21,34 +22,10 @@ const DivRow = styled.div`
 		display: flex;
 	`
 
-const DivItem = styled.div`
-		display: flex;
-		flex-direction: column;
-	`
-
 const DivCard = styled.div`
 		display: flex;
 		align-items: center;
 		width: 100%;
-	`
-
-const DivQuantity = styled.div`
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-	`
-
-const DivDivide = styled.div`
-		display: flex;
-		cursor: pointer;
-		align-items: center;
-		justify-content: center;
-		background-color: #328EFC;
-		border-radius: 50px;
-		height: 20px;
-		width: 20px;
-		opacity: 0.5;
 	`
 
 const DivRemove = styled.div`
@@ -57,26 +34,6 @@ const DivRemove = styled.div`
 		width: auto;
 		margin: auto 12px;
 		align-items: center;
-	`
-
-const DivSplitLine = styled(DivRemove)`
-		padding: 0 3px;
-		// border: 1px solid #328EFC;
-		margin: 0;
-		border-radius: 50px;
-		color: #328EFC;
-		height: 20px;
-		font-size: 12px;
-		// padding-left: 8px;
-		font-weight: 600;
-	`
-
-const DivMove = styled.div`
-		cursor: move;
-		display: flex;
-		height: 100%;
-		align-items: center;
-		padding: 0 12px;
 	`
 
 const DivCol1 = styled.div`
@@ -108,34 +65,6 @@ const Img = styled.img`
 		margin: 0 4px;
 	`
 
-const DivTotalPrice = styled.div`
-		display: flex;
-		width: 150px;
-		align-items: center;
-		justify-items: flex-end;
-		p {
-			text-align: right;
-			font-size: 20px;
-			margin: 0 20px 0 auto;
-			font-weight: 600;
-		}
-	`
-
-const Label = styled.label`
-		margin: 0;
-		font-size: 12px;
-		font-style: italic;
-	`
-
-const Peach = styled.p`
-		margin: 0;
-		padding-right: 8px;
-	`
-
-const DivEditPrice = styled.div`
-		cursor: pointer;
-	`
-
 const P1 = styled.p`
 		cursor: pointer;
 		font-size: 16px;
@@ -151,11 +80,6 @@ const P2 = styled.p`
 		color: grey;
 		font-size: 12px !important;
 		padding: 0 2px;
-	`
-
-const P3 = styled.p`
-		color: black;
-		font-size: 12px !important;
 	`
 
 const ButtonSmall = styled.button`
@@ -176,7 +100,8 @@ const ButtonSmall = styled.button`
 	`
 
 export default function OrderDetailItem({ item }) {
-	const [quantity, setQuantity] = useState('1')
+	const [quantity, setQuantity] = useState(1)
+	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const context = useContext(Context)
 
 	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid)
@@ -190,9 +115,19 @@ export default function OrderDetailItem({ item }) {
 		imageFile = imageFile.slice(0, -5) + 't.jpg'
 		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 	}
+
+	function handleAddedToCart(){
+		setShowAddedToCartModal(false)
+	}
 	
 	return(
 		<DivContainer>
+			<AddedModal 
+				open={showShowAddedToCartModal} 
+				text={'Added to Cart!'} 
+				onClose={handleAddedToCart}
+				timeout={900}
+			/>
 			<DivCard>
 				<DivCol1>
 					<Img max-height='100%' max-width='100%' src={imagePath} />
@@ -215,7 +150,7 @@ export default function OrderDetailItem({ item }) {
 				</DivCol2>
 				<DivCol2>
 					<P2>Promise Date: {item.quantityOrdered}</P2>
-					<P2>{item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
+					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
 					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
@@ -232,7 +167,7 @@ export default function OrderDetailItem({ item }) {
 									'itemNotes': '',
 									'itemUnitPriceOverride': null,
 									'customerPartNumberId': item.customerPartNumberId
-								})
+								}), setShowAddedToCartModal(true), setQuantity(1)
 							}}>Add to Cart</ButtonSmall>
 						)}
 					</Context.Consumer>

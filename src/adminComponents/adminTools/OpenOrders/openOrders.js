@@ -1,5 +1,5 @@
 // import _ from 'lodash'
-import React, { useState, useEffect, useContext, useRef, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
@@ -17,15 +17,6 @@ const ContentScreenContainer = styled.div`
   margin: 28px auto;
   flex-grow: 99;
   align-items: center;
-`
-
-const TableContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 1200px;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-	padding: 20px 40px;
-	margin: 0 auto 0 0;
 `
 
 const Table = styled.table`
@@ -68,30 +59,9 @@ const SpanSort = styled.span`
 	margin-left: 4px;
 `
 
-const DivSpacer = styled.div`
-	margin: 0 8px;
-`
-
 const DivRow = styled.div`
 	display: flex;
 	align-items: center;
-`
-
-const DivRowDate = styled(DivRow)`
-	margin-top: 16px;
-`
-
-const Pdate = styled.p`
-	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	margin: 0;
-	margin-right: 4px;
-	padding-top: 6px;
-`
-
-const Select = styled.select`
-	margin-left: 16px;
 `
 
 const GET_OPEN_ORDERS = gql`

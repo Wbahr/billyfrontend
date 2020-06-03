@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useQuery, useLazyQuery } from '@apollo/client'
@@ -105,7 +106,18 @@ export default function LoginPage(props) {
 	const context = useContext(Context)
 	const history = props.history
 
-	const [executeLogIn, { loading, error, data }] = useLazyQuery(QUERY_LOGIN, {
+	// Account for delays in loading context
+	useEffect(() => {
+		if (!_.isNil(context.userInfo)) {
+			let urlParams = new URLSearchParams(props.location.search)
+			let redirect = urlParams.get('next')
+			if(!_.isNil(redirect)){
+				history.push(redirect)
+			}
+		}
+	},[context.userInfo])
+
+	const [executeLogIn, { loading, error }] = useLazyQuery(QUERY_LOGIN, {
 		onCompleted: data => {
 			let requestData = data.submitLogin
 			if(requestData.success){

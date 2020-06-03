@@ -1,5 +1,4 @@
-import React, {useState, useRef} from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
@@ -25,7 +24,7 @@ export default function ResetPasswordModal({open, hideModal}) {
 	const [username, setUsername] = useState('')
 	const [message, setMessage] = useState('')
 
-	const [executePasswordResetRequest, { loading, error, data }] = useMutation(MUTATION_RESET_PASSWORD_REQUEST, {
+	const [executePasswordResetRequest, { loading }] = useMutation(MUTATION_RESET_PASSWORD_REQUEST, {
 		onCompleted: data => {
 			let requestData = data.requestPasswordReset
 			if(requestData.success){

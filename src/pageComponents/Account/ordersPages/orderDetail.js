@@ -10,6 +10,7 @@ import ToggleSwitch from '../../_common/toggleSwitch'
 import matchSorter from 'match-sorter'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
+import AddedModal from '../../SearchResults/uiComponents/addedModal'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -66,6 +67,7 @@ export default function OrderDetail({ history, orderId }) {
 	const [filter, setFilter] = useState('')
 	const [isTableView, setIsTableView] = useState(false)
 	const [data, setData] = useState({})
+	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
 	useEffect(() => {
 		if (!didMountRef.current && context.ordersCache.length === 0) {
@@ -116,6 +118,11 @@ export default function OrderDetail({ history, orderId }) {
 			)
 		}
 		context.addItems(items)
+		setShowAddedToCartModal(true)
+	}
+
+	function handleAddedToCart(){
+		setShowAddedToCartModal(false)
 	}
 
 	const {
@@ -135,6 +142,12 @@ export default function OrderDetail({ history, orderId }) {
 
 	return(
 		<div>
+			<AddedModal 
+				open={showShowAddedToCartModal} 
+				text={'Added to Cart!'} 
+				onClose={handleAddedToCart}
+				timeout={900}
+			/>
 			<DivHeader>
 				<h4>Order #{orderId}</h4>
 				<p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
