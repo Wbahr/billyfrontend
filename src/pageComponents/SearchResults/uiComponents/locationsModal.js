@@ -66,8 +66,12 @@ export default function LocationsModal({open, hideLocationsModal, invMastUid}) {
 			'invMastUid': invMastUid 
 		},
 		onCompleted: data => {
-			setAirlineStock(data.airlineStock)
-			setFactoryStock(data.factoryStock)
+			if (!_.isNil(data.airlineStock)){
+				setAirlineStock(data.airlineStock)
+			}
+			if (!_.isNil(data.factoryStock)){
+				setFactoryStock(data.factoryStock)
+			}
 		}
 	})
 

@@ -107,6 +107,7 @@ export default function ShoppingCartPage(props) {
 					showEditPriceModal={handleShowEditPriceModal}
 					showCustomerPartModal={handleShowCustomerPartModal}
 					handleSetModalData={handleSetModalData}
+					history={props.history}
 				/>
 				<SubtotalBox
 					history={props.history}

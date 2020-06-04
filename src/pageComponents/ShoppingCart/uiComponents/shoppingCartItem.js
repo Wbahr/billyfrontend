@@ -135,6 +135,12 @@ const P1 = styled.p`
 	font-weight: 600;
 `
 
+const A1 = styled.a`
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+`
+
 const TextRow = styled.div`
 	display: flex;
 `
@@ -160,7 +166,7 @@ const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
 	}
 `
 
-export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
+export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 	const {
 		itemDetails,
 		customerPartNumbers
@@ -263,8 +269,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 					<Img src={imagePath} />
 				</DivCol1>
 				<DivCol2>
+					<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
 					<CopyToClipboard text={itemDetails.itemDesc}>
-						<P1>{itemDetails.itemDesc}</P1>
+						<P2>Copy Item Desc</P2>
 					</CopyToClipboard>
 					<TextRow>
 						<CopyToClipboard text={itemDetails.itemCode}>

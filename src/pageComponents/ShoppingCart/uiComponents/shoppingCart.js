@@ -51,7 +51,7 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
-export default function ShoppingCart({showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}) {
+export default function ShoppingCart({showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 	const [savedCart, setSavedCart] = useState(false)
 	const context = useContext(Context)
 	
@@ -89,6 +89,7 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 											showEditPriceModal={showEditPriceModal}
 											showCustomerPartModal={showCustomerPartModal}
 											handleSetModalData={handleSetModalData}
+											history={history}
 										/>
 									}
 								</div>
@@ -135,7 +136,7 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 						}}
 					</Context.Consumer>
 					<DivShare>
-						<Ashare>Share</Ashare>
+						<Ashare>Email Cart</Ashare>
 						<FontAwesomeIcon icon="share" color="grey"/>
 					</DivShare>
 				</DivRow>

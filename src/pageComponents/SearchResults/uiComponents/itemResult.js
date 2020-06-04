@@ -216,8 +216,7 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 				<DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
 					{result.availability !== 0 ? 
 						<DivRow>
-							<PBlue>{result.availability}</PBlue>
-							<PBlue onClick={()=>toggleLocationsModal(result.frecno)}>(Show Locations)</PBlue>
+							<PBlue onClick={()=>toggleLocationsModal(result.frecno)}>{result.availability} (Show Locations)</PBlue>
 						</DivRow> 
 						: 
 						<PBlue>{result.availability_message}</PBlue>
