@@ -42,13 +42,13 @@ const Container = styled.div`
 
 export default function EditPriceModal({open, index, hideEditPriceModal, data}) {
 	// const context = useContext(Context)
-	const [itemPrice, setItemPrice] = useState('$0.00')
+	const [itemPrice, setItemPrice] = useState(0)
 	const [margin, setMargin] = useState(0)
 	const airlinecost = 1
 
 	useEffect(()=> {
 		if (data && data.modalType === 'edit-price') {
-			let mutatedValue = Number(data.itemPrice.substring(1))
+			let mutatedValue = data.itemPrice
 			let margin = calculateMargin(mutatedValue)
 			setItemPrice(data.itemPrice)
 			setMargin(margin)
@@ -58,7 +58,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 	}, [data])
 
 	function handleReset(){
-		let mutatedValue = Number(data.originalItemPrice.substring(1))
+		let mutatedValue = data.originalItemPrice
 		setItemPrice(data.originalItemPrice)
 		let margin = calculateMargin(mutatedValue)
 		setMargin(margin)
@@ -69,7 +69,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 	}
 
 	function calculateMargin(mutatedValue){
-		let mutatedAirlineCost = Number(data.airlineCost.substring(1))
+		let mutatedAirlineCost = data.airlineCost
 		let margin = (mutatedValue - mutatedAirlineCost)/mutatedValue
 		if (margin < 0){
 			margin = 0

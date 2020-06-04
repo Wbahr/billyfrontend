@@ -230,9 +230,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		case 'edit-price':
 			handleSetModalData({
 				modalType: type,
-				originalItemPrice: <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={context.cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-				airlineCost: <NumberFormat value={1} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+				originalItemPrice: itemDetails.listPrice,
+				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
+				airlineCost: 1
 			})
 			showEditPriceModal(index)
 			break
@@ -327,7 +327,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 								<Context.Consumer>
 									{({ cart }) => (
 										<>
-											<Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>/each}</Peach>
+											<Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
 											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
 										</>
 									)}
