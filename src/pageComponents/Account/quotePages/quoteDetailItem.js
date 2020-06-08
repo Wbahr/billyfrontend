@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
-import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 
@@ -99,7 +98,7 @@ const ButtonSmall = styled.button`
 		}
 	`
 
-export default function OrderDetailItem({ item }) {
+export default function OrderDetailItem({ item, quoteId }) {
 	const [quantity, setQuantity] = useState(1)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const context = useContext(Context)
@@ -145,28 +144,26 @@ export default function OrderDetailItem({ item }) {
 							<P2>{item.customerPartNumber}</P2>
 						</CopyToClipboard>
 					</TextRow>
-					<P2>Quantity Received: {item.quantityOpen}</P2>
 					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
 				</DivCol2>
 				<DivCol2>
-					<P2>Promise Date: {item.quantityOrdered}</P2>
-					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
 					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
 				<DivCol3>
 					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
 					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
-					<DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/></DivRow>
+					<DivRow>Quantity: 1</DivRow>
 					<Context.Consumer>
 						{({addItem}) => (
 							<ButtonSmall onClick={()=>{
 								addItem({
 									'frecno': item.invMastUid,
 									'quantity': parseInt(quantity, 10),
-									'itemNotes': '',
+									'itemNotes': `Quote ${quoteId}`,
 									'itemUnitPriceOverride': null,
-									'customerPartNumberId': item.customerPartNumberId
+									'customerPartNumberId': item.customerPartNumberId,
+									'quoteId': quoteId
 								}), setShowAddedToCartModal(true), setQuantity(1)
 							}}>Add to Cart</ButtonSmall>
 						)}
