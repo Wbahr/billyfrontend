@@ -174,40 +174,68 @@ const QUERY_LOGIN = gql`
 
 export const GET_ORDERS = gql`
   query {
-    accountOrders{
-      orderDate
-      orderNumber
-      poNo
-      isQuote
-      orderType
-      status
-      packingBasis
-      total
-      buyer
-      shipToName
-      shipToAddress1
-      shipToAddress2
-      shipToAddress3
-      shipToCity
-      shipToState
-      shipToZip
-      shipToCountry
-      lineItems{
-        invMastUid
-        itemCode
-        customerPartNumber
-        customerPartNumberId
-        quantityOrdered
-        quantityOpen
-        unitPrice
-        totalPrice
-        trackingNumbers{
-          trackingNumber
-          carrierId
-        }
-      }
-    }
-  }
+		accountOrders{
+			orderNumber
+			orderDate
+			poNo
+			buyer
+			total
+			isQuote
+			status
+			isMine
+			lineItems{
+				invMastUid
+				itemCode
+				customerPartNumber
+				customerPartNumberId
+			}
+		}
+	}
+`
+
+export const GET_ORDERS_DETAIL = gql`
+	query AccountOrderDetails($orderNumber: String){
+		accountOrderDetails(orderNumber: $orderNumber){
+			orderNumber
+			orderDate
+			poNo
+			buyer
+			total
+			isQuote
+			orderType
+			status
+			packingBasis
+			promiseDate
+			isMine
+			shipToName
+			shipToAddress1
+			shipToAddress2
+			shipToAddress3
+			shipToCity
+			shipToState
+			shipToZip
+			shipToCountry
+			lineItems{
+				lineItemId
+				orderNumber
+				lineNumber
+				invMastUid
+				itemCode
+				customerPartNumber
+				customerPartNumberId
+				quantityOrdered
+				quantityOpen
+				unitPrice
+				totalPrice
+				trackingNumbers{
+					carrierId
+					carrierName
+					trackingNumber
+					trackingUrl
+				}
+			}
+		}
+	}
 `
 
 export const GET_INVOICES = gql`

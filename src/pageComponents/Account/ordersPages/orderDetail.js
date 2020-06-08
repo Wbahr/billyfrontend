@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { formatTableData } from '../helpers/mutators'
+import { useQuery } from '@apollo/client'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import OrderDetailItem from './orderDetailItem'
@@ -11,6 +12,7 @@ import matchSorter from 'match-sorter'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
+import { GET_ORDERS_DETAIL } from '../../../config/providerGQL'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -63,30 +65,18 @@ const ButtonSmall = styled.button`
 
 export default function OrderDetail({ history, orderId }) {
 	const context = useContext(Context)
-	const didMountRef = useRef(false)
 	const [filter, setFilter] = useState('')
 	const [isTableView, setIsTableView] = useState(false)
 	const [data, setData] = useState({})
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-	useEffect(() => {
-		if (!didMountRef.current && context.ordersCache.length === 0) {
-			context.getOrders()
-		} else if (context.ordersCache.length > 0) {
-			let mutatedData = formatTableData('order-detail', context.ordersCache, orderId)
-			setData(mutatedData)
+	useQuery(GET_ORDERS_DETAIL, {
+		fetchPolicy: 'no-cache',
+		variables: { orderNumber: String(orderId)	},		
+		onCompleted: result => {
+			setData(result.accountOrderDetails)
 		}
-		didMountRef.current = true
-	}, [context.ordersCache])
-
-	// useEffect(() => {
-	//   if (!_.isEmpty(data)) {
-	//     let batchInvMastUids = _.map(data.lineItems, (item) => {
-	//       return(item.invMastUid)
-	//     })
-
-	//   }
-	// }, [data])
+	})
 
 	let itemDetails = []
 	if(!isTableView){
@@ -140,48 +130,54 @@ export default function OrderDetail({ history, orderId }) {
 		shipToZip
 	} = data
 
-	return(
-		<div>
-			<AddedModal 
-				open={showShowAddedToCartModal} 
-				text={'Added to Cart!'} 
-				onClose={handleAddedToCart}
-				timeout={900}
-			/>
-			<DivHeader>
-				<h4>Order #{orderId}</h4>
-				<p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
-				<ButtonSmall onClick={()=>handleAddOrder()}>Add Order to Cart</ButtonSmall>
-			</DivHeader>
-			<DivOrderInfoContainer>
-				<DivOrderInfo>
-					<p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
-					<p>Order Number: {orderId}</p>
-					<p>P.O. Number: {poNo}</p>
-					<p>Status: {status}</p>
-					<p>Packing Basis: {packingBasis}</p>
-					<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
-				</DivOrderInfo>
-				<DivOrderInfo>
-					<p>Ship-to-Address:</p>
-					<p>{shipToName}</p>
-					<p>{shipToAddress1}</p>
-					{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-					{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
-					<p>{shipToCity}, {shipToState} {shipToZip}</p>
-				</DivOrderInfo>
-			</DivOrderInfoContainer>
+	if(_.isEmpty(data)){
+		return(
+			<p>Loading Order Data...</p>
+		)
+	} else {
+		return(
 			<div>
-				<ToggleSwitch 
-					label='View:'
-					text='Table'
-					text2='List'
-					toggled={isTableView}
-					setToggled={(value)=>setIsTableView(value)}
+				<AddedModal 
+					open={showShowAddedToCartModal} 
+					text={'Added to Cart!'} 
+					onClose={handleAddedToCart}
+					timeout={900}
 				/>
-				<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
+				<DivHeader>
+					<h4>Order #{orderId}</h4>
+					<p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
+					<ButtonSmall onClick={()=>handleAddOrder()}>Add Order to Cart</ButtonSmall>
+				</DivHeader>
+				<DivOrderInfoContainer>
+					<DivOrderInfo>
+						<p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+						<p>Order Number: {orderId}</p>
+						<p>P.O. Number: {poNo}</p>
+						<p>Status: {status}</p>
+						<p>Packing Basis: {packingBasis}</p>
+						<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+					</DivOrderInfo>
+					<DivOrderInfo>
+						<p>Ship-to-Address:</p>
+						<p>{shipToName}</p>
+						<p>{shipToAddress1}</p>
+						{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
+						{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
+						<p>{shipToCity}, {shipToState} {shipToZip}</p>
+					</DivOrderInfo>
+				</DivOrderInfoContainer>
+				<div>
+					<ToggleSwitch 
+						label='View:'
+						text='Table'
+						text2='List'
+						toggled={isTableView}
+						setToggled={(value)=>setIsTableView(value)}
+					/>
+					<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
+				</div>
+				{itemDetails}
 			</div>
-			{itemDetails}
-		</div>
-	)
+		)
+	}
 }

@@ -318,6 +318,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 										onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
 										style={{'width': '50px'}}
 										value={cart[index].quantity}
+										disabled={!_.isNil(cart[index].quoteId)}
 									/>
 								)}
 							</Context.Consumer>
