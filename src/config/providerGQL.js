@@ -241,73 +241,29 @@ export const GET_ORDERS_DETAIL = gql`
 export const GET_INVOICES = gql`
   query AccountInvoices($batchNumber: Int, $batchSize: Int){
     accountInvoices(batchNumber: $batchNumber, batchSize: $batchSize){
-      invoiceNumber
-      orderNumber
-      orderDate
-      invoiceDate
-      termsDueDate
-      netDueDate
-      discDueDate
-      orderedBy
-      taker
-      poNo
-      totalAmount
-      status
-      discountAmount
-      amountPaid
-      isMine
-      terms
-      shipToName
-      shipToAddress1
-      shipToAddress2
-      shipToAddress3
-      shipToCity
-      shipToState
-      shipToZip
-      shipToCountry
-      billingName
-      billingAddress1
-      billingAddress2
-      billingAddress3
-      billingCity
-      billingState
-      billingZip
-      billingCountry
-      subTotal
-      totalTax
-      amountDue
-      lineItems {
-        invoiceLineId
-        orderNumber
-        isTaxItem
-        isOtherItem
-        invoiceLineType
-        invoiceLineNumber
-        orderLineNumber
-        quantityRequested
-        quantityShipped
-        pricingQuantity
-        invMastUid
-        itemCode
-        itemDescription
-        customerPartNumber
-        customerPartNumberId
-        unitPrice
-        itemTotalPrice
-        trackingNumbers{
-          trackingNumber
-          carrierId
-          carrierName
-          trackingUrl
-        }
-      }
+			invoiceNumber
+			orderNumber
+			invoiceDate
+			termsDueDate
+			netDueDate
+			poNo
+			status
+			amountDue
+			amountPaid
+			isMine
+			lineItems{
+				invMastUid
+				itemCode
+				customerPartNumber
+				customerPartNumberId
+			}
     }
   }
 `
 
 export const GET_INVOICE = gql`
-	query AccountInvoice($invoiceNumber: String){
-		accountInvoice(invoiceNumber: $invoiceNumber){
+	query AccountInvoiceDetail($invoiceNumber: String){
+		accountInvoiceDetail(invoiceNumber: $invoiceNumber){
 			invoiceNumber
       orderNumber
       orderDate

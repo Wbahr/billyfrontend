@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
 import { formatTableData } from '../helpers/mutators'
 import 'react-datepicker/dist/react-datepicker.css'
-import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import { GET_INVOICE } from '../../../config/providerGQL'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './invoiceDetailPDF'
 
@@ -106,31 +105,15 @@ const DivTotalContainer = styled.div`
 `
 
 export default function InvoiceDetail({ history, invoiceId }) {
-	const context = useContext(Context)
-	const didMountRef = useRef(false)
 	const [data, setData] = useState({})
 
-	useEffect(() => {
-		if (!didMountRef.current && context.invoiceCache.length === 0) {
-			handleGetInvoice(
-				{
-					variables: {
-						'invoiceNumber': invoiceId
-					}
-				}
-			)
-		} else if (context.invoiceCache.length > 0) {
-			let mutatedData = formatTableData('invoice-detail', context.invoiceCache, invoiceId)
-			setData(mutatedData)
-		}
-		didMountRef.current = true
-	}, [context.invoiceCache])
-
-	const [handleGetInvoice] = useLazyQuery(GET_INVOICE, {
+	useQuery(GET_INVOICE, {
 		fetchPolicy: 'no-cache',
+		variables: {
+			'invoiceNumber': String(invoiceId)
+		},
 		onCompleted: result => {
-			let mutatedData = formatTableData('invoice-detail', result, invoiceId)
-			setData(mutatedData)
+			setData(result.accountInvoiceDetail)
 		}
 	})
 
@@ -203,7 +186,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
 	if (_.isEmpty(data)) {
 		return(
 			<div>
-				<p>loading...</p>
+				<p>Loading Invoice Data...</p>
 			</div>
 		)
 	} else {
