@@ -227,19 +227,21 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 					{(!_.isNil(result.unit_price) && result.unit_price !== 0) ? <Div><Pprice>${result.unit_price.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
 				</DivPartNumberRowSpread>
 				<DivSpace>
-					<Context.Consumer>
-						{({addItem}) => (
-							<ButtonRed onClick={()=>{
-								addItem({
-									'frecno': result.frecno,
-									'quantity': parseInt(quantity, 10),
-									'itemNotes': '',
-									'itemUnitPriceOverride': null,
-									'customerPartNumberId': customerPartNumber
-								}), addedToCart(), setQuantity(1)
-							}}>Add to Cart</ButtonRed>
-						)}
-					</Context.Consumer>
+					{(!_.isNil(result.unit_price) && result.unit_price !== 0) &&
+						<Context.Consumer>
+							{({addItem}) => (
+								<ButtonRed onClick={()=>{
+									addItem({
+										'frecno': result.frecno,
+										'quantity': parseInt(quantity, 10),
+										'itemNotes': '',
+										'itemUnitPriceOverride': null,
+										'customerPartNumberId': customerPartNumber
+									}), addedToCart(), setQuantity(1)
+								}}>Add to Cart</ButtonRed>
+							)}
+						</Context.Consumer>
+					}
 				</DivSpace>
 			</DivPartDetailsRow>
 		</DivItemResultContainer>
