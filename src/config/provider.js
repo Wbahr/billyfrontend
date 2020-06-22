@@ -3,7 +3,8 @@ import _ from 'lodash'
 import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_INVOICES } from './providerGQL'
+import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS,
+	GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from './providerGQL'
 
 export default function Provider(props) {
 	const didMountRef = useRef(false)
@@ -21,6 +22,9 @@ export default function Provider(props) {
 	const [ordersCache, setOrdersCache] = useState([])
 	const [invoiceCache, setInvoiceCache] = useState([])
 	const [invoiceBatchNumber, setInvoiceBatchNumber] = useState(0)
+	const [purchaseHistory, setPurchaseHistory] = useState([])
+	const [itemPrices, setItemPrices] = useState([])
+	const [itemAvailabilities, setItemAvailabilities] = useState([])
 	const invoiceBatchSize = 1000
 	useEffect(() => {
 		if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -170,6 +174,37 @@ export default function Provider(props) {
 			}
 		}
 	})
+  
+  const [getPurchaseHistory] = useLazyQuery(GET_PURCHASE_HISTORY, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      setPurchaseHistory(data.purchaseHistory)
+    }
+  })
+  
+  const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx;
+  
+  const [handleGetItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
+    fetchPolicy: 'no-cache',
+		onCompleted: data => {
+  		setItemPrices([...data.getItemPrices, ...itemPrices].filter(distinct))
+		}
+  })
+	
+	const [handleGetItemAvailabilities] = useLazyQuery(GET_ITEM_AVAILABILITY, {
+		fetchPolicy: 'no-cache',
+    onCompleted: data => {
+			setItemAvailabilities([...data.itemAvailability, ...itemAvailabilities].filter(distinct))
+    }
+	})
+	
+	function getItemPrices(items) {
+		handleGetItemPrices({ variables: { items: items.map(({invMastUid}) => ({ invMastUid, quantity: 1 })) } })
+	}
+	
+	function getItemAvailabilities(items) {
+		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid}) => invMastUid) }})
+	}
 
 	function manageUserInfo(action, userInfo, impersonationInfo){
 		let currentUserType
@@ -197,6 +232,7 @@ export default function Provider(props) {
 			setOrdersCache([])
 			setInvoiceCache([])
 			setInvoiceBatchNumber(0)
+			setPurchaseHistory([])
 			setImpersonatedCompanyInfo(impersonationInfo)
 			currentUserType = 'Impersonator'
 			break
@@ -210,6 +246,7 @@ export default function Provider(props) {
 			setInvoiceCache([])
 			setInvoiceBatchNumber(0)
 			setOrdersCache([])
+      setPurchaseHistory([])
 			break
 		case 'login':
 			setItemDetailCache([])
@@ -224,6 +261,7 @@ export default function Provider(props) {
 			currentUserType = 'Anon'
 			setOrdersCache([])
 			setInvoiceCache([])
+      setPurchaseHistory([])
 			setInvoiceBatchNumber(0)
 			break
 		}
@@ -485,7 +523,13 @@ export default function Provider(props) {
 				getInvoices: () => {
 					handleUpdateInvoices()
 				},
-				invoicesLoaded: invoicesLoaded.current
+				invoicesLoaded: invoicesLoaded.current,
+				purchaseHistory,
+        itemPrices,
+        itemAvailabilities,
+        getPurchaseHistory,
+        getItemPrices,
+        getItemAvailabilities
 			}}
 		>
 			{props.children}

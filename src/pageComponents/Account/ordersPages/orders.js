@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
+import {parse} from 'query-string';
 
 const TableContainer = styled.div`
 	display: flex;
@@ -109,15 +110,19 @@ export default function OrdersTable({ history }) {
 	const [showOrderType, setShowOrderType] = useState('all')
 	const [dateFrom, setDateFrom] = useState(null)
 	const [dateTo, setDateTo] = useState(null)
+	
+	useEffect(() => {
+    const search = history.location.search
+    if (search && search.includes('filter')) {
+      setFilter(parse(search).filter)
+    }
+	}, []);
 
 	useEffect(() => {
 		if (!didMountRef.current && context.ordersCache.length === 0) {
 			context.getOrders()
-		} else if (context.ordersCache.length > 0) {
-			let mutatedData = formatTableData('orders', context.ordersCache)
-			setData(mutatedData)
 		}
-	}, [context.ordersCache])
+	}, [])
 
 	useEffect(() => {
 		if (didMountRef.current) {
@@ -151,7 +156,7 @@ export default function OrdersTable({ history }) {
 			setData(mutatedData)
 		}
 		didMountRef.current = true
-	}, [filter, showOrderType, dateFrom, dateTo])
+	}, [context.ordersCache, filter, showOrderType, dateFrom, dateTo])
 
 	const columns = useMemo(
 		() => [

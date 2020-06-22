@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
+import React, {useState, useEffect, useRef, useMemo, useContext} from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import Context from "../../../config/context";
+import {format as dateFormat} from "date-fns";
+import AddedModal from '../../SearchResults/uiComponents/addedModal'
+import _ from "lodash";
 
 const TableContainer = styled.div`
   display: flex;
@@ -49,6 +53,20 @@ const ButtonPagination = styled.button`
   border-radius: 1px;
 `
 
+const TableButton = styled.button`
+  width: 110px;
+	background-image: linear-gradient(to top left, #950f23, #DB1633);
+	color: white;
+	font-weight: 500;
+	border: 0;
+	border-radius: 5px;
+`
+
+const AddToCartInput = styled.input`
+	margin-right: 5px;
+	width: 50px;
+`
+
 const SpanSort = styled.span`
   margin-left: 4px;
 `
@@ -79,81 +97,177 @@ const Select = styled.select`
   margin-left: 16px;
 `
 
-export default function ItemPurchaseHistoryTable() {
+const ButtonExport = styled.div`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	margin: 10px 4px;
+	&:hover {
+		background-color: whitesmoke;
+	}
+`
+
+export default function ItemPurchaseHistoryTable({ history }) {
+  const context = useContext(Context)
 	const didMountRef = useRef(false)
-	const [originalData, setOriginalData] = useState([])
 	const [data, setData] = useState([])
 	const [filter, setFilter] = useState('')
-	const [showOrderType, setShowOrderType] = useState('all')
 	const [dateFrom, setDateFrom] = useState(null)
 	const [dateTo, setDateTo] = useState(null)
-
+	const [showModal, setShowModal] = useState(false)
+	
+	useEffect(() => {
+		if (!context.purchaseHistory.length) context.getPurchaseHistory()
+	}, [])
+	
+	const getFilter = ({itemId, customerPartNumber, associatedOrderDetails}) => {
+ 		const orderDetails = associatedOrderDetails.map(obj => Object.keys(obj).map(key => obj[key]).join('')).join('')
+		const filter = orderDetails + itemId + customerPartNumber
+		return filter.toUpperCase()
+	}
+	
+	const applyFilters = (accum, row) => {
+    if (
+      (!filter.length || getFilter(row).includes(filter.toUpperCase()))
+      && (_.isNil(dateFrom) || Date.parse(row.lastDateOrdered) >= dateFrom.valueOf())
+      && (_.isNil(dateTo) || Date.parse(row.lastDateOrdered) <= dateTo.valueOf())
+    ) {
+      accum.push(row)
+    }
+    return accum
+  }
+	
 	useEffect(() => {
 		if (didMountRef) {
-			let mutatedData = originalData
-			// Apply search filter
-			if (filter.length > 0) {
-				mutatedData = mutatedData.filter(row => {
-					let upperCaseFilter = filter.toUpperCase()
-					return row.filter.includes(upperCaseFilter)
-				})
-			}
-			// Apply showOrderType filter
-			if (showOrderType !== 'all') {
-				mutatedData = mutatedData.filter(row => {
-					return row.status.includes(showOrderType)
-				})
-			}
-			// Apply date filters
-			if (!_.isNil(dateFrom)) {
-				let epochDateFrom = dateFrom.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) >= epochDateFrom 
-				})
-			}
-			if (!_.isNil(dateTo)) {
-				let epochDateTo = dateTo.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) <= epochDateTo 
-				})
-			}
+			const mutatedData = context.purchaseHistory.reduce(applyFilters, [])
 			setData(mutatedData)
 		}
 		didMountRef.current = true
-	}, [filter, showOrderType, dateFrom, dateTo])
+	}, [context.purchaseHistory, filter, dateFrom, dateTo])
+	
+	const handleViewOrderHistory = ({ row }) => () => {
+ 		history.push(`/account/orders?filter=${row.values.itemId}`)
+	};
+  
+  const handleAddToCartAmtChange = ({data, row}) => ({target: {value}}) => {
+		const foundIdx = data.findIndex(d => d.itemId === row.values.itemId)
+		if (foundIdx !== -1) {
+			const dataCopy = data.slice()
+			const cleanVal = value.replace(/\D/g, '')
+			const addToCartAmt = cleanVal.length ? cleanVal : null
+			dataCopy[foundIdx] = { ...data[foundIdx], addToCartAmt }
+			setData(dataCopy)
+		}
+	}
+  
+  const handleAddToCart = ({row}) => () => {
+  	const { addToCartAmt, invMastUid: frecno } = row.original
+		const quantity = addToCartAmt ? parseInt(addToCartAmt) : 1
+		setShowModal(true)
+		context.addItem({quantity, frecno})
+	}
+	
+	const renderItemPrice = ({row: {values}}) => {
+    const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+    const currentPrice = values.currentPrice
+      ? values.currentPrice
+      : context.itemPrices.find(byUid)?.unitPrice
+		return <span>{currentPrice ? `${currentPrice}` : '...'}</span>
+	}
+	
+	const renderQuantityAvailable = ({row: {values}}) => {
+    const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+    const foundMatch = context.itemAvailabilities.find(byUid);
+    const availability = values.quantityAvailable
+      ? values.quantityAvailable
+      : foundMatch?.availability
+    const quantityAvailable = availability
+      ? availability
+      : foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`;
+		return <span>{quantityAvailable ? quantityAvailable : 'Call us'}</span>
+	}
+	
+	const getImageUrl = url => {
+    let imagePath;
+    if (_.isNil(url)) {
+      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+    } else {
+      const imagePathArray = url.split('\\')
+      let imageFile = imagePathArray[imagePathArray.length - 1]
+      imageFile = imageFile.slice(0, -5) + 't.jpg'
+      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+    }
+    return imagePath
+	}
 
 	const columns = useMemo(
 		() => [
 			{
-				Header: 'Order Date',
-				accessor: 'orderDate', // accessor is the "key" in the data
+				Header: 'Item ID',
+				accessor: 'itemId',
 			},
 			{
-				Header: 'Order #',
-				accessor: 'orderNumber',
+				Header: 'Image',
+				accessor: 'itemImageUrl',
+        Cell: props => <img src={getImageUrl(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
 			},
 			{
-				Header: 'PO #',
-				accessor: 'poNo',
+				Header: 'Last Date Ordered',
+				accessor: 'lastDateOrdered',
+        Cell: props => <span>{props.value && dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
 			},
 			{
-				Header: 'Buyer',
-				accessor: 'buyer',
+				Header: 'Last Qty Purchased',
+				accessor: 'lastQuantityPurchased',
 			},
 			{
-				Header: 'Total',
-				accessor: 'total',
+				Header: '# Times Ordered',
+				accessor: 'numberTimesOrdered',
 			},
 			{
-				Header: 'Status',
-				accessor: 'status',
+				Header: 'Total Qty Purchased',
+				accessor: 'totalQuantityPurchased',
 			},
-			{
-				Header: 'Filter',
-				accessor: 'filter'
-			}
+      {
+        Header: 'Current Price',
+        accessor: 'currentPrice',
+				Cell: renderItemPrice
+      },
+      {
+        Header: 'Qty Available',
+        accessor: 'quantityAvailable',
+				Cell: renderQuantityAvailable
+      },
+      {
+        Header: 'UOM',
+        accessor: 'unitOfMeasure'
+      },
+      {
+        Header: '',
+        accessor: 'addToCartAmt',
+        Cell: props => (
+					<div>
+						<div style={{display: 'flex', justifyContent: 'flex-end'}}>
+							<TableButton onClick={handleViewOrderHistory(props)}>Order History</TableButton>
+						</div>
+						<DivRow>
+							<AddToCartInput type="number" min={1} value={props.value === undefined ? 1 : props.value} onChange={handleAddToCartAmtChange(props)}/>
+							<TableButton onClick={handleAddToCart(props)}>Add to Cart</TableButton>
+						</DivRow>
+					</div>
+				)
+      },
+      {
+        Header: 'Filter',
+        accessor: 'filter'
+      }
 		],
-		[],
+		[context.itemAvailabilities, context.itemPrices],
 	)
 	const {
 		getTableProps,
@@ -171,50 +285,91 @@ export default function ItemPurchaseHistoryTable() {
 		previousPage,
 		setPageSize,
 		state: { pageIndex, pageSize },
-	} = useTable(    
+	} = useTable(
 		{
 			columns,
 			data,
-			initialState: { pageIndex: 0, hiddenColumns: ['filter']},
+			initialState: {
+				pageIndex: 0,
+				hiddenColumns: ['filter'],
+        sortBy: [{
+					id: 'numberTimesOrdered',
+					desc: true
+				}]
+			},
 		},
 		useSortBy,
 		usePagination
 	)
+	
+  useEffect(() => {
+		if (data.length) {
+      const slicedData = data.slice(pageIndex*pageSize, (pageIndex+1)*pageSize)
+			
+      const dataToFetchPricesFor = slicedData.filter(d => !context.itemPrices.find(({itemCode}) => itemCode === d.itemId))
+			if (dataToFetchPricesFor.length) context.getItemPrices(dataToFetchPricesFor)
+      
+      const dataToFetchAvailabilitiesFor = slicedData.filter(d => !context.itemAvailabilities.find(({invMastUid}) => invMastUid === d.invMastUid))
+			if (dataToFetchAvailabilitiesFor.length) context.getItemAvailabilities(dataToFetchAvailabilitiesFor);
+		}
+  }, [pageIndex, pageSize, data])
 
-	return(
+	return (
 		<TableContainer>
 			<h4>Item Purchase History</h4>
 			<DivRow>
 				<AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
 			</DivRow>
+			
+      <DivRow>
 			{/* Date From */}
-			<DivRowDate>
-				<DivSpacer>
-					<FontAwesomeIcon icon="calendar" color="lightgrey"/>
-				</DivSpacer>
-				<Pdate>Date from:</Pdate>
-				<DatePicker
-					selected={Date.parse(dateFrom)}
-					onChange={(value)=>setDateFrom(value)}
-				/>
-				<DivSpacer onClick={()=>{setDateFrom(null)}}>
-					<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-				</DivSpacer>
-			</DivRowDate>
-			{/* Date To */}
-			<DivRowDate>
-				<DivSpacer>
-					<FontAwesomeIcon icon="calendar" color="lightgrey"/>
-				</DivSpacer>
-				<Pdate>Date to:</Pdate>
-				<DatePicker
-					selected={Date.parse(dateTo)}
-					onChange={(value)=>setDateTo(value)}
-				/>
-				<DivSpacer onClick={()=>{setDateTo(null)}}>
-					<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
-				</DivSpacer>
-			</DivRowDate>
+				<div>
+					<DivRowDate>
+						<DivSpacer>
+							<FontAwesomeIcon icon="calendar" color="lightgrey"/>
+						</DivSpacer>
+						<Pdate>Date from:</Pdate>
+						<DatePicker
+							selected={Date.parse(dateFrom)}
+							onChange={(value)=>setDateFrom(value)}
+						/>
+						<DivSpacer onClick={()=>{setDateFrom(null)}}>
+							<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+						</DivSpacer>
+					</DivRowDate>
+					
+					{/* Date To */}
+					<DivRowDate>
+						<DivSpacer>
+							<FontAwesomeIcon icon="calendar" color="lightgrey"/>
+						</DivSpacer>
+						<Pdate>Date to:</Pdate>
+						<DatePicker
+							selected={Date.parse(dateTo)}
+							onChange={(value)=>setDateTo(value)}
+						/>
+						<DivSpacer onClick={()=>{setDateTo(null)}}>
+							<FontAwesomeIcon style={{'cursor': 'pointer'}} icon="times-circle" color="lightgrey"/>
+						</DivSpacer>
+					</DivRowDate>
+				</div>
+				
+				<DivRow>
+					{/*<ButtonExport>*/}
+						{/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
+					{/*</ButtonExport>*/}
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
+					</ButtonExport>
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
+					</ButtonExport>
+					<ButtonExport>
+						<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
+					</ButtonExport>
+				</DivRow>
+			</DivRow>
+			
 			<Table {...getTableProps()}>
 				<thead>
 					{headerGroups.map(headerGroup => (
@@ -300,6 +455,12 @@ export default function ItemPurchaseHistoryTable() {
 				</select>
 				<p>Results: {rows.length}</p>
 			</div>
+			<AddedModal
+				open={showModal}
+				onClose={() => setShowModal(false)}
+        text={'Added to Cart!'}
+        timeout={900}
+			/>
 		</TableContainer>
 	)
 }
