@@ -113,7 +113,7 @@ const ButtonExport = styled.div`
 `
 
 export default function ItemPurchaseHistoryTable({ history }) {
-  const context = useContext(Context)
+	const context = useContext(Context)
 	const didMountRef = useRef(false)
 	const [data, setData] = useState([])
 	const [filter, setFilter] = useState('')
@@ -126,21 +126,21 @@ export default function ItemPurchaseHistoryTable({ history }) {
 	}, [])
 	
 	const getFilter = ({itemId, customerPartNumber, associatedOrderDetails}) => {
- 		const orderDetails = associatedOrderDetails.map(obj => Object.keys(obj).map(key => obj[key]).join('')).join('')
+		const orderDetails = associatedOrderDetails.map(obj => Object.keys(obj).map(key => obj[key]).join('')).join('')
 		const filter = orderDetails + itemId + customerPartNumber
 		return filter.toUpperCase()
 	}
 	
 	const applyFilters = (accum, row) => {
-    if (
-      (!filter.length || getFilter(row).includes(filter.toUpperCase()))
-      && (_.isNil(dateFrom) || Date.parse(row.lastDateOrdered) >= dateFrom.valueOf())
-      && (_.isNil(dateTo) || Date.parse(row.lastDateOrdered) <= dateTo.valueOf())
-    ) {
-      accum.push(row)
-    }
-    return accum
-  }
+		if (
+			(!filter.length || getFilter(row).includes(filter.toUpperCase()))
+			&& (_.isNil(dateFrom) || Date.parse(row.lastDateOrdered) >= dateFrom.valueOf())
+			&& (_.isNil(dateTo) || Date.parse(row.lastDateOrdered) <= dateTo.valueOf())
+		) {
+			accum.push(row)
+		}
+		return accum
+	}
 	
 	useEffect(() => {
 		if (didMountRef) {
@@ -151,10 +151,10 @@ export default function ItemPurchaseHistoryTable({ history }) {
 	}, [context.purchaseHistory, filter, dateFrom, dateTo])
 	
 	const handleViewOrderHistory = ({ row }) => () => {
- 		history.push(`/account/orders?filter=${row.values.itemId}`)
+		history.push(`/account/orders?filter=${row.values.itemId}`)
 	};
-  
-  const handleAddToCartAmtChange = ({data, row}) => ({target: {value}}) => {
+	
+	const handleAddToCartAmtChange = ({data, row}) => ({target: {value}}) => {
 		const foundIdx = data.findIndex(d => d.itemId === row.values.itemId)
 		if (foundIdx !== -1) {
 			const dataCopy = data.slice()
@@ -164,47 +164,47 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			setData(dataCopy)
 		}
 	}
-  
-  const handleAddToCart = ({row}) => () => {
-  	const { addToCartAmt, invMastUid: frecno } = row.original
+	
+	const handleAddToCart = ({row}) => () => {
+		const { addToCartAmt, invMastUid: frecno } = row.original
 		const quantity = addToCartAmt ? parseInt(addToCartAmt) : 1
 		setShowModal(true)
 		context.addItem({quantity, frecno})
 	}
 	
 	const renderItemPrice = ({row: {values}}) => {
-    const byUid = ({invMastUid}) => invMastUid === values.invMastUid
-    const currentPrice = values.currentPrice
-      ? values.currentPrice
-      : context.itemPrices.find(byUid)?.unitPrice
+		const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+		const currentPrice = values.currentPrice
+			? values.currentPrice
+			: context.itemPrices.find(byUid)?.unitPrice
 		return <span>{currentPrice ? `${currentPrice}` : '...'}</span>
 	}
 	
 	const renderQuantityAvailable = ({row: {values}}) => {
-    const byUid = ({invMastUid}) => invMastUid === values.invMastUid
-    const foundMatch = context.itemAvailabilities.find(byUid);
-    const availability = values.quantityAvailable
-      ? values.quantityAvailable
-      : foundMatch?.availability
-    const quantityAvailable = availability
-      ? availability
-      : foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`;
+		const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+		const foundMatch = context.itemAvailabilities.find(byUid);
+		const availability = values.quantityAvailable
+			? values.quantityAvailable
+			: foundMatch?.availability
+		const quantityAvailable = availability
+			? availability
+			: foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`;
 		return <span>{quantityAvailable ? quantityAvailable : 'Call us'}</span>
 	}
 	
 	const getImageUrl = url => {
-    let imagePath;
-    if (_.isNil(url)) {
-      imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-    } else {
-      const imagePathArray = url.split('\\')
-      let imageFile = imagePathArray[imagePathArray.length - 1]
-      imageFile = imageFile.slice(0, -5) + 't.jpg'
-      imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-    }
-    return imagePath
+		let imagePath;
+		if (_.isNil(url)) {
+			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
+		} else {
+			const imagePathArray = url.split('\\')
+			let imageFile = imagePathArray[imagePathArray.length - 1]
+			imageFile = imageFile.slice(0, -5) + 't.jpg'
+			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
+		}
+		return imagePath
 	}
-
+	
 	const columns = useMemo(
 		() => [
 			{
@@ -214,12 +214,12 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			{
 				Header: 'Image',
 				accessor: 'itemImageUrl',
-        Cell: props => <img src={getImageUrl(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
+				Cell: props => <img src={getImageUrl(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
 			},
 			{
 				Header: 'Last Date Ordered',
 				accessor: 'lastDateOrdered',
-        Cell: props => <span>{props.value && dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
+				Cell: props => <span>{props.value && dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
 			},
 			{
 				Header: 'Last Qty Purchased',
@@ -233,24 +233,24 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				Header: 'Total Qty Purchased',
 				accessor: 'totalQuantityPurchased',
 			},
-      {
-        Header: 'Current Price',
-        accessor: 'currentPrice',
+			{
+				Header: 'Current Price',
+				accessor: 'currentPrice',
 				Cell: renderItemPrice
-      },
-      {
-        Header: 'Qty Available',
-        accessor: 'quantityAvailable',
+			},
+			{
+				Header: 'Qty Available',
+				accessor: 'quantityAvailable',
 				Cell: renderQuantityAvailable
-      },
-      {
-        Header: 'UOM',
-        accessor: 'unitOfMeasure'
-      },
-      {
-        Header: '',
-        accessor: 'addToCartAmt',
-        Cell: props => (
+			},
+			{
+				Header: 'UOM',
+				accessor: 'unitOfMeasure'
+			},
+			{
+				Header: '',
+				accessor: 'addToCartAmt',
+				Cell: props => (
 					<div>
 						<div style={{display: 'flex', justifyContent: 'flex-end'}}>
 							<TableButton onClick={handleViewOrderHistory(props)}>Order History</TableButton>
@@ -261,11 +261,11 @@ export default function ItemPurchaseHistoryTable({ history }) {
 						</DivRow>
 					</div>
 				)
-      },
-      {
-        Header: 'Filter',
-        accessor: 'filter'
-      }
+			},
+			{
+				Header: 'Filter',
+				accessor: 'filter'
+			}
 		],
 		[context.itemAvailabilities, context.itemPrices],
 	)
@@ -292,7 +292,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			initialState: {
 				pageIndex: 0,
 				hiddenColumns: ['filter'],
-        sortBy: [{
+				sortBy: [{
 					id: 'numberTimesOrdered',
 					desc: true
 				}]
@@ -302,18 +302,18 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		usePagination
 	)
 	
-  useEffect(() => {
+	useEffect(() => {
 		if (data.length) {
-      const slicedData = data.slice(pageIndex*pageSize, (pageIndex+1)*pageSize)
+			const slicedData = data.slice(pageIndex*pageSize, (pageIndex+1)*pageSize)
 			
-      const dataToFetchPricesFor = slicedData.filter(d => !context.itemPrices.find(({itemCode}) => itemCode === d.itemId))
+			const dataToFetchPricesFor = slicedData.filter(d => !context.itemPrices.find(({itemCode}) => itemCode === d.itemId))
 			if (dataToFetchPricesFor.length) context.getItemPrices(dataToFetchPricesFor)
-      
-      const dataToFetchAvailabilitiesFor = slicedData.filter(d => !context.itemAvailabilities.find(({invMastUid}) => invMastUid === d.invMastUid))
+			
+			const dataToFetchAvailabilitiesFor = slicedData.filter(d => !context.itemAvailabilities.find(({invMastUid}) => invMastUid === d.invMastUid))
 			if (dataToFetchAvailabilitiesFor.length) context.getItemAvailabilities(dataToFetchAvailabilitiesFor);
 		}
-  }, [pageIndex, pageSize, data])
-
+	}, [pageIndex, pageSize, data])
+	
 	return (
 		<TableContainer>
 			<h4>Item Purchase History</h4>
@@ -321,8 +321,8 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				<AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e)=>{setFilter(e.target.value)}}></AirlineInput>
 			</DivRow>
 			
-      <DivRow>
-			{/* Date From */}
+			<DivRow>
+				{/* Date From */}
 				<div>
 					<DivRowDate>
 						<DivSpacer>
@@ -356,7 +356,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				
 				<DivRow>
 					{/*<ButtonExport>*/}
-						{/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
+					{/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
 					{/*</ButtonExport>*/}
 					<ButtonExport>
 						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
@@ -372,41 +372,41 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			
 			<Table {...getTableProps()}>
 				<thead>
-					{headerGroups.map(headerGroup => (
-						<TRheader {...headerGroup.getHeaderGroupProps()}>
-							{headerGroup.headers.map(column => (
-								<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
-									{column.render('Header')}
-									<SpanSort>
-										{column.isSorted
-											? column.isSortedDesc
-												?  <FontAwesomeIcon icon="caret-up" color="black"/>
-												:  <FontAwesomeIcon icon="caret-down" color="black"/>
-											: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-									</SpanSort>
-								</THheader>
-							))}
-						</TRheader>
-					))}
+				{headerGroups.map(headerGroup => (
+					<TRheader {...headerGroup.getHeaderGroupProps()}>
+						{headerGroup.headers.map(column => (
+							<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+								{column.render('Header')}
+								<SpanSort>
+									{column.isSorted
+										? column.isSortedDesc
+											?  <FontAwesomeIcon icon="caret-up" color="black"/>
+											:  <FontAwesomeIcon icon="caret-down" color="black"/>
+										: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+								</SpanSort>
+							</THheader>
+						))}
+					</TRheader>
+				))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{page.map(row => {
-						prepareRow(row)
-						return (
-							<TRrow {...row.getRowProps()}>
-								{row.cells.map(cell => {
-									return (
-										<TDrow {...cell.getCellProps()}>
-											{cell.render('Cell')}
-										</TDrow>
-									)
-								})}
-							</TRrow>
-						)
-					})}
+				{page.map(row => {
+					prepareRow(row)
+					return (
+						<TRrow {...row.getRowProps()}>
+							{row.cells.map(cell => {
+								return (
+									<TDrow {...cell.getCellProps()}>
+										{cell.render('Cell')}
+									</TDrow>
+								)
+							})}
+						</TRrow>
+					)
+				})}
 				</tbody>
 			</Table>
-			{/* 
+			{/*
         Pagination can be built however you'd like. 
         This is just a very basic UI implementation:
       */}
@@ -449,7 +449,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				>
 					{[10, 25, 50].map(pageSize => (
 						<option key={pageSize} value={pageSize}>
-              Show {pageSize}
+							Show {pageSize}
 						</option>
 					))}
 				</select>
@@ -458,8 +458,8 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			<AddedModal
 				open={showModal}
 				onClose={() => setShowModal(false)}
-        text={'Added to Cart!'}
-        timeout={900}
+				text={'Added to Cart!'}
+				timeout={900}
 			/>
 		</TableContainer>
 	)
