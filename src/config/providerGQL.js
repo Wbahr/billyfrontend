@@ -327,3 +327,48 @@ export const GET_INVOICE = gql`
 		}
 	}
 `
+
+export const GET_PURCHASE_HISTORY = gql`
+  query GetPurchaseHistory {
+    purchaseHistory {
+      invMastUid
+      itemId
+      customerPartNumber
+      lastDateOrdered
+      lastQuantityPurchased
+      totalQuantityPurchased
+      quantityAvailable
+      numberTimesOrdered
+      leadTimeDays
+      unitOfMeasure
+      itemImageUrl
+      associatedOrderDetails {
+        orderNumber
+        pONumber
+        webReferenceNumber
+      }
+    }
+  }
+`;
+
+export const GET_ITEM_PRICE = gql`
+  query GetItemPrices($items: [ItemQuantityInput]) {
+    getItemPrices(items: $items) {
+      invMastUid
+      itemCode
+      quantity
+      totalPrice
+      unitPrice
+    }
+  }
+`;
+
+export const GET_ITEM_AVAILABILITY = gql`
+  query GetItemAvailability($invMastUids: [Int]){
+    itemAvailability(invMastUids: $invMastUids) {
+      invMastUid
+      availability
+      leadTimeDays
+    }
+  }
+`;
