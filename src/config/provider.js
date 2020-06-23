@@ -187,6 +187,7 @@ export default function Provider(props) {
 	const [handleGetItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
+			console.log('handleGetItemPrices', [...data.getItemPrices, ...itemPrices].filter(distinct))
 			setItemPrices([...data.getItemPrices, ...itemPrices].filter(distinct))
 		}
 	})
@@ -194,6 +195,7 @@ export default function Provider(props) {
 	const [handleGetItemAvailabilities] = useLazyQuery(GET_ITEM_AVAILABILITY, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
+			console.log('handleGetItemAvailabilities', [...data.itemAvailability, ...itemAvailabilities].filter(distinct))
 			setItemAvailabilities([...data.itemAvailability, ...itemAvailabilities].filter(distinct))
 		}
 	})

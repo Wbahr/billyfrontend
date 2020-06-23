@@ -172,23 +172,23 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		context.addItem({quantity, frecno})
 	}
 	
-	const renderItemPrice = ({row: {values}}) => {
-		const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+	const renderItemPrice = ({row: {original, values}}) => {
+		const byUid = ({invMastUid}) => invMastUid === original.invMastUid
 		const currentPrice = values.currentPrice
 			? values.currentPrice
 			: context.itemPrices.find(byUid)?.unitPrice
 		return <span>{currentPrice ? `${currentPrice}` : '...'}</span>
 	}
 	
-	const renderQuantityAvailable = ({row: {values}}) => {
-		const byUid = ({invMastUid}) => invMastUid === values.invMastUid
+	const renderQuantityAvailable = ({row: {original, values}}) => {
+		const byUid = ({invMastUid}) => invMastUid === original.invMastUid
 		const foundMatch = context.itemAvailabilities.find(byUid);
 		const availability = values.quantityAvailable
 			? values.quantityAvailable
 			: foundMatch?.availability
 		const quantityAvailable = availability
 			? availability
-			: foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`;
+			: foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`
 		return <span>{quantityAvailable ? quantityAvailable : 'Call us'}</span>
 	}
 	
@@ -269,23 +269,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		],
 		[context.itemAvailabilities, context.itemPrices],
 	)
-	const {
-		getTableProps,
-		getTableBodyProps,
-		headerGroups,
-		rows, //all rows
-		prepareRow,
-		page, // current page in rows
-		canPreviousPage,
-		canNextPage,
-		pageOptions,
-		pageCount,
-		gotoPage,
-		nextPage,
-		previousPage,
-		setPageSize,
-		state: { pageIndex, pageSize },
-	} = useTable(
+	const tableProps = useTable(
 		{
 			columns,
 			data,
@@ -302,17 +286,37 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		usePagination
 	)
 	
+	const {
+		getTableProps,
+			getTableBodyProps,
+			headerGroups,
+			rows, //all rows
+			prepareRow,
+			page, // current page in rows
+			canPreviousPage,
+			canNextPage,
+			pageOptions,
+			pageCount,
+			gotoPage,
+			nextPage,
+			previousPage,
+			setPageSize,
+			state: { pageIndex, pageSize, sortBy },
+	} = tableProps;
+	
 	useEffect(() => {
-		if (data.length) {
-			const slicedData = data.slice(pageIndex*pageSize, (pageIndex+1)*pageSize)
-			
-			const dataToFetchPricesFor = slicedData.filter(d => !context.itemPrices.find(({itemCode}) => itemCode === d.itemId))
+		if (page.length) {
+			const dataToFetchPricesFor = page
+				.filter(d => !context.itemPrices.find(({invMastUid}) => invMastUid === d.original.invMastUid))
+				.map(({original}) => original)
 			if (dataToFetchPricesFor.length) context.getItemPrices(dataToFetchPricesFor)
 			
-			const dataToFetchAvailabilitiesFor = slicedData.filter(d => !context.itemAvailabilities.find(({invMastUid}) => invMastUid === d.invMastUid))
+			const dataToFetchAvailabilitiesFor = page
+				.filter(d => !context.itemAvailabilities.find(({invMastUid}) => invMastUid === d.original.invMastUid))
+				.map(({original}) => original)
 			if (dataToFetchAvailabilitiesFor.length) context.getItemAvailabilities(dataToFetchAvailabilitiesFor);
 		}
-	}, [pageIndex, pageSize, data])
+	}, [pageIndex, pageSize, sortBy, data])
 	
 	return (
 		<TableContainer>
