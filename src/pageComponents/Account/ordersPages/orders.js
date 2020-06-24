@@ -10,6 +10,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
+import {parse} from 'query-string';
 
 const TableContainer = styled.div`
 	display: flex;
@@ -109,16 +110,20 @@ export default function OrdersTable({ history }) {
 	const [showOrderType, setShowOrderType] = useState('all')
 	const [dateFrom, setDateFrom] = useState(null)
 	const [dateTo, setDateTo] = useState(null)
-
+	
+	useEffect(() => {
+		const search = history.location.search
+		if (search && search.includes('filter')) {
+			setFilter(parse(search).filter)
+		}
+	}, []);
+	
 	useEffect(() => {
 		if (!didMountRef.current && context.ordersCache.length === 0) {
 			context.getOrders()
-		} else if (context.ordersCache.length > 0) {
-			let mutatedData = formatTableData('orders', context.ordersCache)
-			setData(mutatedData)
 		}
-	}, [context.ordersCache])
-
+	}, [])
+	
 	useEffect(() => {
 		if (didMountRef.current) {
 			let mutatedData = formatTableData('orders', context.ordersCache)
@@ -138,21 +143,21 @@ export default function OrdersTable({ history }) {
 			// Apply date filters
 			if (!_.isNil(dateFrom)) {
 				let epochDateFrom = dateFrom.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) >= epochDateFrom 
+				mutatedData = mutatedData.filter(row => {
+					return Date.parse(row.orderDate) >= epochDateFrom
 				})
 			}
 			if (!_.isNil(dateTo)) {
 				let epochDateTo = dateTo.valueOf()
-				mutatedData = mutatedData.filter(row => { 
-					return Date.parse(row.orderDate) <= epochDateTo 
+				mutatedData = mutatedData.filter(row => {
+					return Date.parse(row.orderDate) <= epochDateTo
 				})
 			}
 			setData(mutatedData)
 		}
 		didMountRef.current = true
-	}, [filter, showOrderType, dateFrom, dateTo])
-
+	}, [context.ordersCache, filter, showOrderType, dateFrom, dateTo])
+	
 	const columns = useMemo(
 		() => [
 			{
@@ -203,12 +208,12 @@ export default function OrdersTable({ history }) {
 		previousPage,
 		setPageSize,
 		state: { pageIndex, pageSize },
-	} = useTable(    
+	} = useTable(
 		{
 			columns,
 			data,
-			initialState: { 
-				pageIndex: 0, 
+			initialState: {
+				pageIndex: 0,
 				hiddenColumns: ['filter'],
 				sortBy: [
 					{
@@ -221,7 +226,7 @@ export default function OrdersTable({ history }) {
 		useSortBy,
 		usePagination
 	)
-
+	
 	return(
 		<TableContainer>
 			<h4>Orders</h4>
@@ -268,10 +273,10 @@ export default function OrdersTable({ history }) {
 				<DivRow>
 					<ButtonExport>
 						<FontAwesomeIcon size='lg' icon="copy" color="grey"/>
-					</ButtonExport> 
+					</ButtonExport>
 					<ButtonExport>
 						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
-					</ButtonExport>      
+					</ButtonExport>
 					<ButtonExport>
 						<FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
 					</ButtonExport>
@@ -282,49 +287,49 @@ export default function OrdersTable({ history }) {
 			</DivRow>
 			<Table {...getTableProps()}>
 				<thead>
-					{headerGroups.map(headerGroup => (
-						<TRheader {...headerGroup.getHeaderGroupProps()}>
-							{headerGroup.headers.map(column => (
-								<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
-									{column.render('Header')}
-									<SpanSort>
-										{column.isSorted
-											? column.isSortedDesc
-												?  <FontAwesomeIcon icon="caret-up" color="black"/>
-												:  <FontAwesomeIcon icon="caret-down" color="black"/>
-											: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-									</SpanSort>
-								</THheader>
-							))}
-						</TRheader>
-					))}
+				{headerGroups.map(headerGroup => (
+					<TRheader {...headerGroup.getHeaderGroupProps()}>
+						{headerGroup.headers.map(column => (
+							<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+								{column.render('Header')}
+								<SpanSort>
+									{column.isSorted
+										? column.isSortedDesc
+											?  <FontAwesomeIcon icon="caret-up" color="black"/>
+											:  <FontAwesomeIcon icon="caret-down" color="black"/>
+										: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+								</SpanSort>
+							</THheader>
+						))}
+					</TRheader>
+				))}
 				</thead>
 				<tbody {...getTableBodyProps()}>
-					{page.map(row => {
-						prepareRow(row)
-						return (
-							<TRrow {...row.getRowProps()}>
-								{row.cells.map(cell => {
-									if(cell.column.id === 'orderNumber') {
-										return (
-											<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
-												{cell.render('Cell')}
-											</TDrow>
-										)
-									} else {
-										return (
-											<TDrow {...cell.getCellProps()}>
-												{cell.render('Cell')}
-											</TDrow>
-										)
-									}
-								})}
-							</TRrow>
-						)
-					})}
+				{page.map(row => {
+					prepareRow(row)
+					return (
+						<TRrow {...row.getRowProps()}>
+							{row.cells.map(cell => {
+								if(cell.column.id === 'orderNumber') {
+									return (
+										<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+											{cell.render('Cell')}
+										</TDrow>
+									)
+								} else {
+									return (
+										<TDrow {...cell.getCellProps()}>
+											{cell.render('Cell')}
+										</TDrow>
+									)
+								}
+							})}
+						</TRrow>
+					)
+				})}
 				</tbody>
 			</Table>
-			{/* 
+			{/*
 				Pagination can be built however you'd like. 
 				This is just a very basic UI implementation:
 			*/}
