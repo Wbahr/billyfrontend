@@ -9,6 +9,7 @@ import Context from "../../../config/context";
 import {format as dateFormat} from "date-fns";
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import _ from "lodash";
+import {CircularProgress} from '@material-ui/core';
 
 const TableContainer = styled.div`
   display: flex;
@@ -110,6 +111,12 @@ const ButtonExport = styled.div`
 	&:hover {
 		background-color: whitesmoke;
 	}
+`
+
+const SpinnerDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	margin: 50px;
 `
 
 export default function ItemPurchaseHistoryTable({ history }) {
@@ -374,42 +381,51 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				</DivRow>
 			</DivRow>
 			
-			<Table {...getTableProps()}>
-				<thead>
-				{headerGroups.map(headerGroup => (
-					<TRheader {...headerGroup.getHeaderGroupProps()}>
-						{headerGroup.headers.map(column => (
-							<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
-								{column.render('Header')}
-								<SpanSort>
-									{column.isSorted
-										? column.isSortedDesc
-											?  <FontAwesomeIcon icon="caret-up" color="black"/>
-											:  <FontAwesomeIcon icon="caret-down" color="black"/>
-										: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-								</SpanSort>
-							</THheader>
+			{
+				context.getPurchaseHistoryState.loading ? (
+					<SpinnerDiv>
+						<CircularProgress color=""/>
+					</SpinnerDiv>
+				) : (
+					<Table {...getTableProps()}>
+						<thead>
+						{headerGroups.map(headerGroup => (
+							<TRheader {...headerGroup.getHeaderGroupProps()}>
+								{headerGroup.headers.map(column => (
+									<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+										{column.render('Header')}
+										<SpanSort>
+											{column.isSorted
+												? column.isSortedDesc
+													?  <FontAwesomeIcon icon="caret-up" color="black"/>
+													:  <FontAwesomeIcon icon="caret-down" color="black"/>
+												: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+										</SpanSort>
+									</THheader>
+								))}
+							</TRheader>
 						))}
-					</TRheader>
-				))}
-				</thead>
-				<tbody {...getTableBodyProps()}>
-				{page.map(row => {
-					prepareRow(row)
-					return (
-						<TRrow {...row.getRowProps()}>
-							{row.cells.map(cell => {
-								return (
-									<TDrow {...cell.getCellProps()}>
-										{cell.render('Cell')}
-									</TDrow>
-								)
-							})}
-						</TRrow>
-					)
-				})}
-				</tbody>
-			</Table>
+						</thead>
+						<tbody {...getTableBodyProps()}>
+						{page.map(row => {
+							prepareRow(row)
+							return (
+								<TRrow {...row.getRowProps()}>
+									{row.cells.map(cell => {
+										return (
+											<TDrow {...cell.getCellProps()}>
+												{cell.render('Cell')}
+											</TDrow>
+										)
+									})}
+								</TRrow>
+							)
+						})}
+						</tbody>
+					</Table>
+				)
+			}
+			
 			{/*
         Pagination can be built however you'd like. 
         This is just a very basic UI implementation:

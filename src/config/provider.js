@@ -154,7 +154,7 @@ export default function Provider(props) {
 		}
 	})
 	
-	const [handleGetOrders] = useLazyQuery(GET_ORDERS, {
+	const [handleGetOrders, getOrdersState] = useLazyQuery(GET_ORDERS, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
 			let requestData = data.accountOrders
@@ -175,7 +175,7 @@ export default function Provider(props) {
 		}
 	})
 	
-	const [getPurchaseHistory] = useLazyQuery(GET_PURCHASE_HISTORY, {
+	const [getPurchaseHistory, getPurchaseHistoryState] = useLazyQuery(GET_PURCHASE_HISTORY, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
 			setPurchaseHistory(data.purchaseHistory)
@@ -519,12 +519,14 @@ export default function Provider(props) {
 				getOrders: () => {
 					handleUpdateOrders()
 				},
+				getOrdersState,
 				invoiceCache: invoiceCache,
 				getInvoices: () => {
 					handleUpdateInvoices()
 				},
 				invoicesLoaded: invoicesLoaded.current,
 				purchaseHistory,
+				getPurchaseHistoryState,
 				itemPrices,
 				itemAvailabilities,
 				getPurchaseHistory,

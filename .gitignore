@@ -1,6 +1,7 @@
 # ignore these directories
 /node_modules
 /dist
+.idea
 
 # ignore these file types
 

@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
 import {parse} from 'query-string';
+import {CircularProgress} from "@material-ui/core";
 
 const TableContainer = styled.div`
 	display: flex;
@@ -102,9 +103,14 @@ const ButtonExport = styled.div`
 	}
 `
 
+const SpinnerDiv = styled.div`
+	display: flex;
+	justify-content: center;
+	margin: 50px;
+`
+
 export default function OrdersTable({ history }) {
 	const context = useContext(Context)
-	const didMountRef = useRef(false)
 	const [data, setData] = useState([])
 	const [filter, setFilter] = useState('')
 	const [showOrderType, setShowOrderType] = useState('all')
@@ -112,6 +118,8 @@ export default function OrdersTable({ history }) {
 	const [dateTo, setDateTo] = useState(null)
 	
 	useEffect(() => {
+		if (!context.ordersCache.length) context.getOrders()
+		
 		const search = history.location.search
 		if (search && search.includes('filter')) {
 			setFilter(parse(search).filter)
@@ -119,43 +127,34 @@ export default function OrdersTable({ history }) {
 	}, []);
 	
 	useEffect(() => {
-		if (!didMountRef.current && context.ordersCache.length === 0) {
-			context.getOrders()
+		let mutatedData = formatTableData('orders', context.ordersCache)
+		// Apply search filter
+		if (filter.length > 0) {
+			mutatedData = mutatedData.filter(row => {
+				let upperCaseFilter = filter.toUpperCase()
+				return row.filter.includes(upperCaseFilter)
+			})
 		}
-	}, [])
-	
-	useEffect(() => {
-		if (didMountRef.current) {
-			let mutatedData = formatTableData('orders', context.ordersCache)
-			// Apply search filter
-			if (filter.length > 0) {
-				mutatedData = mutatedData.filter(row => {
-					let upperCaseFilter = filter.toUpperCase()
-					return row.filter.includes(upperCaseFilter)
-				})
-			}
-			// Apply showOrderType filter
-			if (showOrderType !== 'all') {
-				mutatedData = mutatedData.filter(row => {
-					return row.status.includes(showOrderType)
-				})
-			}
-			// Apply date filters
-			if (!_.isNil(dateFrom)) {
-				let epochDateFrom = dateFrom.valueOf()
-				mutatedData = mutatedData.filter(row => {
-					return Date.parse(row.orderDate) >= epochDateFrom
-				})
-			}
-			if (!_.isNil(dateTo)) {
-				let epochDateTo = dateTo.valueOf()
-				mutatedData = mutatedData.filter(row => {
-					return Date.parse(row.orderDate) <= epochDateTo
-				})
-			}
-			setData(mutatedData)
+		// Apply showOrderType filter
+		if (showOrderType !== 'all') {
+			mutatedData = mutatedData.filter(row => {
+				return row.status.includes(showOrderType)
+			})
 		}
-		didMountRef.current = true
+		// Apply date filters
+		if (!_.isNil(dateFrom)) {
+			let epochDateFrom = dateFrom.valueOf()
+			mutatedData = mutatedData.filter(row => {
+				return Date.parse(row.orderDate) >= epochDateFrom
+			})
+		}
+		if (!_.isNil(dateTo)) {
+			let epochDateTo = dateTo.valueOf()
+			mutatedData = mutatedData.filter(row => {
+				return Date.parse(row.orderDate) <= epochDateTo
+			})
+		}
+		setData(mutatedData)
 	}, [context.ordersCache, filter, showOrderType, dateFrom, dateTo])
 	
 	const columns = useMemo(
@@ -285,50 +284,60 @@ export default function OrdersTable({ history }) {
 					</ButtonExport>
 				</DivRow>
 			</DivRow>
-			<Table {...getTableProps()}>
-				<thead>
-				{headerGroups.map(headerGroup => (
-					<TRheader {...headerGroup.getHeaderGroupProps()}>
-						{headerGroup.headers.map(column => (
-							<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
-								{column.render('Header')}
-								<SpanSort>
-									{column.isSorted
-										? column.isSortedDesc
-											?  <FontAwesomeIcon icon="caret-up" color="black"/>
-											:  <FontAwesomeIcon icon="caret-down" color="black"/>
-										: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-								</SpanSort>
-							</THheader>
+			
+			{
+				context.getOrdersState.loading ? (
+					<SpinnerDiv>
+						<CircularProgress color=""/>
+					</SpinnerDiv>
+				) : (
+					<Table {...getTableProps()}>
+						<thead>
+						{headerGroups.map(headerGroup => (
+							<TRheader {...headerGroup.getHeaderGroupProps()}>
+								{headerGroup.headers.map(column => (
+									<THheader {...column.getHeaderProps(column.getSortByToggleProps())}>
+										{column.render('Header')}
+										<SpanSort>
+											{column.isSorted
+												? column.isSortedDesc
+													?  <FontAwesomeIcon icon="caret-up" color="black"/>
+													:  <FontAwesomeIcon icon="caret-down" color="black"/>
+												: <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+										</SpanSort>
+									</THheader>
+								))}
+							</TRheader>
 						))}
-					</TRheader>
-				))}
-				</thead>
-				<tbody {...getTableBodyProps()}>
-				{page.map(row => {
-					prepareRow(row)
-					return (
-						<TRrow {...row.getRowProps()}>
-							{row.cells.map(cell => {
-								if(cell.column.id === 'orderNumber') {
-									return (
-										<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
-											{cell.render('Cell')}
-										</TDrow>
-									)
-								} else {
-									return (
-										<TDrow {...cell.getCellProps()}>
-											{cell.render('Cell')}
-										</TDrow>
-									)
-								}
-							})}
-						</TRrow>
-					)
-				})}
-				</tbody>
-			</Table>
+						</thead>
+						<tbody {...getTableBodyProps()}>
+						{page.map(row => {
+							prepareRow(row)
+							return (
+								<TRrow {...row.getRowProps()}>
+									{row.cells.map(cell => {
+										if(cell.column.id === 'orderNumber') {
+											return (
+												<TDrow {...cell.getCellProps()} isOrderDetail onClick={()=>history.push(`/account/order-detail/${cell.value}`)}>
+													{cell.render('Cell')}
+												</TDrow>
+											)
+										} else {
+											return (
+												<TDrow {...cell.getCellProps()}>
+													{cell.render('Cell')}
+												</TDrow>
+											)
+										}
+									})}
+								</TRrow>
+							)
+						})}
+						</tbody>
+					</Table>
+				)
+			}
+			
 			{/*
 				Pagination can be built however you'd like. 
 				This is just a very basic UI implementation:
