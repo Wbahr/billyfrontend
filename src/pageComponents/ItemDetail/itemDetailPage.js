@@ -8,6 +8,7 @@ import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
+import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
 
 const GET_ITEM_BY_ID = gql`
 		query ItemById($itemId: Int){
@@ -289,6 +290,7 @@ export default function ItemDetailPage({history}){
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(_.isNil(customerPartNumber) ? null : customerPartNumber)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+	const [showAddListModal, setShowAddListModal] = useState(false)
 
 	function handleAddedToCart(){
 		setShowAddedToCartModal(false)
@@ -451,6 +453,17 @@ export default function ItemDetailPage({history}){
 					{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
 					<Div>
 						<hr/>
+						<ButtonRed
+							onClick={() => setShowAddListModal(true)}
+						>
+							Add to List
+						</ButtonRed>
+						<AddToShoppingListModal
+							open={showAddListModal}
+							hide={() => setShowAddListModal(false)}
+							item={item}
+							customerPartNumberId={selectedCustomerPartNumber}
+						/>
 						<Context.Consumer>
 							{({addItem}) => (
 								<ButtonRed onClick={()=>{

@@ -361,7 +361,7 @@ export const GET_ITEM_PRICE = gql`
       unitPrice
     }
   }
-`;
+`
 
 export const GET_ITEM_AVAILABILITY = gql`
   query GetItemAvailability($invMastUids: [Int]){
@@ -371,4 +371,62 @@ export const GET_ITEM_AVAILABILITY = gql`
       leadTimeDays
     }
   }
-`;
+`
+
+export const GET_SHOPPING_LISTS = gql`
+	query GetShoppingLists {
+		shoppingList {
+	    id
+	    contactIdOwner
+	    name
+	    notes
+	    editors {
+	      contactId
+	      firstName
+	      lastName
+	    }
+	    items {
+	      invMastUid
+	      itemCode
+	      quantity
+	      customerPartNumber
+		    customerPartNumberId
+		    itemDescription
+		    imageUrl
+	    }
+	  }
+  }
+`
+
+export const UPDATE_SHOPPING_LISTS = gql`
+	mutation ShoppingListUpdate($shoppingList: ShoppingListInput) {
+		shoppingListEdit(shoppingList: $shoppingList) {
+		  id
+		  contactIdOwner
+		  name
+		  notes
+		  deleted
+		  editors {
+		    contactId
+		    firstName
+		    lastName
+		  }
+		  items {
+		    invMastUid
+		    itemCode
+		    quantity
+		    customerPartNumberId
+		  }
+		}
+	}
+`
+
+export const GET_WEB_USER_CONTACTS = gql`
+	query GetWebUserContacts {
+		webUsers {
+			contactId
+			firstName
+			lastName
+		}
+	}
+`
