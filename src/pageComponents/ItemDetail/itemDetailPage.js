@@ -20,6 +20,12 @@ const GET_ITEM_BY_ID = gql`
 						assembly
 						availability
 						availabilityMessage
+						brand {
+							id
+							name
+							supplierId
+							logoLink
+					}
 						cBrandId
 						dateCreated
 						dateModified
@@ -280,29 +286,30 @@ const IMG = styled.img`
 	opacity: 0.6;
 `
 
-export default function ItemDetailPage({history}){
+export default function ItemDetailPage({ history }) {
 	let { itemId, customerPartNumber } = useParams()
 
 	const [item, setItem] = useState(null)
 	const [quantity, setQuantity] = useState(1)
-	const [unitPrice, setUnitPrice ] = useState(null)
+	const [unitPrice, setUnitPrice] = useState(null)
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(_.isNil(customerPartNumber) ? null : customerPartNumber)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-	function handleAddedToCart(){
+	function handleAddedToCart() {
 		setShowAddedToCartModal(false)
 	}
 
-	itemId = parseInt(itemId,10)
+	itemId = parseInt(itemId, 10)
 	useQuery(GET_ITEM_BY_ID, {
 		variables: { itemId },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
+			debugger
 			if (result.itemDetails) {
 				performPriceLookup(
 					{
-						variables: {	
+						variables: {
 							'items': [
 								{
 									'invMastUid': result.itemDetails.invMastUid,
@@ -329,13 +336,13 @@ export default function ItemDetailPage({history}){
 	})
 
 	if (_.isNil(item)) {
-		return(<Loader/>)
-	} else if (!_.has(item,'invMastUid')){
-		return(<p>No item found</p>)
+		return (<Loader />)
+	} else if (!_.has(item, 'invMastUid')) {
+		return (<p>No item found</p>)
 	} else {
 		let imagePath
 		let resultImage = _.get(item, 'image[0].path', null)
-		if (_.isNil(resultImage)){
+		if (_.isNil(resultImage)) {
 			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
 		} else {
 			let imagePathArray = resultImage.split('\\')
@@ -343,21 +350,21 @@ export default function ItemDetailPage({history}){
 			imageFile = imageFile.slice(0, -5) + 'o.jpg'
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
-		
+
 		let FeatureItems = item.feature.map(elem => {
-			return(
+			return (
 				<li>{elem.text}</li>
 			)
 		})
 
 		let TechSpecItems = item.techSpec.map(elem => {
-			return(
+			return (
 				<TR><TD>{elem.name}</TD><TD>{elem.value}</TD></TR>
 			)
 		})
 
 		let ItemLinks = item.itemLink.map(elem => {
-			return(
+			return (
 				<a href={elem.linkPath}>{elem.title}</a>
 			)
 		})
@@ -367,7 +374,7 @@ export default function ItemDetailPage({history}){
 				{FeatureItems}
 			</ul>
 		)
-		
+
 		let TechSpecs = (
 			<div>
 				<Table>
@@ -383,8 +390,8 @@ export default function ItemDetailPage({history}){
 		)
 
 		let AccessoryItems = item.associatedItems.map(elem => {
-			return(
-				<AccessoryItem 
+			return (
+				<AccessoryItem
 					associatedItemId={elem.associatedInvMastUid}
 					history={history}
 				/>
@@ -392,19 +399,19 @@ export default function ItemDetailPage({history}){
 		})
 
 		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+			return (<option value={elem.id}>{elem.customerPartNumber}</option>)
 		})
 
-		return(
+		return (
 			<ItemDetailPageContainer>
-				<AddedModal 
-					open={showShowAddedToCartModal} 
-					text={'Added to Cart!'} 
+				<AddedModal
+					open={showShowAddedToCartModal}
+					text={'Added to Cart!'}
 					onClose={handleAddedToCart}
 					timeout={900}
 				/>
 				<DivPhoto>
-					<Img src={imagePath}/>
+					<Img src={imagePath} />
 				</DivPhoto>
 				<DivDetails>
 					<H2ItemTitle>{item.itemDesc}</H2ItemTitle>
@@ -414,21 +421,21 @@ export default function ItemDetailPage({history}){
 						{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
 					</Row>
 					<TABLE>
-						<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src='https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact2.jpg'/></TDWhite></TR2>
+						<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
 						<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
 						<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
 						<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-						<TR2><TDGrey>Customer Part #</TDGrey>    
+						<TR2><TDGrey>Customer Part #</TDGrey>
 							<TDWhite>
-								<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+								<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
 									<option>Select a Part No.</option>
 									{CustomerPartOptions}
 								</select>
-							</TDWhite>        
+							</TDWhite>
 						</TR2>
 						<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
 					</TABLE>
-					<hr/>
+					<hr />
 					<H4 id='feature'>Features</H4>
 					{Features}
 					<H4 id='techspec'>Tech Specifications</H4>
@@ -444,16 +451,16 @@ export default function ItemDetailPage({history}){
 					<RowSpaced>
 						<Row><Pprice>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice><P> /each</P></Row>
 						<RowEnd>
-							<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
+							<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)} />
 						</RowEnd>
 					</RowSpaced>
-					<hr/>
+					<hr />
 					{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
 					<Div>
-						<hr/>
+						<hr />
 						<Context.Consumer>
-							{({addItem}) => (
-								<ButtonRed onClick={()=>{
+							{({ addItem }) => (
+								<ButtonRed onClick={() => {
 									addItem({
 										'frecno': itemId,
 										'quantity': parseInt(quantity, 10),

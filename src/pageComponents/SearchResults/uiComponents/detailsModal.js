@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react'
+import React, { useState, useRef } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
@@ -123,7 +123,13 @@ query ItemById($invMastUid: Int){
         anonPrice
         assembly
         availability
-        availabilityMessage
+				availabilityMessage
+				brand {
+					id
+					name
+					supplierId
+					logoLink
+			}
         cBrandId
         dateCreated
         dateModified
@@ -168,7 +174,7 @@ query ItemSearch($items: [ItemQuantityInput]){
 }
 `
 
-export default function DetailsModal({open, hideDetailsModal, invMastUid, history, itemCode}) {
+export default function DetailsModal({ open, hideDetailsModal, invMastUid, history, itemCode }) {
 	const [item, setItem] = useState(null)
 	const [unitPrice, setUnitPrice] = useState(null)
 	const [quantity, setQuantity] = useState(1)
@@ -185,7 +191,7 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 	})
 
 	const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
-		variables: {	
+		variables: {
 			'items': [
 				{
 					'invMastUid': invMastUid,
@@ -200,25 +206,25 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 		}
 	})
 
-	function handleSetQuantity(quantity){
-		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
+	function handleSetQuantity(quantity) {
+		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === '') {
 			setQuantity(quantity)
 		}
 	}
 
-	function handleCloseModal(){
+	function handleCloseModal() {
 		setItem(null)
 		setUnitPrice(null)
 		setQuantity(1)
 		hideDetailsModal()
 	}
 
-	function mutateItemId(itemId){
+	function mutateItemId(itemId) {
 		let mutatedItemId = itemId.replace(/\s/g, '-')
-		return(mutatedItemId)
+		return (mutatedItemId)
 	}
 
-	if(open && !_.isNil(invMastUid) && !_.isNil(itemCode) && !searchSent.current){
+	if (open && !_.isNil(invMastUid) && !_.isNil(itemCode) && !searchSent.current) {
 		searchSent.current = true
 		performItemDetailSearch()
 		performPriceLookup()
@@ -228,22 +234,22 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 	}
 
 	let PopupContent
-	if(_.isNil(item)){
-		PopupContent =(
+	if (_.isNil(item)) {
+		PopupContent = (
 			<Div>
-				<p>Getting your product details...</p>      
-				<Loader/>
+				<p>Getting your product details...</p>
+				<Loader />
 			</Div>
 		)
 	} else if (open) {
 		let imagePath
-		for (let i=0; i < item.image.length; i++){
+		for (let i = 0; i < item.image.length; i++) {
 			let currentImage = item.image[i]
-			if(currentImage.type === 1){
+			if (currentImage.type === 1) {
 				imagePath = currentImage.path
 			}
 		}
-		if (_.isNil(imagePath)){
+		if (_.isNil(imagePath)) {
 			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
 		} else {
 			let imagePathArray = imagePath.split('\\')
@@ -251,19 +257,19 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 			imageFile = imageFile.slice(0, -5) + 'l.jpg'
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
-		const mutatedItemId = mutateItemId(item.itemCode) 
+		const mutatedItemId = mutateItemId(item.itemCode)
 
 		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+			return (<option value={elem.id}>{elem.customerPartNumber}</option>)
 		})
 
-		PopupContent =(
+		PopupContent = (
 			<DivContainer>
 				<DivColRow>
 					<DivCol1>
 						<DivImg>
-							<img src={imagePath}/>
-							<ButtonBlack onClick={()=>{history.push(`/product/${mutatedItemId}/${invMastUid}`)}}>View More Details</ButtonBlack>
+							<img src={imagePath} />
+							<ButtonBlack onClick={() => { history.push(`/product/${mutatedItemId}/${invMastUid}`) }}>View More Details</ButtonBlack>
 						</DivImg>
 					</DivCol1>
 					<DivCol2>
@@ -274,10 +280,10 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 								<p>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</p><p> /each</p>
 							</DivRow>
 							<DivRow>
-								<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/>
+								<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)} />
 								<Context.Consumer>
-									{({addItem}) => (
-										<ButtonRed onClick={()=>{
+									{({ addItem }) => (
+										<ButtonRed onClick={() => {
 											addItem({
 												'frecno': invMastUid,
 												'quantity': parseInt(quantity, 10),
@@ -296,13 +302,13 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 						</DivRow>
 						<TABLE>
 							<tbody>
-								<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src='https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact2.jpg'/></TDWhite></TR2>
+								<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
 								<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
 								<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
 								<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
 								<TR2><TDGrey>Customer Part #</TDGrey>
 									<TDWhite>
-										<select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
+										<select value={customerPartNumber} onChange={(e) => setCustomerPartNumber(e.target.value)} >
 											<option>Select a Part No.</option>
 											{CustomerPartOptions}
 										</select>
@@ -316,8 +322,8 @@ export default function DetailsModal({open, hideDetailsModal, invMastUid, histor
 			</DivContainer>
 		)
 	}
-	return(
-		<AirlineModal open={open} onClose={()=>{handleCloseModal()}} contentStyle={_.isNil(item) ? {'maxWidth': '300px', 'borderRadius': '5px'} : {'maxWidth': '800px', 'borderRadius': '5px'}}>
+	return (
+		<AirlineModal open={open} onClose={() => { handleCloseModal() }} contentStyle={_.isNil(item) ? { 'maxWidth': '300px', 'borderRadius': '5px' } : { 'maxWidth': '800px', 'borderRadius': '5px' }}>
 			{PopupContent}
 		</AirlineModal>
 	)
