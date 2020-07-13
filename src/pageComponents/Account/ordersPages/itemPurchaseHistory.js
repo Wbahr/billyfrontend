@@ -94,10 +94,6 @@ const Pdate = styled.p`
   padding-top: 6px;
 `
 
-const Select = styled.select`
-  margin-left: 16px;
-`
-
 const ButtonExport = styled.div`
 	cursor: pointer;
 	display: flex;
@@ -129,8 +125,8 @@ export default function ItemPurchaseHistoryTable({ history }) {
 	const [showModal, setShowModal] = useState(false)
 	
 	useEffect(() => {
-		if (!context.purchaseHistory.length) context.getPurchaseHistory()
-	}, [])
+		context.getPurchaseHistory()
+	}, [context.userInfo])
 	
 	const getFilter = ({itemId, customerPartNumber, associatedOrderDetails}) => {
 		const orderDetails = associatedOrderDetails.map(obj => Object.keys(obj).map(key => obj[key]).join('')).join('')
@@ -274,7 +270,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 				accessor: 'filter'
 			}
 		],
-		[context.itemAvailabilities, context.itemPrices],
+		[context.itemAvailabilities, context.itemPrices, context.cart],
 	)
 	const tableProps = useTable(
 		{
