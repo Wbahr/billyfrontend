@@ -58,7 +58,7 @@ const NavBottomContainer = styled.div`
 	}
 `
 
-const NavItem =styled.div`
+const NavItem = styled.div`
 	display: flex;
 	align-items: center;
 	cursor: pointer;
@@ -109,7 +109,7 @@ const Div = styled.div`
 	display: flex;
 `
 const Puser = styled.p`
-	background-image: linear-gradient(to top left, #328efc, #133752);
+	background-image: linear-gradient(to top left, #404040, #333);
 	color: #f3f3f3;
 	font-size: 11px;
 	margin: 0;
@@ -118,6 +118,7 @@ const Puser = styled.p`
 	font-weight: 600;
 `
 const PeUser = styled(Puser)`
+	background-image: linear-gradient(to top left, #328efc, #133752);
 	color: #f3f3f3;
 	font-weight: 600;
 `
@@ -159,70 +160,70 @@ export default function HeaderComponent(props) {
 	function onHover(e) {
 		let target = e.target.id
 		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-		setShowDropdown({...mutatedShowDropdown, [target]: true})
+		setShowDropdown({ ...mutatedShowDropdown, [target]: true })
 	}
 
 	function onExit() {
 		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-		setShowDropdown({...mutatedShowDropdown})
+		setShowDropdown({ ...mutatedShowDropdown })
 	}
 
-	return(
+	return (
 		<>
 			<Context.Consumer>
-				{({topAlert,removeTopAlert}) => {
-					if(topAlert.show) {
-						return(<TopAlert 
+				{({ topAlert, removeTopAlert }) => {
+					if (topAlert.show) {
+						return (<TopAlert
 							message={topAlert.message}
-							close={()=>removeTopAlert()}
+							close={() => removeTopAlert()}
 						/>)
 					}
-				}}        
+				}}
 			</Context.Consumer>
 			<NavTop>
 				<NavBottomContainer>
 					<div>
 						<Context.Consumer>
-							{({userInfo, impersonatedCompanyInfo, cancelImpersonation}) => {
-								if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)){
-									if(userInfo.role === 'AirlineEmployee'){
-										return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+							{({ userInfo, impersonatedCompanyInfo, cancelImpersonation }) => {
+								if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
+									if (userInfo.role === 'AirlineEmployee') {
+										return (<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
 									} else {
-										return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
+										return (<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
 									}
 								} else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-									return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#f3f3f3"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
+									return (<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#f3f3f3" /> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={() => cancelImpersonation()}><FontAwesomeIcon icon="times" color="white" /></DivCancelImpersonation><ImpersonationSearch /></Div>)
 								}
-							}}        
+							}}
 						</Context.Consumer>
 					</div>
 					<Div>
 						<Div>
-							<FontAwesomeIcon icon="phone-alt" color="white"/>        
+							<FontAwesomeIcon icon="phone-alt" color="white" />
 							<Aphone href="tel:+18009997378">800-999-7378</Aphone>
 						</Div>
 						<Context.Consumer>
-							{({userInfo, logoutUser}) => {
-								if (!_.isNil(userInfo)){
-									return(<A onClick={()=>{logoutUser()}}>Sign Out</A>)
+							{({ userInfo, logoutUser }) => {
+								if (!_.isNil(userInfo)) {
+									return (<A onClick={() => { logoutUser() }}>Sign Out</A>)
 								} else {
-									return(<A onClick={()=>props.history.push('/login')}>Sign In</A> )
+									return (<A onClick={() => props.history.push('/login')}>Sign In</A>)
 								}
-							}}        
+							}}
 						</Context.Consumer>
 						<A>|</A>
 						<Context.Consumer>
-							{({userInfo}) => {
-								if (!_.isNil(userInfo)){
-									return(<A onClick={()=>props.history.push('/account/dashboard')}>My Account</A>)
+							{({ userInfo }) => {
+								if (!_.isNil(userInfo)) {
+									return (<A onClick={() => props.history.push('/account/dashboard')}>My Account</A>)
 								} else {
-									return(<A onClick={()=>props.history.push('/signup')}>Create Account</A>)
+									return (<A onClick={() => props.history.push('/signup')}>Create Account</A>)
 								}
-							}}        
+							}}
 						</Context.Consumer>
 						<A>|</A>
 						<Context.Consumer>
-							{({cart}) => (
+							{({ cart }) => (
 								<Link to='/cart' style={{ textDecoration: 'none' }}>
 									<A>Cart({cart.length})</A>
 								</Link>
@@ -234,12 +235,12 @@ export default function HeaderComponent(props) {
 			<NavBottom>
 				<NavBottomContainer>
 					<Link to="/">
-						<img src={AirlineLogo} height="50px"/>
+						<img src={AirlineLogo} height="50px" />
 					</Link>
 					<LinkContainer>
-						<div id="shop" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="shop" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/categories" style={{ textDecoration: 'none' }}>
-								<NavItem id="shop">Shop <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.shop ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="shop">Shop <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.shop ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.shop} history={props.history}
 								options={[
@@ -258,9 +259,9 @@ export default function HeaderComponent(props) {
 								]}
 							/>
 						</div>
-						<div id="services" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="services" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/services" style={{ textDecoration: 'none' }}>
-								<NavItem id="services">Services <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.services ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="services">Services <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.services ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.services} history={props.history}
 								options={[
@@ -283,9 +284,9 @@ export default function HeaderComponent(props) {
 								]}
 							/>
 						</div>
-						<div id="industries" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="industries" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/industries" style={{ textDecoration: 'none' }}>
-								<NavItem id="industries">Industries <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.industries ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="industries">Industries <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.industries ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.industries} history={props.history}
 								options={[
@@ -308,9 +309,9 @@ export default function HeaderComponent(props) {
 								]}
 							/>
 						</div>
-						<div id="brands" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="brands" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/brands" style={{ textDecoration: 'none' }} >
-								<NavItem id="brands">Brands <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.brands ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="brands">Brands <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.brands ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.brands} history={props.history}
 								options={[
@@ -393,9 +394,9 @@ export default function HeaderComponent(props) {
 								]}
 							/>
 						</div>
-						<div id="resources" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="resources" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/resources" style={{ textDecoration: 'none' }}>
-								<NavItem id="resources">Resources <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.resources ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="resources">Resources <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.resources ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.resources} history={props.history}
 								options={[
@@ -413,18 +414,18 @@ export default function HeaderComponent(props) {
 									},
 									{
 										'label': 'Line Cards & Brochures',
-										'link' : '/linecards'
+										'link': '/linecards'
 									},
 									{
 										'label': 'Apps',
-										'link' : '/apps'
+										'link': '/apps'
 									}
 								]}
 							/>
 						</div>
-						<div id="about" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="about" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/about" style={{ textDecoration: 'none' }}>
-								<NavItem id="about">About <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.about ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="about">About <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.about ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.about} history={props.history}
 								options={[
@@ -463,9 +464,9 @@ export default function HeaderComponent(props) {
 								]}
 							/>
 						</div>
-						<div id="contact" onMouseEnter={(e)=>onHover(e)} onMouseLeave={(e)=>onExit(e)}>
+						<div id="contact" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
 							<Link to="/contact-us" style={{ textDecoration: 'none' }}>
-								<NavItem id="contact">Contact <FontAwesomeIcon style={{'marginLeft': '4px'}} icon={showDropdown.contact ? 'caret-up' : 'caret-down'} color="black"/></NavItem>
+								<NavItem id="contact">Contact <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.contact ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
 							</Link>
 							<Dropdown open={showDropdown.contact} history={props.history}
 								options={[
@@ -491,19 +492,19 @@ export default function HeaderComponent(props) {
 					</LinkContainer>
 					<Div>
 						<Context.Consumer>
-							{({userInfo}) => {
-								if(userInfo && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')){
-									return(
-										<ButtonSearchType onClick={()=>{setSearchAsCustomer(!searchAsCustomer)}}>
-											{searchAsCustomer ? <div style={{color: 'limegreen'}}>NW</div> : <div style={{color: 'grey'}}>NW</div>}
+							{({ userInfo }) => {
+								if (userInfo && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')) {
+									return (
+										<ButtonSearchType onClick={() => { setSearchAsCustomer(!searchAsCustomer) }}>
+											{searchAsCustomer ? <div style={{ color: 'limegreen' }}>NW</div> : <div style={{ color: 'grey' }}>NW</div>}
 										</ButtonSearchType>
 									)
 								}
 							}}
 						</Context.Consumer>
-						<InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e)=>setSearchTerm(e.target.value)} onKeyPress={(e)=>{e.key === 'Enter' ? handleSearch() : null}}/>
+						<InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e) => setSearchTerm(e.target.value)} onKeyPress={(e) => { e.key === 'Enter' ? handleSearch() : null }} />
 						<ButtonSearch onClick={handleSearch}>
-							<FontAwesomeIcon icon="search" color="#f6f6f6" size="lg"/>
+							<FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
 						</ButtonSearch>
 					</Div>
 					{/* <InputSearch placeholder="Search within these results" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/><ButtonSearch onClick={handleSearch}>Search</ButtonSearch> */}
