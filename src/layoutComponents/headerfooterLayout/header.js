@@ -109,7 +109,6 @@ const Div = styled.div`
 	display: flex;
 `
 const Puser = styled.p`
-	// background-image: linear-gradient(to top left, #404040, #333);
 	background-image: linear-gradient(to top left, #328efc, #133752);
 	color: #f3f3f3;
 	font-size: 11px;
@@ -192,7 +191,6 @@ export default function HeaderComponent(props) {
 										return(<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
 									}
 								} else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-									// return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#328EFC"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
 									return(<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#f3f3f3"/> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={()=>cancelImpersonation()}><FontAwesomeIcon icon="times" color="white"/></DivCancelImpersonation><ImpersonationSearch /></Div>)
 								}
 							}}        
