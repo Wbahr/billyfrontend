@@ -109,6 +109,23 @@ const SaveChangesButton = styled.button`
   }
 `
 
+const CancelChangesButton = styled.button`
+	cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(to top left, #001d3d, #003978);
+  color: white;
+  padding: 4px 12px;
+  font-size: 20px;
+  font-family: Proxima;
+  font-weight: 600;
+  border: none;
+  svg {
+    margin-right: 5px;
+  }
+`
+
 export default function ShoppingListManagementPage() {
 	const context = useContext(Context)
 	const didMountRef = useRef(false)
@@ -126,7 +143,6 @@ export default function ShoppingListManagementPage() {
 	const [listNotes, setListNotes] = useState()
 	const [listName, setListName] = useState()
 	const [listItems, setListItems] = useState()
-	const [lastUpsertState, setLastUpsertState] = useState()
 	
 	const userOptions = context.webUserContacts.map(({firstName, lastName, contactId}) => ({label: `${firstName} ${lastName || ''}`, value: contactId}))
 	const loading = context.upsertShoppingListState?.loading
@@ -145,13 +161,6 @@ export default function ShoppingListManagementPage() {
 			selectedUser && setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
 		}
 	}, [context.shoppingLists, selectedUser])
-	
-	useEffect(() => {
-		if (!loading && context.upsertShoppingListState.data && lastUpsertState?.loading && !lastUpsertState.data) {
-		
-		}
-		setLastUpsertState(context.upsertShoppingListState)
-	}, [context.upsertShoppingListState])
 	
 	useEffect(() => {
 		setListName(selectedList?.name)
@@ -250,6 +259,14 @@ export default function ShoppingListManagementPage() {
 			items: listItems,
 			editors: selectedList.editors
 		})
+			.then(({data}) => {
+				setSelectedSharedList(null)
+				setSelectedSavedList(data.shoppingListEdit)
+			})
+	}
+	
+	const handleCancelChanges = () => {
+		setSelectedSavedList({ ...selectedList })
 	}
 	
 	const handleListNameChange = ({target: {value}}) => setListName(value)
@@ -257,6 +274,7 @@ export default function ShoppingListManagementPage() {
 	const handleListNotesChange = ({target: {value}}) => setListNotes(value)
 	
 	const saveCallback = newList => {
+		setSelectedSharedList(null)
 		setSelectedSavedList(getRidOf__typename(newList))
 	}
 	
@@ -416,12 +434,21 @@ export default function ShoppingListManagementPage() {
 		}
 		const sameAsOriginal = notes === listNotes && name === listName && !isItemsListChanged()
 		return !sameAsOriginal && (
-			<SaveChangesButton
-				style={{marginBottom: 5}}
-				onClick={handleSaveChanges}
-			>
-				{loading ? 'Saving...' : 'Save Changes'}
-			</SaveChangesButton>
+			<DivRow>
+				<SaveChangesButton
+					style={{marginBottom: 5}}
+					onClick={handleSaveChanges}
+				>
+					{loading ? 'Saving...' : 'Save Changes'}
+				</SaveChangesButton>
+				
+				<CancelChangesButton
+					style={{marginBottom: 5, marginLeft: 10}}
+					onClick={handleCancelChanges}
+				>
+					Cancel Changes
+				</CancelChangesButton>
+			</DivRow>
 		)
 	}
 
@@ -500,8 +527,8 @@ export default function ShoppingListManagementPage() {
 				}
 			</DivRow>
 			
-			<DivRow>
-				<AirlineInput placeholder='Search AHC #, Item ID, Description' value={filter} onChange={(e)=>{setFilter(e.target.value)}}/>
+			<DivRow style={{marginTop: 20}}>
+				<AirlineInput placeholder='Filter by AHC #, Item ID, Description' value={filter} onChange={(e)=>{setFilter(e.target.value)}}/>
 				{/*<ButtonExport>*/}
 				{/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
 				{/*</ButtonExport>*/}
@@ -610,6 +637,8 @@ export default function ShoppingListManagementPage() {
 				</select>
 				<p>Results: {rows.length}</p>
 			</div>
+			
+			<SaveChanges/>
 			
 			<AddedModal
 				open={showModal}
