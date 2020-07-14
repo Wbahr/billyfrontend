@@ -96,9 +96,10 @@ export default function SaveShoppingListModal({open, hide, items, preSelectedUse
 	}
 	
 	const handleSaveList = () => {
-		if (!context.cart || !context.cart.length) {
-			setError('There are no items for this list!')
-		} else if (!context.userInfo.contactId && !selectedUser) {
+		// if (!context.cart || !context.cart.length) {
+		// 	setError('There are no items for this list!')
+		// } else
+		if (!context.userInfo.contactId && !selectedUser) {
 			setError('Please select a user to save this list for')
 		} else if ((listName && listName.length) || selectedShoppingList) {
 			setError('')
