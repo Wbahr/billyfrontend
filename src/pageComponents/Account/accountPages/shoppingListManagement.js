@@ -13,6 +13,7 @@ import ShareShoppingListModal from '../../_common/modals/ShareShoppingListModal'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
 import DeleteChickenModal from '../../_common/modals/DeleteChickenModal'
 import {getRidOf__typename} from "../../_common/helpers/generalHelperFunctions";
+import NumberFormat from "react-number-format";
 
 const Table = styled.table`
   margin: 16px;
@@ -283,7 +284,9 @@ export default function ShoppingListManagementPage() {
 		const currentPrice = values.currentPrice
 			? values.currentPrice
 			: context.itemPrices.find(byUid)?.unitPrice
-		return <span>{currentPrice ? `${currentPrice}` : '...'}</span>
+		return currentPrice ? (
+				<NumberFormat value={currentPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+			) : <span>...</span>
 	}
 	
 	const renderQuantityAvailable = ({row: {original, values}}) => {

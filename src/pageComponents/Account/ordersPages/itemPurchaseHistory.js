@@ -10,6 +10,7 @@ import {format as dateFormat} from "date-fns";
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import _ from "lodash";
 import {CircularProgress} from '@material-ui/core';
+import NumberFormat from "react-number-format";
 
 const TableContainer = styled.div`
   display: flex;
@@ -180,7 +181,9 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		const currentPrice = values.currentPrice
 			? values.currentPrice
 			: context.itemPrices.find(byUid)?.unitPrice
-		return <span>{currentPrice ? `${currentPrice}` : '...'}</span>
+		return  currentPrice ? (
+			<NumberFormat value={currentPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+		) : <span>...</span>
 	}
 	
 	const renderQuantityAvailable = ({row: {original, values}}) => {
