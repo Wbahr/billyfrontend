@@ -118,7 +118,7 @@ const Puser = styled.p`
 	font-weight: 600;
 `
 const PeUser = styled(Puser)`
-	color: #328EFC;
+	color: #f3f3f3;
 	font-weight: 600;
 `
 const A = styled.p`
