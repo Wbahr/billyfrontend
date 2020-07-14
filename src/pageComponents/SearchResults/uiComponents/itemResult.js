@@ -205,14 +205,18 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 				<DivPartNumberRow>
 					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
 				</DivPartNumberRow>
-				<DivPartNumberRow>
-					<PpartAvailability>Customer Part #: 
-						<select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
-							<option>Select a Part No.</option>
-							{CustomerPartOptions}
-						</select>
-					</PpartAvailability>
-				</DivPartNumberRow>
+				{
+					!!CustomerPartOptions.length && (
+						<DivPartNumberRow>
+							<PpartAvailability>Customer Part #:
+								<select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
+									<option>Select a Part No.</option>
+									{CustomerPartOptions}
+								</select>
+							</PpartAvailability>
+						</DivPartNumberRow>
+					)
+				}
 				<DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
 					{result.availability !== 0 ? 
 						<DivRow>

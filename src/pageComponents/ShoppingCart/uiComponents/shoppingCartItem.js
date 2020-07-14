@@ -193,7 +193,6 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	})
 
 	function selectCustomerPartNumber(value){
-
 		if (value === '-1') {
 			setSelectedCustomerPartNumber(null) // Reset Dropdown
 			context.updateItem(index, 'customerPartNumberId', null)

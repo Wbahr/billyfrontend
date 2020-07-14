@@ -306,14 +306,18 @@ export default function DetailsModal({ open, hideDetailsModal, invMastUid, histo
 								<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
 								<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
 								<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-								<TR2><TDGrey>Customer Part #</TDGrey>
-									<TDWhite>
-										<select value={customerPartNumber} onChange={(e) => setCustomerPartNumber(e.target.value)} >
-											<option>Select a Part No.</option>
-											{CustomerPartOptions}
-										</select>
-									</TDWhite>
-								</TR2>
+								{
+									!!CustomerPartOptions.length && (
+										<TR2><TDGrey>Customer Part #</TDGrey>
+											<TDWhite>
+												<select value={customerPartNumber} onChange={(e) => setCustomerPartNumber(e.target.value)} >
+													<option>Select a Part No.</option>
+													{CustomerPartOptions}
+												</select>
+											</TDWhite>
+										</TR2>
+									)
+								}
 								<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
 							</tbody>
 						</TABLE>
