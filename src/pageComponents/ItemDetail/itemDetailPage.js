@@ -218,7 +218,7 @@ const PItemExtendedDescription = styled.p`
 
 const ButtonRed = styled.button`
 	background-color: #b51029;
-	width: 90%
+	width: 70%;
 	color: white;
 	font-weight: 600;
 	border: 0;
