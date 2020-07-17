@@ -268,7 +268,7 @@ export default function DetailsModal({ open, hideDetailsModal, invMastUid, histo
 				<DivColRow>
 					<DivCol1>
 						<DivImg>
-							<img src={imagePath} />
+							<img src={imagePath} width="100%"/>
 							<ButtonBlack onClick={() => { history.push(`/product/${mutatedItemId}/${invMastUid}`) }}>View More Details</ButtonBlack>
 						</DivImg>
 					</DivCol1>
