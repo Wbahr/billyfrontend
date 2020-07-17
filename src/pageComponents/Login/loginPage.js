@@ -86,6 +86,7 @@ const QUERY_LOGIN = gql`
           companyId
           role
           permissions
+          contactId
           limits {
             limitType
             limitValue

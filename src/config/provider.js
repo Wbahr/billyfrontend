@@ -3,8 +3,11 @@ import _ from 'lodash'
 import {timeoutCollection} from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
-import { UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS,
-	GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from './providerGQL'
+import {
+	UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_WEB_USER_CONTACTS,
+	GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS
+} from './providerGQL'
+import {getRidOf__typename} from '../pageComponents/_common/helpers/generalHelperFunctions'
 
 export default function Provider(props) {
 	const didMountRef = useRef(false)
@@ -25,6 +28,8 @@ export default function Provider(props) {
 	const [purchaseHistory, setPurchaseHistory] = useState([])
 	const [itemPrices, setItemPrices] = useState([])
 	const [itemAvailabilities, setItemAvailabilities] = useState([])
+	const [shoppingLists, setShoppingLists] = useState([])
+	const [webUserContacts, setWebUserContacts] = useState([])
 	const invoiceBatchSize = 1000
 	useEffect(() => {
 		if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -90,7 +95,7 @@ export default function Provider(props) {
 					'message': 'You are now impersonating a customer'
 				}
 				setTopAlert(alertObj)
-				window.setTimeout(()=>{resetTopAlert()}, 2000)
+				window.setTimeout(()=>{TopAlert()}, 2000)
 			}
 		}
 	})
@@ -206,6 +211,44 @@ export default function Provider(props) {
 		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid}) => invMastUid) }})
 	}
 	
+	const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
+		fetchPolicy: 'no-cache',
+		onCompleted: ({shoppingList}) => {
+			const data = shoppingList.map(getRidOf__typename)
+			setShoppingLists(data)
+		}
+	})
+	
+	const [handleUpdateShoppingList, upsertShoppingListState] = useMutation(UPDATE_SHOPPING_LISTS, {
+		fetchPolicy: 'no-cache',
+		onCompleted: data => {
+			const distinctShoppingLists = (list, idx, self) => self.findIndex(l => l.id === list.id) === idx
+			if (data.shoppingListEdit.deleted) {
+				const foundListIdx = shoppingLists.findIndex(list => list.id === data.shoppingListEdit.id)
+				if (foundListIdx !== -1) {
+					const shoppingListCopy = shoppingLists.slice()
+					shoppingListCopy.splice(foundListIdx, 1)
+					setShoppingLists(shoppingListCopy)
+				}
+			} else {
+				setShoppingLists([getRidOf__typename(data.shoppingListEdit), ...shoppingLists].filter(distinctShoppingLists))
+			}
+			return Promise.resolve(data)
+		}
+	})
+	
+	const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
+		const items = shoppingList.items.map(({itemCode, frecno, invMastUid, quantity, customerPartNumberId}) => ({itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId}))
+		return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
+	}
+	
+	const [getWebUserContacts, getWebUserContactsState] = useLazyQuery(GET_WEB_USER_CONTACTS, {
+		fetchPolicy: 'no-cache',
+		onCompleted: data => {
+			setWebUserContacts(data.webUsers)
+		}
+	})
+	
 	function manageUserInfo(action, userInfo, impersonationInfo){
 		let currentUserType
 		let userInfoStorage = localStorage.getItem('userInfo')
@@ -233,6 +276,8 @@ export default function Provider(props) {
 				setInvoiceCache([])
 				setInvoiceBatchNumber(0)
 				setPurchaseHistory([])
+				setShoppingLists([])
+				setWebUserContacts([])
 				setImpersonatedCompanyInfo(impersonationInfo)
 				currentUserType = 'Impersonator'
 				break
@@ -531,7 +576,15 @@ export default function Provider(props) {
 				itemAvailabilities,
 				getPurchaseHistory,
 				getItemPrices,
-				getItemAvailabilities
+				getItemAvailabilities,
+				getShoppingLists,
+				getShoppingListsState,
+				upsertShoppingList,
+				upsertShoppingListState,
+				shoppingLists,
+				getWebUserContacts,
+				getWebUserContactsState,
+				webUserContacts
 			}}
 		>
 			{props.children}

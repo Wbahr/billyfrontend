@@ -6,6 +6,7 @@ import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
+import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
 
 const Div = styled.div`
 	display: flex;
@@ -53,6 +54,7 @@ const DivSave = styled(DivShare)`
 
 export default function ShoppingCart({showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 	const [savedCart, setSavedCart] = useState(false)
+	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	const context = useContext(Context)
 	
 	useEffect(() => {
@@ -110,6 +112,10 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 			context.moveItem(result.source.index, result.destination.index)
 		}
 	}
+	
+	const handleSaveAsShoppingList = () => {
+		setShowShoppingListModal(true)
+	}
 
 	return(
 		<>
@@ -125,6 +131,11 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 					}}
 				</Context.Consumer>
 				<DivRow>
+					<DivSave onClick={handleSaveAsShoppingList}>
+						<Ashare>Save As Shopping List</Ashare>
+						<FontAwesomeIcon icon="list" color="grey"/>
+					</DivSave>
+					
 					<Context.Consumer>
 						{({saveCart}) => {
 							return(
@@ -153,6 +164,12 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 					)}
 				</Droppable>
 			</DragDropContext>
+			<SaveShoppingListModal
+				open={showShoppingListModal}
+				hide={() => setShowShoppingListModal(false)}
+				items={context.cart}
+				enableAddToExisting
+			/>
 		</>
 	)
 }
