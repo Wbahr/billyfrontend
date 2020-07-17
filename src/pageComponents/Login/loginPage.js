@@ -119,11 +119,12 @@ export default function LoginPage(props) {
 	},[context.userInfo])
 
 	const [executeLogIn, { loading, error }] = useLazyQuery(QUERY_LOGIN, {
+		fetchPolicy: 'no-cache',
 		onCompleted: data => {
-			let requestData = data.submitLogin
-			if(requestData.success){
+			const requestData = data.submitLogin
+			if (requestData.success) {
 				// Need to reset password
-				if(requestData.isPasswordReset){
+				if (requestData.isPasswordReset) {
 					setErrorMessage('')
 					setInfoMessage(requestData.message)
 					setPassword('')
@@ -132,9 +133,9 @@ export default function LoginPage(props) {
 					localStorage.setItem('apiToken', requestData.authorizationInfo.token)
 					localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
 					context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
-					let urlParams = new URLSearchParams(props.location.search)
-					let redirect = urlParams.get('next')
-					if(!_.isNil(redirect)){
+					const urlParams = new URLSearchParams(props.location.search)
+					const redirect = urlParams.get('next')
+					if (!_.isNil(redirect)) {
 						history.push(redirect)
 					} else {
 						history.push('/')
@@ -147,10 +148,11 @@ export default function LoginPage(props) {
 		}
 	})
 
-	function handleSignin(){
-		if(email.length === 0 || password.length === 0) {
+	function handleSignin() {
+		if (email.length === 0 || password.length === 0) {
 			setErrorMessage('Email and Password Required')
 		} else {
+			setErrorMessage('')
 			executeLogIn(
 				{
 					variables: {
@@ -163,7 +165,7 @@ export default function LoginPage(props) {
 			)
 		}
 	}
-
+	
 	return(
 		<LoginPageContainer>
 			<PasswordResetModal 
@@ -183,7 +185,7 @@ export default function LoginPage(props) {
 				<Label htmlFor='password'>Password</Label>
 				<Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
 			</DivInput>
-			<Button disabled={loading} onClick={()=>handleSignin()}>{loading ? 'Logging In...' : 'Log In'}</Button>
+			<Button disabled={loading} onClick={handleSignin}>{loading ? 'Logging In...' : 'Log In'}</Button>
 			<A onClick={()=>setShowPasswordResetModal(true)}>Forgot your Password?</A>
 			<A onClick={()=> history.push('/signup')}>Create an Account</A>
 

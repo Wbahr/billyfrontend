@@ -412,10 +412,13 @@ export const UPDATE_SHOPPING_LISTS = gql`
 		    lastName
 		  }
 		  items {
-		    invMastUid
-		    itemCode
-		    quantity
+	      invMastUid
+	      itemCode
+	      quantity
+	      customerPartNumber
 		    customerPartNumberId
+		    itemDescription
+		    imageUrl
 		  }
 		}
 	}
