@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../../config/context'
@@ -150,9 +150,27 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-export default function ItemResult({result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
+const Option = ({customer_part_number_id, customer_part_number}) => (
+	<option key={customer_part_number_id} value={customer_part_number_id}>{customer_part_number}</option>
+)
+
+const getCustomerPartOptions = ({customer_part_numbers=[]}) => customer_part_numbers.map(part => (<Option {...part}/>))
+
+export default function ItemResult({searchTerm, result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
 	const [quantity, setQuantity] = useState(1)
-	const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id)
+	
+	const findPartNumberMatchingSearchTerm = () => result.customer_part_numbers
+		.find(part => part.customer_part_number
+			.toLowerCase()
+			.includes(searchTerm.toLowerCase())
+		)?.customer_part_number_id
+	
+	const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id || findPartNumberMatchingSearchTerm())
+	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
+	
+	useEffect(() => {
+		setCustomerPartOptions(getCustomerPartOptions(result))
+	}, [result.customer_part_numbers])
 
 	const mutatedItemId = mutateItemId(result.item_id) 
 	function mutateItemId(itemId){
@@ -174,13 +192,6 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 		let imageFile = imagePathArray[imagePathArray.length - 1]
 		imageFile = imageFile.slice(0, -5) + 'l.jpg'
 		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
-
-	let CustomerPartOptions 
-	if (!_.isNil(result.customer_part_numbers)){
-		CustomerPartOptions = _.map(result.customer_part_numbers, elem => {
-			return(<option value={elem.customer_part_number_id}>{elem.customer_part_number}</option>)
-		})
 	}
 
 	return(
@@ -206,12 +217,12 @@ export default function ItemResult({result, history, toggleDetailsModal, toggleL
 					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
 				</DivPartNumberRow>
 				{
-					!!CustomerPartOptions.length && (
+					!!customerPartOptions.length && (
 						<DivPartNumberRow>
 							<PpartAvailability>Customer Part #:
 								<select value={customerPartNumber} onChange={(e)=>setCustomerPartNumber(e.target.value)} >
 									<option>Select a Part No.</option>
-									{CustomerPartOptions}
+									{customerPartOptions}
 								</select>
 							</PpartAvailability>
 						</DivPartNumberRow>
