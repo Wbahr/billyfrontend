@@ -104,12 +104,12 @@ export default function ItemCreationPage() {
 	const [isSearching, setIsSearching] = useState(false)
 	const [searched, setSearched] = useState(false)
 	const [submitResponse, setSubmitResponse] = useState(null)
-	
+
 	useEffect(() => {
-		if(searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)){
+		if (searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)) {
 			setSearchEnabled(true)
 		} else {
-			if (searchEnabled){
+			if (searchEnabled) {
 				setSearchEnabled(false)
 			}
 		}
@@ -119,11 +119,19 @@ export default function ItemCreationPage() {
 	useQuery(QUERY_ITEM_CREATION_DATA, {
 		onCompleted: data => {
 			setSupplierList(data.suppliers)
-			setUnitsOfMeasure(data.unitsOfMeasure)
+			setUnitsOfMeasure(unit(data.unitsOfMeasure))
 			setProductGroups(data.productGroups)
 		}
 	})
-
+	function unit(units) {
+		let newUnits = [];
+		for (let i = 0; i < units.length; i++) {
+			if (units[i].value !== 'EACH') {  
+				newUnits.push(units[i]);
+			}
+		}
+		return newUnits;
+	}
 	const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
@@ -151,17 +159,17 @@ export default function ItemCreationPage() {
 						'parentCategory': '',
 						'childCategory': ''
 					},
-					attributeFilters:[]
+					attributeFilters: []
 				}
 			}
 		})
 	}
 
-	function loadMoreItems(){
+	function loadMoreItems() {
 		searchItems()
 	}
 
-	function handleChange(newSelection){
+	function handleChange(newSelection) {
 		setSelectedSupplier(newSelection)
 	}
 
@@ -174,14 +182,14 @@ export default function ItemCreationPage() {
 		setSearched(false)
 	}
 
-	function mutateItemId(itemId){
+	function mutateItemId(itemId) {
 		let mutatedItemId = itemId.replace(/\s/g, '-')
-		return(mutatedItemId)
+		return (mutatedItemId)
 	}
 
-	function showModal(response){
+	function showModal(response) {
 		setSubmitResponse(response)
-		if(response.success){
+		if (response.success) {
 			resetItem()
 		}
 	}
@@ -190,10 +198,10 @@ export default function ItemCreationPage() {
 	let searchResultItems = []
 	itemSearchResult.map((element, index) => {
 		let resultImage = ''
-		if (element.thumbnail_image_path === null){
+		if (element.thumbnail_image_path === null) {
 			resultImage = 'https://www.airlinehyd.com/images/no-image.jpg'
-		}else{
-			resultImage = 'https://www.airlinehyd.com/images/items/'+(element.thumbnail_image_path.split('\\')[8]).replace('_t', '_l')
+		} else {
+			resultImage = 'https://www.airlinehyd.com/images/items/' + (element.thumbnail_image_path.split('\\')[8]).replace('_t', '_l')
 		}
 		let mutatedItemId = mutateItemId(element.item_id)
 		searchResultItems.push(
@@ -208,11 +216,11 @@ export default function ItemCreationPage() {
 
 	return (
 		<>
-			{!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={()=>setSubmitResponse(null)} /> }
+			{!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={() => setSubmitResponse(null)} />}
 			<ContentScreenContainer>
 				<DivSearchInputWrapper>
 					<DivSpacer>
-						<AirlineInput 
+						<AirlineInput
 							label="Manufacturer ID:"
 							type="text"
 							placeholder="Enter Manufacturer ID"
@@ -227,13 +235,13 @@ export default function ItemCreationPage() {
 							name="supplierNameSearch"
 							placeholder='Select a Supplier'
 							value={selectedSupplier}
-							options={[{'id': null, 'name': null, 'prefix': null} ,...supplierList]}
+							options={[{ 'id': null, 'name': null, 'prefix': null }, ...supplierList]}
 							changeFunction={handleChange}
 							getOptionLabel={(option) => {
-								if(option.name === null){
-									return('Select a Supplier') 
+								if (option.name === null) {
+									return ('Select a Supplier')
 								} else {
-									return(option.id + ' - ' + option.name)
+									return (option.id + ' - ' + option.name)
 								}
 							}}
 							getOptionValue={(option) => option.name}
@@ -246,11 +254,11 @@ export default function ItemCreationPage() {
 					<Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
 						Clear Item
 					</Button>
-					<Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => {searchItems()}}>
+					<Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => { searchItems() }}>
 						{isSearching ? 'Searching Items..' : 'Search for Item'}
 					</Button>
 				</ButtonContainer>
-				{searched && 
+				{searched &&
 					<div>
 						<SearchResultsContainer>
 							{searchResultItems}
@@ -269,14 +277,14 @@ export default function ItemCreationPage() {
 						</ButtonContainer>
 					</div>
 				}
-				{showNewItemForm && 
+				{showNewItemForm &&
 					<NewItemForm
 						searchTerm={searchTerm}
 						selectedSupplier={selectedSupplier}
 						supplierList={supplierList}
 						unitsOfMeasureList={unitsOfMeasureList}
 						productGroupsList={productGroupsList}
-						clearForm={()=>resetItem()}
+						clearForm={() => resetItem()}
 						showModal={response => showModal(response)}
 					/>}
 			</ContentScreenContainer>
