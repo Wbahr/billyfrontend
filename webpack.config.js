@@ -25,6 +25,7 @@ module.exports = (env) => {
 	const definePlugin = new webpack.DefinePlugin(envKeys)
 	return {
 		entry: './src/index.js',
+		devtool: 'eval-source-map',
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			filename: '[name].[hash].js',
