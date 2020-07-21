@@ -25,7 +25,7 @@ module.exports = (env) => {
 	const definePlugin = new webpack.DefinePlugin(envKeys)
 	return {
 		entry: './src/index.js',
-		devtool: 'eval-source-map',
+		devtool: false,
 		output: {
 			path: path.resolve(__dirname, './dist'),
 			filename: '[name].[hash].js',
@@ -104,6 +104,14 @@ module.exports = (env) => {
 				},
 			},
 		},
-		plugins: [htmlWebpackPlugin, definePlugin, cleanWebpackPlugin]
+		plugins: [
+			htmlWebpackPlugin, 
+			definePlugin, 
+			cleanWebpackPlugin,
+			new webpack.SourceMapDevToolPlugin({
+				filename: '[name].[hash].js.map',
+				exclude: 'vendors',
+			})
+		]
 	}
 }
