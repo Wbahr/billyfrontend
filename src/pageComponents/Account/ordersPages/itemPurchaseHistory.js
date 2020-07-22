@@ -11,6 +11,8 @@ import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import _ from "lodash";
 import {CircularProgress} from '@material-ui/core';
 import NumberFormat from "react-number-format";
+import {exportToExcel, exportToPdf, getCsvFormattedData} from "../../_common/helpers/generalHelperFunctions";
+import { CSVLink } from "react-csv";
 
 const TableContainer = styled.div`
   display: flex;
@@ -324,6 +326,30 @@ export default function ItemPurchaseHistoryTable({ history }) {
 		}
 	}, [pageIndex, pageSize, sortBy, data])
 	
+	const exportIgnoreColumns = ['filter', 'addToCartAmt', 'itemImageUrl']
+	
+	const prepareDataForExport = ({currentPrice, quantityAvailable, lastDateOrdered, ...rest}) => {
+		const byUid = ({invMastUid}) => invMastUid === rest.invMastUid
+		return {
+			...rest,
+			lastDateOrdered: lastDateOrdered ? dateFormat(new Date(lastDateOrdered), 'MM/dd/yyyy') : '',
+			currentPrice: currentPrice || context.itemPrices.find(byUid)?.unitPrice,
+			quantityAvailable: quantityAvailable || context.itemAvailabilities.find(byUid)?.availability
+		}
+	}
+	
+	const handleExcelExport = () => {
+		if (data.length) {
+			exportToExcel(data.map(prepareDataForExport), columns, 'Purchase History', exportIgnoreColumns)
+		}
+	}
+	
+	const handlePdfExport = () => {
+		if (data.length) {
+			exportToPdf(data.map(prepareDataForExport), columns, 'Purchase History', exportIgnoreColumns)
+		}
+	}
+	
 	return (
 		<TableContainer>
 			<h4>Item Purchase History</h4>
@@ -368,15 +394,17 @@ export default function ItemPurchaseHistoryTable({ history }) {
 					{/*<ButtonExport>*/}
 					{/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
 					{/*</ButtonExport>*/}
-					<ButtonExport>
+					<ButtonExport onClick={handlePdfExport}>
 						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
 					</ButtonExport>
-					<ButtonExport>
+					<ButtonExport onClick={handleExcelExport}>
 						<FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
 					</ButtonExport>
-					<ButtonExport>
-						<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
-					</ButtonExport>
+					<CSVLink data={getCsvFormattedData(data.map(prepareDataForExport), columns, exportIgnoreColumns)}>
+						<ButtonExport>
+							<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
+						</ButtonExport>
+					</CSVLink>
 				</DivRow>
 			</DivRow>
 			

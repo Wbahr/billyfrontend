@@ -12,6 +12,9 @@ import Context from '../../../config/context'
 import { format as dateFormat } from 'date-fns'
 import {parse} from 'query-string';
 import {CircularProgress} from "@material-ui/core";
+import {exportToExcel, exportToPdf, getCsvFormattedData} from "../../_common/helpers/generalHelperFunctions";
+import { CSVLink } from "react-csv";
+
 
 const TableContainer = styled.div`
 	display: flex;
@@ -226,6 +229,21 @@ export default function OrdersTable({ history }) {
 		usePagination
 	)
 	
+	const exportIgnoreColumns = ['filter']
+	const prepareDataForExport = ({total, ...rest}) => ({...rest, total: total.props.value})
+	
+	const handleExcelExport = () => {
+		if (data.length) {
+			exportToExcel(data.map(prepareDataForExport), columns, 'Orders', exportIgnoreColumns)
+		}
+	}
+	
+	const handlePdfExport = () => {
+		if (data.length) {
+			exportToPdf(data.map(prepareDataForExport), columns, 'Orders', exportIgnoreColumns)
+		}
+	}
+	
 	return(
 		<TableContainer>
 			<h4>Orders</h4>
@@ -273,15 +291,17 @@ export default function OrdersTable({ history }) {
 					<ButtonExport>
 						<FontAwesomeIcon size='lg' icon="copy" color="grey"/>
 					</ButtonExport>
-					<ButtonExport>
+					<ButtonExport onClick={handlePdfExport}>
 						<FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
 					</ButtonExport>
-					<ButtonExport>
+					<ButtonExport onClick={handleExcelExport}>
 						<FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
 					</ButtonExport>
-					<ButtonExport>
-						<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
-					</ButtonExport>
+					<CSVLink data={getCsvFormattedData(data.map(prepareDataForExport), columns, exportIgnoreColumns)}>
+						<ButtonExport>
+							<FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
+						</ButtonExport>
+					</CSVLink>
 				</DivRow>
 			</DivRow>
 			
