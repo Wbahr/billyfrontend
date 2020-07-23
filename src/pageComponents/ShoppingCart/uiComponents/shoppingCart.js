@@ -52,23 +52,23 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
-export default function ShoppingCart({showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
+export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	const context = useContext(Context)
-	
+
 	useEffect(() => {
-		if(savedCart){
-			setTimeout(()=>setSavedCart(false), 1000)
+		if (savedCart) {
+			setTimeout(() => setSavedCart(false), 1000)
 		}
-	},[savedCart])
+	}, [savedCart])
 
 	const ShoppingCartItems = (
 		<Context.Consumer>
-			{({cart, itemDetailCache, emptyCart}) => (
-				cart.map((item, index)=>{
+			{({ cart, itemDetailCache, emptyCart }) => (
+				cart.map((item, index) => {
 					let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
-					return(
+					return (
 						<Draggable key={index} draggableId={String(index)} index={index}>
 							{(provided) => (
 								<div
@@ -77,7 +77,7 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 									{...provided.dragHandleProps}
 								>
 									{_.isNil(displayItem) ?
-										<SkeletonItem 
+										<SkeletonItem
 											index={index}
 										/>
 										:
@@ -112,48 +112,59 @@ export default function ShoppingCart({showSplitLineModal, showFactoryStockModal,
 			context.moveItem(result.source.index, result.destination.index)
 		}
 	}
-	
+
 	const handleSaveAsShoppingList = () => {
 		setShowShoppingListModal(true)
 	}
 
-	return(
+	return (
 		<>
 			<Div>
 				<Context.Consumer>
-					{({emptyCart}) => {
-						return(
+					{({ emptyCart }) => {
+						return (
 							<DivRow>
 								<H3>Shopping Cart</H3>
-								<p onClick={()=>emptyCart()}>(empty cart)</p>
+								<p onClick={() => emptyCart()}>(empty cart)</p>
 							</DivRow>
 						)
 					}}
 				</Context.Consumer>
 				<DivRow>
-					<DivSave onClick={handleSaveAsShoppingList}>
-						<Ashare>Save As Shopping List</Ashare>
-						<FontAwesomeIcon icon="list" color="grey"/>
-					</DivSave>
-					
 					<Context.Consumer>
-						{({saveCart}) => {
-							return(
-								<DivSave onClick={()=>{saveCart(), setSavedCart(true)}}>
+						{({ userInfo }) => {
+							if (!userInfo) {
+								return (
+									<Ashare></Ashare>
+								)
+							} else {
+								return (
+									<DivSave onClick={handleSaveAsShoppingList}>
+										<Ashare>Save As Shopping List</Ashare>
+										<FontAwesomeIcon icon="list" color="grey" />
+									</DivSave>
+								)
+							}
+						}}
+					</Context.Consumer>
+					<Context.Consumer>
+						{({ saveCart }) => {
+							return (
+								<DivSave onClick={() => { saveCart(), setSavedCart(true) }}>
 									{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
-									{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC"/>   : <FontAwesomeIcon icon="save" color="grey"/>  }
+									{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
 								</DivSave>
 							)
 						}}
 					</Context.Consumer>
 					<DivShare>
 						<Ashare>Email Cart</Ashare>
-						<FontAwesomeIcon icon="share" color="grey"/>
+						<FontAwesomeIcon icon="share" color="grey" />
 					</DivShare>
 				</DivRow>
 			</Div>
-			<DragDropContext onDragEnd={(result)=>onDragEnd(result)}>
-				<Droppable  droppableId="droppable">
+			<DragDropContext onDragEnd={(result) => onDragEnd(result)}>
+				<Droppable droppableId="droppable">
 					{(provided) => (
 						<div
 							{...provided.droppableProps}
