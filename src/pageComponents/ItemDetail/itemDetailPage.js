@@ -307,7 +307,6 @@ export default function ItemDetailPage({ history }) {
 		variables: { itemId },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
-			debugger
 			if (result.itemDetails) {
 				performPriceLookup(
 					{
@@ -353,21 +352,21 @@ export default function ItemDetailPage({ history }) {
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
 
-		let FeatureItems = item.feature.map(elem => {
+		let FeatureItems = item.feature.map((elem, idx) => {
 			return (
-				<li>{elem.text}</li>
+				<li key={idx}>{elem.text}</li>
 			)
 		})
 
-		let TechSpecItems = item.techSpec.map(elem => {
+		let TechSpecItems = item.techSpec.map((elem, idx) => {
 			return (
-				<TR><TD>{elem.name}</TD><TD>{elem.value}</TD></TR>
+				<TR key={idx}><TD>{elem.name}</TD><TD>{elem.value}</TD></TR>
 			)
 		})
 
-		let ItemLinks = item.itemLink.map(elem => {
+		let ItemLinks = item.itemLink.map((elem, idx) => {
 			return (
-				<a href={elem.linkPath}>{elem.title}</a>
+				<a href={elem.linkPath} key={idx}>{elem.title}</a>
 			)
 		})
 
@@ -391,17 +390,18 @@ export default function ItemDetailPage({ history }) {
 			</DivSection>
 		)
 
-		let AccessoryItems = item.associatedItems.map(elem => {
+		let AccessoryItems = item.associatedItems.map((elem, idx) => {
 			return (
 				<AccessoryItem
+					key={idx}
 					associatedItemId={elem.associatedInvMastUid}
 					history={history}
 				/>
 			)
 		})
 
-		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return (<option value={elem.id}>{elem.customerPartNumber}</option>)
+		let CustomerPartOptions = _.map(customerPartNumbers, (elem, idx) => {
+			return (<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>)
 		})
 
 		return (
