@@ -15,7 +15,7 @@ const contactSchema = object({
 			.max(50)
 			.required(),
 		lastName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		phone: string()
@@ -34,7 +34,7 @@ export const shipToSchema = object({
 			.max(50)
 			.required(),
 		lastName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		address1: string()
@@ -87,7 +87,7 @@ export const billToSchema = object({
 			.when('paymentMethod', {
 				is: 'purchase_order',
 				then: string(),
-				otherwise: string().min(3).max(50).required()
+				otherwise: string().min(2).max(50).required()
 			}),
 		address1: string()
 			.min(5)
