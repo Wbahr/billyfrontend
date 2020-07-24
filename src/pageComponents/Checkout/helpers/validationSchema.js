@@ -11,11 +11,11 @@ export const shippingScheduleSchema = object({
 const contactSchema = object({
 	contact: object({
 		firstName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		lastName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		phone: string()
@@ -30,11 +30,11 @@ const contactSchema = object({
 export const shipToSchema = object({
 	shipto: object({
 		firstName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		lastName: string()
-			.min(3)
+			.min(2)
 			.max(50)
 			.required(),
 		address1: string()
@@ -81,13 +81,13 @@ export const billToSchema = object({
 			.when('paymentMethod', {
 				is: 'purchase_order',
 				then: string(),
-				otherwise: string().min(3).max(50).required()
+				otherwise: string().min(2).max(50).required()
 			}),
 		lastName: string()
 			.when('paymentMethod', {
 				is: 'purchase_order',
 				then: string(),
-				otherwise: string().min(3).max(50).required()
+				otherwise: string().min(2).max(50).required()
 			}),
 		address1: string()
 			.min(5)
