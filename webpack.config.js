@@ -9,7 +9,12 @@ module.exports = (env) => {
 	const cleanWebpackPlugin = new CleanWebpackPlugin()
 	const htmlWebpackPlugin = new HtmlWebPackPlugin({
 		template: './src/index.html',
-		filename: './index.html'
+		filename: './index.html',
+		favicon: './src/favicon.ico'
+	})
+	const sourceMapDevToolPlugin = new webpack.SourceMapDevToolPlugin({
+		filename: '[name].[hash].js.map',
+		exclude: 'vendors',
 	})
 
 	const currentPath = path.join(__dirname)
@@ -108,10 +113,7 @@ module.exports = (env) => {
 			htmlWebpackPlugin, 
 			definePlugin, 
 			cleanWebpackPlugin,
-			new webpack.SourceMapDevToolPlugin({
-				filename: '[name].[hash].js.map',
-				exclude: 'vendors',
-			})
+			sourceMapDevToolPlugin
 		]
 	}
 }
