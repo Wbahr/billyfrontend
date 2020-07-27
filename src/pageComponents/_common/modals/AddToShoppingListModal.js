@@ -46,7 +46,6 @@ const ErrorSpan = styled.div`
 `
 
 export default function AddToShoppingListModal({open, hide, item, customerPartNumberId}) {
-	console.log('customerPartNumberId', customerPartNumberId)
 	const context = useContext(Context)
 	const [listName, setListName] = useState('')
 	const [listNotes, setListNotes] = useState('')
@@ -132,7 +131,7 @@ export default function AddToShoppingListModal({open, hide, item, customerPartNu
 	return (
 		<Modal open={open} onClose={handleClose} contentStyle={{'maxWidth': '350px', 'borderRadius': '3px', marginTop: 115}}>
 			<Container>
-				{ !context.userInfo.contactId && (
+				{ !context.userInfo?.contactId && (
 					<DivItem style={{width: 200}}>
 						<Label>Select User</Label>
 						<Select
