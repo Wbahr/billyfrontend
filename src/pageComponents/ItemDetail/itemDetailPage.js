@@ -369,7 +369,12 @@ export default function ItemDetailPage({ history }) {
 			)
 		})
 
+		let Features = (
 
+			<ul>
+				{FeatureItems}
+			</ul>
+		)
 
 		let TechSpecs = (
 			<div>
