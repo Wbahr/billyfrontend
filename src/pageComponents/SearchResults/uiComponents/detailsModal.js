@@ -167,7 +167,6 @@ const GET_ITEM_PRICE = gql`
 query ItemSearch($items: [ItemQuantityInput]){
   getItemPrices(items: $items){
     invMastUid
-    itemCode
     quantity
     totalPrice
   }
