@@ -117,7 +117,6 @@ const GET_ITEM_PRICE = gql`
 query ItemSearch($items: [ItemQuantityInput]){
 	getItemPrices(items: $items){
 		invMastUid
-		itemCode
 		quantity
 		totalPrice
 	}
@@ -307,7 +306,6 @@ export default function ItemDetailPage({ history }) {
 		variables: { itemId },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
-			debugger
 			if (result.itemDetails) {
 				performPriceLookup(
 					{
@@ -353,11 +351,17 @@ export default function ItemDetailPage({ history }) {
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
 
-		let FeatureItems = item.feature.map(elem => {
+		console.log(item.feature)
+		let FeatureItems = item.feature.map((feat) => {
+			console.log(feat)
 			return (
-				<li>{elem.text}</li>
+				<li key={feat.id}>{feat.text}</li>
 			)
 		})
+
+		let Features = (
+			<ul>{FeatureItems}</ul>
+		)
 
 		let TechSpecItems = item.techSpec.map(elem => {
 			return (
@@ -371,11 +375,7 @@ export default function ItemDetailPage({ history }) {
 			)
 		})
 
-		let Features = (
-			<ul>
-				{FeatureItems}
-			</ul>
-		)
+
 
 		let TechSpecs = (
 			<div>
@@ -423,6 +423,7 @@ export default function ItemDetailPage({ history }) {
 						{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
 					</Row>
 					<TABLE>
+						<tbody>
 						<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
 						<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
 						<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
@@ -440,6 +441,7 @@ export default function ItemDetailPage({ history }) {
 							)
 						}
 						<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
+						</tbody>
 					</TABLE>
 					<hr />
 					<H4 id='feature'>Features</H4>

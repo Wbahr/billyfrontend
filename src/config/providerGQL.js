@@ -355,7 +355,6 @@ export const GET_ITEM_PRICE = gql`
   query GetItemPrices($items: [ItemQuantityInput]) {
     getItemPrices(items: $items) {
       invMastUid
-      itemCode
       quantity
       totalPrice
       unitPrice
