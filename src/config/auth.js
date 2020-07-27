@@ -31,8 +31,9 @@ export default function Auth(props) {
 		history.push('/permission-denied')
 		return(null)
 	} else {
+		const { staticContext, ...rest } = props
 		return(
-			<div {...props}>
+			<div {...rest}>
 				{props.children}
 			</div>
 		)
