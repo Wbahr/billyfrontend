@@ -351,9 +351,7 @@ export default function ItemDetailPage({ history }) {
 			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
 		}
 
-		console.log(item.feature)
 		let FeatureItems = item.feature.map((feat) => {
-			console.log(feat)
 			return (
 				<li key={feat.id}>{feat.text}</li>
 			)
