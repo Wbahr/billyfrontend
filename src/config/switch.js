@@ -26,7 +26,7 @@ import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
-import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
+import CategoriesPage from '../pageComponents/ProductCategories/categoriesPage'
 import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
 import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
@@ -98,7 +98,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
+				<WrapperRoute path='/categories' component={CategoriesPage} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
