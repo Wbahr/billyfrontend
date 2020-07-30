@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Link, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import CategoryList from './categoryList'
+import Loader from 'pageComponents/_common/loader'
 
 const DivRow = styled.div`
 	display: flex;
@@ -12,7 +13,7 @@ export default function CategoryRouter(props) {
 	let { categories, match, ...rest } = props;
 	let baseUrl = match.url;
 
-	if (!categories) return <div>Not ready yet</div>;
+	if (!categories) return <div><Loader /></div>;
 	console.log("In categoryGrid", categories)
 
 	return (
