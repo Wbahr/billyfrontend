@@ -166,7 +166,7 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 		>
 			{formikProps => (
 				<Elements>
-					<form name="quoteForm" {...formikProps}>
+					<form name="quoteForm">
 						<FormStep {...formikProps} quoteDropdownDataLabels={quoteDropdownDataLabels} quoteDropdownData={quoteDropdownData}/>
 						{(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
 						{showOrderFailedModal && <OrderFailedModal/>}
