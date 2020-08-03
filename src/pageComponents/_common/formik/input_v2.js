@@ -8,7 +8,6 @@ import CurrencyInput from 'react-currency-input'
 const DivContainer = styled.div`
   display flex;
   flex-direction: column;
-  height: 71px;
   padding: 0 8px;
   width: max-content;
 `
@@ -59,27 +58,40 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength}){
-	if(type === 'text' && _.isNil(changeFunction)){
+const ErrSpan = styled.span`
+	color: black;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 4px;
+	margin-right: -4px;
+	width: max-content;
+	padding: 2px;
+	width: 100%;
+	text-align: right;
+`
+
+export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage}){
+	if((type === 'text' || type === 'email' || type === 'password') && _.isNil(changeFunction)){
 		return(
 			<DivContainer>
 				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
 				<MainInput 
-					type="text" 
+					type={type} 
 					name={name} 
 					placeholder={placeholder} 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
 					maxLength={maxlength}
 				/>
+				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>} 
 			</DivContainer>
 		)
-	} else if(type === 'text' && !_.isNil(changeFunction)){
+	} else if((type === 'text' || type === 'email' || type === 'password') && !_.isNil(changeFunction)){
 		return(
 			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}
 				<MainInput 
-					type="text" 
+					type={type}
 					name={name} 
 					placeholder={placeholder} 
 					disabled={disabled} 
@@ -87,12 +99,13 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 					onChange={(e)=>changeFunction(name, e.target.value)}
 					maxLength={maxlength}
 				/>
+				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>} 
 			</DivContainer>
 		)
 	} else if(type === 'currency') {
 		return(
 			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				{label && <Label htmlFor={label}>{`${label}`}</Label>}      
 				<FormikField name={name}>
 					{({
 						field, // { name, value, onChange, onBlur }
@@ -101,6 +114,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 						<MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
 					)}
 				</FormikField>
+				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>}   
 			</DivContainer>
 		)
 	} else {
@@ -116,7 +130,8 @@ Input.propTypes = {
 	disabled: PropTypes.bool,
 	label: PropTypes.string,
 	placeholder: PropTypes.string,
-	onChange: PropTypes.string
+	onChange: PropTypes.string,
+	validationMessage: PropTypes.string,
 }
 
 Input.defaultProps = {
