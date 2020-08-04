@@ -81,9 +81,7 @@ export default function StaticPage({ match }) {
     const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null);
     const [pagesecondaryAncestor, setPageSecondaryAncestor] = useState(null);
 
-    function createMarkup(htmlString) {
-        return { __html: htmlString };
-    }
+    const createMarkup = (htmlString) => { return { __html: htmlString }}
 
     useQuery(GET_STATIC_PAGE, {
         variables: { pageId, subPageId, subSubPageId },
