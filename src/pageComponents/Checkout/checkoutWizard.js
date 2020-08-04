@@ -195,7 +195,7 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
 		>
 			{formikProps => (
 				<Elements>
-					<form name="checkoutForm" {...formikProps}>
+					<form name="checkoutForm">
 						<FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData} updateZip={updateZip}/>
 						{(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
 						{showOrderFailedModal && <OrderFailedModal/>}

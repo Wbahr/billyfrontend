@@ -171,7 +171,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		itemDetails,
 		customerPartNumbers
 	} = displayItem
-	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || "")
 	const itemId = parseInt(item.frecno,10)
 
 	const context = useContext(Context)
@@ -187,7 +187,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		onCompleted: result => {
 			if (!_.isNil(result.customerPartNumbers)) {
 				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-				setSelectedCustomerPartNumber(item.customerPartNumberId)
+				setSelectedCustomerPartNumber(item.customerPartNumberId || "")
 			}
 		}
 	})
@@ -201,6 +201,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 			setSelectedCustomerPartNumber(value)
 			context.updateItem(index, 'customerPartNumberId', null)
 		} else {
+			
 			setSelectedCustomerPartNumber(value)
 			context.updateItem(index, 'customerPartNumberId', Number(value))
 		}
@@ -231,7 +232,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 				modalType: type,
 				originalItemPrice: itemDetails.listPrice,
 				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
-				airlineCost: 1
+				airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
 			})
 			showEditPriceModal(index)
 			break

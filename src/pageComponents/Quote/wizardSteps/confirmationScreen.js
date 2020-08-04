@@ -71,7 +71,7 @@ export default function QuoteConfirmationScreen(props) {
 	} = props
 
 	let CartDates = schedule.cartWithDates.map((item, index) => (
-		<ShippingScheduleLineDisplay item={item} index={index}/>
+		<ShippingScheduleLineDisplay key={index} item={item} index={index}/>
 	))
 
 	let packingBasisIndex = packingBasis.findIndex(elem => elem.value === schedule.packingBasisName)

@@ -17,10 +17,13 @@ export default function Modal(props) {
 		open
 	} = props
 
+	//https://github.com/yjose/reactjs-popup/pull/173 -> Use <> for popup due to a validation issue that causes an error
 	return(
 		<Popup open={open} onClose={onClose} closeOnDocumentClick  contentStyle={contentStyle}>
-			<CloseDiv><FontAwesomeIcon style={{'cursor': 'pointer'}} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
-			{props.children}
+			<>
+				<CloseDiv><FontAwesomeIcon style={{'cursor': 'pointer'}} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
+				{props.children}
+			</>
 		</Popup>
 	)
 }

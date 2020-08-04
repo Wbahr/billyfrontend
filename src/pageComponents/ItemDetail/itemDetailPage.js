@@ -379,7 +379,9 @@ export default function ItemDetailPage({ history }) {
 		let TechSpecs = (
 			<div>
 				<Table>
-					{TechSpecItems}
+					<tbody>
+						{TechSpecItems}
+					</tbody>
 				</Table>
 			</div>
 		)
@@ -424,23 +426,23 @@ export default function ItemDetailPage({ history }) {
 					</Row>
 					<TABLE>
 						<tbody>
-						<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
-						<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
-						<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
-						<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-						{
-							!!CustomerPartOptions.length && (
-								<TR2><TDGrey>Customer Part #</TDGrey>
-									<TDWhite>
-										<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
-											<option>Select a Part No.</option>
-											{CustomerPartOptions}
-										</select>
-									</TDWhite>
-								</TR2>
-							)
-						}
-						<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
+							<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
+							<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
+							<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
+							<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
+							{
+								!!CustomerPartOptions.length && (
+									<TR2><TDGrey>Customer Part #</TDGrey>
+										<TDWhite>
+											<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
+												<option>Select a Part No.</option>
+												{CustomerPartOptions}
+											</select>
+										</TDWhite>
+									</TR2>
+								)
+							}
+							<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
 						</tbody>
 					</TABLE>
 					<hr />

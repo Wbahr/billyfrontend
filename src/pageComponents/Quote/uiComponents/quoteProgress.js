@@ -57,9 +57,9 @@ export default function QuoteProgress({stepLabels, step, clickMoveToStep}) {
 
 	let Steps = stepLabels.map((stepName, index) =>{
 		if (index === step) {
-			return(<LiSelected onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
+			return(<LiSelected key={index} onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
 		} else {
-			return(<li onClick={()=>clickMoveToStep(index)}>{stepName}</li>)
+			return(<li key={index} onClick={()=>clickMoveToStep(index)}>{stepName}</li>)
 		}
 	})
 	return(
