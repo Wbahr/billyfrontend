@@ -39,7 +39,7 @@ import generalFullBrand from '../pageComponents/Brands/generalFullBrand'
 import brandsPage from '../pageComponents/Brands/brandsPage'
 import technologyPage from 'pageComponents/Technologies/technologyPage'
 import MyAccountPage from '../pageComponents/Account/myAccountPage'
-
+import StaticPage from '../pageComponents/Pages/staticPage'
 
 // Supporting Components
 import Auth from './auth'
@@ -129,7 +129,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
-
+				<WrapperRoute exact path='/pages/:pageId/:subPageId?/:subSubPageId?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
 
 				{/* ADMIN INTERNAL TOOLS */}
 				<WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
