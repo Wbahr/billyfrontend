@@ -23,13 +23,6 @@ const ButtonRed = styled.button`
   }
 `
 
-const H2 = styled.h2`
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  margin: 0;
-`
-
 const H4 = styled.h4`
   width: 100%;
   text-align: center;
@@ -76,10 +69,12 @@ export default function ExistingCustomer() {
 			.integer("Must be a number")
 			.positive("Must be positive"),
 		password: Yup.string()
+			.required('required')
 			.min(8, "Minimum length of 8")
 			.max(1000),
 		verifyPassword: Yup.string()
-			.oneOf([Yup.ref('password'), null], "Passwords must match")
+			.required('required')
+			.oneOf([Yup.ref('password')], "Passwords must match")
 
 	});
 
@@ -107,7 +102,7 @@ export default function ExistingCustomer() {
 					setSubmitting(false)
 				}}
 			>
-				{({ isSubmitting, errors, touched, isValid, dirty }) => (
+				{({ isSubmitting, errors, touched, isValid }) => (
 					<Form>
 						{ !isValid && <PleaseFixErrors/>}
 						<FormikInput label="Customer ID" type="text" name="customerID" validationMessage={errors.customerID && touched.customerID ? errors.customerID : null}  />

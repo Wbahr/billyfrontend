@@ -24,6 +24,10 @@ const Label = styled.label`
   margin-left: 7px;
 `
 
+const ChkSpan = styled.span`
+	padding: 4px;
+`
+
 const MainInput = styled(FormikField)`
   height: 40px;
   padding: 0 8px;
@@ -68,35 +72,21 @@ const ErrSpan = styled.span`
 	padding: 2px;
 	width: 100%;
 	text-align: right;
+	font-style: italic;
 `
 
 export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage}){
-	if((type === 'text' || type === 'email' || type === 'password') && _.isNil(changeFunction)){
+	if((type === 'text' || type === 'email' || type === 'password')) {
 		return(
 			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainInput 
-					type={type} 
-					name={name} 
-					placeholder={placeholder} 
-					disabled={disabled} 
-					style={{width: width || '400px'}}
-					maxLength={maxlength}
-				/>
-				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>} 
-			</DivContainer>
-		)
-	} else if((type === 'text' || type === 'email' || type === 'password') && !_.isNil(changeFunction)){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}
+				{label && <Label htmlFor={name}>{`${label}`}</Label>}
 				<MainInput 
 					type={type}
 					name={name} 
 					placeholder={placeholder} 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
-					onChange={(e)=>changeFunction(name, e.target.value)}
+					// onChange={changeFunction ? (e)=>changeFunction(name, e.target.value) : undefined}
 					maxLength={maxlength}
 				/>
 				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>} 
@@ -105,7 +95,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 	} else if(type === 'currency') {
 		return(
 			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}      
+				{label && <Label htmlFor={name}>{`${label}`}</Label>}      
 				<FormikField name={name}>
 					{({
 						field, // { name, value, onChange, onBlur }
@@ -117,9 +107,22 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>}   
 			</DivContainer>
 		)
+	} else if(type === 'checkbox') {
+		return(
+			<DivContainer>
+				<Label htmlFor={name}>
+					<FormikField type="checkbox" name={name} onChange={changeFunction ? (e)=>changeFunction(name, e.target.value) : undefined} />
+					<ChkSpan>{`${label}`}</ChkSpan>
+				</Label>
+				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>}   
+			</DivContainer>
+		)
 	} else {
 		return(
-			<FormikField type={type} name={name} />
+			<DivContainer>
+				{label && <Label htmlFor={name}></Label>}
+				<FormikField type={type} name={name} />
+			</DivContainer>
 		)
 	}
 }

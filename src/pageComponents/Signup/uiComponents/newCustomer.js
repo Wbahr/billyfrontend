@@ -26,7 +26,7 @@ const DivCenter = styled.div`
 `
 
 const H2 = styled.h2`
-  width: 100%;
+  
   text-align: center;
   font-size: 20px;
   margin: 0;
@@ -36,23 +36,22 @@ const H4 = styled.h4`
   width: 100%;
   text-align: center;
   font-size: 16px;
-  color: #DB1633;
 `
 
 const DivFormContainer = styled.div`
-  display: flex;
-  margin-bottom: 8px; 
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: center; 
 `
 
 const DivInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 16px;
-  background-color: whitesmoke
-  padding: 8px 16px;
-`
-
-const DivInputContainerDark = styled(DivInputContainer)`
+  margin: 10px;
+  background-color: whitesmoke;
+  padding: 10px;
   background-color: #e8e8e8;
 `
 
@@ -66,42 +65,33 @@ const H3 = styled.h3`
 
 const NewCustomer = () => (
 	<div>
-		<H2>Standard Registration</H2>
-		<H4>for New Customers</H4>
+		<H4>New Customer</H4>
+
 		<Formik
-			initialValues={{ firstName: '', lastName: '', email: '', customerID: '', password: '', verifyPassword: '' }}
-			validate={values => {
-				let errors = {}
-				if (!values.email) {
-					errors.email = 'Required'
-				} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email))
-				{
-					errors.email = 'Invalid email address'
-				}
-				if(!values.firstName) {
-					errors.firstName = 'Required'
-				}
-				if(!values.lastName) {
-					errors.lastName = 'Required'
-				}
-				if(!values.customerID) {
-					errors.customerID = 'Required'
-				}
-				if(!values.password) {
-					errors.password = 'Required'
-				} 
-				if(!values.verifyPassword) {
-					errors.verifyPassword = 'Required'
-				} else if (values.password && values.verifyPassword && (values.password !== values.verifyPassword)) {
-					errors.password = 'Passwords do not match'
-				}
-				return errors
-			}}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2))
-					setSubmitting(false)
-				}, 400)
+			initialValues={{ 
+				firstName: '', 
+				lastName: '', 
+				jobTitle: '',
+				phone: '',
+				email: '', 
+				fax: '',
+				password: '', 
+				verifyPassword: '',
+				shippingCompany: '',
+				shippingAddress1: '',
+				shippingAddress2: '',
+				shippingCity: '',
+				shippingState: '',
+				shippingPostal: '',
+				shippingCountry: '',
+				billingSame: false,
+				billingCompany: '',
+				billingAddress1: '',
+				billingAddress2: '',
+				billingCity: '',
+				billingState: '',
+				billingPostal: '',
+				billingCountry: '',
 			}}
 		>
 			{({ isSubmitting }) => (
@@ -111,38 +101,39 @@ const NewCustomer = () => (
 							<H3>Account Information</H3>
 							<FormikInput label="First Name" type="text" name="firstName" />
 							<FormikInput label="Last Name" type="text" name="lastName" />
-							<FormikInput label="Job Title"type="email" name="email" />
-							<FormikInput label="Phone" type="text" name="customerID" />
-							<FormikInput label="Email" type="password" name="password" />
-							<FormikInput label="Fax" type="password" name="verifyPassword" />
+							<FormikInput label="Job Title" type="text" name="jobTitle" />
+							<FormikInput label="Phone" type="text" name="phone" />
+							<FormikInput label="Email" type="email" name="email" />
+							<FormikInput label="Fax" type="text" name="text" />
 							<FormikInput label="Password" type="password" name="password" />
 							<FormikInput label="Verify Password" type="password" name="verifyPassword" />
 						</DivInputContainer>
-						<DivInputContainerDark>
-							<H3>Billing Information</H3>
-							<FormikInput label="Company" type="text" name="billing_firstName" />
-							<FormikInput label="Address Line 1" type="text" name="billing_lastName" />
-							<FormikInput label="Address Line 2"type="email" name="billing_email" />
-							<FormikInput label="City" type="text" name="billing_customerID" />
-							<FormikInput label="State" type="password" name="billing_password" />
-							<FormikInput label="Zip Code" type="password" name="billing_verifyPassword" />
-							<FormikInput label="Country" type="password" name="billing_password" />
-						</DivInputContainerDark>
 						<DivInputContainer>
 							<H3>Shipping Information</H3>
-							<FormikInput label="Same as Billing Checkbox" type="text" name="shipping_firstName" />
-							<FormikInput label="Company" type="text" name="shipping_firstName" />
-							<FormikInput label="Address Line 1" type="text" name="shipping_lastName" />
-							<FormikInput label="Address Line 2"type="email" name="shipping_email" />
-							<FormikInput label="City" type="text" name="shipping_customerID" />
-							<FormikInput label="State" type="password" name="shipping_password" />
-							<FormikInput label="Zip Code" type="password" name="shipping_verifyPassword" />
-							<FormikInput label="Country" type="password" name="shipping_password" />
+							<FormikInput label="Company" type="text" name="shippingCompany" />
+							<FormikInput label="Address Line 1" type="text" name="shippingAddress1" />
+							<FormikInput label="Address Line 2" type="email" name="shippingAddress2" />
+							<FormikInput label="City" type="text" name="shippingCity" />
+							<FormikInput label="State" type="text" name="shippingState" />
+							<FormikInput label="Zip/Postal Code" type="password" name="shippingPostal" />
+							<FormikInput label="Country" type="text" name="shippingCountry" />
 						</DivInputContainer>
+						<DivInputContainer>
+							<H3>Billing Information</H3>
+							<FormikInput label="Same as Shipping" type="checkbox" name="billingSame" />
+							<FormikInput label="Company" type="text" name="billingCompany" />
+							<FormikInput label="Address Line 1" type="text" name="billingAddress1" />
+							<FormikInput label="Address Line 2" type="email" name="billingAddress2" />
+							<FormikInput label="City" type="text" name="billingCity" />
+							<FormikInput label="State" type="password" name="billingState" />
+							<FormikInput label="Zip/Postal Code" type="password" name="billingPostal" />
+							<FormikInput label="Country" type="password" name="billingCountry" />
+						</DivInputContainer>
+						
 					</DivFormContainer>
 					<DivCenter>
 						<ButtonRed type="submit" disabled={isSubmitting}>
-              Register Account
+							Register Account
 						</ButtonRed>
 					</DivCenter>
 				</Form>

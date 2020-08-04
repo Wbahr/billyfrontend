@@ -68,9 +68,9 @@ export default function CustomerSelectPage() {
     pageComponents = <NewCustomer />
   } else {
     pageComponents = (
-      <>
-        <DivRow>
-          <IconDiv onClick={()=>setSignupType('existing')}>
+      <SignupPageContainer>
+        <DivRow onClick={()=>setSignupType('existing')}>
+          <IconDiv >
             <FontAwesomeIcon icon="user" color="white" size="6x"/>
             <p>Existing Customer</p>
           </IconDiv>
@@ -78,8 +78,8 @@ export default function CustomerSelectPage() {
             <PHelp>Your organization does business with Airline Hydraulics, and you need an account to login</PHelp>
           </HelpDiv>
         </DivRow>
-        <DivRow>
-          <IconDiv onClick={()=>setSignupType('new')}>
+        <DivRow onClick={()=>setSignupType('new')}>
+          <IconDiv>
             <FontAwesomeIcon icon="user-plus" color="white" size="6x"/>
             <p>New Customer</p>
           </IconDiv>
@@ -87,13 +87,9 @@ export default function CustomerSelectPage() {
             <PHelp>Your organization is new to Airline Hydraulics, and would like to set up an account</PHelp>
           </HelpDiv>
         </DivRow>
-      </>
+      </SignupPageContainer>
     );
   }
 
-	return(
-		<SignupPageContainer>
-      {pageComponents}      
-		</SignupPageContainer>
-  );
+	return pageComponents;
 }
