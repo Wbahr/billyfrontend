@@ -6,6 +6,7 @@ import TextArea from '../../_common/formik/textarea_v2'
 import Checkbox from '../../_common/formik/checkBox'
 import { ButtonRed } from 'styles/buttons'
 import { FormikFormGroup, FormikFormContainerColumnMajor, FormikFormFieldContainer } from 'styles/formikForm'
+
 const FormContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -13,6 +14,11 @@ const FormContainer = styled.div`
   flex-direction: row-reverse;
   justify-content: space-between;
   flex-grow: 99;
+`
+
+const DivCenter = styled.div`
+  display: flex;
+  justify-content: center;
 `
 
 const initValues = {
@@ -52,13 +58,12 @@ export default function ContactUsForm() {
 								<Input label="Phone Number" name="phone" />
 								<Input label="Job PO Number" name="jobOrder" />
 								<TextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
-								<Checkbox label="Subscribe to our Mailing List?" name="subMailingList"/>
-								
+								<Checkbox label="Subscribe to our Mailing List?" name="subMailingList" width="400px"/>
 							</FormikFormGroup>
-					
-							<ButtonRed>Submit</ButtonRed>
-							
 						</FormikFormContainerColumnMajor>
+						<DivCenter>
+							<ButtonRed>Submit</ButtonRed>
+						</DivCenter>
 					</Form>
 				)}
 			</Formik>

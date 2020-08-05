@@ -4,7 +4,6 @@ import { Field } from 'formik'
 export const FormikFormGroup = styled.div`
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
     padding: 20px;
     background-color: rgb(242, 243, 244);
     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
@@ -27,9 +26,9 @@ export const FormikFormContainer = styled.div`
 
 export const FormikFormContainerColumnMajor = styled(FormikFormContainer)`
     flex-direction: column;
-    align-items: center;
     ${FormikFormGroup} {
         flex-direction: row;
+        justify-content: center;
     }
 `
 
@@ -39,7 +38,7 @@ export const FormikFormFieldContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: 0 8px;
-    width: max-content;
+    width: 416px;
     justify-content: center;
 `
 
@@ -76,11 +75,11 @@ export const FormikFormField = styled(Field)`
     border-radius: 1px;
     border: 1px solid #e1e1e1;  
     :focus{
-    border: 1px solid #007bff;  
-    outline: none;
+        border: 1px solid #007bff;  
+        outline: none;
     }
-    ::placeholder {
-    color: grey;
-    font-size: 14px;
+        ::placeholder {
+        color: grey;
+        font-size: 14px;
     }
 `

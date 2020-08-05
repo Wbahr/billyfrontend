@@ -21,12 +21,12 @@ const DivCenter = styled.div`
 `
 
 const DivInputContainer = styled.div`
-display: flex;
-flex-direction: column;
-margin: 10px;
-background-color: whitesmoke;
-padding: 10px;
-background-color: #e8e8e8;
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	background-color: whitesmoke;
+	padding: 10px;
+	background-color: #e8e8e8;
 `
 
 export default function ExistingCustomer() {
@@ -99,12 +99,11 @@ export default function ExistingCustomer() {
 								<FormikInput label="Job Title" type="text" name="jobTitle" validationMessage={errors.jobTitle && touched.jobTitle ? errors.jobTitle : null}  />
 								<FormikInput label="Password" type="password" name="password" validationMessage={errors.password && touched.password ? errors.password : null}  />
 								<FormikInput label="Confirm Password" type="password" name="verifyPassword" validationMessage={errors.verifyPassword && touched.verifyPassword ? errors.verifyPassword : null}  />
-								
 							</FormikFormGroup>
-							<DivCenter>
-								<ButtonRed type="submit" disabled={isSubmitting}>Submit</ButtonRed>
-							</DivCenter>
 						</FormikFormContainer>
+						<DivCenter>
+							<ButtonRed type="submit" disabled={isSubmitting}>Submit</ButtonRed>
+						</DivCenter>
 					</Form>
 				)}
 			</Formik>
