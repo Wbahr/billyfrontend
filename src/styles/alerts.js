@@ -1,4 +1,8 @@
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useRef } from 'react'
+import ReactDOM from 'react-dom'
 
 export const Alert = styled.div`
   border-radius: 2px;
@@ -17,3 +21,41 @@ export const InfoAlert = styled(Alert)`
   background-color: #d1ecf1;
   border: 1px solid #bee5eb;
 `
+
+//A message box area for forms that displays a message, no icon
+export function ShowAlert({message}) {
+  const ref = useRef(null);
+  useEffect(() => {
+      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
+      ReactDOM.findDOMNode(ref.current).scrollIntoView();
+  });
+  return (
+    <Alert ref={ref}>{message}</Alert>
+  );
+}
+
+//A message box area for forms that displays an informational alert
+export function ShowInfoAlert({message}) {
+  const ref = useRef(null);
+  useEffect(() => {
+      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
+      ReactDOM.findDOMNode(ref.current).scrollIntoView();
+  });
+  return (
+    <InfoAlert ref={ref}><FontAwesomeIcon icon={faInfoCircle} />{message}</InfoAlert>
+  );
+}
+
+//A message box area for forms that displays an error alert
+export function ShowErrorAlert({message}) {
+  const ref = useRef(null);
+  useEffect(() => {
+      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
+      ReactDOM.findDOMNode(ref.current).scrollIntoView();
+  });
+  return (
+    <ErrorAlert ref={ref}><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
+  );
+}
+
+

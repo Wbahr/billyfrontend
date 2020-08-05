@@ -34,13 +34,13 @@ const DivRow = styled.div`
   width: 500px;
   cursor: pointer;
   &:hover ${HelpDiv} {
-    border-color: #DB1633;
+    border-color: ${props => props.theme.mainColor};
   }
 `
 
 const IconDiv = styled.div`
   display: flex;
-  background-image: url(https://www.airlinehyd.com/customer/aihyco/images/Home/CategoryBackground.jpg);
+  background-image: url(${props => props.theme.backgroundImageUrl});
   flex-direction: column;
   justify-content: center;
   align-items: center;

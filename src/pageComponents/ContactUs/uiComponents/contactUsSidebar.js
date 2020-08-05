@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Button from '../../_common/button'
 
 // const EmailContainer = styled.div`
 //     display: flex;
@@ -98,7 +97,7 @@ const CustomerServiceBtn = styled.button`
 `
 
 const BtnText = styled.p`
-  margin: 0 6px;
+  margin: -4px 0px 10px 10px;
   font-weight: bold;
   font-size: 17px;
   text-transform: uppercase;
@@ -113,7 +112,7 @@ const OtherContactDiv = styled.div`
   margin: 30px 0 20px;
 `
 
-const PhoneNumber = styled.text`
+const PhoneNumber = styled.a`
   color: #B51F2B;
   font-size: 25px;
   font-weight: bold;
@@ -134,12 +133,14 @@ const Border = styled.div`
 export default function ContactUsSidebar() {
 	return (
 		<SideDiv>
-			<CallCustomerServiceDiv>
-				<div><PhoneNumber>1-800-999-7378</PhoneNumber></div>
-			</CallCustomerServiceDiv>
-			<CustomerServiceDiv>
-				<CustomerServiceBtn><FontAwesomeIcon icon="envelope" size="2x" /><BtnText> Customer Service</BtnText></CustomerServiceBtn>
+      <CustomerServiceDiv>
+        <BtnText>
+				  <FontAwesomeIcon icon="phone-alt" size="1x" /> Customer Service
+        </BtnText>
 			</CustomerServiceDiv>
+			<CallCustomerServiceDiv>
+				<PhoneNumber href="tel:1-800-999-7378">1-800-999-7378</PhoneNumber>
+			</CallCustomerServiceDiv>
 			<OtherContactDiv>
 				<Border></Border>
 				<SaleDiv>
@@ -182,14 +183,13 @@ export default function ContactUsSidebar() {
 			</OtherContactDiv>
 			<HeadquartersDiv>
 				<Text>Headquarters</Text>
-				<div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank" rel="noopener noreferrer"> 3557 Progress Drive Bensalem, PA 19020</Address></div>
-				<IconDiv><FontAwesomeIcon icon="phone-alt" size="2px" /> (215) 638-4700</IconDiv>
-				<IconDiv><FontAwesomeIcon icon="print" size="2px" /> (215) 638-1707</IconDiv>
+				<div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank" rel="noopener noreferrer"> 3557 Progress Drive<br /> Bensalem, PA 19020</Address></div>
+				<IconDiv><FontAwesomeIcon icon="phone-alt" size="1x" /> (215) 638-4700</IconDiv>
+				<IconDiv><FontAwesomeIcon icon="print" size="1x" /> (215) 638-1707</IconDiv>
 			</HeadquartersDiv>
 			<LocationImgDiv>
 				<Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
 			</LocationImgDiv>
-			<Button color="secondary" text="Branch Locations" />
 		</SideDiv>      
 	)
 }

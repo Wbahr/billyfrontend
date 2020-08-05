@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
@@ -33,21 +33,7 @@ const Img = styled.img`
   cursor: pointer;
 `
 
-const Button = styled.button`
-  background-color: black;
-  color: white;
-  border: none;
-  font-size: 20px;
-  padding: 8px 16px;
-  &:hover{
-    background-color: #DB1633;
-    transition: background-color 300ms;
-  }
-`
-
 export default function LoginPage({history}) {
-	const [customerType, setCustomerType] = useState('')
-
 	return(
 		<SignupPageContainer>
 			<Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>

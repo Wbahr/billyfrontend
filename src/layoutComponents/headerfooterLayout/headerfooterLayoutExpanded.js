@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import Header from './header'
 import Footer from './footer'
-import { airlineRedTheme } from 'layoutComponents/theme'
+import { airlineRedTheme } from 'styles/theme'
 
 const Div = styled.div`
   display: flex;

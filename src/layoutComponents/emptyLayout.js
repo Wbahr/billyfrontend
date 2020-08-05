@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
-import { airlineRedTheme } from './theme'
+import { airlineRedTheme } from '../styles/theme'
 
 const MainScreenContainer = styled.div`
   display: flex;

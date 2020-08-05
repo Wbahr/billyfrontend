@@ -1,11 +1,11 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Form } from 'formik'
 import styled from 'styled-components'
-import FormikInput from '../../_common/formik/input_v2'
-import FormikTextArea from '../../_common/formik/textarea_v2'
-import FormikCheckbox from '../../_common/formik/checkBox'
-import Button from '../../_common/button'
-
+import Input from '../../_common/formik/input_v2'
+import TextArea from '../../_common/formik/textarea_v2'
+import Checkbox from '../../_common/formik/checkBox'
+import { ButtonRed } from 'styles/buttons'
+import { FormikFormGroup, FormikFormContainerColumnMajor, FormikFormFieldContainer } from 'styles/formikForm'
 const FormContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -13,16 +13,6 @@ const FormContainer = styled.div`
   flex-direction: row-reverse;
   justify-content: space-between;
   flex-grow: 99;
-`
-
-const Form = styled.form`
-  display: flex;
-  flex-wrap: wrap;
-  width: 90%;
-  padding: 20px;
-  background-color: rgb(242, 243, 244);
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-  height: max-content;
 `
 
 const initValues = {
@@ -46,21 +36,29 @@ export default function ContactUsForm() {
 			<Formik 
 				initialValues={initValues}
 			>
-				{formikProps => (
-					<Form name="contactUsForm" {...formikProps}>
-						<FormikInput label="First Name*" name="firstName" />
-						<FormikInput label="Last Name*" name="lastName" />
-						<FormikInput label="Job Title*" name="jobTitle" />
-						<FormikInput label="Company*" name="company" />
-						<FormikInput label="City*" name="city" />
-						<FormikInput label="State*" name="state" />
-						<FormikInput label="Zip Code*" name="zip" />
-						<FormikInput label="Email*" name="email" />
-						<FormikInput label="Phone Number*" name="phone" />
-						<FormikInput label="Job PO Number*" name="jobOrder" />
-						<FormikTextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
-						<Button type="submit" color="main" text="Submit"/>
-						<FormikCheckbox label="Subscribe to our Mailing List?" name="subMailingList"/>
+				{({ values, touched, isSubmitting, errors, isValid }) => (
+					<Form name="contactUsForm">
+						{ !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}
+						<FormikFormContainerColumnMajor>
+							<FormikFormGroup>
+								<Input label="First Name*" name="firstName" />
+								<Input label="Last Name*" name="lastName" />
+								<Input label="Job Title" name="jobTitle" />
+								<Input label="Company" name="company" />
+								<Input label="City" name="city" />
+								<Input label="State" name="state" />
+								<Input label="Zip Code" name="zip" />
+								<Input label="Email*" name="email" />
+								<Input label="Phone Number" name="phone" />
+								<Input label="Job PO Number" name="jobOrder" />
+								<TextArea label="Message" name="message" placeholder="Please Enter your Message.." rows="3" />
+								<Checkbox label="Subscribe to our Mailing List?" name="subMailingList"/>
+								
+							</FormikFormGroup>
+					
+							<ButtonRed>Submit</ButtonRed>
+							
+						</FormikFormContainerColumnMajor>
 					</Form>
 				)}
 			</Formik>

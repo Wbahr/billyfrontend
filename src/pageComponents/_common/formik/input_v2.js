@@ -2,48 +2,9 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field as FormikField } from 'formik'
+
 import CurrencyInput from 'react-currency-input'
-
-const DivContainer = styled.div`
-  display flex;
-  flex-direction: column;
-  padding: 0 8px;
-  width: max-content;
-`
-
-const Label = styled.label`
-  color: #606060;
-  font-size: 14px;
-  font-weight: 400;
-  padding-left: 4px;
-  margin-bottom: -4px;
-  // background-color: white;
-  width: max-content;
-  padding: 2px;
-  margin-left: 7px;
-`
-
-const ChkSpan = styled.span`
-	padding: 4px;
-`
-
-const MainInput = styled(FormikField)`
-  height: 40px;
-  padding: 0 8px;
-  color: #303030;
-  font-size: 16px;
-  border-radius: 1px;
-  border: 1px solid #e1e1e1;  
-  :focus{
-    border: 1px solid #007bff;  
-    outline: none;
-  }
-  ::placeholder {
-    color: grey;
-    font-size: 14px;
-  }
-`
+import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 
 const MainCurrencyInput = styled(CurrencyInput)`
   height: 40px;
@@ -62,67 +23,45 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-const ErrSpan = styled.span`
-	color: black;
-	font-size: 14px;
-	font-weight: bold;
-	padding-left: 4px;
-	margin-right: -4px;
-	width: max-content;
-	padding: 2px;
-	width: 100%;
-	text-align: right;
-	font-style: italic;
-`
-
 export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage }){
 	if((type === 'text' || type === 'email' || type === 'password')) {
 		return(
-			<DivContainer>
-				{label && <Label htmlFor={name}>{`${label}`}</Label>}
-				<MainInput 
+			<FormikFormFieldContainer>
+				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+				<FormikFormField 
 					type={type}
-					name={name} 
+					name={name}
+					id={name}
 					placeholder={placeholder} 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
 					// onChange={changeFunction ? (e)=>changeFunction(name, e.target.value) : undefined}
 					maxLength={maxlength}
 				/>
-				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>} 
-			</DivContainer>
+				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>} 
+			</FormikFormFieldContainer>
 		)
 	} else if(type === 'currency') {
 		return(
-			<DivContainer>
-				{label && <Label htmlFor={name}>{`${label}`}</Label>}      
-				<FormikField name={name}>
+			<FormikFormFieldContainer>
+				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
+				<FormikFormField name={name}>
 					{({
 						field, // { name, value, onChange, onBlur }
 						form
 					}) => (
-						<MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
+						<MainCurrencyInput id={name} {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
 					)}
-				</FormikField>
-				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>}   
-			</DivContainer>
-		)
-	} else if(type === 'checkbox') {
-		return(
-			<DivContainer>
-				<Label htmlFor={name}>
-					<FormikField type="checkbox" name={name} onChange={changeFunction ? (e)=>changeFunction(name, e.target.value) : undefined} />
-					<ChkSpan>{`${label}`}</ChkSpan>
-				</Label>
-				{validationMessage && <ErrSpan>{validationMessage}</ErrSpan>}   
-			</DivContainer>
+				</FormikFormField>
+				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>}   
+			</FormikFormFieldContainer>
 		)
 	} else {
 		return(
-			<DivContainer>
-				{label && <Label htmlFor={name}></Label>}
-				<FormikField type={type} name={name} />
-			</DivContainer>
+			<FormikFormFieldContainer>
+				{label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
+				<FormikFormField id={name} type={type} name={name} />
+			</FormikFormFieldContainer>
 		)
 	}
 }

@@ -4,7 +4,10 @@ import { Formik, Form } from 'formik'
 import styled from 'styled-components'
 import FormikInput from '../../_common/formik/input_v2'
 import * as Yup from 'yup';
-import { ThemeButton, PleaseFixErrors } from 'layoutComponents/theme';
+import { ButtonRed } from 'styles/buttons';
+import CheckBox from 'pageComponents/_common/formik/checkBox';
+import { ShowErrorAlert } from 'styles/alerts';
+import { FormikFormGroup, FormikFormContainer, FormikFormFieldContainer } from 'styles/formikForm';
 
 const DivCenter = styled.div`
   display: flex;
@@ -23,24 +26,6 @@ const H4 = styled.h4`
   text-align: center;
   font-size: 16px;
 `
-
-const DivFormContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	flex-direction: row;
-	align-items: stretch;
-	justify-content: center; 
-`
-
-const DivInputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  background-color: whitesmoke;
-  padding: 10px;
-  background-color: #e8e8e8;
-`
-
 const H3 = styled.h3`
   width: 100%;
   text-align: center;
@@ -74,6 +59,7 @@ export default function NewCustomer() {
 			.required('required')
 			.oneOf([Yup.ref('password')], "Passwords must match"),
 		shippingCompany: Yup.string()
+			.required('required')
 			.max(70),
 		shippingAddress1: Yup.string()
 			.max(50),
@@ -103,9 +89,8 @@ export default function NewCustomer() {
 			.max(60),
 	});
 	return (
-	<div>
+	<>
 		<H4>New Customer</H4>
-
 		<Formik
 			initialValues={{ 
 				firstName: '', 
@@ -143,33 +128,33 @@ export default function NewCustomer() {
 		>
 			{({ values, touched, isSubmitting, errors, isValid }) => (
 				<Form>
-					{ !isValid && <PleaseFixErrors/>}
-					<DivFormContainer>
-						<DivInputContainer>
+					{ !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}
+					<FormikFormContainer>
+						<FormikFormGroup>
 							<H3>Account Information</H3>
-							<FormikInput label="First Name" type="text" name="firstName" validationMessage={errors.firstName && touched.firstName ? errors.firstName : null} />
-							<FormikInput label="Last Name" type="text" name="lastName" validationMessage={errors.lastName && touched.lastName ? errors.lastName : null}/>
+							<FormikInput label="First Name*" type="text" name="firstName" validationMessage={errors.firstName && touched.firstName ? errors.firstName : null} />
+							<FormikInput label="Last Name*" type="text" name="lastName" validationMessage={errors.lastName && touched.lastName ? errors.lastName : null}/>
 							<FormikInput label="Job Title" type="text" name="jobTitle" validationMessage={errors.jobTitle && touched.jobTitle ? errors.jobTitle : null}/>
 							<FormikInput label="Phone" type="text" name="phone" validationMessage={errors.phone && touched.phone ? errors.phone : null}/>
 							<FormikInput label="Phone Extension" type="text" name="phoneExtension" validationMessage={errors.phoneExtension && touched.phoneExtension ? errors.phoneExtension : null}/>
-							<FormikInput label="Email" type="email" name="email" validationMessage={errors.email && touched.email ? errors.email : null}/>
+							<FormikInput label="Email*" type="email" name="email" validationMessage={errors.email && touched.email ? errors.email : null}/>
 							<FormikInput label="Fax" type="text" name="fax" validationMessage={errors.fax && touched.fax ? errors.fax : null}/>
-							<FormikInput label="Password" type="password" name="password" validationMessage={errors.password && touched.password ? errors.password : null}/>
-							<FormikInput label="Verify Password" type="password" name="verifyPassword" validationMessage={errors.verifyPassword && touched.verifyPassword ? errors.verifyPassword : null}/>
-						</DivInputContainer>
-						<DivInputContainer>
+							<FormikInput label="Password*" type="password" name="password" validationMessage={errors.password && touched.password ? errors.password : null}/>
+							<FormikInput label="Verify Password*" type="password" name="verifyPassword" validationMessage={errors.verifyPassword && touched.verifyPassword ? errors.verifyPassword : null}/>
+						</FormikFormGroup>
+						<FormikFormGroup>
 							<H3>Shipping Information</H3>
-							<FormikInput label="Company" type="text" name="shippingCompany" validationMessage={errors.shippingCompany && touched.shippingCompany ? errors.shippingCompany : null}/>
+							<FormikInput label="Company*" type="text" name="shippingCompany" validationMessage={errors.shippingCompany && touched.shippingCompany ? errors.shippingCompany : null}/>
 							<FormikInput label="Address Line 1" type="text" name="shippingAddress1" validationMessage={errors.shippingAddress1 && touched.shippingAddress1 ? errors.shippingAddress1 : null}/>
 							<FormikInput label="Address Line 2" type="email" name="shippingAddress2" validationMessage={errors.shippingAddress2 && touched.shippingAddress2 ? errors.shippingAddress2 : null}/>
 							<FormikInput label="City" type="text" name="shippingCity" validationMessage={errors.shippingCity && touched.shippingCity ? errors.shippingCity : null}/>
 							<FormikInput label="State" type="text" name="shippingState" validationMessage={errors.shippingState && touched.shippingState ? errors.shippingState : null}/>
 							<FormikInput label="Zip/Postal Code" type="password" name="shippingPostal" validationMessage={errors.shippingPostal && touched.shippingPostal ? errors.shippingPostal : null}/>
 							<FormikInput label="Country" type="text" name="shippingCountry" validationMessage={errors.shippingCountry && touched.shippingCountry ? errors.shippingCountry : null}/>
-						</DivInputContainer>
-						<DivInputContainer>
+						</FormikFormGroup>
+						<FormikFormGroup>
 							<H3>Billing Information</H3>
-							<FormikInput label="Same as Shipping" type="checkbox" name="billingSame" changeFunction={(fieldName) => console.log("Checkbox!",values[fieldName])}  />
+							
 							<FormikInput label="Company" type="text" name="billingCompany" validationMessage={errors.billingCompany && touched.billingCompany ? errors.billingCompany : null}/>
 							<FormikInput label="Address Line 1" type="text" name="billingAddress1" validationMessage={errors.billingAddress1 && touched.billingAddress1 ? errors.billingAddress1 : null}/>
 							<FormikInput label="Address Line 2" type="email" name="billingAddress2" validationMessage={errors.billingAddress2 && touched.billingAddress2 ? errors.billingAddress2 : null}/>
@@ -177,17 +162,17 @@ export default function NewCustomer() {
 							<FormikInput label="State" type="password" name="billingState" validationMessage={errors.billingState && touched.billingState ? errors.billingState : null}/>
 							<FormikInput label="Zip/Postal Code" type="password" name="billingPostal" validationMessage={errors.billingPostal && touched.billingPostal ? errors.billingPostal : null}/>
 							<FormikInput label="Country" type="password" name="billingCountry" validationMessage={errors.billingCountry && touched.billingCountry ? errors.billingCountry : null}/>
-						</DivInputContainer>
-						
-					</DivFormContainer>
-					<DivCenter>
-						<ThemeButton type="submit" disabled={isSubmitting}>
-							Register Account
-						</ThemeButton>
-					</DivCenter>
+							<CheckBox label="Same as Shipping" name="billingSame" changeFunction={(fieldName) => console.log("Checkbox!",values[fieldName])}  />	
+						</FormikFormGroup>
+						<DivCenter>
+							<ButtonRed type="submit" disabled={isSubmitting}>
+								Register Account
+							</ButtonRed>
+						</DivCenter>
+					</FormikFormContainer>
 				</Form>
 			)}
 		</Formik>
-	</div>
+	</>
 	);
 }
