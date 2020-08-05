@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
+import { airlineRedTheme } from './theme'
 
 const MainScreenContainer = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ export default function EmptyLayout(props) {
 	//   stripe: null,
 	//   currentDisplay: 'Search'
 	// }
-
+	//NOTE use useEffect with no listener props for componentDidMount
 	// componentDidMount() {
 	//   if (window.Stripe) {
 	//     this.setState({stripe: window.Stripe('pk_test_SQ8ib6LMt1YpCE7nVDFenpmH00PWAbBTk0')})
@@ -24,9 +25,11 @@ export default function EmptyLayout(props) {
 	//   }
 	// }
 	return(
-		<MainScreenContainer>
-			{props.children}
-		</MainScreenContainer>
+		<ThemeProvider theme={airlineRedTheme}>
+			<MainScreenContainer>
+				{props.children}
+			</MainScreenContainer>
+		</ThemeProvider>
 	)
 }
 

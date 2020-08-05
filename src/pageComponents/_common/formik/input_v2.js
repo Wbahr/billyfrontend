@@ -75,7 +75,7 @@ const ErrSpan = styled.span`
 	font-style: italic;
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage}){
+export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage }){
 	if((type === 'text' || type === 'email' || type === 'password')) {
 		return(
 			<DivContainer>

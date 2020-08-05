@@ -235,7 +235,7 @@ export default function FooterComponent({history}) {
 			<Container>
 				<Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
 				<Pcopyright>Privacy Policy</Pcopyright> |
-				<Pcopyright>Terms & Conditions</Pcopyright> |
+				<Pcopyright>Terms &amp; Conditions</Pcopyright> |
 				<Pcopyright>Legal Disclaimer</Pcopyright> |
 				<Pcopyright>Help Center</Pcopyright>
 			</Container>

@@ -4,24 +4,7 @@ import { Formik, Form, isInteger } from 'formik';
 import styled from 'styled-components';
 import FormikInput from '../../_common/formik/input_v2';
 import * as Yup from 'yup';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
-const ButtonRed = styled.button`
-  background-color: rgb(219, 22, 51);
-  color: white;
-  font-weight: 600;
-  border: 0;
-  padding: 4px 8px;
-  box-shadow: 2px 2px 4px #000;
-  &:hover{
-    background-color: #b51029;
-  }
-  &:active{
-    background-color: #b51029;
-    box-shadow: 2px 2px 2px #000;
-  }
-`
+import { ThemeButton, PleaseFixErrors } from 'layoutComponents/theme';
 
 const H4 = styled.h4`
   width: 100%;
@@ -34,19 +17,6 @@ const DivCenter = styled.div`
   padding: 10px;
   justify-content: center;
 `
-
-const ErrorSummarySpan = styled.p`
-  background-color: mistyrose;
-  color: red;
-  padding: 10px;
-  border: 1px solid red;
-`
-
-function PleaseFixErrors() {
-	return (
-		<ErrorSummarySpan><FontAwesomeIcon icon={faExclamationTriangle} /> Please correct the problems and try again</ErrorSummarySpan>
-	);
-}
 
 export default function ExistingCustomer() {
 	const existingCustomerSchema = Yup.object().shape({
@@ -116,9 +86,7 @@ export default function ExistingCustomer() {
 						<FormikInput label="Password" type="password" name="password" validationMessage={errors.password && touched.password ? errors.password : null}  />
 						<FormikInput label="Confirm Password" type="password" name="verifyPassword" validationMessage={errors.verifyPassword && touched.verifyPassword ? errors.verifyPassword : null}  />
 						<DivCenter>
-							<ButtonRed type="submit" disabled={isSubmitting}>
-					Submit
-							</ButtonRed>
+							<ThemeButton type="submit" disabled={isSubmitting}>Submit</ThemeButton>
 						</DivCenter>
 					</Form>
 				)}
