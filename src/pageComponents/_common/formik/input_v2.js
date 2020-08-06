@@ -35,7 +35,6 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 					placeholder={placeholder} 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
-					// onChange={changeFunction ? (e)=>changeFunction(name, e.target.value) : undefined}
 					maxLength={maxlength}
 				/>
 				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>} 
@@ -47,7 +46,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
 				<FormikFormField name={name}>
 					{({
-						field, // { name, value, onChange, onBlur }
+						field, 
 						form
 					}) => (
 						<MainCurrencyInput id={name} {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
