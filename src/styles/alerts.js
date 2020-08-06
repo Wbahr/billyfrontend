@@ -24,37 +24,22 @@ export const InfoAlert = styled(Alert)`
 
 //A message box area for forms that displays a message, no icon
 export function ShowAlert({message}) {
-  const ref = useRef(null);
-  useEffect(() => {
-      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
-      ReactDOM.findDOMNode(ref.current).scrollIntoView();
-  });
   return (
-    <Alert ref={ref}>{message}</Alert>
+    <Alert>{message}</Alert>
   );
 }
 
 //A message box area for forms that displays an informational alert
 export function ShowInfoAlert({message}) {
-  const ref = useRef(null);
-  useEffect(() => {
-      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
-      ReactDOM.findDOMNode(ref.current).scrollIntoView();
-  });
   return (
-    <InfoAlert ref={ref}><FontAwesomeIcon icon={faInfoCircle} />{message}</InfoAlert>
+    <InfoAlert><FontAwesomeIcon icon={faInfoCircle} />{message}</InfoAlert>
   );
 }
 
 //A message box area for forms that displays an error alert
 export function ShowErrorAlert({message}) {
-  const ref = useRef(null);
-  useEffect(() => {
-      //When this component is displayed, scroll to it (the button on the form might be on the bottom of the page!)
-      ReactDOM.findDOMNode(ref.current).scrollIntoView();
-  });
   return (
-    <ErrorAlert ref={ref}><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
+    <ErrorAlert><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
   );
 }
 

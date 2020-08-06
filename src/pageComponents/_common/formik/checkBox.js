@@ -34,7 +34,7 @@ export default function CheckBox({disabled, name, label, changeFunction}){
 					disabled={disabled} 
 					style={{cursor: 'pointer', width: '25px'}}
 					checked={eval(isChecked)}
-					onChange={(e)=>setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0)}
+					onChange={(e)=> { setFieldValue(name, e.currentTarget.value == 0 ? 1 : 0); changeFunction() }}
 				/>
 			</FormikFormFieldContainer>
 		)
@@ -44,6 +44,5 @@ export default function CheckBox({disabled, name, label, changeFunction}){
 CheckBox.propTypes = {
 	name: PropTypes.string.isRequired,
 	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	onChange: PropTypes.string
+	label: PropTypes.string
 }

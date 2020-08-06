@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 
 import CurrencyInput from 'react-currency-input'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
+import { ErrorMessage } from 'formik'
 
 const MainCurrencyInput = styled(CurrencyInput)`
   height: 40px;
@@ -23,7 +24,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength, validationMessage }){
+export default function Input({type, disabled, name, label, placeholder, width, maxlength }){
 	if((type === 'text' || type === 'email' || type === 'password')) {
 		return(
 			<FormikFormFieldContainer>
@@ -37,7 +38,9 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 					style={{width: width || '400px'}}
 					maxLength={maxlength}
 				/>
-				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>} 
+				<FormikFormFieldError>
+					<ErrorMessage name={name} />
+				</FormikFormFieldError> 
 			</FormikFormFieldContainer>
 		)
 	} else if(type === 'currency') {
@@ -72,7 +75,6 @@ Input.propTypes = {
 	label: PropTypes.string,
 	placeholder: PropTypes.string,
 	onChange: PropTypes.string,
-	validationMessage: PropTypes.string,
 }
 
 Input.defaultProps = {
