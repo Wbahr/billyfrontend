@@ -1,101 +1,104 @@
-// Render Prop
-import React from 'react'
-import { Formik, Form } from 'formik'
-import styled from 'styled-components'
-import FormikInput from '../../_common/formik/input_v2'
-
-const ButtonRed = styled.button`
-  background-color: rgb(219, 22, 51);
-  color: white;
-  font-weight: 600;
-  border: 0;
-  padding: 4px 8px;
-  box-shadow: 2px 2px 4px #000;
-  &:hover{
-    background-color: #b51029;
-  }
-  &:active{
-    background-color: #b51029;
-    box-shadow: 2px 2px 2px #000;
-  }
-`
-
-const H2 = styled.h2`
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-  margin: 0;
-`
+import React, { useState } from 'react';
+import { Formik, Form, useFormikContext } from 'formik';
+import styled from 'styled-components';
+import FormikInput from '../../_common/formik/input_v2';
+import { ButtonRed } from 'styles/buttons';
+import { ShowErrorAlert } from 'styles/alerts';
+import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
+import { gql, useMutation } from '@apollo/client';
+import Summary from '../summary';
+import { existingCustomerInitialValues, existingCustomerSchema } from '../validationSchemas';
 
 const H4 = styled.h4`
   width: 100%;
   text-align: center;
   font-size: 16px;
-  color: #DB1633;
 `
 
 const DivCenter = styled.div`
   display: flex;
+  padding: 10px;
   justify-content: center;
 `
+//Pulled the FormWrapper out of the NewCustomer component for better syntax/readability for using the state with useEffect
+const FormWrapper = () => {
+	const { isValid, isSubmitting } = useFormikContext();
+	return (
+		<Form>
+			<FormikFormContainer>
+				<FormikFormGroup>
+					<FormikInput label="Customer ID*" type="text" name="customerId" />
+					<FormikInput label="First Name*" type="text" name="firstName" />
+					<FormikInput label="Last Name*" type="text" name="lastName" />
+					<FormikInput label="Email*" type="email" name="email" />
+					<FormikInput label="Phone" type="text" name="phone" />
+					<FormikInput label="Phone Extension" type="text" name="phoneExtension" />
+					<FormikInput label="Fax" type="text" name="fax" />
+					<FormikInput label="Job Title" type="text" name="jobTitle" />
+					<FormikInput label="Password*" type="password" name="password" />
+					<FormikInput label="Confirm Password*" type="password" name="verifyPassword" />
+				</FormikFormGroup>
+			</FormikFormContainer>
+			{ !isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
+			<DivCenter>
+				<ButtonRed type="submit" disabled={isSubmitting}>Submit</ButtonRed>
+			</DivCenter>
+		</Form>
+	);
+};
 
-const ExistingCustomer = () => (
-	<div>
-		<H2>Express Registration</H2>
-		<H4>for Existing Customers</H4>
-		<Formik
-			initialValues={{ firstName: '', lastName: '', email: '', customerID: '', password: '', verifyPassword: '' }}
-			validate={values => {
-				let errors = {}
-				if (!values.email) {
-					errors.email = 'Required'
-				} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email))
-				{
-					errors.email = 'Invalid email address'
-				}
-				if(!values.firstName) {
-					errors.firstName = 'Required'
-				}
-				if(!values.lastName) {
-					errors.lastName = 'Required'
-				}
-				if(!values.customerID) {
-					errors.customerID = 'Required'
-				}
-				if(!values.password) {
-					errors.password = 'Required'
-				} 
-				if(!values.verifyPassword) {
-					errors.verifyPassword = 'Required'
-				} else if (values.password && values.verifyPassword && (values.password !== values.verifyPassword)) {
-					errors.password = 'Passwords do not match'
-				}
-				return errors
-			}}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2))
-					setSubmitting(false)
-				}, 400)
-			}}
-		>
-			{({ isSubmitting }) => (
-				<Form>
-					<FormikInput label="First Name" type="text" name="firstName" />
-					<FormikInput label="Last Name" type="text" name="lastName" />
-					<FormikInput label="Email"type="email" name="email" />
-					<FormikInput label="Customer ID" type="text" name="customerID" />
-					<FormikInput label="Password" type="password" name="password" />
-					<FormikInput label="Verify Password" type="password" name="verifyPassword" />
-					<DivCenter>
-						<ButtonRed type="submit" disabled={isSubmitting}>
-              Submit
-						</ButtonRed>
-					</DivCenter>
-				</Form>
-			)}
-		</Formik>
-	</div>
-)
+const SUBMIT_REG = gql`
+	mutation SubmitContactRegistration($contact: RegistrationContactInputGraphType) {
+		submitContactRegistration(contact: $contact)
+  	}
+`
 
-export default ExistingCustomer
+export default function ExistingCustomer() {
+	const [saved, setSaved] = useState(false);
+	const [saveNewCustomer] = useMutation(SUBMIT_REG,
+		{
+			onCompleted() {
+				setSaved(true);
+			}
+		}
+	);
+
+	const map = (values) => {
+		return {variables: { 
+			contact: {
+				firstName: values.firstName,
+				lastName: values.lastName,
+				password: values.password,
+				customerId: values.customerId,
+				email: values.email,
+				fax: values.fax,
+				jobTitle: values.jobTitle,
+				phone: values.phone,
+				phoneExtension: values.phoneExtension
+			}
+		}};
+	};
+
+	if(saved === true) {
+		return <Summary />
+	} else {
+		return (
+			<>
+				<H4>Existing Customer</H4>
+				<Formik
+					initialValues={existingCustomerInitialValues}
+					validationSchema={existingCustomerSchema}
+					validateOnBlur={false}
+					validateOnChange={false}
+					onSubmit={(values, { setSubmitting }) => {	
+						saveNewCustomer(map(values));
+						setSubmitting(false)
+					}}
+				>
+					<FormWrapper />
+				</Formik>
+			</>
+		);
+	}
+}
+

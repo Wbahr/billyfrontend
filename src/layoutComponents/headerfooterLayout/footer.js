@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ButtonBlack } from 'styles/buttons'
 
 const Newsletter = styled.div`
 	display: flex;
@@ -9,7 +10,7 @@ const Newsletter = styled.div`
 	justify-content: flex-end;
 	background-color: black;
 	height: 70px;
-	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) ), url("https://www.airlinehyd.com/customer/aihyco/images/Headers/Basic_Background.png");
+	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) ), url(${props => props.theme.sectionBackgroundImageUrl});
 	background-color: black;
 	box-shadow: inset 0px 1px 2px black;
 	padding-right: 350px;
@@ -25,10 +26,10 @@ const Newsletter = styled.div`
 `
 
 const NewsletterLabel = styled.label`
-	font-family: ProximaBold;
+	font-family: ${props => props.theme.fancyFontNameBold};
 	font-size: 18px;
 	font-weight: 700;
-	color: white;
+	color: ${props => props.theme.buttonForegroundColor};
 	margin: 0;
 `
 
@@ -45,20 +46,6 @@ const NewsletterInput = styled.input`
 		text-transform: none;
 	}
 `
-
-const NewsletterButton = styled.button`
-	font-family: ProximaBold;
-	height: 35px;
-	color: white;
-	font-size: 18px;
-	font-weight: 600;
-	background-color: black;
-	border: 0;  
-	@media (max-width: 800px){
-		margin-top: 10px;
-	}
-`
-
 const ContainerTop = styled.div`
 	display: flex;
 	align-items: center;
@@ -187,7 +174,7 @@ export default function FooterComponent({history}) {
 	return(
 		<>
 			<Newsletter>
-				<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><NewsletterButton>Subscribe</NewsletterButton>
+				<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><ButtonBlack>Subscribe</ButtonBlack>
 			</Newsletter>
 			<ContainerTop>
 				<ContentContainer>
@@ -235,7 +222,7 @@ export default function FooterComponent({history}) {
 			<Container>
 				<Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
 				<Pcopyright>Privacy Policy</Pcopyright> |
-				<Pcopyright>Terms & Conditions</Pcopyright> |
+				<Pcopyright>Terms &amp; Conditions</Pcopyright> |
 				<Pcopyright>Legal Disclaimer</Pcopyright> |
 				<Pcopyright>Help Center</Pcopyright>
 			</Container>

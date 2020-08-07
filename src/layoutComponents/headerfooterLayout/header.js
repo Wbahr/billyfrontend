@@ -87,8 +87,8 @@ const InputSearch = styled.input`
 const ButtonSearch = styled.button`
 	width: 50px;
 	height: 40px;
-	background-image: linear-gradient(to top left, #950f23, #DB1633);
-	color: white;
+	background-image: linear-gradient(to top left, ${props => props.theme.mainColorBlend},  ${props => props.theme.mainColor});
+	color: ${props => props.theme.buttonForegroundColor};
 	font-weight: 500;
 	border: 0;
 	font-size: 14px;
