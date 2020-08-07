@@ -49,7 +49,7 @@ export default function ContactUsForm() {
 					  }, 1000);
 				}}
 			>
-				{({ values, touched, isSubmitting, errors, isValid }) => (
+				{({ isSubmitting, isValid }) => (
 					<Form name="contactUsForm">
 						{ !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}
 						<FormikFormContainerColumnMajor>
@@ -69,7 +69,7 @@ export default function ContactUsForm() {
 							</FormikFormGroup>
 						</FormikFormContainerColumnMajor>
 						<DivCenter>
-							<ButtonRed type="submit">Submit</ButtonRed>
+							<ButtonRed type="submit" disabled={isSubmitting}>Submit</ButtonRed>
 						</DivCenter>
 					</Form>
 				)}

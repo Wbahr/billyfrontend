@@ -3,11 +3,11 @@ import React  from 'react'
 import { Formik, Form, useFormikContext } from 'formik'
 import styled from 'styled-components'
 import FormikInput from '../../_common/formik/input_v2'
-import * as Yup from 'yup';
 import { ButtonRed } from 'styles/buttons';
 import CheckBox from 'pageComponents/_common/formik/checkBox';
 import { ShowErrorAlert } from 'styles/alerts';
 import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
+import { newCustomerInitialValues, newCustomerSchema } from '../validationSchemas';
 
 const DivCenter = styled.div`
   display: flex;
@@ -34,61 +34,6 @@ const H3 = styled.h3`
   color: black;
 `
 
-const existingCustomerSchema = Yup.object().shape({
-	firstName: Yup.string()
-		.min(2, "Minimum length of 2")
-		.max(50, "Maximum length of 50")
-		.required('required'),
-	lastName: Yup.string()
-		.min(2, "Minimum length of 2")
-		.max(50, "Maximum length of 50")
-		.required('required'),
-	jobTitle: Yup.string(),
-	phone: Yup.string(),
-	phoneExtension: Yup.string(),
-	email: Yup.string()
-		.email('Invalid email address')
-		.required('required'),
-	fax: Yup.string(),
-	password: Yup.string()
-		.required('required')
-		.min(8, "Minimum length of 8")
-		.max(1000),
-	verifyPassword: Yup.string()
-		.required('required')
-		.oneOf([Yup.ref('password')], "Passwords must match"),
-	shippingCompany: Yup.string()
-		.required('required')
-		.max(70),
-	shippingAddress1: Yup.string()
-		.max(50),
-	shippingAddress2: Yup.string()
-		.max(50),
-	shippingCity: Yup.string()
-		.max(50),
-	shippingState: Yup.string()
-		.max(50),
-	shippingPostal: Yup.string()
-		.max(11),
-	shippingCountry: Yup.string()
-		.max(60),
-	billingSame: Yup.boolean(),
-	billingCompany: Yup.string()
-		.max(70)
-		.when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
-	billingAddress1: Yup.string()
-		.max(50),
-	billingAddress2: Yup.string()
-		.max(50),
-	billingCity: Yup.string()
-		.max(50),
-	billingState: Yup.string()
-		.max(50),
-	billingPostal: Yup.string()
-		.max(11),
-	billingCountry: Yup.string()
-		.max(60),
-});
 
 //Pulled the FormWrapper out of the NewCustomer component for better syntax/readability for using the state with useEffect
 const FormWrapper = () => {
@@ -161,33 +106,8 @@ export default function NewCustomer() {
 		<>
 			<H4>New Customer</H4>
 			<Formik
-				initialValues={{
-					firstName: '',
-					lastName: '',
-					jobTitle: '',
-					phone: '',
-					phoneExtension: '',
-					email: '',
-					fax: '',
-					password: '',
-					verifyPassword: '',
-					shippingCompany: '',
-					shippingAddress1: '',
-					shippingAddress2: '',
-					shippingCity: '',
-					shippingState: '',
-					shippingPostal: '',
-					shippingCountry: '',
-					billingSame: false,
-					billingCompany: '',
-					billingAddress1: '',
-					billingAddress2: '',
-					billingCity: '',
-					billingState: '',
-					billingPostal: '',
-					billingCountry: '',
-				}}
-				validationSchema={existingCustomerSchema}
+				initialValues={newCustomerInitialValues}
+				validationSchema={newCustomerSchema}
 				validateOnBlur={false}
 				validateOnChange={false}
 				onSubmit={(values, { setSubmitting }) => {

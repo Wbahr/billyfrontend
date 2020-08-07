@@ -1,14 +1,13 @@
-// Render Prop
 import React, { useState } from 'react';
-import { Formik, Form, isInteger, useFormikContext } from 'formik';
+import { Formik, Form, useFormikContext } from 'formik';
 import styled from 'styled-components';
 import FormikInput from '../../_common/formik/input_v2';
-import * as Yup from 'yup';
 import { ButtonRed } from 'styles/buttons';
 import { ShowErrorAlert } from 'styles/alerts';
 import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
 import { gql, useMutation } from '@apollo/client';
 import Summary from '../summary';
+import { existingCustomerInitialValues, existingCustomerSchema } from '../validationSchemas';
 
 const H4 = styled.h4`
   width: 100%;
@@ -21,40 +20,9 @@ const DivCenter = styled.div`
   padding: 10px;
   justify-content: center;
 `
-
-const existingCustomerSchema = Yup.object().shape({
-	firstName: Yup.string()
-		.min(2, "Minimum length of 2")
-		.max(50, "Maximum length of 50")
-		.required('required'),
-	lastName: Yup.string()
-		.min(2, "Minimum length of 2")
-		.max(50, "Maximum length of 50")
-		.required('required'),
-	email: Yup.string()
-		.email('Invalid email address')
-		.required('required'),
-	phone: Yup.string(),
-	phoneExtension: Yup.string(),
-	fax: Yup.string(),
-	jobTitle: Yup.string(),
-	customerId: Yup.number()
-		.typeError("Must be a number")
-		.integer("Must be a number")
-		.required("required, can be provided by a sales representative"),
-	password: Yup.string()
-		.required('required')
-		.min(8, "Minimum length of 8")
-		.max(1000),
-	verifyPassword: Yup.string()
-		.required('required')
-		.oneOf([Yup.ref('password')], "Passwords must match")
-
-});
-
 //Pulled the FormWrapper out of the NewCustomer component for better syntax/readability for using the state with useEffect
 const FormWrapper = () => {
-	const { values, isValid, isSubmitting, dirty, setFieldValue, validateForm  } = useFormikContext();
+	const { isValid, isSubmitting } = useFormikContext();
 	return (
 		<Form>
 			<FormikFormContainer>
@@ -118,17 +86,7 @@ export default function ExistingCustomer() {
 			<>
 				<H4>Existing Customer</H4>
 				<Formik
-					initialValues={{ 
-						firstName: '', 
-						lastName: '', 
-						email: '', 
-						phone: '',
-						phoneExtension: '',
-						fax: '',
-						jobTitle: '',
-						customerId: '', 
-						password: '', 
-						verifyPassword: '' }}
+					initialValues={existingCustomerInitialValues}
 					validationSchema={existingCustomerSchema}
 					validateOnBlur={false}
 					validateOnChange={false}
