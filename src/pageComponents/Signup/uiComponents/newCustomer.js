@@ -111,7 +111,7 @@ export default function NewCustomer() {
 				validateOnBlur={false}
 				validateOnChange={false}
 				onSubmit={(values, { setSubmitting }) => {
-					setTimeout(() => {
+					setTimeout(() => { /*TODO: Remove this for final implementation */
 						console.log(values);
 						alert(JSON.stringify(values, null, 2));
 						setSubmitting(false);

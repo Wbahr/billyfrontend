@@ -91,9 +91,7 @@ export default function ExistingCustomer() {
 					validateOnBlur={false}
 					validateOnChange={false}
 					onSubmit={(values, { setSubmitting }) => {	
-						console.log(values);
 						saveNewCustomer(map(values));
-						alert(JSON.stringify(values, null, 2))
 						setSubmitting(false)
 					}}
 				>
