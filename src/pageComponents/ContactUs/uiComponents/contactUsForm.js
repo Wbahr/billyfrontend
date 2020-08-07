@@ -33,7 +33,7 @@ const initValues = {
 	phone: '',
 	jobOrder: '',
 	message: '',
-	subMailingList: '0'
+	subMailingList: false
 }
 
 export default function ContactUsForm() {
@@ -41,6 +41,13 @@ export default function ContactUsForm() {
 		<FormContainer>
 			<Formik 
 				initialValues={initValues}
+				onSubmit={(values, { setSubmitting }) => {
+					setTimeout(() => {
+						console.log(values);
+						alert(JSON.stringify(values, null, 2));
+						setSubmitting(false);
+					  }, 1000);
+				}}
 			>
 				{({ values, touched, isSubmitting, errors, isValid }) => (
 					<Form name="contactUsForm">
@@ -62,7 +69,7 @@ export default function ContactUsForm() {
 							</FormikFormGroup>
 						</FormikFormContainerColumnMajor>
 						<DivCenter>
-							<ButtonRed>Submit</ButtonRed>
+							<ButtonRed type="submit">Submit</ButtonRed>
 						</DivCenter>
 					</Form>
 				)}

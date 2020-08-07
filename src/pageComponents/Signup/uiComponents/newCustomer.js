@@ -178,7 +178,7 @@ export default function NewCustomer() {
 					shippingState: '',
 					shippingPostal: '',
 					shippingCountry: '',
-					billingSame: 0,
+					billingSame: false,
 					billingCompany: '',
 					billingAddress1: '',
 					billingAddress2: '',

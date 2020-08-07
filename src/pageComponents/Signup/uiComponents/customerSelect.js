@@ -61,13 +61,12 @@ const IconDiv = styled.div`
 export default function CustomerSelectPage() {
   const [signupType, setSignupType] = useState('');
 
-  let pageComponents;
   if(signupType == 'existing') {
-    pageComponents = <ExistingCustomer />
+    return ( <ExistingCustomer /> );
   } else if(signupType == 'new') {
-    pageComponents = <NewCustomer />
+    return ( <NewCustomer /> );
   } else {
-    pageComponents = (
+    return (
       <SignupPageContainer>
         <DivRow onClick={()=>setSignupType('existing')}>
           <IconDiv >
@@ -90,6 +89,4 @@ export default function CustomerSelectPage() {
       </SignupPageContainer>
     );
   }
-
-	return pageComponents;
 }
