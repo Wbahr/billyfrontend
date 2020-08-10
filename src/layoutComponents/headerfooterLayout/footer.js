@@ -192,11 +192,11 @@ export default function FooterComponent({history}) {
 					<DivMenu>
 						<Head>Featured Brands</Head>
 						<Item onClick={()=> history.push('/brands')}>SMC</Item>
-						<Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
-						<Item onClick={()=> history.push('/brands')}>Gears</Item>
-						<Item onClick={()=> history.push('/brands')}>Tubing</Item>
-						<Item onClick={()=> history.push('/brands')}>Pumps</Item>
-						<Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
+						<Item onClick={()=> history.push('/brands')}>Rexroth</Item>
+						<Item onClick={()=> history.push('/brands')}>Hydac</Item>
+						<Item onClick={()=> history.push('/brands')}>Eaton</Item>
+						<Item onClick={()=> history.push('/brands')}>Omron</Item>
+						<Item onClick={()=> history.push('/brands')}>Phoenix</Item>
 					</DivMenu>
 
 					<DivMenu>
