@@ -2,19 +2,20 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field as FormikField, FieldArray, useFormikContext } from 'formik'
+import { Field as FormikField, FieldArray, useFormikContext, ErrorMessage } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FormikFormFieldContainer, FormikFormField, FormikFormFieldError } from 'styles/formikForm';
 
-const FieldContainer = styled.div`
-  display flex;
-  align-items: center;
-`
 const ButtonContainer = styled.div`
   display flex;
   padding: 0 8px;
   div {
     cursor: pointer;
-    margin: 0 4px;
+	margin: 0 4px;
+	align-self: center;
+  }
+  input {
+	  flex-grow: 1;
   }
 `
 
@@ -62,27 +63,30 @@ export default function FormikFieldArray({name, label, addMore}){
 			name={name}
 			render={arrayHelpers => (
 				<div>
-					<Label>{label}:</Label>
+					<Label>{label}</Label>
 					{valueArray && valueArray.length > 0 ? (
 						valueArray.map((elem, index) => (
-							<FieldContainer key={index}>
-								<MainInput name={`${name}.${index}`} />
+							<FormikFormFieldContainer key={index}>
 								<ButtonContainer>
+									<FormikFormField name={`${name}.${index}`} />
 									<div
 										onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
 									>
 										<FontAwesomeIcon icon="minus-circle" color="grey"/>
 									</div>
 									{ ((index + 1) === valueArray.length && index < 4) &&
-                  <div
-                  	onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                  >
-                  	<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
-                  </div>
+										<div
+											onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+										>
+											<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
+										</div>
 									}
 								</ButtonContainer>
-
-							</FieldContainer>
+								<FormikFormFieldError>
+									<ErrorMessage name={`${name}.${index}`} />
+								</FormikFormFieldError> 
+								
+							</FormikFormFieldContainer>
 						))
 					) : (
 						<DivAddMore

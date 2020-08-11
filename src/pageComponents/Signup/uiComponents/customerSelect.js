@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ExistingCustomer from './existingCustomer'
 import NewCustomer from './newCustomer'
+import Summary from '../summary'
 
 const SignupPageContainer = styled.div`
   display: flex;

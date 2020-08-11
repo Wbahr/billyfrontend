@@ -47,7 +47,7 @@ const FormWrapper = () => {
 	);
 };
 
-const SUBMIT_REG = gql`
+const SUBMIT_CONT_REG = gql`
 	mutation SubmitContactRegistration($contact: RegistrationContactInputGraphType) {
 		submitContactRegistration(contact: $contact)
   	}
@@ -55,7 +55,7 @@ const SUBMIT_REG = gql`
 
 export default function ExistingCustomer() {
 	const [saved, setSaved] = useState(false);
-	const [saveNewCustomer] = useMutation(SUBMIT_REG,
+	const [saveNewCustomer] = useMutation(SUBMIT_CONT_REG,
 		{
 			onCompleted() {
 				setSaved(true);
