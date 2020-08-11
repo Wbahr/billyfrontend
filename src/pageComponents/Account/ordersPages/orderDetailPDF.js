@@ -271,16 +271,16 @@ export default React.memo(({ orderId, data }) => {
 					<P1>Bill-to-Address:</P1>
 					<P0>{billingName}</P0>
 					<P0>{billingAddress1}</P0>
-					{!_.isNil(billingAddress2) && <P0>{billingAddress2}</P0>}
-					{!_.isNil(billingAddress3) && <P0>{billingAddress3}</P0>}
+					{billingAddress2 && <P0>{billingAddress2}</P0>}
+					{billingAddress3 && <P0>{billingAddress3}</P0>}
 					<P0>{billingCity}, {billingState} {billingZip}</P0>
 				</DivOrderInfo>
 				<DivOrderInfo>
 					<P1>Ship-to-Address:</P1>
 					<P0>{shipToName}</P0>
 					<P0>{shipToAddress1}</P0>
-					{!_.isNil(shipToAddress2) && <P0>{shipToAddress2}</P0>}
-					{!_.isNil(shipToAddress3) && <P0>{shipToAddress3}</P0>}
+					{shipToAddress2 && <P0>{shipToAddress2}</P0>}
+					{shipToAddress3 && <P0>{shipToAddress3}</P0>}
 					<P0>{shipToCity}, {shipToState} {shipToZip}</P0>
 				</DivOrderInfo>
 				</DivBillingInfoContainer>
