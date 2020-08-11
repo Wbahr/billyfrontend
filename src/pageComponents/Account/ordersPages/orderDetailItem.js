@@ -10,7 +10,6 @@ import AddedModal from '../../SearchResults/uiComponents/addedModal'
 
 const DivContainer = styled.div`
 		display: flex;
-		border-top: 2px whitesmoke solid;
 		border-bottom: 2px whitesmoke solid;
 		padding: 8px 16px;
 		margin: 8px 0;
@@ -20,6 +19,8 @@ const DivContainer = styled.div`
 
 const DivRow = styled.div`
 		display: flex;
+		font-size: 15px;
+		margin-bottom: 2px;
 	`
 
 const DivCard = styled.div`
@@ -46,8 +47,7 @@ const DivCol2 = styled.div`
 		flex-direction: column;
 		align-items: flex-start;
 		width: 200px;
-		height: 100%;
-		margin-right: 50px;
+		margin-left: 40px;
 		p {
 			font-size: 16px;
 			margin: 0;
@@ -87,9 +87,10 @@ const ButtonSmall = styled.button`
 		color: white;
 		font-weight: 600;
 		border: 0;
-		padding: 4px 8px;
+		padding: 2px 8px;
 		box-shadow: 1px 1px 2px #000;
 		margin: 4px auto 4px 16px;
+		font-size: 14px;
 		&:hover{
 			background-color: rgb(219, 22, 51);
 		}
@@ -130,7 +131,7 @@ export default function OrderDetailItem({ item }) {
 			/>
 			<DivCard>
 				<DivCol1>
-					<Img max-height='100%' max-width='100%' src={imagePath} />
+					<Img max-height='100%' width='100%' src={imagePath} />
 				</DivCol1>
 				<DivCol2>
 					<CopyToClipboard text={item.itemCode}>
@@ -154,7 +155,7 @@ export default function OrderDetailItem({ item }) {
 					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
-				<DivCol3>
+				<DivCol2>
 					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
 					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
 					<DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/></DivRow>
@@ -171,7 +172,7 @@ export default function OrderDetailItem({ item }) {
 							}}>Add to Cart</ButtonSmall>
 						)}
 					</Context.Consumer>
-				</DivCol3>
+				</DivCol2>
 			</DivCard>
 		</DivContainer>
 	)
