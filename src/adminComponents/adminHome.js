@@ -21,6 +21,10 @@ import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import OpenOrders from './adminTools/OpenOrders/openOrders'
 import AppHeader from './appHeader'
+import ContactMail from '@material-ui/icons/ContactMail'
+import FlashOn from '@material-ui/icons/FlashOn'
+import NewCustomer from 'pageComponents/Signup/uiComponents/newCustomer'
+import Settings from './adminTools/Settings/settings'
 
 const drawerWidth = 240
 
@@ -98,6 +102,12 @@ export default function AdminHome() {
 	case 'open-orders':
 		AdminTool = OpenOrders
 		break
+	case 'new-customers':
+		AdminTool = NewCustomer
+		break
+	case 'settings':
+		AdminTool = Settings
+		break
 	default:
 		AdminTool = AdminDashboard
 	}
@@ -127,6 +137,10 @@ export default function AdminHome() {
 					<ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
 					<Divider/>
 					<ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon />} />
+					<Divider/>
+					<ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail />} />
+					<Divider/>
+					<ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn />} />
 					<Divider/>
 				</List>
 			</Drawer>
