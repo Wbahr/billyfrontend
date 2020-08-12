@@ -55,7 +55,7 @@
     "@material-ui/core": "^4.9.14",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/react-transition-group": "^4.3.0",
-    "@react-pdf/renderer": "^1.6.8",
+    "@react-pdf/renderer": "^2.0.0-beta.6",
     "@react-pdf/styled-components": "^1.4.0",
     "apollo-boost": "^0.4.8",
     "babel-polyfill": "^6.26.0",

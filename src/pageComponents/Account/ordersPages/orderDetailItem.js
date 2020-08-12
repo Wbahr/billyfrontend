@@ -150,7 +150,6 @@ export default function OrderDetailItem({ item }) {
 					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
 				</DivCol2>
 				<DivCol2>
-					<P2>Promise Date: {item.quantityOrdered}</P2>
 					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
 					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
