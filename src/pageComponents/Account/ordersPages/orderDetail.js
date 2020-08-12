@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import { formatTableData } from '../helpers/mutators'
@@ -13,6 +13,9 @@ import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { GET_ORDERS_DETAIL } from '../../../config/providerGQL'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import MyDocument from './orderDetailPDF'
+
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -30,7 +33,9 @@ const DivOrderInfo = styled.div`
       margin-left: 8px;  
     }
   `
-
+const DivDownload = styled.div`
+		padding-left: 10px;
+`
 const DivHeader = styled.div`
     display: flex;
     align-items: center;
@@ -72,21 +77,21 @@ export default function OrderDetail({ history, orderId }) {
 
 	useQuery(GET_ORDERS_DETAIL, {
 		fetchPolicy: 'no-cache',
-		variables: { orderNumber: String(orderId)	},		
+		variables: { orderNumber: String(orderId) },
 		onCompleted: result => {
 			setData(result.accountOrderDetails)
 		}
 	})
 
 	let itemDetails = []
-	if(!isTableView){
-		let filteredListItems = matchSorter(data.lineItems, filter, {keys: ['itemCode']})
+	if (!isTableView) {
+		let filteredListItems = matchSorter(data.lineItems, filter, { keys: ['itemCode'] })
 		itemDetails = _.map(filteredListItems, (item) => {
-			return(
+			return (
 				<OrderDetailItem item={item} />
 			)
 		})
-		if (itemDetails.length === 0){
+		if (itemDetails.length === 0) {
 			itemDetails = <p>No items found matching search.</p>
 		}
 	} else {
@@ -95,7 +100,7 @@ export default function OrderDetail({ history, orderId }) {
 
 	function handleAddOrder() {
 		let items = []
-		for(let i =0; i < data.lineItems.length ;i++){
+		for (let i = 0; i < data.lineItems.length; i++) {
 			let item = data.lineItems[i]
 			items.push(
 				{
@@ -111,10 +116,16 @@ export default function OrderDetail({ history, orderId }) {
 		setShowAddedToCartModal(true)
 	}
 
-	function handleAddedToCart(){
+	function handleAddedToCart() {
 		setShowAddedToCartModal(false)
 	}
-
+	const OrderDetailDownloadButton = useMemo(() => {
+		return (
+			<PDFDownloadLink document={<MyDocument orderId={orderId} data={data} />} fileName={`airline_order_${orderId}.pdf`}>
+				{({ loading }) => (loading ? 'Loading document...' : 'Download this Order')}
+			</PDFDownloadLink>
+		)
+	}, [data, orderId])
 	const {
 		orderDate,
 		poNo,
@@ -127,35 +138,40 @@ export default function OrderDetail({ history, orderId }) {
 		shipToAddress3,
 		shipToCity,
 		shipToState,
-		shipToZip
+		shipToZip,
+		promiseDate
 	} = data
 
-	if(_.isEmpty(data)){
-		return(
+	if (_.isEmpty(data)) {
+		return (
 			<p>Loading Order Data...</p>
 		)
 	} else {
-		return(
+		console.log("render", orderId, data);
+		return (
 			<div>
-				<AddedModal 
-					open={showShowAddedToCartModal} 
-					text={'Added to Cart!'} 
+				<AddedModal
+					open={showShowAddedToCartModal}
+					text={'Added to Cart!'}
 					onClose={handleAddedToCart}
 					timeout={900}
 				/>
 				<DivHeader>
+					{/* <img src={AirlineLogo} height="40px" /> */}
 					<h4>Order #{orderId}</h4>
-					<p onClick={()=>{history.push('/account/orders')}}>Back to Orders</p>
-					<ButtonSmall onClick={()=>handleAddOrder()}>Add Order to Cart</ButtonSmall>
+					<DivDownload>{OrderDetailDownloadButton}</DivDownload>
+					<p onClick={() => { history.push('/account/orders') }}>Back to Orders</p>
+					<ButtonSmall onClick={() => handleAddOrder()}>Add Order to Cart</ButtonSmall>
 				</DivHeader>
 				<DivOrderInfoContainer>
 					<DivOrderInfo>
-						<p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+						<p>Order Date: {_.isNil(orderDate) ? '--' : dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+						<p>Promise Date: {_.isNil(promiseDate) ? '--' : dateFormat(new Date(promiseDate), 'MM/dd/yyyy')}</p>
 						<p>Order Number: {orderId}</p>
 						<p>P.O. Number: {poNo}</p>
 						<p>Status: {status}</p>
 						<p>Packing Basis: {packingBasis}</p>
-						<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+						<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /></p>
 					</DivOrderInfo>
 					<DivOrderInfo>
 						<p>Ship-to-Address:</p>
@@ -167,14 +183,14 @@ export default function OrderDetail({ history, orderId }) {
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
 				<div>
-					<ToggleSwitch 
+					<ToggleSwitch
 						label='View:'
 						text='Table'
 						text2='List'
 						toggled={isTableView}
-						setToggled={(value)=>setIsTableView(value)}
+						setToggled={(value) => setIsTableView(value)}
 					/>
-					<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
+					<Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)} />
 				</div>
 				{itemDetails}
 			</div>
