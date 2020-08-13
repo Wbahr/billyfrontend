@@ -23,8 +23,8 @@ import OpenOrders from './adminTools/OpenOrders/openOrders'
 import AppHeader from './appHeader'
 import ContactMail from '@material-ui/icons/ContactMail'
 import FlashOn from '@material-ui/icons/FlashOn'
-import NewCustomer from 'pageComponents/Signup/uiComponents/newCustomer'
 import Settings from './adminTools/Settings/settings'
+import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
 
 const drawerWidth = 240
 
@@ -103,7 +103,7 @@ export default function AdminHome() {
 		AdminTool = OpenOrders
 		break
 	case 'new-customers':
-		AdminTool = NewCustomer
+		AdminTool = NewCustomerAdmin
 		break
 	case 'settings':
 		AdminTool = Settings

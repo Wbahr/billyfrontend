@@ -21,7 +21,7 @@ const GET_ALL_SETTINGS = gql`
 `
 
 const SAVE_ALL_SETTINGS = gql`
-    mutation saveAppSettings($settings: AppSettingsModelGraphType) {
+    mutation saveAppSettings($settings: saveAppSettings) {
         saveAppSettings(settings: $settings)
     }
 `
