@@ -1,5 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
+import { airlineRedTheme } from '../styles/theme'
 
 const MainScreenContainer = styled.div`
   display: flex;
@@ -26,8 +27,10 @@ export default function AdminLayout(props) {
 	//   }
 	// }
 	return(
-		<MainScreenContainer>
-			{props.children}
-		</MainScreenContainer>
+		<ThemeProvider theme={airlineRedTheme}>
+			<MainScreenContainer>
+				{props.children}
+			</MainScreenContainer>
+		</ThemeProvider>
 	)
 }
