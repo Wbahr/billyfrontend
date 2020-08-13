@@ -146,6 +146,8 @@ function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleVa
 		},
 		billing: {
 			paymentMethod: '',
+			paymentMethodId: '',
+			paymentSystemCustomerId: '',
 			purchaseOrder: '',
 			firstName: '',
 			lastName: '',
