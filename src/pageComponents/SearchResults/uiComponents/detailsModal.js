@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react'
-import _ from 'lodash'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'
 import AirlineModal from '../../_common/modal'
+import {GET_ITEM_PRICE} from "../../../config/providerGQL";
+import {getImagePath} from "../../_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
   display: flex;
@@ -163,15 +164,14 @@ query ItemById($invMastUid: Int){
 }
 `
 
-const GET_ITEM_PRICE = gql`
-query ItemSearch($items: [ItemQuantityInput]){
-  getItemPrices(items: $items){
-    invMastUid
-    quantity
-    totalPrice
-  }
-}
-`
+const getItemPricePayload = invMastUid => ({
+	variables: {
+		items: [{
+			invMastUid,
+			quantity: 1
+		}]
+	}
+})
 
 export default function DetailsModal({ open, hideDetailsModal, invMastUid, history, itemCode }) {
 	const [item, setItem] = useState(null)
@@ -179,35 +179,28 @@ export default function DetailsModal({ open, hideDetailsModal, invMastUid, histo
 	const [quantity, setQuantity] = useState(1)
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
-	const searchSent = useRef(false)
+	const context = useContext(Context)
 
 	const [performItemDetailSearch] = useLazyQuery(GET_ITEM_DETAILS, {
 		variables: { invMastUid },
-		onCompleted: data => {
-			setCustomerPartNumbers(data.customerPartNumbers)
-			setItem(data.itemDetails)
+		onCompleted: ({customerPartNumbers, itemDetails}) => {
+			setCustomerPartNumbers(customerPartNumbers)
+			setItem(itemDetails)
 		}
 	})
 
 	const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
-		variables: {
-			'items': [
-				{
-					'invMastUid': invMastUid,
-					'quantity': 1
-				}
-			]
-		},
+		...getItemPricePayload(invMastUid),
 		onCompleted: data => {
-			if (!_.isNil(data.getItemPrices[0])) {
+			if (data.getItemPrices[0]) {
 				setUnitPrice(data.getItemPrices[0].totalPrice)
 			}
 		}
 	})
 
-	function handleSetQuantity(quantity) {
-		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === '') {
-			setQuantity(quantity)
+	function handleSetQuantity({target: {value}}) {
+		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
+			setQuantity(value)
 		}
 	}
 
@@ -217,117 +210,123 @@ export default function DetailsModal({ open, hideDetailsModal, invMastUid, histo
 		setQuantity(1)
 		hideDetailsModal()
 	}
-
-	function mutateItemId(itemId) {
-		let mutatedItemId = itemId.replace(/\s/g, '-')
-		return (mutatedItemId)
+	
+	const handleCustomerPartNumberChange = e => {
+		setCustomerPartNumber(e.target.value)
 	}
-
-	if (open && !_.isNil(invMastUid) && !_.isNil(itemCode) && !searchSent.current) {
-		searchSent.current = true
-		performItemDetailSearch()
-		performPriceLookup()
-	} else if (!open && searchSent.current || !open && !_.isNil(item)) {
-		searchSent.current = false
-		setItem(null)
-	}
-
-	let PopupContent
-	if (_.isNil(item)) {
-		PopupContent = (
-			<Div>
-				<p>Getting your product details...</p>
-				<Loader />
-			</Div>
-		)
-	} else if (open) {
-		let imagePath
-		for (let i = 0; i < item.image.length; i++) {
-			let currentImage = item.image[i]
-			if (currentImage.type === 1) {
-				imagePath = currentImage.path
-			}
-		}
-		if (_.isNil(imagePath)) {
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = imagePath.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 'l.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-		const mutatedItemId = mutateItemId(item.itemCode)
-
-		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return (<option value={elem.id}>{elem.customerPartNumber}</option>)
+	
+	const handleAddToCart = () => {
+		context.addItem({
+			frecno: invMastUid,
+			quantity: parseInt(quantity),
+			itemNotes: '',
+			itemUnitPriceOverride: null,
+			customerPartNumberId: customerPartNumber
 		})
-
-		PopupContent = (
-			<DivContainer>
-				<DivColRow>
-					<DivCol1>
-						<DivImg>
-							<img src={imagePath} width="100%"/>
-							<ButtonBlack onClick={() => { history.push(`/product/${mutatedItemId}/${invMastUid}`) }}>View More Details</ButtonBlack>
-						</DivImg>
-					</DivCol1>
-					<DivCol2>
-						<PpartTitle>{item.itemDesc}</PpartTitle>
-						<p>{item.extendedDesc}</p>
-						<DivRow>
-							<DivRow>
-								<p>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</p><p> /each</p>
-							</DivRow>
-							<DivRow>
-								<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)} />
-								<Context.Consumer>
-									{({ addItem }) => (
-										<ButtonRed onClick={() => {
-											addItem({
-												'frecno': invMastUid,
-												'quantity': parseInt(quantity, 10),
-												'itemNotes': '',
-												'itemUnitPriceOverride': null,
-												'customerPartNumberId': customerPartNumber
-											}), handleCloseModal()
-										}}>Add to Cart</ButtonRed>
-									)}
-								</Context.Consumer>
-							</DivRow>
-						</DivRow>
-						<DivRow>
-							<p>Availability: {item.availability}</p>
-							<p>{item.availabilityMessage}</p>
-						</DivRow>
-						<TABLE>
-							<tbody>
-								<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
-								<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
-								<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
-								<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-								{
-									!!CustomerPartOptions.length && (
-										<TR2><TDGrey>Customer Part #</TDGrey>
+		handleCloseModal()
+	}
+	
+	useEffect(() => {
+		if (invMastUid && itemCode) {
+			performItemDetailSearch()
+			performPriceLookup()
+		} else {
+			setItem(null)
+		}
+	}, [open])
+	
+	const imagePath = item && item.image.find(i => i.type === 1)?.path
+	const customerPartOptions = customerPartNumbers.map((part, key) => <option key={key} value={part.id}>{part.customerPartNumber}</option>)
+	const mutatedItemId = item && item.itemCode.replace(/\s/g, '-')
+	const maxWidth = item ? 800 : 300
+	
+	return (
+		<AirlineModal open={open} onClose={handleCloseModal} contentStyle={{ maxWidth, borderRadius: 5 }}>
+			{
+				!item ? (
+					<Div>
+						<p>Getting your product details...</p>
+						<Loader />
+					</Div>
+				) : (
+					<DivContainer>
+						<DivColRow>
+							<DivCol1>
+								<DivImg>
+									<img src={getImagePath(imagePath)} width="100%"/>
+									<ButtonBlack onClick={() => history.push(`/product/${mutatedItemId}/${invMastUid}`)}>View More Details</ButtonBlack>
+								</DivImg>
+							</DivCol1>
+							
+							<DivCol2>
+								<PpartTitle>{item.itemDesc}</PpartTitle>
+								<p>{item.extendedDesc}</p>
+								
+								<DivRow>
+									<DivRow>
+										<p>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</p>
+										<p> /each</p>
+									</DivRow>
+									
+									<DivRow>
+										<span>Qty:</span>
+										<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+										<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+									</DivRow>
+								</DivRow>
+								
+								<DivRow>
+									<p>Availability: {item.availability}</p>
+									<p>{item.availabilityMessage}</p>
+								</DivRow>
+								
+								<TABLE>
+									<tbody>
+										<TR2>
+											<TDGrey>Manufacturer</TDGrey>
 											<TDWhite>
-												<select value={customerPartNumber} onChange={(e) => setCustomerPartNumber(e.target.value)} >
-													<option>Select a Part No.</option>
-													{CustomerPartOptions}
-												</select>
+												<IMG width='100px' src={item.brand.logoLink} />
 											</TDWhite>
 										</TR2>
-									)
-								}
-								<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
-							</tbody>
-						</TABLE>
-					</DivCol2>
-				</DivColRow>
-			</DivContainer>
-		)
-	}
-	return (
-		<AirlineModal open={open} onClose={() => { handleCloseModal() }} contentStyle={_.isNil(item) ? { 'maxWidth': '300px', 'borderRadius': '5px' } : { 'maxWidth': '800px', 'borderRadius': '5px' }}>
-			{PopupContent}
+										
+										<TR2>
+											<TDGrey>Item ID</TDGrey>
+											<TDWhite>{item.itemCode}</TDWhite>
+										</TR2>
+										
+										<TR2>
+											<TDGrey>Manufacturer Part #</TDGrey>
+											<TDWhite>{item.mfgPartNo}</TDWhite>
+										</TR2>
+										
+										<TR2>
+											<TDGrey>AHC Part #</TDGrey>
+											<TDWhite>{item.invMastUid}</TDWhite>
+										</TR2>
+										{
+											!!customerPartOptions.length && (
+												<TR2>
+													<TDGrey>Customer Part #</TDGrey>
+													<TDWhite>
+														<select value={customerPartNumber || ''} onChange={handleCustomerPartNumberChange} >
+															<option>Select a Part No.</option>
+															{customerPartOptions}
+														</select>
+													</TDWhite>
+												</TR2>
+											)
+										}
+										<TR2>
+											<TDGrey>Unit Size</TDGrey>
+											<TDWhite>{item.unitSizeMultiple}</TDWhite>
+										</TR2>
+									</tbody>
+								</TABLE>
+							</DivCol2>
+						</DivColRow>
+					</DivContainer>
+				)
+			}
 		</AirlineModal>
 	)
 }
