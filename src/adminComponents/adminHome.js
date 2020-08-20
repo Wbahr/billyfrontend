@@ -21,6 +21,10 @@ import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import OpenOrders from './adminTools/OpenOrders/openOrders'
 import AppHeader from './appHeader'
+import ContactMail from '@material-ui/icons/ContactMail'
+import FlashOn from '@material-ui/icons/FlashOn'
+import Settings from './adminTools/Settings/settings'
+import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
 
 const drawerWidth = 240
 
@@ -85,22 +89,25 @@ function ListItemLink(props) {
 	)
 }
 
+function getAdminTool(tool) {
+	switch(tool){
+	case 'item-creation':
+		return (<ItemCreation />);
+	case 'open-orders':
+		return (<OpenOrders />);
+	case 'new-customers':
+		return (<NewCustomerAdmin />);
+	case 'settings':
+		return (<Settings />);
+	default:
+		return (<AdminDashboard />);
+	}
+}
+
 
 export default function AdminHome() {
 	let { tool } = useParams()
 	const classes = useStyles()
-
-	let AdminTool
-	switch(tool){
-	case 'item-creation':
-		AdminTool = ItemCreation
-		break
-	case 'open-orders':
-		AdminTool = OpenOrders
-		break
-	default:
-		AdminTool = AdminDashboard
-	}
 
 	return (
 		<div className={classes.root}>
@@ -128,11 +135,15 @@ export default function AdminHome() {
 					<Divider/>
 					<ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon />} />
 					<Divider/>
+					<ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail />} />
+					<Divider/>
+					<ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn />} />
+					<Divider/>
 				</List>
 			</Drawer>
 			<main className={classes.content}>
 				<AppHeader />
-				<AdminTool />
+				{getAdminTool(tool)}
 			</main>
 		</div>
 	)

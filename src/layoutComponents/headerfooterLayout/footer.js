@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ButtonBlack } from 'styles/buttons'
+import OttoDrift from 'pageComponents/_common/ottoDrift'
 
 const Newsletter = styled.div`
 	display: flex;
@@ -226,6 +227,7 @@ export default function FooterComponent({history}) {
 				<Pcopyright>Legal Disclaimer</Pcopyright> |
 				<Pcopyright>Help Center</Pcopyright>
 			</Container>
+			<OttoDrift />
 		</>
 	)
 }

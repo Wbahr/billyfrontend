@@ -33,7 +33,7 @@ export default function Auth(props) {
 	} else {
 		const { staticContext, ...rest } = props
 		return(
-			<div {...rest}>
+			<div>
 				{props.children}
 			</div>
 		)

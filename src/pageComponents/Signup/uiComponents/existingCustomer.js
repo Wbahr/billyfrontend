@@ -5,9 +5,10 @@ import FormikInput from '../../_common/formik/input_v2';
 import { ButtonRed } from 'styles/buttons';
 import { ShowErrorAlert } from 'styles/alerts';
 import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Summary from '../summary';
 import { existingCustomerInitialValues, existingCustomerSchema } from '../validationSchemas';
+import { SUBMIT_CONT_REG } from 'config/providerGQL';
 
 const H4 = styled.h4`
   width: 100%;
@@ -47,15 +48,9 @@ const FormWrapper = () => {
 	);
 };
 
-const SUBMIT_REG = gql`
-	mutation SubmitContactRegistration($contact: RegistrationContactInputGraphType) {
-		submitContactRegistration(contact: $contact)
-  	}
-`
-
 export default function ExistingCustomer() {
 	const [saved, setSaved] = useState(false);
-	const [saveNewCustomer] = useMutation(SUBMIT_REG,
+	const [saveNewCustomer] = useMutation(SUBMIT_CONT_REG,
 		{
 			onCompleted() {
 				setSaved(true);
@@ -69,7 +64,7 @@ export default function ExistingCustomer() {
 				firstName: values.firstName,
 				lastName: values.lastName,
 				password: values.password,
-				customerId: values.customerId,
+				customerIdP21: values.customerId,
 				email: values.email,
 				fax: values.fax,
 				jobTitle: values.jobTitle,
