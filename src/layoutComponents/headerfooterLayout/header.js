@@ -154,7 +154,7 @@ export default function HeaderComponent(props) {
 	)
 
 	function handleSearch() {
-		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}&nonce=${new Date().getTime()}`)
+		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}`)
 	}
 
 	function onHover(e) {

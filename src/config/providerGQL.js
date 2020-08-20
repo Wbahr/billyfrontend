@@ -433,3 +433,57 @@ export const GET_WEB_USER_CONTACTS = gql`
 		}
 	}
 `
+
+export const QUERY_ITEM_SEARCH = gql`
+	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+		itemSearch(searchParams: $searchParams){
+			result
+			count
+			parentCategories {
+				parentCategoryCount
+				parentCategoryDisplayName
+				parentCategoryName
+			}
+			childCategories {
+				childCategoryCount
+				childCategoryDisplayName
+				childCategoryName
+			}
+			attributeCategories{
+				categoryName
+				categoryNameDisplay
+				features{
+					featureName
+					featureNameDisplay
+					itemCount
+				}
+			}
+			brands{
+				brandCount
+				brandName
+				brandNameDisplay
+			}
+		}
+	}
+`
+
+export const QUERY_STOCK_AVAILABILITY = gql`
+  query GetStockAvailability($invMastUid: Int){
+    airlineStock(invMastUid: $invMastUid){
+      invMastUid
+      itemCode
+      companyId
+      locationId
+      locationName
+      quantityAvailable
+    }
+    factoryStock(invMastUid: $invMastUid){
+      invMastUid
+      factoryAvailability
+      leadTimeDays
+      factoryMessage
+      modifiedBy
+      modifiedDate
+    }
+  }
+`

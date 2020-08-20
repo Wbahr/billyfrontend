@@ -44,10 +44,6 @@ const Label = styled.label`
 	margin-left: 4px;
 `
 
-const DisabledLabel = styled(Label)`
-	color: whitesmoke;
-`
-
 const InputSearch = styled.input`
 	margin: 4px 16px;
 	width: 240px;
@@ -59,59 +55,51 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
 	const [brandFilterValues, setBrandFilterValues] = useState([])
 
 	const handleFeatureToggle = (e, brand) => {
-		let newBrandFilterValues
-		if(e.target.checked){
-			newBrandFilterValues = [...brandFilterValues, brand]
-			setBrandFilterValues(newBrandFilterValues)
-		} else {
-			newBrandFilterValues = _.without(brandFilterValues, brand)
-			setBrandFilterValues(newBrandFilterValues)
-		}
+		const newBrandFilterValues = e.target.checked
+			? [...brandFilterValues, brand]
+			: brandFilterValues.filter(b => b !== brand)
+		setBrandFilterValues(newBrandFilterValues)
 		updatedBrandFilter(newBrandFilterValues)
 	}
-
-	let BrandOptions = brands.map((brand, index) => {
-		let disable = false
-
-		if(brand.brandName.toLowerCase() !== 'null' && _.startsWith(brand.brandName.toLowerCase(), filter)){
-			return (
-				<DivOptionRow key={index}>
-					<input type="checkbox" 
-						onChange={(e) => handleFeatureToggle(e, brand.brandName)}
-						disabled={disable}
-					/>
-					{disable ?
-						<DisabledLabel htmlFor={brand.brandName}>{brand.brandNameDisplay}</DisabledLabel>
-						:
+	
+	const BrandOptions = () => (
+		<DivOptions>
+			{brands
+				.filter(b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter)))
+				.map((brand, idx) => (
+					<DivOptionRow key={idx}>
+						<input type="checkbox" onChange={(e) => handleFeatureToggle(e, brand.brandName)}/>
 						<Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
-					}
-				</DivOptionRow>
-			)
-		}
-	})
+					</DivOptionRow>
+			))}
+		</DivOptions>
+	)
+	
+	const handleSearchChange = e => {
+		setFilter(e.target.value.toLowerCase())
+	}
 
-	return(
-		<>
-			<DivTitle onClick={()=>(setIsOpen(!isOpen))}>
+	return (
+		<div>
+			<DivTitle onClick={() => setIsOpen(!isOpen)}>
 				<P>Brands</P>
-				{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
 			</DivTitle>
 			{isOpen && 
 				<>
 					<div>
-						{brands.length > 10 && <InputSearch placeholder={'Search Brands'} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
+						{brands.length > 10 && (
+							<InputSearch placeholder={'Search Brands'} onChange={handleSearchChange} value={filter}/>
+						)}
 					</div>
-					<DivOptions>
-						{BrandOptions}
-					</DivOptions>
+					
+					<BrandOptions/>
 				</>
 			}
-		</>
+		</div>
 	)
 }
 
 BrandFilter.propTypes = {
 	brands: PropTypes.array.isRequired,
-	open: PropTypes.bool,
-	toggleAttribute: PropTypes.func
 }

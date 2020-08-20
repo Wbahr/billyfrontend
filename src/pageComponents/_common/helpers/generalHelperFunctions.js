@@ -47,3 +47,10 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
 	doc.autoTable(pdfFormat)
 	doc.save(`${name}.pdf`)
 }
+
+export const getImagePath = path => {
+	const pathSplit = path && path.split('\\')
+	return path
+		? 'https://www.airlinehyd.com/images/items/' + pathSplit[pathSplit.length - 1].slice(0, -5) + 'l.jpg'
+		: 'https://www.airlinehyd.com/images/no-image.jpg'
+}
