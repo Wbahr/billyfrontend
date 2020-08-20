@@ -149,7 +149,8 @@ export default function HeaderComponent(props) {
 			resources: false,
 			services: false,
 			shop: false,
-			industries: false
+			industries: false,
+			myAccount: false
 		}
 	)
 
@@ -214,8 +215,62 @@ export default function HeaderComponent(props) {
 						<A>|</A>
 						<Context.Consumer>
 							{({ userInfo }) => {
-								if (!_.isNil(userInfo)) {
-									return (<A onClick={() => props.history.push('/account/dashboard')}>My Account</A>)
+								if (userInfo) {
+									return (
+										<div id="myAccount" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
+											<Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
+												<A id="myAccount">My Account</A>
+											</Link>
+											<Dropdown open={showDropdown.myAccount} history={props.history}
+												options={[
+													{
+														'label': 'Shopping Lists',
+														'link': '/account/shopping-lists'
+													},
+													{
+														'label': 'Upload List to Cart',
+														'link': '/account/dashboard'
+													},
+													{
+														'label': 'Request for Quote',
+														'link': '/contact-us'
+													},
+													{
+														'label': 'Account Profile',
+														'link': '/account/dashboard'
+													},
+													{
+														'label': 'Invoices',
+														'link': '/account/invoices'
+													},
+													{
+														'label': 'Orders',
+														'link': '/account/orders'
+													},
+													{
+														'label': 'Open Orders Report',
+														'link': '/account/open-orders-report'
+													},
+													{
+														'label': 'Open Quotes',
+														'link': '/account/open-quotes'
+													},
+													{
+														'label': 'Open Payables',
+														'link': '/account/dashboard'
+													},
+													{
+														'label': 'Purchase History',
+														'link': '/account/my-ordered-items'
+													},
+													{
+														'label': 'Suspended Orders',
+														'link': '/account/dashboard'
+													}
+												]}
+											/>
+										</div>
+									)
 								} else {
 									return (<A onClick={() => props.history.push('/signup')}>Create Account</A>)
 								}
