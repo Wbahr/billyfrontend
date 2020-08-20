@@ -100,6 +100,7 @@ export const GET_ITEM_BY_ID = gql`
     }
   }
 `
+
 export const GET_ITEMS_BY_ID = gql`
   query GetItemDetails($invMastUids: [Int]){
     itemDetailsBatch(invMastUids: $invMastUids){
@@ -148,7 +149,7 @@ export const UPDATE_CART = gql`
   }
 `
 
-const QUERY_LOGIN = gql`
+export const QUERY_LOGIN = gql`
   query SubmitLogin($loginInfo: LoginInputGraphType){
     submitLogin(login: $loginInfo){
       success
@@ -486,4 +487,31 @@ export const QUERY_STOCK_AVAILABILITY = gql`
       modifiedDate
     }
   }
+`
+
+//Contact Registration includes a Customer ID and no addresses. It is assumed the customer already exists.
+export const SUBMIT_CONT_REG = gql`
+	mutation SubmitContactRegistration($contact: RegistrationContactInputGraphType) {
+		submitContactRegistration(contact: $contact)
+  	}
+`
+//Customer Registration includes Billing and Shipping Addresses, but not Customer ID.
+export const SUBMIT_CUST_REG = gql`
+	mutation SubmitCustomerRegistration($customer: RegistrationCustomerInputGraphType) {
+		submitCustomerRegistration(customer: $customer)
+  	}
+`
+export const GET_ALL_SETTINGS = gql`
+    query appSettings {
+        appSettings {
+            newCustomerNotificationEmails
+            contactUsNotificationEmails
+        }
+    }
+`
+
+export const SAVE_ALL_SETTINGS = gql`
+    mutation saveAppSettings($settings: saveAppSettings) {
+        saveAppSettings(settings: $settings)
+    }
 `

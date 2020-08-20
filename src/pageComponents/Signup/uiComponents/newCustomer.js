@@ -8,8 +8,9 @@ import CheckBox from 'pageComponents/_common/formik/checkBox';
 import { ShowErrorAlert } from 'styles/alerts';
 import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
 import { newCustomerInitialValues, newCustomerSchema } from '../validationSchemas';
-import { gql, useMutation } from '@apollo/client';
+import {  useMutation } from '@apollo/client';
 import Summary from '../summary';
+import { SUBMIT_CUST_REG } from 'config/providerGQL';
 
 const DivCenter = styled.div`
   display: flex;
@@ -34,12 +35,6 @@ const H3 = styled.h3`
   font-size: 14px;
   font-weight: 800;
   color: black;
-`
-
-const SUBMIT_CUST_REG = gql`
-	mutation SubmitCustomerRegistration($customer: RegistrationCustomerInputGraphType) {
-		submitCustomerRegistration(customer: $customer)
-  	}
 `
 
 //Pulled the FormWrapper out of the NewCustomer component for better syntax/readability for using the state with useEffect
@@ -125,7 +120,7 @@ export default function NewCustomer() {
 					firstName: values.firstName,
 					lastName: values.lastName,
 					password: values.password,
-					customerId: values.customerId,
+					customerIdP21: values.customerId,
 					email: values.email,
 					fax: values.fax,
 					jobTitle: values.jobTitle,
@@ -149,6 +144,14 @@ export default function NewCustomer() {
 			}
 		} };
 	};
+
+	const onSubmit = (values, { setSubmitting }) => {
+		setTimeout(() => { 
+			saveNewCustomer(map(values));
+			setSubmitting(false);
+		}, 1000);
+	};
+
 	if(saved === true) {
 		return <Summary />
 	} else {
@@ -160,12 +163,7 @@ export default function NewCustomer() {
 					validationSchema={newCustomerSchema}
 					validateOnBlur={false}
 					validateOnChange={false}
-					onSubmit={(values, { setSubmitting }) => {
-						setTimeout(() => { /*TODO: Remove this for final implementation */
-							saveNewCustomer(map(values));
-							setSubmitting(false);
-						}, 1000);
-					}}
+					onSubmit={onSubmit}
 				>
 					<FormWrapper />
 				</Formik>

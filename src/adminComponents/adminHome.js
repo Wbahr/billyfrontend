@@ -89,28 +89,25 @@ function ListItemLink(props) {
 	)
 }
 
+function getAdminTool(tool) {
+	switch(tool){
+	case 'item-creation':
+		return (<ItemCreation />);
+	case 'open-orders':
+		return (<OpenOrders />);
+	case 'new-customers':
+		return (<NewCustomerAdmin />);
+	case 'settings':
+		return (<Settings />);
+	default:
+		return (<AdminDashboard />);
+	}
+}
+
 
 export default function AdminHome() {
 	let { tool } = useParams()
 	const classes = useStyles()
-
-	let AdminTool
-	switch(tool){
-	case 'item-creation':
-		AdminTool = ItemCreation
-		break
-	case 'open-orders':
-		AdminTool = OpenOrders
-		break
-	case 'new-customers':
-		AdminTool = NewCustomerAdmin
-		break
-	case 'settings':
-		AdminTool = Settings
-		break
-	default:
-		AdminTool = AdminDashboard
-	}
 
 	return (
 		<div className={classes.root}>
@@ -146,7 +143,7 @@ export default function AdminHome() {
 			</Drawer>
 			<main className={classes.content}>
 				<AppHeader />
-				<AdminTool />
+				{getAdminTool(tool)}
 			</main>
 		</div>
 	)

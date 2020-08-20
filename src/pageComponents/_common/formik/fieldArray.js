@@ -25,7 +25,6 @@ const Label = styled.label`
   font-weight: 400;
   padding-left: 4px;
   margin-bottom: -8px;
-  // background-color: white;
   width: max-content;
   padding: 2px;
   margin-left: 7px;
@@ -58,7 +57,7 @@ export default function FormikFieldArray({name, label, addMore}){
 
 	let valueArray = 'values.' + name
 	valueArray = eval(valueArray)
-	return(
+	return (
 		<FieldArray
 			name={name}
 			render={arrayHelpers => (
@@ -69,15 +68,11 @@ export default function FormikFieldArray({name, label, addMore}){
 							<FormikFormFieldContainer key={index}>
 								<ButtonContainer>
 									<FormikFormField name={`${name}.${index}`} />
-									<div
-										onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-									>
+									<div onClick={() => arrayHelpers.remove(index)}> 
 										<FontAwesomeIcon icon="minus-circle" color="grey"/>
 									</div>
 									{ ((index + 1) === valueArray.length && index < 4) &&
-										<div
-											onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-										>
+										<div onClick={() => arrayHelpers.insert(index, '')}>
 											<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
 										</div>
 									}
@@ -89,16 +84,15 @@ export default function FormikFieldArray({name, label, addMore}){
 							</FormikFormFieldContainer>
 						))
 					) : (
-						<DivAddMore
-							onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-						>
-							{addMore} <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
+						<DivAddMore onClick={() => arrayHelpers.insert(index, '')}>
+							{addMore}
+							<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
 						</DivAddMore>
 					)}
 				</div>
 			)}
 		/>
-	)
+	);
 }
 
 FormikFieldArray.propTypes = {
