@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { useTable } from 'react-table'
+import { GET_NEW_CUSTOMERS } from 'config/providerGQL'
+import { Link, useRouteMatch } from 'react-router-dom'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -34,103 +36,68 @@ const Styles = styled.div`
   }
 `
 
-const GET_ALL_NEW_CUSTOMERS = gql`
-    query newCustomers{
-        newCustomers{
-            contact {
-                id
-                customerId
-                email
-                fax
-                firstName
-                jobTitle
-                lastName
-                phone
-                phoneExtension
-            }
-            billingCity
-            billingCompanyName
-            billingCountry
-            billingLine1
-            billingLine2
-            billingState
-            billingZip
-            shippingCity
-            shippingCompanyName
-            shippingCountry
-            shippingLine1
-            shippingLine2
-            shippingState
-            shippingZip
-        } 
-    }
-`
-
 //Note this can be made editable
 //https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/editable-data?from-embed=&file=/src/App.js
-
 function Table({ columns, data }) {
     // Use the state and functions returned from useTable to build your UI
     const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
     } = useTable({
-      columns,
-      data,
+        columns,
+        data,
     });
-  
+
     // Render the UI for your table
     return (
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        <table {...getTableProps()}>
+            <thead>
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                        ))}
+                    </tr>
+                ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+                {rows.map((row, i) => {
+                    prepareRow(row)
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                            })}
+                        </tr>
+                    )
                 })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+            </tbody>
+        </table>
     )
-  }
-  
+}
+
 
 export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState(null);
     const [loading, setLoading] = useState(true);
+    let { path, url } = useRouteMatch();
 
-    const edit = (arg) =>
-    {
+    const edit = (arg) => {
         console.log(arg);
     }
 
-    const reject = (id) =>
-    {
+    const reject = (id) => {
         console.log(id);
     }
 
-    const approve = (id) => 
-    {
+    const approve = (id) => {
         console.log(id);
     }
 
-    useQuery(GET_ALL_NEW_CUSTOMERS, {
+    useQuery(GET_NEW_CUSTOMERS, {
         onCompleted: result => {
             setNewCustomers(result.newCustomers);
             setLoading(false);
@@ -141,6 +108,11 @@ export default function NewCustomerAdmin() {
             {
                 Header: 'Name',
                 columns: [
+                    {
+                        id: 'id',
+                        accessor: 'contact.id',
+                        Cell: ({ value }) => (<Link to={`${path}/${value}`}>Edit</Link>)
+                    },
                     {
                         Header: 'First Name',
                         accessor: 'contact.firstName',
@@ -184,7 +156,7 @@ export default function NewCustomerAdmin() {
                         accessor: 'fax',
                     },
                 ],
-            }, 
+            },
             {
                 Header: 'Shipping Info',
                 columns: [
@@ -262,15 +234,15 @@ export default function NewCustomerAdmin() {
                     {
                         id: 'approve',
                         accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => approve({value})}>Approve</button>)
+                        Cell: ({ value }) => (<button onClick={() => approve({ value })}>Approve</button>)
                     },
                     {
                         id: 'reject',
                         accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => reject({value})}>Reject</button>)
+                        Cell: ({ value }) => (<button onClick={() => reject({ value })}>Reject</button>)
                     }
                 ],
-            } 
+            }
         ],
         []
     );

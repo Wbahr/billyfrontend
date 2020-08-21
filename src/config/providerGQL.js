@@ -501,6 +501,100 @@ export const SUBMIT_CUST_REG = gql`
 		submitCustomerRegistration(customer: $customer)
   	}
 `
+
+//Get a list of new customers that have not been processed yet (form submitted, but customers & logins not created)
+export const GET_NEW_CUSTOMERS = gql`
+    query newCustomers{
+        newCustomers{
+            contact {
+                id
+                customerIdP21
+                email
+                fax
+                firstName
+                jobTitle
+                lastName
+                phone
+                phoneExtension
+            }
+            billingCity
+            billingCompanyName
+            billingCountry
+            billingLine1
+            billingLine2
+            billingState
+            billingZip
+            shippingCity
+            shippingCompanyName
+            shippingCountry
+            shippingLine1
+            shippingLine2
+            shippingState
+            shippingZip
+        } 
+    }
+`
+
+export const GET_NEW_CUSTOMER = gql`
+  query getNewCustomer($id: Int) {
+    newCustomer(id: $id) {
+      contact {
+        id
+        customerIdP21
+        email
+        fax
+        firstName
+        jobTitle
+        lastName
+        phone
+        phoneExtension
+      }
+      billingCity
+      billingCompanyName
+      billingCountry
+      billingLine1
+      billingLine2
+      billingState
+      billingZip
+      shippingCity
+      shippingCompanyName
+      shippingCountry
+      shippingLine1
+      shippingLine2
+      shippingState
+      shippingZip
+    }
+  }
+`
+
+//Pass a registrationCustomerID (from GET_NEW_CUSTOMERS) to reject the account request. It will 
+// not be available in subsequent GET_NEW_CUSTOMERS requests.
+//Variables: { "id": 19 }
+export const REJECT_NEW_CUSTOMER = gql`
+  mutation rejectReg($id: Int) {
+    rejectRegistration(id: $id)
+  }
+`
+//Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and 
+// create a login record from the associated contact
+//Variables: { "id": 18 }
+export const APPROVE_NEW_CUSTOMER = gql`
+  mutation approveReg($id: Int) {
+    approveRegistration(id: $id)
+  }
+`
+
+//Pass a search string from a text box to return a list of P21 customers that match
+//Variables: { "search": "asdf" }
+export const SEARCH_CUSTOMERS = gql`
+  query searchCustomers($search: String) {
+    searchCustomers(search: $search) {
+      key
+      value
+    }
+  }
+`
+
 export const GET_ALL_SETTINGS = gql`
     query appSettings {
         appSettings {

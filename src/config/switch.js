@@ -131,9 +131,8 @@ class App extends React.Component {
 				<WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/pages/:pageId/:subPageId?/:subSubPageId?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
 
-				{/* ADMIN INTERNAL TOOLS */}
-				<WrapperRoute exact path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
-				<WrapperRoute exact path='/admin-dashboard/:tool' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
+				{/* ADMIN INTERNAL TOOLS (MANAGES ITS OWN SUB ROUTES)*/}
+				<WrapperRoute path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
 
 				{/* Error Screens */}
 				<WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>
