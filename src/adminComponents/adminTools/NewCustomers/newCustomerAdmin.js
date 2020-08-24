@@ -85,10 +85,6 @@ export default function NewCustomerAdmin() {
     const [loading, setLoading] = useState(true);
     let { path, url } = useRouteMatch();
 
-    const edit = (arg) => {
-        console.log(arg);
-    }
-
     const reject = (id) => {
         console.log(id);
     }

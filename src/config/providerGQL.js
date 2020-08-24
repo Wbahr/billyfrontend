@@ -495,10 +495,11 @@ export const SUBMIT_CONT_REG = gql`
 		submitContactRegistration(contact: $contact)
   	}
 `
-//Customer Registration includes Billing and Shipping Addresses, but not Customer ID.
-export const SUBMIT_CUST_REG = gql`
-	mutation SubmitCustomerRegistration($customer: RegistrationCustomerInputGraphType) {
-		submitCustomerRegistration(customer: $customer)
+//Customer Registration includes Billing and Shipping Addresses, but not P21 Customer ID.
+//P21 Customer ID may be specified when this is used in an update mode (Id specified)
+export const SAVE_NEW_CUSTOMER = gql`
+  mutation SaveRegistration($customer: RegistrationCustomerInputGraphType) {
+		saveRegistration(customer: $customer)
   	}
 `
 
