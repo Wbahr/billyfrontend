@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import gql from 'graphql-tag'
 import styled from 'styled-components'
-import { useQuery, useMutation } from '@apollo/client'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { useTable } from 'react-table'
-import { GET_NEW_CUSTOMERS } from 'config/providerGQL'
+import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'config/providerGQL'
 import { Link, useRouteMatch } from 'react-router-dom'
+import { ButtonRed } from 'styles/buttons'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -82,23 +82,31 @@ function Table({ columns, data }) {
 
 export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState(null);
-    const [loading, setLoading] = useState(true);
     let { path, url } = useRouteMatch();
 
-    const reject = (id) => {
-        console.log(id);
-    }
-
-    const approve = (id) => {
-        console.log(id);
-    }
-
-    useQuery(GET_NEW_CUSTOMERS, {
-        onCompleted: result => {
-            setNewCustomers(result.newCustomers);
-            setLoading(false);
+    const [rejectRegistrationCall] = useMutation(REJECT_NEW_CUSTOMER, {
+        onCompleted: () => {
+            loadNewCustomers();
         }
     });
+
+    const [approveRegistrationCall] = useMutation(APPROVE_NEW_CUSTOMER, {
+        onCompleted: () => {
+            loadNewCustomers();
+        }
+    });
+
+    const [loadNewCustomers, { loading, error }] = useLazyQuery(GET_NEW_CUSTOMERS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: (result) => {
+            setNewCustomers(result?.newCustomers || []);
+        }
+    });
+
+    useEffect(() => {
+        loadNewCustomers();
+    }, []);
+
     const columns = React.useMemo(
         () => [
             {
@@ -128,7 +136,7 @@ export default function NewCustomerAdmin() {
                     },
                     {
                         Header: 'Claimed Customer ID',
-                        accessor: 'contact.customerId',
+                        accessor: 'contact.customerIdP21',
                     },
                 ],
             },
@@ -222,20 +230,15 @@ export default function NewCustomerAdmin() {
             {
                 Header: 'Actions',
                 columns: [
-                    /*{
-                        id: 'edit',
-                        accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => edit({value})}>Edit</button>)
-                    },*/
                     {
                         id: 'approve',
                         accessor: 'contact.id',
-                        Cell: ({ value }) => (<button onClick={() => approve({ value })}>Approve</button>)
+                        Cell: ({ value }) => (<ButtonRed onClick={() => approveRegistrationCall({ variables: { id: value } })}>Approve</ButtonRed>)
                     },
                     {
                         id: 'reject',
                         accessor: 'contact.id',
-                        Cell: ({ value }) => (<button onClick={() => reject({ value })}>Reject</button>)
+                        Cell: ({ value }) => (<ButtonRed onClick={() => rejectRegistrationCall({ variables: { id: value } })}>Reject</ButtonRed>)
                     }
                 ],
             }
@@ -243,15 +246,15 @@ export default function NewCustomerAdmin() {
         []
     );
 
-    useEffect(() => console.log(newCustomers), [newCustomers]);
-
     if (loading) {
         return (<Loader />);
-    } else {
+    } else if (newCustomers) {
         return (
             <Styles>
                 <Table columns={columns} data={newCustomers} />
             </Styles>
         );
+    } else {
+        return null;
     }
 }

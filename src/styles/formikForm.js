@@ -40,18 +40,37 @@ export const FormikFormFieldContainer = styled.div`
     padding: 0 8px;
     width: 416px;
     justify-content: center;
+    input {
+        height: 40px;
+        padding: 0 8px;
+        color: #303030;
+        font-size: 16px;
+        border-radius: 1px;
+        border: 1px solid #e1e1e1;  
+        :focus{
+            border: 1px solid #007bff;  
+            outline: none;
+        }
+            ::placeholder {
+            color: grey;
+            font-size: 14px;
+        }
+    }
+    label {
+        color: #606060;
+        font-size: 14px;
+        font-weight: 400;
+        padding-left: 4px;
+        margin-bottom: 0px;
+        // background-color: white;
+        width: max-content;
+        padding: 2px;
+        margin-left: 7px;
+    }
 `
 
 export const FormikFormFieldLabel = styled.label`
-    color: #606060;
-    font-size: 14px;
-    font-weight: 400;
-    padding-left: 4px;
-    margin-bottom: 0px;
-    // background-color: white;
-    width: max-content;
-    padding: 2px;
-    margin-left: 7px;
+
 `
 
 export const FormikFormFieldError = styled.span`
@@ -68,18 +87,5 @@ export const FormikFormFieldError = styled.span`
 `
 
 export const FormikFormField = styled(Field)`
-    height: 40px;
-    padding: 0 8px;
-    color: #303030;
-    font-size: 16px;
-    border-radius: 1px;
-    border: 1px solid #e1e1e1;  
-    :focus{
-        border: 1px solid #007bff;  
-        outline: none;
-    }
-        ::placeholder {
-        color: grey;
-        font-size: 14px;
-    }
+
 `

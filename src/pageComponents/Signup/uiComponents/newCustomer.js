@@ -2,10 +2,10 @@
 import React, { useState }  from 'react'
 import styled from 'styled-components'
 import { newCustomerInitialValues, newCustomerSchema } from '../validationSchemas';
-import {  useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Summary from '../summary';
 import { SAVE_NEW_CUSTOMER } from 'config/providerGQL';
-import NewCustomerForm from './newCustomerForm';
+import NewCustomerForm, { mapToApi } from './newCustomerForm';
 
 const H4 = styled.h4`
   width: 100%;
@@ -15,17 +15,15 @@ const H4 = styled.h4`
 
 export default function NewCustomer() {
 	const [saved, setSaved] = useState(false);
-	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
-		{
-			onCompleted() {
-				setSaved(true);
-			}
+	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,{ 
+		onCompleted() {
+			setSaved(true);
 		}
-	);
+	});
 
 	const onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => { 
-			saveNewCustomer(map(values));
+			saveNewCustomer(mapToApi(values));
 			setSubmitting(false);
 		}, 1000);
 	};
@@ -36,8 +34,12 @@ export default function NewCustomer() {
 		return (
 			<>
 				<H4>New Customer</H4>
-				<NewCustomerForm newCustomerInitialValues={newCustomerInitialValues} 
-					newCustomerSchema={newCustomerSchema} onSubmit={onSubmit} choosePasswordEnabled={true} buttonText="Register Account" />
+				<NewCustomerForm 
+					newCustomerInitialValues={newCustomerInitialValues} 
+					validationSchema={newCustomerSchema} 
+					onSubmit={onSubmit} 
+					choosePasswordEnabled={true} 
+					buttonText="Register Account" />
 			</>
 		);
 	}

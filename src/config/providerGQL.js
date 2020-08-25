@@ -53,6 +53,17 @@ export const END_IMPERSONATION = gql`
   }
 `
 
+//Variables example: {variables: {'searchString': 'blah'}}
+export const IMPERSONATION_SEARCH = gql`
+  query GetImpersonationCustomerList($searchString: String){
+    getImpersonationCustomerList(searchString: $searchString){
+      customerIdP21
+      name
+      id
+    }
+  }
+`
+
 export const GET_TAXES = gql`
   query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
     getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
@@ -550,6 +561,7 @@ export const GET_NEW_CUSTOMER = gql`
         phone
         phoneExtension
       }
+      id
       billingCity
       billingCompanyName
       billingCountry
@@ -582,17 +594,6 @@ export const REJECT_NEW_CUSTOMER = gql`
 export const APPROVE_NEW_CUSTOMER = gql`
   mutation approveReg($id: Int) {
     approveRegistration(id: $id)
-  }
-`
-
-//Pass a search string from a text box to return a list of P21 customers that match
-//Variables: { "search": "asdf" }
-export const SEARCH_CUSTOMERS = gql`
-  query searchCustomers($search: String) {
-    searchCustomers(search: $search) {
-      key
-      value
-    }
   }
 `
 

@@ -3,10 +3,11 @@ import { useParams, useRouteMatch } from 'react-router';
 import Loader from 'pageComponents/_common/loader';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_NEW_CUSTOMER, SAVE_NEW_CUSTOMER } from 'config/providerGQL';
-import { ShowErrorAlert } from 'styles/alerts';
+import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts';
 import { Link } from 'react-router-dom';
-import NewCustomerForm from 'pageComponents/Signup/uiComponents/newCustomerForm';
-import { newCustomerSchema } from 'pageComponents/Signup/validationSchemas';
+import NewCustomerForm, { mapToForm, mapToApi } from 'pageComponents/Signup/uiComponents/newCustomerForm';
+import { editCustomerSchema } from 'pageComponents/Signup/validationSchemas';
+import Modal from 'pageComponents/_common/modal';
 
 export default function EditNewCustomer() {
     let { regId } = useParams();
@@ -20,7 +21,9 @@ export default function EditNewCustomer() {
 			'id': regId
 		},
 		onCompleted: result => {
-			setData(result.newCustomer)
+			
+			setData(mapToForm(result.newCustomer));
+			console.log("Data Ready", mapToForm(result.newCustomer));
         }
     });
 
@@ -29,14 +32,15 @@ export default function EditNewCustomer() {
             {loading && <Loader />}
             {!loading && error && error.networkError && <ShowErrorAlert message={error.networkError.result.detail} /> }
             {!loading && error && !error.networkError && <ShowErrorAlert message="An error occured" />}
-            {!loading && !error && <EditForm data={data}/>}
+            {!loading && !error && data && <EditForm data={data}/>}
             <Link to={`${path.split('/:')[0]}`}>Go back</Link>
         </>
     );
 }
 
-function EditForm(data) {
-    const [saved, setSaved] = useState(false);
+function EditForm({data}) {
+	const [saved, setSaved] = useState(false);
+	let { path } = useRouteMatch();
 	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
 		{
 			onCompleted() {
@@ -47,22 +51,26 @@ function EditForm(data) {
 
 	const onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => { 
-			saveNewCustomer(map(values));
+			saveNewCustomer(mapToApi(values));
 			setSubmitting(false);
 		}, 1000);
 	};
 
-	if(saved === true) {
-		return <Summary />
-	} else {
-		return (
+	return (
+		<>
+			<Modal open={saved} onClose={()=> setSaved(false)} >
+				<ShowInfoAlert message="Saved Successfully" />
+				<Link to={`${path.split('/:')[0]}`}>Go Back to New Registrations</Link>
+			</Modal>
 			<NewCustomerForm 
 				newCustomerInitialValues={data} 
-				newCustomerSchema={newCustomerSchema} 
+				validationSchema={editCustomerSchema} 
 				onSubmit={onSubmit} 
 				choosePasswordEnabled={false} 
-				buttonText="Save"
-				showCustomerLookup={true} />
-		);
-	}
+				buttonText="Save Registration"
+				showCustomerLookup={true} 
+				data={data}/>
+			
+		</>
+	);
 }

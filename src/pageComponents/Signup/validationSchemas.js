@@ -44,6 +44,58 @@ export const existingCustomerInitialValues = {
     verifyPassword: ''
 };
 
+export const editCustomerSchema =  Yup.object().shape({
+	firstName: Yup.string()
+		.min(2, "Minimum length of 2")
+		.max(50, "Maximum length of 50")
+		.required('required'),
+	lastName: Yup.string()
+		.min(2, "Minimum length of 2")
+		.max(50, "Maximum length of 50")
+		.required('required'),
+	jobTitle: Yup.string(),
+	phone: Yup.string(),
+	phoneExtension: Yup.string(),
+	email: Yup.string()
+		.email('Invalid email address')
+		.required('required'),
+	fax: Yup.string(),
+	shippingCompany: Yup.string()
+		.required('required')
+		.max(70),
+	shippingAddress1: Yup.string()
+		.max(50),
+	shippingAddress2: Yup.string()
+		.max(50),
+	shippingCity: Yup.string()
+		.max(50),
+	shippingState: Yup.string()
+		.max(50),
+	shippingPostal: Yup.string()
+		.max(11),
+	shippingCountry: Yup.string()
+		.max(60),
+	billingSame: Yup.boolean(),
+	billingCompany: Yup.string()
+		.max(70)
+		.when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
+	billingAddress1: Yup.string()
+		.max(50),
+	billingAddress2: Yup.string()
+		.max(50),
+	billingCity: Yup.string()
+		.max(50),
+	billingState: Yup.string()
+		.max(50),
+	billingPostal: Yup.string()
+		.max(11),
+	billingCountry: Yup.string()
+		.max(60),
+	customerId: Yup.number()
+	.typeError("Must be a number")
+	.integer("Must be a number")
+});
+
 export const newCustomerSchema = Yup.object().shape({
 	firstName: Yup.string()
 		.min(2, "Minimum length of 2")
@@ -101,6 +153,9 @@ export const newCustomerSchema = Yup.object().shape({
 });
 
 export const newCustomerInitialValues = {
+	id: '',
+	customerId: '',
+	customerSearch: '',
     firstName: '',
     lastName: '',
     jobTitle: '',
@@ -108,7 +163,7 @@ export const newCustomerInitialValues = {
     phoneExtension: '',
     email: '',
     fax: '',
-    password: '',
+	password: '',
     verifyPassword: '',
     shippingCompany: '',
     shippingAddress1: '',

@@ -5,6 +5,7 @@ import Context from '../../config/context'
 import DebounceInput from 'react-debounce-input'
 import { useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
+import { IMPERSONATION_SEARCH } from 'config/providerGQL'
 
 const Container = styled.div`
   display: flex;
@@ -53,16 +54,6 @@ const DebounceInputStyle = {
 	'padding': '4px 16px',
 	'borderRadius': '30px 0 0 30px'
 }
-
-const IMPERSONATION_SEARCH = gql`
-  query GetImpersonationCustomerList($searchString: String){
-    getImpersonationCustomerList(searchString: $searchString){
-      customerIdP21
-      name
-      id
-    }
-  }
-`
 
 export default function ImpersonationSearchComponent() {
 	const [impersonationTerm, setImpersonationTerm] = useState('')
