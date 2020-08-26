@@ -6,10 +6,10 @@ import { useTable } from 'react-table'
 import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'config/providerGQL'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { ButtonRed } from 'styles/buttons'
+import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 
 const Styles = styled.div`
   padding: 1rem;
-
   table {
     border-spacing: 0;
     border: 1px solid black;
@@ -82,16 +82,20 @@ function Table({ columns, data }) {
 
 export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState(null);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     let { path, url } = useRouteMatch();
 
-    const [rejectRegistrationCall] = useMutation(REJECT_NEW_CUSTOMER, {
-        onCompleted: () => {
+    const [rejectRegistrationCall, { rejectError }] = useMutation(REJECT_NEW_CUSTOMER, {
+        onCompleted: (data) => {
+            setAlertMessage("Registration rejected.");
             loadNewCustomers();
         }
     });
 
-    const [approveRegistrationCall] = useMutation(APPROVE_NEW_CUSTOMER, {
-        onCompleted: () => {
+    const [approveRegistrationCall, { approveError }] = useMutation(APPROVE_NEW_CUSTOMER, {
+        onCompleted: (data) => {
+            setAlertMessage("Registration approved.");
             loadNewCustomers();
         }
     });
@@ -107,23 +111,52 @@ export default function NewCustomerAdmin() {
         loadNewCustomers();
     }, []);
 
+    useEffect(() => {
+        
+        if(error) {
+            console.log("erroring", error.networkError);
+            if(error.networkError) {
+                setErrorMessage(error.networkError.result.detail);                 
+            } else {
+                setErrorMessage("An error occurred.");
+            }
+        } else {
+            setErrorMessage(null);
+        }
+        
+    }, [rejectError, approveError, error]);
+
     const columns = React.useMemo(
         () => [
+            {
+                Header: 'Registration',
+                columns: [
+                    {
+                        id: 'id', 
+                        accessor: 'id',
+                        Cell: ({ value }) => (<Link to={`${path}/${value}`}>Edit</Link>)
+                    },
+                    {
+                        Header: 'Reg Id',
+                        id: 'regId',
+                        accessor: 'id',
+                    },
+                    {
+                        Header: 'Date',
+                        accessor: 'received',
+                    },
+                ],
+            },
             {
                 Header: 'Name',
                 columns: [
                     {
-                        id: 'id',
-                        accessor: 'contact.id',
-                        Cell: ({ value }) => (<Link to={`${path}/${value}`}>Edit</Link>)
-                    },
-                    {
                         Header: 'First Name',
-                        accessor: 'contact.firstName',
+                        accessor: 'firstName',
                     },
                     {
                         Header: 'Last Name',
-                        accessor: 'contact.lastName',
+                        accessor: 'lastName',
                     },
                 ],
             },
@@ -132,11 +165,11 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         Header: 'JobTitle',
-                        accessor: 'contact.jobTitle',
+                        accessor: 'jobTitle',
                     },
                     {
                         Header: 'Claimed Customer ID',
-                        accessor: 'contact.customerIdP21',
+                        accessor: 'customerIdP21',
                     },
                 ],
             },
@@ -145,15 +178,15 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'contact.email',
+                        accessor: 'email',
                     },
                     {
                         Header: 'Phone',
-                        accessor: 'contact.phone',
+                        accessor: 'phone',
                     },
                     {
                         Header: 'Ext.',
-                        accessor: 'contact.phoneExtension',
+                        accessor: 'phoneExtension',
                     },
                     {
                         Header: 'Fax',
@@ -232,12 +265,12 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         id: 'approve',
-                        accessor: 'contact.id',
+                        accessor: 'id',
                         Cell: ({ value }) => (<ButtonRed onClick={() => approveRegistrationCall({ variables: { id: value } })}>Approve</ButtonRed>)
                     },
                     {
                         id: 'reject',
-                        accessor: 'contact.id',
+                        accessor: 'id',
                         Cell: ({ value }) => (<ButtonRed onClick={() => rejectRegistrationCall({ variables: { id: value } })}>Reject</ButtonRed>)
                     }
                 ],
@@ -246,15 +279,12 @@ export default function NewCustomerAdmin() {
         []
     );
 
-    if (loading) {
-        return (<Loader />);
-    } else if (newCustomers) {
-        return (
-            <Styles>
-                <Table columns={columns} data={newCustomers} />
-            </Styles>
-        );
-    } else {
-        return null;
-    }
+    return (
+        <Styles>
+            {alertMessage && <ShowInfoAlert message={alertMessage} />}
+            {errorMessage && <ShowErrorAlert message={errorMessage} />}
+            {loading && <Loader />}
+            {newCustomers && <Table columns={columns} data={newCustomers} />}
+        </Styles>
+    );
 }

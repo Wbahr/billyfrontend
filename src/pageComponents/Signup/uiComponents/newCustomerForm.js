@@ -46,56 +46,55 @@ export default function NewCustomerForm({ newCustomerInitialValues, validationSc
 }
 
 export function mapToForm(data) {
-    const { contact } = data;
     return {
-        id: data.id,
-        contactId: contact.id,
-        customerId: contact.customerIdP21,
+        id: data.id || '',
+        customerId: String(data.customerIdP21 || ''),
         customerSearch: '',
-        firstName: contact.firstName,
-        lastName: contact.lastName,
-        jobTitle: contact.jobTitle,
-        phone: contact.phone,
-        phoneExtension: contact.phoneExtension,
-        email: contact.email,
-        fax: contact.fax,
+        firstName: data.firstName || '',
+        lastName: data.lastName || '',
+        jobTitle: data.jobTitle || '',
+        phone: data.phone || '',
+        phoneExtension: data.phoneExtension || '',
+        email: data.email || '',
+        fax: data.fax || '',
         password: '',
         verifyPassword: '',
-        shippingCompany: data.shippingCompanyName,
-        shippingAddress1: data.shippingLine1,
-        shippingAddress2: data.shippingLine2,
-        shippingCity: data.shippingCity,
-        shippingState: data.shippingState,
-        shippingPostal: data.shippingZip,
-        shippingCountry: data.shippingCountry,
+        shippingCompany: data.shippingCompanyName || '',
+        shippingAddress1: data.shippingLine1 || '',
+        shippingAddress2: data.shippingLine2 || '',
+        shippingCity: data.shippingCity || '',
+        shippingState: data.shippingState || '',
+        shippingPostal: data.shippingZip || '',
+        shippingCountry: data.shippingCountry || '',
         billingSame: false,
-        billingCompany: data.billingCompanyName,
-        billingAddress1: data.billingLine1,
-        billingAddress2: data.billingLine2,
-        billingCity: data.billingCity,
-        billingState: data.billingState,
-        billingPostal: data.billingZip,
-        billingCountry: data.billingCountry,
+        billingCompany: data.billingCompanyName || '',
+        billingAddress1: data.billingLine1 || '',
+        billingAddress2: data.billingLine2 || '',
+        billingCity: data.billingCity || '',
+        billingState: data.billingState || '',
+        billingPostal: data.billingZip || '',
+        billingCountry: data.billingCountry || '',
     };
+}
+
+function nullIf(str) {
+    return str ? str : null;
 }
 
 export function mapToApi(values) {
     return {
         variables: {
-            customer: {
-                contact: {
-                    id: values.contactId,
-                    firstName: values.firstName,
-                    lastName: values.lastName,
-                    password: values.password,
-                    customerIdP21: values.customerId,
-                    email: values.email,
-                    fax: values.fax,
-                    jobTitle: values.jobTitle,
-                    phone: values.phone,
-                    phoneExtension: values.phoneExtension,
-                },
-                id: values.id,
+            reg: {
+                id: nullIf(values.id),
+                customerIdP21: nullIf(values.customerId),
+                firstName: values.firstName,
+                lastName: values.lastName,
+                jobTitle: values.jobTitle,
+                phone: values.phone,
+                phoneExtension: values.phoneExtension,
+                fax: values.fax,
+                email: values.email,
+                password: values.password, 
                 shippingCompanyName: values.shippingCompany,
                 shippingLine1: values.shippingAddress1,
                 shippingLine2: values.shippingAddress2,
@@ -163,7 +162,6 @@ const FormWrapper = ({ choosePasswordEnabled, buttonText, showCustomerLookup }) 
 
     return (
         <Form>
-            {showCustomerLookup === true && <Field name="contactId" type="hidden" />}
             {showCustomerLookup === true && <Field name="id" type="hidden" />}
             <FormikFormContainer>
                 {showCustomerLookup === true && <CustomerLookup />}
@@ -181,24 +179,24 @@ const FormWrapper = ({ choosePasswordEnabled, buttonText, showCustomerLookup }) 
                 </FormikFormGroup>
                 <FormikFormGroup>
                     <H3>Shipping Information</H3>
-                    <FormikInput label="Company*" type="text" name="shippingCompany" />
-                    <FormikInput label="Address Line 1" type="text" name="shippingAddress1" />
-                    <FormikInput label="Address Line 2" type="text" name="shippingAddress2" />
-                    <FormikInput label="City" type="text" name="shippingCity" />
-                    <FormikInput label="State" type="text" name="shippingState" />
-                    <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" />
-                    <FormikInput label="Country" type="text" name="shippingCountry" />
+                    <FormikInput label="Company*" type="text" name="shippingCompany" disabled={values.customerId != ''} />
+                    <FormikInput label="Address Line 1" type="text" name="shippingAddress1" disabled={values.customerId != ''} />
+                    <FormikInput label="Address Line 2" type="text" name="shippingAddress2" disabled={values.customerId != ''} />
+                    <FormikInput label="City" type="text" name="shippingCity" disabled={values.customerId != ''} />
+                    <FormikInput label="State" type="text" name="shippingState" disabled={values.customerId != ''} />
+                    <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" disabled={values.customerId != ''} />
+                    <FormikInput label="Country" type="text" name="shippingCountry" disabled={values.customerId != ''} />
                 </FormikFormGroup> 
                 <FormikFormGroup>
                     <H3>Billing Information</H3>
-                    <CheckBox label="Same as Shipping" name="billingSame" />
-                    <FormikInput label="Company" type="text" name="billingCompany" disabled={values.billingSame == 1} />
-                    <FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.billingSame == 1} />
-                    <FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.billingSame == 1} />
-                    <FormikInput label="City" type="text" name="billingCity" disabled={values.billingSame == 1} />
-                    <FormikInput label="State" type="text" name="billingState" disabled={values.billingSame == 1} />
-                    <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.billingSame == 1} />
-                    <FormikInput label="Country" type="text" name="billingCountry" disabled={values.billingSame == 1} />
+                    <CheckBox label="Same as Shipping" name="billingSame" disabled={values.customerId !== ''} />
+                    <FormikInput label="Company" type="text" name="billingCompany" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="City" type="text" name="billingCity" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="State" type="text" name="billingState" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    <FormikInput label="Country" type="text" name="billingCountry" disabled={values.customerId !== '' || values.billingSame == 1} />
                 </FormikFormGroup> 
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}

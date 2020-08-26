@@ -61,7 +61,7 @@ export const editCustomerSchema =  Yup.object().shape({
 		.required('required'),
 	fax: Yup.string(),
 	shippingCompany: Yup.string()
-		.required('required')
+		.when('customerId', {is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
 		.max(70),
 	shippingAddress1: Yup.string()
 		.max(50),
@@ -78,7 +78,8 @@ export const editCustomerSchema =  Yup.object().shape({
 	billingSame: Yup.boolean(),
 	billingCompany: Yup.string()
 		.max(70)
-		.when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
+		.when(['billingSame', 'customerId'], 
+		{ is: (billingSame, customerId) => billingSame == true || customerId !== '' , then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
 	billingAddress1: Yup.string()
 		.max(50),
 	billingAddress2: Yup.string()

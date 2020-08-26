@@ -8,7 +8,7 @@ import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
 import { useMutation } from '@apollo/client';
 import Summary from '../summary';
 import { existingCustomerInitialValues, existingCustomerSchema } from '../validationSchemas';
-import { SUBMIT_CONT_REG } from 'config/providerGQL';
+import { SAVE_NEW_CUSTOMER } from 'config/providerGQL';
 
 const H4 = styled.h4`
   width: 100%;
@@ -25,7 +25,7 @@ const DivCenter = styled.div`
 const FormWrapper = () => {
 	const { isValid, isSubmitting } = useFormikContext();
 	return (
-		<Form>
+        <>
 			<FormikFormContainer>
 				<FormikFormGroup>
 					<FormikInput label="Customer ID*" type="text" name="customerId" />
@@ -44,13 +44,13 @@ const FormWrapper = () => {
 			<DivCenter>
 				<ButtonRed type="submit" disabled={isSubmitting}>Submit</ButtonRed>
 			</DivCenter>
-		</Form>
+        </>
 	);
 };
 
 export default function ExistingCustomer() {
 	const [saved, setSaved] = useState(false);
-	const [saveNewCustomer] = useMutation(SUBMIT_CONT_REG,
+	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
 		{
 			onCompleted() {
 				setSaved(true);
@@ -60,7 +60,7 @@ export default function ExistingCustomer() {
 
 	const map = (values) => {
 		return {variables: { 
-			contact: {
+			reg: {
 				firstName: values.firstName,
 				lastName: values.lastName,
 				password: values.password,

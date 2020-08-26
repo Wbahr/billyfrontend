@@ -12,7 +12,7 @@ import Modal from 'pageComponents/_common/modal';
 export default function EditNewCustomer() {
     let { regId } = useParams();
     let { path } = useRouteMatch();
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
     
     const { loading, error } = useQuery(GET_NEW_CUSTOMER, {
         fetchPolicy: 'no-cache',
@@ -21,7 +21,6 @@ export default function EditNewCustomer() {
 			'id': regId
 		},
 		onCompleted: result => {
-			
 			setData(mapToForm(result.newCustomer));
 			console.log("Data Ready", mapToForm(result.newCustomer));
         }
@@ -41,13 +40,11 @@ export default function EditNewCustomer() {
 function EditForm({data}) {
 	const [saved, setSaved] = useState(false);
 	let { path } = useRouteMatch();
-	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
-		{
-			onCompleted() {
-				setSaved(true);
-			}
-		}
-	);
+	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER, {
+        onCompleted() {
+            setSaved(true);
+        }
+	});
 
 	const onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => { 
