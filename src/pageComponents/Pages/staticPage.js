@@ -6,6 +6,7 @@ import Loader from 'pageComponents/_common/loader';
 import styled from 'styled-components'
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom';
+import 'style.css'
 
 const Container = styled.div`
   display: flex;
