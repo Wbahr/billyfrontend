@@ -322,11 +322,11 @@ export default function HeaderComponent(props) {
 								options={[
 									{
 										'label': 'Arc Flash Safety',
-										'link': '/services/plant-services/arc-flash-safety'
+										'link': '/pages/services/arc-flash-safety'
 									},
 									{
 										'label': 'Machine Safeguarding',
-										'link': '/services/plant-services/machine-safeguarding'
+										'link': '/pages/services/machine-safeguarding'
 									},
 									{
 										'label': 'Fluid Cleanliness & Maintenance/Preventive Maintenance',
@@ -335,6 +335,14 @@ export default function HeaderComponent(props) {
 									{
 										'label': 'Engineered Systems & Assemblies',
 										'link': '/services/engineered-systems-and-assemblies'
+									},
+									{
+										'label': 'Energy Efficiency',
+										'link': '/pages/services/energy-efficiency'
+									},
+									{
+										'label': 'Trola-Dyne Systems',
+										'link': '/pages/trola-dyne'
 									}
 								]}
 							/>
