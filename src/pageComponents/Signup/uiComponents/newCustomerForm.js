@@ -30,7 +30,7 @@ const H3 = styled.h3`
 `
 
 //Represents a reusable new customer form. Suitable for admin use or admin dash use
-export default function NewCustomerForm({ newCustomerInitialValues, validationSchema, onSubmit, choosePasswordEnabled, buttonText, showCustomerLookup, data }) {
+export default function NewCustomerForm({ useExpandedMode, newCustomerInitialValues, validationSchema, onSubmit, choosePasswordEnabled, buttonText, showCustomerLookup, data }) {
     return (
         <Formik
             enableReinitialize
@@ -40,7 +40,7 @@ export default function NewCustomerForm({ newCustomerInitialValues, validationSc
             validateOnChange={false}
             onSubmit={onSubmit}
         >
-            <FormWrapper data={data} choosePasswordEnabled={choosePasswordEnabled} buttonText={buttonText} showCustomerLookup={showCustomerLookup} />
+            <FormWrapper useExpandedMode={useExpandedMode} data={data} choosePasswordEnabled={choosePasswordEnabled} buttonText={buttonText} showCustomerLookup={showCustomerLookup} />
         </Formik>
     );
 }
@@ -140,9 +140,7 @@ const CustomerLookup = () => {
     );
 };
 
-//Buttons is an array of [ {text: 'Button Text', action: func }]
-// the action func if omitted will just be the form default "submit"
-const FormWrapper = ({ choosePasswordEnabled, buttonText, showCustomerLookup }) => {
+const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showCustomerLookup }) => {
     const { values, isValid, isSubmitting, dirty, setFieldValue, validateForm } = useFormikContext();
 
     React.useEffect(() => {
@@ -166,7 +164,8 @@ const FormWrapper = ({ choosePasswordEnabled, buttonText, showCustomerLookup }) 
             <FormikFormContainer>
                 {showCustomerLookup === true && <CustomerLookup />}
                 <FormikFormGroup>
-                    <H3>Account Information</H3>
+                    <H3>Account Information</H3> 
+                    {useExpandedMode === false && showCustomerLookup === false && <FormikInput label="Customer ID*" type="text" name="customerId" />}
                     <FormikInput label="First Name*" type="text" name="firstName" />
                     <FormikInput label="Last Name*" type="text" name="lastName" />
                     <FormikInput label="Job Title" type="text" name="jobTitle" />
@@ -177,27 +176,29 @@ const FormWrapper = ({ choosePasswordEnabled, buttonText, showCustomerLookup }) 
                     {choosePasswordEnabled === true && <FormikInput label="Password*" type="password" name="password" />}
                     {choosePasswordEnabled === true && <FormikInput label="Verify Password*" type="password" name="verifyPassword" />}
                 </FormikFormGroup>
-                <FormikFormGroup>
-                    <H3>Shipping Information</H3>
-                    <FormikInput label="Company*" type="text" name="shippingCompany" disabled={values.customerId != ''} />
-                    <FormikInput label="Address Line 1" type="text" name="shippingAddress1" disabled={values.customerId != ''} />
-                    <FormikInput label="Address Line 2" type="text" name="shippingAddress2" disabled={values.customerId != ''} />
-                    <FormikInput label="City" type="text" name="shippingCity" disabled={values.customerId != ''} />
-                    <FormikInput label="State" type="text" name="shippingState" disabled={values.customerId != ''} />
-                    <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" disabled={values.customerId != ''} />
-                    <FormikInput label="Country" type="text" name="shippingCountry" disabled={values.customerId != ''} />
-                </FormikFormGroup> 
-                <FormikFormGroup>
-                    <H3>Billing Information</H3>
-                    <CheckBox label="Same as Shipping" name="billingSame" disabled={values.customerId !== ''} />
-                    <FormikInput label="Company" type="text" name="billingCompany" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="City" type="text" name="billingCity" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="State" type="text" name="billingState" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    <FormikInput label="Country" type="text" name="billingCountry" disabled={values.customerId !== '' || values.billingSame == 1} />
-                </FormikFormGroup> 
+                {useExpandedMode === true && <>
+                    <FormikFormGroup>
+                        <H3>Shipping Information</H3>
+                        <FormikInput label="Company*" type="text" name="shippingCompany" disabled={values.customerId != ''} />
+                        <FormikInput label="Address Line 1" type="text" name="shippingAddress1" disabled={values.customerId != ''} />
+                        <FormikInput label="Address Line 2" type="text" name="shippingAddress2" disabled={values.customerId != ''} />
+                        <FormikInput label="City" type="text" name="shippingCity" disabled={values.customerId != ''} />
+                        <FormikInput label="State" type="text" name="shippingState" disabled={values.customerId != ''} />
+                        <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" disabled={values.customerId != ''} />
+                        <FormikInput label="Country" type="text" name="shippingCountry" disabled={values.customerId != ''} />
+                    </FormikFormGroup> 
+                    <FormikFormGroup>
+                        <H3>Billing Information</H3>
+                        <CheckBox label="Same as Shipping" name="billingSame" disabled={values.customerId !== ''} />
+                        <FormikInput label="Company" type="text" name="billingCompany" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="City" type="text" name="billingCity" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="State" type="text" name="billingState" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.customerId !== '' || values.billingSame == 1} />
+                        <FormikInput label="Country" type="text" name="billingCountry" disabled={values.customerId !== '' || values.billingSame == 1} />
+                    </FormikFormGroup> 
+                </> } 
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
             <DivCenter>

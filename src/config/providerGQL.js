@@ -572,8 +572,8 @@ export const GET_NEW_CUSTOMER = gql`
 // not be available in subsequent GET_NEW_CUSTOMERS requests.
 //Variables: { "id": 19 }
 export const REJECT_NEW_CUSTOMER = gql`
-    mutation rejectReg($id: Int) {
-        rejectRegistration(id: $id)
+    mutation rejectReg($id: Int, $reason: String) {
+        rejectRegistration(id: $id, reason: $reason)
     }
 `
 //Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and 
@@ -590,6 +590,7 @@ export const GET_ALL_SETTINGS = gql`
         appSettings {
             newCustomerNotificationEmails
             contactUsNotificationEmails
+            emailFrom 
         }
     }
 `

@@ -34,7 +34,9 @@ export default function NewCustomer() {
 		return (
 			<>
 				<H4>New Customer</H4>
-				<NewCustomerForm 
+                <NewCustomerForm 
+                    useExpandedMode={true}
+                    showCustomerLookup={false}
 					newCustomerInitialValues={newCustomerInitialValues} 
 					validationSchema={newCustomerSchema} 
 					onSubmit={onSubmit} 

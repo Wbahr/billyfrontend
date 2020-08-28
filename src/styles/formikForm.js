@@ -40,7 +40,7 @@ export const FormikFormFieldContainer = styled.div`
     padding: 0 8px;
     width: 416px;
     justify-content: center;
-    input {
+    input, select {
         height: 40px;
         padding: 0 8px;
         color: #303030;

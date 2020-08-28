@@ -84,9 +84,6 @@ export function FormikStyleInput({type, value, disabled, name, label, placeholde
 				onChange={onChange}
 				value={value}
 			/>
-			<FormikFormFieldError>
-				<ErrorMessage name={name} />
-			</FormikFormFieldError> 
 		</FormikFormFieldContainer>
 	);
 }
