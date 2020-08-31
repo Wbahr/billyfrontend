@@ -327,7 +327,7 @@ export default function Provider(props) {
 			handleShoppingCart('retrieve')
 		}
 		manageUserInfo('login', userInfo)
-		if(userInfo.role === 'AirlineEmployee'){
+		if(userInfo.role === 'AirlineEmployee' && drift){
 			drift.api.widget.hide()
 		}
 		handleUpdateOrders()
@@ -339,7 +339,7 @@ export default function Provider(props) {
 	}
 	
 	function handleLogout(){
-		drift.api.widget.show()
+		if(drift) { drift.api.widget.show(); }
 		manageUserInfo('logout')
 		props.history.push('/')
 		handleEmptyCart()
