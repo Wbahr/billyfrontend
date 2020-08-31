@@ -1,5 +1,5 @@
 // import React from 'react'
-// import { injectStripe } from 'react-stripe-elements'
+// import { injectStripe } from '@stripe/react-stripe-js'
 // import styled from 'styled-components'
 // import _ from 'lodash'
 // import { getStripeUser, stripeTokenHandler } from '../../api-temp/stripe'

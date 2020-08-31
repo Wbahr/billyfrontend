@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -24,10 +23,12 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, maxlength }){
-	if((type === 'text' || type === 'email' || type === 'password')) {
-		return(
-			<FormikFormFieldContainer>
+const input = props => <input {...props} />
+
+export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
+	if (type === 'text' || type === 'email' || type === 'password') {
+		return (
+			<FormikFormFieldContainer style={style}>
 				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
 				<FormikFormField 
 					type={type}
@@ -37,15 +38,22 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
 					maxLength={maxlength}
+					{
+						...(onChange ? {
+							as: input,
+							onChange,
+							value
+						} : {})
+					}
 				/>
 				<FormikFormFieldError>
 					<ErrorMessage name={name} />
 				</FormikFormFieldError> 
 			</FormikFormFieldContainer>
 		)
-	} else if(type === 'currency') {
-		return(
-			<FormikFormFieldContainer>
+	} else if (type === 'currency') {
+		return (
+			<FormikFormFieldContainer style={style}>
 				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
 				<FormikFormField name={name}>
 					{({
@@ -59,8 +67,8 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 			</FormikFormFieldContainer>
 		)
 	} else {
-		return(
-			<FormikFormFieldContainer>
+		return (
+			<FormikFormFieldContainer style={style}>
 				{label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
 				<FormikFormField id={name} type={type} name={name} />
 			</FormikFormFieldContainer>

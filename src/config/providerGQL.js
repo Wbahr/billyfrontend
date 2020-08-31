@@ -74,6 +74,15 @@ export const GET_TAXES = gql`
   }
 `
 
+export const SUBMIT_ORDER = gql`
+  mutation SubmitOrder($order: OrderInputDataInputGraphType){
+    submitOrder(orderInput: $order){
+      webReferenceId
+      messages
+    }
+  }
+`
+
 export const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
@@ -430,6 +439,75 @@ export const GET_WEB_USER_CONTACTS = gql`
 			contactId
 			firstName
 			lastName
+		}
+	}
+`
+
+export const GET_CHECKOUT_DATA = gql`
+  query RetrieveCheckoutData {
+    getCheckoutDropdownData{
+      shipToAddresses{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+        collectNumberUps
+      }
+      carriers{
+        freightMultiplier
+        noAutoAllocation
+        otherShippingMethodFlag
+        shippingMethodName
+        shippingMethodUid
+        shippingMethodValue
+        showInListFlag
+      }
+      contacts{
+        id
+        firstName
+        lastName
+        phoneNumber
+        email
+      }
+      termsDescription
+      customerPhysicalAddress{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
+    }
+  }
+`
+
+export const GET_PAYMENT_METHOD_INFO = gql`
+	query GetPaymentMethodInfo ($paymentMethodRequest: PaymentMethodInfoRetrieve){
+		paymentMethodInfo(paymentMethodInfo: $paymentMethodRequest){
+			paymentSystemSecretKey
+			paymentSystemCustomerId
+			paymentMethods{
+				paymentMethodId
+				paymentSystemCustomerId
+				type
+				card{
+					brand
+					expirationMonth
+					expirationYear
+					lastFour
+				}
+			}
 		}
 	}
 `

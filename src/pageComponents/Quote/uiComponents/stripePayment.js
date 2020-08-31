@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import { CardElement } from 'react-stripe-elements'
+import { CardElement } from '@stripe/react-stripe-js'
 
 const Container = styled.div`
   display: flex;

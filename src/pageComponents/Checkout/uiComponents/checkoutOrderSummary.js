@@ -73,30 +73,59 @@ const DivLineItemTotal = styled(DivLineItem)`
 `
 
 export default function CheckoutOrderSummary({currentStep, taxAmount}) {
-	const context = useContext(Context)
-
-	return(
+	const {cartPricing: {subTotal, tariff}} = useContext(Context)
+	
+	return (
 		<Div>
 			<H4>Order Summary</H4>
+			
 			<DivLineItem>
 				<p>Subtotal</p>
-				<p><NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+				<p><NumberFormat value={subTotal} displayType="text" thousandSeparator={true} prefix="$" decimalScale={2} fixedDecimalScale/></p>
 			</DivLineItem>
+			
 			<DivLineItem>
 				<p>Tariff</p>
-				<p><NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
-			</DivLineItem>        
+				<p><NumberFormat value={tariff} displayType="text" thousandSeparator={true} prefix="$" decimalScale={2} fixedDecimalScale/></p>
+			</DivLineItem>
+			
 			<DivLineItem>
 				<p>Tax</p>
 				{/* If past step 1 (ship to), show tax */}
-				{ currentStep > 1 ? <p><NumberFormat value={taxAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p> : <p>(TBD)</p> }
+				{
+					currentStep > 1 ? (
+						<p>
+							<NumberFormat
+								value={taxAmount}
+								displayType="text"
+								thousandSeparator={true}
+								prefix="$"
+								decimalScale={2}
+								fixedDecimalScale
+							/>
+						</p>
+					) : (
+						<p>(TBD)</p>
+					)
+				}
 			</DivLineItem>
+			
 			<DivLineItem>
 				<p>Shipping</p>
 				<p>(TBD)</p>
 			</DivLineItem>
+			
 			<DivLineItemTotal>
-				<p>Total <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff) + Number(taxAmount)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+				<p>
+					Total <NumberFormat
+						value={Number(subTotal) + Number(tariff) + Number(taxAmount)}
+						displayType="text"
+						thousandSeparator={true}
+						prefix="$"
+						decimalScale={2}
+						fixedDecimalScale
+					/>
+				</p>
 			</DivLineItemTotal>
 		</Div>
 	)

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
-import {Elements} from 'react-stripe-elements'
+import {Elements} from '@stripe/react-stripe-js'
 import PaymentManagementPage from './accountPages/paymentManagement'
 import AccountManagementPage from './accountPages/accountManagement'
 import ShipToManagementPage from './accountPages/shiptoManagement'
@@ -52,7 +52,7 @@ export default function AccountDashboard({history}) {
 		} else if (page === 'shipping-preferences'){
 			setPageComponent(<ShipToManagementPage/>)
 		} else if (page === 'payment-preferences'){
-			setPageComponent(<Elements><PaymentManagementPage/></Elements>)
+			setPageComponent(<PaymentManagementPage/>)
 		} else if (page === 'shopping-lists'){
 			setPageComponent(<ShoppingListManagementPage/>)
 		}

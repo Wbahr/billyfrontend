@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import { CardElement } from 'react-stripe-elements'
+import { CardElement } from '@stripe/react-stripe-js'
 
 const Container = styled.div`
   display: flex;
@@ -26,28 +25,39 @@ const Label = styled.label`
   margin-left: 14px;
 `
 
-export default function StripePaymentSection({stripe}) {
-
-	function handleTestCC(){
-		if(!_.isNil(stripe)){
-			stripe.PaymentMethod.create(type='card').then(function(result) {
-				console.log('stripe test', result)
-			})
+const cardStyle = {
+	style: {
+		base: {
+			color: "#32325d",
+			fontFamily: 'Arial, sans-serif',
+			fontSmoothing: "antialiased",
+			fontSize: "16px",
+			"::placeholder": {
+				color: "#32325d"
+			}
+		},
+		invalid: {
+			color: "#fa755a",
+			iconColor: "#fa755a"
 		}
 	}
-	return(
+}
+
+export default function StripePaymentSection({values, setCardIsValid}) {
+	const [error, setError] = useState(null)
+	
+	const handleChange = async (event) => {
+		setCardIsValid(event.complete && !event.error)
+		setError(event.error ? event.error.message : "")
+	}
+	
+	return (
 		<Container>
 			<Label>Credit Card</Label>
 			<Div>
-				<CardElement style={{
-					base: {
-						fontSize: '18px',
-						backgroundColor: 'white'
-					}
-				}} 
-				/>
+				<CardElement style={cardStyle} onChange={handleChange}/>
+				<p>{error}</p>
 			</Div>
-			{/* <button onClick={()=>handleTestCC()}>Test Credit Card</button> */}
 		</Container>
 	)
 }
