@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
 import ApolloClient, { useQuery } from '@apollo/client';
 import FourOFourPage from 'pageComponents/Error/fourOFourPage';
@@ -36,6 +36,7 @@ const GET_STATIC_PAGE = gql`
     query GetStaticPage($pageId: String, $subPageId: String, $subSubPageId: String){
         getStaticPage(pageId: $pageId, subPageId: $subPageId, subSubPageId: $subSubPageId) {
             html
+            javascript
             name
             primaryAncestor {
                name
@@ -92,6 +93,7 @@ export default function StaticPage({ match }) {
 
     const [pageName, setPageName] = useState('');
     const [pageHtml, setPageHtml] = useState(<Loader />);
+    const [pageJs, setPageJs] = useState(';');
     const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null);
     const [pagesecondaryAncestor, setPageSecondaryAncestor] = useState(null);
 
@@ -103,6 +105,7 @@ export default function StaticPage({ match }) {
             if (result && result.getStaticPage) {
                 setPageName(result.getStaticPage.name);
                 setPageHtml(<div dangerouslySetInnerHTML={createMarkup(result.getStaticPage.html)} />);
+                setPageJs(result.getStaticPage.javascript);
                 setPagePrimaryAncestor(result.getStaticPage.primaryAncestor);
                 setPageSecondaryAncestor(result.getStaticPage.secondaryAncestor);
             } else {
@@ -114,7 +117,9 @@ export default function StaticPage({ match }) {
             console.log("Unknown page", pageId, subPageId, subSubPageId);
             setPageHtml(<FourOFourPage />)
         }
-    })
+    });
+
+    useEffect(() => { eval(pageJs); } ,[pageJs]);
 
     return (
         <Container>
