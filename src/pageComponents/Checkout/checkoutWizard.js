@@ -1,208 +1,93 @@
 import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { useQuery  } from '@apollo/client'
-import gql from 'graphql-tag'
-import {Formik, useFormikContext} from 'formik'
-import {Elements} from 'react-stripe-elements'
-import ProcessingOrderModal from './uiComponents/processingOrderModal'
-import OrderFailedModal from './uiComponents/orderFailedModal'
-// Wizard Steps
+import {Formik} from 'formik'
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
 import Context from '../../config/context'
+import {GET_CHECKOUT_DATA} from '../../config/providerGQL'
+import {defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo} from "./helpers";
 
-const GET_CHECKOUT_DATA = gql`
-  query RetrieveCheckoutData {
-    getCheckoutDropdownData{
-      shipToAddresses{
-        id
-        name
-        companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-        collectNumberUps
-      }
-      carriers{
-        freightMultiplier
-        noAutoAllocation
-        otherShippingMethodFlag
-        shippingMethodName
-        shippingMethodUid
-        shippingMethodValue
-        showInListFlag
-      }
-      contacts{
-        id
-        firstName
-        lastName
-        phoneNumber
-        email
-      }
-      termsDescription
-      customerPhysicalAddress{
-        id
-        name
-        companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-      }
-    }
-  }
-`
+const getFormStepComponent = currentStep => {
+	switch (currentStep) {
+		case 0:
+			return ShippingScheduleForm
+		case 1:
+			return ShipToForm
+		case 2:
+			return BillingInfoForm
+		case 3:
+			return ConfirmationScreen
+		default:
+			return ShippingScheduleForm
+	}
+}
 
-function CheckoutWizard({step, shoppingCart, triggerSubmit, submitForm, handleValidateFields, YupSchema, showOrderFailedModal, updateZip}) {
+function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCart, triggerPaymentInfo, getPaymentInfo, handleValidateFields, yupSchema, updateZip}) {
 	const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
 	const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
 	const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
-	const [submittingOrder, setSubmittingOrder] = useState(false)
-	const context = useContext(Context)
-
-	const AutoSubmit = () => {
-		const {
-			values
-		} = useFormikContext()
-		if(!submittingOrder){
-			setSubmittingOrder(true)
-			submitForm(values)
-		}
-		return(
-			<ProcessingOrderModal/>
-		)
-	}
-
+	const [paymentInfo, setPaymentInfo] = useState({})
+	const {userInfo, cart} = useContext(Context)
+	
 	// Shopping cart was triggering the form the reinitialize, not sure why. This is a fix for it.
 	useEffect(() => {
-		if (shoppingCartAndDatesObj.length === 0) {
-			let date = new Date()
-			date.setDate(date.getDate() + 1)
-			const recentCart = shoppingCart.map(elem => (
-				{'frecno': elem.frecno, 
-					'itemNotes': elem.itemNotes, 
-					'quantity': elem.quantity, 
-					'itemUnitPriceOverride': _.get(elem,'itemUnitPriceOverride',null), 
-					'customerPartNumberId': elem.customerPartNumberId, 
-					'requestedShipDate': date}
-			))
+		if (!shoppingCartAndDatesObj.length) {
+			console.log('the thing was reached')
+			const requestedShipDate = new Date()
+			requestedShipDate.setDate(requestedShipDate.getDate() + 1)
+			const recentCart = cart.map(cartItem => ({
+				...cartItem,
+				itemUnitPriceOverride: cartItem?.itemUnitPriceOverride || null,
+				requestedShipDate
+			}))
 			setShoppingCartAndDatesObj(recentCart)
 		}
-	},[shoppingCart])
-
+	}, [cart])
 
 	useQuery(GET_CHECKOUT_DATA, {
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
-			let mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
+			const mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
 			setCheckoutDropdownData(result.getCheckoutDropdownData)
 			setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
 		}
 	})
 
 	const initValues = {
-		contact: {
-			savedContact: null,
-			firstName: '',
-			lastName: '',
-			phone: '',
-			email: ''
-		},
+		contact: defaultContact,
 		schedule: {
-			isQuote: false,
-			packingBasisName: '',
-			packingBasis: '0',
+			...defaultQuote,
 			cartWithDates: shoppingCartAndDatesObj,
 			shoppingCartToken: localStorage.getItem('shoppingCartToken')
 		},
 		shipto: {
-			saveShipTo: 0,
-			savedShipTo: _.isNil(_.get(context,'userInfo', null)) ? null : -1,
-			firstName: _.get(context,'userInfo.role','') === 'Impersonator' ? '' : _.get(context,'userInfo.firstName','') === null ? '' : _.get(context,'userInfo.firstName',''),
-			lastName: _.get(context,'userInfo.role','') === 'Impersonator' ? '' : _.get(context,'userInfo.lastName','') === null ? '' : _.get(context,'userInfo.lastName',''),
-			address1: '',
-			address2: '',
-			city: '',
-			stateOrProvince: '',
-			zip: '',
-			country: 'us',
-			phone: '',
-			email: '',
-			shippingNotes: '',
-			carrierId: '',
-			isCollect: 0,
-			collectNumber: ''
+			...defaultShipTo,
+			savedShipTo: !userInfo ? null : -1,
+			firstName: userInfo?.role === 'Impersonator' ? '' : userInfo?.firstName || '',
+			lastName: userInfo?.role === 'Impersonator' ? '' : userInfo?.lastName || ''
 		},
-		billing: {
-			paymentMethod: '',
-			paymentMethodId: '',
-			paymentSystemCustomerId: '',
-			purchaseOrder: '',
-			firstName: '',
-			lastName: '',
-			contactId: '',
-			address1: '',
-			address2: '',
-			city: '',
-			stateOrProvince: '',
-			zip: '',
-			country: 'us',
-			phone: '',
-			email: '',
-			cardType: 'new_card'
-		},
-		confirmationEmail: {
-			sendToShipTo: 1,
-			ccEmails: []
-		}
+		billing: defaultBilling,
+		confirmationEmail: defaultConfirmationEmail
 	}
 
-	let FormStep
-	switch(step){
-	case 0:
-		if (shoppingCart.length > 0) {
-			FormStep = ShippingScheduleForm
-			break
-		} else {
-			FormStep = ShippingScheduleForm
-			break
-		}
-	case 1:
-		FormStep = ShipToForm
-		break
-	case 2:
-		FormStep = BillingInfoForm
-		break
-	case 3:
-		FormStep = ConfirmationScreen
-		break
-	}
-	return(
+	const FormStepComponent = getFormStepComponent(step)
+	
+	return (
 		<Formik 
 			initialValues={initValues}
 			enableReinitialize={true}
-			validationSchema={YupSchema[step]}
-			validate={(values)=>handleValidateFields(values)}
+			validationSchema={yupSchema[step]}
+			validate={handleValidateFields}
 		>
 			{formikProps => (
-				<Elements>
-					<form name="checkoutForm">
-						<FormStep {...formikProps} checkoutDropdownDataLabels={checkoutDropdownDataLabels} checkoutDropdownData={checkoutDropdownData} updateZip={updateZip}/>
-						{(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
-						{showOrderFailedModal && <OrderFailedModal/>}
-					</form>
-				</Elements>
+				<form name="checkoutForm" {...formikProps} onSubmit={e => e.preventDefault()}>
+					<FormStepComponent {...{...formikProps, paymentInfo, setPaymentInfo, isStepValid, handleMoveStep,
+						checkoutDropdownData, checkoutDropdownDataLabels, updateZip, history}}/>
+				</form>
 			)}
 		</Formik>
 	)

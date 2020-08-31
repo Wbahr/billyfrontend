@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect} from 'react'
-import _ from 'lodash'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import LoadingRing from './loadingRing'
