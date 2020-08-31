@@ -1,153 +1,29 @@
 // Render Prop
 import React, { useState }  from 'react'
-import { Formik, Form, useFormikContext } from 'formik'
 import styled from 'styled-components'
-import FormikInput from '../../_common/formik/input_v2'
-import { ButtonRed } from 'styles/buttons';
-import CheckBox from 'pageComponents/_common/formik/checkBox';
-import { ShowErrorAlert } from 'styles/alerts';
-import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
 import { newCustomerInitialValues, newCustomerSchema } from '../validationSchemas';
-import {  useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Summary from '../summary';
-import { SUBMIT_CUST_REG } from 'config/providerGQL';
-
-const DivCenter = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const H2 = styled.h2`
-  
-  text-align: center;
-  font-size: 20px;
-  margin: 0;
-`
+import { SAVE_NEW_CUSTOMER } from 'config/providerGQL';
+import NewCustomerForm, { mapToApi } from './newCustomerForm';
 
 const H4 = styled.h4`
   width: 100%;
   text-align: center;
   font-size: 16px;
 `
-const H3 = styled.h3`
-  width: 100%;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 800;
-  color: black;
-`
-
-//Pulled the FormWrapper out of the NewCustomer component for better syntax/readability for using the state with useEffect
-const FormWrapper = () => {
-	const { values, isValid, isSubmitting, dirty, setFieldValue, validateForm  } = useFormikContext();
-
-	React.useEffect(() => {
-		if(dirty) 
-		{
-			//Reset the fields and update validation
-			setFieldValue('billingCompany','');
-			setFieldValue('billingAddress1','');
-			setFieldValue('billingAddress2','');
-			setFieldValue('billingCity','');
-			setFieldValue('billingState','');
-			setFieldValue('billingPostal','');
-			setFieldValue('billingCountry','');
-			validateForm();
-		}
-	}, [values.billingSame]);
-
-	return  (
-		<Form>
-			<FormikFormContainer>
-				<FormikFormGroup>
-					<H3>Account Information</H3>
-					<FormikInput label="First Name*" type="text" name="firstName" />
-					<FormikInput label="Last Name*" type="text" name="lastName" />
-					<FormikInput label="Job Title" type="text" name="jobTitle" />
-					<FormikInput label="Phone" type="text" name="phone" />
-					<FormikInput label="Phone Extension" type="text" name="phoneExtension" />
-					<FormikInput label="Email*" type="email" name="email" />
-					<FormikInput label="Fax" type="text" name="fax" />
-					<FormikInput label="Password*" type="password" name="password" />
-					<FormikInput label="Verify Password*" type="password" name="verifyPassword" />
-				</FormikFormGroup>
-				<FormikFormGroup>
-					<H3>Shipping Information</H3>
-					<FormikInput label="Company*" type="text" name="shippingCompany" />
-					<FormikInput label="Address Line 1" type="text" name="shippingAddress1" />
-					<FormikInput label="Address Line 2" type="text" name="shippingAddress2" />
-					<FormikInput label="City" type="text" name="shippingCity" />
-					<FormikInput label="State" type="text" name="shippingState" />
-					<FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" />
-					<FormikInput label="Country" type="text" name="shippingCountry" />
-				</FormikFormGroup>
-				<FormikFormGroup>
-					<H3>Billing Information</H3>
-					<CheckBox label="Same as Shipping" name="billingSame" />
-					<FormikInput label="Company" type="text" name="billingCompany" disabled={values.billingSame == 1} />
-					<FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.billingSame == 1}  />
-					<FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.billingSame == 1}  />
-					<FormikInput label="City" type="text" name="billingCity" disabled={values.billingSame == 1} />
-					<FormikInput label="State" type="text" name="billingState" disabled={values.billingSame == 1} />
-					<FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.billingSame == 1}  />
-					<FormikInput label="Country" type="text" name="billingCountry" disabled={values.billingSame == 1} />
-				</FormikFormGroup>
-			</FormikFormContainer>
-			{!isValid  && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
-			<DivCenter>
-				<ButtonRed type="submit" disabled={isSubmitting}>
-					Register Account
-				</ButtonRed>
-			</DivCenter>
-		</Form>
-	)
-}
 
 export default function NewCustomer() {
 	const [saved, setSaved] = useState(false);
-	const [saveNewCustomer] = useMutation(SUBMIT_CUST_REG,
-		{
-			onCompleted() {
-				setSaved(true);
-			}
+	const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,{ 
+		onCompleted() {
+			setSaved(true);
 		}
-	);
-	
-	const map = (values) => {
-		return {variables: { 
-			customer: {
-				contact: {
-					firstName: values.firstName,
-					lastName: values.lastName,
-					password: values.password,
-					customerIdP21: values.customerId,
-					email: values.email,
-					fax: values.fax,
-					jobTitle: values.jobTitle,
-					phone: values.phone,
-					phoneExtension: values.phoneExtension,
-				},
-				shippingCompanyName: values.shippingCompany,
-				shippingLine1: values.shippingAddress1,
-				shippingLine2: values.shippingAddress2,
-				shippingCity: values.shippingCity,
-				shippingState: values.shippingState,
-				shippingZip: values.shippingPostal,
-				shippingCountry: values.shippingCountry,
-				billingCompanyName: values.billingSame ? values.shippingCompany : values.billingCompany,
-				billingLine1: values.billingSame ? values.shippingAddress1 : values.billingAddress1,
-				billingLine2: values.billingSame ? values.shippingAddress2 : values.billingAddress2,
-				billingCity: values.billingSame ? values.shippingCity : values.billingCity,
-				billingState: values.billingSame ? values.shippingState : values.billingState,
-				billingZip: values.billingSame ? values.shippingPostal : values.billingPostal,
-				billingCountry: values.billingSame ? values.shippingCountry : values.billingCountry,
-			}
-		} };
-	};
+	});
 
 	const onSubmit = (values, { setSubmitting }) => {
 		setTimeout(() => { 
-			saveNewCustomer(map(values));
+			saveNewCustomer(mapToApi(values));
 			setSubmitting(false);
 		}, 1000);
 	};
@@ -158,15 +34,14 @@ export default function NewCustomer() {
 		return (
 			<>
 				<H4>New Customer</H4>
-				<Formik
-					initialValues={newCustomerInitialValues}
-					validationSchema={newCustomerSchema}
-					validateOnBlur={false}
-					validateOnChange={false}
-					onSubmit={onSubmit}
-				>
-					<FormWrapper />
-				</Formik>
+                <NewCustomerForm 
+                    useExpandedMode={true}
+                    showCustomerLookup={false}
+					newCustomerInitialValues={newCustomerInitialValues} 
+					validationSchema={newCustomerSchema} 
+					onSubmit={onSubmit} 
+					choosePasswordEnabled={true} 
+					buttonText="Register Account" />
 			</>
 		);
 	}

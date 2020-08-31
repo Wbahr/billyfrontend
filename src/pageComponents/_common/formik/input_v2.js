@@ -24,7 +24,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, maxlength }){
+export default function Input({type, disabled, name, label, placeholder, width, maxlength, onChange }){
 	if((type === 'text' || type === 'email' || type === 'password')) {
 		return(
 			<FormikFormFieldContainer>
@@ -42,7 +42,7 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 					<ErrorMessage name={name} />
 				</FormikFormFieldError> 
 			</FormikFormFieldContainer>
-		)
+		);
 	} else if(type === 'currency') {
 		return(
 			<FormikFormFieldContainer>
@@ -57,15 +57,35 @@ export default function Input({type, disabled, name, label, placeholder, width, 
 				</FormikFormField>
 				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>}   
 			</FormikFormFieldContainer>
-		)
+		);
 	} else {
 		return(
 			<FormikFormFieldContainer>
 				{label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
 				<FormikFormField id={name} type={type} name={name} />
 			</FormikFormFieldContainer>
-		)
+		);
 	}
+}
+
+/*Creates a non-formik bound input, but styled to look the same */
+export function FormikStyleInput({type, value, disabled, name, label, placeholder, width, maxlength, onChange }) {
+	return(
+		<FormikFormFieldContainer>
+			{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+			<input 
+				type={type}
+				name={name}
+				id={name}
+				placeholder={placeholder} 
+				disabled={disabled} 
+				style={{width: width || '400px'}}
+				maxLength={maxlength}
+				onChange={onChange}
+				value={value}
+			/>
+		</FormikFormFieldContainer>
+	);
 }
 
 Input.propTypes = {
@@ -74,7 +94,8 @@ Input.propTypes = {
 	disabled: PropTypes.bool,
 	label: PropTypes.string,
 	placeholder: PropTypes.string,
-	onChange: PropTypes.string,
+	width: PropTypes.number,
+	maxLength: PropTypes.number,
 }
 
 Input.defaultProps = {

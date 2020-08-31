@@ -8,7 +8,7 @@ import { FormikFormFieldContainer, FormikFormField, FormikFormFieldError } from 
 
 const ButtonContainer = styled.div`
   display flex;
-  padding: 0 8px;
+  padding: 0 0;
   div {
     cursor: pointer;
 	margin: 0 4px;
@@ -61,11 +61,11 @@ export default function FormikFieldArray({name, label, addMore}){
 		<FieldArray
 			name={name}
 			render={arrayHelpers => (
-				<div>
+				<FormikFormFieldContainer>
 					<Label>{label}</Label>
 					{valueArray && valueArray.length > 0 ? (
 						valueArray.map((elem, index) => (
-							<FormikFormFieldContainer key={index}>
+							<>
 								<ButtonContainer>
 									<FormikFormField name={`${name}.${index}`} />
 									<div onClick={() => arrayHelpers.remove(index)}> 
@@ -80,8 +80,7 @@ export default function FormikFieldArray({name, label, addMore}){
 								<FormikFormFieldError>
 									<ErrorMessage name={`${name}.${index}`} />
 								</FormikFormFieldError> 
-								
-							</FormikFormFieldContainer>
+							</>
 						))
 					) : (
 						<DivAddMore onClick={() => arrayHelpers.insert(index, '')}>
@@ -89,7 +88,7 @@ export default function FormikFieldArray({name, label, addMore}){
 							<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
 						</DivAddMore>
 					)}
-				</div>
+				</FormikFormFieldContainer>
 			)}
 		/>
 	);
