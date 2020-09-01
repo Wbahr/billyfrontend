@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
-import { useQuery  } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import {Formik} from 'formik'
 import {ShippingScheduleForm} from './wizardSteps/shippingScheduleForm'
 import {ShipToForm} from './wizardSteps/shipToForm'
@@ -10,6 +10,7 @@ import formatDropdownData from './helpers/formatCheckoutDropdownData'
 import Context from '../../config/context'
 import {GET_CHECKOUT_DATA} from '../../config/providerGQL'
 import {defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo} from "./helpers";
+import {startOfTomorrow} from 'date-fns'
 
 const getFormStepComponent = currentStep => {
 	switch (currentStep) {
@@ -29,25 +30,9 @@ const getFormStepComponent = currentStep => {
 function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCart, triggerPaymentInfo, getPaymentInfo, handleValidateFields, yupSchema, updateZip}) {
 	const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
 	const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
-	const [shoppingCartAndDatesObj, setShoppingCartAndDatesObj] = useState([])
 	const [paymentInfo, setPaymentInfo] = useState({})
 	const {userInfo, cart} = useContext(Context)
 	
-	// Shopping cart was triggering the form the reinitialize, not sure why. This is a fix for it.
-	useEffect(() => {
-		if (!shoppingCartAndDatesObj.length) {
-			console.log('the thing was reached')
-			const requestedShipDate = new Date()
-			requestedShipDate.setDate(requestedShipDate.getDate() + 1)
-			const recentCart = cart.map(cartItem => ({
-				...cartItem,
-				itemUnitPriceOverride: cartItem?.itemUnitPriceOverride || null,
-				requestedShipDate
-			}))
-			setShoppingCartAndDatesObj(recentCart)
-		}
-	}, [cart])
-
 	useQuery(GET_CHECKOUT_DATA, {
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
@@ -61,7 +46,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		contact: defaultContact,
 		schedule: {
 			...defaultQuote,
-			cartWithDates: shoppingCartAndDatesObj,
+			cartWithDates: cart.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
 			shoppingCartToken: localStorage.getItem('shoppingCartToken')
 		},
 		shipto: {
