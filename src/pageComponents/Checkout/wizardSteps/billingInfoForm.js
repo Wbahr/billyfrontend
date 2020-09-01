@@ -82,10 +82,8 @@ function BillingInfoForm(props) {
 	const handleContinueClick = () => {
 		if (paymentMethod !== 'purchase_order') {
 			if (context.userInfo) {
-				console.log('confirmCardSetup')
 				confirmCardSetup()
 			} else {
-				console.log('getPaymentInfo')
 				getPaymentInfo(transformForPaymentInfo(props.values))
 			}
 		} else {
@@ -104,7 +102,6 @@ function BillingInfoForm(props) {
 	]
 	
 	const handleCardChange = value => {
-		console.log('handleCardChange', value)
 		setValues({ ...props.values, billing: {...props.values.billing, cardType: value === 'new_card' ? value : 'saved_card'} })
 		setSelectedCard(value)
 	}

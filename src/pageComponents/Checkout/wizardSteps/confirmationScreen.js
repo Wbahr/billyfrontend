@@ -86,7 +86,6 @@ export default function ConfirmationScreen(props) {
 	const [submitOrder] = useMutation(SUBMIT_ORDER, {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({submitOrder}) => {
-			console.log('submitOrder', submitOrder)
 			const orderId = submitOrder?.webReferenceId || null
 			if (orderId) {
 				localStorage.removeItem('shoppingCartToken')
@@ -96,16 +95,15 @@ export default function ConfirmationScreen(props) {
 				setShowOrderFailedModal(true)
 			}
 			setSubmitting(false)
+		},
+		onError: () => {
+			setSubmitting(false)
+			setShowOrderFailedModal(true)
 		}
 	})
 	
 	const handleCheckoutSubmit = () => {
 		setSubmitting(true)
-		console.log('submit', {
-			order: props.values,
-			paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
-			paymentMethodId: paymentInfo.paymentMethodId
-		})
 		submitOrder({
 			variables: {
 				order: props.values,
