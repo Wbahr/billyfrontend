@@ -27,17 +27,22 @@ const Pblue = styled.p`
   font-weight: 700;
 `
 
-export default function ResultsSummary({searchTerm, totalResults, isSearching, currentPage}) {
-
-	let ResultsText
-	if (isSearching && currentPage === 0){
-		ResultsText = (<><Pgrey>Searching for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-	} else {
-		ResultsText = (<><Pgrey>{totalResults === 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey><Pblue>{searchTerm}</Pblue></>)
-	}
-	return(
-		<DivResultsSummaryContainer>
-			<Div>{ResultsText}</Div>
-		</DivResultsSummaryContainer>
-	)
-}
+export default ({searchTerm, totalResults, isSearching}) => (
+	<DivResultsSummaryContainer>
+		<Div>
+			{
+				isSearching ? (
+					<>
+						<Pgrey>Searching for:</Pgrey>
+						<Pblue>{searchTerm}</Pblue>
+					</>
+				) : (
+					<>
+						<Pgrey>{totalResults >= 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey>
+						<Pblue>{searchTerm}</Pblue>
+					</>
+				)
+			}
+		</Div>
+	</DivResultsSummaryContainer>
+)

@@ -53,6 +53,17 @@ export const END_IMPERSONATION = gql`
   }
 `
 
+//Variables example: {variables: {'searchString': 'blah'}}
+export const IMPERSONATION_SEARCH = gql`
+  query GetImpersonationCustomerList($searchString: String){
+    getImpersonationCustomerList(searchString: $searchString){
+      customerIdP21
+      name
+      id
+    }
+  }
+`
+
 export const GET_TAXES = gql`
   query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
     getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
@@ -109,6 +120,7 @@ export const GET_ITEM_BY_ID = gql`
     }
   }
 `
+
 export const GET_ITEMS_BY_ID = gql`
   query GetItemDetails($invMastUids: [Int]){
     itemDetailsBatch(invMastUids: $invMastUids){
@@ -509,5 +521,159 @@ export const GET_PAYMENT_METHOD_INFO = gql`
 				}
 			}
 		}
+	}`
+
+export const QUERY_ITEM_SEARCH = gql`
+	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+		itemSearch(searchParams: $searchParams){
+			result
+			count
+			parentCategories {
+				parentCategoryCount
+				parentCategoryDisplayName
+				parentCategoryName
+			}
+			childCategories {
+				childCategoryCount
+				childCategoryDisplayName
+				childCategoryName
+			}
+			attributeCategories{
+				categoryName
+				categoryNameDisplay
+				features{
+					featureName
+					featureNameDisplay
+					itemCount
+				}
+			}
+			brands{
+				brandCount
+				brandName
+				brandNameDisplay
+			}
+		}
 	}
+`
+
+export const QUERY_STOCK_AVAILABILITY = gql`
+    query GetStockAvailability($invMastUid: Int){
+        airlineStock(invMastUid: $invMastUid){
+            invMastUid
+            itemCode
+            companyId
+            locationId
+            locationName
+            quantityAvailable
+        }
+        factoryStock(invMastUid: $invMastUid){
+            invMastUid
+            factoryAvailability
+            leadTimeDays
+            factoryMessage
+            modifiedBy
+            modifiedDate
+        }
+    }
+`
+
+export const SAVE_NEW_CUSTOMER = gql`
+  mutation SaveRegistration($reg: NewCustomerRegistrationInputGraphType) {
+		saveRegistration(reg: $reg)
+  	}
+`
+
+//Get a list of new customers that have not been processed yet (form submitted, but customers & logins not created)
+export const GET_NEW_CUSTOMERS = gql`
+    query newCustomers{
+        newCustomers{
+            id
+            customerIdP21
+            received
+            email
+            fax
+            firstName
+            jobTitle
+            lastName
+            phone
+            phoneExtension
+            billingCity
+            billingCompanyName
+            billingCountry
+            billingLine1
+            billingLine2
+            billingState
+            billingZip
+            shippingCity
+            shippingCompanyName
+            shippingCountry
+            shippingLine1
+            shippingLine2
+            shippingState
+            shippingZip
+        } 
+    }
+`
+
+export const GET_NEW_CUSTOMER = gql`
+    query getNewCustomer($id: Int) {
+        newCustomer(id: $id) {
+            id
+            customerIdP21
+            email
+            fax
+            firstName
+            jobTitle
+            lastName
+            phone
+            phoneExtension
+            billingCity
+            billingCompanyName
+            billingCountry
+            billingLine1
+            billingLine2
+            billingState
+            billingZip
+            shippingCity
+            shippingCompanyName
+            shippingCountry
+            shippingLine1
+            shippingLine2
+            shippingState
+            shippingZip
+        }
+    }
+`
+
+//Pass a registrationCustomerID (from GET_NEW_CUSTOMERS) to reject the account request. It will 
+// not be available in subsequent GET_NEW_CUSTOMERS requests.
+//Variables: { "id": 19 }
+export const REJECT_NEW_CUSTOMER = gql`
+    mutation rejectReg($id: Int, $reason: String) {
+        rejectRegistration(id: $id, reason: $reason)
+    }
+`
+//Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and 
+// create a login record from the associated contact
+//Variables: { "id": 18 }
+export const APPROVE_NEW_CUSTOMER = gql`
+    mutation approveReg($id: Int) {
+        approveRegistration(id: $id)
+    }
+`
+
+export const GET_ALL_SETTINGS = gql`
+    query appSettings {
+        appSettings {
+            newCustomerNotificationEmails
+            contactUsNotificationEmails
+            emailFrom 
+        }
+    }
+`
+
+export const SAVE_ALL_SETTINGS = gql`
+    mutation saveAppSettings($settings: saveAppSettings) {
+        saveAppSettings(settings: $settings)
+    }
 `

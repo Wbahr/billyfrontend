@@ -37,6 +37,12 @@ export default function AppHeader() {
 	case 'open-orders':
 		AdminTool = 'Open Orders'
 		break
+	case 'new-customers':
+		AdminTool = 'New Customers'
+		break
+	case 'settings':
+		AdminTool = 'System Settings'
+		break
 	default:
 		AdminTool = `Welcome Back, ${_.get(context,'userInfo.firstName','Airline Employee')}`
 	}

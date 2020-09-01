@@ -91,16 +91,14 @@ const Button = styled.div`
 `
 
 
-export default function SkeletonItem(){
-	return(
-		<SkeletonDiv>
-			<Image />
-			<QuickLook />
-			<Title />
-			<Detail1 />
-			<Detail2 />
-			<Detail3 />
-			<Button />
-		</SkeletonDiv>
-	)
-}
+export default () => (
+	<SkeletonDiv>
+		<Image />
+		<QuickLook />
+		<Title />
+		<Detail1 />
+		<Detail2 />
+		<Detail3 />
+		<Button />
+	</SkeletonDiv>
+)

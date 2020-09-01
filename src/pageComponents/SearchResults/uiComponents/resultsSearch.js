@@ -38,32 +38,31 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({updateSearchTerm, updateSortType, sortType, clearInnerSearch, handleClearedInnerSearch}) {
+export default function ResultsSearch({addSearchTerm, setSortType, sortType}) {
 	const [searchTerm, setSearchTerm] = useState('')
 
-	function handleUpdateSearchTerm(){
-		updateSearchTerm(searchTerm)
+	function handleUpdateSearchTerm() {
+		addSearchTerm(searchTerm)
+		setSearchTerm('')
 	}
 
-	function handleSetSearchTerm(value){
-		setSearchTerm(value)
+	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
+	
+	const handleSetSortType = e => setSortType(e.target.value)
+	
+	const handleKeyPress = e => {
+		if (e.key === 'Enter') handleUpdateSearchTerm()
 	}
-
-	useEffect(() => {
-		if(clearInnerSearch){
-			handleClearedInnerSearch()
-			setSearchTerm('')
-		}
-	})
-
-
+	
 	return(
 		<Div>
 			<DivResultsSearch>
-				<InputSearch placeholder="Add keywords to refine these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
+				<InputSearch placeholder="Add keywords to refine these results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
+				<ButtonSearch onClick={handleUpdateSearchTerm}>Search</ButtonSearch>
 			</DivResultsSearch>
+			
 			<DivResultsSearch>
-				<select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>
+				<select value={sortType} onChange={handleSetSortType}>
 					<option value={'relevancy'}>Sort by Relevance</option>
 					<option value={'availability'}>Sort by Availability</option>
 					<option value={'popularity'}>Sort by Popularity</option>
