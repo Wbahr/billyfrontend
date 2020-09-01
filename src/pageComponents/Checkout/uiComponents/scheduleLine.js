@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
+import {getImagePath} from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -87,24 +87,11 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-const getImageUrl = url => {
-	let imagePath
-	if (_.isNil(url)) {
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		const imagePathArray = url.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 't.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
-	return imagePath
-}
-
-const getContent = ({itemDetails, customerPartNumbers}) => {
+const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
 	if (!itemDetails) {
-		return <p>{item.freqno}</p>
+		return <p>{item.frecno}</p>
 	} else {
-		const imagePath = getImageUrl(itemDetails?.image?.[0]?.path)
+		const imagePath = getImagePath(itemDetails?.image?.[0]?.path)
 		const tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 		const selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
@@ -139,7 +126,7 @@ const getContent = ({itemDetails, customerPartNumbers}) => {
 								<DatePicker
 									minDate={tomorrowDate}
 									selected={Date.parse(field.value)}
-									onChange={(value)=>form.setFieldValue(field.name, value)}
+									onChange={(value) => form.setFieldValue(field.name, value)}
 								/>
 							</DivRow>
 						)}
@@ -157,7 +144,7 @@ export default function ShippingScheduleItem({item, index}) {
 	
 	return (
 		<DivContainer key={index}>
-			{getContent(displayItem)}
+			{getContent(displayItem, item, index)}
 		</DivContainer>
 	)
 }

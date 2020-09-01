@@ -44,8 +44,6 @@ function BillingInfoForm(props) {
 	const [selectedCard, setSelectedCard] = useState('new_card')
 	const [cardIsValid, setCardIsValid] = useState(false)
 	
-	console.log('values', props.values)
-	
 	useEffect(() => {
 		if (context.userInfo) {
 			getPaymentInfo(transformForPaymentInfo(props.values))
