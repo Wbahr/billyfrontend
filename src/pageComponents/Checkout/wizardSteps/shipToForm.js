@@ -42,14 +42,16 @@ export function ShipToForm(props) {
 	const {values, setValues, checkoutDropdownDataLabels, checkoutDropdownData, setFieldValue, updateZip, isStepValid, handleMoveStep} = props
 	const context = useContext(Context)
 	
+	console.log('values', values)
+	
 	useEffect(() => {
 		window.scrollTo({top: 0})
 	}, [])
 	
 	function handleSavedAddressChange({target: {name, value}}) {
 		setFieldValue(name, value)
-		if (values.shipto.savedShipTo) {
-			setFieldValue('shipto.savedShipTo', -1)
+		if (values.shipto.selectedShipTo) {
+			setFieldValue('shipto.selectedShipTo', -1)
 		}
 	}
 	
@@ -64,14 +66,14 @@ export function ShipToForm(props) {
 
 	function handleZipChange({target: {name, value}}) {
 		setFieldValue(name, value)
-		if (value.length >= 5) updateZip(values.shipto.savedShipTo, value)
+		if (value.length >= 5) updateZip(values.shipto.selectedShipTo, value)
 	}
 	
-	function handleSavedAddressSelectChange(name, savedShipTo) {
-		const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === savedShipTo)
+	function handleSavedAddressSelectChange(name, selectedShipTo) {
+		const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
 		const shipto = {
 			...values.shipto,
-			savedShipTo,
+			selectedShipTo,
 			country: (shipToAddress?.physCountry || 'us').toLowerCase(),
 			companyName: shipToAddress?.companyName || '',
 			address1: shipToAddress?.physAddress1 || '',
@@ -144,14 +146,14 @@ export function ShipToForm(props) {
 			{!!context.userInfo && (
 				<>
 					<Field
-						name="shipto.savedShipTo"
+						name="shipto.selectedShipTo"
 						component={SelectField}
 						options={checkoutDropdownDataLabels.shiptos}
 						width="800px"
 						label="Saved Ship To"
 						changeFunction={handleSavedAddressSelectChange}
 					/>
-					{(values.shipto.savedShipTo === -1) && (
+					{(values.shipto.selectedShipTo === -1) && (
 						<FormRow>
 							<FormikCheckbox label="Save Ship To" name="shipto.saveShipTo"/>
 						</FormRow>

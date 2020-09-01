@@ -51,7 +51,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		},
 		shipto: {
 			...defaultShipTo,
-			savedShipTo: !userInfo ? null : -1,
+			selectedShipTo: !userInfo ? null : -1,
 			firstName: userInfo?.role === 'Impersonator' ? '' : userInfo?.firstName || '',
 			lastName: userInfo?.role === 'Impersonator' ? '' : userInfo?.lastName || ''
 		},
