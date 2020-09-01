@@ -58,7 +58,6 @@ function BillingInfoForm(props) {
 	const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({paymentMethodInfo}) => {
-			console.log({paymentMethodInfo})
 			setPaymentInfo(paymentMethodInfo)
 		}
 	})
@@ -69,7 +68,6 @@ function BillingInfoForm(props) {
 			stripe
 				.confirmCardSetup(paymentInfo.paymentSystemSecretKey, {payment_method: { card: cardElement }})
 				.then(data => {
-					console.log('cc res', data)
 					setPaymentInfo({...paymentInfo, paymentMethodId: data.setupIntent.id})
 					handleMoveStep(3)
 				})
