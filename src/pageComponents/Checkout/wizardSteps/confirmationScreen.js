@@ -102,12 +102,6 @@ export default function ConfirmationScreen(props) {
 		}
 	})
 	
-	console.log('submit object', JSON.stringify({
-		order: props.values,
-		paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
-		paymentMethodId: paymentInfo.paymentMethodId
-	}))
-	
 	const handleCheckoutSubmit = () => {
 		setSubmitting(true)
 		submitOrder({
