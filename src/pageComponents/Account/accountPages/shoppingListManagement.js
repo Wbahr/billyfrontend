@@ -8,7 +8,6 @@ import AddedModal from "../../SearchResults/uiComponents/addedModal";
 import styled from "styled-components";
 import {usePagination, useSortBy, useTable} from "react-table";
 import Context from "../../../config/context";
-import {format as dateFormat} from "date-fns";
 import ShareShoppingListModal from '../../_common/modals/ShareShoppingListModal';
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
 import DeleteChickenModal from '../../_common/modals/DeleteChickenModal'
