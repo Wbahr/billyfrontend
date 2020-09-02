@@ -106,9 +106,11 @@ export default function ConfirmationScreen(props) {
 		setSubmitting(true)
 		submitOrder({
 			variables: {
-				order: props.values,
-				paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
-				paymentMethodId: paymentInfo.paymentMethodId
+				order: {
+					...props.values,
+					paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
+					paymentMethodId: paymentInfo.paymentMethodId
+				}				
 			}
 		})
 	}
