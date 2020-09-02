@@ -68,7 +68,7 @@ function BillingInfoForm(props) {
 			stripe
 				.confirmCardSetup(paymentInfo.paymentSystemSecretKey, {payment_method: { card: cardElement }})
 				.then(data => {
-					setPaymentInfo({...paymentInfo, paymentMethodId: data.setupIntent.id})
+					setPaymentInfo({...paymentInfo, paymentMethodId: data.setupIntent.payment_method})
 					handleMoveStep(3)
 				})
 		} else {
