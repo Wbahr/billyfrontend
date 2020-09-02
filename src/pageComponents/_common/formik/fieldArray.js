@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { Field as FormikField, FieldArray, useFormikContext, ErrorMessage } from 'formik'

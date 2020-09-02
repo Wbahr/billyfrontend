@@ -4,7 +4,6 @@ import _ from 'lodash'
 import { useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import {Formik, useFormikContext} from 'formik'
-import {Elements} from 'react-stripe-elements'
 import ProcessingOrderModal from './uiComponents/processingOrderModal'
 import OrderFailedModal from './uiComponents/orderFailedModal'
 // Wizard Steps
@@ -165,13 +164,11 @@ export default function CheckoutWizard({step, shoppingCart, triggerSubmit, submi
 			validate={(values)=>handleValidateFields(values)}
 		>
 			{formikProps => (
-				<Elements>
-					<form name="quoteForm">
-						<FormStep {...formikProps} quoteDropdownDataLabels={quoteDropdownDataLabels} quoteDropdownData={quoteDropdownData}/>
-						{(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
-						{showOrderFailedModal && <OrderFailedModal/>}
-					</form>
-				</Elements>
+				<form name="quoteForm" {...formikProps}>
+					<FormStep {...formikProps} quoteDropdownDataLabels={quoteDropdownDataLabels} quoteDropdownData={quoteDropdownData}/>
+					{(triggerSubmit && !showOrderFailedModal) && <AutoSubmit/>}
+					{showOrderFailedModal && <OrderFailedModal/>}
+				</form>
 			)}
 		</Formik>
 	)

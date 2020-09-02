@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CardElement } from 'react-stripe-elements'
+import { CardElement } from '@stripe/react-stripe-js'
 
 const DivSection = styled.div`
   display: flex;

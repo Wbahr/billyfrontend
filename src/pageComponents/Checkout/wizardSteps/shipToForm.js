@@ -1,5 +1,4 @@
-import React from 'react'
-import _ from 'lodash'
+import React, {useContext, useEffect} from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -7,22 +6,17 @@ import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObj
 import SelectField from '../../_common/formik/select'
 import Context from '../../../config/context'
 import FormikCheckbox from '../../_common/formik/checkBox'
+import {ButtonBlack, ButtonRed} from "../../../styles/buttons";
 
 const WrapForm = styled.div`
 	display: flex;
+	flex-direction: column;
 	flex-wrap: wrap;
 `
 
 const FormRow = styled.div`
 	display: flex;
-	width: 100%;
-	margin-top: 24px;
-	align-items: center;
-	padding: 0 8px;
-	label {
-		margin: 4px 8px auto 4px;
-		font-style: italic;
-	}
+	flex-direction: row;
 `
 
 const ContactSection = styled.div`
@@ -36,184 +30,220 @@ const ContactSection = styled.div`
 const SavedContactDiv = styled.div`
 	margin-left: 8px;
 `
+
+const DivNavigation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+`
+
 export function ShipToForm(props) {
-	const {
-		values, 
-		checkoutDropdownDataLabels, 
-		checkoutDropdownData,
-		setFieldValue,
-		updateZip
-	} = props
-
-	function handleSavedAddressSelectChange(name, value){
-		if(value !== -1){
-			let index = checkoutDropdownData.shipToAddresses.findIndex(elem => elem.id === value)
-			setFieldValue(name, value)
-			setFieldValue('shipto.country', checkoutDropdownData.shipToAddresses[index].physCountry.toLowerCase())
-			setFieldValue('shipto.companyName', checkoutDropdownData.shipToAddresses[index].companyName)
-			setFieldValue('shipto.address1', checkoutDropdownData.shipToAddresses[index].physAddress1)
-			setFieldValue('shipto.address2', checkoutDropdownData.shipToAddresses[index].physAddress2)
-			setFieldValue('shipto.city', checkoutDropdownData.shipToAddresses[index].physCity)
-			setFieldValue('shipto.stateOrProvince', checkoutDropdownData.shipToAddresses[index].physState)
-			setFieldValue('shipto.zip', checkoutDropdownData.shipToAddresses[index].physPostalCode)
-			setFieldValue('shipto.saveShipTo',0) //If not a custom ship to, we can't save it so set this to false 0.
-			if(_.isNil(checkoutDropdownData.shipToAddresses[index].collectNumberUps)){
-				setFieldValue('shipto.isCollect', 0)
-				setFieldValue('shipto.collectNumber', '')
-			} else {
-				setFieldValue('shipto.isCollect', 1)
-				setFieldValue('shipto.collectNumber', checkoutDropdownData.shipToAddresses[index].collectNumberUps)
-			}
-			updateZip(checkoutDropdownData.shipToAddresses[index].id, checkoutDropdownData.shipToAddresses[index].mailPostalCode)
-		} else {
-			setFieldValue(name, value)
-			setFieldValue('shipto.country', 'us')
-			setFieldValue('shipto.companyName', '')
-			setFieldValue('shipto.address1', '')
-			setFieldValue('shipto.address2', '')
-			setFieldValue('shipto.city', '')
-			setFieldValue('shipto.stateOrProvince', '')
-			setFieldValue('shipto.zip', '')
-			setFieldValue('shipto.isCollect', 0)
-			setFieldValue('shipto.collectNumber', '')
-		}
-	}
-
-	// Once this field is changed, set selected_saved_ship_to and saved_ship_to to -1 (Since what was automatically loaded was changed)
-	// Keep the savedShipTo null if it is already null (customer is anon)
-	function handleSavedAddressChange(name, value){
+	const {values, setValues, checkoutDropdownDataLabels, checkoutDropdownData, setFieldValue, updateZip, isStepValid, handleMoveStep} = props
+	const context = useContext(Context)
+	
+	useEffect(() => {
+		window.scrollTo({top: 0})
+	}, [])
+	
+	function handleSavedAddressChange({target: {name, value}}) {
 		setFieldValue(name, value)
-		if(!_.isNil(values.shipto.savedShipTo)){
-			setFieldValue('shipto.savedShipTo', -1)
+		if (values.shipto.selectedShipTo) {
+			setFieldValue('shipto.selectedShipTo', -1)
 		}
 	}
-
-	function handleCountryChange(name, value){
-		handleSavedAddressChange(name, value)
+	
+	function handleStateOrProvinceChange(name, value) {
+		handleSavedAddressChange({target: {name, value}})
+	}
+	
+	function handleCountryChange(name, value) {
+		handleSavedAddressChange({target: {name, value}})
 		setFieldValue('shipto.stateOrProvince', '')
 	}
 
-	function handleZipChange(name, value){
+	function handleZipChange({target: {name, value}}) {
 		setFieldValue(name, value)
-		
-		if(value.length >= 5){
-			updateZip(values.shipto.savedShipTo, value)
+		if (value.length >= 5) updateZip(values.shipto.selectedShipTo, value)
+	}
+	
+	function handleSavedAddressSelectChange(name, selectedShipTo) {
+		const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
+		const shipto = {
+			...values.shipto,
+			selectedShipTo,
+			country: (shipToAddress?.physCountry || 'us').toLowerCase(),
+			companyName: shipToAddress?.companyName || '',
+			address1: shipToAddress?.physAddress1 || '',
+			address2: shipToAddress?.physAddress2 || '',
+			city: shipToAddress?.physCity || '',
+			stateOrProvince: shipToAddress?.physState || '',
+			zip: shipToAddress?.physPostalCode || '',
+			saveShipTo: 0,
+			isCollect: shipToAddress?.collectNumberUps ? 1 : 0,
+			collectNumber: shipToAddress?.collectNumberUps || ''
 		}
+		setFieldValue('shipto', shipto)
+		shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode)
 	}
 
-	function handleSavedContactSelectChange(name, value){
-		if(value !== -1){
-			let index = checkoutDropdownData.contacts.findIndex(elem => elem.id === value)
-			setFieldValue(name, value)
-			setFieldValue('contact.firstName', checkoutDropdownData.contacts[index].firstName)
-			setFieldValue('contact.lastName', checkoutDropdownData.contacts[index].lastName)
-			setFieldValue('contact.email', checkoutDropdownData.contacts[index].email)
-			setFieldValue('contact.phone', checkoutDropdownData.contacts[index].phoneNumber)
-			setFieldValue('shipto.firstName', checkoutDropdownData.contacts[index].firstName)
-			setFieldValue('shipto.lastName', checkoutDropdownData.contacts[index].lastName)
-			setFieldValue('shipto.email', checkoutDropdownData.contacts[index].email)
-			setFieldValue('shipto.phone', checkoutDropdownData.contacts[index].phoneNumber)
-		} else {
-			setFieldValue(name, value)
-			setFieldValue('contact.firstName', '')
-			setFieldValue('contact.lastName', '')
-			setFieldValue('contact.email', '')
-			setFieldValue('contact.phone', '')
-		}
+	function handleSavedContactSelectChange(name, savedContact) {
+		const contact = checkoutDropdownData.contacts.find(elem => elem.id === savedContact)
+		setValues({
+			...values,
+			shipto: {
+				...values.shipto,
+				firstName: contact?.firstName || '',
+				lastName: contact?.lastName || '',
+				email: contact?.email || '',
+				phone: contact?.phoneNumber || ''
+			},
+			contact: {
+				savedContact,
+				firstName: contact?.firstName || '',
+				lastName: contact?.lastName || '',
+				email: contact?.email || '',
+				phone: contact?.phoneNumber || ''
+			}
+		})
 	}
+	
+	const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
+	const disabled = !isStepValid && values.contact
 
 	return (
 		<WrapForm>
-			<Context.Consumer>
-				{({userInfo}) => {
-					if (!_.isNil(userInfo) && userInfo.role === 'Impersonator'){
-						return(
-							<ContactSection>
-								<Field 
-									name="contact.savedContact" 
-									component={SelectField} 
-									options={checkoutDropdownDataLabels.contacts}
-									width="500px"
-									label="Saved Order Contacts*"
-									placeholder="Select an Order Contact"
-									changeFunction={handleSavedContactSelectChange}
-								/> 
-								{values.contact.savedContact !== null &&
-									<>
-										<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact First Name*" name="contact.firstName"/>
-										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Last Name*" name="contact.lastName"/>
-										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Phone*" name="contact.phone"/>
-										<FormikInput disabled={values.contact.savedContact !== -1}  label="Order Contact Email*" name="contact.email"/>
-										{values.contact.savedContact !== -1 && <SavedContactDiv>Need to change your Saved Contact info? <a href={`https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`} target="_blank" rel="noopener noreferrer">Click here</a> - then refresh this page.</SavedContactDiv>}
-									</>
-								}
-							</ContactSection>
-						)
-					}
-				}}        
-			</Context.Consumer>
-			<Context.Consumer>
-				{({userInfo}) => {
-					if (!_.isNil(userInfo)){
-						return(
-							<>
-								{(values.shipto.savedShipTo === -1) && <FormRow><FormikCheckbox label="Save Ship To" name="shipto.saveShipTo"/></FormRow>}
-								<Field 
-									name="shipto.savedShipTo" 
-									component={SelectField} 
-									options={checkoutDropdownDataLabels.shiptos}
-									width="800px"
-									label="Saved Ship To"
-									changeFunction={handleSavedAddressSelectChange}
-								/> 
-							</>
-						)
-					}
-				}}        
-			</Context.Consumer>
-			<FormikInput label="Company Name" name="shipto.companyName" width="500px" changeFunction={handleSavedAddressChange}/>
-			<FormikInput label="First Name*" name="shipto.firstName" />
-			<FormikInput label="Last Name*" name="shipto.lastName" />
-			<FormikInput label="Phone*" name="shipto.phone" />
-			<FormikInput label="Email*" name="shipto.email" />
-			<FormikInput label="Address 1*" name="shipto.address1" width="600px" changeFunction={handleSavedAddressChange}/>
-			<FormikInput label="Address 2" name="shipto.address2" width="600px" changeFunction={handleSavedAddressChange}/>
-			<FormikInput label="City*" name="shipto.city" changeFunction={handleSavedAddressChange}/>
-			{values.shipto.country  === 'us' && 
+			{context.userInfo?.role === 'Impersonator' && (
+				<ContactSection>
+					<Field
+						name="contact.savedContact"
+						component={SelectField}
+						options={checkoutDropdownDataLabels.contacts}
+						width="500px"
+						label="Saved Order Contacts*"
+						placeholder="Select an Order Contact"
+						changeFunction={handleSavedContactSelectChange}
+					/>
+					{values.contact.savedContact !== null && (
+						<div>
+							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact First Name*" name="contact.firstName"/>
+							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Last Name*" name="contact.lastName"/>
+							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Phone*" name="contact.phone"/>
+							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Email*" name="contact.email"/>
+							{values.contact.savedContact !== -1 && (
+								<SavedContactDiv>
+									Need to change your Saved Contact info?
+									<a href={changeContactLink} target="_blank" rel="noopener noreferrer"> Click here </a>
+									- then refresh this page.
+								</SavedContactDiv>
+							)}
+						</div>
+					)}
+				</ContactSection>
+			)}
+			{!!context.userInfo && (
 				<>
-					<Field 
-						name="shipto.stateOrProvince" 
-						component={SelectField} 
+					<Field
+						name="shipto.selectedShipTo"
+						component={SelectField}
+						options={checkoutDropdownDataLabels.shiptos}
+						width="800px"
+						label="Saved Ship To"
+						changeFunction={handleSavedAddressSelectChange}
+					/>
+					{(values.shipto.selectedShipTo === -1) && (
+						<FormRow>
+							<FormikCheckbox label="Save Ship To" name="shipto.saveShipTo"/>
+						</FormRow>
+					)}
+				</>
+			)}
+			<FormikInput
+				label="Company Name"
+				name="shipto.companyName"
+				width="500px"
+				onChange={handleSavedAddressChange}
+				value={values.shipto.companyName}
+			/>
+			
+			<FormRow>
+				<FormikInput label="First Name*" name="shipto.firstName" />
+				<FormikInput label="Last Name*" name="shipto.lastName" />
+			</FormRow>
+			
+			<FormRow>
+				<FormikInput label="Phone*" name="shipto.phone" />
+				<FormikInput label="Email*" name="shipto.email" />
+			</FormRow>
+			
+			<FormikInput
+				label="Address 1*"
+				name="shipto.address1"
+				width="600px"
+				onChange={handleSavedAddressChange}
+				value={values.shipto.address1}
+			/>
+			
+			<FormikInput
+				label="Address 2"
+				name="shipto.address2"
+				width="600px"
+				onChange={handleSavedAddressChange}
+				value={values.shipto.address2}
+			/>
+			
+			<FormRow>
+				<FormikInput
+					label="City*"
+					name="shipto.city"
+					onChange={handleSavedAddressChange}
+					value={values.shipto.city}
+				/>
+				<FormikInput
+					label="Zip*"
+					name="shipto.zip"
+					width="150px"
+					onChange={handleZipChange}
+					value={values.shipto.zip}
+					style={{width: 'auto'}}
+				/>
+			</FormRow>
+			
+			<FormRow>
+				<Field
+					name="shipto.country"
+					component={SelectField}
+					options={[{label: 'United States', value: 'us'}, {label: 'Canada', value: 'canada'}]}
+					placeholder="Select a Country"
+					width="250px"
+					isSearchable={false}
+					label="Country*"
+					changeFunction={handleCountryChange}
+				/>
+				{values.shipto.country  === 'us' && (
+					<Field
+						name="shipto.stateOrProvince"
+						component={SelectField}
 						options={StateList}
 						placeholder="Select a State"
 						label="State*"
-						changeFunction={handleSavedAddressChange}
-					/> 
-				</>
-			}
-			{values.shipto.country  === 'canada' && 
-				<>
-					<Field 
-						name="shipto.stateOrProvince" 
-						component={SelectField} 
+						changeFunction={handleStateOrProvinceChange}
+						width="200px"
+					/>
+				)}
+				{values.shipto.country  === 'canada' && (
+					<Field
+						name="shipto.stateOrProvince"
+						component={SelectField}
 						options={CanadianProvinceList}
 						placeholder="Select a Province"
 						label="Province*"
-						changeFunction={handleSavedAddressChange}
-					/> 
-				</>
-			}
-			<FormikInput label="Zip*" name="shipto.zip" changeFunction={handleZipChange}/>    
-			<Field 
-				name="shipto.country" 
-				component={SelectField} 
-				options={[{'label': 'United States', 'value': 'us'},{'label': 'Canada', 'value': 'canada'}]}
-				placeholder="Select a Country"
-				width="250px"
-				isSearchable={false}
-				label="Country*"
-				changeFunction={handleCountryChange}
-			/> 
+						changeFunction={handleStateOrProvinceChange}
+						width="200px"
+					/>
+				)}
+			</FormRow>
+			
 			<FormikInput label="Shipping Notes" name="shipto.shippingNotes" width="800px" />
 			<Field 
 				name="shipto.carrierId" 
@@ -221,18 +251,17 @@ export function ShipToForm(props) {
 				options={checkoutDropdownDataLabels.carriers}
 				placeholder="Select a Carrier"
 				label="Carrier*"
-			/> 
+			/>
+			
 			<FormRow>
-				<label>Ship Collect?</label>
-				<Field 
-					name="shipto.isCollect" 
-					component={SelectField} 
-					options={[{'label': 'No', 'value': 0},{'label': 'Yes', 'value': 1}]}
-					width="100px"
-					isSearchable={false}
-				/> 
+				<FormikCheckbox label="Ship Collect?" name="shipto.isCollect" value={values.shipto.isCollect}/>
 			</FormRow>
-			{values.shipto.isCollect  === 1 && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
+			{!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
+			
+			<DivNavigation>
+				<ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
+				<ButtonRed disabled={disabled} onClick={() => handleMoveStep(2)}>Continue</ButtonRed>
+			</DivNavigation>
 		</WrapForm>
 	)
 }

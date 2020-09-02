@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { injectStripe } from 'react-stripe-elements'
+import { useStripe, useElements } from '@stripe/react-stripe-js'
 import PaymentManagerComponent from '../uiComponents/paymentManager'
 import Select from '../../_common/form/select'
 
 function PaymentManagementPage() {
+	const stripe = useStripe()
+	const elements = useElements()
 	// const context = useContext(Context);
 	const [defaultPaymentMethod, setDefaultPaymentMethod] = useState('credit')
 
@@ -30,4 +32,4 @@ function PaymentManagementPage() {
 	)
 }
 
-export default injectStripe(PaymentManagementPage)
+export default PaymentManagementPage
