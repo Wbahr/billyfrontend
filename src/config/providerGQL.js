@@ -600,6 +600,8 @@ export const GET_ALL_SETTINGS = gql`
             newCustomerNotificationEmails
             contactUsNotificationEmails
             emailFrom 
+            siteBaseUrl
+            adminDashNewCustomersRelativeUrl
         }
     }
 `
