@@ -35,7 +35,9 @@ const systemSettingsSchema = Yup.object().shape({
             .email("Must be an email"))
         .min(1, "Must have at least one email"),
     emailFrom: Yup.string().email("Must be an email")
-        .required("required")
+        .required("required"),
+    siteBaseUrl: Yup.string().required(),
+    adminDashNewCustomersRelativeUrl: Yup.string().required(),
 });
 
 const FormWrapper = () => {
@@ -49,6 +51,8 @@ const FormWrapper = () => {
                     <FormikFieldArray name="contactUsNotificationEmails" label="Contact Us Notification Emails" addMore="+" />
                     <FormikFieldArray name="newCustomerNotificationEmails" label="New Customer Notification Emails" addMore="+" />
                     <FormikInput type="text" name="emailFrom" label="Send Email From" />
+                    <FormikInput type="text" name="siteBaseUrl" label="Website Base URL" />
+                    <FormikInput type="text" name="adminDashNewCustomersRelativeUrl" label="Relative URL to New Customers Admin Dash (do not start with /)" />
                 </FormikFormGroup>
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
@@ -92,7 +96,9 @@ export default function Settings() {
                 {
                     newCustomerNotificationEmails: values.newCustomerNotificationEmails,
                     contactUsNotificationEmails: values.contactUsNotificationEmails,
-                    emailFrom: values.emailFrom
+                    emailFrom: values.emailFrom,
+                    siteBaseUrl: values.siteBaseUrl,
+                    adminDashNewCustomersRelativeUrl: values.adminDashNewCustomersRelativeUrl,
                 }
             }
         });
