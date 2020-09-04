@@ -110,7 +110,7 @@ export default function ConfirmationScreen(props) {
 					...props.values,
 					paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
 					paymentMethodId: paymentInfo.paymentMethodId
-				}				
+				}
 			}
 		})
 	}

@@ -5,9 +5,9 @@ export const BEGIN_IMPERSONATION = gql`
     impersonationBegin(customerId: $customerId){
       success
       message
-      authorizationInfo{
+      authorizationInfo {
         token
-        userInfo{
+        userInfo {
           companyId
           companyName
           firstName
@@ -19,7 +19,7 @@ export const BEGIN_IMPERSONATION = gql`
             limitValue
           }
         }
-        impersonationUserInfo{
+        impersonationUserInfo {
           customerId
           customerName
           customerIdP21
@@ -169,7 +169,7 @@ export const UPDATE_CART = gql`
   }
 `
 
-const QUERY_LOGIN = gql`
+export const QUERY_LOGIN = gql`
   query SubmitLogin($loginInfo: LoginInputGraphType){
     submitLogin(login: $loginInfo){
       success
@@ -455,74 +455,6 @@ export const GET_WEB_USER_CONTACTS = gql`
 	}
 `
 
-export const GET_CHECKOUT_DATA = gql`
-  query RetrieveCheckoutData {
-    getCheckoutDropdownData{
-      shipToAddresses{
-        id
-        name
-        companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-        collectNumberUps
-      }
-      carriers{
-        freightMultiplier
-        noAutoAllocation
-        otherShippingMethodFlag
-        shippingMethodName
-        shippingMethodUid
-        shippingMethodValue
-        showInListFlag
-      }
-      contacts{
-        id
-        firstName
-        lastName
-        phoneNumber
-        email
-      }
-      termsDescription
-      customerPhysicalAddress{
-        id
-        name
-        companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
-      }
-    }
-  }
-`
-
-export const GET_PAYMENT_METHOD_INFO = gql`
-	query GetPaymentMethodInfo ($paymentMethodRequest: PaymentMethodInfoRetrieve){
-		paymentMethodInfo(paymentMethodInfo: $paymentMethodRequest){
-			paymentSystemSecretKey
-			paymentSystemCustomerId
-			paymentMethods{
-				paymentMethodId
-				paymentSystemCustomerId
-				type
-				card{
-					brand
-					expirationMonth
-					expirationYear
-					lastFour
-				}
-			}
-		}
-	}`
-
 export const QUERY_ITEM_SEARCH = gql`
 	query ItemSearch($searchParams: ElasticSearchItemRequest!){
 		itemSearch(searchParams: $searchParams){
@@ -679,3 +611,72 @@ export const SAVE_ALL_SETTINGS = gql`
         saveAppSettings(settings: $settings)
     }
 `
+
+export const GET_CHECKOUT_DATA = gql`
+  query RetrieveCheckoutData {
+    getCheckoutDropdownData{
+      shipToAddresses{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+        collectNumberUps
+      }
+      carriers{
+        freightMultiplier
+        noAutoAllocation
+        otherShippingMethodFlag
+        shippingMethodName
+        shippingMethodUid
+        shippingMethodValue
+        showInListFlag
+      }
+      contacts{
+        id
+        firstName
+        lastName
+        phoneNumber
+        email
+      }
+      termsDescription
+      customerPhysicalAddress{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
+    }
+  }
+`
+
+export const GET_PAYMENT_METHOD_INFO = gql`
+	query GetPaymentMethodInfo ($paymentMethodRequest: PaymentMethodInfoRetrieve){
+		paymentMethodInfo(paymentMethodInfo: $paymentMethodRequest){
+			paymentSystemSecretKey
+			paymentSystemCustomerId
+			paymentMethods{
+				paymentMethodId
+				paymentSystemCustomerId
+				type
+				card{
+					brand
+					expirationMonth
+					expirationYear
+					lastFour
+				}
+			}
+		}
+  }
+  `

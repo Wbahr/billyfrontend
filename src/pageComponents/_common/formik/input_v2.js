@@ -23,6 +23,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
+
 const input = props => <input {...props} />
 
 export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
