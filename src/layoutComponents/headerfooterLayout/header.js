@@ -8,6 +8,7 @@ import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
 import Dropdown from './headerNavDropdown'
+import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, DropdownItemContainer, DropdownDisplay } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 
 const NavTop = styled.div`
 	display: flex;
@@ -141,32 +142,10 @@ const DivCancelImpersonation = styled.div`
 export default function HeaderComponent(props) {
 	const [searchTerm, setSearchTerm] = useState('')
 	const [searchAsCustomer, setSearchAsCustomer] = useState(false)
-	const [showDropdown, setShowDropdown] = useState(
-		{
-			about: false,
-			brands: false,
-			contact: false,
-			resources: false,
-			services: false,
-			shop: false,
-			industries: false,
-			myAccount: false
-		}
-	)
+	const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
 
 	function handleSearch() {
 		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}`)
-	}
-
-	function onHover(e) {
-		let target = e.target.id
-		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-		setShowDropdown({ ...mutatedShowDropdown, [target]: true })
-	}
-
-	function onExit() {
-		let mutatedShowDropdown = _.mapValues(showDropdown, () => false)
-		setShowDropdown({ ...mutatedShowDropdown })
 	}
 
 	return (
@@ -217,58 +196,23 @@ export default function HeaderComponent(props) {
 							{({ userInfo }) => {
 								if (userInfo) {
 									return (
-										<div id="myAccount" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
+										<div id="myAccount" onMouseEnter={() => setShowMyAccountDropdown(true)} onMouseLeave={() => { setTimeout(() => { setShowMyAccountDropdown(false) }, 50) } }>
 											<Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
 												<A id="myAccount">My Account</A>
 											</Link>
-											<Dropdown open={showDropdown.myAccount} history={props.history}
-												options={[
-													{
-														'label': 'Shopping Lists',
-														'link': '/account/shopping-lists'
-													},
-													{
-														'label': 'Upload List to Cart',
-														'link': '/account/dashboard'
-													},
-													{
-														'label': 'Request for Quote',
-														'link': '/contact-us'
-													},
-													{
-														'label': 'Account Profile',
-														'link': '/account/dashboard'
-													},
-													{
-														'label': 'Invoices',
-														'link': '/account/invoices'
-													},
-													{
-														'label': 'Orders',
-														'link': '/account/orders'
-													},
-													{
-														'label': 'Open Orders Report',
-														'link': '/account/open-orders-report'
-													},
-													{
-														'label': 'Open Quotes',
-														'link': '/account/open-quotes'
-													},
-													{
-														'label': 'Open Payables',
-														'link': '/account/dashboard'
-													},
-													{
-														'label': 'Purchase History',
-														'link': '/account/my-ordered-items'
-													},
-													{
-														'label': 'Suspended Orders',
-														'link': '/account/dashboard'
-													}
-												]}
-											/>
+											<DropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
+												<DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
+												<DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
+												<DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
+												<DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
+												<DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
+												<DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
+												<DropdownMenuItem to="/account/open-orders-report">Open Orders Report</DropdownMenuItem>
+												<DropdownMenuItem to="/account/open-quotes">Open Quotes</DropdownMenuItem>
+												<DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
+												<DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
+												<DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
+											</DropdownMenu>
 										</div>
 									)
 								} else {
@@ -293,265 +237,83 @@ export default function HeaderComponent(props) {
 						<img src={AirlineLogo} height="50px" />
 					</Link>
 					<LinkContainer>
-						<div id="shop" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/categories" style={{ textDecoration: 'none' }}>
-								<NavItem id="shop">Shop <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.shop ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.shop} history={props.history}
-								options={[
-									{
-										'label': 'All Brands',
-										'link': '/shop/all-categories'
-									},
-									{
-										'label': 'ABB',
-										'link': '/brands/featured/abb'
-									},
-									{
-										'label': 'Aventics',
-										'link': '/brands/featured/aventics'
-									}
-								]}
-							/>
-						</div>
-						<div id="services" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/services" style={{ textDecoration: 'none' }}>
-								<NavItem id="services">Services <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.services ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.services} history={props.history}
-								options={[
-									{
-										'label': 'Arc Flash Safety',
-										'link': '/pages/services/arc-flash-safety'
-									},
-									{
-										'label': 'Machine Safeguarding',
-										'link': '/pages/services/machine-safeguarding'
-									},
-									{
-										'label': 'Fluid Cleanliness & Maintenance/Preventive Maintenance',
-										'link': '/services/plant-services/fluid-cleanliness-and-maintenance'
-									},
-									{
-										'label': 'Engineered Systems & Assemblies',
-										'link': '/services/engineered-systems-and-assemblies'
-									},
-									{
-										'label': 'Energy Efficiency',
-										'link': '/pages/services/energy-efficiency'
-									},
-									{
-										'label': 'Trola-Dyne Systems',
-										'link': '/pages/trola-dyne'
-									}
-								]}
-							/>
-						</div>
-						<div id="industries" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/industries" style={{ textDecoration: 'none' }}>
-								<NavItem id="industries">Industries <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.industries ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.industries} history={props.history}
-								options={[
-									{
-										'label': 'All Brands',
-										'link': '/brands'
-									},
-									{
-										'label': 'ABB',
-										'link': '/brands/featured/abb'
-									},
-									{
-										'label': 'Aventics',
-										'link': '/brands/featured/aventics'
-									},
-									{
-										'label': 'Power Distribution Products and Electrical Enclosures',
-										'link': '/power-distribution-products-and-electrical-enclosures'
-									}
-								]}
-							/>
-						</div>
-						<div id="brands" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/brands" style={{ textDecoration: 'none' }} >
-								<NavItem id="brands">Brands <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.brands ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.brands} history={props.history}
-								options={[
-									{
-										'label': 'All Brands',
-										'link': '/brands'
-									},
-									{
-										'label': 'ABB',
-										'link': '/brands/featured/abb'
-									},
-									{
-										'label': 'Aventics',
-										'link': '/brands/featured/aventics'
-									},
-									{
-										'label': 'Butech',
-										'link': '/brands/featured/butech'
-									},
-									{
-										'label': 'Clippard',
-										'link': '/brands/featured/clippard'
-									},
-									{
-										'label': 'Eaton',
-										'link': '/brands/featured/eaton'
-									},
-									{
-										'label': 'Haskel',
-										'link': '/brands/featured/haskel'
-									},
-									{
-										'label': 'Hydac',
-										'link': '/brands/featured/hydac'
-									},
-									{
-										'label': 'Lincoln',
-										'link': '/brands/featured/lincoln'
-									},
-									{
-										'label': 'Omron',
-										'link': '/brands/featured/omron'
-									},
-									{
-										'label': 'Oriental Motor',
-										'link': '/brands/featured/oriental-motor'
-									},
-									{
-										'label': 'Paccar',
-										'link': '/brands/featured/paccar'
-									},
-									{
-										'label': 'Parker',
-										'link': '/brands/featured/parker'
-									},
-									{
-										'label': 'Phoenix Contact',
-										'link': '/brands/featured/phoenix-contact'
-									},
-									{
-										'label': 'Rexroth',
-										'link': '/brands/featured/rexroth'
-									},
-									{
-										'label': 'Rittal',
-										'link': '/brands/featured/rittal'
-									},
-									{
-										'label': 'Ross',
-										'link': '/brands/featured/ross'
-									},
-									{
-										'label': 'Schmersal',
-										'link': '/brands/featured/schmersal'
-									},
-									{
-										'label': 'SMC',
-										'link': '/brands/featured/smc'
-									}
-								]}
-							/>
-						</div>
-						<div id="resources" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/resources" style={{ textDecoration: 'none' }}>
-								<NavItem id="resources">Resources <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.resources ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.resources} history={props.history}
-								options={[
-									{
-										'label': 'Blog - Technically Speaking',
-										'link': '/blog'
-									},
-									{
-										'label': 'Youtube Channel',
-										'link': '/blog'
-									},
-									{
-										'label': 'Knowledge Center & FAQ',
-										'link': '/knowledge-center-and-faq'
-									},
-									{
-										'label': 'Line Cards & Brochures',
-										'link': '/linecards'
-									},
-									{
-										'label': 'Apps',
-										'link': '/apps'
-									}
-								]}
-							/>
-						</div>
-						<div id="about" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/about" style={{ textDecoration: 'none' }}>
-								<NavItem id="about">About <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.about ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.about} history={props.history}
-								options={[
-									{
-										'label': 'Locations',
-										'link': '/about/locations'
-									},
-									{
-										'label': 'Transactional Services',
-										'link': '/about/transactional-services'
-									},
-									{
-										'label': 'News',
-										'link': '/about/news'
-									},
-									{
-										'label': 'Events',
-										'link': '/about/events'
-									},
-									{
-										'label': 'Careers',
-										'link': '/about/careers'
-									},
-									{
-										'label': 'Quality Policy',
-										'link': '/about/quality-policy'
-									},
-									{
-										'label': 'Our History',
-										'link': '/about/our-history'
-									},
-									{
-										'label': 'Our Mission',
-										'link': '/about/mission-statement'
-									}
-								]}
-							/>
-						</div>
-						<div id="contact" onMouseEnter={(e) => onHover(e)} onMouseLeave={(e) => onExit(e)}>
-							<Link to="/contact-us" style={{ textDecoration: 'none' }}>
-								<NavItem id="contact">Contact <FontAwesomeIcon style={{ 'marginLeft': '4px' }} icon={showDropdown.contact ? 'caret-up' : 'caret-down'} color="black" /></NavItem>
-							</Link>
-							<Dropdown open={showDropdown.contact} history={props.history}
-								options={[
-									{
-										'label': 'Contact Us',
-										'link': '/contact-us'
-									},
-									{
-										'label': 'Credit Application',
-										'link': '/credit-application'
-									},
-									{
-										'label': 'Framing Request',
-										'link': '/framing-request'
-									},
-									{
-										'label': 'Government Sales',
-										'link': '/government-sales'
-									}
-								]}
-							/>
-						</div>
+						<NavigationItemContainer to="/categories" text="Shop">
+							<DropdownMenu>
+								<DropdownMenuItem to="/shop/all-categories">All Brands</DropdownMenuItem>
+								<DropdownMenuItem to="/brands/featured/abb">ABB</DropdownMenuItem>
+								<DropdownMenuItem to="/brands/featured/aventics">Aventics</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/services" text="Services">
+							<DropdownMenu>
+								<DropdownMenuItem to="/pages/services/arc-flash-safety">Arc Flash Safety</DropdownMenuItem>
+								<DropdownMenuItem to="/pages/services/machine-safeguarding">Machine Safeguarding</DropdownMenuItem>
+								<DropdownMenuItem to="/services/plant-services/fluid-cleanliness-and-maintenance">Fluid Cleanliness &amp; Maintenance/Preventive Maintenance</DropdownMenuItem>
+								<DropdownMenuItem to="/services/engineered-systems-and-assemblies">Engineered Systems &amp; Assemblies</DropdownMenuItem>
+								<DropdownMenuItem to="/pages/services/energy-efficiency">Energy Efficiency</DropdownMenuItem>
+								<DropdownMenuItem to="/pages/trola-dyne">Trola-Dyne Systems</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/industries" text="Industries">
+							<DropdownMenu>
+								<DropdownMenuItem to="/brands">All Brands</DropdownMenuItem>
+								<DropdownMenuItem to="/brands/featured/abb">ABB</DropdownMenuItem>
+								<DropdownMenuItem to="/brands/featured/aventics">Aventics</DropdownMenuItem>
+								<DropdownMenuItem to="/power-distribution-products-and-electrical-enclosures">Power Distribution Products &amp; Electrical Enclosures</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/brands" text="Brands">
+							<DropdownMenu>
+								<DropdownMenuItem to='/brands'>All Brands</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/abb'>ABB</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/aventics'>Aventics</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/butech'>Butech</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/clippard'>Clippard</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/eaton'>Eaton</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/haskel'>Haskel</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/hydac'>Hydac</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/lincoln'>Lincoln</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/omron'>Omron</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/oriental-motor'>Oriental Motor</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/paccar'>Paccar</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/parker'>Parker</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/phoenix-contact'>Phoenix Contact</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/rexroth'>Rexroth</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/rittal'>Rittal</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/ross'>Ross</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/schmersal'>Schmersal</DropdownMenuItem>
+								<DropdownMenuItem to='/brands/featured/smc'>SMC</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/resources" text="Resources">
+							<DropdownMenu>
+								<DropdownMenuItem to='/blog'>Blog - Technically Speaking</DropdownMenuItem>
+								<DropdownMenuItem to='/blog'>Youtube Channel</DropdownMenuItem>
+								<DropdownMenuItem to='/knowledge-center-and-faq'>Knowledge Center &amp; FAQ</DropdownMenuItem>
+								<DropdownMenuItem to='/linecards'>Line Cards &amp; Brochures</DropdownMenuItem>
+								<DropdownMenuItem to='/apps'>Apps</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/about" text="About">
+							<DropdownMenu>
+								<DropdownMenuItem to='/about/locations'>Locations</DropdownMenuItem>
+								<DropdownMenuItem to='/about/transactional-services'>Transactional Services</DropdownMenuItem>
+								<DropdownMenuItem to='/about/news'>News</DropdownMenuItem>
+								<DropdownMenuItem to='/about/events'>Events</DropdownMenuItem>
+								<DropdownMenuItem to='/about/careers'>Careers</DropdownMenuItem>
+								<DropdownMenuItem to='/about/quality-policy'>Quality Policy</DropdownMenuItem>
+								<DropdownMenuItem to='/about/our-history'>Our History</DropdownMenuItem>
+								<DropdownMenuItem to='/about/mission-statement'>Our Mission</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
+						<NavigationItemContainer to="/contact-us" text="Contact">
+							<DropdownMenu>
+								<DropdownMenuItem to='/contact-us'>Contact Us</DropdownMenuItem>
+								<DropdownMenuItem to='/credit-application'>Credit Application</DropdownMenuItem>
+								<DropdownMenuItem to='/framing-request'>Framing Request</DropdownMenuItem>
+								<DropdownMenuItem to='/government-sales'>Government Sales</DropdownMenuItem>
+							</DropdownMenu>
+						</NavigationItemContainer>
 					</LinkContainer>
 					<Div>
 						<Context.Consumer>
