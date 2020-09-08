@@ -456,34 +456,45 @@ export const GET_WEB_USER_CONTACTS = gql`
 `
 
 export const QUERY_ITEM_SEARCH = gql`
-	query ItemSearch($searchParams: ElasticSearchItemRequest!){
-		itemSearch(searchParams: $searchParams){
-			result
-			count
-			parentCategories {
-				parentCategoryCount
-				parentCategoryDisplayName
-				parentCategoryName
-			}
-			childCategories {
-				childCategoryCount
-				childCategoryDisplayName
-				childCategoryName
-			}
-			attributeCategories{
-				categoryName
-				categoryNameDisplay
-				features{
-					featureName
-					featureNameDisplay
-					itemCount
+	query Search($search: SearchRequestInput) {
+		itemSearch(searchParams: $search) {
+			searchTerm
+			searchType
+			sortType
+			resultPage
+			resultSize
+			searchTotalCount
+			searchState {
+				parentCategories {
+					parentCategoryName
+					parentCategoryDisplayName
+					parentCategoryCount
+					selected
+				}
+				childCategories {
+					childCategoryName,
+					childCategoryDisplayName
+					childCategoryCount
+					selected
+				}
+				brands {
+					brandName
+					brandNameDisplay
+					brandCount
+					selected
+				}
+				attributes {
+					attributeName
+					attributeNameDisplay
+					features {
+						featureName
+						featureNameDisplay
+						featureCount
+						selected
+					}
 				}
 			}
-			brands{
-				brandCount
-				brandName
-				brandNameDisplay
-			}
+			result
 		}
 	}
 `

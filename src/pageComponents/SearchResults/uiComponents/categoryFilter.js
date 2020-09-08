@@ -22,8 +22,15 @@ const DivTitle = styled.div`
 `
 
 const DivRow = styled.div`
-	display: flex; 
+	display: flex;
+	flex: 1;
 	align-items: center;
+`
+
+const DivOption = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 4px 0 4px 24px;
 `
 
 const DivOptionRow = styled.div`
@@ -54,38 +61,79 @@ const Acategory = styled.p`
 	}
 `
 
-export default function CategoryFilter({isUpdating, parentCategories, childCategories, updatedCategoriesFilter, selectedParent, selectedChild, removeParent, removeChild}) {
+const PCount = styled.p`
+	margin: 0 4px 0 0;
+	color: #535353;
+	font-size: 12px;
+`
+
+const Row = styled.div`
+	display: flex;
+`
+
+export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}) {
 	const [isOpen, setIsOpen] = useState(false)
+	const selectedParentIdx = parentCategories.findIndex(category => category.selected)
+	const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
 	
-	const categories = !childCategories
-		? parentCategories.map(c => ({type: 'parent', value: c.parentCategoryName, label: c.parentCategoryDisplayName}))
-		: childCategories.map(c => ({type: 'child', value: c.childCategoryName, label: c.childCategoryDisplayName}))
-	
-	const handleUpdateCategoriesFilter = (e, type) => {
-		selectedChild.length && !isUpdating && updatedCategoriesFilter(type, e.target.innerText)
+	const handleUpdateCategories = (type, idx) => () => {
+		const toggleSelected = (category, i) => ({ ...category, selected: i === idx ? !category.selected : false })
+		const newCategories = type === 'parent' ? parentCategories.map(toggleSelected) : childCategories.map(toggleSelected)
+		if (type === 'parent') {
+			setParentCategories(newCategories)
+		} else {
+			setChildCategories(newCategories)
+		}
 	}
 	
-	const CategoryOptions = categories.map(({type, value, label}) => {
-		return (
-			<DivOptionRow key={value}>
+	const childCategory = ({childCategoryName, childCategoryDisplayName, childCategoryCount}, idx) => (
+		<DivOptionRow key={childCategoryName}>
+			<DivRow>
+				<Acategory
+					value={childCategoryName}
+					onClick={handleUpdateCategories('child', idx)}
+				>
+					{childCategoryDisplayName}
+				</Acategory>
+				{selectedChildIdx === idx && !isSearching && (
+					<span onClick={handleUpdateCategories('child', selectedChildIdx)}>
+						<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
+					</span>
+				)}
+			</DivRow>
+			
+			<PCount>({childCategoryCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const ChildCategories = () => <div>{(childCategories || []).map(childCategory)}</div>
+	
+	const parentCategory = ({parentCategoryName, parentCategoryDisplayName, parentCategoryCount}, idx) => (
+		<DivOption key={parentCategoryName}>
+			<Row>
 				<DivRow>
 					<Acategory
-						value={value}
-						onClick={e => handleUpdateCategoriesFilter(e, type)}
+						value={parentCategoryName}
+						onClick={handleUpdateCategories('parent', idx)}
 					>
-						{label}
+						{parentCategoryDisplayName}
 					</Acategory>
-					{
-						!!selectedChild.length && !isUpdating && (
-							<span onClick={removeChild}>
-								<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
-							</span>
-						)
-					}
+					{selectedParentIdx === idx && (
+						<span onClick={handleUpdateCategories('parent', selectedParentIdx)}>
+							<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
+						</span>
+					)}
 				</DivRow>
-			</DivOptionRow>
-		)
-	})
+				
+				<PCount>({parentCategoryCount})</PCount>
+			</Row>
+			
+			{selectedParentIdx === idx && !isSearching && <ChildCategories/>}
+			{selectedParentIdx === idx && isSearching && <Loader/>}
+		</DivOption>
+	)
+	
+	const ParentCategories = () => <>{(parentCategories || []).map(parentCategory)}</>
 
 	return (
 		<div>
@@ -94,23 +142,7 @@ export default function CategoryFilter({isUpdating, parentCategories, childCateg
 				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
 			</DivTitle>
 			
-			{(isOpen && childCategories && childCategories.length > 0) && (
-				<DivRow>
-					<PparentTitle>
-						{selectedParent}
-						<span onClick={removeParent}>
-							<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
-						</span>
-					</PparentTitle>
-				</DivRow>
-			)}
-			{
-				isUpdating ? (
-					<Loader/>
-				) : (
-					isOpen && CategoryOptions
-				)
-			}
+			{isOpen && <ParentCategories/>}
 		</div>
 	)
 }

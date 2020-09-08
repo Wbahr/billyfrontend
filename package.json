@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint ./src",
     "start": "webpack-dev-server --mode development --open --hot --env.ENVIRONMENT=development",
+    "local": "webpack-dev-server --mode development --open --hot --env.ENVIRONMENT=local",
     "build": "webpack --mode production --env.ENVIRONMENT=devtest",
     "build-deploy": "webpack --mode production --env.ENVIRONMENT=deploy",
     "build-dev": "webpack --mode development --env.ENVIRONMENT=dev",

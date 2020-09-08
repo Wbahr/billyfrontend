@@ -173,7 +173,7 @@ const getItemPricePayload = invMastUid => ({
 	}
 })
 
-export default function DetailsModal({ open, hideDetailsModal, invMastUid, history, itemCode }) {
+export default function DetailsModal({ open, hideDetailsModal, history, detailsModalItem: {itemCode, invMastUid} }) {
 	const [item, setItem] = useState(null)
 	const [unitPrice, setUnitPrice] = useState(null)
 	const [quantity, setQuantity] = useState(1)

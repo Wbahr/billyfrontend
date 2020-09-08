@@ -9,6 +9,7 @@ import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
 import Dropdown from './headerNavDropdown'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, DropdownItemContainer, DropdownDisplay } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
+import {buildSearchString} from "../../pageComponents/_common/helpers/generalHelperFunctions";
 
 const NavTop = styled.div`
 	display: flex;
@@ -145,7 +146,7 @@ export default function HeaderComponent(props) {
 	const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
 
 	function handleSearch() {
-		props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=24&resultPage=1&sortType=${encodeURIComponent('relevancy')}&nonweb=${encodeURIComponent(searchAsCustomer)}`)
+		props.history.push(buildSearchString(searchTerm, 'relevancy', searchAsCustomer))
 	}
 
 	return (

@@ -54,3 +54,12 @@ export const getImagePath = path => {
 		? 'https://www.airlinehyd.com/images/items/' + pathSplit[pathSplit.length - 1].slice(0, -5) + 'l.jpg'
 		: 'https://www.airlinehyd.com/images/no-image.jpg'
 }
+
+export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCustomer='false') => {
+	return `/search/?
+	searchTerm=${encodeURIComponent(searchTerm)}
+	&sortType=${encodeURIComponent(sortType)}
+	&nonweb=${encodeURIComponent(searchAsCustomer)}
+	&resultSize=24
+	&resultPage=1`
+}

@@ -42,6 +42,14 @@ const Label = styled.label`
 	color: #535353;
 	font-size: 12px;
 	margin-left: 4px;
+	flex: 1;
+`
+
+const PCount = styled.p`
+	margin: 0;
+	color: #535353;
+	font-size: 12px;
+	margin-left: 4px;
 `
 
 const InputSearch = styled.input`
@@ -49,35 +57,37 @@ const InputSearch = styled.input`
 	width: 240px;
 `
 
-export default function BrandFilter({brands, updatedBrandFilter}) {
+export default function BrandFilter({brands, setBrands}) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [filter, setFilter] = useState('')
-	const [brandFilterValues, setBrandFilterValues] = useState([])
 
-	const handleFeatureToggle = (e, brand) => {
-		const newBrandFilterValues = e.target.checked
-			? [...brandFilterValues, brand]
-			: brandFilterValues.filter(b => b !== brand)
-		setBrandFilterValues(newBrandFilterValues)
-		updatedBrandFilter(newBrandFilterValues)
+	const handleFeatureToggle = idx => ({target: {checked}}) => {
+		const newBrands = brands.slice()
+		newBrands[idx].selected = checked
+		setBrands(newBrands)
 	}
+	
+	const searchFilter = b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter))
 	
 	const BrandOptions = () => (
 		<DivOptions>
 			{brands
-				.filter(b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter)))
-				.map((brand, idx) => (
+				.filter(searchFilter)
+				.map(({selected, brandName, brandNameDisplay, brandCount}, idx) => (
 					<DivOptionRow key={idx}>
-						<input type="checkbox" onChange={(e) => handleFeatureToggle(e, brand.brandName)}/>
-						<Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
+						<input
+							type="checkbox"
+							checked={selected}
+							onChange={handleFeatureToggle(idx)}
+						/>
+						<Label htmlFor={brandName}>{brandNameDisplay}</Label>
+						<PCount>({brandCount})</PCount>
 					</DivOptionRow>
 			))}
 		</DivOptions>
 	)
 	
-	const handleSearchChange = e => {
-		setFilter(e.target.value.toLowerCase())
-	}
+	const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
 
 	return (
 		<div>
@@ -87,12 +97,13 @@ export default function BrandFilter({brands, updatedBrandFilter}) {
 			</DivTitle>
 			{isOpen && 
 				<>
-					<div>
-						{brands.length > 10 && (
-							<InputSearch placeholder={'Search Brands'} onChange={handleSearchChange} value={filter}/>
-						)}
-					</div>
-					
+					{brands.length > 10 && (
+						<InputSearch
+							placeholder="Search Brands"
+							onChange={handleSearchChange}
+							value={filter}
+						/>
+					)}
 					<BrandOptions/>
 				</>
 			}

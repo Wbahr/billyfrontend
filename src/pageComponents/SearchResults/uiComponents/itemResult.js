@@ -150,31 +150,26 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-const Option = ({customer_part_number_id, customer_part_number}) => (
-	<option key={customer_part_number_id} value={customer_part_number_id}>{customer_part_number}</option>
-)
+const Option = ({partNumber, partId}) => <option key={partNumber} value={partId}>{partNumber}</option>
 
-const getCustomerPartOptions = ({customer_part_numbers=[]}) => customer_part_numbers.map((part, idx) => (<Option key={idx} {...part}/>))
+const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
-export default function ItemResult({searchTerm, result, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
+export default function ItemResult({searchTerm, result, details, availabilities, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
 	const [quantity, setQuantity] = useState(1)
 	const context = useContext(Context)
+	const {availability, leadTimeDays} = context.itemAvailabilities.find(avail => avail.invMastUid === result.frecno) || {}
+	const {unitPrice} = context.itemPrices.find(item => item.invMastUid === result.frecno) || {}
 	
-	const findPartNumberMatchingSearchTerm = () => result.customer_part_numbers
-		.find(part => part.customer_part_number
-			.toLowerCase()
-			.includes(searchTerm.toLowerCase())
-		)?.customer_part_number_id
-	
-	const [customerPartNumber, setCustomerPartNumber] = useState(result.customer_part_number_id || findPartNumberMatchingSearchTerm())
+	const [customerPartNumber, setCustomerPartNumber] = useState('')
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
 	
 	useEffect(() => {
-		setCustomerPartOptions(getCustomerPartOptions(result))
-	}, [result.customer_part_numbers])
-
-	const mutatedItemId = result.item_id.replace(/\s/g, '-')
-
+		setCustomerPartOptions(getCustomerPartOptions(details))
+		if (details.customerPartNumbers?.length === 1) {
+			setCustomerPartNumber(details.customerPartNumbers[0].partId)
+		}
+	}, [details.customerPartNumbers])
+	
 	function handleSetQuantity({target: {value}}) {
 		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
 			setQuantity(value)
@@ -182,6 +177,7 @@ export default function ItemResult({searchTerm, result, history, toggleDetailsMo
 	}
 	
 	const handlePartClick = () => {
+		const mutatedItemId = result.item_id.replace(/\s/g, '-')
 		if (!customerPartNumber) {
 			history.push(`/product/${mutatedItemId}/${result.frecno}`)
 		} else {
@@ -201,14 +197,20 @@ export default function ItemResult({searchTerm, result, history, toggleDetailsMo
 		setQuantity(1)
 	}
 	
+	const handlePartNumberChange = ({target}) => setCustomerPartNumber(target.value)
+	
+	const handleAvailabilityClick = () => toggleLocationsModal(result.frecno)
+	
+	const handleQuickLookClick = () => toggleDetailsModal(result.frecno, result.item_id)
+	
 	return (
 		<DivItemResultContainer>
 			<DivPartDetailsRow>
 				<DivPartImg onClick={handlePartClick} style={{cursor: 'pointer'}}>
-					<Img src={getImagePath(result.thumbnail_image_path)}/>
+					<Img src={getImagePath(details.image?.length && details.image[0].path)}/>
 				</DivPartImg>
 				
-				<ButtonBlack onClick={() => toggleDetailsModal(result.frecno, result.item_id)}>Quick Look</ButtonBlack>
+				<ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
 				
 				<DivPartDetails>
 					<PpartTitle onClick={handlePartClick}>{result.item_desc}</PpartTitle>
@@ -221,48 +223,48 @@ export default function ItemResult({searchTerm, result, history, toggleDetailsMo
 				<DivPartNumberRow>
 					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
 				</DivPartNumberRow>
-				{
-					!!customerPartOptions.length && (
-						<DivPartNumberRow>
-							<PpartAvailability>
-								Customer Part #:
-								<select value={customerPartNumber} onChange={e => setCustomerPartNumber(e.target.value)}>
-									<option>Select a Part No.</option>
-									{customerPartOptions}
-								</select>
-							</PpartAvailability>
-						</DivPartNumberRow>
-					)
-				}
+				
+				{!!customerPartOptions.length && (
+					<DivPartNumberRow>
+						<PpartAvailability>
+							Customer Part #:
+							<select value={customerPartNumber} onChange={handlePartNumberChange}>
+								<option>Select a Part No.</option>
+								{customerPartOptions}
+							</select>
+						</PpartAvailability>
+					</DivPartNumberRow>
+				)}
+				
 				<DivPartNumberRow>
 					<PpartAvailability>Availability:</PpartAvailability>
-					{
-						result.availability ? (
-							<DivRow>
-								<PBlue onClick={() => toggleLocationsModal(result.frecno)}>{result.availability} (Show Locations)</PBlue>
-							</DivRow>
-						)	: (
-							<PBlue>{result.availability_message}</PBlue>
-						)
-					}
+					{availability ? (
+						<DivRow>
+							<PBlue onClick={handleAvailabilityClick}>
+								{availability} (Show Locations)
+							</PBlue>
+						</DivRow>
+					)	: (
+						<PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : `Call for availability`}</PBlue>
+					)}
 				</DivPartNumberRow>
 				
 				<DivPartNumberRowSpread>
-					<Div>Quantity:<InputQuantity value={quantity} onChange={handleSetQuantity}/></Div>
-					{
-						result.unit_price ? (
-							<Div>
-								<Pprice>${result.unit_price.toFixed(2)}</Pprice>
-								<P>/EA</P>
-							</Div>
-						) : (
-							<ACall href="tel:+18009997378">Call for Price</ACall>
-						)
-					}
+					<Div>Quantity:
+						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+					</Div>
+					{unitPrice ? (
+						<Div>
+							<Pprice>${unitPrice.toFixed(2)}</Pprice>
+							<P>/EA</P>
+						</Div>
+					) : (
+						<ACall href="tel:+18009997378">Call for Price</ACall>
+					)}
 				</DivPartNumberRowSpread>
 				
 				<DivSpace>
-					{!!result.unit_price && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+					{!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
 				</DivSpace>
 			</DivPartDetailsRow>
 		</DivItemResultContainer>
