@@ -6,7 +6,7 @@ import Loader from 'pageComponents/_common/loader';
 import styled from 'styled-components'
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom';
-import 'style.css'
+import  'style.scss';
 
 const Container = styled.div`
   display: flex;
@@ -119,7 +119,7 @@ export default function StaticPage({ match }) {
         }
     });
 
-    useEffect(() => { eval(pageJs); } ,[pageJs]);
+    useEffect(() => { eval(pageJs); }, [pageJs]);
 
     return (
         <Container>
