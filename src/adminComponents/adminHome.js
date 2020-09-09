@@ -1,13 +1,11 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Switch, Route, useParams, useRouteMatch, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Toolbar from '@material-ui/core/Toolbar'
 import List from '@material-ui/core/List'
-// import Typography from '@material-ui/core/Typography';
-import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
@@ -25,6 +23,7 @@ import ContactMail from '@material-ui/icons/ContactMail'
 import FlashOn from '@material-ui/icons/FlashOn'
 import Settings from './adminTools/Settings/settings'
 import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
+import EditNewCustomer from './adminTools/NewCustomers/editNewCustomer'
 
 const drawerWidth = 240
 
@@ -89,25 +88,10 @@ function ListItemLink(props) {
 	)
 }
 
-function getAdminTool(tool) {
-	switch(tool){
-	case 'item-creation':
-		return (<ItemCreation />);
-	case 'open-orders':
-		return (<OpenOrders />);
-	case 'new-customers':
-		return (<NewCustomerAdmin />);
-	case 'settings':
-		return (<Settings />);
-	default:
-		return (<AdminDashboard />);
-	}
-}
-
-
 export default function AdminHome() {
-	let { tool } = useParams()
-	const classes = useStyles()
+	let { tool } = useParams();
+	let { path, url } = useRouteMatch();
+	const classes = useStyles();
 
 	return (
 		<div className={classes.root}>
@@ -115,7 +99,7 @@ export default function AdminHome() {
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
 					<Link component={RouterLink} to="/">
-						<img src={AirlineLogo} height="50px" style={{'paddingRight': '20px'}}/>
+						<img src={AirlineLogo} height="50px" style={{ 'paddingRight': '20px' }} />
 					</Link>
 					<h4>Admin Tools</h4>
 				</Toolbar>
@@ -129,21 +113,40 @@ export default function AdminHome() {
 			>
 				<div className={classes.toolbar} />
 				<List aria-label="main mailbox folders">
-					<ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
-					<Divider/>
-					<ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
-					<Divider/>
-					<ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon />} />
-					<Divider/>
-					<ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail />} />
-					<Divider/>
-					<ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn />} />
-					<Divider/>
+					<ListItemLink to={`${url}`} primary="Dashboard" icon={<DashboardIcon />} />
+					<Divider />
+					<ListItemLink to={`${url}/item-creation`} primary="Item Creation" icon={<AddBoxIcon />} />
+					<Divider />
+					<ListItemLink to={`${url}/open-orders`} primary="Open Orders" icon={<CodeIcon />} />
+					<Divider />
+					<ListItemLink to={`${url}/new-customers`} primary="New Customers" icon={<ContactMail />} />
+					<Divider />
+					<ListItemLink to={`${url}/settings`} primary="System Settings" icon={<FlashOn />} />
+					<Divider />
 				</List>
 			</Drawer>
 			<main className={classes.content}>
 				<AppHeader />
-				{getAdminTool(tool)}
+				<Switch>
+					<Route exact path={path}>
+						<AdminDashboard />
+					</Route>
+					<Route path={`${path}/item-creation`}>
+						<ItemCreation />
+					</Route>
+					<Route path={`${path}/open-orders`}>
+						<OpenOrders />
+					</Route>
+					<Route exact path={`${path}/new-customers`}>
+						<NewCustomerAdmin />
+					</Route>
+					<Route path={`${path}/new-customers/:regId`}>
+						<EditNewCustomer />
+					</Route>
+					<Route path={`${path}/settings`}>
+						<Settings />
+					</Route>
+				</Switch>
 			</main>
 		</div>
 	)

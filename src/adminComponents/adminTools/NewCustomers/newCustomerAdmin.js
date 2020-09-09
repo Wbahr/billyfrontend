@@ -1,13 +1,41 @@
 import React, { useEffect, useState } from 'react'
-import gql from 'graphql-tag'
 import styled from 'styled-components'
-import { useQuery, useMutation } from '@apollo/client'
+import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { useTable } from 'react-table'
+import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'config/providerGQL'
+import { Link, useRouteMatch } from 'react-router-dom'
+import { ButtonRed, ButtonBlack } from 'styles/buttons'
+import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
+import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
+import { FormikFormFieldContainer } from 'styles/formikForm'
+import Modal from 'pageComponents/_common/modal'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 24px;
+  h4 {
+    font-family: ProximaBold;
+  }
+  p {
+    font-family: Proxima;
+    text-align: center;
+  }
+  button {
+    margin-top: 8px;
+  }
+`
+
+const DivRow = styled.div`
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+`
 
 const Styles = styled.div`
   padding: 1rem;
-
   table {
     border-spacing: 0;
     border: 1px solid black;
@@ -34,120 +62,140 @@ const Styles = styled.div`
   }
 `
 
-const GET_ALL_NEW_CUSTOMERS = gql`
-    query newCustomers{
-        newCustomers{
-            contact {
-                id
-                customerId
-                email
-                fax
-                firstName
-                jobTitle
-                lastName
-                phone
-                phoneExtension
-            }
-            billingCity
-            billingCompanyName
-            billingCountry
-            billingLine1
-            billingLine2
-            billingState
-            billingZip
-            shippingCity
-            shippingCompanyName
-            shippingCountry
-            shippingLine1
-            shippingLine2
-            shippingState
-            shippingZip
-        } 
-    }
-`
-
 //Note this can be made editable
 //https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/editable-data?from-embed=&file=/src/App.js
-
 function Table({ columns, data }) {
     // Use the state and functions returned from useTable to build your UI
     const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      rows,
-      prepareRow,
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
     } = useTable({
-      columns,
-      data,
+        columns,
+        data,
     });
-  
+
     // Render the UI for your table
     return (
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        <table {...getTableProps()}>
+            <thead>
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                        ))}
+                    </tr>
+                ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+                {rows.map((row, i) => {
+                    prepareRow(row)
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                            })}
+                        </tr>
+                    )
                 })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+            </tbody>
+        </table>
     )
-  }
-  
+}
+
 
 export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [showRejectReasonModal, setShowRejectReasonModal] = useState(false);
+    const [rejectReason, setRejectReason] = useState('');
+    const [rejectId, setRejectId] = useState(null);
+    const [error, setError] = useState(null);
+    let { path, url } = useRouteMatch();
 
-    const edit = (arg) =>
-    {
-        console.log(arg);
-    }
+    const handleRejectModalClose = () => {
+        setShowRejectReasonModal(false);
+    };
 
-    const reject = (id) =>
-    {
-        console.log(id);
-    }
+    const rejectRegistrationCall = (id) => {
+        //Stash the ID and show modal, when the modal closes then mutuate on the stashed data.
+        console.log("Stashing reject id ", id);
+        setRejectId(id);
+        setShowRejectReasonModal(true);
+    };
 
-    const approve = (id) => 
-    {
-        console.log(id);
-    }
 
-    useQuery(GET_ALL_NEW_CUSTOMERS, {
-        onCompleted: result => {
-            setNewCustomers(result.newCustomers);
-            setLoading(false);
+    const [rejectRegistrationMutation, { error: rejectError, loading: rejectLoading }] = useMutation(REJECT_NEW_CUSTOMER, {
+        onCompleted: (data) => {
+            setAlertMessage("Registration rejected.");
+            setRejectReason('');
+            setRejectId(null);
+            loadNewCustomers();
         }
     });
+
+    const [approveRegistrationCall, { error: approveError, loading: approveLoading }] = useMutation(APPROVE_NEW_CUSTOMER, {
+        onCompleted: (data) => {
+            setAlertMessage("Registration approved.");
+            loadNewCustomers();
+        }
+    });
+
+    const [loadNewCustomers, { loading, error: getError }] = useLazyQuery(GET_NEW_CUSTOMERS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: (result) => {
+            setNewCustomers(result?.newCustomers || []);
+        }
+    });
+
+    useEffect(() => {
+        console.log("starting reject call");
+        if(rejectReason && rejectId) {
+            rejectRegistrationMutation({variables: { id: rejectId, reason: rejectReason }});
+        } 
+    }, [rejectReason]);
+
+    useEffect(() => {
+        setError(rejectError || approveError || getError);
+    }, [rejectError, approveError, getError]);
+
+    useEffect(() => {
+        loadNewCustomers();
+    }, []);
+
     const columns = React.useMemo(
         () => [
+            {
+                Header: 'Registration',
+                columns: [
+                    {
+                        id: 'id', 
+                        accessor: 'id',
+                        Cell: ({ value }) => (<Link to={`${path}/${value}`}>Edit</Link>)
+                    },
+                    {
+                        Header: 'Reg Id',
+                        id: 'regId',
+                        accessor: 'id',
+                    },
+                    {
+                        Header: 'Date',
+                        accessor: 'received',
+                    },
+                ],
+            },
             {
                 Header: 'Name',
                 columns: [
                     {
                         Header: 'First Name',
-                        accessor: 'contact.firstName',
+                        accessor: 'firstName',
                     },
                     {
                         Header: 'Last Name',
-                        accessor: 'contact.lastName',
+                        accessor: 'lastName',
                     },
                 ],
             },
@@ -156,11 +204,11 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         Header: 'JobTitle',
-                        accessor: 'contact.jobTitle',
+                        accessor: 'jobTitle',
                     },
                     {
                         Header: 'Claimed Customer ID',
-                        accessor: 'contact.customerId',
+                        accessor: 'customerIdP21',
                     },
                 ],
             },
@@ -169,22 +217,22 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         Header: 'Email',
-                        accessor: 'contact.email',
+                        accessor: 'email',
                     },
                     {
                         Header: 'Phone',
-                        accessor: 'contact.phone',
+                        accessor: 'phone',
                     },
                     {
                         Header: 'Ext.',
-                        accessor: 'contact.phoneExtension',
+                        accessor: 'phoneExtension',
                     },
                     {
                         Header: 'Fax',
                         accessor: 'fax',
                     },
                 ],
-            }, 
+            },
             {
                 Header: 'Shipping Info',
                 columns: [
@@ -254,36 +302,73 @@ export default function NewCustomerAdmin() {
             {
                 Header: 'Actions',
                 columns: [
-                    /*{
-                        id: 'edit',
-                        accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => edit({value})}>Edit</button>)
-                    },*/
                     {
                         id: 'approve',
-                        accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => approve({value})}>Approve</button>)
+                        accessor: 'id',
+                        Cell: ({ value }) => (<ButtonRed disabled={approveLoading} onClick={() => approveRegistrationCall({ variables: { id: value } })}>Approve</ButtonRed>)
                     },
                     {
                         id: 'reject',
-                        accessor: 'contact.id',
-                        Cell: ({value}) => (<button onClick={() => reject({value})}>Reject</button>)
+                        accessor: 'id',
+                        Cell: ({ value }) => (<ButtonRed disabled={rejectLoading} onClick={() => rejectRegistrationCall(value)}>Reject</ButtonRed>)
                     }
                 ],
-            } 
+            }
         ],
-        []
+        [approveLoading, rejectLoading]
     );
 
-    useEffect(() => console.log(newCustomers), [newCustomers]);
+    return (
+        <Styles>
+            {alertMessage && <ShowInfoAlert message={alertMessage} />}
+            {error && error.networkError && <ShowErrorAlert message={error.networkError.result.detail} /> }
+            {error && !error.networkError && <ShowErrorAlert message="An error occurred" />}
+            {loading && <Loader />}
+            {newCustomers && <Table columns={columns} data={newCustomers} />}
+            <SelectRejectReasonModal visible={showRejectReasonModal} valueCallback={setRejectReason} close={handleRejectModalClose}/>
+        </Styles>
+    );
+}
 
-    if (loading) {
-        return (<Loader />);
-    } else {
-        return (
-            <Styles>
-                <Table columns={columns} data={newCustomers} />
-            </Styles>
-        );
-    }
+function SelectRejectReasonModal({valueCallback, visible, close}){
+    const rejectReasons = ['Not enough information', 'Duplicate customer or contact', 'Potential Spam', 'Customer needs to call', 'Other...'];
+    const initialState = { reason: rejectReasons[0], customReason: '' };
+    const [formValues, setFormValues] = useState(initialState);
+    const [showOtherField, setShowOtherField] = useState(false);
+
+    //Handle custom input box
+    useEffect(() => {
+        setShowOtherField(formValues.reason === 'Other...');
+    }, [formValues.reason]);
+
+    var changeHandler = (event) => setFormValues({
+        ...formValues,
+        [event.target.name]: event.target.value
+    });
+
+    //Reset the form on load
+    useEffect(() => {
+        if(visible === true) {
+            setFormValues(initialState);
+        }
+    }, [visible]);
+    
+    return (
+        <Modal open={visible} onClose={close}>
+            <Container>
+                <FormikFormFieldContainer>
+                    <label htmlFor="reason">Select Reject Reason</label>
+                    <select name="reason" value={formValues.reason} onChange={changeHandler}>
+                        {rejectReasons.map((r) => <option key={r} value={r}>{`${r}`}</option>)}
+                    </select>
+                </FormikFormFieldContainer>
+                {showOtherField && <FormikStyleInput label="Custom Reason (this will be sent to the customer)" type="text" name="customReason" value={formValues.customReason} onChange={changeHandler} />}
+                <DivRow>
+                    <ButtonBlack onClick={close}>Cancel</ButtonBlack>
+                    <ButtonRed onClick={() => { close(); valueCallback(formValues.customReason || formValues.reason);}}>Reject</ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    );
+
 }

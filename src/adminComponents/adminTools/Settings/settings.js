@@ -7,9 +7,10 @@ import { ButtonRed } from 'styles/buttons';
 import FormikFieldArray from '../../../pageComponents/_common/formik/fieldArray'
 import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
 import * as Yup from 'yup';
-import { ShowErrorAlert } from 'styles/alerts';
+import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts';
 import Modal from 'pageComponents/_common/modal'
 import { GET_ALL_SETTINGS, SAVE_ALL_SETTINGS } from 'config/providerGQL';
+import FormikInput from 'pageComponents/_common/formik/input_v2';
 
 const H3 = styled.h3`
   width: 100%;
@@ -33,8 +34,11 @@ const systemSettingsSchema = Yup.object().shape({
         Yup.string()
             .email("Must be an email"))
         .min(1, "Must have at least one email"),
+    emailFrom: Yup.string().email("Must be an email")
+        .required("required"),
+    siteBaseUrl: Yup.string().required(),
+    adminDashNewCustomersRelativeUrl: Yup.string().required(),
 });
-
 
 const FormWrapper = () => {
     const { isValid, isSubmitting } = useFormikContext();
@@ -46,6 +50,9 @@ const FormWrapper = () => {
                     <H3>System Settings</H3>
                     <FormikFieldArray name="contactUsNotificationEmails" label="Contact Us Notification Emails" addMore="+" />
                     <FormikFieldArray name="newCustomerNotificationEmails" label="New Customer Notification Emails" addMore="+" />
+                    <FormikInput type="text" name="emailFrom" label="Send Email From" />
+                    <FormikInput type="text" name="siteBaseUrl" label="Website Base URL" />
+                    <FormikInput type="text" name="adminDashNewCustomersRelativeUrl" label="Relative URL to New Customers Admin Dash (do not start with /)" />
                 </FormikFormGroup>
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
@@ -83,17 +90,25 @@ export default function Settings() {
     };
 
     const onSubmit = (values, { setSubmitting }) => {
-        saveSettings({ variables: { settings: { newCustomerNotificationEmails: values.newCustomerNotificationEmails, contactUsNotificationEmails: values.contactUsNotificationEmails } } });
+        saveSettings({
+            variables: {
+                settings:
+                {
+                    newCustomerNotificationEmails: values.newCustomerNotificationEmails,
+                    contactUsNotificationEmails: values.contactUsNotificationEmails,
+                    emailFrom: values.emailFrom,
+                    siteBaseUrl: values.siteBaseUrl,
+                    adminDashNewCustomersRelativeUrl: values.adminDashNewCustomersRelativeUrl,
+                }
+            }
+        });
         setSubmitting(false);
     };
 
-    return settings ?
-    (
+    return settings ? (
         <>
             <Modal open={savedShowModal} onClose={handleModalClose} >
-                <div>
-                    Saved Successfully!
-            </div>
+                <ShowInfoAlert message="Saved Successfully!" />
             </Modal>
             <Formik
                 initialValues={settings}

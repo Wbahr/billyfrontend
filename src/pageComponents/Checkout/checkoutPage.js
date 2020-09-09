@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import { useLazyQuery, useMutation } from '@apollo/client'
-import gql from 'graphql-tag'
+import { useLazyQuery } from '@apollo/client'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
 import CheckoutWizard from './checkoutWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ButtonRed, ButtonBlack } from '../../styles/buttons'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, billToSchema } from './helpers/validationSchema'
-import { connect } from 'formik'
+import {connect} from 'formik'
+import {GET_TAXES} from "../../config/providerGQL";
 
 const DivContainer = styled.div`
   display: flex;
@@ -63,12 +61,6 @@ const H3 = styled.h3`
   margin: 0 0 2px 4px;
 `
 
-const DivNavigation = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-`
-
 const Container = styled.div`
   margin: 20px;
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -84,48 +76,25 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-const SUBMIT_ORDER = gql`
-  mutation SubmitOrder($order: OrderInputDataInputGraphType){
-    submitOrder(orderInput: $order){
-      webReferenceId
-      messages
-    } 
-  }
-`
+const yupSchema = {
+	0: shippingScheduleSchema,
+	1: shipToSchema,
+	2: billToSchema
+}
 
-const GET_TAX_AMOUNT = gql`
-  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
-    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
-      grandTotal
-      subTotal
-      tariffTotal
-      taxTotal
-      taxRate
-      checkoutItems {
-        frecno
-        itemNotes
-        itemTotalPrice
-        itemTotalTariff
-        itemUnitPrice
-        quantity
-        requestedShipDate
-      }
-    }
-  }
-`
+const airlineYupSchema = {
+	0: shippingScheduleSchema,
+	1: airlineShipToSchema,
+	2: billToSchema
+}
 
-function CheckoutPage(props) {
-	const {
-		history
-	} = props
+const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
 
+function CheckoutPage({history}) {
 	const context = useContext(Context)
 	const [currentStep, setCurrentStep] = useState(0)
-	const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
 	const [shippingZipCode, setShippingZipCode] = useState({})
 	const [taxAmount, setTaxAmount] = useState(0)
-	const [triggerSubmit, setTriggerSubmit] = useState(false)
-	const stepLabel = ['Shipping Schedule','Ship To','Bill To','Order Review']
 	const [stepValidated, setStepValidated] = useState(
 		{
 			0: false,
@@ -134,116 +103,70 @@ function CheckoutPage(props) {
 			3: false
 		}
 	)
-  
-	const YupSchema = {
-		0: shippingScheduleSchema, 
-		1: shipToSchema, 
-		2: billToSchema
-	}
-
-	const AirlineYupSchema = {
-		0: shippingScheduleSchema, 
-		1: airlineShipToSchema, 
-		2: billToSchema
-	}
-
-	useEffect(() => {
-		if(!_.isNil(shippingZipCode)){
-			let cartToken = localStorage.getItem('cartToken')
-			getTaxAmount(
-				{ 'variables': {
-					'checkoutDataRequest': {
-						'anonymousCartToken': cartToken,
-						'shipToId': shippingZipCode.shipToId,
-						'zipcode': shippingZipCode.zip,
-					}
-				}
-				}
-			)
-		}
-	},[shippingZipCode])
-
-	const [submitOrder] = useMutation(SUBMIT_ORDER, {
+	
+	const [getTaxAmount] = useLazyQuery(GET_TAXES, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
-			let orderId = _.get(data,'submitOrder.webReferenceId',null)
-			if (!_.isNil(orderId)) {
-				localStorage.removeItem('shoppingCartToken')
-				context.emptyCart()
-				history.push(`/order-complete/${orderId}`)
-			} else {
-				setShowOrderFailedModal(true)
-			}
-		}
-	})
-
-	const [getTaxAmount] = useLazyQuery(GET_TAX_AMOUNT, {
-		fetchPolicy: 'no-cache',
-		onCompleted: data => {
-			let taxTotal = _.get(data,'getCheckoutData.taxTotal', 0)
+			const taxTotal = data?.getCheckoutData?.taxTotal || 0
 			setTaxAmount(taxTotal)
 		}
 	})
 
-	function handleMoveStep(requestedStep){
-		// const { values: formikValues } = useFormikContext()
-		if(requestedStep === 0 || stepValidated[requestedStep - 1]){
-			setCurrentStep(requestedStep)
+	useEffect(() => {
+		if (!shippingZipCode) {
+			const anonymousCartToken = localStorage.getItem('cartToken')
+			getTaxAmount({
+				variables: {
+					checkoutDataRequest: {
+						anonymousCartToken,
+						...shippingZipCode
+					}
+				}
+			})
+		}
+	},[shippingZipCode])
+	
+	
+	const handleMoveStep = nextStepIdx => {
+		if (nextStepIdx === 0 || stepValidated[nextStepIdx - 1]) {
+			setCurrentStep(nextStepIdx)
 		}
 	}
 
-	function handleValidateFields(values){
-		YupSchema[currentStep].validate(values).catch(function(err) {
-			console.log(err.name, err.errors)
-		})
-		YupSchema[currentStep].isValid(values).then(function(valid) {
-			setStepValidated({
-				...stepValidated,
-				[currentStep]: valid
-			})
-		})
+	const handleValidateFields = values => {
+		yupSchema[currentStep].validate(values)
+			.catch((err) => console.log(err.name, err.errors))
+		
+		yupSchema[currentStep]
+			.isValid(values)
+			.then((valid) => setStepValidated({...stepValidated, [currentStep]: valid}))
 	}
-
-	function handleCheckoutSubmit(formValues){
-		submitOrder({ variables: { order: formValues } })
-	}
-  
-	return(
+	
+	return (
 		<DivContainer>
 			<DivCheckoutCol>
 				<Div>
 					<DivRow>
 						<FontAwesomeIcon icon="lock" />
 						<H3>Checkout</H3>
-						<CheckoutProgress stepLabels={stepLabel} step={currentStep} stepValidated={stepValidated} clickMoveToStep={(index)=>handleMoveStep(index)}/>
+						<CheckoutProgress {...{stepLabels, currentStep, stepValidated, handleMoveStep}}/>
 					</DivRow>
 				</Div>
+				
 				<Container>
-					<Pformheader>{stepLabel[currentStep]}</Pformheader>
-					<Context.Consumer>
-						{({cart}) => (
-							<CheckoutWizard 
-								step={currentStep} 
-								shoppingCart={cart} 
-								triggerSubmit={triggerSubmit} 
-								YupSchema={_.get(context.userInfo, 'role') === 'Impersonator' ? AirlineYupSchema : YupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the AirlineYupSchema
-								handleValidateFields={(values)=>handleValidateFields(values)}
-								submitForm={(formValues)=>handleCheckoutSubmit(formValues)}
-								showOrderFailedModal={showOrderFailedModal}
-								updateZip={(shipToId, zip)=>setShippingZipCode({
-									shipToId: shipToId,
-									zip: zip
-								})}
-							/>)}
-					</Context.Consumer>
-					<DivNavigation>
-						{currentStep === 0 && <ButtonBlack onClick={()=>history.push('/cart')}><FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>Back to Cart</ButtonBlack>}
-						{currentStep > 0 && <ButtonBlack onClick={()=>{setCurrentStep(currentStep - 1)}}>Previous</ButtonBlack>}
-						{currentStep < (stepLabel.length - 1) && <ButtonRed disabled={!stepValidated[currentStep]} onClick={()=>{setCurrentStep(currentStep + 1)}}>Continue</ButtonRed>}
-						{currentStep === (stepLabel.length - 1) && <ButtonRed onClick={()=>{setTriggerSubmit(true)}}><FontAwesomeIcon icon='lock' size="sm" color="white"/>  Submit</ButtonRed>}
-					</DivNavigation>
+					<Pformheader>{stepLabels[currentStep]}</Pformheader>
+					<CheckoutWizard
+						step={currentStep}
+						yupSchema={context.userInfo?.role === 'Impersonator' ? airlineYupSchema : yupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
+						handleValidateFields={handleValidateFields}
+						updateZip={(shipToId, zipcode) => setShippingZipCode({shipToId, zipcode})}
+						isStepValid={stepValidated[currentStep]}
+						handleMoveStep={handleMoveStep}
+						history={history}
+					/>
 				</Container>
 			</DivCheckoutCol>
+			
 			<DivOrderTotalCol>
 				<CheckoutOrderSummary
 					currentStep={currentStep}

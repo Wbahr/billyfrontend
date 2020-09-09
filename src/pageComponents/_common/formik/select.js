@@ -12,8 +12,7 @@ const LabelStyle = {
 	fontSize: '14px',
 	fontWeight: 400,
 	paddingLeft: '4px',
-	marginBottom: '-4px',
-	// backgroundColor: 'white',
+	marginBottom: '2px',
 	width: 'max-content',
 	padding: '2px',
 	marginLeft: '7px'
@@ -38,7 +37,7 @@ const CustomSelectComponent = ({
 	...props
 }) => {
 	return (
-		<div style={{margin: 'auto 0', width: width || '300px', padding: '0 8px', height: '71px'}}>
+		<div style={{margin: 'auto 0', width: width || '300px', padding: '0 8px', height: props.label ? '71px' : ''}}>
 			{props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
 			<Select
 				{...field}

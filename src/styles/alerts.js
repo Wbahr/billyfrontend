@@ -32,7 +32,7 @@ export function ShowAlert({message}) {
 //A message box area for forms that displays an informational alert
 export function ShowInfoAlert({message}) {
   return (
-    <InfoAlert><FontAwesomeIcon icon={faInfoCircle} />{message}</InfoAlert>
+    <InfoAlert><FontAwesomeIcon icon={faInfoCircle} /> {message}</InfoAlert>
   );
 }
 

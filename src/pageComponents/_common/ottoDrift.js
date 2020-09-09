@@ -4,7 +4,7 @@ export default function OttoDrift() {
     console.log("Otto");
     var t = window.driftt = window.drift = window.driftt || [];
     if (!t.init) {
-        if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+        if (t.invoked) return null;
         t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
             t.factory = function (e) {
                 return function () {

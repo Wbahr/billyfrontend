@@ -5,9 +5,9 @@ export const BEGIN_IMPERSONATION = gql`
     impersonationBegin(customerId: $customerId){
       success
       message
-      authorizationInfo{
+      authorizationInfo {
         token
-        userInfo{
+        userInfo {
           companyId
           companyName
           firstName
@@ -19,7 +19,7 @@ export const BEGIN_IMPERSONATION = gql`
             limitValue
           }
         }
-        impersonationUserInfo{
+        impersonationUserInfo {
           customerId
           customerName
           customerIdP21
@@ -53,6 +53,17 @@ export const END_IMPERSONATION = gql`
   }
 `
 
+//Variables example: {variables: {'searchString': 'blah'}}
+export const IMPERSONATION_SEARCH = gql`
+  query GetImpersonationCustomerList($searchString: String){
+    getImpersonationCustomerList(searchString: $searchString){
+      customerIdP21
+      name
+      id
+    }
+  }
+`
+
 export const GET_TAXES = gql`
   query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
     getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
@@ -70,6 +81,15 @@ export const GET_TAXES = gql`
         quantity
         requestedShipDate
       }
+    }
+  }
+`
+
+export const SUBMIT_ORDER = gql`
+  mutation SubmitOrder($order: OrderInputDataInputGraphType){
+    submitOrder(orderInput: $order){
+      webReferenceId
+      messages
     }
   }
 `
@@ -469,43 +489,119 @@ export const QUERY_ITEM_SEARCH = gql`
 `
 
 export const QUERY_STOCK_AVAILABILITY = gql`
-  query GetStockAvailability($invMastUid: Int){
-    airlineStock(invMastUid: $invMastUid){
-      invMastUid
-      itemCode
-      companyId
-      locationId
-      locationName
-      quantityAvailable
+    query GetStockAvailability($invMastUid: Int){
+        airlineStock(invMastUid: $invMastUid){
+            invMastUid
+            itemCode
+            companyId
+            locationId
+            locationName
+            quantityAvailable
+        }
+        factoryStock(invMastUid: $invMastUid){
+            invMastUid
+            factoryAvailability
+            leadTimeDays
+            factoryMessage
+            modifiedBy
+            modifiedDate
+        }
     }
-    factoryStock(invMastUid: $invMastUid){
-      invMastUid
-      factoryAvailability
-      leadTimeDays
-      factoryMessage
-      modifiedBy
-      modifiedDate
-    }
-  }
 `
 
-//Contact Registration includes a Customer ID and no addresses. It is assumed the customer already exists.
-export const SUBMIT_CONT_REG = gql`
-	mutation SubmitContactRegistration($contact: RegistrationContactInputGraphType) {
-		submitContactRegistration(contact: $contact)
+export const SAVE_NEW_CUSTOMER = gql`
+  mutation SaveRegistration($reg: NewCustomerRegistrationInputGraphType) {
+		saveRegistration(reg: $reg)
   	}
 `
-//Customer Registration includes Billing and Shipping Addresses, but not Customer ID.
-export const SUBMIT_CUST_REG = gql`
-	mutation SubmitCustomerRegistration($customer: RegistrationCustomerInputGraphType) {
-		submitCustomerRegistration(customer: $customer)
-  	}
+
+//Get a list of new customers that have not been processed yet (form submitted, but customers & logins not created)
+export const GET_NEW_CUSTOMERS = gql`
+    query newCustomers{
+        newCustomers{
+            id
+            customerIdP21
+            received
+            email
+            fax
+            firstName
+            jobTitle
+            lastName
+            phone
+            phoneExtension
+            billingCity
+            billingCompanyName
+            billingCountry
+            billingLine1
+            billingLine2
+            billingState
+            billingZip
+            shippingCity
+            shippingCompanyName
+            shippingCountry
+            shippingLine1
+            shippingLine2
+            shippingState
+            shippingZip
+        } 
+    }
 `
+
+export const GET_NEW_CUSTOMER = gql`
+    query getNewCustomer($id: Int) {
+        newCustomer(id: $id) {
+            id
+            customerIdP21
+            email
+            fax
+            firstName
+            jobTitle
+            lastName
+            phone
+            phoneExtension
+            billingCity
+            billingCompanyName
+            billingCountry
+            billingLine1
+            billingLine2
+            billingState
+            billingZip
+            shippingCity
+            shippingCompanyName
+            shippingCountry
+            shippingLine1
+            shippingLine2
+            shippingState
+            shippingZip
+        }
+    }
+`
+
+//Pass a registrationCustomerID (from GET_NEW_CUSTOMERS) to reject the account request. It will 
+// not be available in subsequent GET_NEW_CUSTOMERS requests.
+//Variables: { "id": 19 }
+export const REJECT_NEW_CUSTOMER = gql`
+    mutation rejectReg($id: Int, $reason: String) {
+        rejectRegistration(id: $id, reason: $reason)
+    }
+`
+//Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and 
+// create a login record from the associated contact
+//Variables: { "id": 18 }
+export const APPROVE_NEW_CUSTOMER = gql`
+    mutation approveReg($id: Int) {
+        approveRegistration(id: $id)
+    }
+`
+
 export const GET_ALL_SETTINGS = gql`
     query appSettings {
         appSettings {
             newCustomerNotificationEmails
             contactUsNotificationEmails
+            emailFrom 
+            siteBaseUrl
+            adminDashNewCustomersRelativeUrl
         }
     }
 `
@@ -515,3 +611,72 @@ export const SAVE_ALL_SETTINGS = gql`
         saveAppSettings(settings: $settings)
     }
 `
+
+export const GET_CHECKOUT_DATA = gql`
+  query RetrieveCheckoutData {
+    getCheckoutDropdownData{
+      shipToAddresses{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+        collectNumberUps
+      }
+      carriers{
+        freightMultiplier
+        noAutoAllocation
+        otherShippingMethodFlag
+        shippingMethodName
+        shippingMethodUid
+        shippingMethodValue
+        showInListFlag
+      }
+      contacts{
+        id
+        firstName
+        lastName
+        phoneNumber
+        email
+      }
+      termsDescription
+      customerPhysicalAddress{
+        id
+        name
+        companyName
+        physAddress1
+        physAddress2
+        physAddress3
+        physCity
+        physState
+        physPostalCode
+        physCountry
+      }
+    }
+  }
+`
+
+export const GET_PAYMENT_METHOD_INFO = gql`
+	query GetPaymentMethodInfo ($paymentMethodRequest: PaymentMethodInfoRetrieve){
+		paymentMethodInfo(paymentMethodInfo: $paymentMethodRequest){
+			paymentSystemSecretKey
+			paymentSystemCustomerId
+			paymentMethods{
+				paymentMethodId
+				paymentSystemCustomerId
+				type
+				card{
+					brand
+					expirationMonth
+					expirationYear
+					lastFour
+				}
+			}
+		}
+  }
+  `

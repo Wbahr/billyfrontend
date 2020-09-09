@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
 const UlProgressBar = styled.ul`
@@ -44,7 +44,6 @@ li:first-child:after {
 ` 
 
 let LI = styled.li`
-	cursor: ${props => props.cursor ? 'pointer' : 'default'};
 	:before {
 		background-color: ${props => props.validated ? '#000080' : 'white'};
 	}
@@ -53,29 +52,46 @@ let LI = styled.li`
 const LiSelected = styled.li`
 	color: #535353 !important; 
 	font-weight: 500;
-	cursor: ${props => props.cursor ? 'pointer' : 'default'};
 	:before {
 		border-color: #007bff !important;
 		background-color: ${props => props.validated ? '#afd5ff' : 'white'};
 	}
 `
 
-export default function CheckoutProgress({stepLabels, step, clickMoveToStep, stepValidated}) {
-
-	let Steps = stepLabels.map((stepName, index) =>{
-
-
-		if (index === step) {
-			return(<LiSelected cursor={stepValidated[index] || (index === step)} validated={stepValidated[index]} onClick={()=>clickMoveToStep(index)}>{stepName}</LiSelected>)
-		} else {
-			return(<LI cursor={stepValidated[index] || (index === step)} validated={stepValidated[index]} onClick={()=>clickMoveToStep(index)}>{stepName}</LI>)
-		}
-	})
-	return(
-		<>
+export default function CheckoutProgress({stepLabels, currentStep, handleMoveStep, stepValidated}) {
+	const cursor = index => stepValidated[index] || (index === currentStep) ? 'pointer' : 'default'
+	const mapStepLabels = (stepName, index) => index === currentStep
+		? (
+			<LiSelected
+				key={index}
+				cursor={cursor(index)}
+				validated={stepValidated[index]}
+				onClick={() => handleMoveStep(index)}
+			>
+				{stepName}
+			</LiSelected>
+		) : (
+			<LI
+				key={index}
+				cursor={cursor(index)}
+				validated={stepValidated[index]}
+				onClick={() => handleMoveStep(index)}
+			>
+				{stepName}
+			</LI>
+		)
+	
+	const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
+	
+	useEffect(() => {
+		setSteps(stepLabels.map(mapStepLabels))
+	}, [stepLabels, currentStep, stepValidated])
+	
+	return (
+		<div>
 			<UlProgressBar>
-				{Steps}
+				{steps}
 			</UlProgressBar>
-		</>
+		</div>
 	)
 }

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
+import {getImagePath} from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -87,45 +87,26 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-export default function ShippingScheduleItem({item, index}) {
-	const itemId = parseInt(item.frecno,10)
-	const context = useContext(Context)
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
-	const {
-		itemDetails,
-		customerPartNumbers
-	} = displayItem
-
-
-	let Content
-	if(_.isNil(itemDetails)) {
-		Content = (<p>{item.freqno}</p>)
+const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
+	if (!itemDetails) {
+		return <p>{item.frecno}</p>
 	} else {
-		let imagePath
-		let resultImage = _.get(itemDetails,'image[0].path',null)
-		if (_.isNil(resultImage)){
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = resultImage.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-
-		let tomorrowDate = new Date()
+		const imagePath = getImagePath(itemDetails?.image?.[0]?.path)
+		const tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
-
-		let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
-
-		Content = (
+		const selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
+		
+		return (
 			<DivCard>
 				<DivCol1>
-					<Img height='65px'  src={imagePath} />
+					<Img height='65px' src={imagePath} />
 				</DivCol1>
+				
 				<DivCol2>
 					<P1>{itemDetails.itemDesc}</P1>
-					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+					<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!!selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
 				</DivCol2>
+				
 				<DivCol3>
 					<DivQuantity>
 						<DivItem>
@@ -133,32 +114,37 @@ export default function ShippingScheduleItem({item, index}) {
 						</DivItem>
 					</DivQuantity>
 				</DivCol3>
+				
 				<div>
 					<Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
-						{({
-							field,
-							form
-						}) => (
+						{({field, form}) => (
 							<DivRow>
 								<DivSpacer>
 									<FontAwesomeIcon icon="calendar" color="lightgrey"/>
 								</DivSpacer>
+								
 								<DatePicker
 									minDate={tomorrowDate}
 									selected={Date.parse(field.value)}
-									onChange={(value)=>form.setFieldValue(field.name, value)}
+									onChange={(value) => form.setFieldValue(field.name, value)}
 								/>
 							</DivRow>
-						)
-						}
+						)}
 					</Field>
 				</div>
 			</DivCard>
 		)
 	}
-	return(
+}
+
+export default function ShippingScheduleItem({item, index}) {
+	const itemId = parseInt(item.frecno,10)
+	const context = useContext(Context)
+	const displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid === itemId)
+	
+	return (
 		<DivContainer key={index}>
-			{Content}
+			{getContent(displayItem, item, index)}
 		</DivContainer>
 	)
 }
