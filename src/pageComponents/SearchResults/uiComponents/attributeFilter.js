@@ -65,21 +65,32 @@ export default function AttributeFilter({open, attribute, updateAttribute}) {
 	
 	const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
 	
+	const toOption = ({selected, featureName, featureNameDisplay, featureCount}, idx) => (
+		<DivOptionRow key={idx}>
+			<input
+				type="checkbox"
+				checked={selected}
+				onChange={handleFeatureClick(idx)}
+			/>
+			<Label htmlFor={featureName}>{featureNameDisplay}</Label>
+			<PCount>({featureCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const searchSortAndMapToOption = (accum, curVal, idx) => {
+		if (searchFilter(curVal)) {
+			if (curVal.selected) {
+				accum.unshift(toOption(curVal, idx))
+			} else {
+				accum.push(toOption(curVal, idx))
+			}
+		}
+		return accum
+	}
+	
 	const AttributeOptions = () => (
 		<DivOptions>
-			{attribute.features
-				.filter(searchFilter)
-				.map(({selected, featureName, featureNameDisplay, featureCount}, idx) => (
-					<DivOptionRow key={idx}>
-						<input
-							type="checkbox"
-							checked={selected}
-							onChange={handleFeatureClick(idx)}
-						/>
-						<Label htmlFor={featureName}>{featureNameDisplay}</Label>
-						<PCount>({featureCount})</PCount>
-					</DivOptionRow>
-				))}
+			{attribute.features.reduce(searchSortAndMapToOption, [])}
 		</DivOptions>
 	)
 

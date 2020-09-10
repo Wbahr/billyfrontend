@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import Context from '../../../config/context'
 import {getImagePath} from "../../_common/helpers/generalHelperFunctions";
+import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -157,8 +158,11 @@ const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers
 export default function ItemResult({searchTerm, result, details, availabilities, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
 	const [quantity, setQuantity] = useState(1)
 	const context = useContext(Context)
-	const {availability, leadTimeDays} = context.itemAvailabilities.find(avail => avail.invMastUid === result.frecno) || {}
-	const {unitPrice} = context.itemPrices.find(item => item.invMastUid === result.frecno) || {}
+	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.frecno)
+	const {availability, leadTimeDays} = foundAvailability || {}
+	
+	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.frecno)
+	const {unitPrice} = foundPrice || {}
 	
 	const [customerPartNumber, setCustomerPartNumber] = useState('')
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
@@ -207,7 +211,11 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 		<DivItemResultContainer>
 			<DivPartDetailsRow>
 				<DivPartImg onClick={handlePartClick} style={{cursor: 'pointer'}}>
-					<Img src={getImagePath(details.image?.length && details.image[0].path)}/>
+					{!details.image ? (
+						<SkeletonImage/>
+					) : (
+						<Img src={getImagePath(details.image?.length && details.image[0].path)}/>
+					)}
 				</DivPartImg>
 				
 				<ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
@@ -238,14 +246,17 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 				
 				<DivPartNumberRow>
 					<PpartAvailability>Availability:</PpartAvailability>
-					{availability ? (
+					
+					{!unitPrice || !availability ? (
+						<PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : `Call for availability`}</PBlue>
+					)	: !foundAvailability ? (
+						<SkeletonDetail style={{margin: 'auto 0'}}/>
+					) : (
 						<DivRow>
 							<PBlue onClick={handleAvailabilityClick}>
 								{availability} (Show Locations)
 							</PBlue>
 						</DivRow>
-					)	: (
-						<PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : `Call for availability`}</PBlue>
 					)}
 				</DivPartNumberRow>
 				
@@ -253,9 +264,15 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 					<Div>Quantity:
 						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
 					</Div>
+					
 					{unitPrice ? (
 						<Div>
 							<Pprice>${unitPrice.toFixed(2)}</Pprice>
+							<P>/EA</P>
+						</Div>
+					) : !foundPrice ? (
+						<Div>
+							<SkeletonDetail style={{margin: 'auto 0 auto 75px', width: 50}}/>
 							<P>/EA</P>
 						</Div>
 					) : (

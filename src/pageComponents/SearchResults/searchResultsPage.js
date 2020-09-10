@@ -13,7 +13,7 @@ import AddedModal from './uiComponents/addedModal'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useLazyQuery } from '@apollo/client'
 import {QUERY_ITEM_SEARCH, GET_ITEMS_BY_ID} from '../../config/providerGQL'
-import  SkeletonItem from './uiComponents/skeletonItem'
+import SkeletonItem from './uiComponents/skeletonItem'
 import Context from '../../config/context'
 
 const DivContainer = styled.div`
@@ -70,54 +70,67 @@ export default function SearchResultsPage(props) {
 	const [detailsModalItem, setDetailsModalItem] = useState(null)
 	const [ottoFindPart, setOttoFindPart] = useState(false)
 	const [itemDetails, setItemDetails] = useState([])
+	const [lastSearchPayload, setLastSearchPayload] = useState({})
 	
 	const {getItemAvailabilities, getItemPrices} = useContext(Context)
 	
 	useEffect(() => {
-		if (currentPage > 0 && !isSearching) loadItems()
+		if (currentPage > 0) loadItems()
 	}, [currentPage])
 	
 	useEffect(() => {
-		if (!isSynced) {
+		if (isReplacingResults && !isSynced) {
+			window.scrollTo({ top: 0 })
 			setOttoFindPart(false)
 			setCurrentPage(0)
-			setIsReplacingResults(true)
 			loadItems()
 		}
-	}, [searchTerm, sortType, isSynced])
+	}, [isReplacingResults, searchState])
+	
+	useEffect(() => {
+		if (!isSynced) setIsReplacingResults(true)
+	}, [searchState])
+	
+	useEffect(() => {
+		setIsReplacingResults(true)
+	}, [searchTerm, sortType])
 	
 	function loadItems() {
 		const resultSize = !searchResults.length ? parseInt(parsedQueryString.resultSize) : 24
 		setSearching(true)
-		performItemSearch({
-			variables: {
-				search: {
-					searchTerm: parsedQueryString.searchTerm,
-					searchType: parsedQueryString.nonweb === 'true' ? 'nonweb' :'web',
-					sortType: parsedQueryString.sortType,
-					resultPage: currentPage+1,
-					resultSize,
-					searchState: {
-						brands,
-						parentCategories,
-						childCategories,
-						attributes,
-					}
+		const payload = {
+			search: {
+				searchTerm: parsedQueryString.searchTerm,
+				searchType: parsedQueryString.nonweb === 'true' ? 'nonweb' :'web',
+				sortType: parsedQueryString.sortType,
+				resultPage: isReplacingResults ? 1 : currentPage+1,
+				resultSize,
+				searchState: {
+					brands,
+					parentCategories,
+					childCategories,
+					attributes,
 				}
 			}
+		}
+		setLastSearchPayload(payload)
+		performItemSearch({
+			variables: payload
 		})
 	}
 	
-	const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+	const [performItemSearch, {variables}] = useLazyQuery(QUERY_ITEM_SEARCH, {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({itemSearch}) => {
-			const search = queryString.parse(location.search)
-			if (itemSearch.result.length === parseInt(search.resultSize)) setInfiniteScrollHasMore(true)
-			const searchState = cleanSearchState(itemSearch)
-			setSearchState({ ...searchState, isSynced: true })
-			parseQueryResults(itemSearch)
-			setIsReplacingResults(false)
-			setSearching(false)
+			if (variables.search === lastSearchPayload.search) {
+				const search = queryString.parse(location.search)
+				if (itemSearch.result.length === parseInt(search.resultSize)) setInfiniteScrollHasMore(true)
+				const searchState = cleanSearchState(itemSearch)
+				setSearchState({ ...searchState, isSynced: true })
+				parseQueryResults(itemSearch)
+				setIsReplacingResults(false)
+				setSearching(false)
+			}
 		}
 	})
 	
@@ -170,6 +183,10 @@ export default function SearchResultsPage(props) {
 	useEffect(() => {
 		setHistoryLocationSearch(sortType, 'sortType')
 	}, [sortType])
+	
+	useEffect(() => {
+		setSearchTerm(parsedQueryString.searchTerm)
+	}, [parsedQueryString.searchTerm])
 	
 	const handleShowLocationsModal = (invMastUid) => setLocationsModalItem(invMastUid)
 

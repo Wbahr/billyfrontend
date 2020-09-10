@@ -72,7 +72,7 @@ const Row = styled.div`
 `
 
 export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}) {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(true)
 	const selectedParentIdx = parentCategories.findIndex(category => category.selected)
 	const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
 	
@@ -86,7 +86,16 @@ export default function CategoryFilter({isSearching, parentCategories, childCate
 		}
 	}
 	
-	const childCategory = ({childCategoryName, childCategoryDisplayName, childCategoryCount}, idx) => (
+	const sortAndMapToOption = toOption => (accum, curVal, idx) => {
+		if (curVal.selected) {
+			accum.unshift(toOption(curVal, idx))
+		} else {
+			accum.push(toOption(curVal, idx))
+		}
+		return accum
+	}
+	
+	const toChildCategory = ({childCategoryName, childCategoryDisplayName, childCategoryCount}, idx) => (
 		<DivOptionRow key={childCategoryName}>
 			<DivRow>
 				<Acategory
@@ -106,9 +115,9 @@ export default function CategoryFilter({isSearching, parentCategories, childCate
 		</DivOptionRow>
 	)
 	
-	const ChildCategories = () => <div>{(childCategories || []).map(childCategory)}</div>
+	const ChildCategories = () => <div>{(childCategories || []).reduce(sortAndMapToOption(toChildCategory), [])}</div>
 	
-	const parentCategory = ({parentCategoryName, parentCategoryDisplayName, parentCategoryCount}, idx) => (
+	const toParentCategory = ({parentCategoryName, parentCategoryDisplayName, parentCategoryCount}, idx) => (
 		<DivOption key={parentCategoryName}>
 			<Row>
 				<DivRow>
@@ -133,7 +142,7 @@ export default function CategoryFilter({isSearching, parentCategories, childCate
 		</DivOption>
 	)
 	
-	const ParentCategories = () => <>{(parentCategories || []).map(parentCategory)}</>
+	const ParentCategories = () => <>{(parentCategories || []).reduce(sortAndMapToOption(toParentCategory), [])}</>
 
 	return (
 		<div>

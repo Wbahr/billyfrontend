@@ -58,7 +58,7 @@ const InputSearch = styled.input`
 `
 
 export default function BrandFilter({brands, setBrands}) {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(true)
 	const [filter, setFilter] = useState('')
 
 	const handleFeatureToggle = idx => ({target: {checked}}) => {
@@ -69,21 +69,32 @@ export default function BrandFilter({brands, setBrands}) {
 	
 	const searchFilter = b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter))
 	
+	const toOption = ({selected, brandName, brandNameDisplay, brandCount}, idx) => (
+		<DivOptionRow key={idx}>
+			<input
+				type="checkbox"
+				checked={selected}
+				onChange={handleFeatureToggle(idx)}
+			/>
+			<Label htmlFor={brandName}>{brandNameDisplay}</Label>
+			<PCount>({brandCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const searchSortAndMapToOption = (accum, curVal, idx) => {
+		if (searchFilter(curVal)) {
+			if (curVal.selected) {
+				accum.unshift(toOption(curVal, idx))
+			} else {
+				accum.push(toOption(curVal, idx))
+			}
+		}
+		return accum
+	}
+	
 	const BrandOptions = () => (
 		<DivOptions>
-			{brands
-				.filter(searchFilter)
-				.map(({selected, brandName, brandNameDisplay, brandCount}, idx) => (
-					<DivOptionRow key={idx}>
-						<input
-							type="checkbox"
-							checked={selected}
-							onChange={handleFeatureToggle(idx)}
-						/>
-						<Label htmlFor={brandName}>{brandNameDisplay}</Label>
-						<PCount>({brandCount})</PCount>
-					</DivOptionRow>
-			))}
+			{brands.reduce(searchSortAndMapToOption, [])}
 		</DivOptions>
 	)
 	
