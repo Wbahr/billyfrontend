@@ -164,7 +164,7 @@ function BillingInfoForm(props) {
 				<NewCardSection {...props} setCardIsValid={setCardIsValid}/>
 			)}
 			{paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
-				<FormikInput label="PO Number" name="billing.po" />
+				<FormikInput label="PO Number" name="billing.purchaseOrder" />
 			)}
 			
 			<DivNavigation>
