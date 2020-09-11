@@ -27,7 +27,7 @@ export default function NewCardSection(props) {
 	return (
 		<>
 			<StripePaymentSection stripe={stripe}/>
-			<FormikInput label="PO Number" name="billing.po" />
+			<FormikInput label="PO Number" name="billing.purchaseOrder" />
 			<FormikInput type="hidden" name="billing.companyId" />
 			<FormikInput label="Company Name" name="billing.companyName" width="500px"/>
 			<FormikInput label="First Name" name="billing.contact_firstName" />
