@@ -460,6 +460,7 @@ export const QUERY_ITEM_SEARCH = gql`
 		itemSearch(searchParams: $search) {
 			searchTerm
 			searchType
+			innerSearchTerms
 			sortType
 			resultPage
 			resultSize

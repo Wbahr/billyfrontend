@@ -58,6 +58,7 @@ export default function SearchResultsPage(props) {
 	
 	const parsedQueryString = queryString.parse(location.search)
 	const [searchTerm, setSearchTerm] = useState(parsedQueryString.searchTerm)
+	const [innerSearchTerms, setInnerSearchTerms] = useState([])
 	const [sortType, setSortType] = useState(parsedQueryString.sortType)
 	const [searchResults, setSearchResults] = useState([])
 	const [totalResults, setTotalResults] = useState('--')
@@ -79,20 +80,34 @@ export default function SearchResultsPage(props) {
 	}, [currentPage])
 	
 	useEffect(() => {
-		if (isReplacingResults && !isSynced) {
+		if (!isSynced) {
 			window.scrollTo({ top: 0 })
 			setOttoFindPart(false)
 			setCurrentPage(0)
 			loadItems()
 		}
-	}, [isReplacingResults, searchState])
+	}, [searchState])
+	
+	const searchReplaceResults = () => {
+		setIsReplacingResults(true)
+		window.scrollTo({ top: 0 })
+		setOttoFindPart(false)
+		setCurrentPage(0)
+		loadItems()
+	}
 	
 	useEffect(() => {
-		if (!isSynced) setIsReplacingResults(true)
+		searchReplaceResults()
+	}, [innerSearchTerms])
+	
+	useEffect(() => {
+		if (!isSynced) searchReplaceResults()
 	}, [searchState])
 	
 	useEffect(() => {
-		setIsReplacingResults(true)
+		searchReplaceResults()
+		setSearchState(initialSearchState)
+		setInnerSearchTerms([])
 	}, [searchTerm, sortType])
 	
 	function loadItems() {
@@ -101,6 +116,7 @@ export default function SearchResultsPage(props) {
 		const payload = {
 			search: {
 				searchTerm: parsedQueryString.searchTerm,
+				innerSearchTerms,
 				searchType: parsedQueryString.nonweb === 'true' ? 'nonweb' :'web',
 				sortType: parsedQueryString.sortType,
 				resultPage: isReplacingResults ? 1 : currentPage+1,
@@ -114,9 +130,7 @@ export default function SearchResultsPage(props) {
 			}
 		}
 		setLastSearchPayload(payload)
-		performItemSearch({
-			variables: payload
-		})
+		performItemSearch({ variables: payload })
 	}
 	
 	const [performItemSearch, {variables}] = useLazyQuery(QUERY_ITEM_SEARCH, {
@@ -124,13 +138,18 @@ export default function SearchResultsPage(props) {
 		onCompleted: ({itemSearch}) => {
 			if (variables.search === lastSearchPayload.search) {
 				const search = queryString.parse(location.search)
-				if (itemSearch.result.length === parseInt(search.resultSize)) setInfiniteScrollHasMore(true)
+				if (itemSearch.result.length === parseInt(search.resultSize)) {
+					setInfiniteScrollHasMore(true)
+				}
 				const searchState = cleanSearchState(itemSearch)
 				setSearchState({ ...searchState, isSynced: true })
 				parseQueryResults(itemSearch)
 				setIsReplacingResults(false)
 				setSearching(false)
 			}
+		},
+		onError: () => {
+			throw 'Search Failed: show error boundary'
 		}
 	})
 	
@@ -201,8 +220,6 @@ export default function SearchResultsPage(props) {
 		setCurrentPage(currentPage + 1)
 	}
 	
-	const addSearchTerm = newSearchTerm => setSearchTerm(`${searchTerm} ${newSearchTerm}`)
-	
 	const handleAddedToCart = () => setShowAddedToCartModal(true)
 	
 	const handleAddedToCartModal = () => setShowAddedToCartModal(false)
@@ -252,7 +269,8 @@ export default function SearchResultsPage(props) {
 					<ResultsSearch
 						sortType={sortType}
 						setSortType={setSortType}
-						addSearchTerm={addSearchTerm}
+						innerSearchTerms={innerSearchTerms}
+						setInnerSearchTerms={setInnerSearchTerms}
 					/>
 				</DivResultSummary>
 				
@@ -264,7 +282,7 @@ export default function SearchResultsPage(props) {
 				>
 					<DivSearchResultsContainer>
 						{!isReplacingResults && itemSearchResults}
-						{(searchResults.length < totalResults || totalResults === '--') &&
+						{(searchResults.length < totalResults || totalResults === '--' || isSearching) &&
 							<>
 								<SkeletonItem/>
 								<SkeletonItem/>
