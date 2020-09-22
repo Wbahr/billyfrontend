@@ -11,6 +11,7 @@ import {useMutation} from "@apollo/client";
 import {SUBMIT_ORDER} from "../../../config/providerGQL";
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from "../uiComponents/orderFailedModal";
+import _ from "lodash";
 
 const SectionRow = styled.div`
 	display: flew;
@@ -122,15 +123,15 @@ export default function ConfirmationScreen(props) {
 	
 	return (
 		<div>
-			{
-				userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee' && (
-					<SectionContainerBlue>
-						<SectionTitle>Confirmation Email</SectionTitle>
-						<FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
-						<FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
-					</SectionContainerBlue>
-				)
-			}
+			{(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
+				<SectionContainerBlue>
+					<SectionTitle>Confirmation Email</SectionTitle>
+					<FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo"/>
+					<FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email"/>
+					{history.location.pathname === '/create-quote' && <FormikCheckbox label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote"/>}
+				</SectionContainerBlue>
+			)}
+			
 			<SectionRow>
 				<SectionContainerHalf>
 					<SectionTitle>Ship To</SectionTitle>
@@ -154,6 +155,7 @@ export default function ConfirmationScreen(props) {
 							<P>Is Collect?</P>
 							<p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p>
 						</DivTextRow>
+						
 						{shipto.isCollect === 1 && (
 							<DivTextRow>
 								<P>Collect Number:</P>
@@ -180,14 +182,14 @@ export default function ConfirmationScreen(props) {
 							<P>Payment Method:</P>
 							<p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
 						</DivTextRow>
-						{
-							billing.paymentMethod === 'credit_card' && (
-								<DivTextRow>
-									<P>Card Type:</P>
-									<p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>
-								</DivTextRow>
-							)
-						}
+						
+						{billing.paymentMethod === 'credit_card' && (
+							<DivTextRow>
+								<P>Card Type:</P>
+								<p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>
+							</DivTextRow>
+						)}
+						
 						<DivTextRow>
 							<P>Purchase Order:</P>
 							<p>{billing.purchaseOrder}</p>
