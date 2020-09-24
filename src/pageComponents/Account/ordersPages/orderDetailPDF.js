@@ -209,11 +209,9 @@ export default React.memo(({ orderId, data }) => {
 		packingBasis,
 		promiseDate
 	} = data
-	console.log(lineItems);
-	let itemDetails = _.map(lineItems, item => {
-		console.log(item);
+	let itemDetails = _.map(lineItems, (item, index) => {
 		return (
-			<DivItemDetail>
+			<DivItemDetail key={index}>
 				<DivItemDetailCell width='35%'>
 					<P1>{item.itemDescription}</P1>
 					<P2>Item Code: {item.itemCode}</P2>

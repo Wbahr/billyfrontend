@@ -4,6 +4,7 @@ import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import NumberFormat from 'react-number-format'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -79,18 +80,6 @@ const P2 = styled.p`
   color: grey;
   font-size: 12px !important;
 `
-const getImageUrl = url => {
-	let imagePath
-	if (_.isNil(url)) {
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		const imagePathArray = url.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 't.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
-	return imagePath
-}
 
 export default function ShippingScheduleItem({item}) {
 	const itemId = parseInt(item.frecno,10)
@@ -98,7 +87,7 @@ export default function ShippingScheduleItem({item}) {
 	const displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid === itemId)
 	const {itemDetails, customerPartNumbers} = displayItem
 
-	const imagePath = getImageUrl(itemDetails?.image?.[0]?.path)
+    const imagePath = getThumbnailImagePath(itemDetails);
 	let date = item.requestedShipDate
 	date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
@@ -107,7 +96,7 @@ export default function ShippingScheduleItem({item}) {
 	const Content = () => (
 		<DivCard>
 			<DivCol1>
-				<Img height='65px'  src={imagePath} />
+				<Img height='65px' src={imagePath} />
 			</DivCol1>
 			
 			<DivCol2>

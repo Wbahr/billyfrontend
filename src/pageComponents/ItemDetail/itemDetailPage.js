@@ -9,6 +9,7 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
+import { getLargeImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const GET_ITEM_BY_ID = gql`
 		query ItemById($itemId: Int){
@@ -62,15 +63,11 @@ const GET_ITEM_BY_ID = gql`
 								id
 							}
 							image {
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
 								path
 								sequence
-								type
-								id
+								itemMediaType
+                                mediaType
+								mediaId
 							}
 							associatedItems {
 								associatedInvMastUid
@@ -292,7 +289,7 @@ export default function ItemDetailPage({ history }) {
 	const [item, setItem] = useState(null)
 	const [quantity, setQuantity] = useState(1)
 	const [unitPrice, setUnitPrice] = useState(null)
-	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(_.isNil(customerPartNumber) ? null : customerPartNumber)
+	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(_.isNil(customerPartNumber) ? '' : customerPartNumber)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const [showAddListModal, setShowAddListModal] = useState(false)
@@ -340,17 +337,8 @@ export default function ItemDetailPage({ history }) {
 	} else if (!_.has(item, 'invMastUid')) {
 		return (<p>No item found</p>)
 	} else {
-		let imagePath
-		let resultImage = _.get(item, 'image[0].path', null)
-		if (_.isNil(resultImage)) {
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = resultImage.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 'o.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-
+        let imagePath = getLargeImagePath(item);
+		
 		let FeatureItems = item.feature.map((elem, idx) => {
 			return (
 				<li key={idx}>{elem.text}</li>
@@ -415,7 +403,7 @@ export default function ItemDetailPage({ history }) {
 					timeout={900}
 				/>
 				<DivPhoto>
-					<Img src={imagePath} />
+					<Img src={imagePath} alt={item.invMastUid} />
 				</DivPhoto>
 				<DivDetails>
 					<H2ItemTitle>{item.itemDesc}</H2ItemTitle>

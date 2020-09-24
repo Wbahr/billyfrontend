@@ -111,7 +111,8 @@ export const GET_ITEM_BY_ID = gql`
       image {
         path
         sequence
-        type
+        itemMediaType
+        mediaType
       }
     }
     customerPartNumbers(frecno: $itemId){
@@ -138,7 +139,8 @@ export const GET_ITEMS_BY_ID = gql`
       image {
         path
         sequence
-        type
+        mediaType
+        itemMediaType
       }
     }
     customerPartNumbersBatch(invMastUids: $invMastUids){
