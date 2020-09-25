@@ -186,13 +186,6 @@ export default function OrderDetail({ history, orderId }) {
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
 				<Container>
-					{/* <ToggleSwitch
-						label='View:'
-						text='Table'
-						text2='List'
-						toggled={isTableView}
-						setToggled={(value) => setIsTableView(value)}
-					/> */}
 					<Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)} />
 				</Container>
 				{itemDetails}

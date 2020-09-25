@@ -286,16 +286,16 @@ const IMG = styled.img`
 export default function ItemDetailPage({ history }) {
 	let { itemId, customerPartNumber } = useParams()
 
-	const [item, setItem] = useState(null)
-	const [quantity, setQuantity] = useState(1)
-	const [unitPrice, setUnitPrice] = useState(null)
-	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(_.isNil(customerPartNumber) ? '' : customerPartNumber)
-	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
-	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-	const [showAddListModal, setShowAddListModal] = useState(false)
+	const [item, setItem] = useState(null);
+	const [quantity, setQuantity] = useState(1);
+	const [unitPrice, setUnitPrice] = useState(null);
+    const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
+	const [customerPartNumbers, setCustomerPartNumbers] = useState([]);
+	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
+	const [showAddListModal, setShowAddListModal] = useState(false);
 
 	function handleAddedToCart() {
-		setShowAddedToCartModal(false)
+		setShowAddedToCartModal(false);
 	}
 
 	itemId = parseInt(itemId, 10)
