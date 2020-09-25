@@ -68,6 +68,10 @@ const ButtonSmall = styled.button`
     }
   `
 
+const Container = styled.div`
+    margin: 10px 0
+`
+
 export default function OrderDetail({ history, orderId }) {
 	const context = useContext(Context)
 	const [filter, setFilter] = useState('')
@@ -85,10 +89,10 @@ export default function OrderDetail({ history, orderId }) {
 
 	let itemDetails = []
 	if (!isTableView) {
-		let filteredListItems = matchSorter(data.lineItems, filter, { keys: ['itemCode'] })
+        let filteredListItems = matchSorter(data.lineItems, filter, { keys: ['itemCode'] })
 		itemDetails = _.map(filteredListItems, (item) => {
 			return (
-				<OrderDetailItem item={item} />
+				<OrderDetailItem key={item.lineNumber} item={item} />
 			)
 		})
 		if (itemDetails.length === 0) {
@@ -147,7 +151,6 @@ export default function OrderDetail({ history, orderId }) {
 			<p>Loading Order Data...</p>
 		)
 	} else {
-		console.log("render", orderId, data);
 		return (
 			<div>
 				<AddedModal
@@ -182,16 +185,9 @@ export default function OrderDetail({ history, orderId }) {
 						<p>{shipToCity}, {shipToState} {shipToZip}</p>
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
-				<div>
-					<ToggleSwitch
-						label='View:'
-						text='Table'
-						text2='List'
-						toggled={isTableView}
-						setToggled={(value) => setIsTableView(value)}
-					/>
+				<Container>
 					<Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)} />
-				</div>
+				</Container>
 				{itemDetails}
 			</div>
 		)
