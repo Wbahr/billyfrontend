@@ -58,17 +58,6 @@ module.exports = (env) => {
 					}
 				},
 				{
-					test: /\.css$/,
-					use: [
-						{
-							loader: 'style-loader'
-						},
-						{
-							loader: 'css-loader'
-						}
-					]
-				},
-				{
 					test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
 					use: [
 						{
@@ -97,6 +86,10 @@ module.exports = (env) => {
 						}
 					]
 				},
+				{
+					test: /\.s?css$/,
+					use: ['style-loader', 'css-loader', 'sass-loader']          
+				}
 			]
 		},
 		devServer: {

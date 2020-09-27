@@ -15,6 +15,7 @@ import {
 	exportToExcel,
 	exportToPdf,
 	getCsvFormattedData,
+    getImagePath,
 	getRidOf__typename
 } from "../../_common/helpers/generalHelperFunctions";
 import NumberFormat from "react-number-format";
@@ -197,19 +198,6 @@ export default function ShoppingListManagementPage() {
 				setConfirmDelete(false)
 			})
 	}
-
-	const getImageUrl = url => {
-		let imagePath
-		if (_.isNil(url)) {
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			const imagePathArray = url.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-		return imagePath
-	}
 	
 	const handleQuantityChange = (props) => ({target: {value}}) => {
 		const {row: {original: {idx}}, listItems} = props
@@ -315,7 +303,7 @@ export default function ShoppingListManagementPage() {
 			{
 				Header: 'Image',
 				accessor: 'imageUrl',
-				Cell: props => <img src={getImageUrl(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
+				Cell: props => <img src={getImagePath(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
 			},
 			{
 				Header: 'AHC #',
@@ -580,7 +568,7 @@ export default function ShoppingListManagementPage() {
 			{
 				context.getShoppingListsState?.loading ? (
 					<SpinnerDiv>
-						<CircularProgress color=""/>
+						<CircularProgress />
 					</SpinnerDiv>
 				) : (
 					<Table {...getTableProps()}>

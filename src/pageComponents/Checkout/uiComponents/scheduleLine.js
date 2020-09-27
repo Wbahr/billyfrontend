@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
-import {getImagePath} from '../../_common/helpers/generalHelperFunctions'
+import { getThumbnailImagePath} from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -91,7 +91,7 @@ const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
 	if (!itemDetails) {
 		return <p>{item.frecno}</p>
 	} else {
-		const imagePath = getImagePath(itemDetails?.image?.[0]?.path)
+        const imagePath = getThumbnailImagePath(itemDetails);
 		const tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 		const selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
@@ -99,7 +99,7 @@ const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
 		return (
 			<DivCard>
 				<DivCol1>
-					<Img height='65px' src={imagePath} />
+					<Img height='65px' src={imagePath} alt={item.frecno} />
 				</DivCol1>
 				
 				<DivCol2>

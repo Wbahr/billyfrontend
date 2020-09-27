@@ -196,7 +196,7 @@ export default function HeaderComponent(props) {
 							{({ userInfo }) => {
 								if (userInfo) {
 									return (
-										<div id="myAccount" onMouseEnter={() => setShowMyAccountDropdown(true)} onMouseLeave={() => { setTimeout(() => { setShowMyAccountDropdown(false) }, 50) } }>
+										<div id="myAccount" onMouseEnter={() => setShowMyAccountDropdown(true)} onMouseLeave={() => { setTimeout(() => { setShowMyAccountDropdown(false) }, 50) }}>
 											<Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
 												<A id="myAccount">My Account</A>
 											</Link>
@@ -256,6 +256,8 @@ export default function HeaderComponent(props) {
 						</NavigationItemContainer>
 						<NavigationItemContainer to="/industries" text="Industries">
 							<DropdownMenu>
+								<DropdownMenuItem to="/pages/industries/commercial-protective-barriers">Physical Distancing Barriers</DropdownMenuItem>
+								<DropdownMenuItem to="/pages/industries/covid-medical-structures">Covid Medical Structures</DropdownMenuItem>
 								<DropdownMenuItem to="/brands">All Brands</DropdownMenuItem>
 								<DropdownMenuItem to="/brands/featured/abb">ABB</DropdownMenuItem>
 								<DropdownMenuItem to="/brands/featured/aventics">Aventics</DropdownMenuItem>

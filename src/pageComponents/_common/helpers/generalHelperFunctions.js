@@ -48,9 +48,24 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
 	doc.save(`${name}.pdf`)
 }
 
+//Sanitizes a path so that if it is null, the place-holder image is returned
 export const getImagePath = path => {
 	const pathSplit = path && path.split('\\')
 	return path
-		? 'https://www.airlinehyd.com/images/items/' + pathSplit[pathSplit.length - 1].slice(0, -5) + 'l.jpg'
-		: 'https://www.airlinehyd.com/images/no-image.jpg'
+		? '//' + path
+		: 'https://www.airlinehyd.com/images/no-image.jpg';
+}
+
+const ItemMediaType_Large = 1;
+const ItemMediaType_Thumbnail = 3;
+const MediaType_Image = 0;
+
+export const getThumbnailImagePath = itemDetails => {
+    let resultImage = itemDetails?.image?.filter(i => i.itemMediaType === ItemMediaType_Thumbnail && i.mediaType === MediaType_Image && i.sequence === 1)?.[0];
+    return getImagePath(resultImage?.path);
+}
+
+export const getLargeImagePath = itemDetails => {
+    let resultImage = itemDetails?.image?.filter(i => i.itemMediaType === ItemMediaType_Large && i.mediaType === MediaType_Image && i.sequence === 1)?.[0];
+    return getImagePath(resultImage?.path);
 }
