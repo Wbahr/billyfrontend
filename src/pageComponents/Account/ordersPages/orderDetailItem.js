@@ -7,6 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -103,21 +104,11 @@ const ButtonSmall = styled.button`
 export default function OrderDetailItem({ item }) {
 	const [quantity, setQuantity] = useState(1)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-	const context = useContext(Context)
-
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid)
-	let imagePath
-	let resultImage = _.get(displayItem,'itemDetails.image[0].path',null)
-	if (_.isNil(resultImage)){
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		let imagePathArray = resultImage.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 't.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
-
-	function handleAddedToCart(){
+    const context = useContext(Context)
+    let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid);
+    let imagePath = getThumbnailImagePath(displayItem?.itemDetails);
+   
+    function handleAddedToCart(){
 		setShowAddedToCartModal(false)
 	}
 	

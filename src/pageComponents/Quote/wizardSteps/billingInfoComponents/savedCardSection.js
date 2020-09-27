@@ -31,7 +31,7 @@ export default function SavedCardSection() {
 				label="Saved Card"
 				isSearchable={false}
 			/> 
-			<FormikInput label="PO Number" name="billing.po" />
+			<FormikInput label="PO Number" name="billing.purchaseOrder" />
 		</>
 	)
 }

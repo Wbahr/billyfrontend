@@ -62,7 +62,7 @@ export default function NewCardSection(props) {
 			</Row>
 			
 			<Row>
-				{!!context.userInfo && <FormikInput label="PO Number" name="billing.po" />}
+				{!!context.userInfo && <FormikInput label="PO Number" name="billing.purchaseOrder" />}
 				<FormikInput label="Company Name" name="billing.companyName"/>
 			</Row>
 			

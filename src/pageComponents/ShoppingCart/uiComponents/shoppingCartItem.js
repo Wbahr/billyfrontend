@@ -8,6 +8,7 @@ import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -246,16 +247,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	if(_.isNil(itemDetails)) {
 		Content = (<p>{item.freqno}</p>)
 	} else {
-		let imagePath
-		let resultImage = _.get(itemDetails,'image[0].path',null)
-		if (_.isNil(resultImage)){
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = resultImage.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
+        let imagePath = getThumbnailImagePath(itemDetails);
 
 		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
 			return(<option value={elem.id}>{elem.customerPartNumber}</option>)

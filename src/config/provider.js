@@ -13,7 +13,8 @@ export default function Provider(props) {
 	const didMountRef = useRef(false)
 	const justLoadedCart = useRef(false)
 	const invoicesLoaded = useRef(false)
-	const [shoppingCart, setShoppingCart] = useState([])
+    const [shoppingCart, setShoppingCart] = useState([])
+    //TODO: Remove the images aspect of the itemDEtailCache. All queries that require images will return them directly, server-side.
 	const [itemDetailCache, setItemDetailCache] = useState([])
 	const [orderNotes, setOrderNotes] = useState('')
 	const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})

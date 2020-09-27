@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
+import { getLargeImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -101,17 +102,8 @@ export default function ShippingScheduleItem({item, index}) {
 	if(_.isNil(itemDetails)) {
 		Content = (<p>{item.freqno}</p>)
 	} else {
-		let imagePath
-		let resultImage = _.get(itemDetails,'image[0].path',null)
-		if (_.isNil(resultImage)){
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = resultImage.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-
+        let imagePath = getLargeImagePath(itemDetails);
+        
 		let tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
@@ -120,7 +112,7 @@ export default function ShippingScheduleItem({item, index}) {
 		Content = (
 			<DivCard>
 				<DivCol1>
-					<Img height='65px'  src={imagePath} />
+					<Img height='65px' src={imagePath} />
 				</DivCol1>
 				<DivCol2>
 					<P1>{itemDetails.itemDesc}</P1>

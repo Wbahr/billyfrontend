@@ -308,7 +308,7 @@ export default function OrdersTable({ history }) {
 			{
 				context.getOrdersState.loading ? (
 					<SpinnerDiv>
-						<CircularProgress color=""/>
+						<CircularProgress />
 					</SpinnerDiv>
 				) : (
 					<Table {...getTableProps()}>

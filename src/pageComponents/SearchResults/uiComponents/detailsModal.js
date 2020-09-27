@@ -6,7 +6,7 @@ import Loader from '../../_common/loader'
 import Context from '../../../config/context'
 import AirlineModal from '../../_common/modal'
 import {GET_ITEM_PRICE} from "../../../config/providerGQL";
-import {getImagePath} from "../../_common/helpers/generalHelperFunctions";
+import { getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
   display: flex;
@@ -157,7 +157,8 @@ query ItemById($invMastUid: Int){
         image {
           path
           sequence
-          type
+          itemMediaType
+          mediaType
         }
     }
 
@@ -236,7 +237,7 @@ export default function DetailsModal({ open, hideDetailsModal, history, detailsM
 		}
 	}, [open])
 	
-	const imagePath = item && item.image.find(i => i.type === 1)?.path
+	const imagePath = getLargeImagePath(item);
 	const customerPartOptions = customerPartNumbers.map((part, key) => <option key={key} value={part.id}>{part.customerPartNumber}</option>)
 	const mutatedItemId = item && item.itemCode.replace(/\s/g, '-')
 	const maxWidth = item ? 800 : 300
@@ -254,7 +255,7 @@ export default function DetailsModal({ open, hideDetailsModal, history, detailsM
 						<DivColRow>
 							<DivCol1>
 								<DivImg>
-									<img src={getImagePath(imagePath)} width="100%"/>
+									<img src={imagePath} width="100%" alt={item.itemDesc}/>
 									<ButtonBlack onClick={() => history.push(`/product/${mutatedItemId}/${invMastUid}`)}>View More Details</ButtonBlack>
 								</DivImg>
 							</DivCol1>
