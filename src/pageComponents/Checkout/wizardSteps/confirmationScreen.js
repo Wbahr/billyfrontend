@@ -11,7 +11,6 @@ import {useMutation} from "@apollo/client";
 import {SUBMIT_ORDER} from "../../../config/providerGQL";
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from "../uiComponents/orderFailedModal";
-import _ from "lodash";
 
 const SectionRow = styled.div`
 	display: flew;
