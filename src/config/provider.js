@@ -18,7 +18,8 @@ export default function Provider(props) {
 	const [itemDetailCache, setItemDetailCache] = useState([])
 	const [orderNotes, setOrderNotes] = useState('')
 	const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
-	const [userInfo, setUserInfo] = useState(null)
+    const [userInfo, setUserInfo] = useState(null)
+    const [isAirlineUser, setIsAirlineUser] = useState(false)
 	const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
 	const [userType, setUserType] = useState({'current': null, 'previous': null})
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''})
@@ -37,8 +38,12 @@ export default function Provider(props) {
 			manageUserInfo('load-context')
 			handleShoppingCart('retrieve')
 		}
-	})
-	
+    })
+    
+	useEffect(() => {
+        setIsAirlineUser(userInfo?.role === 'AirlineEmployee' || userInfo?.role === 'Impersonator');
+    }, [userInfo]);
+
 	useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
 		if(didMountRef.current){
 			if(!justLoadedCart.current){
@@ -512,7 +517,8 @@ export default function Provider(props) {
 				removeTopAlert: ()=>{
 					resetTopAlert()
 				},
-				userInfo: userInfo,
+                userInfo: userInfo,
+                isAirlineUser: isAirlineUser,
 				loginUser: (userInformation, mergeToken)=>{
 					handleLogin(userInformation, mergeToken)
 				},

@@ -229,13 +229,13 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 			showFactoryStockModal(index)
 			break
 		case 'edit-price':
-			handleSetModalData({
-				modalType: type,
-				originalItemPrice: itemDetails.listPrice,
-				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
-				airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
-			})
-			showEditPriceModal(index)
+            handleSetModalData({
+                modalType: type,
+                originalItemPrice: itemDetails.listPrice,
+                itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
+                airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
+            })
+            showEditPriceModal(index)
 			break
 		case 'customer-part':
 			showCustomerPartModal(index)
@@ -249,8 +249,8 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	} else {
         let imagePath = getThumbnailImagePath(itemDetails);
 
-		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+		let CustomerPartOptions = customerPartNumbers.map(elem => {
+			return(<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>)
 		})
 		Content = (
 			<DivCard>
@@ -317,12 +317,16 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						</DivItem>
 						<DivItem>
 							<DivRow>
-								<Context.Consumer>
-									{({ cart }) => (
+                                <Context.Consumer>
+									{({ cart, isAirlineUser }) => (
 										<>
-											<Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
-										</>
+                                        {isAirlineUser &&
+                                            <>
+                                                <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
+                                            </>
+                                        }
+                                        </>
 									)}
 								</Context.Consumer>
 							</DivRow>

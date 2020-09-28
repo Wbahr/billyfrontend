@@ -84,10 +84,11 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 										<ShoppingCartItem
 											item={item}
 											displayItem={displayItem}
-											emptyCart={emptyCart}
+                                            emptyCart={emptyCart}
+                                            key={index}
 											index={index}
 											showSplitLineModal={showSplitLineModal}
-											showFactoryStockModal={showFactoryStockModal}
+                                            showFactoryStockModal={showFactoryStockModal}
 											showEditPriceModal={showEditPriceModal}
 											showCustomerPartModal={showCustomerPartModal}
 											handleSetModalData={handleSetModalData}
