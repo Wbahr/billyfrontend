@@ -31,7 +31,7 @@ const client = new ApolloClient({
 		})
 	},
 	onError: (response) => {
-		if(response.networkError.statusCode === 403){
+		if(response.networkError.statusCode === 401){
 			logout()
 			location.reload()
 		}
