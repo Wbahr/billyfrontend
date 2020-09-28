@@ -77,3 +77,8 @@ export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCust
 	&resultSize=24
 	&resultPage=1`
 }
+
+export const logout = () => {
+	const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
+	keysToRemove.forEach(key => localStorage.removeItem(key))
+}
