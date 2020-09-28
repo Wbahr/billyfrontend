@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function OttoDrift() {
-    console.log("Otto");
     var t = window.driftt = window.drift = window.driftt || [];
     if (!t.init) {
         if (t.invoked) return null;

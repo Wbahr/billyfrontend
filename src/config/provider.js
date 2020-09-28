@@ -205,11 +205,11 @@ export default function Provider(props) {
 	})
 	
 	function getItemPrices(items) {
-		handleGetItemPrices({ variables: { items: items.map(({invMastUid}) => ({ invMastUid, quantity: 1 })) } })
+		handleGetItemPrices({ variables: { items: items.map(({invMastUid, frecno}) => ({ invMastUid: invMastUid || frecno, quantity: 1 })) } })
 	}
 	
 	function getItemAvailabilities(items) {
-		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid}) => invMastUid) }})
+		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid, frecno}) => invMastUid || frecno) }})
 	}
 	
 	const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {

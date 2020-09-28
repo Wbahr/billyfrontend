@@ -48,7 +48,6 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
 	doc.save(`${name}.pdf`)
 }
 
-//Sanitizes a path so that if it is null, the place-holder image is returned
 export const getImagePath = path => {
 	const pathSplit = path && path.split('\\')
 	return path
@@ -68,4 +67,13 @@ export const getThumbnailImagePath = itemDetails => {
 export const getLargeImagePath = itemDetails => {
     let resultImage = itemDetails?.image?.filter(i => i.itemMediaType === ItemMediaType_Large && i.mediaType === MediaType_Image && i.sequence === 1)?.[0];
     return getImagePath(resultImage?.path);
+}
+
+export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCustomer='false') => {
+	return `/search/?
+	searchTerm=${encodeURIComponent(searchTerm)}
+	&sortType=${encodeURIComponent(sortType)}
+	&nonweb=${encodeURIComponent(searchAsCustomer)}
+	&resultSize=24
+	&resultPage=1`
 }

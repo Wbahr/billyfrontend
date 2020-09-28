@@ -4,8 +4,6 @@ import styled from 'styled-components'
 const DivResultsSummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 0 8px 0;
-
 `
 
 const Div = styled.div`
