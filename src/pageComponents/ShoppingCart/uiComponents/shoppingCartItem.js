@@ -318,9 +318,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						<DivItem>
 							<DivRow>
                                 <Context.Consumer>
-									{({ cart, isAirlineUser }) => (
+									{({ cart, userInfo }) => (
 										<>
-                                        {isAirlineUser &&
+                                        {userInfo.isAirlineUser &&
                                             <>
                                                 <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
                                                 <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
