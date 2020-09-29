@@ -128,7 +128,7 @@ export function ShipToForm(props) {
 						name="contact.savedContact"
 						component={SelectField}
 						options={checkoutDropdownDataLabels.contacts}
-						width="500px"
+                        width="500px"
 						label="Saved Order Contacts*"
 						placeholder="Select an Order Contact"
 						changeFunction={handleSavedContactSelectChange}
@@ -170,7 +170,7 @@ export function ShipToForm(props) {
 			<FormikInput
 				label="Company Name"
 				name="shipto.companyName"
-				width="500px"
+				width={500}
 				onChange={handleSavedAddressChange}
 				value={values.shipto.companyName}
 			/>
@@ -188,7 +188,7 @@ export function ShipToForm(props) {
 			<FormikInput
 				label="Address 1*"
 				name="shipto.address1"
-				width="600px"
+				width={600}
 				onChange={handleSavedAddressChange}
 				value={values.shipto.address1}
 			/>
@@ -196,7 +196,7 @@ export function ShipToForm(props) {
 			<FormikInput
 				label="Address 2"
 				name="shipto.address2"
-				width="600px"
+				width={600}
 				onChange={handleSavedAddressChange}
 				value={values.shipto.address2}
 			/>
@@ -211,10 +211,9 @@ export function ShipToForm(props) {
 				<FormikInput
 					label="Zip*"
 					name="shipto.zip"
-					width="150px"
+					width={150}
 					onChange={handleZipChange}
 					value={values.shipto.zip}
-					style={{width: 'auto'}}
 				/>
 			</FormRow>
 			
@@ -253,7 +252,7 @@ export function ShipToForm(props) {
 				)}
 			</FormRow>
 			
-			<FormikInput label="Shipping Notes" name="shipto.shippingNotes" width="800px" />
+			<FormikInput label="Shipping Notes" name="shipto.shippingNotes" width={800} />
 			<Field 
 				name="shipto.carrierId" 
 				component={SelectField} 

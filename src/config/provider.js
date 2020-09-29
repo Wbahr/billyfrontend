@@ -18,7 +18,11 @@ export default function Provider(props) {
 	const [itemDetailCache, setItemDetailCache] = useState([])
 	const [orderNotes, setOrderNotes] = useState('')
 	const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
-	const [userInfo, setUserInfo] = useState(null)
+    const [userInfo, setUserInfo] = useState(null)
+    const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
+        ...newUserInfo,
+        isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
+    } : null);
 	const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
 	const [userType, setUserType] = useState({'current': null, 'previous': null})
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''})
@@ -37,8 +41,8 @@ export default function Provider(props) {
 			manageUserInfo('load-context')
 			handleShoppingCart('retrieve')
 		}
-	})
-	
+    })
+
 	useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
 		if(didMountRef.current){
 			if(!justLoadedCart.current){
@@ -256,7 +260,7 @@ export default function Provider(props) {
 		let imperInfoStorage = localStorage.getItem('imperInfo')
 		switch(action) {
 			case 'load-context':
-				setUserInfo(JSON.parse(userInfoStorage))
+				handleSetUserInfo(JSON.parse(userInfoStorage))
 				setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
 				if (_.isNil(userInfoStorage)) {
 					currentUserType = 'Anon'
@@ -268,7 +272,7 @@ export default function Provider(props) {
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 				localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
 				localStorage.removeItem('shoppingCartToken')
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
 					props.history.push('/')
 				}
@@ -285,7 +289,7 @@ export default function Provider(props) {
 			case 'end-impersonation':
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 				localStorage.removeItem('imperInfo')
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'AirlineEmployee'
 				setItemDetailCache([])
@@ -296,12 +300,12 @@ export default function Provider(props) {
 				break
 			case 'login':
 				setItemDetailCache([])
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				currentUserType = userInfo.role
 				break
 			case 'logout':
-				logout()
-				setUserInfo(null)
+                logout()
+				handleSetUserInfo(null)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'Anon'
 				setOrdersCache([])
@@ -326,9 +330,10 @@ export default function Provider(props) {
 		} else {
 			handleShoppingCart('retrieve')
 		}
-		manageUserInfo('login', userInfo)
-		if(userInfo.role === 'AirlineEmployee' && drift){
-			drift.api.widget.hide()
+        manageUserInfo('login', userInfo)
+        let drift = drift || null;
+		if(drift && userInfo.role === 'AirlineEmployee' ){
+			drift?.api?.widget?.hide();
 		}
 		handleUpdateOrders()
 		setTopAlert({
@@ -511,7 +516,7 @@ export default function Provider(props) {
 				removeTopAlert: ()=>{
 					resetTopAlert()
 				},
-				userInfo: userInfo,
+                userInfo: userInfo,
 				loginUser: (userInformation, mergeToken)=>{
 					handleLogin(userInformation, mergeToken)
 				},

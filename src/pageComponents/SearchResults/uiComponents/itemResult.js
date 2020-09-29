@@ -164,7 +164,7 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.frecno)
 	const {unitPrice} = foundPrice || {}
 	
-	const [customerPartNumber, setCustomerPartNumber] = useState('')
+	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
 	
 	useEffect(() => {
