@@ -37,6 +37,14 @@ const Label = styled.label`
 	color: #535353;
 	font-size: 12px;
 	margin-left: 4px;
+	flex: 1;
+`
+
+const PCount = styled.p`
+	margin: 0;
+	color: #535353;
+	font-size: 12px;
+	margin-left: 4px;
 `
 
 const InputSearch = styled.input`
@@ -44,84 +52,72 @@ const InputSearch = styled.input`
 	width: 240px;
 `
 
-export default function AttributeFilter({categoryAttribute, open, checkedAttributeFilters, setCheckedAttributeFilters}) {
+export default function AttributeFilter({open, attribute, updateAttribute}) {
 	const [isOpen, setIsOpen] = useState(open)
 	const toggleOpen = () => setIsOpen(!isOpen)
 	const [filter, setFilter] = useState('')
-	const [attribute, setAttribute] = useState(null)
-
-	useEffect(() => {
-		const inputAttribute = checkedAttributeFilters.find(attr => attr.field === categoryAttribute.categoryName)
-		setAttribute({
-			field: categoryAttribute.categoryName,
-			values: inputAttribute?.values || []
-		})
-	}, [categoryAttribute, checkedAttributeFilters])
-
-	const handleFeatureToggle = (e, option) => {
-		//Add or remove the feature from the field category, depending on the checked status.
-		const newAttribute = {
-			...attribute,
-			values: e.target.checked
-				? [...new Set([...attribute.values, option.featureName])]
-				: attribute.values.filter(val => val !== option.featureName)
-		}
-		//Create a new array with all the attribute category filter selections.
-		//Temporarily remove this attribute category
-		//Re-add the new category attribute values if any features of the category are
-		//selected for filtering
-		const newCheckedAttributeFilters = checkedAttributeFilters
-			.filter(f => f.field !== newAttribute.field)
-			.concat(newAttribute.values.length ? newAttribute : [])
-		
-		setCheckedAttributeFilters(newCheckedAttributeFilters)
+	
+	const handleFeatureClick = idx => ({target: {checked}}) => {
+		const features = attribute.features.slice()
+		features[idx].selected = checked
+		updateAttribute({ ...attribute, features })
 	}
-
+	
+	const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
+	
+	const toOption = ({selected, featureName, featureNameDisplay, featureCount}, idx) => (
+		<DivOptionRow key={idx}>
+			<input
+				type="checkbox"
+				checked={selected}
+				onChange={handleFeatureClick(idx)}
+			/>
+			<Label htmlFor={featureName}>{featureNameDisplay}</Label>
+			<PCount>({featureCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const searchSortAndMapToOption = (accum, curVal, idx) => {
+		if (searchFilter(curVal)) {
+			if (curVal.selected) {
+				accum.unshift(toOption(curVal, idx))
+			} else {
+				accum.push(toOption(curVal, idx))
+			}
+		}
+		return accum
+	}
+	
 	const AttributeOptions = () => (
 		<DivOptions>
-			{
-				categoryAttribute.features
-					.filter(f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter)))
-					.map((feature, idx) => (
-						<DivOptionRow key={idx}>
-							<input
-								type="checkbox"
-								checked={attribute && attribute.values.includes(feature.featureName)}
-								onChange={(e) => handleFeatureToggle(e, feature)}
-							/>
-							<Label htmlFor={feature.featureName}>{feature.featureNameDisplay}</Label>
-						</DivOptionRow>
-					))
-			}
+			{attribute.features.reduce(searchSortAndMapToOption, [])}
 		</DivOptions>
 	)
 
-	const handleSearchChange = (e) => {
-		setFilter(e.target.value.toLowerCase())
-	}
+	const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
 	
 	return (
 		<div>
 			<DivTitle onClick={toggleOpen}>
-				<P>{categoryAttribute.categoryNameDisplay}</P>
-				{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+				<P>{attribute.attributeNameDisplay}</P>
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
 			</DivTitle>
-			{isOpen && 
+			{isOpen && (
 				<>
-					<div>
-						{categoryAttribute.features.length > 10 && (
-							<InputSearch placeholder={`Search ${categoryAttribute.categoryNameDisplay}`} onChange={handleSearchChange} value={filter}/>
-						)}
-					</div>
-					
+					{attribute.features.length > 10 && (
+						<InputSearch
+							placeholder={`Search ${attribute.attributeNameDisplay}`}
+							onChange={handleSearchChange}
+							value={filter}
+						/>
+					)}
 					<AttributeOptions/>
 				</>
-			}
+			)}
 		</div>
 	)
 }
 
 AttributeFilter.propTypes = {
-	categoryAttribute: PropTypes.object.isRequired,
 	open: PropTypes.bool,
 }

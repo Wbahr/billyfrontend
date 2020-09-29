@@ -45,7 +45,6 @@ export const defaultShipTo = {
 }
 
 export const defaultQuote = {
-	isQuote: false,
 	packingBasisName: '',
 	packingBasis: '0',
 }

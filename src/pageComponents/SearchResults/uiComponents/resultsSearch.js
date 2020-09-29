@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import SearchTermChip from './SearchTermChip'
 
 const Div = styled.div`
   display: flex;
@@ -38,12 +39,23 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({addSearchTerm, setSortType, sortType}) {
+const SearchChipDiv = styled.div`
+	display: flex;
+ 	margin: 5px 0px;
+`
+
+export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, setSortType, sortType}) {
 	const [searchTerm, setSearchTerm] = useState('')
 
-	function handleUpdateSearchTerm() {
-		addSearchTerm(searchTerm)
+	const handleUpdateSearchTerm = () => {
+		setInnerSearchTerms([...innerSearchTerms, ...searchTerm.split(' ')])
 		setSearchTerm('')
+	}
+	
+	const handleRemoveSearchTerm = (idx) => () => {
+		const innerSearchTermsCopy = innerSearchTerms.slice()
+		innerSearchTermsCopy.splice(idx, 1)
+		setInnerSearchTerms(innerSearchTermsCopy)
 	}
 
 	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
@@ -56,6 +68,10 @@ export default function ResultsSearch({addSearchTerm, setSortType, sortType}) {
 	
 	return(
 		<Div>
+			<SearchChipDiv>
+				{innerSearchTerms.map((term, idx) => <SearchTermChip label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
+			</SearchChipDiv>
+			
 			<DivResultsSearch>
 				<InputSearch placeholder="Add keywords to refine these results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
 				<ButtonSearch onClick={handleUpdateSearchTerm}>Search</ButtonSearch>

@@ -7,7 +7,7 @@ import {
 	UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_WEB_USER_CONTACTS,
 	GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS
 } from './providerGQL'
-import {getRidOf__typename} from '../pageComponents/_common/helpers/generalHelperFunctions'
+import {getRidOf__typename, logout} from '../pageComponents/_common/helpers/generalHelperFunctions'
 
 export default function Provider(props) {
 	const didMountRef = useRef(false)
@@ -209,11 +209,11 @@ export default function Provider(props) {
 	})
 	
 	function getItemPrices(items) {
-		handleGetItemPrices({ variables: { items: items.map(({invMastUid}) => ({ invMastUid, quantity: 1 })) } })
+		handleGetItemPrices({ variables: { items: items.map(({invMastUid, frecno}) => ({ invMastUid: invMastUid || frecno, quantity: 1 })) } })
 	}
 	
 	function getItemAvailabilities(items) {
-		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid}) => invMastUid) }})
+		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid, frecno}) => invMastUid || frecno) }})
 	}
 	
 	const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
@@ -304,8 +304,7 @@ export default function Provider(props) {
 				currentUserType = userInfo.role
 				break
 			case 'logout':
-				const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
-				keysToRemove.forEach(key => localStorage.removeItem(key))
+        logout()
 				handleSetUserInfo(null)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'Anon'

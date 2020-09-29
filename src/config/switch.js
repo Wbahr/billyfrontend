@@ -27,8 +27,6 @@ import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
 import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
-import QuoteComplete from '../pageComponents/Quote/quoteCompletePage'
-import CreateQuote from '../pageComponents/Quote/createQuotePage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import Shop from '../pageComponents/Shop/shopPage'
@@ -101,7 +99,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/create-quote' component={CreateQuote} layout={HeaderFooterLayout}/>
+				<WrapperRoute exact path='/create-quote' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/credit-application' component={CreditApplication} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/framing-request' component={FramingRequest} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/government-sales' component={GovermentSale} layout={HeaderFooterLayoutExpanded}/>
@@ -114,7 +112,6 @@ class App extends React.Component {
 				<WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/quote-complete/:orderId' component={QuoteComplete} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/red-pallet' component={RedPallet} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/resources' component={Home} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/search/' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>

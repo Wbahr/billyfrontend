@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-const gradientAnimation = keyframes`
+export const gradientAnimation = keyframes`
   0% {
     background-position: 0% 50%;
   }
@@ -26,7 +26,7 @@ const SkeletonDiv = styled.div`
   border-bottom: 1px #dedede solid;
 `
 
-const Image = styled.div`
+export const Image = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 5px;
@@ -54,7 +54,7 @@ const Title = styled.div`
   margin: 5px 0;
 `
 
-const Detail1 = styled.div`
+export const Detail1 = styled.div`
   width: 150px;
   height: 15px;
   background: linear-gradient(-90deg, whitesmoke, #dedede, whitesmoke, #dedede);

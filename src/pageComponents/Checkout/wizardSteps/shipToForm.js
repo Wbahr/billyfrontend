@@ -39,7 +39,7 @@ const DivNavigation = styled.div`
 `
 
 export function ShipToForm(props) {
-	const {values, setValues, checkoutDropdownDataLabels, checkoutDropdownData, setFieldValue, updateZip, isStepValid, handleMoveStep} = props
+	const {history, values, setValues, checkoutDropdownDataLabels, checkoutDropdownData, setFieldValue, updateZip, isStepValid, handleMoveStep} = props
 	const context = useContext(Context)
 	
 	useEffect(() => {
@@ -88,7 +88,7 @@ export function ShipToForm(props) {
 	}
 
 	function handleSavedContactSelectChange(name, savedContact) {
-		const contact = checkoutDropdownData.contacts.find(elem => elem.id === savedContact)
+		const contact = (checkoutDropdownData.contacts || []).find(elem => elem.id === savedContact)
 		setValues({
 			...values,
 			shipto: {
@@ -106,6 +106,15 @@ export function ShipToForm(props) {
 				phone: contact?.phoneNumber || ''
 			}
 		})
+	}
+	
+	function handleContinueClick() {
+		console.log('history.location', history.location)
+		if (history.location.pathname === '/create-quote') {
+			handleMoveStep(3)
+		} else {
+			handleMoveStep(2)
+		}
 	}
 	
 	const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
@@ -260,7 +269,7 @@ export function ShipToForm(props) {
 			
 			<DivNavigation>
 				<ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
-				<ButtonRed disabled={disabled} onClick={() => handleMoveStep(2)}>Continue</ButtonRed>
+				<ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
 			</DivNavigation>
 		</WrapForm>
 	)

@@ -47,7 +47,8 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		schedule: {
 			...defaultQuote,
 			cartWithDates: cart.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
-			shoppingCartToken: localStorage.getItem('shoppingCartToken')
+			shoppingCartToken: localStorage.getItem('shoppingCartToken'),
+			isQuote: history.location.pathname === 'create-quote'
 		},
 		shipto: {
 			...defaultShipTo,
