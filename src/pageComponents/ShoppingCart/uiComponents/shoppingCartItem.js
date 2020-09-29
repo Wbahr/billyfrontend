@@ -172,7 +172,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		itemDetails,
 		customerPartNumbers
 	} = displayItem
-	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || "")
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || 0)
 	const itemId = parseInt(item.frecno,10)
 
 	const context = useContext(Context)
@@ -188,19 +188,19 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		onCompleted: result => {
 			if (!_.isNil(result.customerPartNumbers)) {
 				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-				setSelectedCustomerPartNumber(item.customerPartNumberId || "")
+				setSelectedCustomerPartNumber(item.customerPartNumberId || 0)
 			}
 		}
 	})
 
 	function selectCustomerPartNumber(value){
-		if (value === '-1') {
-			setSelectedCustomerPartNumber(null) // Reset Dropdown
-			context.updateItem(index, 'customerPartNumberId', null)
+		if (value === -1) {
+			setSelectedCustomerPartNumber(0) // Reset Dropdown
+			context.updateItem(index, 'customerPartNumberId', 0)
 			showCustomerPartModal(index)
-		} else if (value === '0') {
+		} else if (value === 0) {
 			setSelectedCustomerPartNumber(value)
-			context.updateItem(index, 'customerPartNumberId', null)
+			context.updateItem(index, 'customerPartNumberId', 0)
 		} else {
 			
 			setSelectedCustomerPartNumber(value)
@@ -209,7 +209,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	}
 
 	function clearCustomerPartNumber(){
-		selectCustomerPartNumber('0')
+		selectCustomerPartNumber(0)
 	}
 
 	function handleShowModal(type){
@@ -279,7 +279,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 							{CustomerPartOptions}
 							<option value="-1">Create Part#</option>
 						</select>
-						{ selectedCustomerPartNumber !== '0' &&
+						{ selectedCustomerPartNumber != 0 &&
 							<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
 								<FontAwesomeIcon icon="times" color="grey" />
 							</div>

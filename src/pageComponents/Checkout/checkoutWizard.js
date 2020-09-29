@@ -70,7 +70,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 			validate={handleValidateFields}
 		>
 			{formikProps => (
-				<form name="checkoutForm" {...formikProps} onSubmit={e => e.preventDefault()}>
+				<form name="checkoutForm" onSubmit={e => e.preventDefault()}>
 					<FormStepComponent {...{...formikProps, paymentInfo, setPaymentInfo, isStepValid, handleMoveStep,
 						checkoutDropdownData, checkoutDropdownDataLabels, updateZip, history}}/>
 				</form>

@@ -19,10 +19,10 @@ export default function Provider(props) {
 	const [orderNotes, setOrderNotes] = useState('')
 	const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
     const [userInfo, setUserInfo] = useState(null)
-    const handleSetUserInfo = newUserInfo => setUserInfo({
+    const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
-        isAirlineUser: newUserInfo ?.role === 'AirlineEmployee' || newUserInfo ?.role === 'Impersonator'
-    });
+        isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
+    } : null);
 	const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
 	const [userType, setUserType] = useState({'current': null, 'previous': null})
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''})
@@ -304,7 +304,7 @@ export default function Provider(props) {
 				currentUserType = userInfo.role
 				break
 			case 'logout':
-        logout()
+                logout()
 				handleSetUserInfo(null)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'Anon'
@@ -330,9 +330,10 @@ export default function Provider(props) {
 		} else {
 			handleShoppingCart('retrieve')
 		}
-		manageUserInfo('login', userInfo)
-		if(userInfo.role === 'AirlineEmployee' && drift){
-			drift.api.widget.hide()
+        manageUserInfo('login', userInfo)
+        let drift = drift || null;
+		if(drift && userInfo.role === 'AirlineEmployee' ){
+			drift?.api?.widget?.hide();
 		}
 		handleUpdateOrders()
 		setTopAlert({
