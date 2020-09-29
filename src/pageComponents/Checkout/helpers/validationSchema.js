@@ -79,19 +79,19 @@ export const billToSchema = object({
 				then: string().min(1).max(20).required()
 			}),
 		firstName: string()
-			.when('paymentMethod', {
-				is: 'new_card',
-				then: string().min(2).max(50).required(),
-				otherwise: string()
+			.when('cardType', {
+				is: 'saved_card',
+				then: string(),
+				otherwise: string().min(2).max(50).required()
 			}),
 		lastName: string()
-			.when('paymentMethod', {
-				is: 'new_card',
-				then: string().min(2).max(50).required(),
-				otherwise: string()
+			.when('cardType', {
+				is: 'saved_card',
+				then: string(),
+				otherwise: string().min(2).max(50).required(),
 			}),
 		address1: string()
-			.when('paymentMethod', {
+			.when('cardType', {
 				is: 'saved_card',
 				then: string(),
 				otherwise: string()
@@ -100,7 +100,7 @@ export const billToSchema = object({
 					.required()
 			}),
 		city: string()
-			.when('paymentMethod', {
+			.when('cardType', {
 				is: 'saved_card',
 				then: string(),
 				otherwise: string().min(3)
@@ -108,13 +108,13 @@ export const billToSchema = object({
 					.required()
 			}),
 		stateOrProvince: string()
-			.when('paymentMethod', {
+			.when('cardType', {
 				is: 'saved_card',
 				then: string(),
 				otherwise: string().required()
 			}),
 		zip: string()
-			.when('paymentMethod', {
+			.when('cardType', {
 				is: 'saved_card',
 				then: string(),
 				otherwise: string()

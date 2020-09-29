@@ -104,6 +104,15 @@ function BillingInfoForm(props) {
 		setSelectedCard(value)
 	}
 	
+	const handleRadioButtonClick = ({target: {value}}) => {
+		const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
+		setFieldValue('billing', {
+			...props.values.billing,
+			paymentMethod: value,
+			cardType: value === 'credit_card' ? cardType : ''
+		})
+	}
+	
 	const disabled = paymentMethod === 'credit_card' && cardType === 'new_card'
 		? !isStepValid || !cardIsValid
 		: !isStepValid
@@ -115,7 +124,7 @@ function BillingInfoForm(props) {
 					{...field}
 					disabled={!context.userInfo}
 					value="purchase_order"
-					onChange={({target}) => setFieldValue('billing.paymentMethod', target.value)}
+					onChange={handleRadioButtonClick}
 					checked={field.value === 'purchase_order'}
 					type="radio"
 				/>
@@ -126,7 +135,7 @@ function BillingInfoForm(props) {
 				<input
 					{...field}
 					value="credit_card"
-					onChange={({target}) => setFieldValue('billing.paymentMethod', target.value)}
+					onChange={handleRadioButtonClick}
 					checked={field.value === 'credit_card'}
 					type="radio"
 				/>
