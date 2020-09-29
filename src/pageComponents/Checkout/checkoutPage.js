@@ -99,10 +99,16 @@ function CheckoutPage({history}) {
 		{
 			0: false,
 			1: false,
-			2: false,
+			2: history.location.pathname === '/create-quote',
 			3: false
 		}
 	)
+	
+	useEffect(() => {
+		if (!context.cart.length) {
+			history.replace('/cart')
+		}
+	}, [])
 	
 	const [getTaxAmount] = useLazyQuery(GET_TAXES, {
 		fetchPolicy: 'no-cache',

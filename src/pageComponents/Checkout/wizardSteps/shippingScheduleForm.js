@@ -73,7 +73,7 @@ const getInfoMessage = packingBasisName => {
 }
 
 export function ShippingScheduleForm(props) {
-	const {values: {schedule: {cartWithDates, packingBasisName}}, setFieldValue, isStepValid, handleMoveStep} = props
+	const {history, values: {schedule: {cartWithDates, packingBasisName}}, setFieldValue, isStepValid, handleMoveStep} = props
 	
 	function handlePackingBasisChange(name, value) {
 		setFieldValue(name, value)
