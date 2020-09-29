@@ -69,7 +69,7 @@ export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, se
 	return(
 		<Div>
 			<SearchChipDiv>
-				{innerSearchTerms.map((term, idx) => <SearchTermChip label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
+				{innerSearchTerms.map((term, idx) => <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
 			</SearchChipDiv>
 			
 			<DivResultsSearch>

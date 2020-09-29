@@ -216,8 +216,10 @@ export default function SearchResultsPage(props) {
 	const handleHideDetailsModal = () => setDetailsModalItem(null)
 	
 	const loadMore = () => {
-		setInfiniteScrollHasMore(false)
-		setCurrentPage(currentPage + 1)
+		if (searchResults.length < totalResults) {
+			setInfiniteScrollHasMore(false)
+			setCurrentPage(currentPage + 1)
+		}
 	}
 	
 	const handleAddedToCart = () => setShowAddedToCartModal(true)
