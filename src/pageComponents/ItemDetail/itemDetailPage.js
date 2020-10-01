@@ -153,7 +153,7 @@ const DivPurchaseInfo = styled.div`
 	width: 300px;
 	height: 300px;
 	margin: 30px 8px 0 12px;
-	padding: 8px 16px
+	padding: 8px 16px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
