@@ -155,7 +155,7 @@ export default function ShoppingListManagementPage() {
 	const loading = context.upsertShoppingListState?.loading
 	
 	useEffect(() => {
-		context.getWebUserContacts()
+		if (!context.userInfo?.contactId) context.getWebUserContacts()
 		context.getShoppingLists()
 	}, [context.userInfo])
 	
