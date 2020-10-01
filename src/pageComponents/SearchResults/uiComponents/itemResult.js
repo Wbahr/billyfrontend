@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import Context from '../../../config/context'
-import {getImagePath} from "../../_common/helpers/generalHelperFunctions";
+import {getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
 
 const DivItemResultContainer = styled.div`
@@ -214,7 +214,7 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 					{!details.image ? (
 						<SkeletonImage/>
 					) : (
-						<Img src={getImagePath(details.image?.length && details.image[0].path)}/>
+						<Img src={getLargeImagePath(details)}/>
 					)}
 				</DivPartImg>
 				
