@@ -12,7 +12,7 @@ export const defaultBilling = {
 		country: 'us',
 		phone: '',
 		email: '',
-		cardType: 'new_card'
+		cardType: ''
 }
 
 export const defaultConfirmationEmail = {
