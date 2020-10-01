@@ -100,6 +100,7 @@ export const GET_ITEM_BY_ID = gql`
       anonPrice
       invMastUid
       itemCode
+      itemCodeUrlSanitized
       itemDesc
       listPrice
       mfgPartNo
@@ -128,6 +129,7 @@ export const GET_ITEMS_BY_ID = gql`
       anonPrice
       invMastUid
       itemCode
+      itemCodeUrlSanitized
       itemDesc
       listPrice
       mfgPartNo
@@ -507,6 +509,7 @@ export const QUERY_STOCK_AVAILABILITY = gql`
         airlineStock(invMastUid: $invMastUid){
             invMastUid
             itemCode
+            itemCodeUrlSanitized
             companyId
             locationId
             locationName

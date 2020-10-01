@@ -155,7 +155,7 @@ const Option = ({partNumber, partId}) => <option key={partNumber} value={partId}
 
 const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
-export default function ItemResult({searchTerm, result, details, availabilities, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
+export default function ItemResult({result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
 	const [quantity, setQuantity] = useState(1)
 	const context = useContext(Context)
 	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.frecno)
@@ -181,11 +181,10 @@ export default function ItemResult({searchTerm, result, details, availabilities,
 	}
 	
 	const handlePartClick = () => {
-		const mutatedItemId = result.item_id.replace(/\s/g, '-')
-		if (!customerPartNumber) {
-			history.push(`/product/${mutatedItemId}/${result.frecno}`)
+		if (customerPartNumber) {
+			history.push(`/product/${details.itemCodeUrlSanitized}/${result.frecno}/${customerPartNumber}`)
 		} else {
-			history.push(`/product/${mutatedItemId}/${result.frecno}/${customerPartNumber}`)
+			history.push(`/product/${details.itemCodeUrlSanitized}/${result.frecno}`)
 		}
 	}
 	
