@@ -258,7 +258,7 @@ export default React.memo(({ orderId, data }) => {
 						<P6>www.airlinehyd.com</P6>
 						<P6>1-800-999-7378</P6>
 					</HeaderContact>
-					<HeaderOrder><P3>Order #{orderId}</P3></HeaderOrder>
+					<HeaderOrder><P3>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</P3></HeaderOrder>
 				</Header>
 				<DivThanks>
 					<P4>Thank you for ordering our products. Please find your order details below. If you have any questions or concerns, please contact us.</P4>
