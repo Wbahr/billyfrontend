@@ -1,134 +1,27 @@
-import React, { useState } from 'react'
-import _ from 'lodash'
+import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
-import { getLargeImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
-
-const GET_ITEM_BY_ID = gql`
-		query ItemById($itemId: Int){
-				customerPartNumbers(frecno: $itemId){
-					customerPartNumber
-					id
-				}
-				itemDetails(invMastUid: $itemId) {
-						anonPrice
-						assembly
-						availability
-						availabilityMessage
-						brand {
-							id
-							name
-							supplierId
-							logoLink
-					}
-						cBrandId
-						dateCreated
-						dateModified
-						extendedDesc
-						filters
-						hideOnWeb
-						invMastUid
-						itemCode
-						itemDesc
-						listPrice
-						mfgPartNo
-						modelCode
-						p21ItemDesc
-						p21NonWeb
-						popularity
-						preferredSourceLoc
-						relevancy
-						restrictedCustomerCodes
-						rootCategoryUids
-						showPrice
-						supplierId
-						tariff
-						unitSizeMultiple
-						feature {
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								sequence
-								text
-								type
-								id
-							}
-							image {
-								path
-								sequence
-								itemMediaType
-                                mediaType
-								mediaId
-							}
-							associatedItems {
-								associatedInvMastUid
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								quantity
-								type
-								id
-							}
-							itemLink {
-								audienceType
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								linkPath
-								linkType
-								modifiedBy
-								sequence
-								thumbnail
-								title
-								id
-							}
-							techSpec {
-								attributeId
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								name
-								sequence
-								id
-								value
-							}
-				}
-		}
-`
-
-const GET_ITEM_PRICE = gql`
-query ItemSearch($items: [ItemQuantityInput]){
-	getItemPrices(items: $items){
-		invMastUid
-		quantity
-		totalPrice
-	}
-}
-`
+import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
+import {GET_ITEM_PRICE, ITEM_DETAILS_PAGE_GET_ITEM_BY_ID} from "../../config/providerGQL";
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
-	width: 100%;  
+	flex-wrap: wrap;
+	justify-content: center;
 `
 
 const DivPhoto = styled.div`
-	width: 400px;
-	height: 400px;
+	min-width: 200px;
+	max-width: 400px;
+	max-height: 400px;
 	margin: 0px 8px;
+	text-align: center;
 `
 
 const Img = styled.img`
@@ -137,9 +30,9 @@ const Img = styled.img`
 `
 
 const DivDetails = styled.div`
+	flex: 1;
 	width: 500px;
-	padding: 0 32px;
-	flex-grow: 99;
+	padding: 0 16px;
 `
 
 const DivPurchaseInfo = styled.div`
@@ -149,33 +42,37 @@ const DivPurchaseInfo = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-between;
-	width: 300px;
-	height: 300px;
+	width: 100%;
 	margin: 30px 8px 0 12px;
 	padding: 8px 16px
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
-const Div = styled.div`
+const DivLeftCol = styled.div`
+	display: flex;
+ 	flex-direction: column;
+ 	max-width: 400px;
+ 	align-items: center;
+ 	padding: '0 16px';
+ 	margin-bottom: 16px;
+`
+
+const DivPurchaseInfoButtons = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	align-content: center;
+	align-items: center;
+	margin: 16px 0;
 `
 
 const Row = styled.div`
 	display: flex;
-	width: 100%;  
 	align-items: flex-end;
 `
 
-const RowEnd = styled(Row)`
-	justify-content: flex-end;
-`
-
-const RowSpaced = styled(Row)`
-	justify-content: space-between;
+const RowCentered = styled.div`
+	display: flex;
+	justify-content: center;
 `
 
 const P = styled.p`
@@ -195,6 +92,13 @@ const DivSection = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-left: 24px;
+`
+
+const DivTitle = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin: 16px
 `
 
 const DivAccessoryItems = styled.div`
@@ -283,13 +187,17 @@ const IMG = styled.img`
 	opacity: 0.6;
 `
 
+const priceLookupPayload = invMastUid => ({variables: {items: [{invMastUid, quantity: 1}]}})
+
 export default function ItemDetailPage({ history }) {
-	let { itemId, customerPartNumber } = useParams()
+	const { addItem, } = useContext(Context)
+	const { itemId, customerPartNumber } = useParams()
+	const itemIdInt = parseInt(itemId)
 
 	const [item, setItem] = useState(null);
 	const [quantity, setQuantity] = useState(1);
 	const [unitPrice, setUnitPrice] = useState(null);
-    const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
+	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([]);
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
 	const [showAddListModal, setShowAddListModal] = useState(false);
@@ -298,24 +206,12 @@ export default function ItemDetailPage({ history }) {
 		setShowAddedToCartModal(false);
 	}
 
-	itemId = parseInt(itemId, 10)
-	useQuery(GET_ITEM_BY_ID, {
-		variables: { itemId },
+	useQuery(ITEM_DETAILS_PAGE_GET_ITEM_BY_ID, {
+		variables: { itemId: itemIdInt },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			if (result.itemDetails) {
-				performPriceLookup(
-					{
-						variables: {
-							'items': [
-								{
-									'invMastUid': result.itemDetails.invMastUid,
-									'quantity': 1
-								}
-							]
-						}
-					}
-				)
+				performPriceLookup(priceLookupPayload(result.itemDetails.invMastUid))
 				setCustomerPartNumbers(result.customerPartNumbers)
 				setItem(result.itemDetails)
 			} else {
@@ -326,166 +222,168 @@ export default function ItemDetailPage({ history }) {
 
 	const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
-			if (!_.isNil(data.getItemPrices[0])) {
+			if (data.getItemPrices[0]) {
 				setUnitPrice(data.getItemPrices[0].totalPrice)
 			}
 		}
 	})
+	
+	const handleAddToCart = () => {
+		addItem({
+			frecno: itemIdInt,
+			quantity: parseInt(quantity, 10),
+			itemNotes: '',
+			itemUnitPriceOverride: null,
+			customerPartNumberId: selectedCustomerPartNumber
+		})
+		setShowAddedToCartModal(true)
+		setQuantity(1)
+	}
+	
+	const handleSetQuantity = ({target: {value}}) => {
+		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
+			setQuantity(value)
+		}
+	}
 
-	if (_.isNil(item)) {
+	if (!item) {
 		return (<Loader />)
-	} else if (!_.has(item, 'invMastUid')) {
+	} else if (!item.invMastUid) {
 		return (<p>No item found</p>)
 	} else {
-        let imagePath = getLargeImagePath(item);
+		const FeatureItems = item.feature.map((elem, idx) => <li key={idx}>{elem.text}</li>)
 		
-		let FeatureItems = item.feature.map((elem, idx) => {
-			return (
-				<li key={idx}>{elem.text}</li>
-			)
-		})
+		const TechSpecItems = item.techSpec.map((elem, idx) => (
+			<TR key={idx}>
+				<TD>{elem.name}</TD>
+				<TD>{elem.value}</TD>
+			</TR>
+		))
+		
+		const ItemLinks = item.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+		
+		const AccessoryItems = item.associatedItems.map((elem, idx) => (
+			<AccessoryItem
+				key={idx}
+				associatedItemId={elem.associatedInvMastUid}
+				history={history}
+			/>
+		))
 
-		let TechSpecItems = item.techSpec.map((elem, idx) => {
-			return (
-				<TR key={idx}><TD>{elem.name}</TD><TD>{elem.value}</TD></TR>
-			)
-		})
-
-		let ItemLinks = item.itemLink.map((elem, idx) => {
-			return (
-				<a href={elem.linkPath} key={idx}>{elem.title}</a>
-			)
-		})
-
-		let Features = (
-
-			<ul>
-				{FeatureItems}
-			</ul>
-		)
-
-		let TechSpecs = (
-			<div>
-				<Table>
-					<tbody>
-						{TechSpecItems}
-					</tbody>
-				</Table>
-			</div>
-		)
-
-		let Links = (
-			<DivSection>
-				{ItemLinks}
-			</DivSection>
-		)
-
-		let AccessoryItems = item.associatedItems.map((elem, idx) => {
-			return (
-				<AccessoryItem
-					key={idx}
-					associatedItemId={elem.associatedInvMastUid}
-					history={history}
-				/>
-			)
-		})
-
-		let CustomerPartOptions = _.map(customerPartNumbers, (elem, idx) => {
-			return (<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>)
-		})
+		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
+			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
+		))
 
 		return (
 			<ItemDetailPageContainer>
-				<AddedModal
-					open={showShowAddedToCartModal}
-					text={'Added to Cart!'}
-					onClose={handleAddedToCart}
-					timeout={900}
-				/>
-				<DivPhoto>
-					<Img src={imagePath} alt={item.invMastUid} />
-				</DivPhoto>
-				<DivDetails>
+				<DivTitle>
 					<H2ItemTitle>{item.itemDesc}</H2ItemTitle>
+				</DivTitle>
+				
+				<DivLeftCol>
+					<DivPhoto>
+						<Img src={getOriginalImagePath(item)} alt={item.invMastUid} />
+					</DivPhoto>
+					
+					<DivPurchaseInfo>
+						<Row>
+							<Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
+							<P> /each</P>
+						</Row>
+						
+						{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Available: ${item.availability}`}</Pbold>}
+						
+						<DivPurchaseInfoButtons>
+							<RowCentered>
+								<span>Qty:</span>
+								<InputQuantity value={quantity} onChange={handleSetQuantity} />
+							</RowCentered>
+							
+							<ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
+							
+							<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+						</DivPurchaseInfoButtons>
+						
+						{item.feature.length > 0 && <a href='#feature'>Features</a>}
+						{item.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
+						{item.associatedItems.length > 0 && <a href='#accessory'>Accessory</a>}
+					</DivPurchaseInfo>
+				</DivLeftCol>
+				
+				<DivDetails>
 					<PItemExtendedDescription>{item.extendedDesc}</PItemExtendedDescription>
+					
 					<Row>
-						<Pprice>{_.isNil(unitPrice) ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
-						{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
+						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
+						{item.availability === 0 ? (
+							<Pbold>{item.availabilityMessage}</Pbold>
+						) : (
+							<Pbold style={{margin: 'auto 10px'}}>{`Available: ${item.availability}`}</Pbold>
+						)}
 					</Row>
+					
 					<TABLE>
 						<tbody>
 							<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={item.brand.logoLink} /></TDWhite></TR2>
 							<TR2><TDGrey>Item ID</TDGrey><TDWhite>{item.itemCode}</TDWhite></TR2>
 							<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{item.mfgPartNo}</TDWhite></TR2>
 							<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{item.invMastUid}</TDWhite></TR2>
-							{
-								!!CustomerPartOptions.length && (
-									<TR2><TDGrey>Customer Part #</TDGrey>
-										<TDWhite>
-											<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
-												<option>Select a Part No.</option>
-												{CustomerPartOptions}
-											</select>
-										</TDWhite>
-									</TR2>
-								)
-							}
-							<TR2><TDGrey>Unit Size</TDGrey><TDWhite>{item.unitSizeMultiple}</TDWhite></TR2>
+							
+							{!!CustomerPartOptions.length && (
+								<TR2>
+									<TDGrey>Customer Part #</TDGrey>
+									<TDWhite>
+										<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
+											<option>Select a Part No.</option>
+											{CustomerPartOptions}
+										</select>
+									</TDWhite>
+								</TR2>
+							)}
+							
+							<TR2>
+								<TDGrey>Unit Size</TDGrey>
+								<TDWhite>{item.unitSizeMultiple}</TDWhite>
+							</TR2>
 						</tbody>
 					</TABLE>
+					
 					<hr />
+					
 					<H4 id='feature'>Features</H4>
-					{Features}
+					<ul>{FeatureItems}</ul>
+					
 					<H4 id='techspec'>Tech Specifications</H4>
-					{TechSpecs}
+					<Table>
+						<tbody>
+						{TechSpecItems}
+						</tbody>
+					</Table>
+					
 					{item.itemLink.length > 0 && <H4>Links</H4>}
-					{Links}
+					<DivSection>{ItemLinks}</DivSection>
+					
 					{item.associatedItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
+					
 					<DivAccessoryItems>
 						{AccessoryItems}
 					</DivAccessoryItems>
 				</DivDetails>
-				<DivPurchaseInfo>
-					<RowSpaced>
-						<Row><Pprice>{_.isNil(unitPrice) ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice><P> /each</P></Row>
-						<RowEnd>
-							<span>Qty:</span><InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)} />
-						</RowEnd>
-					</RowSpaced>
-					<hr />
-					{item.availability === 0 ? <Pbold>{item.availabilityMessage}</Pbold> : <Pbold>{`Availability: ${item.availability}`}</Pbold>}
-					<Div>
-						<hr/>
-						<ButtonRed
-							onClick={() => setShowAddListModal(true)}
-						>
-							Add to List
-						</ButtonRed>
-						<AddToShoppingListModal
-							open={showAddListModal}
-							hide={() => setShowAddListModal(false)}
-							item={item}
-							customerPartNumberId={selectedCustomerPartNumber}
-						/>
-						<Context.Consumer>
-							{({ addItem }) => (
-								<ButtonRed onClick={() => {
-									addItem({
-										'frecno': itemId,
-										'quantity': parseInt(quantity, 10),
-										'itemNotes': '',
-										'itemUnitPriceOverride': null,
-										'customerPartNumberId': selectedCustomerPartNumber
-									}), setShowAddedToCartModal(true), setQuantity(1)
-								}}>Add to Cart</ButtonRed>
-							)}
-						</Context.Consumer>
-						{/* <ButtonBlack>Buy Now</ButtonBlack> */}
-					</Div>
-					{item.feature.length > 0 && <a href='#feature'>Features</a>}
-					{item.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
-					{item.associatedItems.length > 0 && <a href='#accessory'>Accessory</a>}
-				</DivPurchaseInfo>
+				
+				<AddedModal
+					open={showShowAddedToCartModal}
+					text="Added to Cart!"
+					onClose={handleAddedToCart}
+					timeout={900}
+				/>
+				
+				<AddToShoppingListModal
+					open={showAddListModal}
+					hide={() => setShowAddListModal(false)}
+					item={item}
+					customerPartNumberId={selectedCustomerPartNumber}
+				/>
+			
 			</ItemDetailPageContainer>
 		)
 	}

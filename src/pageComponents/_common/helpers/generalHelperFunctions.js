@@ -54,19 +54,22 @@ export const getImagePath = path => {
 		: 'https://www.airlinehyd.com/images/no-image.jpg';
 }
 
-const ItemMediaType_Large = 1;
-const ItemMediaType_Thumbnail = 3;
+const ImageTypes = {
+	Original: 0,
+	Large: 1,
+	Zoom: 2,
+	Thumbnail: 3,
+}
 const MediaType_Image = 0;
 
-export const getThumbnailImagePath = itemDetails => {
-    const resultImage = itemDetails?.image?.filter(i => i.itemMediaType === ItemMediaType_Thumbnail && i.mediaType === MediaType_Image && i.sequence === 1)?.[0];
-    return getImagePath(resultImage?.path);
-}
+const getTypeImage = (itemDetails, type) =>  itemDetails?.image?.filter(i => i.itemMediaType === type
+	&& i.mediaType === MediaType_Image && i.sequence === 1)?.[0]
 
-export const getLargeImagePath = itemDetails => {
-    const resultImage = itemDetails?.image?.filter(i => i.itemMediaType === ItemMediaType_Large && i.mediaType === MediaType_Image && i.sequence === 1)?.[0];
-    return getImagePath(resultImage?.path);
-}
+export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Thumbnail)?.path);
+
+export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
+
+export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path);
 
 export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCustomer='false') => {
 	return `/search/?
