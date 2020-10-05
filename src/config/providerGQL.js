@@ -102,7 +102,6 @@ export const GET_ITEM_BY_ID = gql`
       itemCode
       itemCodeUrlSanitized
       itemDesc
-      listPrice
       mfgPartNo
       modelCode
       tariff
@@ -131,7 +130,6 @@ export const GET_ITEMS_BY_ID = gql`
       itemCode
       itemCodeUrlSanitized
       itemDesc
-      listPrice
       mfgPartNo
       modelCode
       tariff

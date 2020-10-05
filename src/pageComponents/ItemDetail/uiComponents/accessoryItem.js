@@ -180,26 +180,8 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({associatedItemId, history}) {
+export default function AccessoryItem({ item, history }) {
 	const [quantity, setQuantity] = useState(1)
-	const [item, setItem] = useState(null)
-  
-	function mutateItemId(itemId){
-		let mutatedItemId = itemId.replace(/\s/g, '-')
-		return(mutatedItemId)
-	}
-
-	useQuery(GET_ITEM_BY_ID, {
-		variables: { associatedItemId },
-		onCompleted: result => {
-			if (result.itemDetails.length) {
-				setItem(result.itemDetails[0])
-			} else {
-				setItem({})
-			}
-		}
-	})
-
 
 	function handleSetQuantity(quantity){
 		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -211,40 +193,38 @@ export default function AccessoryItem({associatedItemId, history}) {
 		if (quantity.length > 0){
 			// addToCart(quantity, frecno)
 		}
-    }
+  }
     
-    let imagePath = getThumbnailImagePath(item);
+  let imagePath = getThumbnailImagePath(item);
 
-	if (_.isNil(item)){
-		return(
-			<Loader />
-		)
-	} else {
-		let mutatedItemId = mutateItemId(_.get(item,'item_id',''))
-		return(
-			<DivItemResultContainer>
-				<DivPartDetailsRow>
-					<DivPartImg>
-						<Img src={imagePath} alt={item.invMastUid}/>
-					</DivPartImg>
-					<DivPartDetails>
-						<PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>
-					</DivPartDetails>
-					<DivPartNumberRow>
-						<PpartAvailability>Airline #: AHC{item.invMastUid}</PpartAvailability>
-					</DivPartNumberRow>
-					<DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-						{item.availability !== 0 ? <PBlue>{item.availability}</PBlue> : <PBlue>{item.availabilityMessage}</PBlue>}
-					</DivPartNumberRow>
-					<DivPartNumberRowSpread>
-						<Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-						{(!_.isNil(item.anonPrice) && item.anonPrice !== 0) ? <Div><Pprice>${item.anonPrice.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-					</DivPartNumberRowSpread>
-					<DivSpace>
-						<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-					</DivSpace>
-				</DivPartDetailsRow>
-			</DivItemResultContainer>
-		)
-	}
+	return (
+    <DivItemResultContainer>
+      <DivPartDetailsRow>
+        <DivPartImg>
+          <Img 
+            src={imagePath} 
+            alt={item.details?.itemCode}
+            onClick={()=>{history.push(`/product/${item.details?.itemCodeUrlSanitized}/${item.associatedInvMastUid}`)}}/>
+        </DivPartImg>
+        <DivPartDetails>
+          <PpartTitle onClick={()=>{history.push(`/product/${item.details?.itemCodeUrlSanitized}/${item.associatedInvMastUid}`)}}>{item.details?.itemCode}</PpartTitle>
+        </DivPartDetails>
+        <DivPartNumberRow>
+          <PpartAvailability>Airline #: AHC{item.associatedInvMastUid}</PpartAvailability>
+        </DivPartNumberRow>
+        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+          {item.availability 
+              ? <PBlue>{item.availability.availability}</PBlue> 
+              : <PBlue>{item.availability === 0 ? item.availability.availabilityMessage : 'Call Airline for Price'}</PBlue>}
+        </DivPartNumberRow>
+        <DivPartNumberRowSpread>
+          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+          {(item.unitPrice && item.unitPrice !== 0) ? <Div><Pprice>${item.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+        </DivPartNumberRowSpread>
+        <DivSpace>
+          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+        </DivSpace>
+      </DivPartDetailsRow>
+    </DivItemResultContainer>
+	)
 }

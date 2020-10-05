@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -10,114 +10,45 @@ import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
 import { getLargeImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
+import { FRAGMENT_ITEM_DETAIL, FRAGMENT_ITEM_DETAIL_BRANDS, FRAGMENT_ITEM_DETAIL_FEATURES,
+		 FRAGMENT_ITEM_DETAIL_MEDIA, FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS,
+		 FRAGMENT_ITEM_DETAIL_ITEM_LINKS, FRAGMENT_ITEM_DETAIL_TECH_SPECS } from 'config/gqlFragments/gqlItemDetail'
 
-const GET_ITEM_BY_ID = gql`
-		query ItemById($itemId: Int){
-				customerPartNumbers(frecno: $itemId){
-					customerPartNumber
-					id
-				}
-				itemDetails(invMastUid: $itemId) {
-						anonPrice
-						assembly
-						availability
-						availabilityMessage
-						brand {
-							id
-							name
-							supplierId
-							logoLink
-					}
-						cBrandId
-						dateCreated
-						dateModified
-						extendedDesc
-						filters
-						hideOnWeb
-						invMastUid
-						itemCode
-						itemDesc
-						listPrice
-						mfgPartNo
-						modelCode
-						p21ItemDesc
-						p21NonWeb
-						popularity
-						preferredSourceLoc
-						relevancy
-						restrictedCustomerCodes
-						rootCategoryUids
-						showPrice
-						supplierId
-						tariff
-						unitSizeMultiple
-						feature {
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								sequence
-								text
-								type
-								id
-							}
-							image {
-								path
-								sequence
-								itemMediaType
-                                mediaType
-								mediaId
-							}
-							associatedItems {
-								associatedInvMastUid
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								quantity
-								type
-								id
-							}
-							itemLink {
-								audienceType
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								linkPath
-								linkType
-								modifiedBy
-								sequence
-								thumbnail
-								title
-								id
-							}
-							techSpec {
-								attributeId
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								name
-								sequence
-								id
-								value
-							}
-				}
+const GET_MAIN_ITEM_BY_ID = gql`
+	query ItemById($itemId: Int) {
+		customerPartNumbers(frecno: $itemId){
+			customerPartNumber
+			id
 		}
+		itemDetails(invMastUid: $itemId) {
+			...ItemDetails
+			...Brands
+			...Features
+			...Media
+			...AssociatedItems
+			...ItemLinks
+			...TechSpecs
+		}
+	}
+	${FRAGMENT_ITEM_DETAIL}
+	${FRAGMENT_ITEM_DETAIL_BRANDS}
+	${FRAGMENT_ITEM_DETAIL_FEATURES}
+	${FRAGMENT_ITEM_DETAIL_MEDIA}
+	${FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS}
+	${FRAGMENT_ITEM_DETAIL_ITEM_LINKS}
+	${FRAGMENT_ITEM_DETAIL_TECH_SPECS}
 `
 
-const GET_ITEM_PRICE = gql`
-query ItemSearch($items: [ItemQuantityInput]){
-	getItemPrices(items: $items){
-		invMastUid
-		quantity
-		totalPrice
+const GET_ACCESSORY_ITEM_DETAILS = gql`
+	query GetAccessoryItems($invMastUids: [Int]){
+		itemDetailsBatch(invMastUids: $invMastUids){
+			...ItemDetails
+			...Media
+		}
 	}
-}
+	${FRAGMENT_ITEM_DETAIL}
+	${FRAGMENT_ITEM_DETAIL_MEDIA}
 `
 
 const ItemDetailPageContainer = styled.div`
@@ -287,6 +218,7 @@ export default function ItemDetailPage({ history }) {
 	let { itemId, customerPartNumber } = useParams()
 
 	const [item, setItem] = useState(null);
+	const [accessoryItems, setAccessoryItems] = useState([])
 	const [quantity, setQuantity] = useState(1);
 	const [unitPrice, setUnitPrice] = useState(null);
     const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
@@ -299,23 +231,11 @@ export default function ItemDetailPage({ history }) {
 	}
 
 	itemId = parseInt(itemId, 10)
-	useQuery(GET_ITEM_BY_ID, {
+	useQuery(GET_MAIN_ITEM_BY_ID, {
 		variables: { itemId },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			if (result.itemDetails) {
-				performPriceLookup(
-					{
-						variables: {
-							'items': [
-								{
-									'invMastUid': result.itemDetails.invMastUid,
-									'quantity': 1
-								}
-							]
-						}
-					}
-				)
 				setCustomerPartNumbers(result.customerPartNumbers)
 				setItem(result.itemDetails)
 			} else {
@@ -324,17 +244,99 @@ export default function ItemDetailPage({ history }) {
 		}
 	})
 
-	const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
+	//Perform actions when the item is set. Such as price retrieval.
+	useEffect(() => {
+		if(!item) return
+
+		queryItemPrice({
+			variables: {
+				'items': [{
+					'invMastUid': item.invMastUid,
+					'quantity': 1
+				}]
+			}
+		})
+
+		//If there are accessory items attached to this item, query for their details
+		if(item.associatedItems.length){
+			setAccessoryItems(item.associatedItems)
+
+			//Build the price request objects
+			let accessoryItemPriceRequests = item.associatedItems.map(i => {
+				return {
+					'invMastUid': i.associatedInvMastUid,
+					'quantity': 1
+				}
+			})
+
+			queryAccessoryItemPrices({
+				variables: {
+					'items': accessoryItemPriceRequests
+				}
+			})
+
+			queryAccessoryItemDetails({
+				variables: {
+					'invMastUids': item.associatedItems.map(i => i.associatedInvMastUid)
+				}
+			})
+		} else{
+			setAccessoryItems([])
+		}
+		
+	}, [item])
+
+	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
-			if (!_.isNil(data.getItemPrices[0])) {
-				setUnitPrice(data.getItemPrices[0].totalPrice)
+			if(data.getItemPrices.length){
+				let unitPrice = data.getItemPrices[0].unitPrice
+				setUnitPrice(unitPrice)
+			} else{
+				setUnitPrice(0)
 			}
 		}
 	})
 
-	if (_.isNil(item)) {
+	const [queryAccessoryItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
+		onCompleted: data => {
+
+			if(accessoryItems.length){
+				let accessoryItemsWithPrice = accessoryItems.map(ai => {
+					let associatedItemPrice = data.getItemPrices.find(priceObj => priceObj.invMastUid === ai.associatedInvMastUid).unitPrice
+
+					return {
+						...ai,
+						unitPrice: associatedItemPrice
+					}
+				})
+
+				setAccessoryItems(accessoryItemsWithPrice)
+			}
+		}
+	})
+
+	const [queryAccessoryItemDetails] = useLazyQuery(GET_ACCESSORY_ITEM_DETAILS, {
+		onCompleted: data => {
+			let itemsWithDetails = data.itemDetailsBatch
+
+			if(accessoryItems.length){
+				let accessoryItemsWithDetails = accessoryItems.map(ai => {
+					let accessoryItemDetails = itemsWithDetails.find(detailObj => detailObj.invMastUid === ai.associatedInvMastUid)
+
+					return  {
+						...ai,
+						details: accessoryItemDetails
+					}
+				})
+
+				setAccessoryItems(accessoryItemsWithDetails)
+			}
+		}
+	})
+
+	if (!item) {
 		return (<Loader />)
-	} else if (!_.has(item, 'invMastUid')) {
+	} else if (!item.invMastUid) {
 		return (<p>No item found</p>)
 	} else {
         let imagePath = getLargeImagePath(item);
@@ -358,7 +360,6 @@ export default function ItemDetailPage({ history }) {
 		})
 
 		let Features = (
-
 			<ul>
 				{FeatureItems}
 			</ul>
@@ -380,11 +381,11 @@ export default function ItemDetailPage({ history }) {
 			</DivSection>
 		)
 
-		let AccessoryItems = item.associatedItems.map((elem, idx) => {
+		let AccessoryItems = accessoryItems.length && accessoryItems.map((ai, idx) => {
 			return (
 				<AccessoryItem
 					key={idx}
-					associatedItemId={elem.associatedInvMastUid}
+					item={ai}
 					history={history}
 				/>
 			)
