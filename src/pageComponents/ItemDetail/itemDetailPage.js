@@ -7,48 +7,9 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
-import gql from 'graphql-tag'
 import { GET_ITEM_PRICE } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
-import { FRAGMENT_ITEM_DETAIL, FRAGMENT_ITEM_DETAIL_BRANDS, FRAGMENT_ITEM_DETAIL_FEATURES,
-		 FRAGMENT_ITEM_DETAIL_MEDIA, FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS,
-		 FRAGMENT_ITEM_DETAIL_ITEM_LINKS, FRAGMENT_ITEM_DETAIL_TECH_SPECS } from 'config/gqlFragments/gqlItemDetail'
-
-const GET_MAIN_ITEM_BY_ID = gql`
-	query ItemById($itemId: Int) {
-		customerPartNumbers(frecno: $itemId){
-			customerPartNumber
-			id
-		}
-		itemDetails(invMastUid: $itemId) {
-			...ItemDetails
-			...Brands
-			...Features
-			...Media
-			...AssociatedItems
-			...ItemLinks
-			...TechSpecs
-		}
-	}
-	${FRAGMENT_ITEM_DETAIL}
-	${FRAGMENT_ITEM_DETAIL_BRANDS}
-	${FRAGMENT_ITEM_DETAIL_FEATURES}
-	${FRAGMENT_ITEM_DETAIL_MEDIA}
-	${FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS}
-	${FRAGMENT_ITEM_DETAIL_ITEM_LINKS}
-	${FRAGMENT_ITEM_DETAIL_TECH_SPECS}
-`
-
-const GET_ACCESSORY_ITEM_DETAILS = gql`
-	query GetAccessoryItems($invMastUids: [Int]){
-		itemDetailsBatch(invMastUids: $invMastUids){
-			...ItemDetails
-			...Media
-		}
-	}
-	${FRAGMENT_ITEM_DETAIL}
-	${FRAGMENT_ITEM_DETAIL_MEDIA}
-`
+import { GET_MAIN_ITEM_BY_ID, GET_ACCESSORY_ITEM_DETAILS } from 'config/gqlFragments/gqlItemDetail'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
