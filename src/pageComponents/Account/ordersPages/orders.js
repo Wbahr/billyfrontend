@@ -112,6 +112,10 @@ const SpinnerDiv = styled.div`
 	margin: 50px;
 `
 
+const RefundTextColor = styled.span`
+	color: red;
+`
+
 export default function OrdersTable({ history }) {
 	const context = useContext(Context)
 	const [data, setData] = useState([])
@@ -220,7 +224,7 @@ export default function OrdersTable({ history }) {
 				sortBy: [
 					{
 						id: 'orderDate',
-						desc: true
+						desc: true,
 					}
 				]
 			},
@@ -342,7 +346,16 @@ export default function OrdersTable({ history }) {
 													{cell.render('Cell')}
 												</TDrow>
 											)
-										} else {
+										} else if (cell.column.id === 'total' && cell.value.props.value < 0 ) {
+											return (
+												<TDrow {...cell.getCellProps()}>
+													<RefundTextColor>
+													{cell.render('Cell')}
+													</RefundTextColor>	
+												</TDrow>
+											)
+										}
+										 else {
 											return (
 												<TDrow {...cell.getCellProps()}>
 													{cell.render('Cell')}

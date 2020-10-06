@@ -160,8 +160,7 @@ export default function OrderDetail({ history, orderId }) {
 					timeout={900}
 				/>
 				<DivHeader>
-					{/* <img src={AirlineLogo} height="40px" /> */}
-					<h4>Order #{orderId}</h4>
+					<h4>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</h4>
 					<DivDownload>{OrderDetailDownloadButton}</DivDownload>
 					<p onClick={() => { history.push('/account/orders') }}>Back to Orders</p>
 					<ButtonSmall onClick={() => handleAddOrder()}>Add Order to Cart</ButtonSmall>
