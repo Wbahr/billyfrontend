@@ -26,7 +26,6 @@ import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
-import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import Shop from '../pageComponents/Shop/shopPage'
@@ -46,6 +45,7 @@ import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 import knowledgeCenterPage from 'pageComponents/KnowledgeCenter/knowledgeCenterPage'
+import CategoriesPage from 'pageComponents/ProductCategories/categoriesPage'
 
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
