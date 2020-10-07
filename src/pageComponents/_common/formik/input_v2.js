@@ -1,46 +1,10 @@
 import React from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field as FormikField } from 'formik'
+
 import CurrencyInput from 'react-currency-input'
-
-const DivContainer = styled.div`
-  display flex;
-  flex-direction: column;
-  height: 71px;
-  padding: 0 8px;
-  width: max-content;
-`
-
-const Label = styled.label`
-  color: #606060;
-  font-size: 14px;
-  font-weight: 400;
-  padding-left: 4px;
-  margin-bottom: -4px;
-  // background-color: white;
-  width: max-content;
-  padding: 2px;
-  margin-left: 7px;
-`
-
-const MainInput = styled(FormikField)`
-  height: 40px;
-  padding: 0 8px;
-  color: #303030;
-  font-size: 16px;
-  border-radius: 1px;
-  border: 1px solid #e1e1e1;  
-  :focus{
-    border: 1px solid #007bff;  
-    outline: none;
-  }
-  ::placeholder {
-    color: grey;
-    font-size: 14px;
-  }
-`
+import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
+import { ErrorMessage } from 'formik'
 
 const MainCurrencyInput = styled(CurrencyInput)`
   height: 40px;
@@ -59,55 +23,78 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-export default function Input({type, disabled, name, label, placeholder, width, changeFunction, maxlength}){
-	if(type === 'text' && _.isNil(changeFunction)){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainInput 
-					type="text" 
-					name={name} 
+
+const input = props => <input {...props} />
+
+export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
+	if (type === 'text' || type === 'email' || type === 'password') {
+		return (
+			<FormikFormFieldContainer style={style}>
+				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+				<FormikFormField 
+					type={type}
+					name={name}
+					id={name}
 					placeholder={placeholder} 
 					disabled={disabled} 
 					style={{width: width || '400px'}}
 					maxLength={maxlength}
+					{
+						...(onChange ? {
+							as: input,
+							onChange,
+							value
+						} : {})
+					}
 				/>
-			</DivContainer>
+				<FormikFormFieldError>
+					<ErrorMessage name={name} />
+				</FormikFormFieldError> 
+			</FormikFormFieldContainer>
 		)
-	} else if(type === 'text' && !_.isNil(changeFunction)){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainInput 
-					type="text" 
-					name={name} 
-					placeholder={placeholder} 
-					disabled={disabled} 
-					style={{width: width || '400px'}}
-					onChange={(e)=>changeFunction(name, e.target.value)}
-					maxLength={maxlength}
-				/>
-			</DivContainer>
-		)
-	} else if(type === 'currency') {
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<FormikField name={name}>
+	} else if (type === 'currency') {
+		return (
+			<FormikFormFieldContainer style={style}>
+				{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
+				<FormikFormField name={name}>
 					{({
-						field, // { name, value, onChange, onBlur }
+						field, 
 						form
 					}) => (
-						<MainCurrencyInput {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
+						<MainCurrencyInput id={name} {...field} value={field.value} prefix='$' style={{width: width || '400px'}} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
 					)}
-				</FormikField>
-			</DivContainer>
-		)
+				</FormikFormField>
+				{validationMessage && <FormikFormFieldError>{validationMessage}</FormikFormFieldError>}   
+			</FormikFormFieldContainer>
+		);
 	} else {
-		return(
-			<FormikField type={type} name={name} />
-		)
+		return (
+			<FormikFormFieldContainer style={style}>
+				{label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
+				<FormikFormField id={name} type={type} name={name} />
+			</FormikFormFieldContainer>
+		);
 	}
+}
+
+/*Creates a non-formik bound input, but styled to look the same */
+export function FormikStyleInput({type, value, disabled, name, label, placeholder, width, maxlength, onChange }) {
+	return(
+		<FormikFormFieldContainer>
+			{label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+			<input 
+				type={type}
+				name={name}
+				id={name}
+				placeholder={placeholder} 
+				disabled={disabled} 
+				style={{width: width || '400px'}}
+				maxLength={maxlength}
+				onChange={onChange}
+				value={value}
+			/>
+		</FormikFormFieldContainer>
+	);
 }
 
 Input.propTypes = {
@@ -116,7 +103,8 @@ Input.propTypes = {
 	disabled: PropTypes.bool,
 	label: PropTypes.string,
 	placeholder: PropTypes.string,
-	onChange: PropTypes.string
+	width: PropTypes.number,
+	maxLength: PropTypes.number,
 }
 
 Input.defaultProps = {

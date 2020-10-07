@@ -11,7 +11,7 @@ import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import _ from "lodash";
 import {CircularProgress} from '@material-ui/core';
 import NumberFormat from "react-number-format";
-import {exportToExcel, exportToPdf, getCsvFormattedData} from "../../_common/helpers/generalHelperFunctions";
+import {exportToExcel, exportToPdf, getCsvFormattedData, getImagePath} from "../../_common/helpers/generalHelperFunctions";
 import { CSVLink } from "react-csv";
 
 const TableContainer = styled.div`
@@ -199,20 +199,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			: foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} days`
 		return <span>{quantityAvailable ? quantityAvailable : 'Call us'}</span>
 	}
-	
-	const getImageUrl = url => {
-		let imagePath;
-		if (_.isNil(url)) {
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			const imagePathArray = url.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
-		return imagePath
-	}
-	
+		
 	const columns = useMemo(
 		() => [
 			{
@@ -222,7 +209,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			{
 				Header: 'Image',
 				accessor: 'itemImageUrl',
-				Cell: props => <img src={getImageUrl(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
+				Cell: props => <img src={getImagePath(props.value)} height={75} width={75} alt={props.row.values.itemId}/>
 			},
 			{
 				Header: 'Last Date Ordered',
@@ -411,7 +398,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
 			{
 				context.getPurchaseHistoryState.loading ? (
 					<SpinnerDiv>
-						<CircularProgress color=""/>
+						<CircularProgress />
 					</SpinnerDiv>
 				) : (
 					<Table {...getTableProps()}>

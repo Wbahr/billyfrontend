@@ -22,8 +22,15 @@ const DivTitle = styled.div`
 `
 
 const DivRow = styled.div`
-	display: flex; 
+	display: flex;
+	flex: 1;
 	align-items: center;
+`
+
+const DivOption = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 4px 0 4px 24px;
 `
 
 const DivOptionRow = styled.div`
@@ -54,52 +61,97 @@ const Acategory = styled.p`
 	}
 `
 
-export default function CategoryFilter({isUpdating, parentCategories, childCategories, updatedCategoriesFilter, selectedParent, selectedChild, removeParent, removeChild}) {
-	const [isOpen, setIsOpen] = useState(false)
-	let categorieslevel
-	let categories
-	if (_.isNil(childCategories)){
-		categorieslevel = 'parent'
-		categories = parentCategories
-	} else {
-		categorieslevel = 'child'
-		categories = childCategories
-	}
-	let FilterName = 'Categories'
-	let CategoryOptions = _.map(categories, option => {
-		if (_.isNil(childCategories)) {
-			return (
-				<DivOptionRow>
-					<Acategory value={option.parentCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.parentCategoryDisplayName}</Acategory>
-				</DivOptionRow>
-			)
-		} else if (selectedChild.length > 0 && !isUpdating) {
-			return (
-				<DivOptionRow>
-					<DivRow>
-						<Acategory value={option.childCategoryName}>{option.childCategoryDisplayName} </Acategory>
-						<span onClick={()=>removeChild()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span>
-					</DivRow>
-				</DivOptionRow>
-			)
-		} else {
-			return (
-				<DivOptionRow>
-					<Acategory value={option.childCategoryName} onClick={(e)=>updatedCategoriesFilter(categorieslevel, e.target.innerText)}>{option.childCategoryDisplayName}</Acategory>
-				</DivOptionRow>
-			)   
-		}
-	})
+const PCount = styled.p`
+	margin: 0 4px 0 0;
+	color: #535353;
+	font-size: 12px;
+`
 
-	return(
-		<>
-			<DivTitle onClick={()=>(setIsOpen(!isOpen))}>
-				<P>{FilterName}</P>
-				{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+const Row = styled.div`
+	display: flex;
+`
+
+export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}) {
+	const [isOpen, setIsOpen] = useState(true)
+	const selectedParentIdx = parentCategories.findIndex(category => category.selected)
+	const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
+	
+	const handleUpdateCategories = (type, idx) => () => {
+		const toggleSelected = (category, i) => ({ ...category, selected: i === idx ? !category.selected : false })
+		const newCategories = type === 'parent' ? parentCategories.map(toggleSelected) : childCategories.map(toggleSelected)
+		if (type === 'parent') {
+			setParentCategories(newCategories)
+		} else {
+			setChildCategories(newCategories)
+		}
+	}
+	
+	const sortAndMapToOption = toOption => (accum, curVal, idx) => {
+		if (curVal.selected) {
+			accum.unshift(toOption(curVal, idx))
+		} else {
+			accum.push(toOption(curVal, idx))
+		}
+		return accum
+	}
+	
+	const toChildCategory = ({childCategoryName, childCategoryDisplayName, childCategoryCount}, idx) => (
+		<DivOptionRow key={childCategoryName}>
+			<DivRow>
+				<Acategory
+					value={childCategoryName}
+					onClick={handleUpdateCategories('child', idx)}
+				>
+					{childCategoryDisplayName}
+				</Acategory>
+				{selectedChildIdx === idx && !isSearching && (
+					<span onClick={handleUpdateCategories('child', selectedChildIdx)}>
+						<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
+					</span>
+				)}
+			</DivRow>
+			
+			<PCount>({childCategoryCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const ChildCategories = () => <div>{(childCategories || []).reduce(sortAndMapToOption(toChildCategory), [])}</div>
+	
+	const toParentCategory = ({parentCategoryName, parentCategoryDisplayName, parentCategoryCount}, idx) => (
+		<DivOption key={parentCategoryName}>
+			<Row>
+				<DivRow>
+					<Acategory
+						value={parentCategoryName}
+						onClick={handleUpdateCategories('parent', idx)}
+					>
+						{parentCategoryDisplayName}
+					</Acategory>
+					{selectedParentIdx === idx && (
+						<span onClick={handleUpdateCategories('parent', selectedParentIdx)}>
+							<FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
+						</span>
+					)}
+				</DivRow>
+				
+				<PCount>({parentCategoryCount})</PCount>
+			</Row>
+			
+			{selectedParentIdx === idx && !isSearching && <ChildCategories/>}
+			{selectedParentIdx === idx && isSearching && <Loader/>}
+		</DivOption>
+	)
+	
+	const ParentCategories = () => <>{(parentCategories || []).reduce(sortAndMapToOption(toParentCategory), [])}</>
+
+	return (
+		<div>
+			<DivTitle onClick={() => setIsOpen(!isOpen)}>
+				<P>Categories</P>
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
 			</DivTitle>
-			{(isOpen && !_.isNil(childCategories) && childCategories.length > 0) &&<DivRow><PparentTitle>{selectedParent} <span onClick={()=>removeParent()}><FontAwesomeIcon icon={faMinusSquare} color="#961427"/></span></PparentTitle></DivRow>}
-			{(isOpen && !isUpdating) && CategoryOptions}
-			{(isUpdating && isOpen) && <Loader/>}
-		</>
+			
+			{isOpen && <ParentCategories/>}
+		</div>
 	)
 }

@@ -4,6 +4,7 @@ import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import NumberFormat from 'react-number-format'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
   display: flex;
@@ -11,11 +12,6 @@ const DivContainer = styled.div`
   padding: 8px 16px;
   margin: 8px 0;
   height: 70px;
-`
-
-const DivRow = styled.div`
-  display: flex;
-  align-items: center;
 `
 
 const DivItem = styled.div`
@@ -85,62 +81,73 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 
-export default function ShippingScheduleItem({item, index}) {
+export default function ShippingScheduleItem({item}) {
 	const itemId = parseInt(item.frecno,10)
 	const context = useContext(Context)
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == itemId)
-	const {
-		itemDetails,
-		customerPartNumbers
-	} = displayItem
+	const displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid === itemId)
+	const {itemDetails, customerPartNumbers} = displayItem
 
-	let imagePath
-	let resultImage = _.get(itemDetails,'image[0].path',null)
-	if (_.isNil(resultImage)){
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		let imagePathArray = resultImage.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 't.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
+    const imagePath = getThumbnailImagePath(itemDetails);
 	let date = item.requestedShipDate
 	date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
-	let selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
+	const selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
 
-	let Content = (
+	const Content = () => (
 		<DivCard>
 			<DivCol1>
-				<Img height='65px'  src={imagePath} />
+				<Img height='65px' src={imagePath} />
 			</DivCol1>
+			
 			<DivCol2>
 				<P1>{itemDetails.itemDesc}</P1>
-				<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!_.isNil(selectedCustomerPartNumber) && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+				<P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
 				<P2>Requested Date: {date}</P2>
 			</DivCol2>
+			
 			<DivCol3>
 				<DivQuantity>
 					<DivItem>
-						<Label>{<NumberFormat value={_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}/each</Label>
+						<Label>
+							<NumberFormat
+								value={!item.itemUnitPriceOverride ? itemDetails.listPrice : item.itemUnitPriceOverride}
+								displayType="text"
+								thousandSeparator={true}
+								prefix="$"
+								decimalScale={2}
+								fixedDecimalScale
+							/>/each
+						</Label>
 					</DivItem>
 				</DivQuantity>
+				
 				<DivQuantity>
 					<DivItem>
 						<Label>Qty: {item.quantity}</Label>
 					</DivItem>
 				</DivQuantity>
+				
 				<DivQuantity>
 					<DivItem>
-						<LabelBold>{<NumberFormat value={Number(item.quantity) * Number(_.isNil(item.itemUnitPriceOverride) ? itemDetails.listPrice : item.itemUnitPriceOverride)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</LabelBold>
+						<LabelBold>
+							<NumberFormat
+								value={Number(item.quantity) * Number(!item.itemUnitPriceOverride ? itemDetails.listPrice : item.itemUnitPriceOverride)}
+								displayType="text"
+								thousandSeparator={true}
+								prefix="$"
+								decimalScale={2}
+								fixedDecimalScale
+							/>
+						</LabelBold>
 					</DivItem>
 				</DivQuantity>
 			</DivCol3>
 		</DivCard>
 	)
-	return(
+	
+	return (
 		<DivContainer>
-			{Content}
+			<Content/>
 		</DivContainer>
 	)
 }

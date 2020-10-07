@@ -11,7 +11,9 @@ import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/fr
 import { ApolloProvider } from '@apollo/client'
 import ApolloClient from 'apollo-boost'
 import ContextProvider from './config/provider'
-import { StripeProvider } from 'react-stripe-elements'
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from '@stripe/react-stripe-js';
+import { logout } from './pageComponents/_common/helpers/generalHelperFunctions'
 import 'index.css'
 
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare, faGripLines, faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faFacebookF, faLinkedinIn, faTwitter, faYoutube, faMapPin, faFax, faSearch, faUserCircle, faTimes, faUser, faUserPlus, faGlobeAmericas, faAddressBook, faArrowCircleRight, faPlus, faFileInvoiceDollar, faPlusCircle, faMinusCircle, faTools, faPencilAlt, faShippingFast, faEnvelope, faMapMarkerAlt, faPrint, faQuestionCircle, faTruckLoading, faUserEdit, faDesktop, faBoxOpen, faDatabase, faHome, faFilePdf, faFileCsv, faFileExcel, faCopy, faList)
@@ -27,17 +29,25 @@ const client = new ApolloClient({
 				authorization: token ? `Bearer ${token}` : null
 			}
 		})
+	},
+	onError: (response) => {
+		if(response.networkError.statusCode === 401){
+			logout()
+			location.reload()
+		}
 	}
 })
+
+const stripePromise = loadStripe(process.env.STRIPE_KEY)
 
 ReactDOM.render(
 	<ApolloProvider client={client}>
 		<ContextProvider history={customHistory}>
-			<StripeProvider apiKey={process.env.STRIPE_KEY}>
+			<Elements stripe={stripePromise}>
 				<Router history={customHistory}>
 					<Switch />
 				</Router>
-			</StripeProvider>
+			</Elements>
 		</ContextProvider>
 	</ApolloProvider>
 	, document.getElementById('index')

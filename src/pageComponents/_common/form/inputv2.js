@@ -4,7 +4,8 @@ import CurrencyInput from 'react-currency-input'
 
 const DivContainer = styled.div`
   display flex;
-  flex-direction: column;
+	flex-direction: column;
+	padding-left: 5px;
 `
 
 const Label = styled.label`
@@ -20,7 +21,6 @@ const Label = styled.label`
 `
 
 const MainInput = styled.input`
-  height: 40px;
   padding: 0 8px;
   color: #303030;
   font-size: 16px;

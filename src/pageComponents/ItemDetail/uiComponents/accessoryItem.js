@@ -4,6 +4,7 @@ import Loader from '../../_common/loader'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const GET_ITEM_BY_ID = gql`
     query ItemById($associatedItemId: Int){
@@ -37,6 +38,9 @@ const GET_ITEM_BY_ID = gql`
             unitSizeMultiple
             image {
               path
+              itemMediaType
+              mediaType
+              sequence
             }
         }
     }
@@ -207,18 +211,9 @@ export default function AccessoryItem({associatedItemId, history}) {
 		if (quantity.length > 0){
 			// addToCart(quantity, frecno)
 		}
-	}
-
-	let imagePath
-	let resultImage = _.get(item,'image[0].path',null)
-	if (_.isNil(resultImage)){
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		let imagePathArray = resultImage.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 'o.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
+    }
+    
+    let imagePath = getThumbnailImagePath(item);
 
 	if (_.isNil(item)){
 		return(
@@ -230,7 +225,7 @@ export default function AccessoryItem({associatedItemId, history}) {
 			<DivItemResultContainer>
 				<DivPartDetailsRow>
 					<DivPartImg>
-						<Img src={imagePath}/>
+						<Img src={imagePath} alt={item.invMastUid}/>
 					</DivPartImg>
 					<DivPartDetails>
 						<PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>

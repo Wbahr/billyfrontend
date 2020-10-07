@@ -8,6 +8,7 @@ import { Button } from '@material-ui/core'
 import AirlineInput from '../../../pageComponents/_common/form/inputv2'
 import AirlineSelect from '../../../pageComponents/_common/form/selectv2'
 import ItemCreationModal from './uiComponents/itemCreationModal'
+import { getImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const QUERY_ITEM_CREATION_DATA = gql`
 	query GetItemCreationData{
@@ -197,12 +198,8 @@ export default function ItemCreationPage() {
 
 	let searchResultItems = []
 	itemSearchResult.map((element, index) => {
-		let resultImage = ''
-		if (element.thumbnail_image_path === null) {
-			resultImage = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			resultImage = 'https://www.airlinehyd.com/images/items/' + (element.thumbnail_image_path.split('\\')[8]).replace('_t', '_l')
-		}
+        resultImage = getImagePath(element.thumbnail_image_path);
+
 		let mutatedItemId = mutateItemId(element.item_id)
 		searchResultItems.push(
 			<DivSearchItemContainer key={index}>

@@ -47,3 +47,40 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
 	doc.autoTable(pdfFormat)
 	doc.save(`${name}.pdf`)
 }
+
+export const getImagePath = path => {
+	return path
+		? '//' + path
+		: 'https://www.airlinehyd.com/images/no-image.jpg';
+}
+
+const ImageTypes = {
+	Original: 0,
+	Large: 1,
+	Zoom: 2,
+	Thumbnail: 3,
+}
+const MediaType_Image = 0;
+
+const getTypeImage = (itemDetails, type) =>  itemDetails?.image?.filter(i => i.itemMediaType === type
+	&& i.mediaType === MediaType_Image && i.sequence === 1)?.[0]
+
+export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Thumbnail)?.path);
+
+export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
+
+export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path);
+
+export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCustomer='false') => {
+	return `/search/?
+	searchTerm=${encodeURIComponent(searchTerm)}
+	&sortType=${encodeURIComponent(sortType)}
+	&nonweb=${encodeURIComponent(searchAsCustomer)}
+	&resultSize=24
+	&resultPage=1`
+}
+
+export const logout = () => {
+	const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
+	keysToRemove.forEach(key => localStorage.removeItem(key))
+}

@@ -7,17 +7,22 @@ import {
 	UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_WEB_USER_CONTACTS,
 	GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS
 } from './providerGQL'
-import {getRidOf__typename} from '../pageComponents/_common/helpers/generalHelperFunctions'
+import {getRidOf__typename, logout} from '../pageComponents/_common/helpers/generalHelperFunctions'
 
 export default function Provider(props) {
 	const didMountRef = useRef(false)
 	const justLoadedCart = useRef(false)
 	const invoicesLoaded = useRef(false)
-	const [shoppingCart, setShoppingCart] = useState([])
+    const [shoppingCart, setShoppingCart] = useState([])
+    //TODO: Remove the images aspect of the itemDEtailCache. All queries that require images will return them directly, server-side.
 	const [itemDetailCache, setItemDetailCache] = useState([])
 	const [orderNotes, setOrderNotes] = useState('')
 	const [shoppingCartPricing, setShoppingCartPricing] = useState({'state': 'stable','subTotal': '--', 'tariff': '--'})
-	const [userInfo, setUserInfo] = useState(null)
+    const [userInfo, setUserInfo] = useState(null)
+    const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
+        ...newUserInfo,
+        isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
+    } : null);
 	const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
 	const [userType, setUserType] = useState({'current': null, 'previous': null})
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''})
@@ -36,8 +41,8 @@ export default function Provider(props) {
 			manageUserInfo('load-context')
 			handleShoppingCart('retrieve')
 		}
-	})
-	
+    })
+
 	useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
 		if(didMountRef.current){
 			if(!justLoadedCart.current){
@@ -204,11 +209,11 @@ export default function Provider(props) {
 	})
 	
 	function getItemPrices(items) {
-		handleGetItemPrices({ variables: { items: items.map(({invMastUid}) => ({ invMastUid, quantity: 1 })) } })
+		handleGetItemPrices({ variables: { items: items.map(({invMastUid, frecno}) => ({ invMastUid: invMastUid || frecno, quantity: 1 })) } })
 	}
 	
 	function getItemAvailabilities(items) {
-		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid}) => invMastUid) }})
+		handleGetItemAvailabilities({ variables: { invMastUids: items.map(({invMastUid, frecno}) => invMastUid || frecno) }})
 	}
 	
 	const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
@@ -255,7 +260,7 @@ export default function Provider(props) {
 		let imperInfoStorage = localStorage.getItem('imperInfo')
 		switch(action) {
 			case 'load-context':
-				setUserInfo(JSON.parse(userInfoStorage))
+				handleSetUserInfo(JSON.parse(userInfoStorage))
 				setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
 				if (_.isNil(userInfoStorage)) {
 					currentUserType = 'Anon'
@@ -267,7 +272,7 @@ export default function Provider(props) {
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 				localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
 				localStorage.removeItem('shoppingCartToken')
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
 					props.history.push('/')
 				}
@@ -284,7 +289,7 @@ export default function Provider(props) {
 			case 'end-impersonation':
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
 				localStorage.removeItem('imperInfo')
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'AirlineEmployee'
 				setItemDetailCache([])
@@ -295,13 +300,12 @@ export default function Provider(props) {
 				break
 			case 'login':
 				setItemDetailCache([])
-				setUserInfo(userInfo)
+				handleSetUserInfo(userInfo)
 				currentUserType = userInfo.role
 				break
 			case 'logout':
-				const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
-				keysToRemove.forEach(key => localStorage.removeItem(key))
-				setUserInfo(null)
+                logout()
+				handleSetUserInfo(null)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'Anon'
 				setOrdersCache([])
@@ -326,9 +330,10 @@ export default function Provider(props) {
 		} else {
 			handleShoppingCart('retrieve')
 		}
-		manageUserInfo('login', userInfo)
-		if(userInfo.role === 'AirlineEmployee'){
-			drift.api.widget.hide()
+        manageUserInfo('login', userInfo)
+        let drift = drift || null;
+		if(drift && userInfo.role === 'AirlineEmployee' ){
+			drift?.api?.widget?.hide();
 		}
 		handleUpdateOrders()
 		setTopAlert({
@@ -339,7 +344,7 @@ export default function Provider(props) {
 	}
 	
 	function handleLogout(){
-		drift.api.widget.show()
+		if(drift) { drift.api.widget.show(); }
 		manageUserInfo('logout')
 		props.history.push('/')
 		handleEmptyCart()
@@ -511,7 +516,7 @@ export default function Provider(props) {
 				removeTopAlert: ()=>{
 					resetTopAlert()
 				},
-				userInfo: userInfo,
+                userInfo: userInfo,
 				loginUser: (userInformation, mergeToken)=>{
 					handleLogin(userInformation, mergeToken)
 				},

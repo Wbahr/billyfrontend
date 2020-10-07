@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import SearchTermChip from './SearchTermChip'
 
 const Div = styled.div`
   display: flex;
@@ -38,32 +39,46 @@ const ButtonSearch = styled.button`
   font-size: 14px;
 `
 
-export default function ResultsSearch({updateSearchTerm, updateSortType, sortType, clearInnerSearch, handleClearedInnerSearch}) {
+const SearchChipDiv = styled.div`
+	display: flex;
+ 	margin: 5px 0px;
+`
+
+export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, setSortType, sortType}) {
 	const [searchTerm, setSearchTerm] = useState('')
 
-	function handleUpdateSearchTerm(){
-		updateSearchTerm(searchTerm)
+	const handleUpdateSearchTerm = () => {
+		setInnerSearchTerms([...innerSearchTerms, ...searchTerm.split(' ')])
+		setSearchTerm('')
+	}
+	
+	const handleRemoveSearchTerm = (idx) => () => {
+		const innerSearchTermsCopy = innerSearchTerms.slice()
+		innerSearchTermsCopy.splice(idx, 1)
+		setInnerSearchTerms(innerSearchTermsCopy)
 	}
 
-	function handleSetSearchTerm(value){
-		setSearchTerm(value)
+	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
+	
+	const handleSetSortType = e => setSortType(e.target.value)
+	
+	const handleKeyPress = e => {
+		if (e.key === 'Enter') handleUpdateSearchTerm()
 	}
-
-	useEffect(() => {
-		if(clearInnerSearch){
-			handleClearedInnerSearch()
-			setSearchTerm('')
-		}
-	})
-
-
+	
 	return(
 		<Div>
+			<SearchChipDiv>
+				{innerSearchTerms.map((term, idx) => <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
+			</SearchChipDiv>
+			
 			<DivResultsSearch>
-				<InputSearch placeholder="Add keywords to refine these results" onChange={(e) => handleSetSearchTerm(e.target.value)} value={searchTerm} /><ButtonSearch onClick={() => handleUpdateSearchTerm()}>Search</ButtonSearch>
+				<InputSearch placeholder="Add keywords to refine these results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
+				<ButtonSearch onClick={handleUpdateSearchTerm}>Search</ButtonSearch>
 			</DivResultsSearch>
+			
 			<DivResultsSearch>
-				<select value={sortType} onChange={(e) =>  updateSortType(e.target.value)}>
+				<select value={sortType} onChange={handleSetSortType}>
 					<option value={'relevancy'}>Sort by Relevance</option>
 					<option value={'availability'}>Sort by Availability</option>
 					<option value={'popularity'}>Sort by Popularity</option>

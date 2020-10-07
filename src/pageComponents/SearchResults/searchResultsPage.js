@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import queryString from 'query-string'
-import _ from 'lodash'
 import ItemResult from './uiComponents/itemResult'
 import ResultsSearch from './uiComponents/resultsSearch'
 import ResultsSummary from './uiComponents/resultsSummary'
@@ -13,8 +12,9 @@ import DetailsModal from './uiComponents/detailsModal'
 import AddedModal from './uiComponents/addedModal'
 import InfiniteScroll from 'react-infinite-scroller'
 import { useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
-import  SkeletonItem from './uiComponents/skeletonItem'
+import {QUERY_ITEM_SEARCH, GET_ITEMS_BY_ID} from '../../config/providerGQL'
+import SkeletonItem from './uiComponents/skeletonItem'
+import Context from '../../config/context'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -37,396 +37,254 @@ const DivSearchResultsContainer = styled.div`
 	flex-wrap: wrap;
 `
 
-const QUERY_ITEM_SEARCH = gql`
-	query ItemSearch($searchParams: ElasticSearchItemRequest!){
-		itemSearch(searchParams: $searchParams){
-			result
-			count
-			parentCategories {
-				parentCategoryCount
-				parentCategoryDisplayName
-				parentCategoryName
-			}
-			childCategories {
-				childCategoryCount
-				childCategoryDisplayName
-				childCategoryName
-			}
-			attributeCategories{
-				categoryName
-				categoryNameDisplay
-				features{
-					featureName
-					featureNameDisplay
-					itemCount
-				}
-			}
-			brands{
-				brandCount
-				brandName
-				brandNameDisplay
-			}
-		}
+const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
+	const removeTypeName = ({__typename, ...rest}) => rest
+	return {
+		brands: brands.map(removeTypeName),
+		attributes: attributes.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })),
+		parentCategories: parentCategories.map(removeTypeName),
+		childCategories: childCategories && childCategories.map(removeTypeName)
 	}
-`
+}
 
 export default function SearchResultsPage(props) {
-	const didMountRef = useRef(false)
-	const didSetDefaults = useRef(false)
-	const prevHistoryRef = useRef()
-	const performSearchRef = useRef(true)
-	const search = queryString.parse(location.search)
-	const [searchTerm, setSearchTerm] = useState(search.searchTerm)
-	const [resultPage, setResultPage] = useState(search.resultPage)
-	const [sortType, setSortType] = useState(search.sortType)
+	const initialSearchState = { brands: [], attributes: [], parentCategories: [], childCategories: [], isSynced: false }
+	const [searchState, setSearchState] = useState(initialSearchState)
+	const { brands, attributes, parentCategories, childCategories, isSynced } = searchState
+	const setBrands = brands => setSearchState({ ...searchState, brands, isSynced: false })
+	const setAttributes = attributes => setSearchState({ ...searchState, attributes, isSynced: false })
+	const setParentCategories = parentCategories => setSearchState({ ...searchState, childCategories: null, parentCategories, isSynced: false })
+	const setChildCategories = childCategories => setSearchState({ ...searchState, childCategories, isSynced: false })
+	
+	const parsedQueryString = queryString.parse(location.search)
+	const [searchTerm, setSearchTerm] = useState(parsedQueryString.searchTerm)
+	const [innerSearchTerms, setInnerSearchTerms] = useState([])
+	const [sortType, setSortType] = useState(parsedQueryString.sortType)
 	const [searchResults, setSearchResults] = useState([])
 	const [totalResults, setTotalResults] = useState('--')
-	const [attributeCategories, setAttributeCategories] = useState([])
-	const [filteredAttributeCategories, setFilteredAttributeCategories] = useState([])
-	const [brands, setBrands] = useState([])
-	const [parentCategories, setParentCategories] = useState([])
-	const [childCategories, setChildCategories] = useState([])
 	const [isSearching, setSearching] = useState(false)
 	const [currentPage, setCurrentPage] = useState(0)
-	const [checkedAttributeFilters, setCheckedAttributeFilters] = useState([])
-	const [checkedBrandFilters, setCheckedBrandFilters] = useState([])
 	const [isReplacingResults, setIsReplacingResults] = useState(false)
 	const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
-	const [showDetailsModal, setShowDetailsModal] = useState(false)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const [locationsModalItem, setLocationsModalItem] = useState(null)
 	const [detailsModalItem, setDetailsModalItem] = useState(null)
-	const [detailsModalItemCode, setDetailsModalItemCode] = useState(null)
-	const [showLocationsModal, setShowLocationsModal] = useState(false)
-	const [clearInnerSearch, setClearInnerSearch] = useState(false)
-	const [newAttributeCategories, setNewAttributeCategories] = useState([])
-	const [isSetNewCategories, setIsSetNewCategories] = useState(false)
-	const [searchNonce, setSearchNonce] = useState(0)
-	const [parentCategory, setParentCategory] = useState('')
-	const [childCategory, setChildCategory] = useState('')
 	const [ottoFindPart, setOttoFindPart] = useState(false)
-
-	// Set search defaults for categories. This occurs before the first search is executed
+	const [itemDetails, setItemDetails] = useState([])
+	const [lastSearchPayload, setLastSearchPayload] = useState({})
+	
+	const {getItemAvailabilities, getItemPrices} = useContext(Context)
+	
 	useEffect(() => {
-		if (!didSetDefaults.current) {
-			didSetDefaults.current = true
-			prevHistoryRef.current = props.history.location
-			let pathArray = props.history.location.pathname.slice(1).split('/')
-			if(pathArray[1] === 'categories'){
-				setParentCategory(pathArray[2])
-				if(pathArray.length === 4){
-					setChildCategory(pathArray[3])
-				}
-			}
-		}
-	})
-
-	const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
-		fetchPolicy: 'no-cache',
-		onCompleted: data => {
-			var itemSearchResult = data.itemSearch
-			//If the number of retrieved results equals the requesting page size,
-			//then enable the scroller to possibly load more.
-			const search = queryString.parse(location.search)
-			if(itemSearchResult.result.length == search.resultSize){
-				setInfiniteScrollHasMore(true)
-			}
-			setSearchNonce(search.nonce)
-			setNewAttributeCategories(itemSearchResult.attributeCategories)
-			setBrands(_.get(itemSearchResult,'brands',[]))
-			setParentCategories(itemSearchResult.parentCategories)
-			setChildCategories(itemSearchResult.childCategories)
-			parseQueryResults(itemSearchResult)
-			setIsReplacingResults(false)
-			setSearching(false)
-		}
-	})
-
-	useEffect(() => {
-		if (!didMountRef.current) {
-			prevHistoryRef.current = props.history.location
-			let pathArray = props.history.location.pathname.slice(1).split('/')
-			if(pathArray[1] === 'categories'){
-				setParentCategory(pathArray[2])
-				if(pathArray.length === 4){
-					setChildCategory(pathArray[3])
-				}
-			}
-
-			didMountRef.current = true
-		}
-		const prevHistory = prevHistoryRef.current
-		if(props.history.location.search !== prevHistory.search){
-			let searchNew = queryString.parse(props.history.location.search)
-			let searchOld = queryString.parse(prevHistory.search)
-			setCheckedAttributeFilters([])
-
-			if (searchOld.searchTerm !== searchNew.searchTerm || searchOld.sortType !== searchNew.sortType){
-				setSearchResults([])
-				setOttoFindPart(false)
-				setSearchTerm(searchNew.searchTerm)
-				loadFunc(true)
-				setIsReplacingResults(true)
-			}
-			prevHistoryRef.current = props.history.location
-			performSearchRef.current = true
-		}
-	})
-
-	useEffect(() => {
-		if(isSetNewCategories){
-			setAttributeCategories(newAttributeCategories)
-			setIsSetNewCategories(false)
-		}
-	}, [isSetNewCategories])
-
-	useEffect(() => {
-		setIsSetNewCategories(true)
-	}, [searchNonce])
-
-	useEffect(() => {
-		if(currentPage > 0 && !isSearching){
-			loadFunc()
-		}
+		if (currentPage > 0) loadItems()
 	}, [currentPage])
-
-	// Execute additional search
+	
 	useEffect(() => {
-		setSearchResults([])
+		if (!isSynced) {
+			window.scrollTo({ top: 0 })
+			setOttoFindPart(false)
+			setCurrentPage(0)
+			loadItems()
+		}
+	}, [searchState])
+	
+	const searchReplaceResults = () => {
+		setIsReplacingResults(true)
+		window.scrollTo({ top: 0 })
 		setOttoFindPart(false)
 		setCurrentPage(0)
-		setIsReplacingResults(true)
-		loadFunc(true)
-	}, [checkedAttributeFilters, checkedBrandFilters, parentCategory, childCategory])
-
-	useEffect(()=> {
-		if (!_.isNil(drift.api)){
-			if (ottoFindPart) {
-				drift.api.startInteraction({ interactionId: 126679 })
-			} else {
-				drift.api.hideChat()
+		loadItems()
+	}
+	
+	useEffect(() => {
+		searchReplaceResults()
+	}, [innerSearchTerms])
+	
+	useEffect(() => {
+		if (!isSynced) searchReplaceResults()
+	}, [searchState])
+	
+	useEffect(() => {
+		searchReplaceResults()
+		setSearchState(initialSearchState)
+		setInnerSearchTerms([])
+	}, [searchTerm, sortType])
+	
+	function loadItems() {
+		const resultSize = !searchResults.length ? parseInt(parsedQueryString.resultSize) : 24
+		setSearching(true)
+		const payload = {
+			search: {
+				searchTerm: parsedQueryString.searchTerm,
+				innerSearchTerms,
+				searchType: parsedQueryString.nonweb === 'true' ? 'nonweb' :'web',
+				sortType: parsedQueryString.sortType,
+				resultPage: isReplacingResults ? 1 : currentPage+1,
+				resultSize,
+				searchState: {
+					brands,
+					parentCategories,
+					childCategories,
+					attributes,
+				}
 			}
+		}
+		setLastSearchPayload(payload)
+		performItemSearch({ variables: payload })
+	}
+	
+	const [performItemSearch, {variables}] = useLazyQuery(QUERY_ITEM_SEARCH, {
+		fetchPolicy: 'no-cache',
+		onCompleted: ({itemSearch}) => {
+			if (variables.search === lastSearchPayload.search) {
+				const search = queryString.parse(location.search)
+				if (itemSearch.result.length === parseInt(search.resultSize)) {
+					setInfiniteScrollHasMore(true)
+				}
+				const searchState = cleanSearchState(itemSearch)
+				setSearchState({ ...searchState, isSynced: true })
+				parseQueryResults(itemSearch)
+				setIsReplacingResults(false)
+				setSearching(false)
+			}
+		},
+		onError: () => {
+			throw 'Search Failed: show error boundary'
+		}
+	})
+	
+	function parseQueryResults(itemSearchData) {
+		const invMastUids = itemSearchData.result.map(i => i.frecno)
+		getItemAvailabilities(itemSearchData.result)
+		getItemPrices(itemSearchData.result)
+		getItemDetails({ variables: { invMastUids } })
+		
+		if (isReplacingResults) {
+			setSearchResults(itemSearchData.result)
+			setOttoFindPart(false)
+		} else {
+			if (searchResults.length >= 48) setOttoFindPart(true)
+			setSearchResults([...searchResults, ...itemSearchData.result])
+		}
+		setTotalResults(itemSearchData.searchTotalCount)
+	}
+	
+	const [getItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
+		fetchPolicy: 'no-cache',
+		onCompleted: ({itemDetailsBatch, customerPartNumbersBatch}) => {
+			const mergedDetails = itemDetailsBatch.map(details => ({
+				...details,
+				customerPartNumbers: customerPartNumbersBatch
+					.filter(({invMastUid}) => details.invMastUid === invMastUid)
+					.map(part => ({partNumber: part.customerPartNumber, partId: part.id}))
+			}))
+			setItemDetails([...itemDetails, ...mergedDetails])
+		}
+	})
+
+	useEffect(() => {
+		if (ottoFindPart) {
+			drift.api?.startInteraction({ interactionId: 126679 })
+		} else {
+			drift.api?.hideChat()
 		}
 	}, [ottoFindPart])
-
-	function parseQueryResults(itemSearchData) {
-		let additionalSearchResults = itemSearchData.result
-
-		if(isReplacingResults){
-			setSearchResults([...additionalSearchResults])
-			setOttoFindPart(false)
-		} else{
-			if (searchResults.length >= 48) {
-				setOttoFindPart(true)
-			}
-			setSearchResults([...searchResults, ...additionalSearchResults])
-		}
-		
-		setTotalResults(itemSearchData.count)
-
+	
+	const setHistoryLocationSearch = (field, fieldName) => {
+		const search = queryString.stringify({ ...queryString.parse(location.search), [fieldName || field]: field })
+		props.history.push({ pathname: '/search', search })
 	}
+	
+	useEffect(() => {
+		setHistoryLocationSearch(searchTerm, 'searchTerm')
+	}, [searchTerm])
+	
+	useEffect(() => {
+		setHistoryLocationSearch(sortType, 'sortType')
+	}, [sortType])
+	
+	useEffect(() => {
+		setSearchTerm(parsedQueryString.searchTerm)
+	}, [parsedQueryString.searchTerm])
+	
+	const handleShowLocationsModal = (invMastUid) => setLocationsModalItem(invMastUid)
 
-	function handleUpdateResults(updateObj){
-		const search = queryString.parse(location.search)
-		let query
-		let update = Object.keys(updateObj)[0]
-		switch(update){
-		case 'searchTerm':
-			setSearchTerm(updateObj.searchTerm)
-			setResultPage(1)
-			query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}&nonce=${search.nonce}`
-			break
-		case 'page':
-			setResultPage(updateObj.page)
-			query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}&nonce=${search.nonce}`
-			break
-		case 'sort':
-			setSortType(updateObj.sort)
-			query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}&nonce=${search.nonce}`
-			break
-		}
-		setClearInnerSearch(true)
-		props.history.push({
-			pathname: '/search',
-			search: query
-		})
-	}
+	const handleHideLocationsModal = () => setLocationsModalItem(null)
 
-	function handleUpdatedFeatureToggle(updatedState){
-		setCheckedAttributeFilters(updatedState)
-	}
+	const handleShowDetailsModal = (invMastUid, itemCode) => setDetailsModalItem({invMastUid, itemCode})
 
-	function handleUpdatedBrandToggle(selectedBrands){
-		setCheckedBrandFilters(selectedBrands)
-	}
-
-	function handleUpdatedCategoryToggle(categoryType, selectedCategory){
-		if(categoryType === 'parent'){
-			setParentCategory(selectedCategory)
-		} else {
-			setChildCategory(selectedCategory)
+	const handleHideDetailsModal = () => setDetailsModalItem(null)
+	
+	const loadMore = () => {
+		if (searchResults.length < totalResults) {
+			setInfiniteScrollHasMore(false)
+			setCurrentPage(currentPage + 1)
 		}
 	}
-
-	function loadFunc(isNewSearch){
-		const search = queryString.parse(location.search)
-
-		var resultSize = searchResults.length === 0 ? parseInt(search.resultSize) : 24
-		
-		setSearching(true)
-		performItemSearch({
-			variables: {
-				searchParams: {
-					searchTerm: search.searchTerm,
-					searchType: search.nonweb === 'true' ? 'nonweb' :'web',
-					resultSize: resultSize,
-					resultPage: isNewSearch ? 1 : currentPage + 1,
-					sortType: search.sortType,
-					brandFilters: checkedBrandFilters,
-					categoryFilter: {
-						'parentCategory': parentCategory,
-						'childCategory': childCategory
-					},
-					attributeFilters: checkedAttributeFilters.map(filter => {
-						return {
-							field: filter.field,
-							values: filter.values
-						}
-					})
-				}
-			}
-		})
-	}
-
-	function handleShowLocationsModal(freqno){
-		setShowLocationsModal(true)
-		setLocationsModalItem(freqno)
-	}
-
-	function handleHideLocationsModal(){
-		setShowLocationsModal(false)
-		setLocationsModalItem(null)
-	}
-
-	function handleShowDetailsModal(freqno, itemCode){
-		setDetailsModalItem(freqno)
-		setDetailsModalItemCode(itemCode)
-		setShowDetailsModal(true)
-	}
-
-	function handleHideDetailsModal(){
-		setShowDetailsModal(false)
-		setDetailsModalItem(null)
-		setDetailsModalItemCode(null)
-	}
-
-	function handleAddedToCart(){
-		setShowAddedToCartModal(true)
-	}
-
-	function handleAddedToCartModal(){
-		setShowAddedToCartModal(false)
-	}
-
-	function removeParentChildren(){
-		setParentCategory('')
-		setChildCategory('')
-	}
-
-	let SearchResults = _.map(searchResults, result => {
-		return(
-			<ItemResult 
-				key={result.frecno}
-				searchTerm={searchTerm}
-				result={result} 
-				updateResults={handleUpdateResults} 
-				history={props.history}
-				showDetailsModal={showDetailsModal}
-				toggleDetailsModal={(freqno, itemCode)=>{handleShowDetailsModal(freqno, itemCode)}}
-				toggleLocationsModal={(freqno)=>{handleShowLocationsModal(freqno)}}
-				addedToCart={()=>{handleAddedToCart()}}
-			/>
-		)
-	})
-
-	let AttributeFilters = attributeCategories.map((attribute, index) => {
-		return <AttributeFilter 
-			key={('' + index + attribute.categoryName)}
-			categoryAttribute={attribute}
-			attributeFeatureToggleStates={checkedAttributeFilters}
-			updatedFeatureToggleEvent={handleUpdatedFeatureToggle}
-			filteredAttributeCategories={filteredAttributeCategories}
+	
+	const handleAddedToCart = () => setShowAddedToCartModal(true)
+	
+	const handleAddedToCartModal = () => setShowAddedToCartModal(false)
+	
+	const itemSearchResults = useMemo(() => searchResults.map(result => (
+		<ItemResult
+			key={result.frecno}
+			searchTerm={searchTerm}
+			result={result}
+			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
+			history={props.history}
+			toggleDetailsModal={handleShowDetailsModal}
+			toggleLocationsModal={handleShowLocationsModal}
+			addedToCart={handleAddedToCart}
 		/>
-	})
+	)), [searchResults, itemDetails])
+	
+	const handleUpdateAttributes = index => newAttr => {
+		const newAttributes = attributes.slice()
+		newAttributes[index] = newAttr
+		setAttributes(newAttributes)
+	}
 
-	return(
+	const attributeFilters = useMemo(() => attributes.map((attribute, index) => (
+		<AttributeFilter
+			key={index}
+			attribute={attribute}
+			updateAttribute={handleUpdateAttributes(index)}
+		/>
+	)), [attributes])
+	
+	return (
 		<DivContainer>
-			<AddedModal 
-				open={showShowAddedToCartModal} 
-				text={'Added to Cart!'} 
-				onClose={handleAddedToCartModal}
-				timeout={900}
-			/>
-			<LocationsModal 
-				open={showLocationsModal} 
-				hideLocationsModal={handleHideLocationsModal}
-				invMastUid={locationsModalItem}
-			/>
-			<DetailsModal 
-				open={showDetailsModal} 
-				hideDetailsModal={handleHideDetailsModal}
-				invMastUid={detailsModalItem}
-				itemCode={detailsModalItemCode}
-				history={props.history}
-			/>
 			<div>
-				<CategoryFilter 
-					isUpdating={isSearching}
-					parentCategories={parentCategories}
-					childCategories={childCategories}
-					updatedCategoriesFilter={(categorieslevel, value)=>handleUpdatedCategoryToggle(categorieslevel, value)}
-					selectedParent={parentCategory}
-					selectedChild={childCategory}
-					removeParent={()=>removeParentChildren()}
-					removeChild={()=>setChildCategory('')}
-				/>
-				{ brands.length > 0 &&
-					<BrandFilter 
-						brands={brands}
-						updatedBrandFilter={handleUpdatedBrandToggle}
-					/>
-				}
-
-				{AttributeFilters}
+				<CategoryFilter {...{isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}} />
+				{!!brands.length && <BrandFilter brands={brands} setBrands={setBrands}/>}
+				{attributeFilters}
 			</div>
+			
 			<ResultsContainer>
 				<DivResultSummary>
 					<ResultsSummary 
 						searchTerm={searchTerm}
 						totalResults={totalResults}
 						isSearching={isSearching}
-						currentPage={currentPage}
 					/>
 					<ResultsSearch
 						sortType={sortType}
-						updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
-						updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
-						handleClearedInnerSearch={()=> setClearInnerSearch(false)}
-						clearInnerSearch={clearInnerSearch}
+						setSortType={setSortType}
+						innerSearchTerms={innerSearchTerms}
+						setInnerSearchTerms={setInnerSearchTerms}
 					/>
 				</DivResultSummary>
+				
 				<InfiniteScroll
 					pageStart={0}
-					loadMore={() => {
-						setInfiniteScrollHasMore(false)
-						setCurrentPage(currentPage + 1)
-					}}
+					loadMore={loadMore}
 					hasMore={infiniteScrollHasMore}
 					threshold={3000}
 				>
-					<DivSearchResultsContainer>          
-						{SearchResults}
-						{(SearchResults.length < totalResults || totalResults === '--') &&
+					<DivSearchResultsContainer>
+						{!isReplacingResults && itemSearchResults}
+						{(searchResults.length < totalResults || totalResults === '--' || isSearching) &&
 							<>
 								<SkeletonItem/>
 								<SkeletonItem/>
@@ -445,6 +303,26 @@ export default function SearchResultsPage(props) {
 					</DivSearchResultsContainer>
 				</InfiniteScroll>
 			</ResultsContainer>
+			
+			<AddedModal
+				open={showShowAddedToCartModal}
+				text="Added to Cart!"
+				onClose={handleAddedToCartModal}
+				timeout={900}
+			/>
+			
+			<LocationsModal
+				open={!!locationsModalItem}
+				hideLocationsModal={handleHideLocationsModal}
+				invMastUid={locationsModalItem}
+			/>
+			
+			<DetailsModal
+				open={!!detailsModalItem}
+				hideDetailsModal={handleHideDetailsModal}
+				detailsModalItem={detailsModalItem}
+				history={props.history}
+			/>
 		</DivContainer>
 	)
 }

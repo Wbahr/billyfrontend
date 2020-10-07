@@ -5,6 +5,8 @@ import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { packingBasis } from '../helpers/checkoutDropdownData'
+import {ButtonBlack, ButtonRed} from "../../../styles/buttons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const FormRow = styled.div`
 	display: flex;
@@ -23,7 +25,6 @@ const Pinfo = styled.p`
 	font-size: 16px;
 	padding: 8px;
 	border: 1px solid black;
-	width: max-content;
 	background-color: #e7f2ff;
 	border: 1px #007bff solid;
 	border-radius: 2px;
@@ -44,19 +45,51 @@ const DivScheduleHeader = styled.div`
 	}
 `
 
-export function ShippingScheduleForm(props){
-	const {
-		values, 
-		setFieldValue
-	} = props
-	
-	function handlePackingBasisChange(name, value){
-		setFieldValue(name, value)
-		let packingBasisIndex = packingBasis.findIndex(elem => elem.value === value)
-		let packingBasisName = packingBasis[packingBasisIndex].apiValue
-		setFieldValue('schedule.packingBasis', packingBasisName)
+const DivNavigation = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  width: 100%;
+`
+
+const getInfoMessage = packingBasisName => {
+	switch (packingBasisName) {
+		case 1:
+			return <Pinfo>Your order will ship complete when all parts are available.</Pinfo>
+		case 2:
+			return <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>
+		case 3:
+			return <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>
+		case 4:
+			return (
+				<div>
+					<Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
+					<DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
+				</div>
+			)
+		default:
+			return <div/>
 	}
-	return(
+}
+
+export function ShippingScheduleForm(props) {
+	const {history, values: {schedule: {cartWithDates, packingBasisName}}, setFieldValue, isStepValid, handleMoveStep} = props
+	
+	function handlePackingBasisChange(name, value) {
+		setFieldValue(name, value)
+		const foundPackingBasis = packingBasis.find(elem => elem.value === value)
+		setFieldValue('schedule.packingBasis', foundPackingBasis.apiValue)
+	}
+	
+	const InfoMessage = ({packingBasisName}) => getInfoMessage(packingBasisName)
+	
+	const mapShippingScheduleLines = (item, index) => <ShippingScheduleLine key={index} item={item} index={index}/>
+	
+	const renderLineItems = () => cartWithDates?.length
+		? cartWithDates.map(mapShippingScheduleLines)
+		: <p>No Cart Items</p>
+	
+	return (
 		<>
 			<FormRow>
 				<label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
@@ -71,31 +104,25 @@ export function ShippingScheduleForm(props){
 					<FormikInput type="hidden" name="schedule.packingBasis" />
 				</div>
 			</FormRow>
-			{values.schedule.packingBasisName === 1 && <Pinfo>Your order will ship complete when all parts are available.</Pinfo>}
-			{values.schedule.packingBasisName === 2 && <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>}
-			{values.schedule.packingBasisName === 3 && <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>}
-			{values.schedule.packingBasisName === 4 && (
-				<>
-					<Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
-					<DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
-				</>
-			)}
-			{values.schedule.packingBasisName === 4 &&
-				<FieldArray
-					name="schedule.cartWithDates"
-					render={() => (
-						<div>
-							{(values.schedule.cartWithDates && values.schedule.cartWithDates.length > 0) ? (
-								values.schedule.cartWithDates.map((item, index) => (
-									<ShippingScheduleLine key={`shipping-schedule-line-${index}`} item={item} index={index}/>
-								))
-							) : (
-								<p>No Cart Items</p>
-							)}
-						</div>
-					)}
-				/>
+			
+			<InfoMessage packingBasisName={packingBasisName}/>
+			
+			{
+				packingBasisName === 4 &&
+					<FieldArray
+						name="schedule.cartWithDates"
+						render={renderLineItems}
+					/>
 			}
+			
+			<DivNavigation>
+				<ButtonBlack onClick={() => history.push('/cart')}>
+					<FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>
+					Back to Cart
+				</ButtonBlack>
+				
+				<ButtonRed disabled={!isStepValid} onClick={() => handleMoveStep(1)}>Continue</ButtonRed>
+			</DivNavigation>
 		</>
 	)
 }

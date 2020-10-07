@@ -1,5 +1,6 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 const dotenv = require('dotenv')
 const fs = require('fs')
@@ -15,6 +16,11 @@ module.exports = (env) => {
 	const sourceMapDevToolPlugin = new webpack.SourceMapDevToolPlugin({
 		filename: '[name].[hash].js.map',
 		exclude: 'vendors',
+	})
+	const copyWebpackPlugin = new CopyPlugin({
+		patterns: [{
+			from: './src/web.config',  to: 'web.config'
+		}]
 	})
 
 	const currentPath = path.join(__dirname)
@@ -52,17 +58,6 @@ module.exports = (env) => {
 					}
 				},
 				{
-					test: /\.css$/,
-					use: [
-						{
-							loader: 'style-loader'
-						},
-						{
-							loader: 'css-loader'
-						}
-					]
-				},
-				{
 					test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
 					use: [
 						{
@@ -90,6 +85,10 @@ module.exports = (env) => {
 							loader: 'svg-inline-loader'
 						}
 					]
+				},
+				{
+					test: /\.s?css$/,
+					use: ['style-loader', 'css-loader', 'sass-loader']          
 				}
 			]
 		},
@@ -113,7 +112,8 @@ module.exports = (env) => {
 			htmlWebpackPlugin, 
 			definePlugin, 
 			cleanWebpackPlugin,
-			sourceMapDevToolPlugin
+			sourceMapDevToolPlugin,
+			copyWebpackPlugin
 		]
 	}
 }

@@ -7,10 +7,10 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 		display: flex;
-		border-top: 2px whitesmoke solid;
 		border-bottom: 2px whitesmoke solid;
 		padding: 8px 16px;
 		margin: 8px 0;
@@ -20,6 +20,8 @@ const DivContainer = styled.div`
 
 const DivRow = styled.div`
 		display: flex;
+		font-size: 15px;
+		margin-bottom: 2px;
 	`
 
 const DivCard = styled.div`
@@ -46,8 +48,7 @@ const DivCol2 = styled.div`
 		flex-direction: column;
 		align-items: flex-start;
 		width: 200px;
-		height: 100%;
-		margin-right: 50px;
+		margin-left: 40px;
 		p {
 			font-size: 16px;
 			margin: 0;
@@ -87,9 +88,10 @@ const ButtonSmall = styled.button`
 		color: white;
 		font-weight: 600;
 		border: 0;
-		padding: 4px 8px;
+		padding: 2px 8px;
 		box-shadow: 1px 1px 2px #000;
 		margin: 4px auto 4px 16px;
+		font-size: 14px;
 		&:hover{
 			background-color: rgb(219, 22, 51);
 		}
@@ -102,21 +104,11 @@ const ButtonSmall = styled.button`
 export default function OrderDetailItem({ item }) {
 	const [quantity, setQuantity] = useState(1)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-	const context = useContext(Context)
-
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid)
-	let imagePath
-	let resultImage = _.get(displayItem,'itemDetails.image[0].path',null)
-	if (_.isNil(resultImage)){
-		imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-	} else {
-		let imagePathArray = resultImage.split('\\')
-		let imageFile = imagePathArray[imagePathArray.length - 1]
-		imageFile = imageFile.slice(0, -5) + 't.jpg'
-		imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-	}
-
-	function handleAddedToCart(){
+    const context = useContext(Context)
+    let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid);
+    let imagePath = getThumbnailImagePath(displayItem?.itemDetails);
+   
+    function handleAddedToCart(){
 		setShowAddedToCartModal(false)
 	}
 	
@@ -130,7 +122,7 @@ export default function OrderDetailItem({ item }) {
 			/>
 			<DivCard>
 				<DivCol1>
-					<Img max-height='100%' max-width='100%' src={imagePath} />
+					<Img max-height='100%' width='100%' src={imagePath} />
 				</DivCol1>
 				<DivCol2>
 					<CopyToClipboard text={item.itemCode}>
@@ -149,12 +141,11 @@ export default function OrderDetailItem({ item }) {
 					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
 				</DivCol2>
 				<DivCol2>
-					<P2>Promise Date: {item.quantityOrdered}</P2>
 					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
 					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
-				<DivCol3>
+				<DivCol2>
 					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
 					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
 					<DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/></DivRow>
@@ -171,7 +162,7 @@ export default function OrderDetailItem({ item }) {
 							}}>Add to Cart</ButtonSmall>
 						)}
 					</Context.Consumer>
-				</DivCol3>
+				</DivCol2>
 			</DivCard>
 		</DivContainer>
 	)

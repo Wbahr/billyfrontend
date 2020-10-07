@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   display: flex;
+  margin: 10px 0;
 `
 
 const Label = styled.label`
@@ -10,6 +11,7 @@ const Label = styled.label`
   display: inline-block;
   width: 30px;
   height: 17px;
+  margin: 5px 5px 0;
   input {
     opacity: 0;
     width: 0;
@@ -58,7 +60,7 @@ export default function ToggleSwitch({ label, text, text2, toggled, setToggled }
 		<Container>
 			{label}
 			<Label>
-				<Input type='checkbox' checked={toggled} onClick={()=>setToggled(!toggled)}/>
+				<Input type='checkbox' checked={toggled} onClick={()=>setToggled(!toggled)} />
 				<Span></Span>
 			</Label>
 			{toggled ? text : text2}

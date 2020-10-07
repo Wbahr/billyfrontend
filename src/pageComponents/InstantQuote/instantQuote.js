@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import IQCard from './iqCard'
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import {CardElement} from '@stripe/react-stripe-js';
 
 // import styled from 'styled-components'
 // import queryString from 'query-string'
@@ -99,4 +99,4 @@ class ProductConfigSearch extends React.Component {
   }
 }
 
-export default injectStripe(ProductConfigSearch)
+export default ProductConfigSearch

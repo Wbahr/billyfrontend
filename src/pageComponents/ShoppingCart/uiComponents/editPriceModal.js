@@ -42,9 +42,10 @@ const Container = styled.div`
 
 export default function EditPriceModal({open, index, hideEditPriceModal, data}) {
 	// const context = useContext(Context)
-	const [itemPrice, setItemPrice] = useState(0)
-	const [margin, setMargin] = useState(0)
-	const airlinecost = 1
+	const [itemPrice, setItemPrice] = useState(0);
+	const [margin, setMargin] = useState(0);
+	//Note: Airline cost only available to authorized users
+	const [airlineCost, setAirlineCost] = useState(0);
 
 	useEffect(()=> {
 		if (data && data.modalType === 'edit-price') {
@@ -52,6 +53,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 			let margin = calculateMargin(mutatedValue)
 			setItemPrice(data.itemPrice)
 			setMargin(margin)
+			setAirlineCost(data.airlineCost);
 		} else {
 
 		}
@@ -86,7 +88,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 		} else {
 			let mutatedValue = Number(value.slice(0, -1))
 			setMargin(mutatedValue)
-			let itemPrice = airlinecost /(1 - (mutatedValue/100))
+			let itemPrice = airlineCost /(1 - (mutatedValue/100))
 			setItemPrice(itemPrice)
 		}
 	}
@@ -103,7 +105,7 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 						<Label>Margin: </Label><AirlineInput type="percent" value={margin} width='100px' onChange={(e)=> handleChangePrice('margin', e.target.value)}/>
 					</DivItem>
 					<DivItem>
-						<Label>Airline Cost: </Label><AirlineInput type="currency" disabled={true} value={airlinecost} width='100px' onChange={()=>{}}/>
+						<Label>Airline Cost: </Label><AirlineInput type="currency" disabled={true} value={airlineCost} width='100px' onChange={()=>{}}/>
 					</DivItem>
 				</DivRow>
 				<Context.Consumer>

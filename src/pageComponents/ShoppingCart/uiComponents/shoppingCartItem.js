@@ -8,6 +8,7 @@ import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -171,7 +172,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		itemDetails,
 		customerPartNumbers
 	} = displayItem
-	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId)
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || 0)
 	const itemId = parseInt(item.frecno,10)
 
 	const context = useContext(Context)
@@ -187,27 +188,28 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		onCompleted: result => {
 			if (!_.isNil(result.customerPartNumbers)) {
 				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-				setSelectedCustomerPartNumber(item.customerPartNumberId)
+				setSelectedCustomerPartNumber(item.customerPartNumberId || 0)
 			}
 		}
 	})
 
 	function selectCustomerPartNumber(value){
-		if (value === '-1') {
-			setSelectedCustomerPartNumber(null) // Reset Dropdown
-			context.updateItem(index, 'customerPartNumberId', null)
+		if (value === -1) {
+			setSelectedCustomerPartNumber(0) // Reset Dropdown
+			context.updateItem(index, 'customerPartNumberId', 0)
 			showCustomerPartModal(index)
-		} else if (value === '0') {
+		} else if (value === 0) {
 			setSelectedCustomerPartNumber(value)
-			context.updateItem(index, 'customerPartNumberId', null)
+			context.updateItem(index, 'customerPartNumberId', 0)
 		} else {
+			
 			setSelectedCustomerPartNumber(value)
 			context.updateItem(index, 'customerPartNumberId', Number(value))
 		}
 	}
 
 	function clearCustomerPartNumber(){
-		selectCustomerPartNumber('0')
+		selectCustomerPartNumber(0)
 	}
 
 	function handleShowModal(type){
@@ -227,13 +229,13 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 			showFactoryStockModal(index)
 			break
 		case 'edit-price':
-			handleSetModalData({
-				modalType: type,
-				originalItemPrice: itemDetails.listPrice,
-				itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
-				airlineCost: 1
-			})
-			showEditPriceModal(index)
+            handleSetModalData({
+                modalType: type,
+                originalItemPrice: itemDetails.listPrice,
+                itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
+                airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
+            })
+            showEditPriceModal(index)
 			break
 		case 'customer-part':
 			showCustomerPartModal(index)
@@ -245,19 +247,10 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	if(_.isNil(itemDetails)) {
 		Content = (<p>{item.freqno}</p>)
 	} else {
-		let imagePath
-		let resultImage = _.get(itemDetails,'image[0].path',null)
-		if (_.isNil(resultImage)){
-			imagePath = 'https://www.airlinehyd.com/images/no-image.jpg'
-		} else {
-			let imagePathArray = resultImage.split('\\')
-			let imageFile = imagePathArray[imagePathArray.length - 1]
-			imageFile = imageFile.slice(0, -5) + 't.jpg'
-			imagePath = 'https://www.airlinehyd.com/images/items/' + imageFile
-		}
+        let imagePath = getThumbnailImagePath(itemDetails);
 
-		let CustomerPartOptions = _.map(customerPartNumbers, elem => {
-			return(<option value={elem.id}>{elem.customerPartNumber}</option>)
+		let CustomerPartOptions = customerPartNumbers.map(elem => {
+			return(<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>)
 		})
 		Content = (
 			<DivCard>
@@ -286,7 +279,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 							{CustomerPartOptions}
 							<option value="-1">Create Part#</option>
 						</select>
-						{ selectedCustomerPartNumber !== '0' &&
+						{ selectedCustomerPartNumber != 0 &&
 							<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
 								<FontAwesomeIcon icon="times" color="grey" />
 							</div>
@@ -324,12 +317,16 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						</DivItem>
 						<DivItem>
 							<DivRow>
-								<Context.Consumer>
-									{({ cart }) => (
+                                <Context.Consumer>
+									{({ cart, userInfo }) => (
 										<>
-											<Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
-										</>
+                                        {userInfo.isAirlineUser &&
+                                            <>
+                                                <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
+                                            </>
+                                        }
+                                        </>
 									)}
 								</Context.Consumer>
 							</DivRow>

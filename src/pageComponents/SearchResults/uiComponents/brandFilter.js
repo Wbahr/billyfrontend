@@ -42,10 +42,14 @@ const Label = styled.label`
 	color: #535353;
 	font-size: 12px;
 	margin-left: 4px;
+	flex: 1;
 `
 
-const DisabledLabel = styled(Label)`
-	color: whitesmoke;
+const PCount = styled.p`
+	margin: 0;
+	color: #535353;
+	font-size: 12px;
+	margin-left: 4px;
 `
 
 const InputSearch = styled.input`
@@ -53,65 +57,71 @@ const InputSearch = styled.input`
 	width: 240px;
 `
 
-export default function BrandFilter({brands, updatedBrandFilter}) {
-	const [isOpen, setIsOpen] = useState(false)
+export default function BrandFilter({brands, setBrands}) {
+	const [isOpen, setIsOpen] = useState(true)
 	const [filter, setFilter] = useState('')
-	const [brandFilterValues, setBrandFilterValues] = useState([])
 
-	const handleFeatureToggle = (e, brand) => {
-		let newBrandFilterValues
-		if(e.target.checked){
-			newBrandFilterValues = [...brandFilterValues, brand]
-			setBrandFilterValues(newBrandFilterValues)
-		} else {
-			newBrandFilterValues = _.without(brandFilterValues, brand)
-			setBrandFilterValues(newBrandFilterValues)
-		}
-		updatedBrandFilter(newBrandFilterValues)
+	const handleFeatureToggle = idx => ({target: {checked}}) => {
+		const newBrands = brands.slice()
+		newBrands[idx].selected = checked
+		setBrands(newBrands)
 	}
-
-	let BrandOptions = brands.map((brand, index) => {
-		let disable = false
-
-		if(brand.brandName.toLowerCase() !== 'null' && _.startsWith(brand.brandName.toLowerCase(), filter)){
-			return (
-				<DivOptionRow key={index}>
-					<input type="checkbox" 
-						onChange={(e) => handleFeatureToggle(e, brand.brandName)}
-						disabled={disable}
-					/>
-					{disable ?
-						<DisabledLabel htmlFor={brand.brandName}>{brand.brandNameDisplay}</DisabledLabel>
-						:
-						<Label htmlFor={brand.brandName}>{brand.brandNameDisplay}</Label>
-					}
-				</DivOptionRow>
-			)
+	
+	const searchFilter = b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter))
+	
+	const toOption = ({selected, brandName, brandNameDisplay, brandCount}, idx) => (
+		<DivOptionRow key={idx}>
+			<input
+				type="checkbox"
+				checked={selected}
+				onChange={handleFeatureToggle(idx)}
+			/>
+			<Label htmlFor={brandName}>{brandNameDisplay}</Label>
+			<PCount>({brandCount})</PCount>
+		</DivOptionRow>
+	)
+	
+	const searchSortAndMapToOption = (accum, curVal, idx) => {
+		if (searchFilter(curVal)) {
+			if (curVal.selected) {
+				accum.unshift(toOption(curVal, idx))
+			} else {
+				accum.push(toOption(curVal, idx))
+			}
 		}
-	})
+		return accum
+	}
+	
+	const BrandOptions = () => (
+		<DivOptions>
+			{brands.reduce(searchSortAndMapToOption, [])}
+		</DivOptions>
+	)
+	
+	const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
 
-	return(
-		<>
-			<DivTitle onClick={()=>(setIsOpen(!isOpen))}>
+	return (
+		<div>
+			<DivTitle onClick={() => setIsOpen(!isOpen)}>
 				<P>Brands</P>
-				{isOpen ?  <FontAwesomeIcon icon="caret-up" color="black"/> : <FontAwesomeIcon icon="caret-down" color="black"/>}
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
 			</DivTitle>
 			{isOpen && 
 				<>
-					<div>
-						{brands.length > 10 && <InputSearch placeholder={'Search Brands'} onChange={(e)=>{setFilter(e.target.value.toLowerCase())}} value={filter}></InputSearch>}
-					</div>
-					<DivOptions>
-						{BrandOptions}
-					</DivOptions>
+					{brands.length > 10 && (
+						<InputSearch
+							placeholder="Search Brands"
+							onChange={handleSearchChange}
+							value={filter}
+						/>
+					)}
+					<BrandOptions/>
 				</>
 			}
-		</>
+		</div>
 	)
 }
 
 BrandFilter.propTypes = {
 	brands: PropTypes.array.isRequired,
-	open: PropTypes.bool,
-	toggleAttribute: PropTypes.func
 }
