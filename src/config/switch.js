@@ -26,7 +26,6 @@ import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
-import ProductCategories from '../pageComponents/ProductCategories/productCategoriesPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import Shop from '../pageComponents/Shop/shopPage'
@@ -46,6 +45,7 @@ import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 import knowledgeCenterPage from 'pageComponents/KnowledgeCenter/knowledgeCenterPage'
+import CategoriesPage from 'pageComponents/ProductCategories/categoriesPage'
 
 
 function WrapperRoute({auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -96,7 +96,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/categories' component={ProductCategories} layout={HeaderFooterLayout}/>
+				<WrapperRoute path='/categories' component={CategoriesPage} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/create-quote' component={Checkout} layout={HeaderFooterLayout}/>
