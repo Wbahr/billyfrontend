@@ -18,7 +18,7 @@ const CategoryBlock = styled.div`
 `
 
 export default function Category(props) {
-  let {text, linkTo, image, ...rest } = props;
+  const {text, linkTo, image, ...rest } = props;
   return (
     <Link to={`${linkTo}`}>
       <CategoryBlock {...rest} image={image}>

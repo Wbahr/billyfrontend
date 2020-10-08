@@ -10,11 +10,10 @@ const DivRow = styled.div`
 `
 
 export default function CategoryRouter(props) {
-	let { categories, match, ...rest } = props;
-	let baseUrl = match.url;
+	const { categories, match, ...rest } = props;
+	const baseUrl = match.url;
 
 	if (!categories) return <div><Loader /></div>;
-	console.log("In categoryGrid", categories)
 
 	return (
 		<Switch>
@@ -24,7 +23,6 @@ export default function CategoryRouter(props) {
 					//Shuttle off to search component
 					const parentCat = categories.find(c => c.nameForUrl == match.params.nameForUrl)
 					const foundCat = parentCat.children.find(c => c.nameForUrl == match.params.subCatNameForUrl)
-					console.log("Subcat", foundCat)
 					if (foundCat) {
 						return (
 							<>
@@ -48,8 +46,7 @@ export default function CategoryRouter(props) {
 			<Route
 				path={`${match.path}/:nameForUrl`}
 				render={({match}) => {
-					const foundCat = categories.find(c => c.nameForUrl == match.params.nameForUrl)
-					console.log("Foundcat", foundCat, categories, match)
+					const foundCat = categories.find(c => c.nameForUrl == match.params.nameForUrl);
 					if (foundCat) {
 						return (
 							<>
