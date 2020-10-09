@@ -11,6 +11,9 @@ const CategoryBlock = styled.div`
   cursor: pointer;
   margin: 0 16px 16px 16px;
   border: 3px solid ${props => props.theme.backgroundColor};
+  &: hover {
+      border: 3px solid ${props => props.theme.mainColor};
+  }
   padding: 3px;
   margin: 3px;
   font-family: ${props => props.theme.fancyFontNameBold};
