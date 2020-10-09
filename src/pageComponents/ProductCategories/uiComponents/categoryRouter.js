@@ -66,7 +66,10 @@ export default function CategoryRouter(props) {
 			<Route
 				exact={true}
 				path={match.path}
-				render={({match}) => <CategoryList categories={categories} match={match} />}
+				render={({match}) => <>
+                    <DivRow><p>All Categories</p></DivRow>
+                    <CategoryList categories={categories} match={match} />
+                </>}
 			/>
 
 		</Switch>

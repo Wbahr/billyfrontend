@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function CategoryList(props) {
     const { categories, match, ...rest } = props;
-    if(!categories) return null;
+    if(!categories) return <Loader />;
     return (
         <>
             {categories.map((c) => {

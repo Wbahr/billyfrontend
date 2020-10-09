@@ -16,6 +16,7 @@ const CategoryBlock = styled.div`
   font-family: ${props => props.theme.fancyFontNameBold};
   font-size: 20px;
   color: black;
+  border-radius: 8px;
   img {
       margin-right: 5px;
       max-height: 150px;
