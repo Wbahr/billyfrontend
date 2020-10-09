@@ -15,6 +15,7 @@ export const airlineRedTheme = {
     fancyFontName: "Proxima",
     fancyFontNameBold: "ProximaBold",
     headingFont: "Verdana",
-    textFont: ""
+    textFont: "",
+    backgroundColor: "#535353"
 };
 
