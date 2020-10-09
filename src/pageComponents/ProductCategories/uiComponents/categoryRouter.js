@@ -12,7 +12,7 @@ const DivRow = styled.div`
 export default function CategoryRouter(props) {
 	const { categories, match, ...rest } = props;
 	const baseUrl = match.url;
-    console.log("match", match);
+    
 	if (!categories) return <div><Loader /></div>;
 
 	return (
