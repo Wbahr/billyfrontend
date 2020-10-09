@@ -12,7 +12,7 @@ const DivRow = styled.div`
 export default function CategoryRouter(props) {
 	const { categories, match, ...rest } = props;
 	const baseUrl = match.url;
-
+    
 	if (!categories) return <div><Loader /></div>;
 
 	return (
@@ -66,7 +66,10 @@ export default function CategoryRouter(props) {
 			<Route
 				exact={true}
 				path={match.path}
-				render={({match}) => <CategoryList categories={categories} match={match} />}
+				render={({match}) => <>
+                    <DivRow><p>All Categories</p></DivRow>
+                    <CategoryList categories={categories} match={match} />
+                </>}
 			/>
 
 		</Switch>
