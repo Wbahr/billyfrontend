@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -78,11 +78,11 @@ export function NavigationItemContainer({children, to, text}) {
         <div>
             <Link to={to} className="nav-link">{text}
             {
-                children?.props?.children.length && <span style={{position: 'absolute', right: '0.25rem'}}><FontAwesomeIcon icon='caret-down' color="black" /></span>
+                children?.props?.children?.length && <span style={{position: 'absolute', right: '0.25rem'}}><FontAwesomeIcon icon='caret-down' color="black" /></span>
             }
             </Link>
         </div>
-        {children}
+        {children && children}
     </NavigationItemContainerElement>
 }
 NavigationItemContainer.propTypes = {
@@ -92,7 +92,7 @@ NavigationItemContainer.propTypes = {
         let error = null
 
         //Allow only DropdownMenu children
-        React.Children.forEach(prop, function(child) {
+        React.Children?.forEach(prop, function(child) {
             if(child.type !== DropdownMenu){
                 error = `${componentName} children should be of type '${DropdownMenu.name}'`
             }
@@ -118,7 +118,7 @@ DropdownMenu.propTypes = {
         const prop = props[propName]
 
         let error = null
-        React.Children.forEach(prop, function(child) {
+        React.Children?.forEach(prop, function(child) {
             if(child.type !== DropdownMenuItem){
                 error = `${componentName} children should be of type '${DropdownMenuItem}'`
             }
@@ -134,5 +134,11 @@ DropdownMenu.propTypes = {
 export function DropdownMenuItem({ children: linkText, to }) {
     return <div className="dropdown-link">
         <Link to={to}>{linkText}</Link>
+    </div>
+}
+
+export function DropdownMenuItemExternal({ children: linkText, to }) {
+    return <div className="dropdown-link">
+        <a href={to} target="_blank">{linkText}</a>
     </div>
 }

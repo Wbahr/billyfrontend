@@ -4,6 +4,7 @@ import SectionHeader from '../../_common/sectionHeader.js'
 import LineCard from '../../../imgs/homepage/lineCard.png'
 import Hydraulic from '../../../imgs/homepage/HydraulicCatalog.png'
 import Automation from '../../../imgs/homepage/AutomationCatalog.png'
+import { Link } from 'react-router-dom'
 
 const LineCardWrapper = styled.div`
 		display: flex;
@@ -48,27 +49,25 @@ export default function LineCards() {
 
 	return (
 		<>
-			<SectionHeader
-				text='Line Card & Catalogs'
-			/>
+			<SectionHeader text="Line Card &amp; Catalogs"/>
 			<LineCardWrapper>
 				<LineCardDiv>
-					<A href="#">
+					<a href="/linecards">
 						<ImgDiv><Img src={LineCard} /></ImgDiv>
-						<NameDiv><P>Line Card</P></NameDiv>
-					</A>
+						<NameDiv><P>View all line cards</P></NameDiv>
+					</a>
 				</LineCardDiv>
 				<LineCardDiv>
-					<A href="#">
+                    <a href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulic_Preferred_Products_Catalog.pdf">
 						<ImgDiv><Img src={Hydraulic} /></ImgDiv>
 						<NameDiv><P>Hydraulic Catalog</P></NameDiv>
-					</A>
+					</a>
 				</LineCardDiv>
 				<LineCardDiv>
-					<A href="#">
+                    <a href="//airlinemedia.airlinehyd.com/Literature/Airline_Preferred_Stock_Catalog.pdf">
 						<ImgDiv><Img src={Automation} /></ImgDiv>
 						<NameDiv><P>Automation Catalog</P></NameDiv>
-					</A>
+					</a>
 				</LineCardDiv>
 			</LineCardWrapper>
 		</>
