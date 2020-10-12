@@ -198,110 +198,128 @@ export default function BlogPage() {
                 <ThumbnailCol>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_line_card.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Airline%20line%20card%20thumb.jpg'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/airline_line_card_thumb.jpg"
                             text="Airline Hydraulics' Line Card"
+                            alt="Airline Hydraulics linecard"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Capability_Statement.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/CapabilityStatement_thumb2.jpg'
-                            text='Capablities Statement'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/capabilitystatement_thumb2.jpg"
+                            text="Capablities Statement"
+                            alt="Airline Capablilities Statement"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_offering_flyer.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Airline_offering_thumb.jpg'
-                            text='Products &amp; Services Overview'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/airline_offering_thumb.jpg"
+                            text="Products &amp; Services Overview"
+                            alt="Airline Offering"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_corporate_brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/corporate_thumb.jpg'
-                            text='Airline Corporate Brochure'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/corporate_thumb.jpg"
+                            text="Airline Corporate Brochure"
+                            alt="Airline Corporate Brochure"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Preferred_Stock_Catalog.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Automation_preferred_stock_catalog_thumbnail.png'
-                            text='Automation Preferred Stock Catalog'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/automation_preferred_stock_catalog_thumbnail.png"
+                            text="Automation Preferred Stock Catalog"
+                            alt="Automation Preferred Stock Catalog"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulic_Preferred_Products_Catalog.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Hydraulic_Preferred_Stock_Catalog.jpg'
-                            text='Hydraulic Preferred Products Catalog'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/hydraulic_preferred_stock_catalog.jpg"
+                            text="Hydraulic Preferred Products Catalog"
+                            alt="Hydraulic Preferred Stock Catalog"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulic_Brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Hydraulic_Products_Services_thumb.jpg'
-                            text='Hydraulic Components &amp; Services'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/hydraulic_products_services_thumb.jpg"
+                            text="Hydraulic Components &amp; Services"
+                            alt="Airline Hydraulic Hydraulic Product Service"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Automation_Solutions.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/AutomationSolutionsthumb.jpg'
-                            text='Automation Solutions'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/automationsolutionsthumb.jpg"
+                            text="Automation Solutions"
+                            alt="Airline Hydraulics Automation Solutions"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulics_Aftermarket_Brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Aftermarket%20Thumb.jpg'
-                            text='Aftermarket Services (Service Repair)'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/aftermarket_thumb.jpg"
+                            text="Aftermarket Services (Service Repair)"
+                            alt="Aftermarket Services (Repair,Field Service,Maintenance,Installation,Start-up,Troubleshooting)"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/MPSA-safety-brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Machine_Safeguarding_thumb.jpg'
-                            text='Machine Safeguarding'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/machine_safeguarding_thumb.jpg"
+                            text="Machine Safeguarding"
+                            alt="Machine Safeguarding"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Tool_Room_Guarding.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Tool%20Guard%20Thumbnail.jpg'
-                            text='Tool Room Guarding'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/tool_guard_thumbnail.jpg"
+                            text="Tool Room Guarding"
+                            alt="Tool Room Guarding"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Hydraulic_Safety_flyer.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/HydSafetySolFlyer.jpg'
-                            text='Hydraulic Safety'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/hydsafetysolflyer.jpg"
+                            text="Hydraulic Safety"
+                            alt="Hydraulic Safety"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Mobile_Marine_brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Mobile_Marine.jpg'
-                            text='Fluid Power Solutions for Mobile &amp; Marine Applications'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/mobile_marine.jpg"
+                            text="Fluid Power Solutions for Mobile &amp; Marine Applications"
+                            alt="Fluid Power Solutions for Mobile and Marine Applications"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulics_Shale_Gas_Industry_brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Shale%20Gas%20Thumb.jpg'
-                            text='Fluid Power Solutions for the Shale Gas Industry'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/shale_gas_thumb.jpg"
+                            text="Fluid Power Solutions for the Shale Gas Industry"
+                            alt="Fluid Power Solutions for the Shale Gas Industry"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulics_Snow_and_Ice_brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/Snow%20and%20Ice%20thumb.jpg'
-                            text='Snow and Ice Brochure'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/snow_and_ice_thumb.jpg"
+                            text="Snow and Ice Brochure"
+                            alt="Airline Hydraulics Snow and Ice Brochure"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Forestry_brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/customer/aihyco/images/forestry_thumb.png'
-                            text='Forest Products Industry Brochure'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/forestry_thumb.png"
+                            text="Forest Products Industry Brochure"
+                            alt="Airline Hydraulics Forest Products"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_High_Pressure_Systems_Brochure.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/high_pressure_systems_thumb.jpg'
-                            text='High Pressure Systems Brochure'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/high_pressure_systems_thumb.jpg"
+                            text="Airline Hydraulics Forest Products"
+                            alt="Airline Hydraulics Forest Products"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Industrial_Facilities.pdf">
                         <LineCardThumbnail
-                            src='https://www.airlinehyd.com/literature_catalog/Airline/Thumbnails/Ind_Facilities_thumb.jpg'
-                            text='Industrial Facilities Brochure'
+                            src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/ind_facilities_thumb.jpg"
+                            text="Industrial Facilities Brochure"
+                            alt="Airline Hydraulics Forest Products"
                         />
                     </ThumbnailDiv>
                 </ThumbnailCol>
