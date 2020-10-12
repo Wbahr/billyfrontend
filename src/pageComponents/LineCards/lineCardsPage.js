@@ -100,7 +100,7 @@ const Button = styled.a`
     &:hover{
         text-decoration: none;
         color:white;
-        }
+    }
 `
 const PopDiv = styled.div`
     &:hover{
@@ -129,8 +129,7 @@ export default function BlogPage() {
                         </LinkDiv>
                     </SideDiv>
                     <SideDiv>
-                        <LineCardName
-                            text='Product Flyers' />
+                        <LineCardName text="Product Flyers" />
                         <LinkDiv>
                             <A href="//airlinemedia.airlinehyd.com/Literature/Airline_offering_flyer.pdf">Airline's Offering</A>
                             <A href="//airlinemedia.airlinehyd.com/Literature/CalAmp_flyer.pdf#">CalAmp</A>
@@ -163,8 +162,7 @@ export default function BlogPage() {
                         </LinkDiv>
                     </SideDiv>
                     <SideDiv>
-                        <LineCardName
-                            text='Manufacturer Flyers' />
+                        <LineCardName text="Manufacturer Flyers" />
                         <LinkDiv>
                             <A href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydac.pdf">HYDAC</A>
                             <A href="//airlinemedia.airlinehyd.com/Literature/Omron_flyer.pdf">Omron</A>
@@ -174,8 +172,7 @@ export default function BlogPage() {
                         </LinkDiv>
                     </SideDiv>
                     <SideDiv>
-                        <LineCardName
-                            text='Additional Brochures and Flyers' />
+                        <LineCardName text="Additional Brochures and Flyers" />
                         <LinkDiv>
                             <A href="//airlinemedia.airlinehyd.com/Literature/educational_outreach.pdf">Airline Educational Outreach Program</A>
                             <A href="//airlinemedia.airlinehyd.com/Literature/Ashland_facility.pdf">Airline Ashland, VA Location</A>
@@ -187,8 +184,7 @@ export default function BlogPage() {
                         </LinkDiv>
                     </SideDiv>
                     <SideDiv>
-                        <LineCardName
-                            text="Manufacturers's Catalogs" />
+                        <LineCardName text="Manufacturers's Catalogs" />
                         <LinkDiv>
                             <A href="#">Search By Manufacturer</A>
                         </LinkDiv>
