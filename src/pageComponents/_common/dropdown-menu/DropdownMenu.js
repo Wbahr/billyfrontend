@@ -119,7 +119,8 @@ DropdownMenu.propTypes = {
 
         let error = null
         React.Children?.forEach(prop, function(child) {
-            if(child.type !== DropdownMenuItem){
+            if(child.type !== DropdownMenuItem && child.type !== DropdownMenuItemExternal){
+                console.log("ctype", child.type);
                 error = `${componentName} children should be of type '${DropdownMenuItem}'`
             }
         })
