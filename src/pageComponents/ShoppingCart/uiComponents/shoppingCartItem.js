@@ -215,118 +215,111 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 		}
 	}
 
-	let Content
-	if(!itemDetails) {
-		Content = (<p>{cartItem.frecno}</p>)
-	} else {
-        let imagePath = getThumbnailImagePath(itemDetails);
-
-		let CustomerPartOptions = customerPartNumbers?.map(elem => {
-			return(<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>)
-		})
-		Content = (
-			<DivCard>
-				<DivMove>
-					<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
-				</DivMove>
-				<DivCol1>
-					<Img src={imagePath} />
-				</DivCol1>
-				<DivCol2>
-					<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
-					<CopyToClipboard text={itemDetails.itemDesc}>
-						<P2>Copy Item Desc</P2>
-					</CopyToClipboard>
-					<TextRow>
-						<CopyToClipboard text={itemDetails.itemCode}>
-							<P2>{itemDetails.itemCode}</P2>
-						</CopyToClipboard> <P2>|</P2>
-						<CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
-							<P2>AHC{itemDetails.invMastUid}</P2>
+	return <DivContainer>
+		{
+			!itemDetails
+				? <p>{cartItem.frecno}</p>
+				: <DivCard>
+					<DivMove>
+						<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+					</DivMove>
+					<DivCol1>
+						<Img src={getThumbnailImagePath(itemDetails)} />
+					</DivCol1>
+					<DivCol2>
+						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+						<CopyToClipboard text={itemDetails.itemDesc}>
+							<P2>Copy Item Desc</P2>
 						</CopyToClipboard>
-					</TextRow>
-					<TextRow>
-						<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
-							<option value="0">Customer Part#</option>
-							{CustomerPartOptions}
-							<option value="-1">Create Part#</option>
-						</select>
-						{ selectedCustomerPartNumber != 0 &&
-							<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
-								<FontAwesomeIcon icon="times" color="grey" />
-							</div>
-						}
-					</TextRow>
-					<DivRow>
-						<P3>
-							Availability: {availabilityInfo?.availability}
-							{
-								cartItem.quantity > availabilityInfo?.availability && (
-									availabilityInfo?.leadTimeDays 
-										? ` | Lead time ${availabilityInfo?.leadTimeDays} days`
-										: ' | Call Airline Hydraulics Co. for lead time'
-								)
-							}
-						</P3>
-					</DivRow>
-					<DivRow>
-						<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
-						<DivSplitLine>|</DivSplitLine>
-						<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
-						<DivSplitLine>|</DivSplitLine>
-						<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
-					</DivRow>
-				</DivCol2>
-				<DivCol3>
-					<DivQuantity>
-						<DivItem>
-							<Label>Qty:</Label>
-							<input
-								onChange={(e) => context.updateItem(index, 'quantity', e.target.value)} 
-								style={{'width': '50px'}}
-								value={cartItem.quantity}
-								disabled={cartItem.quoteId}
-							/>
-						</DivItem>
-						<DivItem>
-							<DivRow>
-								{context.userInfo.isAirlineUser &&
-									<>
-										<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-										<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
-									</>
+						<TextRow>
+							<CopyToClipboard text={itemDetails.itemCode}>
+								<P2>{itemDetails.itemCode}</P2>
+							</CopyToClipboard> <P2>|</P2>
+							<CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
+								<P2>AHC{itemDetails.invMastUid}</P2>
+							</CopyToClipboard>
+						</TextRow>
+						<TextRow>
+							<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+								<option value="0">Customer Part#</option>
+								{
+									customerPartNumbers?.map(elem => 
+										<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
+									)
 								}
-							</DivRow>
-						</DivItem>
-						<DivItem>
-							<DivTotalPrice>
-								<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-							</DivTotalPrice>
-						</DivItem>
-					</DivQuantity>
-					<DivQuantity>
-						<DivItem>
-							<Label>Item Notes:</Label>
-							<DebounceInput
-								placeholder='Type item notes here'
-								minLength={0}
-								debounceTimeout={300}
-								onChange={(e) => context.updateItem(index, 'notes', e.target.value)} 
-								style={{'width': '300px'}}
-								value={cartItem.itemNotes}
-							/>
-						</DivItem>
-					</DivQuantity>
-				</DivCol3>
-				<DivRemove onClick={()=> context.removeItem(index)} alt='remove-item'>
-					<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-				</DivRemove>
-			</DivCard>
-		)
-	}
-	return(
-		<DivContainer>
-			{Content}
-		</DivContainer>
-	)
+								<option value="-1">Create Part#</option>
+							</select>
+							{ selectedCustomerPartNumber != 0 &&
+								<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+									<FontAwesomeIcon icon="times" color="grey" />
+								</div>
+							}
+						</TextRow>
+						<DivRow>
+							<P3>
+								Availability: {availabilityInfo?.availability}
+								{
+									cartItem.quantity > availabilityInfo?.availability && (
+										availabilityInfo?.leadTimeDays 
+											? ` | Lead time ${availabilityInfo?.leadTimeDays} days`
+											: ' | Call Airline Hydraulics Co. for lead time'
+									)
+								}
+							</P3>
+						</DivRow>
+						<DivRow>
+							<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
+							<DivSplitLine>|</DivSplitLine>
+							<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
+							<DivSplitLine>|</DivSplitLine>
+							<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
+						</DivRow>
+					</DivCol2>
+					<DivCol3>
+						<DivQuantity>
+							<DivItem>
+								<Label>Qty:</Label>
+								<input
+									onChange={(e) => context.updateItem(index, 'quantity', e.target.value)} 
+									style={{'width': '50px'}}
+									value={cartItem.quantity}
+									disabled={cartItem.quoteId}
+								/>
+							</DivItem>
+							<DivItem>
+								<DivRow>
+									{context.userInfo.isAirlineUser &&
+										<>
+											<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
+										</>
+									}
+								</DivRow>
+							</DivItem>
+							<DivItem>
+								<DivTotalPrice>
+									<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+								</DivTotalPrice>
+							</DivItem>
+						</DivQuantity>
+						<DivQuantity>
+							<DivItem>
+								<Label>Item Notes:</Label>
+								<DebounceInput
+									placeholder='Type item notes here'
+									minLength={0}
+									debounceTimeout={300}
+									onChange={(e) => context.updateItem(index, 'notes', e.target.value)} 
+									style={{'width': '300px'}}
+									value={cartItem.itemNotes}
+								/>
+							</DivItem>
+						</DivQuantity>
+					</DivCol3>
+					<DivRemove onClick={()=> context.removeItem(index)} alt='remove-item'>
+						<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+					</DivRemove>
+				</DivCard>
+		}
+	</DivContainer>
 }

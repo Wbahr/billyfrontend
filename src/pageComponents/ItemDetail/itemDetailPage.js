@@ -314,7 +314,7 @@ export default function ItemDetailPage({ history }) {
 			quantity: parseInt(quantity, 10),
 			itemNotes: null,
 			itemUnitPriceOverride: null,
-			customerPartNumberId: selectedCustomerPartNumber ? selectedCustomerPartNumber : null
+			customerPartNumberId: selectedCustomerPartNumber || null
 		})
 		setShowAddedToCartModal(true)
 		setQuantity(1)
@@ -342,7 +342,7 @@ export default function ItemDetailPage({ history }) {
 
 		const ItemLinks = item.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
 
-		const AccessoryItems = accessoryItems.length && accessoryItems.map((ai, idx) => {
+		const AccessoryItems = accessoryItems.map((ai, idx) => {
 			return (
 				<AccessoryItem
 					key={idx}

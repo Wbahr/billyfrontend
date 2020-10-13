@@ -164,7 +164,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 									</DivSave>
 								: 	<Ashare></Ashare>
 						}
-					<DivSave onClick={() => { context.saveCart(), setSavedCart(true) }}>
+					<DivSave onClick={() => { context.saveCart(); setSavedCart(true); }}>
 						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
 						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
 					</DivSave>

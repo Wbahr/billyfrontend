@@ -203,23 +203,27 @@ export default function AccessoryItem({ item, history }) {
         <DivPartImg>
           <Img 
             src={imagePath} 
-            alt={item.details?.itemCode}
-            onClick={()=>{history.push(`/product/${item.details?.itemCodeUrlSanitized}/${item.associatedInvMastUid}`)}}/>
+            alt={item?.details?.itemCode}
+            onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${item.details?.itemCodeUrlSanitized}/${item.associatedInvMastUid}`)}}>{item.details?.itemCode}</PpartTitle>
+          <PpartTitle onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}>{item?.details?.itemCode}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{item.associatedInvMastUid}</PpartAvailability>
+          <PpartAvailability>Airline #: AHC{item?.associatedInvMastUid}</PpartAvailability>
         </DivPartNumberRow>
         <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-          {item.availability 
-              ? <PBlue>{item.availability.availability}</PBlue> 
-              : <PBlue>{item.availability === 0 ? item.availability.availabilityMessage : 'Call Airline for Price'}</PBlue>}
+          {item?.availability 
+              ? <PBlue>{item?.availability.availability}</PBlue> 
+              : <PBlue>{item?.availability === 0 ? item?.availability.availabilityMessage : 'Call Airline for Price'}</PBlue>}
         </DivPartNumberRow>
         <DivPartNumberRowSpread>
           <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-          {(item.unitPrice && item.unitPrice !== 0) ? <Div><Pprice>${item.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
+          {
+            item?.unitPrice 
+              ? <Div><Pprice>${item.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
+              : <ACall href="tel:+18009997378">Call for Price</ACall>
+          }
         </DivPartNumberRowSpread>
         <DivSpace>
           <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
