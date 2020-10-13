@@ -167,31 +167,28 @@ const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
 	}
 `
 
-export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
-	const {
-		itemDetails,
-		customerPartNumbers
-	} = displayItem
-	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || 0)
-	const itemId = parseInt(item.frecno,10)
+export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
+
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
+	const itemId = parseInt(cartItem.frecno,10)
 
 	const context = useContext(Context)
-	useEffect(()=> {
-		if (item.customerPartNumberId !== selectedCustomerPartNumber) {
-			getUpdatedCustomerPartNumbers()
-		}
-	}, [item.customerPartNumberId])
+	// useEffect(()=> {
+	// 	if (cartItem.customerPartNumberId !== selectedCustomerPartNumber) {
+	// 		getUpdatedCustomerPartNumbers()
+	// 	}
+	// }, [cartItem.customerPartNumberId])
 
-	const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
-		fetchPolicy: 'no-cache',
-		variables: { itemId },
-		onCompleted: result => {
-			if (!_.isNil(result.customerPartNumbers)) {
-				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-				setSelectedCustomerPartNumber(item.customerPartNumberId || 0)
-			}
-		}
-	})
+	// const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
+	// 	fetchPolicy: 'no-cache',
+	// 	variables: { itemId },
+	// 	onCompleted: result => {
+	// 		if (!_.isNil(result.customerPartNumbers)) {
+	// 			context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
+	// 			setSelectedCustomerPartNumber(cartItem.customerPartNumberId || 0)
+	// 		}
+	// 	}
+	// })
 
 	function selectCustomerPartNumber(value){
 		if (value === -1) {
@@ -223,7 +220,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		case 'factory-stock':
 			handleSetModalData({
 				modalType: type,
-				name: itemDetails.itemDesc,
+				name: itemDetails?.itemDesc,
 				frecno: itemId
 			})
 			showFactoryStockModal(index)
@@ -231,9 +228,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		case 'edit-price':
             handleSetModalData({
                 modalType: type,
-                originalItemPrice: itemDetails.listPrice,
-                itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
-                airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
+                originalItemPrice: priceInfo?.unitPrice,
+                itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+                airlineCost: cartItem.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
             })
             showEditPriceModal(index)
 			break
@@ -244,12 +241,12 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 	}
 
 	let Content
-	if(_.isNil(itemDetails)) {
-		Content = (<p>{item.freqno}</p>)
+	if(!itemDetails) {
+		Content = (<p>{cartItem.frecno}</p>)
 	} else {
         let imagePath = getThumbnailImagePath(itemDetails);
 
-		let CustomerPartOptions = customerPartNumbers.map(elem => {
+		let CustomerPartOptions = customerPartNumbers?.map(elem => {
 			return(<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>)
 		})
 		Content = (
@@ -286,11 +283,16 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						}
 					</TextRow>
 					<DivRow>
-						<Context.Consumer>
-							{({ cart }) => (
-								<P3>Availability: {itemDetails.availability} {(cart[index].quantity > itemDetails.availability)&& '| '  + itemDetails.availabilityMessage }</P3>
-							)}
-						</Context.Consumer>
+						<P3>
+							Availability: {availabilityInfo?.availability}
+							{
+								cartItem.quantity > availabilityInfo?.availability && (
+									availabilityInfo?.leadTimeDays 
+										? ` | Lead time ${availabilityInfo?.leadTimeDays} days`
+										: ' | Call Airline Hydraulics Co. for lead time'
+								)
+							}
+						</P3>
 					</DivRow>
 					<DivRow>
 						<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
@@ -305,12 +307,12 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						<DivItem>
 							<Label>Qty:</Label>
 							<Context.Consumer>
-								{({ updateItem, cart }) => (
+								{({ updateItem }) => (
 									<input
 										onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
 										style={{'width': '50px'}}
-										value={cart[index].quantity}
-										disabled={!_.isNil(cart[index].quoteId)}
+										value={cartItem.quantity}
+										disabled={cartItem.quoteId}
 									/>
 								)}
 							</Context.Consumer>
@@ -318,12 +320,12 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 						<DivItem>
 							<DivRow>
                                 <Context.Consumer>
-									{({ cart, userInfo }) => (
+									{({ userInfo }) => (
 										<>
                                         {userInfo.isAirlineUser &&
                                             <>
-                                                <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
+                                                <Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
                                             </>
                                         }
                                         </>
@@ -332,13 +334,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 							</DivRow>
 						</DivItem>
 						<DivItem>
-							<Context.Consumer>
-								{({ cart }) => (
-									<DivTotalPrice>
-										<p>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={_.get(itemDetails,'listPrice','0').toFixed(2) * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-									</DivTotalPrice>
-								)}
-							</Context.Consumer>
+							<DivTotalPrice>
+								<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+							</DivTotalPrice>
 						</DivItem>
 					</DivQuantity>
 					<DivQuantity>
@@ -352,7 +350,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 										debounceTimeout={300}
 										onChange={(e) => updateItem(index, 'notes', e.target.value)} 
 										style={{'width': '300px'}}
-										value={cart[index].itemNotes}
+										value={cartItem.itemNotes}
 									/>
 								)}
 							</Context.Consumer>
@@ -361,11 +359,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 				</DivCol3>
 				<Context.Consumer>
 					{({ removeItem }) => (
-						<>
-							<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
-								<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-							</DivRemove>
-						</>
+						<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
+							<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+						</DivRemove>
 					)}
 				</Context.Consumer>
 			</DivCard>

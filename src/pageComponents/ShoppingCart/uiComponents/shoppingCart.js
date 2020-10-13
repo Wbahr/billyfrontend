@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Context from '../../../config/context'
@@ -7,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
+import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlFragments/gqlItemDetail'
+import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 
 const Div = styled.div`
 	display: flex;
@@ -55,6 +58,10 @@ const DivSave = styled(DivShare)`
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
+	const [itemsDetails, setItemsDetails] = useState([])
+	const [itemsPrices, setItemsPrices] = useState([])
+	const [itemsAvailability, setItemsAvailability] = useState([])
+	const [itemsCustomerPartNumbers, setItemsCustomerPartNumbers] = useState([])
 	const context = useContext(Context)
 
 	useEffect(() => {
@@ -63,47 +70,131 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 		}
 	}, [savedCart])
 
-	const ShoppingCartItems = (
-		<Context.Consumer>
-			{({ cart, itemDetailCache, emptyCart }) => (
-				cart.map((item, index) => {
-					let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
-					return (
-						<Draggable key={index} draggableId={String(index)} index={index}>
-							{(provided) => (
-								<div
-									ref={provided.innerRef}
-									{...provided.draggableProps}
-									{...provided.dragHandleProps}
-								>
-									{_.isNil(displayItem) ?
-										<SkeletonItem
-											index={index}
-										/>
-										:
-										<ShoppingCartItem
-											item={item}
-											displayItem={displayItem}
-                                            emptyCart={emptyCart}
-                                            key={index}
-											index={index}
-											showSplitLineModal={showSplitLineModal}
-                                            showFactoryStockModal={showFactoryStockModal}
-											showEditPriceModal={showEditPriceModal}
-											showCustomerPartModal={showCustomerPartModal}
-											handleSetModalData={handleSetModalData}
-											history={history}
-										/>
-									}
-								</div>
-							)}
-						</Draggable>
-					)
+	useEffect(() => {
+		retrieveCartData()
+	}, [])
+
+	useEffect(() => {
+
+	}, [context.cart])
+
+	const retrieveCartData = () => {
+		var cart = context.cart
+
+		let invMastUids = cart.map(item => item.frecno)
+
+		//Query the item details
+		if(!itemsDetails || !itemsDetails.length){
+			queryShoppingCartItemsDetails({
+				variables: {
+					'invMastUids': invMastUids
 				}
-				)
-			)}
-		</Context.Consumer>
-	)
+			})
+		}
+
+		//Query the item prices
+		if(!itemsPrices || !itemsPrices.length){
+			//Build the price request objects
+			let priceRequests = cart.map(item => {
+				return {
+					'invMastUid': item.frecno,
+					'quantity': 1
+				}
+			})
+
+			queryShoppingCartItemsPrices({
+				variables: {
+					'items': priceRequests
+				}
+			})
+		}
+
+		if(!itemsAvailability || !itemsAvailability.length){
+			queryShoppingCartItemsAvailability({
+				variables: {
+					'invMastUids': invMastUids
+				}
+			})
+		}
+
+		if(!itemsCustomerPartNumbers || !itemsCustomerPartNumbers.length){
+			queryShoppingCartItemsCustomerPartNumbers({
+				variables:{
+					'invMastUids': invMastUids
+				}
+			})
+		}
+	}
+
+	const ShoppingCartItems = () => {
+		var cart = context.cart
+
+		let cartItems = cart.map((cartItem, index) => {
+			let itemDetails = itemsDetails?.find(detail => detail.invMastUid === cartItem.frecno)
+			let itemPrice = itemsPrices?.find(price => price.invMastUid === cartItem.frecno)
+			let itemAvailability = itemsAvailability.find(a => a.invMastUid === cartItem.frecno)
+			let itemCustomerPartNumbers = itemsCustomerPartNumbers.filter(p => p.invMastUid === cartItem.frecno)
+			return (
+				<Draggable key={index} draggableId={String(index)} index={index}>
+					{(provided) => (
+						<div
+							ref={provided.innerRef}
+							{...provided.draggableProps}
+							{...provided.dragHandleProps}
+						>
+							{itemDetails ?
+								<ShoppingCartItem
+									cartItem={cartItem}
+									itemDetails={itemDetails}
+									priceInfo={itemPrice}
+									availabilityInfo={itemAvailability}
+									customerPartNumbersitemCustomerPartNumbers
+									key={index}
+									index={index}
+									showSplitLineModal={showSplitLineModal}
+									showFactoryStockModal={showFactoryStockModal}
+									showEditPriceModal={showEditPriceModal}
+									showCustomerPartModal={showCustomerPartModal}
+									handleSetModalData={handleSetModalData}
+									history={history}
+								/>
+								: <></>
+								/* <SkeletonItem
+									index={index}
+								/> */
+							}
+						</div>
+					)}
+				</Draggable>
+			)
+		})
+
+		return cartItems
+	}
+
+	const [queryShoppingCartItemsDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+		onCompleted: data => {
+			setItemsDetails(data.itemDetailsBatch)
+		}
+	})
+
+	const [queryShoppingCartItemsPrices] = useLazyQuery(GET_ITEM_PRICE, {
+		onCompleted: data => {
+			setItemsPrices(data.getItemPrices)
+		}
+	})
+
+	const [queryShoppingCartItemsAvailability] = useLazyQuery(GET_ITEM_AVAILABILITY, {
+		onCompleted: data => {
+			setItemsAvailability(data.itemAvailability)
+		}
+	})
+
+	const [queryShoppingCartItemsCustomerPartNumbers] = useLazyQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+		onCompleted: data => {
+			setItemsCustomerPartNumbers(data.customerPartNumbersBatch)
+		}
+	})
 
 	function onDragEnd(result) {
 		// if dropped outside the list
@@ -121,43 +212,23 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	return (
 		<>
 			<Div>
-				<Context.Consumer>
-					{({ emptyCart }) => {
-						return (
-							<DivRow>
-								<H3>Shopping Cart</H3>
-								<p onClick={() => emptyCart()}>(empty cart)</p>
-							</DivRow>
-						)
-					}}
-				</Context.Consumer>
 				<DivRow>
-					<Context.Consumer>
-						{({ userInfo }) => {
-							if (!userInfo) {
-								return (
-									<Ashare></Ashare>
-								)
-							} else {
-								return (
-									<DivSave onClick={handleSaveAsShoppingList}>
+					<H3>Shopping Cart</H3>
+					<p onClick={() => context.emptyCart()}>(empty cart)</p>
+				</DivRow>
+				<DivRow>
+						{
+							context.userInfo 
+								?	<DivSave onClick={handleSaveAsShoppingList}>
 										<Ashare>Save As Shopping List</Ashare>
 										<FontAwesomeIcon icon="list" color="grey" />
 									</DivSave>
-								)
-							}
-						}}
-					</Context.Consumer>
-					<Context.Consumer>
-						{({ saveCart }) => {
-							return (
-								<DivSave onClick={() => { saveCart(), setSavedCart(true) }}>
-									{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
-									{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
-								</DivSave>
-							)
-						}}
-					</Context.Consumer>
+								: 	<Ashare></Ashare>
+						}
+					<DivSave onClick={() => { context.saveCart(), setSavedCart(true) }}>
+						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
+						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
+					</DivSave>
 					<DivShare>
 						<Ashare>Email Cart</Ashare>
 						<FontAwesomeIcon icon="share" color="grey" />
@@ -171,7 +242,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 						>
-							{ShoppingCartItems}
+							{ShoppingCartItems()}
 						</div>
 					)}
 				</Droppable>

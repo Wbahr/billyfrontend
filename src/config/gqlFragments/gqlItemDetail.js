@@ -158,3 +158,22 @@ export const GET_ACCESSORY_ITEM_DETAILS = gql`
 	${FRAGMENT_ITEM_DETAIL}
 	${FRAGMENT_ITEM_DETAIL_MEDIA}
 `
+
+export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
+    query GetShoppingCartItemsDetails($invMastUids: [Int]){
+        itemDetailsBatch(invMastUids: $invMastUids){
+            ...ItemDetails
+        }
+    }
+    ${FRAGMENT_ITEM_DETAIL}
+`
+
+export const GET_ITEM_CUSTOMER_PART_NUMBERS = gql`
+    query GetCustomerPartNumbers($invMastUids: [Int]){
+        customerPartNumbersBatch(invMastUids: $invMastUids){
+            invMastUid
+			customerPartNumber
+			id
+		}
+    }
+`
