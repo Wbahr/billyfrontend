@@ -263,7 +263,6 @@ export default function HeaderComponent(props) {
                         </NavigationItemContainer>
                         <NavigationItemContainer to="/resources" text="Resources">
                             <DropdownMenu>
-                                <DropdownMenuItem to='/blog'>Blog - Technically Speaking</DropdownMenuItem>
                                 <DropdownMenuItemExternal to='https://www.youtube.com/channel/UCdZYpFsi2IES53d5BZr03fw/'>Youtube Channel</DropdownMenuItemExternal>
                                 <DropdownMenuItem to='/knowledge-center-and-faq'>Knowledge Center &amp; FAQ</DropdownMenuItem>
                                 <DropdownMenuItem to='/linecards'>Line Cards &amp; Brochures</DropdownMenuItem>
