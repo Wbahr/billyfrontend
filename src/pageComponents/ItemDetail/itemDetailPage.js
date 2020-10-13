@@ -237,7 +237,7 @@ export default function ItemDetailPage({ history }) {
 			setAccessoryItems(item.associatedItems)
 
 			//Build the price request objects
-			let accessoryItemPriceRequests = item.associatedItems.map(i => {
+			const accessoryItemPriceRequests = item.associatedItems.map(i => {
 				return {
 					'invMastUid': i.associatedInvMastUid,
 					'quantity': 1
@@ -264,8 +264,7 @@ export default function ItemDetailPage({ history }) {
 	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
 			if(data.getItemPrices.length){
-				let unitPrice = data.getItemPrices[0].unitPrice
-				setUnitPrice(unitPrice)
+				setUnitPrice(data.getItemPrices[0].unitPrice)
 			} else{
 				setUnitPrice(0)
 			}
@@ -276,8 +275,8 @@ export default function ItemDetailPage({ history }) {
 		onCompleted: data => {
 
 			if(accessoryItems.length){
-				let accessoryItemsWithPrice = accessoryItems.map(ai => {
-					let associatedItemPrice = data.getItemPrices.find(priceObj => priceObj.invMastUid === ai.associatedInvMastUid).unitPrice
+				const accessoryItemsWithPrice = accessoryItems.map(ai => {
+					const associatedItemPrice = data.getItemPrices.find(priceObj => priceObj.invMastUid === ai.associatedInvMastUid).unitPrice
 
 					return {
 						...ai,
@@ -292,11 +291,11 @@ export default function ItemDetailPage({ history }) {
 
 	const [queryAccessoryItemDetails] = useLazyQuery(GET_ACCESSORY_ITEM_DETAILS, {
 		onCompleted: data => {
-			let itemsWithDetails = data.itemDetailsBatch
+			const itemsWithDetails = data.itemDetailsBatch
 
 			if(accessoryItems.length){
-				let accessoryItemsWithDetails = accessoryItems.map(ai => {
-					let accessoryItemDetails = itemsWithDetails.find(detailObj => detailObj.invMastUid === ai.associatedInvMastUid)
+				const accessoryItemsWithDetails = accessoryItems.map(ai => {
+					const accessoryItemDetails = itemsWithDetails.find(detailObj => detailObj.invMastUid === ai.associatedInvMastUid)
 
 					return  {
 						...ai,
