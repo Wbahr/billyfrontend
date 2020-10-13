@@ -124,7 +124,7 @@ const Head = styled.p`
 	margin: 0;
 `
 
-const Item = styled.p`
+const Item = styled.a`
 	cursor: pointer;
 	font-size: 12px;
 	font-weight: 300;
@@ -192,22 +192,22 @@ export default function FooterComponent({history}) {
 					</DivAirline>
 					<DivMenu>
 						<Head>Featured Brands</Head>
-						<Item onClick={()=> history.push('/brands/featured/smc')}>SMC</Item>
-						<Item onClick={()=> history.push('/brands/featured/rexroth')}>Rexroth</Item>
-						<Item onClick={()=> history.push('/brands/featured/hydac')}>Hydac</Item>
-						<Item onClick={()=> history.push('/brands/featured/eaton')}>Eaton</Item>
-						<Item onClick={()=> history.push('/brands/featured/omron')}>Omron</Item>
-						<Item onClick={()=> history.push('/brands/featured/phoenix-contact')}>Phoenix</Item>
+						<Item href="/brands/featured/smc">SMC</Item>
+						<Item href="/brands/featured/rexroth">Rexroth</Item>
+						<Item href="/brands/featured/hydac">Hydac</Item>
+						<Item href="/brands/featured/eaton">Eaton</Item>
+						<Item href="/brands/featured/omron">Omron</Item>
+						<Item href="/brands/featured/phoenix-contact">Phoenix</Item>
 					</DivMenu>
 
 					<DivMenu>
 						<Head>Products</Head>
-						<Item onClick={()=> history.push('/brands')}>Valves</Item>
-						<Item onClick={()=> history.push('/brands')}>Hydraulics</Item>
-						<Item onClick={()=> history.push('/brands')}>Gears</Item>
-						<Item onClick={()=> history.push('/brands')}>Tubing</Item>
-						<Item onClick={()=> history.push('/brands')}>Aluminum Framing</Item>
-						<Item onClick={()=> history.push('/brands')}>Controls</Item>
+						<Item href="/search?searchTerm=valves">Valves</Item>
+						<Item href="/search?searchTerm=hydraulics">Hydraulics</Item>
+						<Item href="/search?searchTerm=gear">Gears</Item>
+						<Item href="/search?searchTerm=tubing">Tubing</Item>
+						<Item href="/categories/aluminum-structural-framing">Aluminum Framing</Item>
+						<Item href="/categories/process-controls-components">Controls</Item>
 					</DivMenu>
 
 					<DivSocial>

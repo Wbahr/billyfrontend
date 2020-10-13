@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import FeaturedManufacturers from './uiComponents/featuredManufacturers'
 import ShopOurProducts from './uiComponents/shopOurProducts'
 import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
-// import ContentScreen from '../../containerComponents/contentScreen'
-// import ItemResult from './uiComponents/itemResult'
-// import ResultsSearch from './uiComponents/resultsSearch'
+import { useQuery } from '@apollo/client'
+import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
 
 const ContentScreenContainer = styled.div`
 	display: flex;
@@ -18,23 +17,26 @@ const ContentScreenContainer = styled.div`
 	justify-content: space-between;
 	flex-grow: 99;
 `
-class HomePage extends React.Component {
 
-	render() {
-		return (
-			<>
-				{/* <SuggestedSearch /> */}
-				<ContentScreenContainer>
-					<Banner />
-					<ShopOurProducts {...this.props} />
-					<TechnicallySpeaking />
-					<FeaturedManufacturers />
-					<LineCards />
-					
-				</ContentScreenContainer>
-			</>
-		)
-	}
+export default function HomePage(props) {
+    const [categories, setCategories] = useState(null);
+
+	const { loading, error, data } = useQuery(GET_CATEGORY_SEARCH, {
+		onCompleted: data => { 
+			setCategories(data.getAllParentCategories);
+		}
+	});
+    
+    return (
+        <>
+            <ContentScreenContainer>
+                <Banner />
+                <ShopOurProducts categories={categories} match={{ path:'/categories', url: '/categories' }}/>
+                <TechnicallySpeaking />
+                <FeaturedManufacturers />
+                <LineCards />
+                
+            </ContentScreenContainer>
+        </>
+    );
 }
-
-export default HomePage

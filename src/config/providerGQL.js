@@ -793,3 +793,22 @@ export const GET_PAYMENT_METHOD_INFO = gql`
 		}
   }
   `
+
+  export const GET_CATEGORY_SEARCH = gql`
+  {
+      getAllParentCategories {
+          name
+          nameForUrl
+          bannerUrl
+          parentId
+          id
+          children {
+              name
+              nameForUrl
+              bannerUrl
+              parentId
+              id
+          }
+      }
+  }
+`
