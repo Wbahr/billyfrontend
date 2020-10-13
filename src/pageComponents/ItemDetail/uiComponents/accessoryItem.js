@@ -204,7 +204,7 @@ export default function AccessoryItem({ item, history }) {
 		}
   }
     
-  let imagePath = getThumbnailImagePath(item);
+  const imagePath = getThumbnailImagePath(item);
 
 	return (
     <DivItemResultContainer>
