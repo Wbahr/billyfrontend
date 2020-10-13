@@ -125,13 +125,6 @@ export default function Provider(props) {
 		}
 	})
 	
-	const [getItemData] = useLazyQuery(GET_ITEM_BY_ID, {
-		fetchPolicy: 'no-cache',
-		onCompleted: result => {
-			mutateItemDetailCache('add', result)
-		}
-	})
-	
 	const [getMultiItemData] = useLazyQuery(GET_ITEMS_BY_ID, {
 		fetchPolicy: 'no-cache',
 		onCompleted: data => {
@@ -357,7 +350,6 @@ export default function Provider(props) {
 	
 	function handleAddItem (item){
 		setShoppingCart([...shoppingCart, item])
-		getItemData({variables: { 'itemId': item.frecno }}) // Retrieve the item's data and add it to the display cart
 	}
 	
 	function handleAddItems (items){

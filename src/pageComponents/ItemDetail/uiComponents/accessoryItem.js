@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import Context from 'config/context'
 import _ from 'lodash'
 import Loader from '../../_common/loader'
 import styled from 'styled-components'
@@ -181,7 +182,9 @@ const Img = styled.img`
 `
 
 export default function AccessoryItem({ item, history }) {
-	const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(1)
+  
+  const context = useContext(Context)
 
 	function handleSetQuantity(quantity){
 		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -190,8 +193,14 @@ export default function AccessoryItem({ item, history }) {
 	}
 
 	function handleAddToCart() {
-		if (quantity.length > 0){
-			// addToCart(quantity, frecno)
+		if (quantity > 0){
+      context.addItem({
+        frecno: item.associatedInvMastUid,
+        quantity: quantity,
+        itemNotes: null,
+        itemUnitPriceOverride: null,
+        customerPartNumberId: null
+      })
 		}
   }
     
@@ -226,7 +235,7 @@ export default function AccessoryItem({ item, history }) {
           }
         </DivPartNumberRowSpread>
         <DivSpace>
-          <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+        { !!item.unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
         </DivSpace>
       </DivPartDetailsRow>
     </DivItemResultContainer>
