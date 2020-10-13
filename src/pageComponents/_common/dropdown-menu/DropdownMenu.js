@@ -82,7 +82,7 @@ export function NavigationItemContainer({children, to, text}) {
             }
             </Link>
         </div>
-        {children && children}
+        {children}
     </NavigationItemContainerElement>
 }
 NavigationItemContainer.propTypes = {
