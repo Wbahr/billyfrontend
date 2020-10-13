@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link } from 'react-router-dom'
@@ -11,7 +10,6 @@ import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, DropdownMenuIt
 import { buildSearchString } from "../../pageComponents/_common/helpers/generalHelperFunctions";
 import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
-import Loader from 'pageComponents/_common/loader'
 
 const NavTop = styled.div`
 	display: flex;
@@ -148,6 +146,7 @@ export default function HeaderComponent(props) {
     const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false);
     const [categories, setCategories] = useState(null);
 
+    const context = useContext(Context);
     useQuery(GET_CATEGORY_SEARCH, {
         onCompleted: data => {
             setCategories(data.getAllParentCategories);
@@ -160,84 +159,48 @@ export default function HeaderComponent(props) {
 
     return (
         <>
-            <Context.Consumer>
-                {({ topAlert, removeTopAlert }) => {
-                    if (topAlert.show) {
-                        return (<TopAlert
-                            message={topAlert.message}
-                            close={() => removeTopAlert()}
-                        />)
-                    }
-                }}
-            </Context.Consumer>
+            {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={() => context.removeTopAlert()} />}
             <NavTop>
                 <NavBottomContainer>
                     <div>
-                        <Context.Consumer>
-                            {({ userInfo, impersonatedCompanyInfo, cancelImpersonation }) => {
-                                if (!_.isNil(userInfo) && _.isNil(impersonatedCompanyInfo)) {
-                                    if (userInfo.role === 'AirlineEmployee') {
-                                        return (<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
-                                    } else {
-                                        return (<Div><Puser>Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})</Puser></Div>)
-                                    }
-                                } else if (!_.isNil(userInfo) && !_.isNil(impersonatedCompanyInfo)) {
-                                    return (<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#f3f3f3" /> {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={() => cancelImpersonation()}><FontAwesomeIcon icon="times" color="white" /></DivCancelImpersonation><ImpersonationSearch /></Div>)
-                                }
-                            }}
-                        </Context.Consumer>
+                        <UserNameSection context={context}></UserNameSection>
                     </div>
                     <Div>
                         <Div>
                             <FontAwesomeIcon icon="phone-alt" color="white" />
                             <Aphone href="tel:+18009997378">800-999-7378</Aphone>
                         </Div>
-                        <Context.Consumer>
-                            {({ userInfo, logoutUser }) => {
-                                if (!_.isNil(userInfo)) {
-                                    return (<A onClick={() => { logoutUser() }}>Sign Out</A>)
-                                } else {
-                                    return (<A onClick={() => props.history.push('/login')}>Sign In</A>)
-                                }
-                            }}
-                        </Context.Consumer>
+                            {context.userInfo 
+                                ? <A onClick={() => { context.logoutUser() }}>Sign Out</A> 
+                                : <A onClick={() => props.history.push('/login')}>Sign In</A>}
                         <A>|</A>
-                        <Context.Consumer>
-                            {({ userInfo }) => {
-                                if (userInfo) {
-                                    return (
-                                        <div id="myAccount" onMouseEnter={() => setShowMyAccountDropdown(true)} onMouseLeave={() => { setTimeout(() => { setShowMyAccountDropdown(false) }, 50) }}>
-                                            <Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
-                                                <A id="myAccount">My Account</A>
-                                            </Link>
-                                            <DropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
-                                                <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
-                                                <DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/open-orders-report">Open Orders Report</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/open-quotes">Open Quotes</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
-                                                <DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
-                                            </DropdownMenu>
-                                        </div>
-                                    )
-                                } else {
-                                    return (<A onClick={() => props.history.push('/signup')}>Create Account</A>)
-                                }
-                            }}
-                        </Context.Consumer>
+                        {context.userInfo 
+                            ? (<div id="myAccount" onMouseEnter={() => setShowMyAccountDropdown(true)} onMouseLeave={() => { setTimeout(() => { setShowMyAccountDropdown(false) }, 50) }}>
+                                    <Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
+                                        <A id="myAccount">My Account</A>
+                                    </Link>
+                                    <DropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
+                                        <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
+                                        <DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/open-orders-report">Open Orders Report</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/open-quotes">Open Quotes</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
+                                        <DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
+                                    </DropdownMenu>
+                                </div>)
+                            : (<A onClick={() => props.history.push('/signup')}>Create Account</A>)
+                        }
                         <A>|</A>
-                        <Context.Consumer>
-                            {({ cart }) => (
-                                <Link to='/cart' style={{ textDecoration: 'none' }}>
-                                    <A>Cart({cart.length})</A>
-                                </Link>
-                            )}
-                        </Context.Consumer>
+                       { context.cart && (
+                            <Link to='/cart' style={{ textDecoration: 'none' }}>
+                                <A>Cart({context.cart.length})</A>
+                            </Link>
+                        )}
                     </Div>
                 </NavBottomContainer>
             </NavTop>
@@ -328,18 +291,12 @@ export default function HeaderComponent(props) {
                             </DropdownMenu>
                         </NavigationItemContainer>
                     </LinkContainer>
-                    <Div>
-                        <Context.Consumer>
-                            {({ userInfo }) => {
-                                if (userInfo && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')) {
-                                    return (
-                                        <ButtonSearchType onClick={() => { setSearchAsCustomer(!searchAsCustomer) }}>
-                                            {searchAsCustomer ? <div style={{ color: 'limegreen' }}>NW</div> : <div style={{ color: 'grey' }}>NW</div>}
-                                        </ButtonSearchType>
-                                    )
-                                }
-                            }}
-                        </Context.Consumer>
+                    <Div>   
+                        {context.userInfo && (context.userInfo.role === 'AirlineEmployee' || context.userInfo.role === 'Impersonator') &&
+                            <ButtonSearchType onClick={() => { setSearchAsCustomer(!searchAsCustomer) }}>
+                                {searchAsCustomer ? <div style={{ color: 'limegreen' }}>NW</div> : <div style={{ color: 'grey' }}>NW</div>}
+                            </ButtonSearchType>
+                        }
                         <InputSearch value={searchTerm} placeholder={searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'} onChange={(e) => setSearchTerm(e.target.value)} onKeyPress={(e) => { e.key === 'Enter' ? handleSearch() : null }} />
                         <ButtonSearch onClick={handleSearch}>
                             <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
@@ -350,4 +307,18 @@ export default function HeaderComponent(props) {
             </NavBottom>
         </>
     );
+}
+
+function UserNameSection({context}) {
+    if (context.userInfo && !context.impersonatedCompanyInfo) {
+        if (context.userInfo.role === 'AirlineEmployee') {
+            return (<Div><Puser>Hello, {context.userInfo.firstName} {context.userInfo.lastName} ({context.userInfo.companyName} - {context.userInfo.companyId})</Puser><ImpersonationSearch /></Div>)
+        } else {
+            return (<Div><Puser>Hello, {context.userInfo.firstName} {context.userInfo.lastName} ({context.userInfo.companyName} - {context.userInfo.companyId})</Puser></Div>)
+        }
+    } else if (context.userInfo && context.impersonatedCompanyInfo) {
+        return (<Div><PeUser><FontAwesomeIcon icon="user-circle" color="#f3f3f3" /> {context.impersonatedCompanyInfo.customerName} - {context.impersonatedCompanyInfo.customerIdP21} [Impersonating]</PeUser><DivCancelImpersonation onClick={() => context.cancelImpersonation()}><FontAwesomeIcon icon="times" color="white" /></DivCancelImpersonation><ImpersonationSearch /></Div>)
+    } else {
+        return null;
+    }
 }
