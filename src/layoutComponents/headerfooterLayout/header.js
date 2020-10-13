@@ -146,7 +146,7 @@ export default function HeaderComponent(props) {
 	const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
 
 	function handleSearch() {
-		props.history.push(buildSearchString(searchTerm, 'relevancy', searchAsCustomer))
+		props.history.push(buildSearchString({searchTerm, nonweb: searchAsCustomer}))
 	}
 
 	return (

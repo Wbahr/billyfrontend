@@ -28,7 +28,7 @@ const InputSearch = styled.input`
 `
 
 const ButtonSearch = styled.button`
-  width: 70px;
+  width: 120px;
   height: 30px;
   background-color: rgb(219, 22, 51);
   color: white;
@@ -46,14 +46,15 @@ const SearchChipDiv = styled.div`
 
 export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, setSortType, sortType}) {
 	const [searchTerm, setSearchTerm] = useState('')
+	const innerSearchTermsArray = innerSearchTerms ? innerSearchTerms.split(',') : []
 
 	const handleUpdateSearchTerm = () => {
-		setInnerSearchTerms([...innerSearchTerms, ...searchTerm.split(' ')])
+		setInnerSearchTerms([...innerSearchTermsArray, ...searchTerm.split(' ')])
 		setSearchTerm('')
 	}
 	
 	const handleRemoveSearchTerm = (idx) => () => {
-		const innerSearchTermsCopy = innerSearchTerms.slice()
+		const innerSearchTermsCopy = innerSearchTermsArray.slice()
 		innerSearchTermsCopy.splice(idx, 1)
 		setInnerSearchTerms(innerSearchTermsCopy)
 	}
@@ -69,12 +70,12 @@ export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, se
 	return(
 		<Div>
 			<SearchChipDiv>
-				{innerSearchTerms.map((term, idx) => <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
+				{innerSearchTermsArray.map((term, idx) => <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
 			</SearchChipDiv>
 			
 			<DivResultsSearch>
 				<InputSearch placeholder="Add keywords to refine these results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
-				<ButtonSearch onClick={handleUpdateSearchTerm}>Search</ButtonSearch>
+				<ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
 			</DivResultsSearch>
 			
 			<DivResultsSearch>

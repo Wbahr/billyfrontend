@@ -22,6 +22,7 @@ const DivOptions = styled.div`
 `
 
 const DivOptionRow = styled.div`
+	cursor: pointer;
 	display: flex; 
 	width: 250px;
 	align-items: center;
@@ -33,6 +34,7 @@ const P = styled.p`
 `
 
 const Label = styled.label`
+	cursor: pointer;
 	margin: 0;
 	color: #535353;
 	font-size: 12px;
@@ -57,23 +59,30 @@ export default function AttributeFilter({open, attribute, updateAttribute}) {
 	const toggleOpen = () => setIsOpen(!isOpen)
 	const [filter, setFilter] = useState('')
 	
-	const handleFeatureClick = idx => ({target: {checked}}) => {
+	const handleFeatureClick = idx => () => {
 		const features = attribute.features.slice()
-		features[idx].selected = checked
+		features[idx].selected = !features[idx].selected
 		updateAttribute({ ...attribute, features })
 	}
 	
 	const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
 	
+	const hasSelectedFeature = attribute.features.find(f => f.selected)
+	const shouldShowFeatureCount = selected => selected || !hasSelectedFeature
+	
 	const toOption = ({selected, featureName, featureNameDisplay, featureCount}, idx) => (
-		<DivOptionRow key={idx}>
+		<DivOptionRow key={idx} onClick={handleFeatureClick(idx)}>
 			<input
 				type="checkbox"
 				checked={selected}
-				onChange={handleFeatureClick(idx)}
+				style={{cursor: 'pointer'}}
 			/>
 			<Label htmlFor={featureName}>{featureNameDisplay}</Label>
-			<PCount>({featureCount})</PCount>
+			{
+				shouldShowFeatureCount(selected)
+					? <PCount>({featureCount})</PCount>
+					: <FontAwesomeIcon icon="plus" color="#535353"/>
+			}
 		</DivOptionRow>
 	)
 	
