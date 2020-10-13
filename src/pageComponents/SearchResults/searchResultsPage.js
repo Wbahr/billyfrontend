@@ -229,7 +229,6 @@ export default function SearchResultsPage(props) {
 	const itemSearchResults = useMemo(() => searchResults.map(result => (
 		<ItemResult
 			key={result.frecno}
-			searchTerm={searchTerm}
 			result={result}
 			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
 			history={props.history}

@@ -58,7 +58,7 @@ export default function AddToShoppingListModal({open, hide, item, customerPartNu
 	const loading = context.upsertShoppingListState?.loading
 	
 	useEffect(() => {
-		context.getWebUserContacts()
+		if (!context.userInfo?.contactId) context.getWebUserContacts()
 		context.getShoppingLists()
 	}, [context.userInfo])
 	

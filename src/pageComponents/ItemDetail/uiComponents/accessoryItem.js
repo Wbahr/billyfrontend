@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import Context from 'config/context'
 import _ from 'lodash'
 import Loader from '../../_common/loader'
 import styled from 'styled-components'
@@ -180,26 +181,10 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({associatedItemId, history}) {
-	const [quantity, setQuantity] = useState(1)
-	const [item, setItem] = useState(null)
+export default function AccessoryItem({ item, history }) {
+  const [quantity, setQuantity] = useState(1)
   
-	function mutateItemId(itemId){
-		let mutatedItemId = itemId.replace(/\s/g, '-')
-		return(mutatedItemId)
-	}
-
-	useQuery(GET_ITEM_BY_ID, {
-		variables: { associatedItemId },
-		onCompleted: result => {
-			if (result.itemDetails.length) {
-				setItem(result.itemDetails[0])
-			} else {
-				setItem({})
-			}
-		}
-	})
-
+  const context = useContext(Context)
 
 	function handleSetQuantity(quantity){
 		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
@@ -208,43 +193,51 @@ export default function AccessoryItem({associatedItemId, history}) {
 	}
 
 	function handleAddToCart() {
-		if (quantity.length > 0){
-			// addToCart(quantity, frecno)
+		if (quantity > 0){
+      context.addItem({
+        frecno: item.associatedInvMastUid,
+        quantity: quantity,
+        itemNotes: null,
+        itemUnitPriceOverride: null,
+        customerPartNumberId: null
+      })
 		}
-    }
+  }
     
-    let imagePath = getThumbnailImagePath(item);
+  const imagePath = getThumbnailImagePath(item);
 
-	if (_.isNil(item)){
-		return(
-			<Loader />
-		)
-	} else {
-		let mutatedItemId = mutateItemId(_.get(item,'item_id',''))
-		return(
-			<DivItemResultContainer>
-				<DivPartDetailsRow>
-					<DivPartImg>
-						<Img src={imagePath} alt={item.invMastUid}/>
-					</DivPartImg>
-					<DivPartDetails>
-						<PpartTitle onClick={()=>{history.push(`/product/${mutatedItemId}/${item.invMastUid}`)}}>{item.itemDesc}</PpartTitle>
-					</DivPartDetails>
-					<DivPartNumberRow>
-						<PpartAvailability>Airline #: AHC{item.invMastUid}</PpartAvailability>
-					</DivPartNumberRow>
-					<DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-						{item.availability !== 0 ? <PBlue>{item.availability}</PBlue> : <PBlue>{item.availabilityMessage}</PBlue>}
-					</DivPartNumberRow>
-					<DivPartNumberRowSpread>
-						<Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
-						{(!_.isNil(item.anonPrice) && item.anonPrice !== 0) ? <Div><Pprice>${item.anonPrice.toFixed(2)}</Pprice><P>/EA</P></Div> : <ACall href="tel:+18009997378">Call for Price</ACall>}
-					</DivPartNumberRowSpread>
-					<DivSpace>
-						<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-					</DivSpace>
-				</DivPartDetailsRow>
-			</DivItemResultContainer>
-		)
-	}
+	return (
+    <DivItemResultContainer>
+      <DivPartDetailsRow>
+        <DivPartImg>
+          <Img 
+            src={imagePath} 
+            alt={item?.details?.itemCode}
+            onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}/>
+        </DivPartImg>
+        <DivPartDetails>
+          <PpartTitle onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}>{item?.details?.itemCode}</PpartTitle>
+        </DivPartDetails>
+        <DivPartNumberRow>
+          <PpartAvailability>Airline #: AHC{item?.associatedInvMastUid}</PpartAvailability>
+        </DivPartNumberRow>
+        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+          {item?.availability 
+              ? <PBlue>{item?.availability.availability}</PBlue> 
+              : <PBlue>{item?.availability === 0 ? item?.availability.availabilityMessage : 'Call Airline for Price'}</PBlue>}
+        </DivPartNumberRow>
+        <DivPartNumberRowSpread>
+          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+          {
+            item?.unitPrice 
+              ? <Div><Pprice>${item.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
+              : <ACall href="tel:+18009997378">Call for Price</ACall>
+          }
+        </DivPartNumberRowSpread>
+        <DivSpace>
+        { (context.userInfo?.isAirlineUser || !!item.unitPrice) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
+        </DivSpace>
+      </DivPartDetailsRow>
+    </DivItemResultContainer>
+	)
 }
