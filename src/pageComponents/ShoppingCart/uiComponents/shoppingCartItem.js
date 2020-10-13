@@ -288,7 +288,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</DivItem>
 							<DivItem>
 								<DivRow>
-									{context.userInfo.isAirlineUser &&
+									{context.userInfo?.isAirlineUser &&
 										<>
 											<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
 											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>

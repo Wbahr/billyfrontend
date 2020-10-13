@@ -186,12 +186,16 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 					)}
 				</Droppable>
 			</DragDropContext>
-			<SaveShoppingListModal
-				open={showShoppingListModal}
-				hide={() => setShowShoppingListModal(false)}
-				items={context.cart}
-				enableAddToExisting
-			/>
+
+			{
+				context.userInfo && <SaveShoppingListModal
+					open={showShoppingListModal}
+					hide={() => setShowShoppingListModal(false)}
+					items={context.cart}
+					enableAddToExisting
+				/>
+			}
+			
 		</>
 	)
 }

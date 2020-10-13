@@ -189,7 +189,7 @@ const IMG = styled.img`
 `
 
 export default function ItemDetailPage({ history }) {
-	const { addItem, } = useContext(Context)
+	const context = useContext(Context)
 	const { itemId, customerPartNumber } = useParams()
 	const itemIdInt = parseInt(itemId)
 
@@ -309,7 +309,7 @@ export default function ItemDetailPage({ history }) {
 	})
 	
 	const handleAddToCart = () => {
-		addItem({
+		context.addItem({
 			frecno: itemIdInt,
 			quantity: parseInt(quantity, 10),
 			itemNotes: null,
@@ -458,13 +458,16 @@ export default function ItemDetailPage({ history }) {
 					onClose={handleAddedToCart}
 					timeout={900}
 				/>
+
+				{
+					context.userInfo && <AddToShoppingListModal
+						open={showAddListModal}
+						hide={() => setShowAddListModal(false)}
+						item={item}
+						customerPartNumberId={selectedCustomerPartNumber}
+					/>
+				}
 				
-				<AddToShoppingListModal
-					open={showAddListModal}
-					hide={() => setShowAddListModal(false)}
-					item={item}
-					customerPartNumberId={selectedCustomerPartNumber}
-				/>
 			
 			</ItemDetailPageContainer>
 		)
