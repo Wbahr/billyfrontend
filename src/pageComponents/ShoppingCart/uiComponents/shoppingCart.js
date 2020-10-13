@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useLazyQuery } from '@apollo/client'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Context from '../../../config/context'
@@ -58,11 +58,38 @@ const DivSave = styled(DivShare)`
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-	const [itemsDetails, setItemsDetails] = useState([])
-	const [itemsPrices, setItemsPrices] = useState([])
-	const [itemsAvailability, setItemsAvailability] = useState([])
-	const [itemsCustomerPartNumbers, setItemsCustomerPartNumbers] = useState([])
 	const context = useContext(Context)
+
+	const invMastUids = context.cart.map(item => item.frecno)
+
+	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
+		variables: {
+			'items': invMastUids.map(invMastUid => {
+				return {
+					'invMastUid': invMastUid,
+					'quantity': 1
+				}
+			})
+		}
+	})
+
+	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers} = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+		variables:{
+			'invMastUids': invMastUids
+		}
+	})
 
 	useEffect(() => {
 		if (savedCart) {
@@ -70,130 +97,42 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 		}
 	}, [savedCart])
 
-	useEffect(() => {
-		retrieveCartData()
-	}, [])
+	const ShoppingCartItems = context.cart.map((cartItem, index) => {
 
-	useEffect(() => {
-
-	}, [context.cart])
-
-	const retrieveCartData = () => {
-		var cart = context.cart
-
-		let invMastUids = cart.map(item => item.frecno)
-
-		//Query the item details
-		if(!itemsDetails || !itemsDetails.length){
-			queryShoppingCartItemsDetails({
-				variables: {
-					'invMastUids': invMastUids
-				}
-			})
-		}
-
-		//Query the item prices
-		if(!itemsPrices || !itemsPrices.length){
-			//Build the price request objects
-			let priceRequests = cart.map(item => {
-				return {
-					'invMastUid': item.frecno,
-					'quantity': 1
-				}
-			})
-
-			queryShoppingCartItemsPrices({
-				variables: {
-					'items': priceRequests
-				}
-			})
-		}
-
-		if(!itemsAvailability || !itemsAvailability.length){
-			queryShoppingCartItemsAvailability({
-				variables: {
-					'invMastUids': invMastUids
-				}
-			})
-		}
-
-		if(!itemsCustomerPartNumbers || !itemsCustomerPartNumbers.length){
-			queryShoppingCartItemsCustomerPartNumbers({
-				variables:{
-					'invMastUids': invMastUids
-				}
-			})
-		}
-	}
-
-	const ShoppingCartItems = () => {
-		var cart = context.cart
-
-		let cartItems = cart.map((cartItem, index) => {
-			let itemDetails = itemsDetails?.find(detail => detail.invMastUid === cartItem.frecno)
-			let itemPrice = itemsPrices?.find(price => price.invMastUid === cartItem.frecno)
-			let itemAvailability = itemsAvailability.find(a => a.invMastUid === cartItem.frecno)
-			let itemCustomerPartNumbers = itemsCustomerPartNumbers.filter(p => p.invMastUid === cartItem.frecno)
-			return (
-				<Draggable key={index} draggableId={String(index)} index={index}>
-					{(provided) => (
-						<div
-							ref={provided.innerRef}
-							{...provided.draggableProps}
-							{...provided.dragHandleProps}
-						>
-							{itemDetails ?
-								<ShoppingCartItem
-									cartItem={cartItem}
-									itemDetails={itemDetails}
-									priceInfo={itemPrice}
-									availabilityInfo={itemAvailability}
-									customerPartNumbersitemCustomerPartNumbers
-									key={index}
-									index={index}
-									showSplitLineModal={showSplitLineModal}
-									showFactoryStockModal={showFactoryStockModal}
-									showEditPriceModal={showEditPriceModal}
-									showCustomerPartModal={showCustomerPartModal}
-									handleSetModalData={handleSetModalData}
-									history={history}
-								/>
-								: <></>
-								/* <SkeletonItem
-									index={index}
-								/> */
-							}
-						</div>
-					)}
-				</Draggable>
-			)
-		})
-
-		return cartItems
-	}
-
-	const [queryShoppingCartItemsDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
-		onCompleted: data => {
-			setItemsDetails(data.itemDetailsBatch)
-		}
-	})
-
-	const [queryShoppingCartItemsPrices] = useLazyQuery(GET_ITEM_PRICE, {
-		onCompleted: data => {
-			setItemsPrices(data.getItemPrices)
-		}
-	})
-
-	const [queryShoppingCartItemsAvailability] = useLazyQuery(GET_ITEM_AVAILABILITY, {
-		onCompleted: data => {
-			setItemsAvailability(data.itemAvailability)
-		}
-	})
-
-	const [queryShoppingCartItemsCustomerPartNumbers] = useLazyQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
-		onCompleted: data => {
-			setItemsCustomerPartNumbers(data.customerPartNumbersBatch)
-		}
+		const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === cartItem.frecno)
+		const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === cartItem.frecno)
+		const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
+		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.customerPartNumbersBatch?.filter(p => p.invMastUid === cartItem.frecno)
+		return (
+			<Draggable key={index} draggableId={String(index)} index={index}>
+				{(provided) => (
+					<div
+						ref={provided.innerRef}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+					>
+						{itemDetails ?
+							<ShoppingCartItem
+								cartItem={cartItem}
+								itemDetails={itemDetails}
+								priceInfo={itemPrice}
+								availabilityInfo={itemAvailability}
+								customerPartNumbers={itemCustomerPartNumbers}
+								key={index}
+								index={index}
+								showSplitLineModal={showSplitLineModal}
+								showFactoryStockModal={showFactoryStockModal}
+								showEditPriceModal={showEditPriceModal}
+								showCustomerPartModal={showCustomerPartModal}
+								handleSetModalData={handleSetModalData}
+								history={history}
+							/>
+							: <SkeletonItem index={index} />
+						}
+					</div>
+				)}
+			</Draggable>
+		)	
 	})
 
 	function onDragEnd(result) {
@@ -242,7 +181,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 						>
-							{ShoppingCartItems()}
+							{ShoppingCartItems}
 						</div>
 					)}
 				</Droppable>

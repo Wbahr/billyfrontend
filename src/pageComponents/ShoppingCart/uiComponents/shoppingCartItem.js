@@ -158,37 +158,12 @@ const P3 = styled.p`
 	font-size: 12px !important;
 `
 
-const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
-	query ItemById($itemId: Int){
-		customerPartNumbers(frecno: $itemId){
-			customerPartNumber
-			id
-		}
-	}
-`
-
 export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	const itemId = parseInt(cartItem.frecno,10)
 
 	const context = useContext(Context)
-	// useEffect(()=> {
-	// 	if (cartItem.customerPartNumberId !== selectedCustomerPartNumber) {
-	// 		getUpdatedCustomerPartNumbers()
-	// 	}
-	// }, [cartItem.customerPartNumberId])
-
-	// const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
-	// 	fetchPolicy: 'no-cache',
-	// 	variables: { itemId },
-	// 	onCompleted: result => {
-	// 		if (!_.isNil(result.customerPartNumbers)) {
-	// 			context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-	// 			setSelectedCustomerPartNumber(cartItem.customerPartNumberId || 0)
-	// 		}
-	// 	}
-	// })
 
 	function selectCustomerPartNumber(value){
 		if (value === -1) {
@@ -306,31 +281,21 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 					<DivQuantity>
 						<DivItem>
 							<Label>Qty:</Label>
-							<Context.Consumer>
-								{({ updateItem }) => (
-									<input
-										onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
-										style={{'width': '50px'}}
-										value={cartItem.quantity}
-										disabled={cartItem.quoteId}
-									/>
-								)}
-							</Context.Consumer>
+							<input
+								onChange={(e) => context.updateItem(index, 'quantity', e.target.value)} 
+								style={{'width': '50px'}}
+								value={cartItem.quantity}
+								disabled={cartItem.quoteId}
+							/>
 						</DivItem>
 						<DivItem>
 							<DivRow>
-                                <Context.Consumer>
-									{({ userInfo }) => (
-										<>
-                                        {userInfo.isAirlineUser &&
-                                            <>
-                                                <Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
-                                            </>
-                                        }
-                                        </>
-									)}
-								</Context.Consumer>
+								{context.userInfo.isAirlineUser &&
+									<>
+										<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+										<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
+									</>
+								}
 							</DivRow>
 						</DivItem>
 						<DivItem>
@@ -342,28 +307,20 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 					<DivQuantity>
 						<DivItem>
 							<Label>Item Notes:</Label>
-							<Context.Consumer>
-								{({ updateItem, cart }) => (
-									<DebounceInput
-										placeholder='Type item notes here'
-										minLength={0}
-										debounceTimeout={300}
-										onChange={(e) => updateItem(index, 'notes', e.target.value)} 
-										style={{'width': '300px'}}
-										value={cartItem.itemNotes}
-									/>
-								)}
-							</Context.Consumer>
+							<DebounceInput
+								placeholder='Type item notes here'
+								minLength={0}
+								debounceTimeout={300}
+								onChange={(e) => context.updateItem(index, 'notes', e.target.value)} 
+								style={{'width': '300px'}}
+								value={cartItem.itemNotes}
+							/>
 						</DivItem>
 					</DivQuantity>
 				</DivCol3>
-				<Context.Consumer>
-					{({ removeItem }) => (
-						<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
-							<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-						</DivRemove>
-					)}
-				</Context.Consumer>
+				<DivRemove onClick={()=> context.removeItem(index)} alt='remove-item'>
+					<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+				</DivRemove>
 			</DivCard>
 		)
 	}
