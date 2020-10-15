@@ -235,7 +235,6 @@ export default function SearchResultsPage({history}) {
 	const itemSearchResults = useMemo(() => results.map(result => (
 		<ItemResult
 			key={result.frecno}
-			searchTerm={searchTerm}
 			result={result}
 			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
 			history={history}

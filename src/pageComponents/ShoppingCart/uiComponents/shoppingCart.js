@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useQuery, useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Context from '../../../config/context'
@@ -7,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
+import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlFragments/gqlItemDetail'
+import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 
 const Div = styled.div`
 	display: flex;
@@ -57,53 +60,80 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	const context = useContext(Context)
 
+	const invMastUids = context.cart.map(item => item.frecno)
+
+	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
+		variables: {
+			'items': invMastUids.map(invMastUid => {
+				return {
+					'invMastUid': invMastUid,
+					'quantity': 1
+				}
+			})
+		}
+	})
+
+	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers} = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+		variables:{
+			'invMastUids': invMastUids
+		}
+	})
+
 	useEffect(() => {
 		if (savedCart) {
 			setTimeout(() => setSavedCart(false), 1000)
 		}
 	}, [savedCart])
 
-	const ShoppingCartItems = (
-		<Context.Consumer>
-			{({ cart, itemDetailCache, emptyCart }) => (
-				cart.map((item, index) => {
-					let displayItem = itemDetailCache.find(elem => elem.itemDetails.invMastUid === item.frecno)
-					return (
-						<Draggable key={index} draggableId={String(index)} index={index}>
-							{(provided) => (
-								<div
-									ref={provided.innerRef}
-									{...provided.draggableProps}
-									{...provided.dragHandleProps}
-								>
-									{_.isNil(displayItem) ?
-										<SkeletonItem
-											index={index}
-										/>
-										:
-										<ShoppingCartItem
-											item={item}
-											displayItem={displayItem}
-                                            emptyCart={emptyCart}
-                                            key={index}
-											index={index}
-											showSplitLineModal={showSplitLineModal}
-                                            showFactoryStockModal={showFactoryStockModal}
-											showEditPriceModal={showEditPriceModal}
-											showCustomerPartModal={showCustomerPartModal}
-											handleSetModalData={handleSetModalData}
-											history={history}
-										/>
-									}
-								</div>
-							)}
-						</Draggable>
-					)
-				}
-				)
-			)}
-		</Context.Consumer>
-	)
+	const ShoppingCartItems = context.cart.map((cartItem, index) => {
+
+		const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === cartItem.frecno)
+		const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === cartItem.frecno)
+		const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
+		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.customerPartNumbersBatch?.filter(p => p.invMastUid === cartItem.frecno)
+		return (
+			<Draggable key={index} draggableId={String(index)} index={index}>
+				{(provided) => (
+					<div
+						ref={provided.innerRef}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+					>
+						{itemDetails ?
+							<ShoppingCartItem
+								cartItem={cartItem}
+								itemDetails={itemDetails}
+								priceInfo={itemPrice}
+								availabilityInfo={itemAvailability}
+								customerPartNumbers={itemCustomerPartNumbers}
+								key={index}
+								index={index}
+								showSplitLineModal={showSplitLineModal}
+								showFactoryStockModal={showFactoryStockModal}
+								showEditPriceModal={showEditPriceModal}
+								showCustomerPartModal={showCustomerPartModal}
+								handleSetModalData={handleSetModalData}
+								history={history}
+							/>
+							: <SkeletonItem index={index} />
+						}
+					</div>
+				)}
+			</Draggable>
+		)	
+	})
 
 	function onDragEnd(result) {
 		// if dropped outside the list
@@ -121,43 +151,23 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	return (
 		<>
 			<Div>
-				<Context.Consumer>
-					{({ emptyCart }) => {
-						return (
-							<DivRow>
-								<H3>Shopping Cart</H3>
-								<p onClick={() => emptyCart()}>(empty cart)</p>
-							</DivRow>
-						)
-					}}
-				</Context.Consumer>
 				<DivRow>
-					<Context.Consumer>
-						{({ userInfo }) => {
-							if (!userInfo) {
-								return (
-									<Ashare></Ashare>
-								)
-							} else {
-								return (
-									<DivSave onClick={handleSaveAsShoppingList}>
+					<H3>Shopping Cart</H3>
+					<p onClick={() => context.emptyCart()}>(empty cart)</p>
+				</DivRow>
+				<DivRow>
+						{
+							context.userInfo 
+								?	<DivSave onClick={handleSaveAsShoppingList}>
 										<Ashare>Save As Shopping List</Ashare>
 										<FontAwesomeIcon icon="list" color="grey" />
 									</DivSave>
-								)
-							}
-						}}
-					</Context.Consumer>
-					<Context.Consumer>
-						{({ saveCart }) => {
-							return (
-								<DivSave onClick={() => { saveCart(), setSavedCart(true) }}>
-									{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
-									{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
-								</DivSave>
-							)
-						}}
-					</Context.Consumer>
+								: 	<Ashare></Ashare>
+						}
+					<DivSave onClick={() => { context.saveCart(); setSavedCart(true); }}>
+						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
+						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
+					</DivSave>
 					<DivShare>
 						<Ashare>Email Cart</Ashare>
 						<FontAwesomeIcon icon="share" color="grey" />
@@ -176,12 +186,16 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 					)}
 				</Droppable>
 			</DragDropContext>
-			<SaveShoppingListModal
-				open={showShoppingListModal}
-				hide={() => setShowShoppingListModal(false)}
-				items={context.cart}
-				enableAddToExisting
-			/>
+
+			{
+				context.userInfo && <SaveShoppingListModal
+					open={showShoppingListModal}
+					hide={() => setShowShoppingListModal(false)}
+					items={context.cart}
+					enableAddToExisting
+				/>
+			}
+			
 		</>
 	)
 }

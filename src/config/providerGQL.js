@@ -94,113 +94,14 @@ export const SUBMIT_ORDER = gql`
   }
 `
 
-export const ITEM_DETAILS_PAGE_GET_ITEM_BY_ID = gql`
-		query ItemById($itemId: Int){
-				customerPartNumbers(frecno: $itemId){
-					customerPartNumber
-					id
-				}
-				itemDetails(invMastUid: $itemId) {
-						anonPrice
-						assembly
-						availability
-						availabilityMessage
-						brand {
-							id
-							name
-							supplierId
-							logoLink
-					}
-						cBrandId
-						dateCreated
-						dateModified
-						extendedDesc
-						filters
-						hideOnWeb
-						invMastUid
-						itemCode
-						itemDesc
-						listPrice
-						mfgPartNo
-						modelCode
-						p21ItemDesc
-						p21NonWeb
-						popularity
-						preferredSourceLoc
-						relevancy
-						restrictedCustomerCodes
-						rootCategoryUids
-						showPrice
-						supplierId
-						tariff
-						unitSizeMultiple
-						feature {
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								sequence
-								text
-								type
-								id
-							}
-							image {
-								path
-								sequence
-								itemMediaType
-								mediaType
-								mediaId
-							}
-							associatedItems {
-								associatedInvMastUid
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								quantity
-								type
-								id
-							}
-							itemLink {
-								audienceType
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								linkPath
-								linkType
-								modifiedBy
-								sequence
-								thumbnail
-								title
-								id
-							}
-							techSpec {
-								attributeId
-								createDate
-								createdBy
-								invMastUid
-								lastModifiedDate
-								modifiedBy
-								name
-								sequence
-								id
-								value
-							}
-				}
-		}
-`
-
 export const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
       anonPrice
       invMastUid
       itemCode
+      itemCodeUrlSanitized
       itemDesc
-      listPrice
       mfgPartNo
       modelCode
       tariff
@@ -227,8 +128,8 @@ export const GET_ITEMS_BY_ID = gql`
       anonPrice
       invMastUid
       itemCode
+      itemCodeUrlSanitized
       itemDesc
-      listPrice
       mfgPartNo
       modelCode
       tariff
@@ -606,6 +507,7 @@ export const QUERY_STOCK_AVAILABILITY = gql`
         airlineStock(invMastUid: $invMastUid){
             invMastUid
             itemCode
+            itemCodeUrlSanitized
             companyId
             locationId
             locationName

@@ -158,40 +158,12 @@ const P3 = styled.p`
 	font-size: 12px !important;
 `
 
-const GET_UPDATED_CUSTOMER_PART_NUMBERS = gql`
-	query ItemById($itemId: Int){
-		customerPartNumbers(frecno: $itemId){
-			customerPartNumber
-			id
-		}
-	}
-`
+export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 
-export default function ShoppingCartItem({item, displayItem, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
-	const {
-		itemDetails,
-		customerPartNumbers
-	} = displayItem
-	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(item.customerPartNumberId || 0)
-	const itemId = parseInt(item.frecno,10)
+	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
+	const itemId = parseInt(cartItem.frecno,10)
 
 	const context = useContext(Context)
-	useEffect(()=> {
-		if (item.customerPartNumberId !== selectedCustomerPartNumber) {
-			getUpdatedCustomerPartNumbers()
-		}
-	}, [item.customerPartNumberId])
-
-	const [getUpdatedCustomerPartNumbers] = useLazyQuery(GET_UPDATED_CUSTOMER_PART_NUMBERS, {
-		fetchPolicy: 'no-cache',
-		variables: { itemId },
-		onCompleted: result => {
-			if (!_.isNil(result.customerPartNumbers)) {
-				context.updateItemDetailCache('update-customer-numbers', {'frecno': itemId, 'customerPartNumbers': result.customerPartNumbers})
-				setSelectedCustomerPartNumber(item.customerPartNumberId || 0)
-			}
-		}
-	})
 
 	function selectCustomerPartNumber(value){
 		if (value === -1) {
@@ -223,7 +195,7 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		case 'factory-stock':
 			handleSetModalData({
 				modalType: type,
-				name: itemDetails.itemDesc,
+				name: itemDetails?.itemDesc,
 				frecno: itemId
 			})
 			showFactoryStockModal(index)
@@ -231,9 +203,9 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		case 'edit-price':
             handleSetModalData({
                 modalType: type,
-                originalItemPrice: itemDetails.listPrice,
-                itemPrice: _.isNil(context.cart[index].itemUnitPriceOverride) ? itemDetails.listPrice : context.cart[index].itemUnitPriceOverride,
-                airlineCost: item.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
+                originalItemPrice: priceInfo?.unitPrice,
+                itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+                airlineCost: cartItem.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
             })
             showEditPriceModal(index)
 			break
@@ -243,137 +215,111 @@ export default function ShoppingCartItem({item, displayItem, index, showSplitLin
 		}
 	}
 
-	let Content
-	if(_.isNil(itemDetails)) {
-		Content = (<p>{item.freqno}</p>)
-	} else {
-        let imagePath = getThumbnailImagePath(itemDetails);
-
-		let CustomerPartOptions = customerPartNumbers.map(elem => {
-			return(<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>)
-		})
-		Content = (
-			<DivCard>
-				<DivMove>
-					<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
-				</DivMove>
-				<DivCol1>
-					<Img src={imagePath} />
-				</DivCol1>
-				<DivCol2>
-					<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
-					<CopyToClipboard text={itemDetails.itemDesc}>
-						<P2>Copy Item Desc</P2>
-					</CopyToClipboard>
-					<TextRow>
-						<CopyToClipboard text={itemDetails.itemCode}>
-							<P2>{itemDetails.itemCode}</P2>
-						</CopyToClipboard> <P2>|</P2>
-						<CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
-							<P2>AHC{itemDetails.invMastUid}</P2>
+	return <DivContainer>
+		{
+			!itemDetails
+				? <p>{cartItem.frecno}</p>
+				: <DivCard>
+					<DivMove>
+						<FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+					</DivMove>
+					<DivCol1>
+						<Img src={getThumbnailImagePath(itemDetails)} />
+					</DivCol1>
+					<DivCol2>
+						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+						<CopyToClipboard text={itemDetails.itemDesc}>
+							<P2>Copy Item Desc</P2>
 						</CopyToClipboard>
-					</TextRow>
-					<TextRow>
-						<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
-							<option value="0">Customer Part#</option>
-							{CustomerPartOptions}
-							<option value="-1">Create Part#</option>
-						</select>
-						{ selectedCustomerPartNumber != 0 &&
-							<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
-								<FontAwesomeIcon icon="times" color="grey" />
-							</div>
-						}
-					</TextRow>
-					<DivRow>
-						<Context.Consumer>
-							{({ cart }) => (
-								<P3>Availability: {itemDetails.availability} {(cart[index].quantity > itemDetails.availability)&& '| '  + itemDetails.availabilityMessage }</P3>
-							)}
-						</Context.Consumer>
-					</DivRow>
-					<DivRow>
-						<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
-						<DivSplitLine>|</DivSplitLine>
-						<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
-						<DivSplitLine>|</DivSplitLine>
-						<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
-					</DivRow>
-				</DivCol2>
-				<DivCol3>
-					<DivQuantity>
-						<DivItem>
-							<Label>Qty:</Label>
-							<Context.Consumer>
-								{({ updateItem, cart }) => (
-									<input
-										onChange={(e) => updateItem(index, 'quantity', e.target.value)} 
-										style={{'width': '50px'}}
-										value={cart[index].quantity}
-										disabled={!_.isNil(cart[index].quoteId)}
-									/>
-								)}
-							</Context.Consumer>
-						</DivItem>
-						<DivItem>
-							<DivRow>
-                                <Context.Consumer>
-									{({ cart, userInfo }) => (
+						<TextRow>
+							<CopyToClipboard text={itemDetails.itemCode}>
+								<P2>{itemDetails.itemCode}</P2>
+							</CopyToClipboard> <P2>|</P2>
+							<CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
+								<P2>AHC{itemDetails.invMastUid}</P2>
+							</CopyToClipboard>
+						</TextRow>
+						<TextRow>
+							<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+								<option value="0">Customer Part#</option>
+								{
+									customerPartNumbers?.map(elem => 
+										<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
+									)
+								}
+								<option value="-1">Create Part#</option>
+							</select>
+							{ selectedCustomerPartNumber != 0 &&
+								<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+									<FontAwesomeIcon icon="times" color="grey" />
+								</div>
+							}
+						</TextRow>
+						<DivRow>
+							<P3>
+								Availability: {availabilityInfo?.availability}
+								{
+									cartItem.quantity > availabilityInfo?.availability && (
+										availabilityInfo?.leadTimeDays 
+											? ` | Lead time ${availabilityInfo?.leadTimeDays} days`
+											: ' | Call Airline Hydraulics Co. for lead time'
+									)
+								}
+							</P3>
+						</DivRow>
+						<DivRow>
+							<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
+							<DivSplitLine>|</DivSplitLine>
+							<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
+							<DivSplitLine>|</DivSplitLine>
+							<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
+						</DivRow>
+					</DivCol2>
+					<DivCol3>
+						<DivQuantity>
+							<DivItem>
+								<Label>Qty:</Label>
+								<input
+									onChange={(e) => context.updateItem(index, 'quantity', e.target.value)} 
+									style={{'width': '50px'}}
+									value={cartItem.quantity}
+									disabled={cartItem.quoteId}
+								/>
+							</DivItem>
+							<DivItem>
+								<DivRow>
+									{context.userInfo?.isAirlineUser &&
 										<>
-                                        {userInfo.isAirlineUser &&
-                                            <>
-                                                <Peach>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={itemDetails.listPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-                                                <DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={!_.isNil(cart[index].itemUnitPriceOverride) ? '#328EFC' : 'grey'} /></DivEditPrice>
-                                            </>
-                                        }
-                                        </>
-									)}
-								</Context.Consumer>
-							</DivRow>
-						</DivItem>
-						<DivItem>
-							<Context.Consumer>
-								{({ cart }) => (
-									<DivTotalPrice>
-										<p>{_.isNil(cart[index].itemUnitPriceOverride) ? <NumberFormat value={_.get(itemDetails,'listPrice','0').toFixed(2) * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cart[index].itemUnitPriceOverride * item.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-									</DivTotalPrice>
-								)}
-							</Context.Consumer>
-						</DivItem>
-					</DivQuantity>
-					<DivQuantity>
-						<DivItem>
-							<Label>Item Notes:</Label>
-							<Context.Consumer>
-								{({ updateItem, cart }) => (
-									<DebounceInput
-										placeholder='Type item notes here'
-										minLength={0}
-										debounceTimeout={300}
-										onChange={(e) => updateItem(index, 'notes', e.target.value)} 
-										style={{'width': '300px'}}
-										value={cart[index].itemNotes}
-									/>
-								)}
-							</Context.Consumer>
-						</DivItem>
-					</DivQuantity>
-				</DivCol3>
-				<Context.Consumer>
-					{({ removeItem }) => (
-						<>
-							<DivRemove onClick={()=>removeItem(index)} alt='remove-item'>
-								<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-							</DivRemove>
-						</>
-					)}
-				</Context.Consumer>
-			</DivCard>
-		)
-	}
-	return(
-		<DivContainer>
-			{Content}
-		</DivContainer>
-	)
+											<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
+											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
+										</>
+									}
+								</DivRow>
+							</DivItem>
+							<DivItem>
+								<DivTotalPrice>
+									<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+								</DivTotalPrice>
+							</DivItem>
+						</DivQuantity>
+						<DivQuantity>
+							<DivItem>
+								<Label>Item Notes:</Label>
+								<DebounceInput
+									placeholder='Type item notes here'
+									minLength={0}
+									debounceTimeout={300}
+									onChange={(e) => context.updateItem(index, 'notes', e.target.value)} 
+									style={{'width': '300px'}}
+									value={cartItem.itemNotes}
+								/>
+							</DivItem>
+						</DivQuantity>
+					</DivCol3>
+					<DivRemove onClick={()=> context.removeItem(index)} alt='remove-item'>
+						<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+					</DivRemove>
+				</DivCard>
+		}
+	</DivContainer>
 }

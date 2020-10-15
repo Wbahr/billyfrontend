@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/client'
@@ -7,8 +7,9 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
+import { GET_ITEM_PRICE } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
-import {GET_ITEM_PRICE, ITEM_DETAILS_PAGE_GET_ITEM_BY_ID} from "../../config/providerGQL";
+import { GET_MAIN_ITEM_BY_ID, GET_ACCESSORY_ITEM_DETAILS } from 'config/gqlFragments/gqlItemDetail'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -44,7 +45,7 @@ const DivPurchaseInfo = styled.div`
 	align-items: center;
 	width: 100%;
 	margin: 30px 8px 0 12px;
-	padding: 8px 16px
+	padding: 8px 16px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 `
 
@@ -187,14 +188,13 @@ const IMG = styled.img`
 	opacity: 0.6;
 `
 
-const priceLookupPayload = invMastUid => ({variables: {items: [{invMastUid, quantity: 1}]}})
-
 export default function ItemDetailPage({ history }) {
-	const { addItem, } = useContext(Context)
+	const context = useContext(Context)
 	const { itemId, customerPartNumber } = useParams()
 	const itemIdInt = parseInt(itemId)
 
 	const [item, setItem] = useState(null);
+	const [accessoryItems, setAccessoryItems] = useState([])
 	const [quantity, setQuantity] = useState(1);
 	const [unitPrice, setUnitPrice] = useState(null);
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
@@ -206,12 +206,11 @@ export default function ItemDetailPage({ history }) {
 		setShowAddedToCartModal(false);
 	}
 
-	useQuery(ITEM_DETAILS_PAGE_GET_ITEM_BY_ID, {
+	useQuery(GET_MAIN_ITEM_BY_ID, {
 		variables: { itemId: itemIdInt },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			if (result.itemDetails) {
-				performPriceLookup(priceLookupPayload(result.itemDetails.invMastUid))
 				setCustomerPartNumbers(result.customerPartNumbers)
 				setItem(result.itemDetails)
 			} else {
@@ -220,21 +219,102 @@ export default function ItemDetailPage({ history }) {
 		}
 	})
 
-	const [performPriceLookup] = useLazyQuery(GET_ITEM_PRICE, {
+	//Perform actions when the item is set. Such as price retrieval.
+	useEffect(() => {
+		if(!item) return
+
+		queryItemPrice({
+			variables: {
+				'items': [{
+					'invMastUid': item.invMastUid,
+					'quantity': 1
+				}]
+			}
+		})
+
+		//If there are accessory items attached to this item, query for their details
+		if(item.associatedItems.length){
+			setAccessoryItems(item.associatedItems)
+
+			//Build the price request objects
+			const accessoryItemPriceRequests = item.associatedItems.map(i => {
+				return {
+					'invMastUid': i.associatedInvMastUid,
+					'quantity': 1
+				}
+			})
+
+			queryAccessoryItemPrices({
+				variables: {
+					'items': accessoryItemPriceRequests
+				}
+			})
+
+			queryAccessoryItemDetails({
+				variables: {
+					'invMastUids': item.associatedItems.map(i => i.associatedInvMastUid)
+				}
+			})
+		} else{
+			setAccessoryItems([])
+		}
+		
+	}, [item])
+
+	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
-			if (data.getItemPrices[0]) {
-				setUnitPrice(data.getItemPrices[0].totalPrice)
+			if(data.getItemPrices.length){
+				setUnitPrice(data.getItemPrices[0].unitPrice)
+			} else{
+				setUnitPrice(0)
+			}
+		}
+	})
+
+	const [queryAccessoryItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
+		onCompleted: data => {
+
+			if(accessoryItems.length){
+				const accessoryItemsWithPrice = accessoryItems.map(ai => {
+					const associatedItemPrice = data.getItemPrices.find(priceObj => priceObj.invMastUid === ai.associatedInvMastUid).unitPrice
+
+					return {
+						...ai,
+						unitPrice: associatedItemPrice
+					}
+				})
+
+				setAccessoryItems(accessoryItemsWithPrice)
+			}
+		}
+	})
+
+	const [queryAccessoryItemDetails] = useLazyQuery(GET_ACCESSORY_ITEM_DETAILS, {
+		onCompleted: data => {
+			const itemsWithDetails = data.itemDetailsBatch
+
+			if(accessoryItems.length){
+				const accessoryItemsWithDetails = accessoryItems.map(ai => {
+					const accessoryItemDetails = itemsWithDetails.find(detailObj => detailObj.invMastUid === ai.associatedInvMastUid)
+
+					return  {
+						...ai,
+						details: accessoryItemDetails
+					}
+				})
+
+				setAccessoryItems(accessoryItemsWithDetails)
 			}
 		}
 	})
 	
 	const handleAddToCart = () => {
-		addItem({
+		context.addItem({
 			frecno: itemIdInt,
 			quantity: parseInt(quantity, 10),
-			itemNotes: '',
+			itemNotes: null,
 			itemUnitPriceOverride: null,
-			customerPartNumberId: selectedCustomerPartNumber
+			customerPartNumberId: selectedCustomerPartNumber || null
 		})
 		setShowAddedToCartModal(true)
 		setQuantity(1)
@@ -252,23 +332,25 @@ export default function ItemDetailPage({ history }) {
 		return (<p>No item found</p>)
 	} else {
 		const FeatureItems = item.feature.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-		
+
 		const TechSpecItems = item.techSpec.map((elem, idx) => (
 			<TR key={idx}>
 				<TD>{elem.name}</TD>
 				<TD>{elem.value}</TD>
 			</TR>
 		))
-		
+
 		const ItemLinks = item.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-		
-		const AccessoryItems = item.associatedItems.map((elem, idx) => (
-			<AccessoryItem
-				key={idx}
-				associatedItemId={elem.associatedInvMastUid}
-				history={history}
-			/>
-		))
+
+		const AccessoryItems = accessoryItems.map((ai, idx) => {
+			return (
+				<AccessoryItem
+					key={idx}
+					item={ai}
+					history={history}
+				/>
+			)
+		})
 
 		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
 			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
@@ -376,13 +458,16 @@ export default function ItemDetailPage({ history }) {
 					onClose={handleAddedToCart}
 					timeout={900}
 				/>
+
+				{
+					context.userInfo && <AddToShoppingListModal
+						open={showAddListModal}
+						hide={() => setShowAddListModal(false)}
+						item={item}
+						customerPartNumberId={selectedCustomerPartNumber}
+					/>
+				}
 				
-				<AddToShoppingListModal
-					open={showAddListModal}
-					hide={() => setShowAddListModal(false)}
-					item={item}
-					customerPartNumberId={selectedCustomerPartNumber}
-				/>
 			
 			</ItemDetailPageContainer>
 		)
