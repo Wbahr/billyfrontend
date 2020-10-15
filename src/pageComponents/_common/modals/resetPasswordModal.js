@@ -56,7 +56,7 @@ export default function ResetPasswordModal({open, hideModal}) {
 	}
   
 	return(
-		<Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+		<Popup open={open} onClose={()=>handleClose()} closeOnDocumentClick contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
 			<DivContainer>
 				<p>Reset Password</p>
 				{message && <p>{message}</p>}

@@ -45,7 +45,7 @@ export default function ProcessingOrderModal() {
 	}, 50)
 
 	return(
-		<Popup open={true} closeOnDocumentClick={false} contentStyle={{'max-width': '350px', 'border-radius': '5px'}}>
+		<Popup open={true} closeOnDocumentClick={false} contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
 			<Container>
 				<LoadingRing
 					complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}

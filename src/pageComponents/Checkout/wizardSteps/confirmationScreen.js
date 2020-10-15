@@ -103,7 +103,8 @@ export default function ConfirmationScreen(props) {
 	})
 	
 	const handleCheckoutSubmit = () => {
-		setSubmitting(true)
+        setSubmitting(true)
+        console.log("props", props)
 		submitOrder({
 			variables: {
 				order: {

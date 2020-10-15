@@ -1,5 +1,7 @@
 import _ from 'lodash'
 
+//These functions drive the dropdown lists on the ship to page
+
 export default function formatCheckoutDropdownData(data){
 	let mutatedShipTos = formatShipToData(data.shipToAddresses)
 	let mutatedCarriers = formatCarriers(data.carriers)
@@ -34,11 +36,11 @@ function formatCarriers(data){
 		for(let i=0;data.length > i;i++){
 			let element = data[i]
 			mutatedData.push({
-				'label': element.shippingMethodName,
-				'value': element.shippingMethodUid
+				'label': element.name,
+				'value': String(element.id) /* P21 carrier ID is a string */
 			})
 		}
-	}
+    }
 	return mutatedData
 }
 
