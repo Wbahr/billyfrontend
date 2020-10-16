@@ -78,7 +78,7 @@ const DivNavigation = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-	const {history, values: {schedule, shipto, billing}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
+	const {history, values: {schedule, shipto, billing: {sameAsShipping, ...billing}}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
 	const {userInfo, emptyCart} = useContext(Context)
 	const [submitting, setSubmitting] = useState(false)
 	const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
@@ -108,7 +108,7 @@ export default function ConfirmationScreen(props) {
 			variables: {
 				order: {
                     ...props.values,
-                    billing: {...props.values.billing, sameAsShipping: undefined /*Exclude this field, it is UI-only*/},
+                    billing: {...billing},
 					paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
 					paymentMethodId: paymentInfo.paymentMethodId
 				}
