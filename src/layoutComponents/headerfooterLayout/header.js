@@ -274,30 +274,6 @@ export default function HeaderComponent({history}) {
 		</Row>
 	)
 	
-	const TabsSection = () => (
-		<LinkContainer>
-			{tabComponents.slice(0, visibleTabCount)}
-			
-			{visibleTabCount < tabDeclaration.length && (
-				<Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
-					<FontAwesomeIcon icon="ellipsis-h"/>
-				</Button>
-			)}
-			
-			<Menu
-				MenuListProps={{style: {backgroundColor: '#535353'}}}
-				anchorEl={overflowMenu}
-				open={!!overflowMenu}
-				onClose={() => setOverflowMenu(null)}
-			>
-				{tabDeclaration
-					.slice(visibleTabCount, tabDeclaration.length)
-					.map(toMenuItem)
-				}
-			</Menu>
-		</LinkContainer>
-	)
-	
 	return (
 		<Nav>
 			{context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
@@ -322,7 +298,28 @@ export default function HeaderComponent({history}) {
 						<img src={AirlineLogo} width="135px" />
 					</Link>
 					
-					<TabsSection/>
+					
+					<LinkContainer>
+						{tabComponents.slice(0, visibleTabCount)}
+						
+						{visibleTabCount < tabDeclaration.length && (
+							<Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
+								<FontAwesomeIcon icon="ellipsis-h"/>
+							</Button>
+						)}
+						
+						<Menu
+							MenuListProps={{style: {backgroundColor: '#535353'}}}
+							anchorEl={overflowMenu}
+							open={!!overflowMenu}
+							onClose={() => setOverflowMenu(null)}
+						>
+							{tabDeclaration
+								.slice(visibleTabCount, tabDeclaration.length)
+								.map(toMenuItem)
+							}
+						</Menu>
+					</LinkContainer>
 					
 					<SearchBar/>
 				</NavContainer>
