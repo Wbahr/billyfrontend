@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
-import { NavigationItemContainer, DropdownMenu, DropdownMenuItem } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
+import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString } from "../../pageComponents/_common/helpers/generalHelperFunctions";
 import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
@@ -159,14 +159,13 @@ export default function HeaderComponent({history}) {
 	
 	useQuery(GET_CATEGORY_SEARCH, {
 		onCompleted: data => {
-			console.log('GET_CATEGORY_SEARCH', data)
 			setCategories(data.getAllParentCategories)
 		}
 	})
 	
 	const calculateTabs = () => {
 		const containerRight = tabContainerRef.current && tabContainerRef.current.getBoundingClientRect().right
-		const widthOfTheComponentsToTheRightOfTheTabs = context.userInfo?.isAirlineUser ? 395 : 350
+		const widthOfTheComponentsToTheRightOfTheTabs = 395
 		const count = tabRefs.current.reduce((count, tabRight) => {
 			if (tabRight <= (containerRight - widthOfTheComponentsToTheRightOfTheTabs)) {
 				count += 1
@@ -188,7 +187,7 @@ export default function HeaderComponent({history}) {
 	
 	const toMenu = ({label, to, subItems}, idx) => (
 		<NavigationItemContainer to={to} text={label} key={label} ref={setTabRef(idx)}>
-			<DropdownMenu style={{top: '100%'}}>
+			<DropdownMenu>
 				{subItems.map(toMenuItem)}
 			</DropdownMenu>
 		</NavigationItemContainer>
@@ -215,7 +214,7 @@ export default function HeaderComponent({history}) {
 				<P id="myAccount">My Account</P>
 			</Link>
 			
-			<DropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
+			<MyAccountDropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
 				<DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
 				<DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
 				<DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
@@ -227,7 +226,7 @@ export default function HeaderComponent({history}) {
 				<DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
 				<DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
 				<DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
-			</DropdownMenu>
+			</MyAccountDropdownMenu>
 		</div>
 	)
 	
@@ -307,7 +306,7 @@ export default function HeaderComponent({history}) {
 				<NavContainer>
 					<UserNameSection {...context}/>
 					
-					<Row>
+					<Row style={{padding: '5px 0'}}>
 						<Row>
 							<FontAwesomeIcon icon="phone-alt" color="white" />
 							<Aphone href="tel:+18009997378">800-999-7378</Aphone>

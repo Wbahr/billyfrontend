@@ -81,13 +81,13 @@ const DropdownLink = styled.div`
 
 export const NavigationItemContainer = React.forwardRef(({children, to, text}, ref) => (
 	<NavigationItemContainerElement ref={ref}>
-      <Link to={to} className="nav-link">{text}
-        {!!children?.props?.children?.length && (
-          <span style={{position: 'absolute', right: '0.25rem'}}>
-            <FontAwesomeIcon icon='caret-down' color="black" />
-          </span>
-        )}
-      </Link>
+    <Link to={to} className="nav-link">{text}
+      {!!children?.props?.children?.length && (
+        <span style={{position: 'absolute', right: '0.25rem'}}>
+          <FontAwesomeIcon icon='caret-down' color="black" />
+        </span>
+      )}
+    </Link>
 		{children}
 	</NavigationItemContainerElement>
 ))
@@ -111,11 +111,17 @@ export const NavigationItemContainer = React.forwardRef(({children, to, text}, r
 //     }
 // }
 
-export function DropdownMenu({children, className}) {
-    return <DropdownElement className={'nav-dropdown ' + className}>
-        {children}
-    </DropdownElement>
-}
+export const MyAccountDropdownMenu = ({children, className}) => (
+	<DropdownElement className={'nav-dropdown ' + className}>
+		{children}
+	</DropdownElement>
+)
+
+export const DropdownMenu = ({children, className}) => (
+  <DropdownElement className={'nav-dropdown ' + className} style={{top: '100%'}}>
+    {children}
+  </DropdownElement>
+)
 // DropdownMenu.propTypes = {
 //     children: function (props, propName, componentName){
 //         const prop = props[propName]
