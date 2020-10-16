@@ -205,7 +205,6 @@ export default function HeaderComponent({history}) {
 	
 	const MyAccountDropdown = () => (
 		<div
-			style={{height: '100%'}}
 			id="myAccount"
 			onMouseEnter={() => setShowMyAccountDropdown(true)}
 			onMouseLeave={() => setShowMyAccountDropdown(false)}
