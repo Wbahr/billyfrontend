@@ -328,7 +328,7 @@ export default function HeaderComponent({history}) {
 	);
 }
 
-function UserNameSection({userInfo, impersonatedCompanyInfo}) {
+function UserNameSection({userInfo, impersonatedCompanyInfo, cancelImpersonation}) {
 	if (userInfo && !impersonatedCompanyInfo) {
 		return (
 			<Row style={{flex: 1}}>
@@ -345,7 +345,7 @@ function UserNameSection({userInfo, impersonatedCompanyInfo}) {
 					<FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
 					{impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
 				</PeUser>
-				<DivCancelImpersonation onClick={context.cancelImpersonation}>
+				<DivCancelImpersonation onClick={cancelImpersonation}>
 					<FontAwesomeIcon icon="times" color="white" />
 				</DivCancelImpersonation>
 				<ImpersonationSearch />
