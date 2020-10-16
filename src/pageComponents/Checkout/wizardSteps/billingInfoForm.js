@@ -121,7 +121,6 @@ function BillingInfoForm(props) {
 		<>
 			<div>
 				<input
-					{...field}
 					disabled={!context.userInfo}
 					value="purchase_order"
 					onChange={handleRadioButtonClick}
@@ -133,7 +132,6 @@ function BillingInfoForm(props) {
 			
 			<div>
 				<input
-					{...field}
 					value="credit_card"
 					onChange={handleRadioButtonClick}
 					checked={field.value === 'credit_card'}
@@ -147,19 +145,21 @@ function BillingInfoForm(props) {
 	return (
 		<WrapForm>
 			<FormRow>
-				<label htmlFor="paymentMethod">How would you like to pay?*</label>
+				<label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
 				<Field
 					name="billing.paymentMethod"
 					component={RadioButtons}
 					options={[{label: 'Purchase Order', value: 'purchase_order'}, {label: 'Credit Card', value: 'credit_card'}]}
 					placeholder="Select a Payment Method"
-					isSearchable={false}
+                    isSearchable={false}
+                    value="purchase_order"
 				/>
 			</FormRow>
 			{paymentMethod === 'credit_card' && (
 				<FormRow>
-					<label htmlFor="card_type">New or Saved Card?*</label>
+					<label htmlFor="billing.cardType">New or Saved Card?*</label>
 					<Select
+                        name="billing.cardType"
 						value={newOrSavedCardOptions.find(o => o.value === selectedCard)}
 						setValue={handleCardChange}
 						options={newOrSavedCardOptions}

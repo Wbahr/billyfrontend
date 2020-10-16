@@ -1,18 +1,21 @@
 export const defaultBilling = {
-	paymentMethod: '',
-		purchaseOrder: '',
-		firstName: '',
-		lastName: '',
-		contactId: '',
-		address1: '',
-		address2: '',
-		city: '',
-		stateOrProvince: '',
-		zip: '',
-		country: 'us',
-		phone: '',
-		email: '',
-		cardType: ''
+	paymentMethod: 'purchase_order',
+    purchaseOrder: '',
+    firstName: '',
+    lastName: '',
+    contactId: '',
+    address1: '',
+    address2: '',
+    city: '',
+    stateOrProvince: '',
+    zip: '',
+    country: 'us',
+    phone: '',
+    email: '',
+    cardType: '',
+    companyName: '',
+    savePaymentMethod: 0,
+    sameAsShipping: 0,
 }
 
 export const defaultConfirmationEmail = {
@@ -41,7 +44,8 @@ export const defaultShipTo = {
 	shippingNotes: '',
 	carrierId: '',
 	isCollect: 0,
-	collectNumber: ''
+    collectNumber: '',
+    companyName: '',
 }
 
 export const defaultQuote = {

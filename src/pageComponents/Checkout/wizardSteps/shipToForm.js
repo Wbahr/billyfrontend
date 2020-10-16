@@ -68,8 +68,9 @@ export function ShipToForm(props) {
 	}
 	
 	function handleSavedAddressSelectChange(name, selectedShipTo) {
-		const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
-		const shipto = {
+        const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
+        //This is the object the form binds to
+        const shipto = {
 			...values.shipto,
 			selectedShipTo,
 			country: (shipToAddress?.physCountry || 'us').toLowerCase(),
@@ -81,8 +82,9 @@ export function ShipToForm(props) {
 			zip: shipToAddress?.physPostalCode || '',
 			saveShipTo: 0,
 			isCollect: shipToAddress?.collectNumberUps ? 1 : 0,
-			collectNumber: shipToAddress?.collectNumberUps || ''
-		}
+            collectNumber: shipToAddress?.collectNumberUps || '',
+            carrierId: shipToAddress?.carrierId || ''
+        }
 		setFieldValue('shipto', shipto)
 		shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode)
 	}
@@ -258,7 +260,8 @@ export function ShipToForm(props) {
 				component={SelectField} 
 				options={checkoutDropdownDataLabels.carriers}
 				placeholder="Select a Carrier"
-				label="Carrier*"
+                label="Carrier*"
+                width="500px"
 			/>
 			
 			<FormRow>

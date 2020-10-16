@@ -642,17 +642,13 @@ export const GET_CHECKOUT_DATA = gql`
         physPostalCode
         physCountry
         collectNumberUps
+        carrierId
       }
-      carriers{
-        freightMultiplier
-        noAutoAllocation
-        otherShippingMethodFlag
-        shippingMethodName
-        shippingMethodUid
-        shippingMethodValue
-        showInListFlag
+      carriers {
+        id
+        name
       }
-      contacts{
+      contacts {
         id
         firstName
         lastName
@@ -660,7 +656,7 @@ export const GET_CHECKOUT_DATA = gql`
         email
       }
       termsDescription
-      customerPhysicalAddress{
+      customerPhysicalAddress {
         id
         name
         companyName
