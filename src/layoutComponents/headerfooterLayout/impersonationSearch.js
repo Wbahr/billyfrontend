@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../config/context'
 import DebounceInput from 'react-debounce-input'
 import { useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import { IMPERSONATION_SEARCH } from 'config/providerGQL'
 
 const Container = styled.div`
   display: flex;
+  margin: 0 10px;
 `
 
 const Div = styled.div`
@@ -45,14 +45,13 @@ const DivResults = styled.div`
 `
 
 const DebounceInputStyle = {
-	'width': '225px',
-	'height': '25px',
-	'border': 'none',
-	'backgroundColor': 'white',
-	'fontSize': '11px',
-	'marginLeft': '20px',
-	'padding': '4px 16px',
-	'borderRadius': '30px 0 0 30px'
+	width: '225px',
+	height: '25px',
+	border: 'none',
+	backgroundColor: 'white',
+	fontSize: '11px',
+	padding: '4px 16px',
+	borderRadius: '30px 0 0 30px'
 }
 
 export default function ImpersonationSearchComponent() {
@@ -74,30 +73,33 @@ export default function ImpersonationSearchComponent() {
 	}
 
 	function handleBlur() {
-		setTimeout(() => {setSearchResult([]), setImpersonationTerm('')}, 200)
+		setTimeout(() => {
+			setSearchResult([])
+			setImpersonationTerm('')
+		}, 200)
 	}
 
 	useEffect(() => {
 		if (impersonationTerm.length > 0) {
-			impersonationSearch({variables: {'searchString': impersonationTerm}})
+			impersonationSearch({variables: {searchString: impersonationTerm}})
 		} else {
 			setSearchResult([])
 		}
 	},[impersonationTerm])
 
-	let results = searchResult.map(result => {
-		return(
-			<div key={result.id} onClick={()=>{context.startImpersonation(result.id)}}>{`${result.name} - ${result.customerIdP21}`}</div>
-		)
-	})
+	const results = searchResult.map(result => (
+		<div key={result.id} onClick={() => context.startImpersonation(result.id)}>{result.name} - {result.customerIdP21}</div>
+	))
   
-	let searchResults = (
+	const searchResults = (
 		<DivResults>
 			{results}
 		</DivResults>
 	)
 
-	return(
+	const handleKeyDown = (e) => e.key === 'Enter' && handleEnterPress()
+	
+	return (
 		<Container>
 			<DebounceInput
 				placeholder='Search by Customer Name or #'
@@ -106,10 +108,10 @@ export default function ImpersonationSearchComponent() {
 				onChange={(e) => setImpersonationTerm(e.target.value)} 
 				style={DebounceInputStyle}
 				value={impersonationTerm}
-				onKeyDown={(e)=>{e.key === 'Enter' ? handleEnterPress() : null}}
-				onBlur={()=>{handleBlur()}}
+				onKeyDown={handleKeyDown}
+				onBlur={handleBlur}
 			/>
-			<Div onClick={()=>context.startImpersonation(impersonationTerm)}>
+			<Div onClick={() => context.startImpersonation(impersonationTerm)}>
 				<FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
 			</Div>
 			{searchResult.length > 0 && searchResults}
