@@ -78,7 +78,7 @@ const DivNavigation = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-	const {history, values: {schedule, shipto, billing}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
+	const {history, values: {schedule, shipto,  billing}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
 	const {userInfo, emptyCart} = useContext(Context)
 	const [submitting, setSubmitting] = useState(false)
 	const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
