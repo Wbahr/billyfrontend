@@ -155,7 +155,7 @@ export default function AccessoryItem({ itemDetails, price, availability, histor
 	function handleAddToCart() {
 		if (quantity > 0){
       context.addItem({
-        frecno: itemDetails.invMastUid,
+        frecno: itemDetails?.invMastUid,
         quantity: quantity,
         itemNotes: null,
         itemUnitPriceOverride: null,
@@ -175,13 +175,13 @@ export default function AccessoryItem({ itemDetails, price, availability, histor
           <Img 
             src={imagePath} 
             alt={itemDetails.itemCode}
-            onClick={()=>{history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}/>
+            onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemCode}</PpartTitle>
+          <PpartTitle onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}>{itemDetails.itemCode}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{itemDetails.invMastUid}</PpartAvailability>
+          <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
         </DivPartNumberRow>
         <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
           {availability 

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const FRAGMENT_ITEM_DETAIL = gql`
+export const FRAGMENT_ITEM_DETAIL = gql`
     fragment ItemDetails on ItemGraphType {
         anonPrice
         assembly
@@ -32,7 +32,7 @@ const FRAGMENT_ITEM_DETAIL = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_BRANDS = gql`
+export const FRAGMENT_ITEM_DETAIL_BRANDS = gql`
     fragment Brands on ItemGraphType {
         brand {
             id
@@ -43,7 +43,7 @@ const FRAGMENT_ITEM_DETAIL_BRANDS = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_FEATURES = gql`
+export const FRAGMENT_ITEM_DETAIL_FEATURES = gql`
     fragment Features on ItemGraphType {
         feature {
             createDate
@@ -59,7 +59,7 @@ const FRAGMENT_ITEM_DETAIL_FEATURES = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_MEDIA = gql`
+export const FRAGMENT_ITEM_DETAIL_MEDIA = gql`
     fragment Media on ItemGraphType {
         image {
             path
@@ -71,7 +71,7 @@ const FRAGMENT_ITEM_DETAIL_MEDIA = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS = gql`
+export const FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS = gql`
     fragment AssociatedItems on ItemGraphType{
         associatedItems {
             associatedInvMastUid
@@ -87,7 +87,7 @@ const FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
+export const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
     fragment ItemLinks on ItemGraphType {
         itemLink {
             audienceType
@@ -106,7 +106,7 @@ const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
     }
 `
 
-const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
+export const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
     fragment TechSpecs on ItemGraphType {
         techSpec {
             attributeId
@@ -123,57 +123,18 @@ const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
     }
 `
 
-export const GET_MAIN_ITEM_BY_ID = gql`
-	query ItemById($itemId: Int) {
-		customerPartNumbers(frecno: $itemId){
-			customerPartNumber
-			id
-		}
-		itemDetails(invMastUid: $itemId) {
-			...ItemDetails
-			...Brands
-			...Features
-			...Media
-			...AssociatedItems
-			...ItemLinks
-			...TechSpecs
-		}
-	}
-	${FRAGMENT_ITEM_DETAIL}
-	${FRAGMENT_ITEM_DETAIL_BRANDS}
-	${FRAGMENT_ITEM_DETAIL_FEATURES}
-	${FRAGMENT_ITEM_DETAIL_MEDIA}
-	${FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS}
-	${FRAGMENT_ITEM_DETAIL_ITEM_LINKS}
-	${FRAGMENT_ITEM_DETAIL_TECH_SPECS}
-`
-
-export const GET_ACCESSORY_ITEM_DETAILS = gql`
-	query GetAccessoryItems($invMastUids: [Int]){
-		itemDetailsBatch(invMastUids: $invMastUids){
-			...ItemDetails
-			...Media
-		}
-	}
-	${FRAGMENT_ITEM_DETAIL}
-	${FRAGMENT_ITEM_DETAIL_MEDIA}
-`
-
-export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
-    query GetShoppingCartItemsDetails($invMastUids: [Int]){
-        itemDetailsBatch(invMastUids: $invMastUids){
-            ...ItemDetails
-        }
+export const FRAGMENT_ITEM_AVAILABILITY = gql`
+    fragment ItemAvailability on ItemAvailability {
+        invMastUid
+        availability
+        leadTimeDays
     }
-    ${FRAGMENT_ITEM_DETAIL}
 `
 
-export const GET_ITEM_CUSTOMER_PART_NUMBERS = gql`
-    query GetCustomerPartNumbers($invMastUids: [Int]){
-        customerPartNumbersBatch(invMastUids: $invMastUids){
-            invMastUid
-			customerPartNumber
-			id
-		}
+export const FRAGMENT_ITEM_CUSTOMER_PART_NUMBER = gql`
+    fragment ItemCustomerPartNumber on InvXRef {
+        id
+        invMastUid
+        customerPartNumber
     }
 `

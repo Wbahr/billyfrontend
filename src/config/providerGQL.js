@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import { FRAGMENT_ITEM_AVAILABILITY } from 'config/gqlFragments/gqlItemFragments'
 
 export const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){
@@ -389,11 +390,10 @@ export const GET_ITEM_PRICE = gql`
 export const GET_ITEM_AVAILABILITY = gql`
   query GetItemAvailability($invMastUids: [Int]){
     itemAvailability(invMastUids: $invMastUids) {
-      invMastUid
-      availability
-      leadTimeDays
+      ...ItemAvailability
     }
   }
+  ${FRAGMENT_ITEM_AVAILABILITY}
 `
 
 export const GET_SHOPPING_LISTS = gql`

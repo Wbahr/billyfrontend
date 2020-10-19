@@ -9,7 +9,7 @@ import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
 import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
-import { GET_MAIN_ITEM_BY_ID, GET_ACCESSORY_ITEM_DETAILS, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlFragments/gqlItemDetail'
+import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -191,12 +191,10 @@ const IMG = styled.img`
 export default function ItemDetailPage({ history }) {
 	const context = useContext(Context)
 	const { itemId, customerPartNumber } = useParams()
-	const itemIdInt = parseInt(itemId)
-
+	const invMastUid = parseInt(itemId)
 	const [accessoryItems, setAccessoryItems] = useState([])
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
-	const [accessoryItemDetails, setAccessoryItemDetails] = useState([])
-	const [accessoryItemAvailability, setAccessoryItemAvailability] = useState([])
+	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
 	const [quantity, setQuantity] = useState(1);
 	const [unitPrice, setUnitPrice] = useState(null);
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
@@ -207,12 +205,11 @@ export default function ItemDetailPage({ history }) {
 		setShowAddedToCartModal(false);
 	}
 
-	const {loading: loadingItemInfo, error: errorItemInfo, data: itemInfo} = useQuery(GET_MAIN_ITEM_BY_ID, {
-		variables: { itemId: itemIdInt },
+	const {loading: loadingItemInfo, error: errorItemInfo, data: itemInfo} = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
+		variables: { invMastUid: invMastUid },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
 			const details = result.itemDetails
-
 			queryItemPrice({
 				variables: {
 					'items': [{
@@ -240,13 +237,7 @@ export default function ItemDetailPage({ history }) {
 					}
 				})
 
-				queryAccessoryItemDetails({
-					variables: {
-						'invMastUids': details.associatedItems.map(i => i.associatedInvMastUid)
-					}
-				})
-
-				queryAccessoryItemAvailability({
+				queryAccessoryItemsInfo({
 					variables: {
 						'invMastUids': details.associatedItems.map(i => i.associatedInvMastUid)
 					}
@@ -259,6 +250,7 @@ export default function ItemDetailPage({ history }) {
 
 	const itemDetails = itemInfo?.itemDetails
 	const customerPartNumbers = itemInfo?.customerPartNumbers
+	const itemAvailability = itemInfo?.itemAvailabilitySingular
 
 	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
@@ -276,15 +268,9 @@ export default function ItemDetailPage({ history }) {
 		}
 	})
 
-	const [queryAccessoryItemDetails] = useLazyQuery(GET_ACCESSORY_ITEM_DETAILS, {
-		onCompleted: data => {
-			setAccessoryItemDetails(data.itemDetailsBatch)
-		}
-	})
-
-	const[queryAccessoryItemAvailability] = useLazyQuery(GET_ITEM_AVAILABILITY, {
-		onCompleted: data => {
-			setAccessoryItemAvailability(data.itemAvailability)
+	const [queryAccessoryItemsInfo] = useLazyQuery(GET_ACCESSORY_ITEMS_INFO, {
+		onCompleted: ({itemAvailability, itemDetailsBatch}) => {
+			setAccessoryItemsInfo({itemAvailability, itemDetailsBatch})
 		}
 	})
 	
@@ -306,13 +292,12 @@ export default function ItemDetailPage({ history }) {
 		}
 	}
 
-	if (loadingItemInfo) {
+	if (!itemDetails) {
 		return (<Loader />)
 	} else if (!itemDetails.invMastUid) {
 		return (<p>No item found</p>)
 	} else {
 		const FeatureItems = itemDetails.feature.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-
 		const TechSpecItems = itemDetails.techSpec.map((elem, idx) => (
 			<TR key={idx}>
 				<TD>{elem.name}</TD>
@@ -321,12 +306,11 @@ export default function ItemDetailPage({ history }) {
 		))
 
 		const ItemLinks = itemDetails.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-
 		const AccessoryItems = accessoryItems.map((ai, idx) => {
 
-			const details = accessoryItemDetails.find(d => d.invMastUid === ai.associatedInvMastUid)
+			const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
+			const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
 			const price = accessoryItemPrices.find(p => p.invMastUid === ai.associatedInvMastUid)
-			const availability = accessoryItemAvailability.find(a => a.invMastUid === ai.associatedInvMastUid)
 
 			return (
 				<AccessoryItem
@@ -360,7 +344,7 @@ export default function ItemDetailPage({ history }) {
 							<P> /each</P>
 						</Row>
 						
-						{itemDetails.availability === 0 ? <Pbold>{itemDetails.availabilityMessage}</Pbold> : <Pbold>{`Available: ${itemDetails.availability}`}</Pbold>}
+						{itemAvailability.availability === 0 ? <Pbold>{itemAvailability.availability}</Pbold> : <Pbold>{`Available: ${itemAvailability.availability}`}</Pbold>}
 						
 						<DivPurchaseInfoButtons>
 							<RowCentered>
@@ -384,10 +368,10 @@ export default function ItemDetailPage({ history }) {
 					
 					<Row>
 						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
-						{itemDetails.availability === 0 ? (
-							<Pbold>{itemDetails.availabilityMessage}</Pbold>
+						{itemAvailability.availability === 0 ? (
+							<Pbold>{`Lead time ${itemAvailability.leadTimeDays} days`}</Pbold>
 						) : (
-							<Pbold style={{margin: 'auto 10px'}}>{`Available: ${itemDetails.availability}`}</Pbold>
+							<Pbold style={{margin: 'auto 10px'}}>{`Available: ${itemAvailability.availability}`}</Pbold>
 						)}
 					</Row>
 					
