@@ -80,7 +80,7 @@ const P2 = styled.p`
   color: grey;
   font-size: 12px !important;
 `
-
+//TODO rename this; it has the same name as the component in scheduleLine.js
 export default function ShippingScheduleItem({item}) {
 	const itemId = parseInt(item.frecno,10)
 	const context = useContext(Context)

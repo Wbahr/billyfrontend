@@ -13,3 +13,4 @@ package-lock.json
 src/.DS_Store
 src/uiComponents/.DS_Store
 src/uiComponents/Brands/.DS_Store
+.vscode/

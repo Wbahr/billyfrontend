@@ -78,7 +78,7 @@ const DivNavigation = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-	const {history, values: {schedule, shipto,	billing}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
+	const {history, values: {schedule, shipto, billing: {sameAsShipping, ...billing}}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
 	const {userInfo, emptyCart} = useContext(Context)
 	const [submitting, setSubmitting] = useState(false)
 	const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
@@ -103,16 +103,17 @@ export default function ConfirmationScreen(props) {
 	})
 	
 	const handleCheckoutSubmit = () => {
-		setSubmitting(true)
+        setSubmitting(true);
 		submitOrder({
 			variables: {
 				order: {
-					...props.values,
+                    ...props.values,
+                    billing: {...billing},
 					paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
 					paymentMethodId: paymentInfo.paymentMethodId
 				}
 			}
-		})
+		});
 	}
 
 	const CartDates = schedule.cartWithDates.map((item, index) => <ShippingScheduleLineDisplay key={index} item={item} index={index}/>)

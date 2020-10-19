@@ -54,12 +54,11 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 			...defaultShipTo,
 			selectedShipTo: !userInfo ? null : -1,
 			firstName: userInfo?.role === 'Impersonator' ? '' : userInfo?.firstName || '',
-			lastName: userInfo?.role === 'Impersonator' ? '' : userInfo?.lastName || ''
+            lastName: userInfo?.role === 'Impersonator' ? '' : userInfo?.lastName || '',
 		},
 		billing: defaultBilling,
 		confirmationEmail: defaultConfirmationEmail
-	}
-
+    }
 	const FormStepComponent = getFormStepComponent(step)
 	
 	return (
