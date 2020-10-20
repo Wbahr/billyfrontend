@@ -11,6 +11,8 @@ import Context from '../../config/context'
 import {GET_CHECKOUT_DATA} from '../../config/providerGQL'
 import {defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo} from "./helpers";
 import {startOfTomorrow} from 'date-fns'
+import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
 
 const getFormStepComponent = currentStep => {
 	switch (currentStep) {
@@ -42,6 +44,36 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		}
 	})
 
+	const invMastUids = cart?.map(item => item.frecno)
+	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
+		variables: {
+			'items': cart.map(cartItem => {
+				return {
+					'invMastUid': cartItem.frecno,
+					'quantity': cartItem.quantity
+				}
+			})
+		}
+	})
+
+	const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers} = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+		variables:{
+			'invMastUids': invMastUids
+		}
+	})
+
+	const itemInfo = {
+		itemsDetails: itemsDetails?.itemDetailsBatch,
+		itemsPrices: itemsPrices?.getItemPrices,
+		itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
+	}
+
 	const initValues = {
 		contact: defaultContact,
 		schedule: {
@@ -70,7 +102,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		>
 			{formikProps => (
 				<form name="checkoutForm" onSubmit={e => e.preventDefault()}>
-					<FormStepComponent {...{...formikProps, paymentInfo, setPaymentInfo, isStepValid, handleMoveStep,
+					<FormStepComponent {...{...formikProps, ...itemInfo, paymentInfo, setPaymentInfo, isStepValid, handleMoveStep,
 						checkoutDropdownData, checkoutDropdownDataLabels, updateZip, history}}/>
 				</form>
 			)}

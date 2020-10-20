@@ -58,6 +58,15 @@ export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
     ${FRAGMENT_ITEM_DETAIL}
 `
 
+export const GET_CHECKOUT_ITEM_DETAIL = gql`
+    query GetShoppingCartItemsDetails($invMastUids: [Int]){
+        itemDetailsBatch(invMastUids: $invMastUids){
+            ...ItemDetails
+        }
+    }
+    ${FRAGMENT_ITEM_DETAIL}
+`
+
 export const GET_ITEM_CUSTOMER_PART_NUMBERS = gql`
     query GetCustomerPartNumbers($invMastUids: [Int]){
         customerPartNumbersBatch(invMastUids: $invMastUids){

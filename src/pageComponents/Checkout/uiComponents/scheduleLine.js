@@ -4,7 +4,6 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Field } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Context from '../../../config/context'
 import { getThumbnailImagePath} from '../../_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
@@ -87,14 +86,14 @@ const DivSpacer = styled.div`
   margin: 0 8px;
 `
 
-const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
+const getContent = (itemDetails, item, customerPartNumbers, index) => {
 	if (!itemDetails) {
 		return <p>{item.frecno}</p>
 	} else {
         const imagePath = getThumbnailImagePath(itemDetails);
 		const tomorrowDate = new Date()
 		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
-		const selectedCustomerPartNumber = customerPartNumbers.find(elem => elem.id === item.customerPartNumberId)
+		const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
 		
 		return (
 			<DivCard>
@@ -137,14 +136,11 @@ const getContent = ({itemDetails, customerPartNumbers}, item, index) => {
 	}
 }
 
-export default function ShippingScheduleItem({item, index}) {
-	const itemId = parseInt(item.frecno,10)
-	const context = useContext(Context)
-	const displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid === itemId)
+export default function ShippingScheduleItem({item, itemDetails, customerPartNumbers, index}) {
 	
 	return (
 		<DivContainer key={index}>
-			{getContent(displayItem, item, index)}
+			{getContent(itemDetails, item, customerPartNumbers, index)}
 		</DivContainer>
 	)
 }
