@@ -10,11 +10,12 @@ import CategoryFilter from './uiComponents/categoryFilter'
 import LocationsModal from './uiComponents/locationsModal'
 import DetailsModal from './uiComponents/detailsModal'
 import AddedModal from './uiComponents/addedModal'
-import InfiniteScroll from 'react-infinite-scroller'
 import { useLazyQuery } from '@apollo/client'
 import {QUERY_ITEM_SEARCH, GET_ITEMS_BY_ID} from '../../config/providerGQL'
 import SkeletonItem from './uiComponents/skeletonItem'
 import Context from '../../config/context'
+import {buildSearchString, useDidUpdateEffect} from "../_common/helpers/generalHelperFunctions";
+import {Pagination} from '@material-ui/lab'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -37,6 +38,13 @@ const DivSearchResultsContainer = styled.div`
 	flex-wrap: wrap;
 `
 
+const PaginationContainer = styled.div`
+	display: flex;
+	justify-content: center;
+`
+
+const RESULT_SIZE = 24
+
 const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
 	const removeTypeName = ({__typename, ...rest}) => rest
 	return {
@@ -47,26 +55,57 @@ const cleanSearchState = ({searchState: {brands, attributes, parentCategories, c
 	}
 }
 
-export default function SearchResultsPage(props) {
-	const initialSearchState = { brands: [], attributes: [], parentCategories: [], childCategories: [], isSynced: false }
+export default function SearchResultsPage({history}) {
+	
+	const setQueryParam = (fieldName, value) => {
+		const search = queryString.stringify({ ...queryString.parse(location.search), [fieldName]: value })
+		history.push({ pathname: '/search', search })
+	}
+	
+	const [parsedQueryString, setParsedQueryString] = useState(queryString.parse(location.search))
+	
+	useEffect(() => {
+		setParsedQueryString(queryString.parse(location.search))
+	}, [location.search])
+	
+	const { searchTerm, innerSearchTerms, sortType='relevancy', nonweb='false', resultPage,
+		parentCategory, childCategory, brands: selectedBrands, ...selectedAttributes } = parsedQueryString
+	
+	const setInnerSearchTerms = newInnerSearchTerms => {
+		setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
+	}
+	
+	const setSortType = newSortType => setQueryParam('sortType', newSortType)
+	
+	const [searchData, setSearchData] = useState({results: [], totalResults: '--', isSearching: false})
+	const handleSetSearchData = newSearchData => setSearchData({...searchData, ...newSearchData})
+	const {results, totalResults, isSearching} = searchData
+	
+	const initialParentCategories = parentCategory ? [{parentCategoryName: parentCategory, parentCategoryDisplayName: parentCategory, selected: true}] : []
+	const initialChildCategories = childCategory ? [{childCategoryName: childCategory, childCategoryDisplayName: childCategory, selected: true}] : []
+	const initialAttributes = Object.keys(selectedAttributes)
+		.map(attributeName => ({
+			attributeName,
+			features: selectedAttributes[attributeName]
+				.split(',')
+				.map(featureName => ({
+					featureName,
+					selected: true
+				}))
+		}))
+	const initialBrands = selectedBrands ? selectedBrands.split(',').map(b => ({brandName: b, selected: true})) : []
+	const initialSearchState = { brands: initialBrands, attributes: initialAttributes, parentCategories: initialParentCategories,
+		childCategories: initialChildCategories, isSynced: false }
+	
 	const [searchState, setSearchState] = useState(initialSearchState)
 	const { brands, attributes, parentCategories, childCategories, isSynced } = searchState
+	
 	const setBrands = brands => setSearchState({ ...searchState, brands, isSynced: false })
 	const setAttributes = attributes => setSearchState({ ...searchState, attributes, isSynced: false })
 	const setParentCategories = parentCategories => setSearchState({ ...searchState, childCategories: null, parentCategories, isSynced: false })
 	const setChildCategories = childCategories => setSearchState({ ...searchState, childCategories, isSynced: false })
 	
-	const parsedQueryString = queryString.parse(location.search)
-	const [searchTerm, setSearchTerm] = useState(parsedQueryString.searchTerm)
-	const [innerSearchTerms, setInnerSearchTerms] = useState([])
-	const [sortType, setSortType] = useState(parsedQueryString.sortType)
-	const [searchResults, setSearchResults] = useState([])
-	const [totalResults, setTotalResults] = useState('--')
-	const [isSearching, setSearching] = useState(false)
-	const [currentPage, setCurrentPage] = useState(0)
-	const [isReplacingResults, setIsReplacingResults] = useState(false)
-	const [infiniteScrollHasMore, setInfiniteScrollHasMore] = useState(false)
-	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+	const [showAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const [locationsModalItem, setLocationsModalItem] = useState(null)
 	const [detailsModalItem, setDetailsModalItem] = useState(null)
 	const [ottoFindPart, setOttoFindPart] = useState(false)
@@ -75,52 +114,62 @@ export default function SearchResultsPage(props) {
 	
 	const {getItemAvailabilities, getItemPrices} = useContext(Context)
 	
-	useEffect(() => {
-		if (currentPage > 0) loadItems()
-	}, [currentPage])
+	useDidUpdateEffect(() => {
+		if (ottoFindPart) {
+			drift.api?.startInteraction({ interactionId: 126679 })
+		} else {
+			drift.api?.hideChat()
+		}
+	}, [ottoFindPart])
 	
-	useEffect(() => {
+	useDidUpdateEffect(() => {
 		if (!isSynced) {
-			window.scrollTo({ top: 0 })
-			setOttoFindPart(false)
-			setCurrentPage(0)
-			loadItems()
+			const parentCategory = parentCategories.find(cat => cat.selected)?.parentCategoryName
+			const childCategory = childCategories && childCategories.find(cat => cat.selected)?.childCategoryName
+			const selectedBrands = brands.filter(b => b.selected).map(b => b.brandName).join(',')
+			const selectedAttributes = attributes.reduce((accum, {attributeName, features}) => {
+				const selectedFeatures = features.filter(f => f.selected).map(f => f.featureName)
+				if (selectedFeatures.length) accum[attributeName] = selectedFeatures.join(',')
+				return accum
+			}, {})
+			
+			history.replace(buildSearchString({
+				searchTerm,
+				innerSearchTerms,
+				sortType,
+				nonweb,
+				resultPage: 1,
+				parentCategory,
+				childCategory,
+				brands: selectedBrands,
+				...selectedAttributes
+			}))
+			if (resultPage === '1') performItemSearch()
 		}
 	}, [searchState])
 	
-	const searchReplaceResults = () => {
-		setIsReplacingResults(true)
-		window.scrollTo({ top: 0 })
-		setOttoFindPart(false)
-		setCurrentPage(0)
-		loadItems()
-	}
+	useDidUpdateEffect(() => {
+		if (resultPage === '1') {
+			performItemSearch()
+		} else {
+			setQueryParam('resultPage', 1)
+		}
+	}, [searchTerm, innerSearchTerms, sortType])
 	
 	useEffect(() => {
-		searchReplaceResults()
-	}, [innerSearchTerms])
+		performItemSearch()
+	}, [resultPage])
 	
-	useEffect(() => {
-		if (!isSynced) searchReplaceResults()
-	}, [searchState])
-	
-	useEffect(() => {
-		searchReplaceResults()
-		setSearchState(initialSearchState)
-		setInnerSearchTerms([])
-	}, [searchTerm, sortType])
-	
-	function loadItems() {
-		const resultSize = !searchResults.length ? parseInt(parsedQueryString.resultSize) : 24
-		setSearching(true)
+	const performItemSearch = () => {
+		handleSetSearchData({isSearching: true})
 		const payload = {
 			search: {
-				searchTerm: parsedQueryString.searchTerm,
-				innerSearchTerms,
-				searchType: parsedQueryString.nonweb === 'true' ? 'nonweb' :'web',
-				sortType: parsedQueryString.sortType,
-				resultPage: isReplacingResults ? 1 : currentPage+1,
-				resultSize,
+				searchTerm,
+				innerSearchTerms: innerSearchTerms ? innerSearchTerms.split(',') : [],
+				searchType: nonweb === 'true' ? 'nonweb' :'web',
+				sortType,
+				resultPage,
+				resultSize: RESULT_SIZE,
 				searchState: {
 					brands,
 					parentCategories,
@@ -130,22 +179,16 @@ export default function SearchResultsPage(props) {
 			}
 		}
 		setLastSearchPayload(payload)
-		performItemSearch({ variables: payload })
+		search({ variables: payload })
 	}
 	
-	const [performItemSearch, {variables}] = useLazyQuery(QUERY_ITEM_SEARCH, {
+	const [search, {variables}] = useLazyQuery(QUERY_ITEM_SEARCH, {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({itemSearch}) => {
 			if (variables.search === lastSearchPayload.search) {
-				const search = queryString.parse(location.search)
-				if (itemSearch.result.length === parseInt(search.resultSize)) {
-					setInfiniteScrollHasMore(true)
-				}
 				const searchState = cleanSearchState(itemSearch)
 				setSearchState({ ...searchState, isSynced: true })
-				parseQueryResults(itemSearch)
-				setIsReplacingResults(false)
-				setSearching(false)
+				parseSearchResults(itemSearch)
 			}
 		},
 		onError: () => {
@@ -153,20 +196,15 @@ export default function SearchResultsPage(props) {
 		}
 	})
 	
-	function parseQueryResults(itemSearchData) {
-		const invMastUids = itemSearchData.result.map(i => i.frecno)
-		getItemAvailabilities(itemSearchData.result)
-		getItemPrices(itemSearchData.result)
+	function parseSearchResults({result, searchTotalCount}) {
+		const invMastUids = result.map(i => i.frecno)
 		getItemDetails({ variables: { invMastUids } })
+		getItemAvailabilities(result)
+		getItemPrices(result)
 		
-		if (isReplacingResults) {
-			setSearchResults(itemSearchData.result)
-			setOttoFindPart(false)
-		} else {
-			if (searchResults.length >= 48) setOttoFindPart(true)
-			setSearchResults([...searchResults, ...itemSearchData.result])
-		}
-		setTotalResults(itemSearchData.searchTotalCount)
+		if (results.length >= RESULT_SIZE * 2) setOttoFindPart(true)
+		
+		handleSetSearchData({results: result, totalResults: searchTotalCount, isSearching: false})
 	}
 	
 	const [getItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
@@ -181,31 +219,6 @@ export default function SearchResultsPage(props) {
 			setItemDetails([...itemDetails, ...mergedDetails])
 		}
 	})
-
-	useEffect(() => {
-		if (ottoFindPart) {
-			drift.api?.startInteraction({ interactionId: 126679 })
-		} else {
-			drift.api?.hideChat()
-		}
-	}, [ottoFindPart])
-	
-	const setHistoryLocationSearch = (field, fieldName) => {
-		const search = queryString.stringify({ ...queryString.parse(location.search), [fieldName || field]: field })
-		props.history.push({ pathname: '/search', search })
-	}
-	
-	useEffect(() => {
-		setHistoryLocationSearch(searchTerm, 'searchTerm')
-	}, [searchTerm])
-	
-	useEffect(() => {
-		setHistoryLocationSearch(sortType, 'sortType')
-	}, [sortType])
-	
-	useEffect(() => {
-		setSearchTerm(parsedQueryString.searchTerm)
-	}, [parsedQueryString.searchTerm])
 	
 	const handleShowLocationsModal = (invMastUid) => setLocationsModalItem(invMastUid)
 
@@ -215,28 +228,21 @@ export default function SearchResultsPage(props) {
 
 	const handleHideDetailsModal = () => setDetailsModalItem(null)
 	
-	const loadMore = () => {
-		if (searchResults.length < totalResults) {
-			setInfiniteScrollHasMore(false)
-			setCurrentPage(currentPage + 1)
-		}
-	}
-	
 	const handleAddedToCart = () => setShowAddedToCartModal(true)
 	
 	const handleAddedToCartModal = () => setShowAddedToCartModal(false)
 	
-	const itemSearchResults = useMemo(() => searchResults.map(result => (
+	const itemSearchResults = useMemo(() => results.map(result => (
 		<ItemResult
 			key={result.frecno}
 			result={result}
 			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
-			history={props.history}
+			history={history}
 			toggleDetailsModal={handleShowDetailsModal}
 			toggleLocationsModal={handleShowLocationsModal}
 			addedToCart={handleAddedToCart}
 		/>
-	)), [searchResults, itemDetails])
+	)), [results, itemDetails])
 	
 	const handleUpdateAttributes = index => newAttr => {
 		const newAttributes = attributes.slice()
@@ -251,6 +257,16 @@ export default function SearchResultsPage(props) {
 			updateAttribute={handleUpdateAttributes(index)}
 		/>
 	)), [attributes])
+	
+	const PaginationComponent = () => (
+		<PaginationContainer>
+			<Pagination
+				count={Math.ceil(totalResults / RESULT_SIZE)}
+				page={parseInt(resultPage)}
+				onChange={(e, page) => setQueryParam('resultPage', page)}
+			/>
+		</PaginationContainer>
+	)
 	
 	return (
 		<DivContainer>
@@ -267,6 +283,7 @@ export default function SearchResultsPage(props) {
 						totalResults={totalResults}
 						isSearching={isSearching}
 					/>
+					
 					<ResultsSearch
 						sortType={sortType}
 						setSortType={setSortType}
@@ -275,36 +292,18 @@ export default function SearchResultsPage(props) {
 					/>
 				</DivResultSummary>
 				
-				<InfiniteScroll
-					pageStart={0}
-					loadMore={loadMore}
-					hasMore={infiniteScrollHasMore}
-					threshold={3000}
-				>
-					<DivSearchResultsContainer>
-						{!isReplacingResults && itemSearchResults}
-						{(searchResults.length < totalResults || totalResults === '--' || isSearching) &&
-							<>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-								<SkeletonItem/>
-							</>
-						}
-					</DivSearchResultsContainer>
-				</InfiniteScroll>
+				<PaginationComponent/>
+				
+				<DivSearchResultsContainer>
+					{isSearching && <LoadingItems/>}
+					{!isSearching && itemSearchResults}
+				</DivSearchResultsContainer>
+				
+				<PaginationComponent/>
 			</ResultsContainer>
 			
 			<AddedModal
-				open={showShowAddedToCartModal}
+				open={showAddedToCartModal}
 				text="Added to Cart!"
 				onClose={handleAddedToCartModal}
 				timeout={900}
@@ -320,8 +319,25 @@ export default function SearchResultsPage(props) {
 				open={!!detailsModalItem}
 				hideDetailsModal={handleHideDetailsModal}
 				detailsModalItem={detailsModalItem}
-				history={props.history}
+				history={history}
 			/>
 		</DivContainer>
 	)
 }
+
+const LoadingItems = () => (
+	<>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+		<SkeletonItem/>
+	</>
+)

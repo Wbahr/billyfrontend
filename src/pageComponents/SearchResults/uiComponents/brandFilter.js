@@ -27,6 +27,7 @@ const DivOptions = styled.div`
 `
 
 const DivOptionRow = styled.div`
+	cursor: pointer;
 	display: flex; 
 	width: 250px;
 	align-items: center;
@@ -38,6 +39,7 @@ const P = styled.p`
 `
 
 const Label = styled.label`
+	cursor: pointer;
 	margin: 0;
 	color: #535353;
 	font-size: 12px;
@@ -61,23 +63,30 @@ export default function BrandFilter({brands, setBrands}) {
 	const [isOpen, setIsOpen] = useState(true)
 	const [filter, setFilter] = useState('')
 
-	const handleFeatureToggle = idx => ({target: {checked}}) => {
+	const handleFeatureToggle = idx => () => {
 		const newBrands = brands.slice()
-		newBrands[idx].selected = checked
+		newBrands[idx].selected = !brands[idx].selected
 		setBrands(newBrands)
 	}
 	
 	const searchFilter = b => b.brandName !== 'null' && (!filter.length || b.brandName.toLowerCase().startsWith(filter))
 	
+	const hasSelectedBrand = brands.find(f => f.selected)
+	const shouldShowFeatureCount = selected => selected || !hasSelectedBrand
+	
 	const toOption = ({selected, brandName, brandNameDisplay, brandCount}, idx) => (
-		<DivOptionRow key={idx}>
+		<DivOptionRow key={idx} onClick={handleFeatureToggle(idx)}>
 			<input
 				type="checkbox"
 				checked={selected}
-				onChange={handleFeatureToggle(idx)}
+				style={{cursor: 'pointer'}}
 			/>
 			<Label htmlFor={brandName}>{brandNameDisplay}</Label>
-			<PCount>({brandCount})</PCount>
+			{
+				shouldShowFeatureCount(selected)
+					? <PCount>({brandCount})</PCount>
+					: <FontAwesomeIcon icon="plus" color="#535353"/>
+			}
 		</DivOptionRow>
 	)
 	

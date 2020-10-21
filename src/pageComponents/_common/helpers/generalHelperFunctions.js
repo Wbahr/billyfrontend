@@ -1,21 +1,8 @@
-import _ from 'lodash'
-import XLSX from "xlsx";
+import {useRef, useEffect} from 'react'
+import XLSX from "xlsx"
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
-export function emailIsValid (email) {
-	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
-
-export function requiredField(value) {
-	let valid = true
-	if (_.isNil(value)) {
-		valid = false
-	} else if (value.length === 0) {
-		valid = false
-	}
-	return valid
-}
 
 export const getRidOf__typename = ({__typename, editors, items, ...rest}) => (
 	{ ...rest, editors: editors.map(({__typename, ...rest1}) => rest1), items: items.map(({__typename, ...rest2}) => rest2) }
@@ -62,7 +49,7 @@ const ImageTypes = {
 }
 const MediaType_Image = 0;
 
-const getTypeImage = (itemDetails, type) =>  itemDetails?.image?.filter(i => i.itemMediaType === type
+const getTypeImage = (itemDetails, type) => itemDetails?.image?.filter(i => i.itemMediaType === type
 	&& i.mediaType === MediaType_Image && i.sequence === 1)?.[0]
 
 export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Thumbnail)?.path);
@@ -71,16 +58,39 @@ export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDe
 
 export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path);
 
-export const buildSearchString = (searchTerm, sortType='relevancy', searchAsCustomer='false') => {
-	return `/search/?
-	searchTerm=${encodeURIComponent(searchTerm)}
-	&sortType=${encodeURIComponent(sortType)}
-	&nonweb=${encodeURIComponent(searchAsCustomer)}
-	&resultSize=24
-	&resultPage=1`
+export const buildSearchString = ({
+ searchTerm,
+ sortType='relevancy',
+ nonweb='false',
+ innerSearchTerms,
+ parentCategory,
+ childCategory,
+ brands,
+ resultPage='1',
+	...attributes
+}) => {
+	return convertObjectToSearchQuery({searchTerm, sortType, nonweb, innerSearchTerms, parentCategory,
+		childCategory, brands, resultPage, ...attributes})
+}
+
+const convertObjectToSearchQuery = object => {
+	return `/search?${Object.keys(object).filter(key => object[key]).map(key => {
+		return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`
+	}).join('&')}`
 }
 
 export const logout = () => {
 	const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
 	keysToRemove.forEach(key => localStorage.removeItem(key))
+}
+
+export const useDidUpdateEffect = (create, deps) => {
+	const didMountRef = useRef(false);
+	
+	useEffect(() => {
+		if (didMountRef.current)
+			create();
+		else
+			didMountRef.current = true;
+	}, deps);
 }
