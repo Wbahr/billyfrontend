@@ -7,46 +7,6 @@ import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
-const GET_ITEM_BY_ID = gql`
-    query ItemById($associatedItemId: Int){
-        itemDetails(invMastUid: $associatedItemId) {
-            anonPrice
-            assembly
-            availability
-            availabilityMessage
-            cBrandId
-            dateCreated
-            dateModified
-            extendedDesc
-            filters
-            hideOnWeb
-            invMastUid
-            itemCode
-            itemDesc
-            listPrice
-            mfgPartNo
-            modelCode
-            p21ItemDesc
-            p21NonWeb
-            popularity
-            preferredSourceLoc
-            relevancy
-            restrictedCustomerCodes
-            rootCategoryUids
-            showPrice
-            supplierId
-            tariff
-            unitSizeMultiple
-            image {
-              path
-              itemMediaType
-              mediaType
-              sequence
-            }
-        }
-    }
-`
-
 const DivItemResultContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -181,7 +141,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({ item, history }) {
+export default function AccessoryItem({ itemDetails, price, availability, history }) {
   const [quantity, setQuantity] = useState(1)
   
   const context = useContext(Context)
@@ -195,7 +155,7 @@ export default function AccessoryItem({ item, history }) {
 	function handleAddToCart() {
 		if (quantity > 0){
       context.addItem({
-        frecno: item.associatedInvMastUid,
+        frecno: itemDetails?.invMastUid,
         quantity: quantity,
         itemNotes: null,
         itemUnitPriceOverride: null,
@@ -203,8 +163,10 @@ export default function AccessoryItem({ item, history }) {
       })
 		}
   }
+
+  if(!itemDetails) return <></>
     
-  const imagePath = getThumbnailImagePath(item);
+  const imagePath = getThumbnailImagePath(itemDetails);
 
 	return (
     <DivItemResultContainer>
@@ -212,30 +174,34 @@ export default function AccessoryItem({ item, history }) {
         <DivPartImg>
           <Img 
             src={imagePath} 
-            alt={item?.details?.itemCode}
-            onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}/>
+            alt={itemDetails.itemCode}
+            onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}/>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${item?.details?.itemCodeUrlSanitized}/${item?.associatedInvMastUid}`)}}>{item?.details?.itemCode}</PpartTitle>
+          <PpartTitle onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}>{itemDetails.itemCode}</PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{item?.associatedInvMastUid}</PpartAvailability>
+          <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
         </DivPartNumberRow>
         <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
-          {item?.availability 
-              ? <PBlue>{item?.availability.availability}</PBlue> 
-              : <PBlue>{item?.availability === 0 ? item?.availability.availabilityMessage : 'Call Airline for Price'}</PBlue>}
+          {availability 
+              ? <PBlue>{availability.availability 
+                ? availability.availability 
+                : availability.leadTimeDays
+                  ? 'Lead Time ' + availability.leadTimeDays + ' days'
+                  : 'Call airline for lead time' }</PBlue> 
+              : <PBlue>Call Airline for Price</PBlue>}
         </DivPartNumberRow>
         <DivPartNumberRowSpread>
           <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
           {
-            item?.unitPrice 
-              ? <Div><Pprice>${item.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
+            price
+              ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
               : <ACall href="tel:+18009997378">Call for Price</ACall>
           }
         </DivPartNumberRowSpread>
         <DivSpace>
-        { (context.userInfo?.isAirlineUser || !!item.unitPrice) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
+        { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
         </DivSpace>
       </DivPartDetailsRow>
     </DivItemResultContainer>

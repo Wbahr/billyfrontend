@@ -73,7 +73,17 @@ const getInfoMessage = packingBasisName => {
 }
 
 export function ShippingScheduleForm(props) {
-	const {history, values: {schedule: {cartWithDates, packingBasisName}}, setFieldValue, isStepValid, handleMoveStep} = props
+	const { 
+		history, 
+		values: {
+			schedule: {cartWithDates, packingBasisName}
+		}, 
+		setFieldValue, 
+		isStepValid, 
+		handleMoveStep, 
+		itemsDetails,
+		itemsCustomerPartNumbers
+	} = props
 	
 	function handlePackingBasisChange(name, value) {
 		setFieldValue(name, value)
@@ -83,7 +93,17 @@ export function ShippingScheduleForm(props) {
 	
 	const InfoMessage = ({packingBasisName}) => getInfoMessage(packingBasisName)
 	
-	const mapShippingScheduleLines = (item, index) => <ShippingScheduleLine key={index} item={item} index={index}/>
+	const mapShippingScheduleLines = (item, index) => {
+		const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
+		const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+		
+		return <ShippingScheduleLine 
+			key={index} 
+			item={item}
+			itemDetails={details}
+			customerPartNumbers={customerPartNumbers}
+			index={index}/>
+	}
 	
 	const renderLineItems = () => cartWithDates?.length
 		? cartWithDates.map(mapShippingScheduleLines)

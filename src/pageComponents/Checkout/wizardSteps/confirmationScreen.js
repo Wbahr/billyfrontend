@@ -78,7 +78,24 @@ const DivNavigation = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-	const {history, values: {schedule, shipto, billing: {sameAsShipping, ...billing}}, paymentInfo, checkoutDropdownDataLabels, handleMoveStep} = props
+	const {
+		history, 
+		values: {
+			schedule, 
+			shipto, 
+			billing: {
+				sameAsShipping, 
+				...billing
+			}
+		}, 
+		paymentInfo, 
+		checkoutDropdownDataLabels, 
+		handleMoveStep, 
+		itemsDetails,
+		itemsPrices,
+		itemsCustomerPartNumbers
+	} = props
+
 	const {userInfo, emptyCart} = useContext(Context)
 	const [submitting, setSubmitting] = useState(false)
 	const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
@@ -116,7 +133,20 @@ export default function ConfirmationScreen(props) {
 		});
 	}
 
-	const CartDates = schedule.cartWithDates.map((item, index) => <ShippingScheduleLineDisplay key={index} item={item} index={index}/>)
+	const CartDates = schedule.cartWithDates.map((item, index) => {
+		const price = itemsPrices?.find(price => price.invMastUid === item.frecno)
+		const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
+		const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+
+		return <ShippingScheduleLineDisplay 
+			key={index} 
+			item={item}
+			price={price}
+			itemDetails={details}
+			customerPartNumbers={customerPartNumbers}
+			index={index}
+		/>
+	})
 
 	const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
 	const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label

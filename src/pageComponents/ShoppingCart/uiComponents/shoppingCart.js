@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
-import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlFragments/gqlItemDetail'
+import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 
 const Div = styled.div`
@@ -58,9 +58,9 @@ const DivSave = styled(DivShare)`
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-	const context = useContext(Context)
+	const { cart, moveItem, emptyCart, userInfo } = useContext(Context)
 
-	const invMastUids = context.cart.map(item => item.frecno)
+	const invMastUids = cart.map(item => item.frecno)
 
 	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
 		variables: {
@@ -70,10 +70,10 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 
 	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
 		variables: {
-			'items': invMastUids.map(invMastUid => {
+			'items': cart.map(cartItem => {
 				return {
-					'invMastUid': invMastUid,
-					'quantity': 1
+					'invMastUid': cartItem.frecno,
+					'quantity': cartItem.quantity
 				}
 			})
 		}
@@ -97,7 +97,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 		}
 	}, [savedCart])
 
-	const ShoppingCartItems = context.cart.map((cartItem, index) => {
+	const ShoppingCartItems = cart.map((cartItem, index) => {
 
 		const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === cartItem.frecno)
 		const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === cartItem.frecno)
@@ -140,7 +140,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 		if (!result.destination) {
 			return
 		} else {
-			context.moveItem(result.source.index, result.destination.index)
+			moveItem(result.source.index, result.destination.index)
 		}
 	}
 
@@ -153,18 +153,18 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			<Div>
 				<DivRow>
 					<H3>Shopping Cart</H3>
-					<p onClick={() => context.emptyCart()}>(empty cart)</p>
+					<p onClick={emptyCart}>(empty cart)</p>
 				</DivRow>
 				<DivRow>
 						{
-							context.userInfo 
+							userInfo 
 								?	<DivSave onClick={handleSaveAsShoppingList}>
 										<Ashare>Save As Shopping List</Ashare>
 										<FontAwesomeIcon icon="list" color="grey" />
 									</DivSave>
 								: 	<Ashare></Ashare>
 						}
-					<DivSave onClick={() => { context.saveCart(); setSavedCart(true); }}>
+					<DivSave onClick={() => { saveCart(); setSavedCart(true); }}>
 						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
 						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
 					</DivSave>
@@ -188,10 +188,10 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			</DragDropContext>
 
 			{
-				context.userInfo && <SaveShoppingListModal
+				userInfo && <SaveShoppingListModal
 					open={showShoppingListModal}
 					hide={() => setShowShoppingListModal(false)}
-					items={context.cart}
+					items={cart}
 					enableAddToExisting
 				/>
 			}
