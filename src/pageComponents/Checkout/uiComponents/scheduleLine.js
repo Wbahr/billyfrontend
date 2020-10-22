@@ -136,7 +136,7 @@ const getContent = (itemDetails, item, customerPartNumbers, index) => {
 	}
 }
 
-export default function ShippingScheduleItem({item, itemDetails, customerPartNumbers, index}) {
+export default function ScheduleLine({item, itemDetails, customerPartNumbers, index}) {
 	
 	return (
 		<DivContainer key={index}>

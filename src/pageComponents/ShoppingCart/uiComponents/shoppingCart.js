@@ -60,9 +60,11 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	const { cart, moveItem, emptyCart, userInfo } = useContext(Context)
 
+	const invMastUids = cart.map(item => item.frecno)
+
 	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
 		variables: {
-			'invMastUids': cart.map(item => item.frecno)
+			'invMastUids': invMastUids
 		}
 	})
 
@@ -151,7 +153,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			<Div>
 				<DivRow>
 					<H3>Shopping Cart</H3>
-					<p onClick={() => emptyCart()}>(empty cart)</p>
+					<p onClick={emptyCart}>(empty cart)</p>
 				</DivRow>
 				<DivRow>
 						{

@@ -81,13 +81,18 @@ const P2 = styled.p`
   font-size: 12px !important;
 `
 //TODO rename this; it has the same name as the component in scheduleLine.js
-export default function ShippingScheduleItem({item, price, itemDetails, customerPartNumbers}) {
+export default function ScheduleLineDisplay({item, price, itemDetails, customerPartNumbers}) {
 
     const imagePath = getThumbnailImagePath(itemDetails);
 	let date = item.requestedShipDate
 	date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
 	const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
+	const totalPrice = Number(item.quantity) * (
+		(item.itemUnitPriceOverride || price)
+			? Number(item.itemUnitPriceOverride ? item.itemUnitPriceOverride : price.unitPrice)
+			: 0
+	)
 
 	const Content = () => (
 		<DivCard>
@@ -127,13 +132,7 @@ export default function ShippingScheduleItem({item, price, itemDetails, customer
 					<DivItem>
 						<LabelBold>
 							<NumberFormat
-								value={
-									Number(item.quantity) * (
-										(item.itemUnitPriceOverride || price)
-											? Number(item.itemUnitPriceOverride ? item.itemUnitPriceOverride : price.unitPrice)
-											: 0
-									)
-								}
+								value={totalPrice}
 								displayType="text"
 								thousandSeparator={true}
 								prefix="$"
