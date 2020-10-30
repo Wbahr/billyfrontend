@@ -362,7 +362,7 @@ export default function HeaderComponent({history}) {
 }
 
 function UserNameSection({userInfo, impersonatedCompanyInfo, cancelImpersonation}) {
-	if (userInfo && !impersonatedCompanyInfo) {``
+	if (userInfo && !impersonatedCompanyInfo) {
 		return (
 			<UserNameRow style={{flex: 1}}>
 				<Puser>

@@ -75,7 +75,6 @@ const Container = styled.div`
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	#height: 30px;
 	background-color: #535353;
 `
 
