@@ -19,6 +19,8 @@ const Brandsdiv = styled.div`
   &:hover {
     transform: scale(1.2);
   }
+  position: relative;
+  z-index: 1;
 `
 
 export default function FeaturedManufacturerLink(props) {

@@ -30,10 +30,15 @@ const CategoryBlock = styled.div`
       text-align: center;
       width: 200px;
   }
+  @media (max-width: 355px) {
+    width: min-content;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 `
 
-export default function Category(props) 
-{
+export default function Category(props) {
   const {text, linkTo, image, ...rest } = props;
   return (
     <Link to={`${linkTo}`}>

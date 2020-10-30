@@ -7,7 +7,6 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 1300px;
 	margin: 0 auto 50px;
 `
 
@@ -25,7 +24,7 @@ function useInterval(callback, delay) {
 			savedCallback.current()
 		}
 		if (delay !== null) {
-			let id = setInterval(tick, delay)
+			const id = setInterval(tick, delay)
 			return () => clearInterval(id)
 		}
 	}, [delay])
@@ -40,12 +39,12 @@ export default function FeaturedManufacturers(){
 	const [r2, setR2] = useState(1)
 
 	useInterval(() => {
-		let random1 = getRandomInt(18)
+		const random1 = getRandomInt(18)
 		setR1(random1)
 	}, 1200)
 
 	useInterval(() => {
-		let random2 = getRandomInt(18)
+		const random2 = getRandomInt(18)
 		setR2(random2)
 	}, 1700)
 

@@ -51,7 +51,6 @@ const ContainerTop = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	height: 180px; 
 	background-color: white;
 	margin: 16px 0;
 `
@@ -73,16 +72,16 @@ const ContentContainer = styled.div`
 
 const Container = styled.div`
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	height: 30px;
+	#height: 30px;
 	background-color: #535353;
 `
 
 const DivSocial = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 500px;
 `
 
 const DivSocialIcons = styled.div`
@@ -98,7 +97,6 @@ const DivSocialIcons = styled.div`
 const DivAirline = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 620px;
 	margin-right: 30px;
 	@media (max-width: 800px){
 		width: 90%;
@@ -111,9 +109,8 @@ const DivMenu = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	width: 300px; 
 	margin: 8px 32px;
-	@media (max-width: 1200px){
+	@media (max-width: 1000px){
 		display: none;
 	}
 `
@@ -175,21 +172,40 @@ export default function FooterComponent({history}) {
 	return(
 		<>
 			<Newsletter>
-				<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel><NewsletterInput placeholder='your@email.com'/><ButtonBlack>Subscribe</ButtonBlack>
+				<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel>
+				<NewsletterInput placeholder='your@email.com'/>
+				<ButtonBlack>Subscribe</ButtonBlack>
 			</Newsletter>
+			
 			<ContainerTop>
 				<ContentContainer>
 					<DivAirline>
-						<DivRow>
-							<div>
-								<img src={AirlineLogo} height="45px" />
-							</div>
+						<DivRow style={{flexWrap: 'wrap'}}>
+							<img src={AirlineLogo} height="45px" />
 							<ACallUs href="tel:1-800-999-7378">800-999-7378</ACallUs>
 						</DivRow>
-						<a target='_blank' rel='noopener noreferrer' href='https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020'><DivRow><FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/><P>3557 Progress Drive, Bensalem, PA 19020</P></DivRow></a>
-						<a href='tel:215-638-4700'><DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/><P>215-638-4700</P></DivRow></a>
-						<DivRow><FontAwesomeIcon icon='fax' size="sm" color="#535353"/><P>Fax: 215-638-1707</P></DivRow>
+						
+						<a target='_blank' rel='noopener noreferrer'
+							href='https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020'
+						>
+							<DivRow>
+								<FontAwesomeIcon icon='map-pin' size="sm" color="#535353"/>
+								<P>3557 Progress Drive, Bensalem, PA 19020</P>
+							</DivRow>
+						</a>
+						
+						<a href='tel:215-638-4700'>
+							<DivRow><FontAwesomeIcon icon='phone-alt' size="sm" color="#535353"/>
+							<P>215-638-4700</P>
+							</DivRow>
+						</a>
+						
+						<DivRow>
+							<FontAwesomeIcon icon='fax' size="sm" color="#535353"/>
+							<P>Fax: 215-638-1707</P>
+						</DivRow>
 					</DivAirline>
+					
 					<DivMenu>
 						<Head>Featured Brands</Head>
 						<Item href="/brands/featured/smc">SMC</Item>
@@ -199,7 +215,7 @@ export default function FooterComponent({history}) {
 						<Item href="/brands/featured/omron">Omron</Item>
 						<Item href="/brands/featured/phoenix-contact">Phoenix</Item>
 					</DivMenu>
-
+				
 					<DivMenu>
 						<Head>Products</Head>
 						<Item href="/search?searchTerm=valves">Valves</Item>
@@ -209,17 +225,29 @@ export default function FooterComponent({history}) {
 						<Item href="/categories/aluminum-structural-framing">Aluminum Framing</Item>
 						<Item href="/categories/process-controls-components">Controls</Item>
 					</DivMenu>
-
+				
 					<DivSocial>
 						<DivSocialIcons>
-							<ADim target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Airlinehyd/"><FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/></ADim>
-							<ADim target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/airline-hydraulics-corporation"><FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/></ADim>
-							<ADim target="_blank" rel="noopener noreferrer" href="https://twitter.com/AirlineHyd"><FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/></ADim>
-							<ADim target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/AirlineHydraulics"><FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/></ADim>
+							<ADim target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Airlinehyd/">
+								<FontAwesomeIcon icon={['fab', 'facebook']} size="2x" color="black"/>
+							</ADim>
+							
+							<ADim target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/airline-hydraulics-corporation">
+								<FontAwesomeIcon icon={['fab', 'linkedin-in']} size="2x" color="black"/>
+							</ADim>
+							
+							<ADim target="_blank" rel="noopener noreferrer" href="https://twitter.com/AirlineHyd">
+								<FontAwesomeIcon icon={['fab', 'twitter']} size="2x" color="black"/>
+							</ADim>
+							
+							<ADim target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/user/AirlineHydraulics">
+								<FontAwesomeIcon icon={['fab', 'youtube']} size="2x" color="black"/>
+							</ADim>
 						</DivSocialIcons>
 					</DivSocial>
 				</ContentContainer>
 			</ContainerTop>
+			
 			<Container>
 				<Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
 				<Pcopyright>Privacy Policy</Pcopyright> |
