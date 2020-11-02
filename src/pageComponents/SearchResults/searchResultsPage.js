@@ -197,7 +197,7 @@ export default function SearchResultsPage({history}) {
 	})
 	
 	function parseSearchResults({result, searchTotalCount}) {
-		const invMastUids = result.map(i => i.frecno)
+		const invMastUids = result.map(i => i.invMastUid)
 		getItemDetails({ variables: { invMastUids } })
 		getItemAvailabilities(result)
 		getItemPrices(result)
