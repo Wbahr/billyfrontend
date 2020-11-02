@@ -158,10 +158,10 @@ const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers
 export default function ItemResult({result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
 	const [quantity, setQuantity] = useState(1)
 	const context = useContext(Context)
-	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.frecno)
+	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 	const {availability, leadTimeDays} = foundAvailability || {}
 	
-	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.frecno)
+	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.invMastUid)
 	const {unitPrice} = foundPrice || {}
 	
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
@@ -182,15 +182,15 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	
 	const handlePartClick = () => {
 		if (customerPartNumber) {
-			history.push(`/product/${details.itemCodeUrlSanitized}/${result.frecno}/${customerPartNumber}`)
+			history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}/${customerPartNumber}`)
 		} else {
-			history.push(`/product/${details.itemCodeUrlSanitized}/${result.frecno}`)
+			history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}`)
 		}
 	}
 	
 	const handleAddToCart = () => {
 		context.addItem({
-			frecno: result.frecno,
+			frecno: result.invMastUid,
 			quantity: parseInt(quantity),
 			itemNotes: '',
 			itemUnitPriceOverride: null,
@@ -202,9 +202,9 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	
 	const handlePartNumberChange = ({target}) => setCustomerPartNumber(target.value)
 	
-	const handleAvailabilityClick = () => toggleLocationsModal(result.frecno)
+	const handleAvailabilityClick = () => toggleLocationsModal(result.invMastUid)
 	
-	const handleQuickLookClick = () => toggleDetailsModal(result.frecno, result.item_id)
+	const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
 	
 	return (
 		<DivItemResultContainer>
@@ -220,15 +220,15 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 				<ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
 				
 				<DivPartDetails>
-					<PpartTitle onClick={handlePartClick}>{result.item_desc}</PpartTitle>
+					<PpartTitle onClick={handlePartClick}>{result.itemDescription}</PpartTitle>
 				</DivPartDetails>
 				
 				<DivPartNumberRow>
-					<PpartAvailability>Item Id: {result.item_id}</PpartAvailability>
+					<PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
 				</DivPartNumberRow>
 				
 				<DivPartNumberRow>
-					<PpartAvailability>Airline #: AHC{result.frecno}</PpartAvailability>
+					<PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
 				</DivPartNumberRow>
 				
 				{!!customerPartOptions.length && (

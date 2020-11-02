@@ -234,9 +234,9 @@ export default function SearchResultsPage({history}) {
 	
 	const itemSearchResults = useMemo(() => results.map(result => (
 		<ItemResult
-			key={result.frecno}
+			key={result.invMastUid}
 			result={result}
-			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
+			details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
 			history={history}
 			toggleDetailsModal={handleShowDetailsModal}
 			toggleLocationsModal={handleShowLocationsModal}
