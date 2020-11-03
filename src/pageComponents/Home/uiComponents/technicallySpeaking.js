@@ -6,20 +6,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Container = styled.div`
 		display: flex;
 		flex-direction: row;
-		@media (max-width: 400px) {
-				flex-direction: column;
-			} 
+		flex-wrap: wrap;
 `
 const Row = styled.div`
 		display: flex;
+		flex-wrap: wrap;
 		flex-direction: row;
 		background-color: #f2f3f4;
 		flex: 1;
-		margin: 20px;  
+		margin: 20px;
 `
 const Img = styled.img`
 		width: 305px;
 		height: 290px;
+		@media (max-width: 345px) {
+			width: 100%;
+			height: auto;
+		}
 `
 const Details = styled.div`
 		margin: 0;
@@ -28,9 +31,6 @@ const Details = styled.div`
 		@media (max-width: 800px) {
 				font-size: 25px;
 			} 
-`
-const BoxDiv = styled.div`
-
 `
 const TextDiv = styled.div`
 		display: flex;
@@ -44,23 +44,21 @@ const Button = styled.button`
 		font-size: 14px;
 		user-select: none;
 		padding: 10px;
-		&:hover{
-				color: white;
-		border-radius: 50px;
-		border-color: #494949 !important;
-		transition: all 0.3s ease 0s;
+		&:hover {
+			color: white;
+			border-radius: 50px;
+			border-color: #494949 !important;
+			transition: all 0.3s ease 0s;
 		}
 		@media (max-width: 800px) {
-				font-size: 20px;
-			 } 
+			font-size: 20px;
+		 }
 		`
 const ButtonDiv = styled.div`
 		padding: 30px 0;
 		@media (max-width: 800px) {
-				padding: 15px 0;
-			 } 
-`
-const Div = styled.div`
+			padding: 15px 0;
+		 }
 `
 const SeeAll = styled.div`
 		padding: 17px;
@@ -68,7 +66,7 @@ const SeeAll = styled.div`
 		@media (max-width: 800px) {
 			 font-size: 25px;
 		}
-		`
+`
 const A = styled.a`
 		color: #333;
 `
@@ -79,32 +77,42 @@ export default function TechnicallySpeaking() {
 
 	return (
 		<>
-			<SectionHeader
-				text='Technically Speaking'
-			/>
+			<SectionHeader text='Technically Speaking'/>
 			<Wrapper>
 				<Container>
 					<Row>
-						<BoxDiv><Img src="https://world-nuclear-news.org/originalimages/uploads/1/MHI-steam_generators.jpg" /></BoxDiv>
+						<div>
+							<Img src="https://world-nuclear-news.org/originalimages/uploads/1/MHI-steam_generators.jpg" />
+						</div>
+						
 						<TextDiv> 
 							<Details >Lorem Ipsum has been the industry's standard dummy text 
 								<ButtonDiv> <Button>Watch More</Button></ButtonDiv>
 							</Details> 
 						</TextDiv>
 					</Row>
+					
 					<Row>
-						<BoxDiv><Img src="https://www.power-eng.com/wp-content/uploads/content/dam/pe/online-articles/2016/04/LNG-solution.jpg" /></BoxDiv>
-						<TextDiv> <Details > Lorem Ipsum has been the industry's standard dummy text 
-							<ButtonDiv> <Button>Read More</Button></ButtonDiv>
-						</Details>
+						<div>
+							<Img src="https://www.power-eng.com/wp-content/uploads/content/dam/pe/online-articles/2016/04/LNG-solution.jpg" />
+						</div>
+						
+						<TextDiv>
+							<Details>
+								Lorem Ipsum has been the industry's standard dummy text
+								<ButtonDiv>
+									<Button>Read More</Button>
+								</ButtonDiv>
+							</Details>
 						</TextDiv>
 					</Row>
 				</Container>
-				<Div>
+				
+				<div>
 					<SeeAll>
 						<A href="#">See all videos and articles <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
 					</SeeAll>
-				</Div>
+				</div>
 			</Wrapper>
 		</>
 	)

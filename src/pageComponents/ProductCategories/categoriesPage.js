@@ -6,13 +6,10 @@ import { useQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
 
-//Queries for categories from GraphQL
-//Asks child components to render these
-
 export const CategoryContainer = styled.div`
 	display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+	flex-wrap: wrap;
+	justify-content: center;
 `
 
 export default function CategoriesPage(props) {
