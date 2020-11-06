@@ -48,10 +48,10 @@ const RESULT_SIZE = 24
 const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
 	const removeTypeName = ({__typename, ...rest}) => rest
 	return {
-		brands: brands.map(removeTypeName),
-		attributes: attributes.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })),
-		parentCategories: parentCategories.map(removeTypeName),
-		childCategories: childCategories && childCategories.map(removeTypeName)
+		brands: brands?.map(removeTypeName) || [],
+		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+		parentCategories: parentCategories?.map(removeTypeName) || [],
+		childCategories: childCategories?.map(removeTypeName) || []
 	}
 }
 
