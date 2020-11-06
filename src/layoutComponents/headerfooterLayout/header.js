@@ -16,6 +16,7 @@ const Nav = styled.div`
 	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
+	z-index: 2;
 `
 const NavTop = styled.div`
 	display: flex;
@@ -24,28 +25,33 @@ const NavTop = styled.div`
 	width: 100%;
 	background-color: #535353;
 	justify-content: center;
-	z-index: 89;
 `
 const NavBottom = styled.div`
 	margin: 0 auto;
 	width: 100%;
-	height: 50px;
-	padding: 0 10px;
+	padding: 5px 10px;
 	background-color: white;
 	box-shadow: 0px 3px 4px #dadada;
-	z-index: 2;
 `
 const NavContainer = styled.div`
-	width: 100%;
-	height: 100%;
 	display: flex;
+	flex-wrap: wrap;
+	height: 100%;
+	align-items: center;
+`
+const ReverseNavContainer = styled.div`
+	display: flex;
+	flex-direction: row-reverse;
+	flex-wrap: wrap;
+	height: 100%;
+	width: 100%;
 	align-items: center;
 `
 const LinkContainer = styled.div`
 	display: flex;
 	align-items: center;
 	flex: 1;
-	height: 100%;
+	min-width: 250px;
 	color: black;
 	font-size: 14px;
 	font-weight: 500;
@@ -64,6 +70,9 @@ const InputSearch = styled.input`
 		border-top: 1px #b4b4b4 solid;
 		border-left: 1px #b4b4b4 solid;
 		border-bottom: 1px #b4b4b4 solid;
+	}
+	@media (max-width: 365px) {
+		width: 215px;
 	}
 `
 const ButtonSearch = styled.button`
@@ -90,6 +99,12 @@ const Row = styled.div`
 	display: flex;
 	align-items: center;
 `
+const UserNameRow = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+`
 const Puser = styled.p`
 	background-image: linear-gradient(to top left, #404040, #333);
 	color: #f3f3f3;
@@ -111,6 +126,7 @@ const P = styled.p`
 	font-size: 14px;
 	font-weight: 600;
 	padding: 0 5px;
+	white-space: nowrap;
 `
 const A = styled.a`
 	cursor: pointer;
@@ -119,13 +135,15 @@ const A = styled.a`
 	font-size: 14px;
 	font-weight: 600;
 	padding: 0 5px;
+	white-space: nowrap;
 	&:hover {
 		color: #f3f3f3;
 	}
 `
 const Aphone = styled(P)`
-  margin: 0 auto;
+  margin: 0;
 	color: white;
+	white-space: nowrap;
 `
 const DivCancelImpersonation = styled.div`
 	cursor: pointer;
@@ -136,6 +154,21 @@ const GrayDiv = styled.div`
 `
 const GreenDiv = styled.div`
 	color: limegreen;
+`
+const SearchBarRow = styled.div`
+ 	display: flex;
+ 	flex: 1;
+ 	justify-content: flex-end;
+ 	@media (max-width: 755px) {
+ 		justify-content: center;
+	}
+`
+const AccountSectionRow = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+ 	flex: 1;
+ 	justify-content: flex-end;
+ 	padding: 5px 0;
 `
 
 function onWindowResize(callback) {
@@ -165,7 +198,7 @@ export default function HeaderComponent({history}) {
 	
 	const calculateTabs = () => {
 		const containerRight = tabContainerRef.current && tabContainerRef.current.getBoundingClientRect().right
-		const widthOfTheComponentsToTheRightOfTheTabs = 395
+		const widthOfTheComponentsToTheRightOfTheTabs = containerRight < 745 ? 70 : 395 //SearchBar wraps at < 745
 		const count = tabRefs.current.reduce((count, tabRight) => {
 			if (tabRight <= (containerRight - widthOfTheComponentsToTheRightOfTheTabs)) {
 				count += 1
@@ -230,31 +263,38 @@ export default function HeaderComponent({history}) {
 	)
 	
 	const AccountSection = () => (
-		<>
-			{context.userInfo
-				? <P onClick={context.logoutUser}>Sign Out</P>
-				: <P onClick={() => history.push('/login')}>Sign In</P>
-			}
+		<AccountSectionRow>
+			<Row style={{justifyContent: 'center'}}>
+				<FontAwesomeIcon icon="phone-alt" color="white" />
+				<Aphone href="tel:+18009997378">800-999-7378</Aphone>
+			</Row>
 			
-			<P>|</P>
-			
-			{context.userInfo
-				? <MyAccountDropdown/>
-				: <A href="/signup">Create Account</A>
-			}
-			
-			<P>|</P>
-			
-			{context.cart && (
-				<Link to='/cart' style={{ textDecoration: 'none' }}>
-					<P>Cart({context.cart.length})</P>
-				</Link>
-			)}
-		</>
+			<Row style={{justifyContent: 'center'}}>
+				{context.userInfo
+					? <P onClick={context.logoutUser}>Sign Out</P>
+					: <P onClick={() => history.push('/login')}>Sign In</P>
+				}
+				
+				<P>|</P>
+				
+				{context.userInfo
+					? <MyAccountDropdown/>
+					: <A href="/signup">Create Account</A>
+				}
+				
+				<P>|</P>
+				
+				{context.cart && (
+					<Link to='/cart' style={{ textDecoration: 'none' }}>
+						<P>Cart({context.cart.length})</P>
+					</Link>
+				)}
+			</Row>
+		</AccountSectionRow>
 	)
 	
-	const SearchBar = () => (
-		<Row>
+	const SearchBar = (
+		<SearchBarRow>
 			{context.userInfo?.isAirlineUser && (
 				<ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
 					{ searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
@@ -271,25 +311,18 @@ export default function HeaderComponent({history}) {
 			<ButtonSearch onClick={handleSearch}>
 				<FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
 			</ButtonSearch>
-		</Row>
+		</SearchBarRow>
 	)
 	
 	return (
 		<Nav>
 			{context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
 			<NavTop>
-				<NavContainer>
-					<UserNameSection {...context}/>
+				<ReverseNavContainer>
+					<AccountSection/>
 					
-					<Row style={{padding: '5px 0'}}>
-						<Row>
-							<FontAwesomeIcon icon="phone-alt" color="white" />
-							<Aphone href="tel:+18009997378">800-999-7378</Aphone>
-						</Row>
-						
-						<AccountSection/>
-					</Row>
-				</NavContainer>
+					<UserNameSection {...context}/>
+				</ReverseNavContainer>
 			</NavTop>
 			
 			<NavBottom>
@@ -321,7 +354,7 @@ export default function HeaderComponent({history}) {
 						</Menu>
 					</LinkContainer>
 					
-					<SearchBar/>
+					{SearchBar}
 				</NavContainer>
 			</NavBottom>
 		</Nav>
@@ -331,16 +364,16 @@ export default function HeaderComponent({history}) {
 function UserNameSection({userInfo, impersonatedCompanyInfo, cancelImpersonation}) {
 	if (userInfo && !impersonatedCompanyInfo) {
 		return (
-			<Row style={{flex: 1}}>
+			<UserNameRow style={{flex: 1}}>
 				<Puser>
 					Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
 				</Puser>
 				{userInfo.role === 'AirlineEmployee' && <ImpersonationSearch/>}
-			</Row>
+			</UserNameRow>
 		)
 	} else if (userInfo && impersonatedCompanyInfo) {
 		return (
-			<Row style={{flex: 1}}>
+			<UserNameRow style={{flex: 1}}>
 				<PeUser>
 					<FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
 					{impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
@@ -349,7 +382,7 @@ function UserNameSection({userInfo, impersonatedCompanyInfo, cancelImpersonation
 					<FontAwesomeIcon icon="times" color="white" />
 				</DivCancelImpersonation>
 				<ImpersonationSearch />
-			</Row>
+			</UserNameRow>
 		)
 	} else {
 		return <Row style={{flex: 1}}/>;
@@ -405,7 +438,7 @@ const industriesSubItems = [
 		to: '/brands/featured/aventics'
 	},
 	{
-		label: 'Power Distribution Products and <br/> Electrical Enclosures',
+		label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
 		to: '/power-distribution-products-and-electrical-enclosures'
 	}
 ]

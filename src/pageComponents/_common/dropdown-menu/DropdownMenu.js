@@ -31,6 +31,7 @@ const NavigationItemContainerElement = styled.div`
 `
 
 const DropdownElement = styled.div`
+		z-index: 1;
     position: absolute;
     display: block;
     height: auto;
@@ -92,59 +93,20 @@ export const NavigationItemContainer = React.forwardRef(({children, to, text}, r
 	</NavigationItemContainerElement>
 ))
 
-// NavigationItemContainer.propTypes = {
-//     children: function (props, propName, componentName){
-//         const prop = props[propName]
-//
-//         let error = null
-//
-//         //Allow only DropdownMenu children
-//         React.Children?.forEach(prop, function(child) {
-//             if(child.type !== DropdownMenu){
-//                 error = `${componentName} children should be of type '${DropdownMenu.name}'`
-//             }
-//         })
-//
-//         if(!error && prop.length > 1) error = `Only one ${DropdownMenu.name} component should be in ${componentName}`
-//
-//         return error ? new Error(error) : null
-//     }
-// }
-
 export const MyAccountDropdownMenu = ({children, className}) => (
-	<DropdownElement className={'nav-dropdown ' + className}>
+	<DropdownElement className={'nav-dropdown ' + className} style={{marginLeft: -14}}>
 		{children}
 	</DropdownElement>
 )
 
 export const DropdownMenu = ({children, className}) => (
-  <DropdownElement className={'nav-dropdown ' + className} style={{top: '100%'}}>
+  <DropdownElement className={'nav-dropdown ' + className} style={{top: '100%', left: '50%', transform: 'translateX(-50%)'}}>
     {children}
   </DropdownElement>
 )
-// DropdownMenu.propTypes = {
-//     children: function (props, propName, componentName){
-//         const prop = props[propName]
-//
-//         let error = null
-//         React.Children?.forEach(prop, function(child) {
-//             if(child.type !== DropdownMenuItem && child.type !== DropdownMenuItemExternal){
-//                 error = `${componentName} children should be of type '${DropdownMenuItem}'`
-//             }
-//         })
-//
-//         return error ? new Error(error) : null
-//     }
-// }
 
 export const DropdownMenuItem = React.forwardRef(({ children: linkText, to }, ref) => (
   <DropdownLink ref={ref}>
     <Link to={to}>{linkText}</Link>
   </DropdownLink>
 ))
-
-export function DropdownMenuItemExternal({ children: linkText, to }) {
-    return <div className="dropdown-link">
-        <a href={to} target="_blank">{linkText}</a>
-    </div>
-}

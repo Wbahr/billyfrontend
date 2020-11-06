@@ -7,36 +7,43 @@ import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
 import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
+import SectionHeader from "../_common/sectionHeader";
+import {CategoryContainer} from "../ProductCategories/categoriesPage";
+import CategoryList from "../ProductCategories/uiComponents/categoryList";
 
 const ContentScreenContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	max-width: 1300px;
 	margin: 28px auto;
 	justify-content: space-between;
 	flex-grow: 99;
 `
 
 export default function HomePage(props) {
-    const [categories, setCategories] = useState(null);
+	const [categories, setCategories] = useState(null);
 
-	const { loading, error, data } = useQuery(GET_CATEGORY_SEARCH, {
+	useQuery(GET_CATEGORY_SEARCH, {
 		onCompleted: data => { 
 			setCategories(data.getAllParentCategories);
 		}
 	});
     
     return (
-        <>
-            <ContentScreenContainer>
-                <Banner />
-                <ShopOurProducts categories={categories} match={{ path:'/categories', url: '/categories' }}/>
-                <TechnicallySpeaking />
-                <FeaturedManufacturers />
-                <LineCards />
-                
-            </ContentScreenContainer>
-        </>
+			<ContentScreenContainer>
+				<Banner />
+				
+				<div>
+					<SectionHeader text='Shop by Categories' />
+				
+					<CategoryContainer>
+						<CategoryList {...{categories, match: {path:'/categories', url: '/categories'}}} />
+					</CategoryContainer>
+				</div>
+				
+				<TechnicallySpeaking />
+				<FeaturedManufacturers />
+				<LineCards />
+			</ContentScreenContainer>
     );
 }
