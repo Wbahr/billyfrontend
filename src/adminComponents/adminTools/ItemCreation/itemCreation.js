@@ -200,13 +200,13 @@ export default function ItemCreationPage() {
 	itemSearchResult.map((element, index) => {
         resultImage = getImagePath(element.thumbnail_image_path);
 
-		let mutatedItemId = mutateItemId(element.item_id)
+		let mutatedItemId = mutateItemId(element.itemCode)
 		searchResultItems.push(
 			<DivSearchItemContainer key={index}>
-				<img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.item_id} ></img>
-				<h6>{element.item_id}</h6>
-				<p>{element.item_desc}</p>
-				<a href={`/product/${mutatedItemId}/${element.frecno}`} target="_blank" rel="noopener noreferrer">View Details</a>
+				<img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.itemCode} ></img>
+				<h6>{element.itemCode}</h6>
+				<p>{element.itemDescription}</p>
+				<a href={`/product/${mutatedItemId}/${element.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
 			</DivSearchItemContainer>
 		)
 	})

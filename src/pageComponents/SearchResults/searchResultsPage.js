@@ -48,10 +48,10 @@ const RESULT_SIZE = 24
 const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
 	const removeTypeName = ({__typename, ...rest}) => rest
 	return {
-		brands: brands.map(removeTypeName),
-		attributes: attributes.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })),
-		parentCategories: parentCategories.map(removeTypeName),
-		childCategories: childCategories && childCategories.map(removeTypeName)
+		brands: brands?.map(removeTypeName) || [],
+		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+		parentCategories: parentCategories?.map(removeTypeName) || [],
+		childCategories: childCategories?.map(removeTypeName) || []
 	}
 }
 
@@ -197,7 +197,7 @@ export default function SearchResultsPage({history}) {
 	})
 	
 	function parseSearchResults({result, searchTotalCount}) {
-		const invMastUids = result.map(i => i.frecno)
+		const invMastUids = result.map(i => i.invMastUid)
 		getItemDetails({ variables: { invMastUids } })
 		getItemAvailabilities(result)
 		getItemPrices(result)
@@ -234,9 +234,9 @@ export default function SearchResultsPage({history}) {
 	
 	const itemSearchResults = useMemo(() => results.map(result => (
 		<ItemResult
-			key={result.frecno}
+			key={result.invMastUid}
 			result={result}
-			details={itemDetails.find(detail => detail.invMastUid === result.frecno) || {}}
+			details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
 			history={history}
 			toggleDetailsModal={handleShowDetailsModal}
 			toggleLocationsModal={handleShowLocationsModal}
