@@ -13,6 +13,7 @@ import {defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, 
 import {startOfTomorrow} from 'date-fns'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE } from 'config/providerGQL'
+import { contextType } from 'react-copy-to-clipboard'
 
 const getFormStepComponent = currentStep => {
 	switch (currentStep) {
@@ -90,7 +91,12 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		},
 		billing: defaultBilling,
 		confirmationEmail: defaultConfirmationEmail
-    }
+	}
+	
+	if(!userInfo){
+		defaultBilling.purchaseOrder = "Temp PO - Anon User"
+	}
+
 	const FormStepComponent = getFormStepComponent(step)
 	
 	return (
