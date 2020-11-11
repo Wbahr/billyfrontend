@@ -1,5 +1,5 @@
 export const defaultBilling = {
-	paymentMethod: 'credit_card',
+	paymentMethod: 'credit_card', /* note: if the default is changed to purchase order, anon users will not be able to checkout */
     purchaseOrder: '',
     firstName: '',
     lastName: '',
