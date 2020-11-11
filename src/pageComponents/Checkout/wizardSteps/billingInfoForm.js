@@ -51,12 +51,15 @@ function BillingInfoForm(props) {
 	}, [context.userInfo])
 	
 	useEffect(() => {
-		window.scrollTo({top: 0})
-		if (!paymentMethod) setFieldValue('billing.paymentMethod', context.userInfo ? 'purchase_order' : 'credit_card')
+        window.scrollTo({top: 0})
+		if (!paymentMethod) { 
+            
+            setFieldValue('billing.paymentMethod', context.userInfo ? 'purchase_order' : 'credit_card') 
+        }
 	}, [])
 	
 	const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
-		fetchPolicy: 'no-cache',
+        fetchPolicy: 'no-cache',
 		onCompleted: ({paymentMethodInfo}) => {
 			setPaymentInfo(paymentMethodInfo)
 		}
@@ -82,7 +85,8 @@ function BillingInfoForm(props) {
 			if (context.userInfo) {
 				confirmCardSetup()
 			} else {
-				getPaymentInfo(transformForPaymentInfo(props.values))
+                getPaymentInfo(transformForPaymentInfo(props.values));
+                handleMoveStep(3);
 			}
 		} else {
 			handleMoveStep(3)

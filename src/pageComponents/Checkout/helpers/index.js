@@ -1,5 +1,5 @@
 export const defaultBilling = {
-	paymentMethod: 'purchase_order',
+	paymentMethod: 'credit_card',
     purchaseOrder: '',
     firstName: '',
     lastName: '',
@@ -54,21 +54,23 @@ export const defaultQuote = {
 }
 
 export const transformForPaymentInfo = ({billing: {address1, address2, city, state, zip, country},
-												 shipto: {companyName, phone, email, firstName, lastName, ...shipto}}) => ({
-	companyName,
-	phone,
-	email,
-	billingAddress: {
-		address1, address2, city, state, zip, country
-	},
-	shippingAddress: {
-		name: `${firstName} ${lastName}`,
-		phone,
-		address1: shipto.address1,
-		address2: shipto.address2,
-		city: shipto.city,
-		state: shipto.state,
-		zip: shipto.zip,
-		country: shipto.country
-	}
+												 shipto: {companyName, phone, email, firstName, lastName, ...shipto}}) => (
+    {variables: { paymentMethodRequest: {
+        companyName,
+        phone,
+        email,
+        billingAddress: {
+            address1, address2, city, state, zip, country
+        },
+        shippingAddress: {
+            name: `${firstName} ${lastName}`,
+            phone,
+            address1: shipto.address1,
+            address2: shipto.address2,
+            city: shipto.city,
+            state: shipto.state,
+            zip: shipto.zip,
+            country: shipto.country
+        }
+    } }
 })
