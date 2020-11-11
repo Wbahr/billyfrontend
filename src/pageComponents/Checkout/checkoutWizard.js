@@ -92,10 +92,6 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 		billing: defaultBilling,
 		confirmationEmail: defaultConfirmationEmail
 	}
-	
-	// if(!userInfo){
-	// 	defaultBilling.purchaseOrder = "Temp PO - Anon User"
-	// }
 
 	const FormStepComponent = getFormStepComponent(step)
 	

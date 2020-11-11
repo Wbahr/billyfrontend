@@ -118,6 +118,14 @@ export default function ConfirmationScreen(props) {
 			setShowOrderFailedModal(true)
 		}
 	})
+
+	const handlePreviousClick = () => {
+		if (history.location.pathname === '/create-quote') {
+			handleMoveStep(1)
+		} else {
+			handleMoveStep(2)
+		}
+	}
 	
 	const handleCheckoutSubmit = () => {
         setSubmitting(true);
@@ -246,7 +254,7 @@ export default function ConfirmationScreen(props) {
 			</SectionContainer>
 			
 			<DivNavigation>
-				<ButtonBlack onClick={() => handleMoveStep(2)}>Previous</ButtonBlack>
+				<ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
 				<ButtonRed onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white"/>Submit</ButtonRed>
 			</DivNavigation>
 			

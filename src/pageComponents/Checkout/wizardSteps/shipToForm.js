@@ -111,7 +111,6 @@ export function ShipToForm(props) {
 	}
 	
 	function handleContinueClick() {
-		console.log('history.location', history.location)
 		if (history.location.pathname === '/create-quote') {
 			handleMoveStep(3)
 		} else {
