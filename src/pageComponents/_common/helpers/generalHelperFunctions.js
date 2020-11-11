@@ -52,7 +52,7 @@ const MediaType_Image = 0;
 const getTypeImage = (itemDetails, type) => itemDetails?.image?.filter(i => i.itemMediaType === type
 	&& i.mediaType === MediaType_Image && i.sequence === 1)?.[0]
 
-export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Thumbnail)?.path);
+export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
 
 export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
 

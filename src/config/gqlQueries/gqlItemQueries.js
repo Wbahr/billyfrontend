@@ -53,6 +53,13 @@ export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
     query GetShoppingCartItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
+			image {
+				path
+				sequence
+				itemMediaType
+				mediaType
+				mediaId
+			}
         }
     }
     ${FRAGMENT_ITEM_DETAIL}
@@ -62,6 +69,13 @@ export const GET_CHECKOUT_ITEM_DETAIL = gql`
     query GetShoppingCartItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
+			image {
+				path
+				sequence
+				itemMediaType
+				mediaType
+				mediaId
+			}
         }
     }
     ${FRAGMENT_ITEM_DETAIL}
