@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const H1Div = styled.div`
     width: 100%;
-    // background-image: url('https://media.istockphoto.com/photos/abstract-background-of-polygons-on-white-background-picture-id1182309134?s=2048x2048');
     padding: 50px;
     display: flex;
     flex-direction: column;

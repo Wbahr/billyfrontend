@@ -41,7 +41,7 @@ export default function Paccar() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/paccar.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/paccar-logo.png" />
 			<Container>
 				<H1 text="Paccar"
 				/>
@@ -49,7 +49,7 @@ export default function Paccar() {
 					text="PACCAR Winch Division is the industry leader in the design and manufacture of winch, hoist and drive systems. Their products are sold under the brands of Braden, Carco and Gearmatic. PACCAR manufactures high quality, high value winches, hoists and drive systems and offers custom-engineered products that meet the highest manufacturing standards."
 				/>
 				<ShopProductBtn
-					text="Shop for Paccar Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

@@ -60,7 +60,7 @@ margin: 20px 0 20px 0;
 background-color:  #f2f3f4;
 padding: 15px;
 width: 100%;
-flex-direction: ${ props => {props.reverse ? 'row-reverse' : 'row'}}; 
+flex-direction: ${ props => props.reverse ? 'row-reverse' : 'row'}; 
 `
 
 export default function ProductItems(props) {

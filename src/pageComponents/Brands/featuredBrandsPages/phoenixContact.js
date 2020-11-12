@@ -41,7 +41,7 @@ export default function Phoenix() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact2.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png" />
 			<Container>
 				<H1 text="Phoenix Contact"
 				/>
@@ -49,7 +49,7 @@ export default function Phoenix() {
 					text="Phoenix Contact is a world leader for electronic components, systems, and solutions in the fields of electrical engineering, electronics, and automation. Phoenix Contact provides products for applications in a wide range of industries such as automotive, oil and gas, solar power, transportation, water management, and wind power."
 				/>
 				<ShopProductBtn
-					text="Shop for Phoenix Contact Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

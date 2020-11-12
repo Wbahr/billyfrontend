@@ -13,9 +13,7 @@ const FeaturedBrandLogo = styled.div`
   width: 100%;
   justify-content: center;
   padding: 80px 0;
-  background-image: url('https://media.istockphoto.com/photos/white-silver-geometric-universal-background-for-business-presentation-picture-id1207126778?s=2048x2048');
-  // background-image: url('https://media.istockphoto.com/photos/abstract-white-background-picture-id674723944?s=2048x2048');
-  // background-image: url('https://media.istockphoto.com/photos/abstract-background-of-polygons-on-white-background-picture-id857482302?s=2048x2048');
+  background-image: url('https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   `
@@ -86,16 +84,18 @@ const ProductsH4 = styled.a`
   }
 `
 const ShopAbbButton = styled.button`
-  background-image: linear-gradient(to left top, rgb(149, 15, 35), rgb(219, 22, 51));
-  width: 20%
-  color: white;
-  font-weight: 600;
-  border-radius:28px;
-  border: 0;
-  padding: 5px;
-  margin: 0 auto;
-  outline: none;
-  `
+	background-image: linear-gradient(to top left,#950f23,#DB1633);
+	color: white;
+	font-weight: 600;
+	border-radius:3px;
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	border: 0;
+	padding: 10px 15px;
+	margin: 0 auto;
+	outline: none;
+`
 const BorderBottom = styled.div`
   display: flex;
   border-bottom: 1px solid #555555;
@@ -238,14 +238,14 @@ export default function Butech() {
 	return (
 		<Container>
 			<FeaturedBrandLogo>
-				<div> <BannerImg src={BuTech} /></div>
+				<div> <BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/BuTech_Logo.png" /></div>
 			</FeaturedBrandLogo>
 			<BrandDetailsContainer>
 				<AirlineDistributorH1>BuTech
 				</AirlineDistributorH1>
 				<DistributorDetails>BuTech a leading brand of high pressure valves, fittings and tubing. The BuTech line of products was established in 1973, offering high pressure piping components and the most extensive and versatile product line available for pressures up to 150,000 PSI. BuTech products are used in oil, natural gas, chemical and petrochemical industries, as well as waterjet/waterblast, aerospace, marine, government and niche industrial markets.</DistributorDetails>
 				<Div>
-					<ShopAbbButton>Shop for BuTech Products </ShopAbbButton>
+					<ShopAbbButton>Shop Products </ShopAbbButton>
 				</Div>
 
 				{/*............................... PRODUCTS................................... */}

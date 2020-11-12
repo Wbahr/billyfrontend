@@ -14,9 +14,7 @@ const FeaturedBrandLogo = styled.div`
   width: 100%;
   justify-content: center;
   padding: 80px 0;
-  background-image: url('https://media.istockphoto.com/photos/white-silver-geometric-universal-background-for-business-presentation-picture-id1207126778?s=2048x2048');
-  // background-image: url('https://media.istockphoto.com/photos/abstract-white-background-picture-id674723944?s=2048x2048');
-  // background-image: url('https://media.istockphoto.com/photos/abstract-background-of-polygons-on-white-background-picture-id857482302?s=2048x2048');
+  background-image: url('https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   `
@@ -87,16 +85,18 @@ const ProductsH4 = styled.a`
   }
 `
 const ShopAbbButton = styled.button`
-  background-image: linear-gradient(to left top, rgb(149, 15, 35), rgb(219, 22, 51));
-  width: 20%
-  color: white;
-  font-weight: 600;
-  border-radius:28px;
-  border: 0;
-  padding: 5px;
-  margin: 0 auto;
-  outline: none;
-  `
+background-image: linear-gradient(to top left,#950f23,#DB1633);
+color: white;
+font-weight: 600;
+border-radius:3px;
+font-size: 16px;
+text-transform: uppercase;
+letter-spacing: 1px;
+border: 0;
+padding: 10px 15px;
+margin: 0 auto;
+outline: none;
+`
 const BorderBottom = styled.div`
   display: flex;
   border-bottom: 1px solid #555555;
@@ -242,14 +242,14 @@ export default function Aventics() {
 
 		<Container>
 			<FeaturedBrandLogo>
-				<BannerDiv> <BannerImg src="https://clthompson.com/wp-content/uploads/2019/10/aventics-logo.png"/></BannerDiv>
+				<BannerDiv> <BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png"/></BannerDiv>
 			</FeaturedBrandLogo>
 			<BrandDetailsContainer>
 				<AirlineDistributorH1>Aventics
 				</AirlineDistributorH1>
 				<DistributorDetails>Aventics, formerly Bosch Rexroth Pneumatics, provides pneumatic, electro-pneumatic, and electronic products for industrial automation, oilfield, mobile and marine applications. Aventics has a sophisticated and extensive product line, offering standard products in both NPT and ISO G (BSPP) port configurations, as well as application-specific custom product solutions. Products include pneumatic valves and actuators, pneumatic and hydraulic cylinders, pneumatic fieldbus valve manifolds, electro-pneumatic valves and positioners, FRLs, tubing and fittings, vacuum components, industrial shock absorbers and tooth chain products.</DistributorDetails>
 				<Div>
-					<ShopAbbButton>Shop for Aventics Products </ShopAbbButton>
+					<ShopAbbButton>Shop Products </ShopAbbButton>
 				</Div>
 
 				{/*............................... PRODUCTS................................... */}
