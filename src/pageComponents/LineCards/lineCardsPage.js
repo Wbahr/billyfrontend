@@ -65,6 +65,7 @@ const ThumbnailDiv = styled.a`
     text-align: center;
     &:hover{
         transform: scale(1.1);
+        transition: transform 0.5s;
     }
 `
 const MainContainer = styled.div`
@@ -89,14 +90,15 @@ const CallUs = styled.p`
 `
 
 const Button = styled.a`
-    border: 0;
-    background-color: #B51F2B;
+    background-color: #246696;
     color: white;
-    padding: 5px 20px;
-    border-radius: 30px;
     font-weight: bold;
+    border-radius: 3px;
+    font-size: 16px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    border: 0;
+    padding: 10px 15px;
     &:hover{
         text-decoration: none;
         color:white;
@@ -311,8 +313,8 @@ export default function BlogPage() {
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_High_Pressure_Systems_Brochure.pdf">
                         <LineCardThumbnail
                             src="//airlinemedia.airlinehyd.com/Literature/Thumbnails/high_pressure_systems_thumb.jpg"
-                            text="Airline Hydraulics Forest Products"
-                            alt="Airline Hydraulics Forest Products"
+                            text="High Pressure Systems & Components"
+                            alt="Airline Hydraulics High Pressure Systems & Components"
                         />
                     </ThumbnailDiv>
                     <ThumbnailDiv href="//airlinemedia.airlinehyd.com/Literature/Airline_Industrial_Facilities.pdf">
