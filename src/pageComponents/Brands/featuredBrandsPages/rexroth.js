@@ -45,7 +45,7 @@ export default function Rexroth() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Rexroth-Logo_RGB.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Rexroth-Logo_RGB.png" />
 			<Container>
 				<H1 text="Bosch Rexroth"
 				/>
@@ -53,7 +53,7 @@ export default function Rexroth() {
 					text="Bosch Rexroth is the world leader in the drive, motion and control technologies that power today’s most advanced manufacturing systems. We carry the full line of products from each of Bosch Rexroth’s technology areas: Industrial and Mobile Hydraulics, Pneumatics, Aluminum Structural Framing, Linear Motion Technologies and Electric Drives and Controls."
 				/>
 				<ShopProductBtn
-					text="Shop for Bosch Rexroth Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

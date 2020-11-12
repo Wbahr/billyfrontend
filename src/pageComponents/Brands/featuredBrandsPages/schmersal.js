@@ -42,7 +42,7 @@ export default function Schmersal() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/schmersal.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" />
 			<Container>
 				<H1 text="Schmersal"
 				/>
@@ -51,7 +51,7 @@ export default function Schmersal() {
 					Safety requirements for workers in almost all industries have evolved to ensure that safety in the workplace is no longer an option. Government organizations around the world have made worker safety a priority for companies which has drawn even greater attention to the topic of safety. The latest product developments from the Schmersal Group have focused on advanced safety systems designed to satisfy the most current safety standards and regulations."
 				/>
 				<ShopProductBtn
-					text="Shop for Schmersal Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

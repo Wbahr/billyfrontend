@@ -43,7 +43,7 @@ export default function Lincoln() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/LincolnSKFweb.png" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
 			<Container>
 				<H1 text="Lincoln"
 				/>
@@ -51,7 +51,7 @@ export default function Lincoln() {
 					text="Poor lubrication causes about 36% of all premature bearing failures. But with the right lubrication solution you can increase uptime and productivity. Together, SKF and Lincoln offer the world’s most complete portfolio of lubrication systems and solutions. As an authorized distributor, Airline offers sales, system design, installation, service and repair of SKF and Lincoln lubrication products. Lincoln and SKF’s cost-effective lubrication components and systems can be configured for industrial, mobile, off-road and other applications requiring equipment lubrication at specific intervals to minimize friction and wear and optimize bearing and machinery service life."
 				/>
 				<ShopProductBtn
-					text="Shop for Lincoln Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />
