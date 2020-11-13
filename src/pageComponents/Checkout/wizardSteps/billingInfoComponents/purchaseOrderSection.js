@@ -4,19 +4,67 @@ import FormikInput from '../../../_common/formik/input_v2'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import SelectField from '../../../_common/formik/select'
 import styled from 'styled-components'
-import Context from '../../../../config/context'
+import Context from '../../../../config/context';
+import { defaultBilling } from "../../helpers";
+
+const StyledCheckbox = styled.input`
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	padding-right: 18px;
+	margin: auto 0;
+`
 
 const Row = styled.div`
 	display: flex;
 	flexDirection: row;
 	flex-wrap: wrap;
 `
+const Label = styled.label`
+	margin: auto 10px;
+`
 
 export default function PurchaseOrderSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { customerPhysicalAddress } } = props
-    const context = useContext(Context)
+    const { values, setFieldValue, checkoutDropdownData: { customerPhysicalAddress } } = props;
+    const context = useContext(Context);
+    
+    const handleSameAsShippingChange = ({ target: { checked } }) => {
+        if(checked) {
+            setFieldValue('billing.firstName', values.shipto.firstName);
+            setFieldValue('billing.lastName', values.shipto.lastName);
+            setFieldValue('billing.address1', values.shipto.address1);
+            setFieldValue('billing.address2', values.shipto.address2);
+            setFieldValue('billing.city', values.shipto.city);
+            setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince);
+            setFieldValue('billing.zip', values.shipto.zip);
+            setFieldValue('billing.country', values.shipto.country);
+            setFieldValue('billing.companyName', values.shipto.companyName);
+            setFieldValue('billing.email', values.shipto.email);
+            setFieldValue('billing.phone', values.shipto.phone);
+        } else {
+            setFieldValue('billing.firstName', defaultBilling.firstName);
+            setFieldValue('billing.lastName', defaultBilling.lastName);
+            setFieldValue('billing.address1', defaultBilling.address1);
+            setFieldValue('billing.address2', defaultBilling.address2);
+            setFieldValue('billing.city', defaultBilling.city);
+            setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince);
+            setFieldValue('billing.zip', defaultBilling.zip);
+            setFieldValue('billing.country', defaultBilling.country);
+            setFieldValue('billing.companyName', defaultBilling.companyName);
+            setFieldValue('billing.email', defaultBilling.email);
+            setFieldValue('billing.phone', defaultBilling.phone);
+        }
+    };
+
     useEffect(() => {
         if (customerPhysicalAddress) {
+            if(values.contact.firstName && !values.billing.firstName) {
+                values.billing.firstName = values.contact.firstName;
+            }
+            if(values.contact.lastName && !values.billing.lastName) {
+                values.billing.lastName = values.contact.lastName;
+            }
+
             setFieldValue('billing', {
                 ...values.billing,
                 companyName: customerPhysicalAddress.companyName || '',
@@ -26,12 +74,16 @@ export default function PurchaseOrderSection(props) {
                 zip: customerPhysicalAddress.physPostalCode || '',
                 stateOrProvince: customerPhysicalAddress.physState || '',
                 country: customerPhysicalAddress.physCountry?.toLowerCase() || ''
-            })
+            });
         }
-    }, [customerPhysicalAddress])
+    }, [customerPhysicalAddress]);
 
     return (
         <div>
+            <Row style={{ padding: '8px 10px' }}>
+                <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
+                <Label htmlFor="sameAsShipping">Billing same as shipping</Label>
+            </Row>
             <Row>
                 {!!context.userInfo && <FormikInput label="PO Number*" name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" />

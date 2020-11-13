@@ -76,7 +76,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 	}
 
 	const initValues = {
-		contact: defaultContact,
+		contact: {...defaultContact},
 		schedule: {
 			...defaultQuote,
 			cartWithDates: cart.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
@@ -89,7 +89,7 @@ function CheckoutWizard({history, isStepValid, step, handleMoveStep, shoppingCar
 			firstName: userInfo?.role === 'Impersonator' ? '' : userInfo?.firstName || '',
             lastName: userInfo?.role === 'Impersonator' ? '' : userInfo?.lastName || '',
 		},
-		billing: defaultBilling,
+		billing: {...defaultBilling},
 		confirmationEmail: defaultConfirmationEmail
 	}
 
