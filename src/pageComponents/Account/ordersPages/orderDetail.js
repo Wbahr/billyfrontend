@@ -1,18 +1,16 @@
 import React, { useState, useContext, useMemo } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import { formatTableData } from '../helpers/mutators'
 import { useQuery } from '@apollo/client'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
 import OrderDetailItem from './orderDetailItem'
 import Input from '../../_common/form/inputv2'
-import ToggleSwitch from '../../_common/toggleSwitch'
 import matchSorter from 'match-sorter'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { GET_ORDERS_DETAIL } from '../../../config/providerGQL'
+import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'config/gqlQueries/gqlItemQueries'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './orderDetailPDF'
 
@@ -69,67 +67,20 @@ const ButtonSmall = styled.button`
   `
 
 const Container = styled.div`
-    margin: 10px 0
+    margin: 10px 0;
 `
 
 export default function OrderDetail({ history, orderId }) {
 	const context = useContext(Context)
 	const [filter, setFilter] = useState('')
 	const [isTableView, setIsTableView] = useState(false)
-	const [data, setData] = useState({})
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-	useQuery(GET_ORDERS_DETAIL, {
+	const { loading: isOrderDetailsLoading, error: orderDetailsError, data: orderDetails} = useQuery(GET_ORDERS_DETAIL, {
 		fetchPolicy: 'no-cache',
-		variables: { orderNumber: String(orderId) },
-		onCompleted: result => {
-			setData(result.accountOrderDetails)
-		}
+		variables: { orderNumber: String(orderId) }
 	})
 
-	let itemDetails = []
-	if (!isTableView) {
-        let filteredListItems = matchSorter(data.lineItems, filter, { keys: ['itemCode'] })
-		itemDetails = _.map(filteredListItems, (item) => {
-			return (
-				<OrderDetailItem key={item.lineNumber} item={item} />
-			)
-		})
-		if (itemDetails.length === 0) {
-			itemDetails = <p>No items found matching search.</p>
-		}
-	} else {
-
-	}
-
-	function handleAddOrder() {
-		let items = []
-		for (let i = 0; i < data.lineItems.length; i++) {
-			let item = data.lineItems[i]
-			items.push(
-				{
-					'frecno': item.invMastUid,
-					'quantity': parseInt(item.quantityOrdered, 10),
-					'itemNotes': '',
-					'itemUnitPriceOverride': null,
-					'customerPartNumberId': item.customerPartNumberId
-				}
-			)
-		}
-		context.addItems(items)
-		setShowAddedToCartModal(true)
-	}
-
-	function handleAddedToCart() {
-		setShowAddedToCartModal(false)
-	}
-	const OrderDetailDownloadButton = useMemo(() => {
-		return (
-			<PDFDownloadLink document={<MyDocument orderId={orderId} data={data} />} fileName={`airline_order_${orderId}.pdf`}>
-				{({ loading }) => (loading ? 'Loading document...' : 'Download this Order')}
-			</PDFDownloadLink>
-		)
-	}, [data, orderId])
 	const {
 		orderDate,
 		poNo,
@@ -143,10 +94,83 @@ export default function OrderDetail({ history, orderId }) {
 		shipToCity,
 		shipToState,
 		shipToZip,
-		promiseDate
-	} = data
+		promiseDate,
+		lineItems
+	} = orderDetails?.accountOrderDetails || {}
 
-	if (_.isEmpty(data)) {
+	const invMastUids = lineItems?.map(item => item.invMastUid) || []
+
+	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
+		variables: {
+			'items': invMastUids.map(invMastUid => {
+				return {
+					'invMastUid': invMastUid,
+					'quantity': 1
+				}
+			})
+		}
+	})
+
+	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	let itemDetails = []
+	if (!isTableView) {
+		let filteredListItems = matchSorter(lineItems, filter, { keys: ['itemCode'] })
+		
+		itemDetails = filteredListItems?.map((item) => {
+			const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
+			const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
+			const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
+			return <OrderDetailItem 
+						key={item.lineNumber} 
+						item={item}
+						itemDetails={itemDetails}
+						availability={itemAvailability}
+						priceInfo={itemPrice} />
+		})
+
+		if (!itemDetails || itemDetails.length === 0) {
+			itemDetails = <p>No items found matching search.</p>
+		}
+	}
+
+	function handleAddOrder() {
+		let items = lineItems.map(item => {
+			return {
+				'frecno': item.invMastUid,
+				'quantity': parseInt(item.quantityOrdered, 10),
+				'itemNotes': '',
+				'itemUnitPriceOverride': null,
+				'customerPartNumberId': item.customerPartNumberId
+			}
+		})
+
+		context.addItems(items)
+		setShowAddedToCartModal(true)
+	}
+
+	function handleAddedToCart() {
+		setShowAddedToCartModal(false)
+	}
+	const OrderDetailDownloadButton = useMemo(() => {
+		return (
+			<PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
+				{({ loading }) => (loading ? 'Loading document...' : 'Download this Order')}
+			</PDFDownloadLink>
+		)
+	}, [orderDetails, orderId])
+
+	if (isOrderDetailsLoading) {
 		return (
 			<p>Loading Order Data...</p>
 		)
@@ -167,8 +191,8 @@ export default function OrderDetail({ history, orderId }) {
 				</DivHeader>
 				<DivOrderInfoContainer>
 					<DivOrderInfo>
-						<p>Order Date: {_.isNil(orderDate) ? '--' : dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
-						<p>Promise Date: {_.isNil(promiseDate) ? '--' : dateFormat(new Date(promiseDate), 'MM/dd/yyyy')}</p>
+						<p>Order Date: {orderDate ? dateFormat(new Date(orderDate), 'MM/dd/yyyy') : '--'}</p>
+						<p>Promise Date: {promiseDate ? dateFormat(new Date(promiseDate), 'MM/dd/yyyy') : '--'}</p>
 						<p>Order Number: {orderId}</p>
 						<p>P.O. Number: {poNo}</p>
 						<p>Status: {status}</p>
@@ -179,8 +203,8 @@ export default function OrderDetail({ history, orderId }) {
 						<p>Ship-to-Address:</p>
 						<p>{shipToName}</p>
 						<p>{shipToAddress1}</p>
-						{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-						{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
+						{shipToAddress2 && <p>{shipToAddress2}</p>}
+						{shipToAddress3 && <p>{shipToAddress3}</p>}
 						<p>{shipToCity}, {shipToState} {shipToZip}</p>
 					</DivOrderInfo>
 				</DivOrderInfoContainer>
