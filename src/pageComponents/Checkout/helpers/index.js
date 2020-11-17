@@ -12,7 +12,7 @@ export const defaultBilling = {
     country: 'us',
     phone: '',
     email: '',
-    cardType: '',
+    cardType: 'new_card',
     companyName: '',
     savePaymentMethod: 0,
     sameAsShipping: 0,

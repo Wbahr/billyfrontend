@@ -2,6 +2,7 @@ import * as React from 'react'
 import _ from 'lodash'
 import Select from 'react-select'
 import styled from '@emotion/styled'
+import Input from './input_v2'
 
 const ErrorMessage = styled.div`
   color: red
@@ -33,21 +34,28 @@ const CustomSelectComponent = ({
 	form: { touched, errors, setFieldValue },
 	options,
 	width,
-	changeFunction,
+    changeFunction,
+    isDisabled,
 	...props
 }) => {
-	return (
-		<div style={{position: 'relative', zIndex: 1, margin: 'auto 0', width: width || '300px', padding: '0 8px', height: props.label ? '71px' : ''}}>
+    return (
+		<div style={{position: 'relative', margin: 'auto 0', width: width || '300px', padding: '0 8px', height: props.label ? '71px' : ''}}>
 			{props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
-			<Select
+            <Select
 				{...field}
-				{...props}
+                {...props}
+                isDisabled={isDisabled}
 				options={options}
 				value={(options ? options.find(option => option.value === field.value) : '')}
 				onChange={_.isNil(changeFunction) ? option =>{setFieldValue(field.name, (option).value)} : option => changeFunction(field.name, (option).value)}
 				width='400px'
 				styles={SelectStyle}
-			/>
+            /> 
+            {!!isDisabled && 
+            <input type="hidden"
+                {...field}
+                value={field.value}/> }
+            
 			{touched[field.name] && errors[field.name] && (
 				<ErrorMessage>{errors[field.name]}</ErrorMessage>
 			)}
