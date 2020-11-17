@@ -12,7 +12,8 @@ import matchSorter from 'match-sorter'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { GET_ORDERS_DETAIL } from '../../../config/providerGQL'
+import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'config/gqlQueries/gqlItemQueries'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -67,54 +68,12 @@ export default function OrderDetail({ history, orderId: quoteId}) {
 	const context = useContext(Context)
 	const [filter, setFilter] = useState('')
 	const [isTableView, setIsTableView] = useState(false)
-	const [data, setData] = useState({})
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-	useQuery(GET_ORDERS_DETAIL, {
+	const { loading: isOrderDetailsLoading, error: orderDetailsError, data: orderDetails} = useQuery(GET_ORDERS_DETAIL, {
 		fetchPolicy: 'no-cache',
-		variables: { orderNumber: String(quoteId)	},		
-		onCompleted: result => {
-			setData(result.accountOrderDetails)
-		}
+		variables: { orderNumber: String(quoteId) }
 	})
-
-	let itemDetails = []
-	if(!isTableView){
-		let filteredListItems = matchSorter(data.lineItems, filter, {keys: ['itemCode']})
-		itemDetails = _.map(filteredListItems, (item) => {
-			return(
-				<QuoteDetailItem item={item} quoteId={quoteId}/>
-			)
-		})
-		if (itemDetails.length === 0){
-			itemDetails = <p>No items found matching search.</p>
-		}
-	} else {
-
-	}
-
-	function handleAddQuote() {
-		let items = []
-		for(let i =0; i < data.lineItems.length ;i++){
-			let item = data.lineItems[i]
-			items.push(
-				{
-					'frecno': item.invMastUid,
-					'quantity': parseInt(item.quantityOrdered, 10),
-					'itemNotes': '',
-					'itemUnitPriceOverride': null,
-					'customerPartNumberId': item.customerPartNumberId,
-					'quoteId': quoteId
-				}
-			)
-		}
-		context.addItems(items)
-		setShowAddedToCartModal(true)
-	}
-
-	function handleAddedToCart(){
-		setShowAddedToCartModal(false)
-	}
 
 	const {
 		orderDate,
@@ -128,10 +87,78 @@ export default function OrderDetail({ history, orderId: quoteId}) {
 		shipToAddress3,
 		shipToCity,
 		shipToState,
-		shipToZip
-	} = data
+		shipToZip,
+		promiseDate,
+		lineItems
+	} = orderDetails?.accountOrderDetails || {}
 
-	if(_.isEmpty(data)){
+	const invMastUids = lineItems?.map(item => item.invMastUid) || []
+
+	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
+		variables: {
+			'items': invMastUids.map(invMastUid => {
+				return {
+					'invMastUid': invMastUid,
+					'quantity': 1
+				}
+			})
+		}
+	})
+
+	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
+		variables: {
+			'invMastUids': invMastUids
+		}
+	})
+
+	let itemDetails = []
+	if(!isTableView){
+		let filteredListItems = matchSorter(lineItems, filter, {keys: ['itemCode']})
+		itemDetails = filteredListItems?.map((item) => {
+			const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
+			const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
+			const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
+			return <QuoteDetailItem 
+						key={item.lineNumber} 
+						quoteId={quoteId}
+						item={item}
+						itemDetails={itemDetails}
+						availability={itemAvailability}
+						priceInfo={itemPrice} />
+		})
+
+		if (!itemDetails || itemDetails.length === 0) {
+			itemDetails = <p>No items found matching search.</p>
+		}
+	}
+
+	function handleAddQuote() {
+		let items = lineItems.map(item => {
+			return {
+				'frecno': item.invMastUid,
+				'quantity': parseInt(item.quantityOrdered, 10),
+				'itemNotes': '',
+				'itemUnitPriceOverride': null,
+				'customerPartNumberId': item.customerPartNumberId,
+				//'quoteId': quoteId
+			}
+		})
+
+		context.addItems(items)
+		setShowAddedToCartModal(true)
+	}
+
+	function handleAddedToCart(){
+		setShowAddedToCartModal(false)
+	}
+
+	if(isOrderDetailsLoading){
 		return(
 			<p>Loading Quote Data...</p>
 		)
@@ -151,7 +178,7 @@ export default function OrderDetail({ history, orderId: quoteId}) {
 				</DivHeader>
 				<DivOrderInfoContainer>
 					<DivOrderInfo>
-						<p>Order Date: {_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p>
+						<p>Order Date: {orderDate ? dateFormat(new Date(orderDate), 'MM/dd/yyyy') : '--'}</p>
 						<p>Quote Number: {quoteId}</p>
 						<p>P.O. Number: {poNo}</p>
 						<p>Status: {status}</p>
@@ -162,8 +189,8 @@ export default function OrderDetail({ history, orderId: quoteId}) {
 						<p>Ship-to-Address:</p>
 						<p>{shipToName}</p>
 						<p>{shipToAddress1}</p>
-						{!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-						{!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
+						{shipToAddress2 && <p>{shipToAddress2}</p>}
+						{shipToAddress3 && <p>{shipToAddress3}</p>}
 						<p>{shipToCity}, {shipToState} {shipToZip}</p>
 					</DivOrderInfo>
 				</DivOrderInfoContainer>

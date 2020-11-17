@@ -94,3 +94,13 @@ export const useDidUpdateEffect = (create, deps) => {
 			didMountRef.current = true;
 	}, deps);
 }
+
+export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => {
+	return quantity > (availability || 0)
+		? (
+			(leadTimeDays || 0) 
+				? `Lead time ${availability?.leadTimeDays || 25} days`
+				: 'Call Airline Hydraulics Co. for lead time'
+		)
+		: ''
+}

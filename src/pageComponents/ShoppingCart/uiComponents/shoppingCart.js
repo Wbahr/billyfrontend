@@ -37,7 +37,7 @@ const H3 = styled.h3`
 `
 
 const Ashare = styled.a`
-	margin-right: 4px
+	margin-right: 4px;
 `
 
 const AshareBlue = styled(Ashare)`

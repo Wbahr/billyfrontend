@@ -66,7 +66,23 @@ export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
 `
 
 export const GET_CHECKOUT_ITEM_DETAIL = gql`
-    query GetShoppingCartItemsDetails($invMastUids: [Int]){
+    query GetCheckoutItemsDetails($invMastUids: [Int]){
+        itemDetailsBatch(invMastUids: $invMastUids){
+            ...ItemDetails
+			image {
+				path
+				sequence
+				itemMediaType
+				mediaType
+				mediaId
+			}
+        }
+    }
+    ${FRAGMENT_ITEM_DETAIL}
+`
+
+export const GET_ORDER_DETAIL_ITEM_DETAIL = gql`
+    query GetOrderDetailItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
 			image {
