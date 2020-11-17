@@ -280,6 +280,8 @@ function CheckoutPage({ history }) {
                             enableReinitialize={false}
                             validationSchema={validationSchema[currentStep]}
                             validate={handleValidateFields}
+                            validateOnBlur={true}
+                            validateOnChange={true}
                         >
                             {formikProps => (
                                 <form name="checkoutForm" onSubmit={e => e.preventDefault()}>

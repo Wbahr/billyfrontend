@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -39,36 +39,33 @@ const DivNavigation = styled.div`
 `
 
 export function ShipToForm(props) {
-	const {history, values, setValues, checkoutDropdownDataLabels, checkoutDropdownData, setFieldValue, updateZip, isStepValid, handleMoveStep} = props
-	const context = useContext(Context)
+	const {history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep} = props
+    const context = useContext(Context);
 	
 	useEffect(() => {
 		window.scrollTo({top: 0})
-	}, [])
-	
-	function handleSavedAddressChange({target: {name, value}}) {
-		setFieldValue(name, value)
+    }, [])
+    
+    function handleSavedAddressChange(e, handleChange) {
 		if (values.shipto.selectedShipTo) {
-			setFieldValue('shipto.selectedShipTo', -1)
-		}
+			setFieldValue('shipto.selectedShipTo', -1);
+        }
+        handleChange(e);
 	}
-	
-	function handleStateOrProvinceChange(name, value) {
-		handleSavedAddressChange({target: {name, value}})
-	}
-	
-	function handleCountryChange(name, value) {
-		handleSavedAddressChange({target: {name, value}})
-		setFieldValue('shipto.stateOrProvince', '')
+		
+	function handleCountryChange(e, value, handleChange) {
+        handleSavedAddressChange(e, handleChange);
+		setFieldValue('shipto.stateOrProvince', '');
 	}
 
-	function handleZipChange({target: {name, value}}) {
-		setFieldValue(name, value)
-		if (value.length >= 5) updateZip(values.shipto.selectedShipTo, value)
+	function handleZipChange(e, handleChange) {
+        handleSavedAddressChange(e, handleChange);
+        //Pass the zip up to the parent component; tax needs to be recalculated
+		if (value.length >= 5) updateZip(values.shipto.selectedShipTo, value);
 	}
 	
-	function handleSavedAddressSelectChange(name, selectedShipTo) {
-        const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
+	function handleSavedAddressSelectChange(e, selectedShipTo, handleChange) {
+        const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo);
         //Update the formik context values state
         const shipto = {
 			...values.shipto,
@@ -85,8 +82,9 @@ export function ShipToForm(props) {
             collectNumber: shipToAddress?.collectNumberUps || '',
             carrierId: shipToAddress?.carrierId || ''
         }
-		setFieldValue('shipto', shipto)
-		shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode)
+        setFieldValue('shipto', shipto);
+        shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode);
+        handleChange(e);
 	}
 
 	function handleSavedContactSelectChange(name, savedContact) {
@@ -159,7 +157,7 @@ export function ShipToForm(props) {
 						options={checkoutDropdownDataLabels.shiptos}
 						width="800px"
 						label="Saved Ship To"
-						changeFunction={handleSavedAddressSelectChange}
+						changeFunction={(e, val) => handleSavedAddressSelectChange(e, val, handleChange)}
 					/>
 					{(values.shipto.selectedShipTo === -1) && (
 						<FormRow>
@@ -172,7 +170,7 @@ export function ShipToForm(props) {
 				label="Company Name"
 				name="shipto.companyName"
 				width={500}
-				onChange={handleSavedAddressChange}
+				onChange={(e) => { handleSavedAddressChange(e, handleChange); }}
 				value={values.shipto.companyName}
 			/>
 			
@@ -190,31 +188,31 @@ export function ShipToForm(props) {
 				label="Address 1*"
 				name="shipto.address1"
 				width={600}
-				onChange={handleSavedAddressChange}
-				value={values.shipto.address1}
+				onChange={(e) => handleSavedAddressChange(e, handleChange)}
+			    value={values.shipto.address1} 
 			/>
 			
 			<FormikInput
 				label="Address 2"
 				name="shipto.address2"
 				width={600}
-				onChange={handleSavedAddressChange}
-				value={values.shipto.address2}
+				onChange={(e) => handleSavedAddressChange(e, handleChange)}
+			    value={values.shipto.address2} 
 			/>
 			
 			<FormRow>
 				<FormikInput
 					label="City*"
 					name="shipto.city"
-					onChange={handleSavedAddressChange}
-					value={values.shipto.city}
+					onChange={(e) => handleSavedAddressChange(e, handleChange)}
+			        value={values.shipto.city} 
 				/>
 				<FormikInput
 					label="Zip*"
 					name="shipto.zip"
 					width={150}
-					onChange={handleZipChange}
-					value={values.shipto.zip}
+					onChange={(e) => handleZipChange(e, handleChange)}
+			        value={values.shipto.zip} 
 				/>
 			</FormRow>
 			
@@ -227,7 +225,7 @@ export function ShipToForm(props) {
 					width="250px"
 					isSearchable={false}
 					label="Country*"
-					changeFunction={handleCountryChange}
+					changeFunction={(e, val) => { handleCountryChange(e, val, handleChange)}}
 				/>
 				{values.shipto.country  === 'us' && (
 					<Field
@@ -236,7 +234,7 @@ export function ShipToForm(props) {
 						options={StateList}
 						placeholder="Select a State"
 						label="State*"
-						changeFunction={handleStateOrProvinceChange}
+						changeFunction={(e, val) => { handleSavedAddressChange(e, handleChange)}}
 						width="200px"
 					/>
 				)}
@@ -247,7 +245,7 @@ export function ShipToForm(props) {
 						options={CanadianProvinceList}
 						placeholder="Select a Province"
 						label="Province*"
-						changeFunction={handleStateOrProvinceChange}
+						changeFunction={(e, val) => { handleSavedAddressChange(e, handleChange)}}
 						width="200px"
 					/>
 				)}
@@ -261,13 +259,14 @@ export function ShipToForm(props) {
 				placeholder="Select a Carrier"
                 label="Carrier*"
                 width="500px"
+                changeFunction={(e, val) => handleSavedAddressChange(e, handleChange)}
+			    value={values.shipto.carrierId} 
 			/>
 			
 			<FormRow>
 				<FormikCheckbox label="Ship Collect?" name="shipto.isCollect" value={values.shipto.isCollect}/>
 			</FormRow>
 			{!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
-			
 			<DivNavigation>
 				<ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
 				<ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>

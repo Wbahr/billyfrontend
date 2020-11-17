@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import CurrencyInput from 'react-currency-input'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
-import { ErrorMessage } from 'formik'
+import { ErrorMessage, Field } from 'formik'
 
 const MainCurrencyInput = styled(CurrencyInput)`
   height: 40px;
@@ -24,7 +24,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
 `
 
 
-const input = props => <input {...props} />
+const input = props => <Field {...props} />
 
 export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
 	if (type === 'text' || type === 'email' || type === 'password') {
@@ -47,7 +47,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
 						} : {})
 					}
 				/>
-				<FormikFormFieldError>
+				<FormikFormFieldError style={{width: width || '400px'}}>
 					<ErrorMessage name={name} />
 				</FormikFormFieldError> 
 			</FormikFormFieldContainer>
@@ -72,6 +72,9 @@ export default function Input({ type, disabled, name, label, placeholder, width,
 			<FormikFormFieldContainer style={style}>
 				{label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
 				<FormikFormField id={name} type={type} name={name} />
+                <FormikFormFieldError style={{width: width || '400px'}}>
+					<ErrorMessage name={name} />
+				</FormikFormFieldError> 
 			</FormikFormFieldContainer>
 		);
 	}
