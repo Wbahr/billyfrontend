@@ -20,87 +20,57 @@ const Row = styled.div`
 	flexDirection: row;
 	flex-wrap: wrap;
 `
-const Label = styled.label`
+const Label = styled.p`
 	margin: auto 10px;
 `
 
 export default function PurchaseOrderSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { customerPhysicalAddress } } = props;
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props;
     const context = useContext(Context);
-    
-    const handleSameAsShippingChange = ({ target: { checked } }) => {
-        if(checked) {
-            setFieldValue('billing.firstName', values.shipto.firstName);
-            setFieldValue('billing.lastName', values.shipto.lastName);
-            setFieldValue('billing.address1', values.shipto.address1);
-            setFieldValue('billing.address2', values.shipto.address2);
-            setFieldValue('billing.city', values.shipto.city);
-            setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince);
-            setFieldValue('billing.zip', values.shipto.zip);
-            setFieldValue('billing.country', values.shipto.country);
-            setFieldValue('billing.companyName', values.shipto.companyName);
-            setFieldValue('billing.email', values.shipto.email);
-            setFieldValue('billing.phone', values.shipto.phone);
-        } else {
-            setFieldValue('billing.firstName', defaultBilling.firstName);
-            setFieldValue('billing.lastName', defaultBilling.lastName);
-            setFieldValue('billing.address1', defaultBilling.address1);
-            setFieldValue('billing.address2', defaultBilling.address2);
-            setFieldValue('billing.city', defaultBilling.city);
-            setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince);
-            setFieldValue('billing.zip', defaultBilling.zip);
-            setFieldValue('billing.country', defaultBilling.country);
-            setFieldValue('billing.companyName', defaultBilling.companyName);
-            setFieldValue('billing.email', defaultBilling.email);
-            setFieldValue('billing.phone', defaultBilling.phone);
-        }
-    };
 
     useEffect(() => {
-        if (customerPhysicalAddress) {
-            if(values.contact.firstName && !values.billing.firstName) {
+        if (billingInfo) {
+            if (values.contact.firstName && !values.billing.firstName) {
                 values.billing.firstName = values.contact.firstName;
             }
-            if(values.contact.lastName && !values.billing.lastName) {
+            if (values.contact.lastName && !values.billing.lastName) {
                 values.billing.lastName = values.contact.lastName;
+            }
+            if (values.contact.email && !values.billing.email) {
+                values.billing.email = values.contact.email;
+            }
+            if (values.contact.phone && !values.billing.phone) {
+                values.billing.phone = values.contact.phone;
             }
 
             setFieldValue('billing', {
-                ...values.billing,
-                companyName: customerPhysicalAddress.companyName || '',
-                address1: customerPhysicalAddress.physAddress1 || '',
-                address2: customerPhysicalAddress.physAddress2 || '',
-                city: customerPhysicalAddress.physCity || '',
-                zip: customerPhysicalAddress.physPostalCode || '',
-                stateOrProvince: customerPhysicalAddress.physState || '',
-                country: customerPhysicalAddress.physCountry?.toLowerCase() || ''
+                ...values.billing
             });
         }
-    }, [customerPhysicalAddress]);
-
+    }, []);
+    /* Note: we don't show a "same as shipping" on this screen, because the customer has to use
+    the accounting-approved address when paying by PO */
     return (
         <div>
-            <Row style={{ padding: '8px 10px' }}>
-                <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
-                <Label htmlFor="sameAsShipping">Billing same as shipping</Label>
-            </Row>
+            {!!billingInfo.requiresPONumber && <Row><Label>A PO# is required for this order.</Label></Row>}
+            {!!billingInfo.terms && <Row><Label>Terms: {billingInfo.terms}</Label></Row>}
             <Row>
                 {!!context.userInfo && <FormikInput label="PO Number*" name="billing.purchaseOrder" />}
-                <FormikInput label="Company Name" name="billing.companyName" />
+                <FormikInput label="Company Name" name="billing.companyName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <FormikInput label="First Name*" name="billing.firstName" />
-                <FormikInput label="Last Name*" name="billing.lastName" />
+                <FormikInput label="First Name*" name="billing.firstName" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label="Last Name*" name="billing.lastName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <FormikInput label='Email Invoice To' name="billing.email" />
-                <FormikInput label="Phone" name="billing.phone" />
+                <FormikInput label='Email Invoice To' name="billing.email" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label="Phone" name="billing.phone" disabled={!!billingInfo.isNetTerms} />
             </Row>
-            <FormikInput label="Address 1*" name="billing.address1" width={500} />
-            <FormikInput label="Address 2" name="billing.address2" width={500} />
+            <FormikInput label="Address 1*" name="billing.address1" width={500} disabled={!!billingInfo.isNetTerms} />
+            <FormikInput label="Address 2" name="billing.address2" width={500} disabled={!!billingInfo.isNetTerms} />
             <Row>
-                <FormikInput label="City*" name="billing.city" />
-                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} />
+                <FormikInput label="City*" name="billing.city" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
                 <Field
@@ -110,6 +80,7 @@ export default function PurchaseOrderSection(props) {
                     placeholder="Select a Country"
                     isSearchable={false}
                     label="Country*"
+                    isDisabled={!!billingInfo.isNetTerms}
                 />
                 {values.billing.country === 'us' && (
                     <Field
@@ -119,6 +90,7 @@ export default function PurchaseOrderSection(props) {
                         placeholder="Select a State"
                         label="State*"
                         width="200px"
+                        isDisabled={!!billingInfo.isNetTerms}
                     />
                 )}
                 {values.billing.country === 'canada' && (
@@ -129,8 +101,10 @@ export default function PurchaseOrderSection(props) {
                         placeholder="Select a Province"
                         label="Province*"
                         width="200px"
+                        isDisabled={!!billingInfo.isNetTerms}
                     />
                 )}
+
             </Row>
         </div>
     )

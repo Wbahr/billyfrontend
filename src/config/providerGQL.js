@@ -25,6 +25,15 @@ export const BEGIN_IMPERSONATION = gql`
           customerName
           customerIdP21
         }
+        billingInfo {
+            requiresPONumber
+            address1
+            address2
+            city
+            state
+            zip
+            country
+        }
       }
     }
   }
@@ -655,18 +664,17 @@ export const GET_CHECKOUT_DATA = gql`
         phoneNumber
         email
       }
-      termsDescription
-      customerPhysicalAddress {
-        id
-        name
+      billingInfo {
+        requiresPONumber
+        terms
+        isNetTerms
+        address1
+        address2
+        city
+        state
+        zip
+        country
         companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
       }
     }
   }

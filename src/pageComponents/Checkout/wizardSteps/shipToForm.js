@@ -69,7 +69,7 @@ export function ShipToForm(props) {
 	
 	function handleSavedAddressSelectChange(name, selectedShipTo) {
         const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
-        //This is the object the form binds to
+        //Update the formik context values state
         const shipto = {
 			...values.shipto,
 			selectedShipTo,

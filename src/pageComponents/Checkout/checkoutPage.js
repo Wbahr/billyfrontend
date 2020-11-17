@@ -3,12 +3,26 @@ import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
 import Context from '../../config/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
-import CheckoutWizard from './checkoutWizard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CheckoutProgress from './uiComponents/checkoutProgress'
-import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, billToSchema } from './helpers/validationSchema'
-import {connect} from 'formik'
-import {GET_TAXES} from "../../config/providerGQL";
+import { connect } from 'formik'
+import { GET_TAXES } from "../../config/providerGQL";
+import PropTypes from 'prop-types'
+import { useQuery } from '@apollo/client'
+import { Formik } from 'formik'
+import { ShippingScheduleForm } from './wizardSteps/shippingScheduleForm'
+import { ShipToForm } from './wizardSteps/shipToForm'
+import BillingInfoForm from './wizardSteps/billingInfoForm'
+import ConfirmationScreen from './wizardSteps/confirmationScreen'
+import formatDropdownData from './helpers/formatCheckoutDropdownData'
+import { GET_CHECKOUT_DATA } from '../../config/providerGQL'
+import { defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo } from "./helpers";
+import { startOfTomorrow } from 'date-fns'
+import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
+import { contextType } from 'react-copy-to-clipboard'
+import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema } from './helpers/validationSchema'
+import Loader from 'pageComponents/_common/loader'
 
 const DivContainer = styled.div`
   display: flex;
@@ -76,111 +90,218 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-const yupSchema = {
-	0: shippingScheduleSchema,
-	1: shipToSchema,
-	2: billToSchema
-}
-
-const airlineYupSchema = {
-	0: shippingScheduleSchema,
-	1: airlineShipToSchema,
-	2: billToSchema
-}
-
 const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
 
-function CheckoutPage({history}) {
-	const context = useContext(Context)
-	const [currentStep, setCurrentStep] = useState(0)
-	const [shippingZipCode, setShippingZipCode] = useState({})
-	const [taxAmount, setTaxAmount] = useState(0)
-	const [stepValidated, setStepValidated] = useState(
-		{
-			0: false,
-			1: false,
-			2: history.location.pathname === '/create-quote',
-			3: false
-		}
-	)
-	
-	useEffect(() => {
-		if (!context.cart.length) {
-			history.replace('/cart')
-		}
-	}, [])
-	
-	const [getTaxAmount] = useLazyQuery(GET_TAXES, {
-		fetchPolicy: 'no-cache',
-		onCompleted: data => {
-			const taxTotal = data?.getCheckoutData?.taxTotal || 0
-			setTaxAmount(taxTotal)
-		}
-	})
+function CheckoutPage({ history }) {
+    const context = useContext(Context);
+    const [checkoutDropdownData, setCheckoutDropdownData] = useState([]);
+    const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([]);
+    const [paymentInfo, setPaymentInfo] = useState({});
+    const [shippingZipCode, setShippingZipCode] = useState({});
+    const [taxAmount, setTaxAmount] = useState(0);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [validationSchema, setValidationSchema] = useState(null);
 
-	useEffect(() => {
-		if (!shippingZipCode) {
-			const anonymousCartToken = localStorage.getItem('cartToken')
-			getTaxAmount({
-				variables: {
-					checkoutDataRequest: {
-						anonymousCartToken,
-						...shippingZipCode
-					}
-				}
-			})
-		}
-	},[shippingZipCode])
-	
-	
-	const handleMoveStep = nextStepIdx => {
-		if (nextStepIdx === 0 || stepValidated[nextStepIdx - 1]) {
-			setCurrentStep(nextStepIdx)
-		}
-	}
+    const handleMoveStep = nextStepIdx => {
+        if (nextStepIdx === 0 || stepValidated[nextStepIdx - 1]) {
+            setCurrentStep(nextStepIdx)
+        }
+    };
 
-	const handleValidateFields = values => {
-		yupSchema[currentStep].validate(values)
-			.catch((err) => console.log(err.name, err.errors))
-		
-		yupSchema[currentStep]
-			.isValid(values)
-			.then((valid) => setStepValidated({...stepValidated, [currentStep]: valid}))
-	}
-	
-	return (
-		<DivContainer>
-			<DivCheckoutCol>
-				<Div>
-					<DivRow>
-						<FontAwesomeIcon icon="lock" />
-						<H3>Checkout</H3>
-						<CheckoutProgress {...{stepLabels, currentStep, stepValidated, handleMoveStep}}/>
-					</DivRow>
-				</Div>
-				
-				<Container>
-					<Pformheader>{stepLabels[currentStep]}</Pformheader>
-					<CheckoutWizard
-						step={currentStep}
-						yupSchema={context.userInfo?.role === 'Impersonator' ? airlineYupSchema : yupSchema} //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
-						handleValidateFields={handleValidateFields}
-						updateZip={(shipToId, zipcode) => setShippingZipCode({shipToId, zipcode})}
-						isStepValid={stepValidated[currentStep]}
-						handleMoveStep={handleMoveStep}
-						history={history}
-					/>
-				</Container>
-			</DivCheckoutCol>
-			
-			<DivOrderTotalCol>
-				<CheckoutOrderSummary
-					currentStep={currentStep}
-					taxAmount={taxAmount}
-				/>
-			</DivOrderTotalCol>
-		</DivContainer>
-	)
+    const [stepValidated, setStepValidated] = useState(
+        {
+            0: false,
+            1: false,
+            2: history.location.pathname === '/create-quote',
+            3: false
+        }
+    );
+
+    useEffect(() => {
+        if (!context.cart.length) {
+            history.replace('/cart')
+        }
+    }, [])
+
+    const [getTaxAmount] = useLazyQuery(GET_TAXES, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const taxTotal = data?.getCheckoutData?.taxTotal || 0
+            setTaxAmount(taxTotal)
+        }
+    })
+
+    useEffect(() => {
+        if (!shippingZipCode) {
+            const anonymousCartToken = localStorage.getItem('cartToken')
+            getTaxAmount({
+                variables: {
+                    checkoutDataRequest: {
+                        anonymousCartToken,
+                        ...shippingZipCode
+                    }
+                }
+            })
+        }
+    }, [shippingZipCode])
+    const getFormStepComponent = currentStep => {
+        switch (currentStep) {
+            case 0:
+                return ShippingScheduleForm
+            case 1:
+                return ShipToForm
+            case 2:
+                return BillingInfoForm
+            case 3:
+                return ConfirmationScreen
+            default:
+                return ShippingScheduleForm
+        }
+    };
+
+    function yupSchema(requiresPONumber) {
+        return {
+            0: shippingScheduleSchema,
+            1: shipToSchema,
+            2: getBillToSchema(requiresPONumber)
+        };
+    };
+
+    function airlineYupSchema(requiresPONumber) {
+        return {
+            0: shippingScheduleSchema,
+            1: airlineShipToSchema,
+            2: getBillToSchema(requiresPONumber)
+        };
+    };
+
+    useQuery(GET_CHECKOUT_DATA, {
+        fetchPolicy: 'no-cache',
+        onCompleted: result => {
+            const mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
+            setCheckoutDropdownData(result.getCheckoutDropdownData)
+            setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
+            const requiresPONumber = result.getCheckoutDropdownData.billingInfo?.requiresPONumber;
+
+            //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
+            setValidationSchema(context.userInfo?.role === 'Impersonator' ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
+        }
+    });
+
+    const handleValidateFields = values => {
+        validationSchema[currentStep].validate(values)
+            .catch((err) => console.log(err.name, err.errors))
+
+        validationSchema[currentStep]
+            .isValid(values)
+            .then((valid) => setStepValidated({ ...stepValidated, [currentStep]: valid }))
+    };
+
+    const invMastUids = context.cart?.map(item => item.frecno)
+    const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
+        variables: {
+            'invMastUids': invMastUids
+        }
+    })
+
+    const { loading: pricesLoading, error: itemPricesError, data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
+        variables: {
+            'items': context.cart.map(cartItem => {
+                return {
+                    'invMastUid': cartItem.frecno,
+                    'quantity': cartItem.quantity
+                }
+            })
+        }
+    })
+
+    const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+        variables: {
+            'invMastUids': invMastUids
+        }
+    })
+
+    const itemInfo = {
+        itemsDetails: itemsDetails?.itemDetailsBatch,
+        itemsPrices: itemsPrices?.getItemPrices,
+        itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
+    }
+
+    const initValues = {
+        contact: { ...defaultContact },
+        schedule: {
+            ...defaultQuote,
+            cartWithDates: context.cart.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
+            shoppingCartToken: localStorage.getItem('shoppingCartToken'),
+            isQuote: history.location.pathname === 'create-quote'
+        },
+        shipto: {
+            ...defaultShipTo,
+            selectedShipTo: !context.userInfo ? null : -1,
+            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+        },
+        billing: {
+            ...defaultBilling,
+            paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? "purchase_order" : "credit_card",
+            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+            companyName: checkoutDropdownData.billingInfo?.companyName || '',
+            address1: checkoutDropdownData.billingInfo?.address1 || '',
+            address2: checkoutDropdownData.billingInfo?.address2 || '',
+            city: checkoutDropdownData.billingInfo?.city || '',
+            stateOrProvince: checkoutDropdownData.billingInfo?.state || '',
+            zip: checkoutDropdownData.billingInfo?.zip || '',
+            country: checkoutDropdownData.billingInfo?.country.toLowerCase() || '',
+        },
+        confirmationEmail: defaultConfirmationEmail
+    };
+
+    const showPoOption = checkoutDropdownData.billingInfo?.isNetTerms;
+
+    const FormStepComponent = getFormStepComponent(currentStep)
+
+    return (
+        <DivContainer>
+            <DivCheckoutCol>
+                <Div>
+                    <DivRow>
+                        <FontAwesomeIcon icon="lock" />
+                        <H3>Checkout</H3>
+                        <CheckoutProgress {...{ stepLabels, currentStep, stepValidated, handleMoveStep }} />
+                    </DivRow>
+                </Div>
+
+                <Container>
+                    <Pformheader>{stepLabels[currentStep]}</Pformheader>
+                    {validationSchema &&
+                        <Formik
+                            initialValues={initValues}
+                            enableReinitialize={false}
+                            validationSchema={validationSchema[currentStep]}
+                            validate={handleValidateFields}
+                        >
+                            {formikProps => (
+                                <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
+                                    <FormStepComponent {...{
+                                        ...formikProps, ...itemInfo, paymentInfo, setPaymentInfo, isStepValid: stepValidated[currentStep], handleMoveStep,
+                                        checkoutDropdownData, checkoutDropdownDataLabels, updateZip: (shipToId, zipcode) => setShippingZipCode({ shipToId, zipcode }), history, showPoOption
+                                    }} />
+                                </form>
+                            )}
+                        </Formik>}
+                    {!validationSchema && <Loader />}
+                </Container>
+            </DivCheckoutCol>
+
+            <DivOrderTotalCol>
+                <CheckoutOrderSummary
+                    currentStep={currentStep}
+                    taxAmount={taxAmount}
+                />
+            </DivOrderTotalCol>
+        </DivContainer>
+    )
 }
 
 export default connect(CheckoutPage)

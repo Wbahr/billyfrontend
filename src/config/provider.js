@@ -23,7 +23,8 @@ export default function Provider(props) {
         ...newUserInfo,
         isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
     } : null);
-	const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
+    const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
+    const [billingInfo, setBillingInfo] = useState(null)
 	const [userType, setUserType] = useState({'current': null, 'previous': null})
 	const [topAlert, setTopAlert] = useState({'show': false, 'message': ''})
 	const [timeoutId, setTimeoutId] = useState(null)
@@ -89,10 +90,11 @@ export default function Provider(props) {
 				const {
 					userInfo,
 					impersonationUserInfo,
-					token
+                    token,
+                    billingInfo
 				} = requestData.authorizationInfo
 				localStorage.setItem('apiToken', token)
-				manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
+				manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo, billingInfo)
 				handleUpdateOrders()
 				handleShoppingCart('retrieve')
 				let alertObj = {
@@ -247,14 +249,16 @@ export default function Provider(props) {
 		}
 	})
 	
-	function manageUserInfo(action, userInfo, impersonationInfo){
+	function manageUserInfo(action, userInfo, impersonationInfo, billingInfo){
 		let currentUserType
 		let userInfoStorage = localStorage.getItem('userInfo')
-		let imperInfoStorage = localStorage.getItem('imperInfo')
+        let imperInfoStorage = localStorage.getItem('imperInfo')
+        let billingInfoStorage = localStorage.getItem('billingInfo')
 		switch(action) {
 			case 'load-context':
 				handleSetUserInfo(JSON.parse(userInfoStorage))
-				setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
+                setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
+                setBillingInfo(JSON.parse(billingInfoStorage))
 				if (_.isNil(userInfoStorage)) {
 					currentUserType = 'Anon'
 				} else {
@@ -263,7 +267,8 @@ export default function Provider(props) {
 				break
 			case 'begin-impersonation':
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
-				localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
+                localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
+                localStorage.setItem('billingInfo', JSON.stringify(billingInfo))
 				localStorage.removeItem('shoppingCartToken')
 				handleSetUserInfo(userInfo)
 				if(userType.current === 'Impersonator'){ //User switched companies they are impersonating
@@ -281,7 +286,8 @@ export default function Provider(props) {
 				break
 			case 'end-impersonation':
 				localStorage.setItem('userInfo', JSON.stringify(userInfo))
-				localStorage.removeItem('imperInfo')
+                localStorage.removeItem('imperInfo')
+                localStorage.removeItem('billingInfo')
 				handleSetUserInfo(userInfo)
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'AirlineEmployee'
@@ -293,12 +299,16 @@ export default function Provider(props) {
 				break
 			case 'login':
 				setItemDetailCache([])
-				handleSetUserInfo(userInfo)
+                handleSetUserInfo(userInfo)
+                setBillingInfo(billingInfo)
+                localStorage.setItem('billingInfo', JSON.stringify(billingInfo))
 				currentUserType = userInfo.role
 				break
 			case 'logout':
                 logout()
-				handleSetUserInfo(null)
+                handleSetUserInfo(null)
+                setBillingInfo(null)
+                localStorage.removeItem('billingInfo')
 				setImpersonatedCompanyInfo(null)
 				currentUserType = 'Anon'
 				setOrdersCache([])

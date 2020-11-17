@@ -28,7 +28,7 @@ const Label = styled.label`
 `
 
 export default function NewCardSection(props) {
-    const { values, setFieldValue } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
     const context = useContext(Context)
 
     const handleSameAsShippingChange = ({ target: { checked } }) => {
@@ -73,7 +73,7 @@ export default function NewCardSection(props) {
             </Row>
 
             <Row>
-                {!!context.userInfo && <FormikInput label="PO Number" name="billing.purchaseOrder" />}
+                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? "PO Number*" : "PO Number"} name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" />
             </Row>
 
