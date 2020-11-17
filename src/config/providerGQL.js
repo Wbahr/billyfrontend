@@ -25,15 +25,6 @@ export const BEGIN_IMPERSONATION = gql`
           customerName
           customerIdP21
         }
-        billingInfo {
-            requiresPONumber
-            address1
-            address2
-            city
-            state
-            zip
-            country
-        }
       }
     }
   }
