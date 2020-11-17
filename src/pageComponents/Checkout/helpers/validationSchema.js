@@ -42,7 +42,7 @@ export const shipToSchema = object({
 			.max(256)
 			.required('Address Line 1 is required'),
 		city: string()
-			.min(3, 'City must be at least 3 characters long')
+			.min(2, 'City must be at least 2 characters long')
 			.max(100)
 			.required('City is required'),
 		stateOrProvince: string()
@@ -79,7 +79,7 @@ export function getBillToSchema(requirePoNumber) {
                     return requirePoNumber || paymentMethod === "purchase_order" 
                         ? schema
                             .min(1, 'Purchase Order must be at least 1 character long')
-                            .max(20)
+                            .max(20, 'Purchase Order can not exceed 20 characters')
                             .required('PO Number is required')
                         : schema;
                 }),
@@ -114,7 +114,7 @@ export function getBillToSchema(requirePoNumber) {
                 .when('cardType', {
                     is: 'saved_card',
                     then: string(),
-                    otherwise: string().min(3, 'City must be at least 3 characters long')
+                    otherwise: string().min(2, 'City must be at least 2 characters long')
                         .max(100)
                         .required('City is required')
                 }),
