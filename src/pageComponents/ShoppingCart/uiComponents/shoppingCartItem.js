@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
-import { useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
 import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
-import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -259,11 +256,8 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							<P3>
 								Availability: {availabilityInfo?.availability}
 								{
-									cartItem.quantity > availabilityInfo?.availability && (
-										availabilityInfo?.leadTimeDays 
-											? ` | Lead time ${availabilityInfo?.leadTimeDays} days`
-											: ' | Call Airline Hydraulics Co. for lead time'
-									)
+									(cartItem.quantity > availabilityInfo?.availability) && 
+										(' | ' + getAvailabilityMessage(cartItem.quantity, availabilityInfo?.availability, availabilityInfo?.leadTimeDays))
 								}
 							</P3>
 						</DivRow>

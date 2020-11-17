@@ -6,7 +6,7 @@ import Context from '../../../config/context'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -47,6 +47,7 @@ const DivCol2 = styled.div`
 		align-items: flex-start;
 		width: 200px;
 		height: 100%;
+		margin-left: 1rem;
 		margin-right: 50px;
 		p {
 			font-size: 16px;
@@ -63,6 +64,8 @@ const DivCol3 = styled.div`
 
 const Img = styled.img`
 		margin: 0 4px;
+		max-height: 100%; 
+		max-width: 100%;
 	`
 
 const P1 = styled.p`
@@ -99,13 +102,10 @@ const ButtonSmall = styled.button`
 		}
 	`
 
-export default function OrderDetailItem({ item, quoteId }) {
-	const [quantity, setQuantity] = useState(1)
+export default function OrderDetailItem({ item, quoteId, itemDetails, availability, priceInfo }) {
+	const [quantity, setQuantity] = useState(item.quantityOrdered)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-	const context = useContext(Context)
-
-	let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid)
-    let imagePath = getThumbnailImagePath(displayItem?.itemDetails);
+    let imagePath = getThumbnailImagePath(itemDetails);
 
 	function handleAddedToCart(){
 		setShowAddedToCartModal(false);
@@ -121,7 +121,7 @@ export default function OrderDetailItem({ item, quoteId }) {
 			/>
 			<DivCard>
 				<DivCol1>
-					<Img max-height='100%' max-width='100%' src={imagePath} />
+					<Img src={imagePath} />
 				</DivCol1>
 				<DivCol2>
 					<CopyToClipboard text={item.itemCode}>
@@ -131,21 +131,28 @@ export default function OrderDetailItem({ item, quoteId }) {
 						<CopyToClipboard text={`AHC${item.invMastUid}`}>
 							<P2>AHC{item.invMastUid}</P2>
 						</CopyToClipboard>
-						<P2>|</P2>
-						<CopyToClipboard text={item.customerPartNumber}>
-							<P2>{item.customerPartNumber}</P2>
-						</CopyToClipboard>
+						{
+							item.customerPartNumber && (
+								<>
+									<P2>|</P2>
+									<CopyToClipboard text={item.customerPartNumber}>
+										<P2>{item.customerPartNumber}</P2>
+									</CopyToClipboard>
+								</>
+							)
+						}
 					</TextRow>
 					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
 				</DivCol2>
 				<DivCol2>
-					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
-					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Quote Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Quote Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
 				<DivCol3>
-					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
-					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
-					<DivRow>Quantity: 1</DivRow>
+					<DivRow>Availability: {availability?.availability}</DivRow>
+					<DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
+					<DivRow>Quantity: {item.quantityOrdered}</DivRow>
 					<Context.Consumer>
 						{({addItem}) => (
 							<ButtonSmall onClick={()=>{
@@ -155,7 +162,7 @@ export default function OrderDetailItem({ item, quoteId }) {
 									'itemNotes': `Quote ${quoteId}`,
 									'itemUnitPriceOverride': null,
 									'customerPartNumberId': item.customerPartNumberId,
-									'quoteId': quoteId
+									//'quoteId': quoteId
 								}), setShowAddedToCartModal(true), setQuantity(1)
 							}}>Add to Cart</ButtonSmall>
 						)}

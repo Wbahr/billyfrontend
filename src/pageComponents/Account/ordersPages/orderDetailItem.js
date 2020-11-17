@@ -7,7 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -30,14 +30,6 @@ const DivCard = styled.div`
 		width: 100%;
 	`
 
-const DivRemove = styled.div`
-		cursor: pointer;
-		display: flex;
-		width: auto;
-		margin: auto 12px;
-		align-items: center;
-	`
-
 const DivCol1 = styled.div`
 		display: flex;
 		width: 100px;
@@ -53,13 +45,6 @@ const DivCol2 = styled.div`
 			font-size: 16px;
 			margin: 0;
 		}
-	`
-
-const DivCol3 = styled.div`
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		flex-grow: 99;
 	`
 
 const Img = styled.img`
@@ -101,12 +86,10 @@ const ButtonSmall = styled.button`
 		}
 	`
 
-export default function OrderDetailItem({ item }) {
+export default function OrderDetailItem({ item, itemDetails, availability, priceInfo }) {
 	const [quantity, setQuantity] = useState(1)
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-    const context = useContext(Context)
-    let displayItem = context.itemDetailCache.find(elem => elem.itemDetails.invMastUid == item.invMastUid);
-    let imagePath = getThumbnailImagePath(displayItem?.itemDetails);
+    let imagePath = getThumbnailImagePath(itemDetails);
    
     function handleAddedToCart(){
 		setShowAddedToCartModal(false)
@@ -132,22 +115,29 @@ export default function OrderDetailItem({ item }) {
 						<CopyToClipboard text={`AHC${item.invMastUid}`}>
 							<P2>AHC{item.invMastUid}</P2>
 						</CopyToClipboard>
-						<P2>|</P2>
-						<CopyToClipboard text={item.customerPartNumber}>
-							<P2>{item.customerPartNumber}</P2>
-						</CopyToClipboard>
+						{
+							item.customerPartNumber && (
+								<>
+									<P2>|</P2>
+									<CopyToClipboard text={item.customerPartNumber}>
+										<P2>{item.customerPartNumber}</P2>
+									</CopyToClipboard>
+								</>
+							)
+						}
 					</TextRow>
 					<P2>Quantity Received: {item.quantityOpen}</P2>
 					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
 				</DivCol2>
 				<DivCol2>
 					<P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
-					<P2>Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
-					<P2>Total Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Order Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Order Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+					<P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
 				</DivCol2>
 				<DivCol2>
-					<DivRow>Availability: {_.get(displayItem,'itemDetails.availability','--')}</DivRow>
-					<DivRow>{_.get(displayItem,'itemDetails.availabilityMessage',null)}</DivRow>
+					<DivRow>Availability: {availability?.availability}</DivRow>
+					<DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
 					<DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e)=>setQuantity(e.target.value)}/></DivRow>
 					<Context.Consumer>
 						{({addItem}) => (

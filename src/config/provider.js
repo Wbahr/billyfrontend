@@ -14,8 +14,6 @@ export default function Provider(props) {
     const justLoadedCart = useRef(false)
     const invoicesLoaded = useRef(false)
     const [shoppingCart, setShoppingCart] = useState([])
-    //TODO: Remove the images aspect of the itemDEtailCache. All queries that require images will return them directly, server-side.
-    const [itemDetailCache, setItemDetailCache] = useState([])
     const [orderNotes, setOrderNotes] = useState('')
     const [shoppingCartPricing, setShoppingCartPricing] = useState({ 'state': 'stable', 'subTotal': '--', 'tariff': '--' })
     const [userInfo, setUserInfo] = useState(null)
@@ -71,11 +69,6 @@ export default function Provider(props) {
                 cartItems.forEach(elem => delete elem.__typename)
                 setShoppingCart(cartItems)
                 setOrderNotes(result.orderNotes)
-                if (result.action === 'retrieve' && cartItems.length > 0) { // If the cart was existing, populate cartDisplay
-                    let cartFrecnos = []
-                    cartItems.forEach(elem => cartFrecnos.push(elem.frecno))
-                    getMultiItemData({ variables: { 'invMastUids': cartFrecnos } })
-                }
             }
             setShoppingCartPricing({ 'state': 'stable', 'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2) })
         }
@@ -122,31 +115,6 @@ export default function Provider(props) {
             } else {
                 setErrorMessage(requestData.message)
             }
-        }
-    })
-
-    const [getMultiItemData] = useLazyQuery(GET_ITEMS_BY_ID, {
-        fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            let itemDetailsBatch = data.itemDetailsBatch
-            let customerPartNumbersBatch = data.customerPartNumbersBatch
-            let result = []
-            for (let i = 0; i < itemDetailsBatch.length; i++) {
-                let frecno = itemDetailsBatch[i].invMastUid
-                let customerPartNumbers = []
-                for (let i = 0; i < customerPartNumbersBatch.length; i++) {
-                    let customerPartNumberObj = customerPartNumbersBatch[i]
-                    if (customerPartNumberObj.invMastUid === frecno) {
-                        customerPartNumbers.push(customerPartNumberObj)
-                    }
-                }
-                let itemDetailsObj = {
-                    'itemDetails': itemDetailsBatch[i],
-                    'customerPartNumbers': customerPartNumbers
-                }
-                result.push(itemDetailsObj)
-            }
-            mutateItemDetailCache('add-multiple', result)
         }
     })
 
@@ -269,7 +237,6 @@ export default function Provider(props) {
                 if (userType.current === 'Impersonator') { //User switched companies they are impersonating
                     props.history.push('/')
                 }
-                setItemDetailCache([])
                 setOrdersCache([])
                 setInvoiceCache([])
                 setInvoiceBatchNumber(0)
@@ -285,14 +252,12 @@ export default function Provider(props) {
                 handleSetUserInfo(userInfo)
                 setImpersonatedCompanyInfo(null)
                 currentUserType = 'AirlineEmployee'
-                setItemDetailCache([])
                 setInvoiceCache([])
                 setInvoiceBatchNumber(0)
                 setOrdersCache([])
                 setPurchaseHistory([])
                 break
             case 'login':
-                setItemDetailCache([])
                 handleSetUserInfo(userInfo)
                 currentUserType = userInfo.role
                 break
@@ -356,7 +321,6 @@ export default function Provider(props) {
         setShoppingCart([...shoppingCart, ...items])
         let itemFrecnos = []
         items.forEach(elem => itemFrecnos.push(elem.frecno))
-        getMultiItemData({ variables: { 'invMastUids': itemFrecnos } })
     }
 
     function handleRemoveItem(itemLocation) {
@@ -409,29 +373,6 @@ export default function Provider(props) {
                 break
         }
         setShoppingCart([...mutatedCart])
-    }
-
-    function mutateItemDetailCache(type, data) {
-        let mutatedItemDetailCache
-        switch (type) {
-            case 'add':
-                mutatedItemDetailCache = [...itemDetailCache, data]
-                setItemDetailCache(mutatedItemDetailCache)
-                break
-            case 'add-multiple':
-                mutatedItemDetailCache = [...itemDetailCache, ...data]
-                setItemDetailCache(mutatedItemDetailCache)
-                break
-            case 'update-customer-numbers':
-                mutatedItemDetailCache = itemDetailCache.map(elem => {
-                    if (elem.itemDetails.invMastUid === data.frecno) {
-                        elem.customerPartNumbers = data.customerPartNumbers
-                    }
-                    return (elem)
-                })
-                setItemDetailCache(mutatedItemDetailCache)
-                break
-        }
     }
 
     function handleShoppingCart(action, mergeToken) {
@@ -524,10 +465,6 @@ export default function Provider(props) {
                     handleLogout()
                 },
                 cart: shoppingCart,
-                itemDetailCache: itemDetailCache,
-                updateItemDetailCache: (type, data) => {
-                    mutateItemDetailCache(type, data)
-                },
                 cartPricing: shoppingCartPricing,
                 orderNotes: orderNotes,
                 addItem: (item) => {
