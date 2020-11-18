@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react'
+import React, { useState, useEffect, useMemo, useContext, useRef } from 'react'
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import styled from 'styled-components'
 import queryString from 'query-string'
 import ItemResult from './uiComponents/itemResult'
@@ -14,26 +16,21 @@ import { useLazyQuery } from '@apollo/client'
 import {QUERY_ITEM_SEARCH, GET_ITEMS_BY_ID} from '../../config/providerGQL'
 import SkeletonItem from './uiComponents/skeletonItem'
 import Context from '../../config/context'
-import {buildSearchString, useDidUpdateEffect} from "../_common/helpers/generalHelperFunctions";
+import {buildSearchString, useDidUpdateEffect, onWindowResize} from "../_common/helpers/generalHelperFunctions";
 import {Pagination} from '@material-ui/lab'
+import {AccountTree as AttributeIcon, Category as CategoryIcon, Tune as FilterIcon, FormatBold as BrandIcon, Store, ChevronLeft as ChevronLeftIcon} from '@material-ui/icons';
+import {Drawer, Typography, IconButton} from '@material-ui/core'
 
-const DivContainer = styled.div`
+const Flex = styled.div`
 	display: flex;
 `
 
-const ResultsContainer = styled.div`
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	margin-left: 8px;
-`
-
-const DivResultSummary = styled.div`
+const FlexCol = styled.div`
 	display: flex;
 	flex-direction: column;
 `
 
-const DivSearchResultsContainer = styled.div`
+const FlexWrap = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 `
@@ -41,6 +38,21 @@ const DivSearchResultsContainer = styled.div`
 const PaginationContainer = styled.div`
 	display: flex;
 	justify-content: center;
+	max-width: 420px
+`
+
+const Content = styled.div`
+	flex-grow: 1;
+	padding: 10px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+`
+
+const AppBar = styled.div`
+	z-index: 1;
+	display: flex;
+	width: 100%;
+	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
 `
 
 const RESULT_SIZE = 24
@@ -111,7 +123,12 @@ export default function SearchResultsPage({history}) {
 	const [ottoFindPart, setOttoFindPart] = useState(false)
 	const [itemDetails, setItemDetails] = useState([])
 	const [lastSearchPayload, setLastSearchPayload] = useState({})
+	const [drawerOpen, setDrawerOpen] = useState((() => {
+		console.log('window.innerWidth', window.innerWidth)
+		return window.innerWidth > 750
+	})())
 	
+	const classes = useStyles();
 	const {getItemAvailabilities, getItemPrices} = useContext(Context)
 	
 	useDidUpdateEffect(() => {
@@ -232,6 +249,8 @@ export default function SearchResultsPage({history}) {
 	
 	const handleAddedToCartModal = () => setShowAddedToCartModal(false)
 	
+	const toggleDrawer = () => setDrawerOpen(!drawerOpen)
+	
 	const itemSearchResults = useMemo(() => results.map(result => (
 		<ItemResult
 			key={result.invMastUid}
@@ -244,64 +263,94 @@ export default function SearchResultsPage({history}) {
 		/>
 	)), [results, itemDetails])
 	
-	const handleUpdateAttributes = index => newAttr => {
-		const newAttributes = attributes.slice()
-		newAttributes[index] = newAttr
-		setAttributes(newAttributes)
+	const handlePageChange = (e, page) => {
+		setQueryParam('resultPage', page)
+		window.scrollTo({top: 0, behavior: 'smooth'})
 	}
-
-	const attributeFilters = useMemo(() => attributes.map((attribute, index) => (
-		<AttributeFilter
-			key={index}
-			attribute={attribute}
-			updateAttribute={handleUpdateAttributes(index)}
-		/>
-	)), [attributes])
 	
 	const PaginationComponent = () => (
 		<PaginationContainer>
 			<Pagination
 				count={Math.ceil(totalResults / RESULT_SIZE)}
 				page={parseInt(resultPage)}
-				onChange={(e, page) => setQueryParam('resultPage', page)}
+				onChange={handlePageChange}
 			/>
 		</PaginationContainer>
 	)
 	
+	const [contentHeight, setContentHeight] = useState(window.innerHeight - 48)
+	
+	useEffect(() => {
+		onWindowResize(() => setContentHeight(window.innerHeight - 48))
+	}, [])
+	
 	return (
-		<DivContainer>
-			<div>
-				<CategoryFilter {...{isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}} />
-				{!!brands.length && <BrandFilter brands={brands} setBrands={setBrands}/>}
-				{attributeFilters}
-			</div>
+		<div>
+			<AppBar className={classes.sticky}>
+				<IconButton
+					aria-label="toggle drawer"
+					onClick={toggleDrawer}
+					className={classes.menuButton}
+				>
+					<FilterIcon />
+					<ChevronLeftIcon className={clsx({
+						[classes.chevronRight]: !drawerOpen,
+						[classes.chevronLeft]: drawerOpen
+					})} />
+				</IconButton>
+				<Typography variant="h6" noWrap style={{margin: 'auto 0', color: 'white'}}>
+					Search Results
+				</Typography>
+			</AppBar>
 			
-			<ResultsContainer>
-				<DivResultSummary>
-					<ResultsSummary 
-						searchTerm={searchTerm}
-						totalResults={totalResults}
-						isSearching={isSearching}
-					/>
+			<Flex>
+				<Drawer
+					variant="permanent"
+					className={clsx(classes.drawer, {
+						[classes.drawerOpen]: drawerOpen,
+						[classes.drawerClose]: !drawerOpen,
+					})}
+					classes={{
+						paper: clsx({
+							[classes.drawerOpen]: drawerOpen,
+							[classes.drawerClose]: !drawerOpen,
+						}),
+					}}
+					PaperProps={{style: {position: 'relative'}}}
+					style={{height: contentHeight, overflowY: 'scroll'}}
+				>
+					<CategoryFilter {...{isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen, setDrawerOpen}} />
+					<BrandFilter {...{brands, setBrands, classes, drawerOpen, setDrawerOpen}}/>
+					<AttributeFilter {...{attributes, setAttributes, classes, drawerOpen, setDrawerOpen}} />
+				</Drawer>
+				
+				<Content>
+					<FlexCol>
+						<ResultsSummary
+							searchTerm={searchTerm}
+							totalResults={totalResults}
+							isSearching={isSearching}
+						/>
+						
+						<ResultsSearch
+							sortType={sortType}
+							setSortType={setSortType}
+							innerSearchTerms={innerSearchTerms}
+							setInnerSearchTerms={setInnerSearchTerms}
+						/>
+						
+						<PaginationComponent/>
+					</FlexCol>
 					
-					<ResultsSearch
-						sortType={sortType}
-						setSortType={setSortType}
-						innerSearchTerms={innerSearchTerms}
-						setInnerSearchTerms={setInnerSearchTerms}
-					/>
-				</DivResultSummary>
-				
-				<PaginationComponent/>
-				
-				<DivSearchResultsContainer>
-					{isSearching && <LoadingItems/>}
-					{!isSearching && itemSearchResults}
-				</DivSearchResultsContainer>
-				
-				<PaginationComponent/>
-			</ResultsContainer>
-			
+					<FlexWrap>
+						{isSearching && <LoadingItems/>}
+						{!isSearching && itemSearchResults}
+					</FlexWrap>
+					
+					<PaginationComponent/>
+				</Content>
+			</Flex>
+		
 			<AddedModal
 				open={showAddedToCartModal}
 				text="Added to Cart!"
@@ -321,7 +370,7 @@ export default function SearchResultsPage({history}) {
 				detailsModalItem={detailsModalItem}
 				history={history}
 			/>
-		</DivContainer>
+		</div>
 	)
 }
 
@@ -341,3 +390,85 @@ const LoadingItems = () => (
 		<SkeletonItem/>
 	</>
 )
+
+const drawerWidth = 280
+
+const useStyles = makeStyles((theme) => ({
+	sticky: {
+		position: 'sticky',
+		'-webkit-sticky': 'sticky',
+		width: '100%',
+		top: 0,
+		alignSelf: 'flex-start'
+	},
+	appBarShift: {
+		marginLeft: drawerWidth,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create(['width', 'margin'], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+	},
+	menuButton: {
+		marginRight: 24,
+		color: 'white'
+	},
+	hide: {
+		display: 'none',
+	},
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+		whiteSpace: 'nowrap',
+		position: 'sticky',
+		alignSelf: 'flex-start',
+		top: 48,
+	},
+	drawerOpen: {
+		width: drawerWidth,
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen,
+		})
+	},
+	drawerClose: {
+		transition: theme.transitions.create('width', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+		overflowX: 'hidden',
+		width: theme.spacing(6) + 1,
+		[theme.breakpoints.up('sm')]: {
+			width: theme.spacing(6) + 1,
+		},
+	},
+	chevronLeft: {
+		transform: 'rotate(0deg)',
+		transition: theme.transitions.create('transform', {
+			easing: theme.transitions.easing.sharp,
+			duration: 300,
+		}),
+	},
+	chevronRight: {
+		transform: 'rotate(180deg)',
+		transition: theme.transitions.create('transform', {
+			easing: theme.transitions.easing.sharp,
+			duration: 300,
+		}),
+	},
+	expand: {
+		maxHeight: 660,
+		transition: theme.transitions.create('max-height', {
+			easing: theme.transitions.easing.sharp,
+			duration: 300,
+		}),
+	},
+	collapse: {
+		maxHeight: 0,
+		overflow: 'hidden',
+		transition: theme.transitions.create('max-height', {
+			easing: theme.transitions.easing.sharp,
+			duration: 300,
+		}),
+	}
+}));

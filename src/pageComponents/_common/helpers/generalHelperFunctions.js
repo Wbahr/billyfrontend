@@ -94,3 +94,8 @@ export const useDidUpdateEffect = (create, deps) => {
 			didMountRef.current = true;
 	}, deps);
 }
+
+export function onWindowResize(callback) {
+	window.addEventListener('resize', callback)
+	return () => window.removeEventListener('resize', callback)
+}

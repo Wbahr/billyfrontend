@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {Store as BrandIcon} from '@material-ui/icons';
+import clsx from "clsx";
 
 const DivTitle = styled.div`
 	display: flex;
 	cursor: pointer;
-	width: 280px;
+	width: 279px;
 	height: 36px;
-	padding: 0 16px;
+	padding: 0 12px;
 	background-color: #f3f3f3;
 	color: white;
 	font-weight: 600;
@@ -17,21 +18,18 @@ const DivTitle = styled.div`
 	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 8px;
 `
 const DivOptions = styled.div`
 	display: flex; 
 	flex-direction: column;
-	max-height: 250px;
 	overflow: scroll;
 `
 
 const DivOptionRow = styled.div`
 	cursor: pointer;
 	display: flex; 
-	width: 250px;
 	align-items: center;
-	margin: 8px 0 0 24px;
+	margin: 4px 0;
 `
 
 const P = styled.p`
@@ -59,9 +57,17 @@ const InputSearch = styled.input`
 	width: 240px;
 `
 
-export default function BrandFilter({brands, setBrands}) {
+const BrandsDiv = styled.div`
+	margin-left: 48px;
+`
+
+export default function BrandFilter({brands, setBrands, drawerOpen, setDrawerOpen, classes}) {
 	const [isOpen, setIsOpen] = useState(true)
 	const [filter, setFilter] = useState('')
+	
+	useEffect(() => {
+		if (drawerOpen) setIsOpen(true)
+	}, [drawerOpen])
 
 	const handleFeatureToggle = idx => () => {
 		const newBrands = brands.slice()
@@ -78,7 +84,7 @@ export default function BrandFilter({brands, setBrands}) {
 		<DivOptionRow key={idx} onClick={handleFeatureToggle(idx)}>
 			<input
 				type="checkbox"
-				checked={selected}
+				defaultChecked={selected}
 				style={{cursor: 'pointer'}}
 			/>
 			<Label htmlFor={brandName}>{brandNameDisplay}</Label>
@@ -111,22 +117,28 @@ export default function BrandFilter({brands, setBrands}) {
 
 	return (
 		<div>
-			<DivTitle onClick={() => setIsOpen(!isOpen)}>
+			<DivTitle onClick={() => {
+				if (!drawerOpen) setDrawerOpen(true)
+				setIsOpen(!isOpen)
+			}}>
+				<BrandIcon/>
 				<P>Brands</P>
-				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="white"/>
 			</DivTitle>
-			{isOpen && 
-				<>
-					{brands.length > 10 && (
-						<InputSearch
-							placeholder="Search Brands"
-							onChange={handleSearchChange}
-							value={filter}
-						/>
-					)}
-					<BrandOptions/>
-				</>
-			}
+			
+			<BrandsDiv className={clsx({
+				[classes.expand]: drawerOpen || isOpen,
+				[classes.collapse]: !isOpen || !drawerOpen
+			})}>
+				{brands.length > 10 && (
+					<InputSearch
+						placeholder="Search Brands"
+						onChange={handleSearchChange}
+						value={filter}
+					/>
+				)}
+				<BrandOptions/>
+			</BrandsDiv>
 		</div>
 	)
 }
