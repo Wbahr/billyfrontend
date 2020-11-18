@@ -1,10 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
 import Context from '../../config/context'
 import DebounceInput from 'react-debounce-input'
 import { useLazyQuery } from '@apollo/client'
-import { IMPERSONATION_SEARCH } from 'config/providerGQL'
+import { GET_ALL_USER_CARTS, IMPERSONATION_SEARCH } from 'config/providerGQL'
+import { CartsDropdownMenu, DropdownMenu, DropDownMenuAction } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
+import Loader from 'pageComponents/_common/loader'
 
 const Container = styled.div`
   display: flex;
@@ -12,15 +15,17 @@ const Container = styled.div`
 `
 
 const Div = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 25px;
-  width: 40px;
-  padding-right: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+    width: 40px;
+    padding-right: 2px;
+    background-image: linear-gradient(to top left, #950f23, #DB1633);
+`
+
+const DivLast = styled(Div)`
   border-radius: 0 30px 30px 0;
-  // background-color: #007bff;;
-  background-image: linear-gradient(to top left, #950f23, #DB1633);
 `
 
 const DivResults = styled.div`
@@ -56,14 +61,23 @@ const DebounceInputStyle = {
 
 export default function ImpersonationSearchComponent() {
 	const [impersonationTerm, setImpersonationTerm] = useState('')
-	const [searchResult, setSearchResult] = useState([])
+    const [searchResult, setSearchResult] = useState([])
+    const [showOtherCartsDropdown, setShowOtherCartsDropdown] = useState(false)
+    const [userCartsData, setUserCartsData] = useState(null)
 	const context = useContext(Context)
 
 	const [impersonationSearch] = useLazyQuery(IMPERSONATION_SEARCH, {
 		onCompleted: data => {
 			setSearchResult(data.getImpersonationCustomerList)
 		}
-	})
+    })
+    
+    const [usersCarts, {loading: userCartsDataLoading}] = useLazyQuery(GET_ALL_USER_CARTS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setUserCartsData(data.employeeCarts);
+        }
+    });
 
 	function handleEnterPress() {
 		// If only 1 result and you press Enter, Impersonate that user
@@ -97,8 +111,8 @@ export default function ImpersonationSearchComponent() {
 		</DivResults>
 	)
 
-	const handleKeyDown = (e) => e.key === 'Enter' && handleEnterPress()
-	
+    const handleKeyDown = (e) => e.key === 'Enter' && handleEnterPress()
+    
 	return (
 		<Container>
 			<DebounceInput
@@ -111,9 +125,24 @@ export default function ImpersonationSearchComponent() {
 				onKeyDown={handleKeyDown}
 				onBlur={handleBlur}
 			/>
-			<Div onClick={() => context.startImpersonation(impersonationTerm)}>
+            <Div onClick={() => context.startImpersonation(impersonationTerm)}>
 				<FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
 			</Div>
+			<DivLast tabIndex={1} onClick={() => { usersCarts(); setShowOtherCartsDropdown(true)}}
+                     onBlur={() => { setShowOtherCartsDropdown(false)}}>
+                <FontAwesomeIcon icon={faCartArrowDown} color="whitesmoke"/>
+                <CartsDropdownMenu className={showOtherCartsDropdown ? 'visible' : ''}>
+                    {userCartsData && userCartsData.map((itm, idx) =>  
+                        (<DropDownMenuAction key={idx} linkText={itm.customerName + " - " + itm.shoppingCartItemCount} 
+                            onClick={() => {
+                                context.startImpersonation(itm.customerId); 
+                                setShowOtherCartsDropdown(false);
+                            }} />
+                        )
+                    )}
+                    {userCartsDataLoading && <Loader />}
+                </CartsDropdownMenu>
+			</DivLast>
 			{searchResult.length > 0 && searchResults}
 		</Container>
 	)
