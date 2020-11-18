@@ -1,5 +1,5 @@
 import React, {useEffect, useContext, useState} from 'react'
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import styled from 'styled-components'
 import NewCardSection from './billingInfoComponents/newCardSection'
 import PurchaseOrderSection from './billingInfoComponents/purchaseOrderSection'
@@ -37,10 +37,10 @@ const DivNavigation = styled.div`
 `
 
 function BillingInfoForm(props) {
-	const {setValues, setFieldValue, values: {billing: {paymentMethod, cardType}}, handleMoveStep, isStepValid, paymentInfo, setPaymentInfo} = props
+	const {setValues, setFieldValue, values: {contact, billing: {paymentMethod, cardType}}, checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, setPaymentInfo, showPoOption} = props
 	const stripe = useStripe()
 	const elements = useElements()
-	const context = useContext(Context)
+    const context = useContext(Context)
 	const [selectedCard, setSelectedCard] = useState('new_card')
 	const [cardIsValid, setCardIsValid] = useState(false)
 	
@@ -54,7 +54,7 @@ function BillingInfoForm(props) {
         window.scrollTo({top: 0})
 		if (!paymentMethod) { 
             
-            setFieldValue('billing.paymentMethod', context.userInfo ? 'purchase_order' : 'credit_card') 
+            setFieldValue('billing.paymentMethod', context.userInfo && billingInfo.isNetTerms ? 'purchase_order' : 'credit_card') 
         }
 	}, [])
 	
@@ -110,11 +110,35 @@ function BillingInfoForm(props) {
 	
 	const handleRadioButtonClick = ({target: {value}}) => {
 		const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
-		setFieldValue('billing', {
-			...props.values.billing,
-			paymentMethod: value,
-			cardType: value === 'credit_card' ? cardType : ''
-		})
+        
+        //If the customer requires a PO, we need to reload the canned data 
+        // and not persist changes made in Credit Card mode.
+        if(billingInfo?.isNetTerms) 
+        {
+            setFieldValue('billing', {
+                ...props.values.billing,
+                paymentMethod: value,
+			    cardType: value === 'credit_card' ? cardType : '',
+                companyName: billingInfo?.companyName || '',
+                address1: billingInfo?.address1 || '',
+                address2: billingInfo?.address2 || '',
+                city: billingInfo?.city || '',
+                stateOrProvince: billingInfo?.state || '',
+                zip: billingInfo?.zip || '',
+                country: billingInfo?.country.toLowerCase() || '',
+                firstName: contact?.firstName || '',
+                lastName: contact?.lastName || '',
+                email: contact?.email || '',
+                phone: contact?.phone || '',
+
+            });
+        } else {
+           setFieldValue('billing', {
+                ...props.values.billing,
+                paymentMethod: value,
+                cardType: value === 'credit_card' ? cardType : ''
+            }); 
+        }
 	}
 	
 	const disabled = paymentMethod === 'credit_card' && cardType === 'new_card'
@@ -144,21 +168,24 @@ function BillingInfoForm(props) {
 				<label>Credit Card</label>
 			</div>
 		</>
-	)
-	
+    );
+
 	return (
 		<WrapForm>
-			<FormRow>
-				<label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
-				<Field
-					name="billing.paymentMethod"
-					component={RadioButtons}
-					options={[{label: 'Purchase Order', value: 'purchase_order'}, {label: 'Credit Card', value: 'credit_card'}]}
-					placeholder="Select a Payment Method"
-                    isSearchable={false}
-                    value="purchase_order"
-				/>
-			</FormRow>
+            {showPoOption && 
+                <FormRow>
+                    <label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
+                    <Field
+                        name="billing.paymentMethod"
+                        component={RadioButtons}
+                        options={[{label: 'Purchase Order', value: 'purchase_order'}, {label: 'Credit Card', value: 'credit_card'}]}
+                        placeholder="Select a Payment Method"
+                        isSearchable={false}
+                        value="purchase_order"
+                    />
+                </FormRow>
+            }
+
 			{paymentMethod === 'credit_card' && (
 				<FormRow>
 					<label htmlFor="billing.cardType">New or Saved Card?*</label>
@@ -177,7 +204,7 @@ function BillingInfoForm(props) {
 				<NewCardSection {...props} setCardIsValid={setCardIsValid}/>
 			)}
 			{paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
-				<FormikInput label="PO Number" name="billing.purchaseOrder" />
+				<FormikInput label={billingInfo.requirePoNumber ? "PO Number*" : "PO Number"} name="billing.purchaseOrder" />
 			)}
 			
 			<DivNavigation>

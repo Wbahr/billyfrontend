@@ -655,18 +655,17 @@ export const GET_CHECKOUT_DATA = gql`
         phoneNumber
         email
       }
-      termsDescription
-      customerPhysicalAddress {
-        id
-        name
+      billingInfo {
+        requiresPONumber
+        terms
+        isNetTerms
+        address1
+        address2
+        city
+        state
+        zip
+        country
         companyName
-        physAddress1
-        physAddress2
-        physAddress3
-        physCity
-        physState
-        physPostalCode
-        physCountry
       }
     }
   }

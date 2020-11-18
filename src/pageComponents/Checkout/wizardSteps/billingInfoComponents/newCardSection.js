@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
-import { Field } from 'formik'
-import SelectField from '../../../_common/formik/select'
-import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
-import StripePaymentSection from '../../uiComponents/stripePayment'
-import FormikInput from '../../../_common/formik/input_v2'
+import React, { useContext } from 'react';
+import { Field } from 'formik';
+import SelectField from '../../../_common/formik/select';
+import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects';
+import StripePaymentSection from '../../uiComponents/stripePayment';
+import FormikInput from '../../../_common/formik/input_v2';
 import styled from "styled-components";
 import { defaultBilling } from "../../helpers";
 import FormikCheckbox from "../../../_common/formik/checkBox";
-import Context from '../../../../config/context'
+import Context from '../../../../config/context';
 
 const StyledCheckbox = styled.input`
 	width: 15px;
@@ -28,41 +28,52 @@ const Label = styled.label`
 `
 
 export default function NewCardSection(props) {
-    const { values, setFieldValue } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
     const context = useContext(Context)
 
     const handleSameAsShippingChange = ({ target: { checked } }) => {
-        const applyShipTo = (accum, field) => {
-            if (Object.keys(values.shipto).includes(field)) {
-                accum[field] = values.shipto[field]
-            }
-            return accum
+        if(checked) {
+            setFieldValue('billing.firstName', values.shipto.firstName);
+            setFieldValue('billing.lastName', values.shipto.lastName);
+            setFieldValue('billing.address1', values.shipto.address1);
+            setFieldValue('billing.address2', values.shipto.address2);
+            setFieldValue('billing.city', values.shipto.city);
+            setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince);
+            setFieldValue('billing.zip', values.shipto.zip);
+            setFieldValue('billing.country', values.shipto.country);
+            setFieldValue('billing.companyName', values.shipto.companyName);
+            setFieldValue('billing.email', values.shipto.email);
+            setFieldValue('billing.phone', values.shipto.phone);
+        } else {
+            setFieldValue('billing.firstName', defaultBilling.firstName);
+            setFieldValue('billing.lastName', defaultBilling.lastName);
+            setFieldValue('billing.address1', defaultBilling.address1);
+            setFieldValue('billing.address2', defaultBilling.address2);
+            setFieldValue('billing.city', defaultBilling.city);
+            setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince);
+            setFieldValue('billing.zip', defaultBilling.zip);
+            setFieldValue('billing.country', defaultBilling.country);
+            setFieldValue('billing.companyName', defaultBilling.companyName);
+            setFieldValue('billing.email', defaultBilling.email);
+            setFieldValue('billing.phone', defaultBilling.phone);
         }
-
-        const billing = checked
-            ? Object.keys(values.billing).reduce(applyShipTo, values.billing)
-            : { ...defaultBilling, paymentMethod: 'credit_card' }
-
-        setFieldValue('billing', billing)
-    }
+    };
 
     return (
         <div>
-            <StripePaymentSection {...props} />
-
-            {!!context.userInfo && (
-                <Row style={{ padding: '8px 10px' }}>
-                    <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" />
-                </Row>
-            )}
-
+            <Row style={{ padding: '8px 10px' }}>
+                <StripePaymentSection {...props} />
+                {!!context.userInfo && (
+                    <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" style={{ margin: 'auto 10px auto 0px' }} />
+                )}
+            </Row>
             <Row style={{ padding: '8px 10px' }}>
                 <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
-                <Label htmlFor="sameAsShipping">Billing same as shipping</Label>
+                <Label htmlFor="billing.sameAsShipping">Billing same as shipping</Label>
             </Row>
 
             <Row>
-                {!!context.userInfo && <FormikInput label="PO Number" name="billing.purchaseOrder" />}
+                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? "PO Number*" : "PO Number"} name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" />
             </Row>
 

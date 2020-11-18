@@ -42,7 +42,7 @@ export default function Orientalmotor() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Oriental%20Motor.png" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" />
 			<Container>
 				<H1 text="Oriental Motor"
 				/>
@@ -50,7 +50,7 @@ export default function Orientalmotor() {
 					text="Oriental Motor manufactures a wide range of motion control products including; stepper motors and drivers, servo motors, brushless DC motors, fractional HP AC motors, linear and rotary actuators, and cooling fans. Since its founding in 1885, Oriental Motor has been providing the optimal motion systems as part of their total service, to meet the widest market demands. Oriental Motor offers an extensive product line of about 50,000 products that provide the optimal motion system solutions."
 				/>
 				<ShopProductBtn
-					text="Shop for Oriental Motor Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

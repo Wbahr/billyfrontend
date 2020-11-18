@@ -9,16 +9,18 @@ const Div = styled.div`
   align-items: center;
 `
 const ShopBtn = styled.button`
-  background-image: linear-gradient(to left top, rgb(149, 15, 35), rgb(219, 22, 51));
-  width: 20%
+  background-image: linear-gradient(to top left,#950f23,#DB1633);
   color: white;
   font-weight: 600;
-  border-radius:28px;
+  border-radius:3px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   border: 0;
-  padding: 5px;
+  padding: 10px 15px;
   margin: 0 auto;
   outline: none;
-  `
+`
 export default function ShopProductBtn(props) {
 	return (
 		<Div>

@@ -42,7 +42,7 @@ export default function Rittal() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/rittal.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/RITTAL.png" />
 			<Container>
 				<H1 text="Rittal"
 				/>
@@ -51,7 +51,7 @@ export default function Rittal() {
 					Let us help you take your project from start to finish with our automation engineering services or let our sub-assembly department provide you with a pre-assembled, ready to use unit."
 				/>
 				<ShopProductBtn
-					text="Shop for Rittal Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

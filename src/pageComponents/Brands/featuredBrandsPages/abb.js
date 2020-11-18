@@ -14,9 +14,7 @@ const FeaturedBrandLogo = styled.div`
 	width: 100%;
 	justify-content: center;
 	padding: 80px 0;
-	background-image: url('https://media.istockphoto.com/photos/white-silver-geometric-universal-background-for-business-presentation-picture-id1207126778?s=2048x2048');
-	// background-image: url('https://media.istockphoto.com/photos/abstract-white-background-picture-id674723944?s=2048x2048');
-	// background-image: url('https://media.istockphoto.com/photos/abstract-background-of-polygons-on-white-background-picture-id857482302?s=2048x2048');
+	background-image: url('https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg');
 	background-repeat: no-repeat;
 	background-size: cover;
 	`
@@ -87,13 +85,15 @@ const ProductsH4 = styled.a`
 	}
 `
 const ShopAbbButton = styled.button`
-	background-image: linear-gradient(to left top, rgb(149, 15, 35), rgb(219, 22, 51));
-	width: 20%
+	background-image: linear-gradient(to top left,#950f23,#DB1633);
 	color: white;
 	font-weight: 600;
-	border-radius:28px;
+	border-radius:3px;
+	font-size: 16px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
 	border: 0;
-	padding: 5px;
+	padding: 10px 15px;
 	margin: 0 auto;
 	outline: none;
 	`
@@ -269,14 +269,14 @@ export default function Abb() {
 
 		<Container>
 			<FeaturedBrandLogo>
-				<BannerDiv> <BannerImg src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/ABB_logo.svg/1280px-ABB_logo.svg.png" width="8%" /></BannerDiv>
+				<BannerDiv> <BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ABB_logo.png" width="8%" /></BannerDiv>
 			</FeaturedBrandLogo>
 			<BrandDetailsContainer>
 				<AirlineDistributorH1>Airline is your Authorized Distributor of ABB Products
 				</AirlineDistributorH1>
 				<DistributorDetails>ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration.</DistributorDetails>
 				<Div>
-					<ShopAbbButton>Shop for ABB Products </ShopAbbButton>
+					<ShopAbbButton>Shop Products </ShopAbbButton>
 				</Div>
 
 				{/*............................... PRODUCTS................................... */}

@@ -47,7 +47,7 @@ export default function Parker() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/Parker_web.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/parker_logo.jpg" />
 			<Container>
 				<H1 text="Parker"
 				/>
@@ -75,7 +75,7 @@ export default function Parker() {
 					</div>}
 				/>
 				<ShopProductBtn
-					text="Shop for Parker Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />

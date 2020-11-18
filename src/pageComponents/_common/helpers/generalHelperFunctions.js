@@ -99,3 +99,13 @@ export function onWindowResize(callback) {
 	window.addEventListener('resize', callback)
 	return () => window.removeEventListener('resize', callback)
 }
+
+export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => {
+	return quantity > (availability || 0)
+		? (
+			(leadTimeDays || 0) 
+				? `Lead time ${availability?.leadTimeDays || 25} days`
+				: 'Call Airline Hydraulics Co. for lead time'
+		)
+		: ''
+}

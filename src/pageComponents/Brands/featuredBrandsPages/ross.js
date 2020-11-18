@@ -44,7 +44,7 @@ export default function Ross() {
 
 	return (
 		<>
-			<FeaturedBrandLogo src="https://www.airlinehyd.com/customer/aihyco/images/RossControls_logo.jpg" />
+			<FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ROSS_LOGO.png" />
 			<Container>
 				<H1 text="Ross controls"
 				/>
@@ -52,7 +52,7 @@ export default function Ross() {
 					text="Ross controls is a global manufacturer of pneumatic valves, control systems and safety products. Their products are used anywhere compressed air is used to perform a work process."
 				/>
 				<ShopProductBtn
-					text="Shop for Ross Products"
+					text="Shop Products"
 				/>
 				<SectionHeader
 					text="Products" />
