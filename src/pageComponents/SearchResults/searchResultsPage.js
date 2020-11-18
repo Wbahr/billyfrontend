@@ -123,10 +123,7 @@ export default function SearchResultsPage({history}) {
 	const [ottoFindPart, setOttoFindPart] = useState(false)
 	const [itemDetails, setItemDetails] = useState([])
 	const [lastSearchPayload, setLastSearchPayload] = useState({})
-	const [drawerOpen, setDrawerOpen] = useState((() => {
-		console.log('window.innerWidth', window.innerWidth)
-		return window.innerWidth > 750
-	})())
+	const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
 	
 	const classes = useStyles();
 	const {getItemAvailabilities, getItemPrices} = useContext(Context)
