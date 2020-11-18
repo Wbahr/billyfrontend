@@ -167,13 +167,9 @@ const ACallUs = styled.a`
 	margin: 0 0 0 8px;
 `
 
-const ZIndexWrapper = styled.div`
-	z-index: 2;
-`
-
 export default function FooterComponent({history}) {
 	return(
-		<ZIndexWrapper>
+		<>
 			<Newsletter>
 				<NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel>
 				<NewsletterInput placeholder='your@email.com'/>
@@ -259,6 +255,6 @@ export default function FooterComponent({history}) {
 				<Pcopyright>Help Center</Pcopyright>
 			</Container>
 			<OttoDrift />
-		</ZIndexWrapper>
+		</>
 	)
 }
