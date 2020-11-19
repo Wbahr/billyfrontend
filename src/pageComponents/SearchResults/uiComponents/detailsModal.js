@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import Loader from '../../_common/loader'
 import Context from '../../../config/context'
 import AirlineModal from '../../_common/modal'
-import {GET_ITEM_PRICE} from "../../../config/providerGQL";
-import { getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
+import {GET_ITEM_PRICE} from "config/providerGQL";
+import { GET_QUICK_LOOK_ITEM_DETAIL } from "config/gqlQueries/gqlItemQueries"
+import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
   display: flex;
@@ -114,57 +114,6 @@ const ButtonBlack = styled.button`
   margin: 4px auto 0 auto;
 `
 
-const GET_ITEM_DETAILS = gql`
-query ItemById($invMastUid: Int){
-  customerPartNumbers(frecno: $invMastUid){
-    customerPartNumber
-    id
-  }
-  itemDetails(invMastUid: $invMastUid) {
-        anonPrice
-        assembly
-        availability
-				availabilityMessage
-				brand {
-					id
-					name
-					supplierId
-					logoLink
-			}
-        cBrandId
-        dateCreated
-        dateModified
-        extendedDesc
-        filters
-        hideOnWeb
-        invMastUid
-        itemCode
-        itemDesc
-        listPrice
-        mfgPartNo
-        modelCode
-        p21ItemDesc
-        p21NonWeb
-        popularity
-        preferredSourceLoc
-        relevancy
-        restrictedCustomerCodes
-        rootCategoryUids
-        showPrice
-        supplierId
-        tariff
-        unitSizeMultiple
-        image {
-          path
-          sequence
-          itemMediaType
-          mediaType
-        }
-    }
-
-}
-`
-
 const getItemPricePayload = invMastUid => ({
 	variables: {
 		items: [{
@@ -174,20 +123,21 @@ const getItemPricePayload = invMastUid => ({
 	}
 })
 
-export default function DetailsModal({ open, hideDetailsModal, history, detailsModalItem }) {
-	const {itemCode, invMastUid} = detailsModalItem || {}
+export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const [item, setItem] = useState(null)
 	const [unitPrice, setUnitPrice] = useState(null)
 	const [quantity, setQuantity] = useState(1)
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
+	const [itemAvailability, setItemAvailability] = useState(null)
 	const context = useContext(Context)
 
-	const [performItemDetailSearch] = useLazyQuery(GET_ITEM_DETAILS, {
+	const [performItemDetailSearch] = useLazyQuery(GET_QUICK_LOOK_ITEM_DETAIL, {
 		variables: { invMastUid },
-		onCompleted: ({customerPartNumbers, itemDetails}) => {
+		onCompleted: ({customerPartNumbers, itemDetails, itemAvailabilitySingular}) => {
 			setCustomerPartNumbers(customerPartNumbers)
 			setItem(itemDetails)
+			setItemAvailability(itemAvailabilitySingular)
 		}
 	})
 
@@ -229,13 +179,13 @@ export default function DetailsModal({ open, hideDetailsModal, history, detailsM
 	}
 	
 	useEffect(() => {
-		if (invMastUid && itemCode) {
+		if (invMastUid) {
 			performItemDetailSearch()
 			performPriceLookup()
 		} else {
 			setItem(null)
 		}
-	}, [open])
+	}, [invMastUid])
 	
 	const imagePath = getLargeImagePath(item);
 	const customerPartOptions = customerPartNumbers.map((part, key) => <option key={key} value={part.id}>{part.customerPartNumber}</option>)
@@ -243,7 +193,7 @@ export default function DetailsModal({ open, hideDetailsModal, history, detailsM
 	const maxWidth = item ? 800 : 300
 	
 	return (
-		<AirlineModal open={open} onClose={handleCloseModal} contentStyle={{ maxWidth, borderRadius: 5 }}>
+		<AirlineModal open={invMastUid} onClose={handleCloseModal} contentStyle={{ maxWidth, borderRadius: 5 }}>
 			{
 				!item ? (
 					<Div>
@@ -278,8 +228,8 @@ export default function DetailsModal({ open, hideDetailsModal, history, detailsM
 								</DivRow>
 								
 								<DivRow>
-									<p>Availability: {item.availability}</p>
-									<p>{item.availabilityMessage}</p>
+									<p>Availability: {itemAvailability?.availability}</p>
+									<p>{getAvailabilityMessage(quantity, itemAvailability?.availability, itemAvailability?.leadTimeDays)}</p>
 								</DivRow>
 								
 								<TABLE>
