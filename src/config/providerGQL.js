@@ -709,3 +709,13 @@ export const GET_PAYMENT_METHOD_INFO = gql`
       }
   }
 `
+
+export const GET_ALL_USER_CARTS = gql`
+    query GetAllEmployeeCarts {
+        employeeCarts {
+            customerId
+            customerName
+            shoppingCartItemCount
+        }
+    }
+`

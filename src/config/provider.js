@@ -93,7 +93,7 @@ export default function Provider(props) {
                     'message': 'You are now impersonating a customer'
                 }
                 setTopAlert(alertObj)
-                window.setTimeout(() => { TopAlert() }, 2000)
+                window.setTimeout(() => { setTopAlert({show: false}) }, 2000)
             }
         }
     })
