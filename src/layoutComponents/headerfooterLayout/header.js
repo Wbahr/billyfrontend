@@ -102,8 +102,7 @@ const Row = styled.div`
 const UserNameRow = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
+	padding: 0 5px;
 `
 const Puser = styled.p`
 	background-image: linear-gradient(to top left, #404040, #333);

@@ -172,6 +172,15 @@ export const UPDATE_CART = gql`
   }
 `
 
+export const CHANGE_PASSWORD = gql`
+    mutation ChangePassword($changePasswordInfo: ChangePasswordGraphType) {
+        changePassword(changePasswordInfo: $changePasswordInfo) {
+            success
+            message
+        }
+    }
+`
+
 export const QUERY_LOGIN = gql`
   query SubmitLogin($loginInfo: LoginInputGraphType){
     submitLogin(login: $loginInfo){
