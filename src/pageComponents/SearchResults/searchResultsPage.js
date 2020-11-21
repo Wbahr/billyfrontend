@@ -107,7 +107,7 @@ export default function SearchResultsPage({history}) {
 	
 	const [showAddedToCartModal, setShowAddedToCartModal] = useState(false)
 	const [locationsModalItem, setLocationsModalItem] = useState(null)
-	const [detailsModalItem, setDetailsModalItem] = useState(null)
+	const [detailsModalInvMastUid, setDetailsModalItem] = useState(0)
 	const [ottoFindPart, setOttoFindPart] = useState(false)
 	const [itemDetails, setItemDetails] = useState([])
 	const [lastSearchPayload, setLastSearchPayload] = useState({})
@@ -224,9 +224,9 @@ export default function SearchResultsPage({history}) {
 
 	const handleHideLocationsModal = () => setLocationsModalItem(null)
 
-	const handleShowDetailsModal = (invMastUid, itemCode) => setDetailsModalItem({invMastUid, itemCode})
+	const handleShowDetailsModal = (invMastUid) => setDetailsModalItem(invMastUid)
 
-	const handleHideDetailsModal = () => setDetailsModalItem(null)
+	const handleHideDetailsModal = () => setDetailsModalItem(0)
 	
 	const handleAddedToCart = () => setShowAddedToCartModal(true)
 	
@@ -316,9 +316,8 @@ export default function SearchResultsPage({history}) {
 			/>
 			
 			<DetailsModal
-				open={!!detailsModalItem}
 				hideDetailsModal={handleHideDetailsModal}
-				detailsModalItem={detailsModalItem}
+				invMastUid={detailsModalInvMastUid}
 				history={history}
 			/>
 		</DivContainer>
