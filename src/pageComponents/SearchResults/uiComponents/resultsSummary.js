@@ -17,12 +17,9 @@ const Pgrey = styled.p`
   font-weight: 700;
 `
 
-const Pblue = styled.p`
-  font-size: 20px;
+const Red = styled.span`
   color: rgb(219, 22, 51);
   padding: 0 4px;
-  margin: 0;
-  font-weight: 700;
 `
 
 export default ({searchTerm, totalResults, isSearching}) => (
@@ -30,15 +27,9 @@ export default ({searchTerm, totalResults, isSearching}) => (
 		<Div>
 			{
 				isSearching ? (
-					<>
-						<Pgrey>Searching for:</Pgrey>
-						<Pblue>{searchTerm}</Pblue>
-					</>
+					<Pgrey>Searching for: <Red>{searchTerm}</Red></Pgrey>
 				) : (
-					<>
-						<Pgrey>{totalResults >= 10000 ?  '10,000+' : totalResults} results returned for:</Pgrey>
-						<Pblue>{searchTerm}</Pblue>
-					</>
+					<Pgrey>{totalResults >= 10000 ?  '10,000+' : totalResults} results returned for: <Red>{searchTerm}</Red></Pgrey>
 				)
 			}
 		</Div>

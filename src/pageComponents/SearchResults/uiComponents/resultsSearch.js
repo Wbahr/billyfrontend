@@ -37,6 +37,7 @@ const ButtonSearch = styled.button`
   border-radius: 0 3px 3px 0;
   box-shadow: inset 0px 2px 3px #7f0c1d;
   font-size: 14px;
+  line-height: 27px;
 `
 
 const SearchChipDiv = styled.div`
@@ -74,7 +75,7 @@ export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, se
 			</SearchChipDiv>
 			
 			<DivResultsSearch>
-				<InputSearch placeholder="Add keywords to refine these results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
+				<InputSearch placeholder="Add keywords to refine results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
 				<ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
 			</DivResultsSearch>
 			

@@ -95,6 +95,11 @@ export const useDidUpdateEffect = (create, deps) => {
 	}, deps);
 }
 
+export function onWindowResize(callback) {
+	window.addEventListener('resize', callback)
+	return () => window.removeEventListener('resize', callback)
+}
+
 export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => {
 	return quantity > (availability || 0)
 		? (

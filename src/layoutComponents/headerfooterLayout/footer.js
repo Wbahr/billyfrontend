@@ -52,7 +52,7 @@ const ContainerTop = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: white;
-	margin: 16px 0;
+	padding: 16px 0;
 `
 
 const ContentContainer = styled.div`

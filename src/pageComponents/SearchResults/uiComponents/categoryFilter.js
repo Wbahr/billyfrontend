@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinusSquare } from '@fortawesome/free-regular-svg-icons'
 import Loader from '../../_common/loader'
+import {Category as CategoryIcon} from '@material-ui/icons';
+import clsx from "clsx";
 
 const DivTitle = styled.div`
 	display: flex;
 	cursor: pointer;
-	width: 280px;
+	width: 279px;
 	height: 36px;
-	padding: 0 16px;
+	padding: 0 12px;
 	background-color: #f3f3f3;
 	color: white;
 	font-weight: 600;
@@ -18,7 +19,6 @@ const DivTitle = styled.div`
 	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 8px;
 `
 
 const DivRow = styled.div`
@@ -30,25 +30,17 @@ const DivRow = styled.div`
 const DivOption = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 4px 0 4px 24px;
+	margin: 4px 0;
 `
 
 const DivOptionRow = styled.div`
 	display: flex; 
 	align-items: center;
-	margin: 4px 0 4px 24px;
+	margin: 4px 0;
 `
 
 const P = styled.p`
 	margin: 0;
-`
-
-const PparentTitle = styled.p`
-	margin-left: 16px;
-	margin-bottom: 0px;
-	color: #535353;
-	font-size: 14px;
-	font-weight: 500;
 `
 
 const Acategory = styled.p`
@@ -71,10 +63,18 @@ const Row = styled.div`
 	display: flex;
 `
 
-export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories}) {
+const CategoriesDiv = styled.div`
+	margin-left: 48px;
+`
+
+export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen}) {
 	const [isOpen, setIsOpen] = useState(true)
 	const selectedParentIdx = parentCategories.findIndex(category => category.selected)
 	const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
+	
+	useEffect(() => {
+		if (drawerOpen) setIsOpen(true)
+	}, [drawerOpen])
 	
 	const handleUpdateCategories = (type, idx) => () => {
 		const toggleSelected = (category, i) => ({ ...category, selected: i === idx ? !category.selected : false })
@@ -147,11 +147,17 @@ export default function CategoryFilter({isSearching, parentCategories, childCate
 	return (
 		<div>
 			<DivTitle onClick={() => setIsOpen(!isOpen)}>
+				<CategoryIcon/>
 				<P>Categories</P>
-				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
+				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="white"/>
 			</DivTitle>
 			
-			{isOpen && <ParentCategories/>}
+			<CategoriesDiv className={clsx({
+				[classes.expand]: drawerOpen || isOpen,
+				[classes.collapse]: !isOpen || !drawerOpen
+			})}>
+				<ParentCategories/>
+			</CategoriesDiv>
 		</div>
 	)
 }

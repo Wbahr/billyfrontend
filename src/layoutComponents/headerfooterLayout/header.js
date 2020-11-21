@@ -7,14 +7,14 @@ import TopAlert from './headerAlertModal'
 import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
-import { buildSearchString } from "../../pageComponents/_common/helpers/generalHelperFunctions";
+import { buildSearchString, onWindowResize } from "../../pageComponents/_common/helpers/generalHelperFunctions";
 import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
 import {Button, Menu} from '@material-ui/core'
 
 const Nav = styled.div`
-	position: -webkit-sticky;
-	position: sticky;
+	position: ${props => props.history.location.pathname === '/search' ? 'relative' : '-webkit-sticky'};
+	position: ${props => props.history.location.pathname === '/search' ? 'relative' : 'sticky'};
 	top: 0;
 	z-index: 2;
 `
@@ -51,7 +51,6 @@ const LinkContainer = styled.div`
 	display: flex;
 	align-items: center;
 	flex: 1;
-	min-width: 250px;
 	color: black;
 	font-size: 14px;
 	font-weight: 500;
@@ -170,11 +169,6 @@ const AccountSectionRow = styled.div`
  	justify-content: flex-end;
  	padding: 5px 0;
 `
-
-function onWindowResize(callback) {
-	window.addEventListener('resize', callback)
-	return () => window.removeEventListener('resize', callback)
-}
 
 export default function HeaderComponent({history}) {
 	const tabContainerRef = useRef(null)
@@ -315,7 +309,7 @@ export default function HeaderComponent({history}) {
 	)
 	
 	return (
-		<Nav>
+		<Nav history={history}>
 			{context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
 			<NavTop>
 				<ReverseNavContainer>
@@ -327,32 +321,34 @@ export default function HeaderComponent({history}) {
 			
 			<NavBottom>
 				<NavContainer ref={tabContainerRef}>
-					<Link to="/">
-						<img src={AirlineLogo} width="135px" />
-					</Link>
-					
-					
-					<LinkContainer>
-						{tabComponents.slice(0, visibleTabCount)}
+					<Row>
+						<Link to="/">
+							<img src={AirlineLogo} width="135px" />
+						</Link>
 						
-						{visibleTabCount < tabDeclaration.length && (
-							<Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
-								<FontAwesomeIcon icon="ellipsis-h"/>
-							</Button>
-						)}
 						
-						<Menu
-							MenuListProps={{style: {backgroundColor: '#535353'}}}
-							anchorEl={overflowMenu}
-							open={!!overflowMenu}
-							onClose={() => setOverflowMenu(null)}
-						>
-							{tabDeclaration
-								.slice(visibleTabCount, tabDeclaration.length)
-								.map(toMenuItem)
-							}
-						</Menu>
-					</LinkContainer>
+						<LinkContainer>
+							{tabComponents.slice(0, visibleTabCount)}
+							
+							{visibleTabCount < tabDeclaration.length && (
+								<Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
+									<FontAwesomeIcon icon="ellipsis-h"/>
+								</Button>
+							)}
+							
+							<Menu
+								MenuListProps={{style: {backgroundColor: '#535353'}}}
+								anchorEl={overflowMenu}
+								open={!!overflowMenu}
+								onClose={() => setOverflowMenu(null)}
+							>
+								{tabDeclaration
+									.slice(visibleTabCount, tabDeclaration.length)
+									.map(toMenuItem)
+								}
+							</Menu>
+						</LinkContainer>
+					</Row>
 					
 					{SearchBar}
 				</NavContainer>
@@ -384,9 +380,8 @@ function UserNameSection({userInfo, impersonatedCompanyInfo, cancelImpersonation
 				<ImpersonationSearch />
 			</UserNameRow>
 		)
-	} else {
-		return <Row style={{flex: 1}}/>;
 	}
+	return null
 }
 
 const servicesSubItems = [

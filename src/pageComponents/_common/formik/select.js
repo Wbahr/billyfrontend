@@ -38,7 +38,7 @@ const CustomSelectComponent = ({
     isDisabled,
 	...props
 }) => {
-    return (
+	return (
 		<div style={{position: 'relative', margin: 'auto 0', width: width || '300px', padding: '0 8px', height: props.label ? '71px' : ''}}>
 			{props.label && <label style={LabelStyle} htmlFor={field.name}>{props.label}</label>}
             <Select
