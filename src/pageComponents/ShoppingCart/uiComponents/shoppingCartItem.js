@@ -118,13 +118,13 @@ const Label = styled.label`
 	font-style: italic;
 `
 
-const Peach = styled.p`
-	margin: 0;
-	padding-right: 8px;
+const EditPriceDiv = styled.div`
+	display: flex;
 `
 
-const DivEditPrice = styled.div`
+const EditPriceIcon = styled.div`
 	cursor: pointer;
+	margin-left: 8px;
 `
 
 const P1 = styled.p`
@@ -155,7 +155,8 @@ const P3 = styled.p`
 	font-size: 12px !important;
 `
 
-export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index, showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
+export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index,
+ 	showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	const itemId = parseInt(cartItem.frecno,10)
@@ -165,15 +166,15 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 	function selectCustomerPartNumber(value){
 		if (value === -1) {
 			setSelectedCustomerPartNumber(0) // Reset Dropdown
-			context.updateItem(index, 'customerPartNumberId', 0)
+			context.updateCartItemField(index, 'customerPartNumberId', 0)
 			showCustomerPartModal(index)
 		} else if (value === 0) {
 			setSelectedCustomerPartNumber(value)
-			context.updateItem(index, 'customerPartNumberId', 0)
+			context.updateCartItemField(index, 'customerPartNumberId', 0)
 		} else {
 			
 			setSelectedCustomerPartNumber(value)
-			context.updateItem(index, 'customerPartNumberId', Number(value))
+			context.updateCartItemField(index, 'customerPartNumberId', Number(value))
 		}
 	}
 
@@ -197,18 +198,25 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 			})
 			showFactoryStockModal(index)
 			break
-		case 'edit-price':
+			case 'edit-price':
             handleSetModalData({
                 modalType: type,
                 originalItemPrice: priceInfo?.unitPrice,
                 itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-                airlineCost: cartItem.airlineCost /*Airline cost only comes from the shopping cart, when authorized */
+                airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
+            		priceReasonId: cartItem.priceReasonId
             })
             showEditPriceModal(index)
 			break
 		case 'customer-part':
 			showCustomerPartModal(index)
 			break
+		}
+	}
+	
+	const handleQuantityChange = ({target: {value}}) => {
+		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
+			context.updateCartItemField(index, 'quantity', value.length ? parseInt(value) : '')
 		}
 	}
 
@@ -274,7 +282,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							<DivItem>
 								<Label>Qty:</Label>
 								<input
-									onChange={(e) => context.updateItem(index, 'quantity', e.target.value)} 
+									onChange={handleQuantityChange}
 									style={{'width': '50px'}}
 									value={cartItem.quantity}
 									disabled={cartItem.quoteId}
@@ -282,12 +290,37 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</DivItem>
 							<DivItem>
 								<DivRow>
-									{context.userInfo?.isAirlineUser &&
-										<>
-											<Peach>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale /> : <NumberFormat value={cartItem.itemUnitPriceOverride} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</Peach>
-											<DivEditPrice onClick={()=>handleShowModal('edit-price')}><FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} /></DivEditPrice>
-										</>
-									}
+									{context.userInfo?.isAirlineUser && (
+										cartItem.itemUnitPriceOverride ? (
+											<EditPriceDiv>
+												<NumberFormat
+													value={cartItem.itemUnitPriceOverride}
+													displayType={'text'}
+													thousandSeparator={true}
+													prefix={'$'}
+													decimalScale={2}
+													fixedDecimalScale
+												/>
+												<EditPriceIcon onClick={()=>handleShowModal('edit-price')}>
+													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+												</EditPriceIcon>
+											</EditPriceDiv>
+										) : priceInfo?.unitPrice ? (
+											<EditPriceDiv>
+												<NumberFormat
+													value={priceInfo?.unitPrice}
+													displayType={'text'}
+													thousandSeparator={true}
+													prefix={'$'}
+													decimalScale={2}
+													fixedDecimalScale
+												/>
+												<EditPriceIcon onClick={()=>handleShowModal('edit-price')}>
+													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+												</EditPriceIcon>
+											</EditPriceDiv>
+										) : null
+									)}
 								</DivRow>
 							</DivItem>
 							<DivItem>
@@ -303,7 +336,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 									placeholder='Type item notes here'
 									minLength={0}
 									debounceTimeout={300}
-									onChange={(e) => context.updateItem(index, 'notes', e.target.value)} 
+									onChange={(e) => context.updateCartItemField(index, 'itemNotes', e.target.value)}
 									style={{'width': '300px'}}
 									value={cartItem.itemNotes}
 								/>

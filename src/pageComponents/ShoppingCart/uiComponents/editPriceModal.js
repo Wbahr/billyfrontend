@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../../_common/form/inputv2'
+import AirlineSelect from '../../_common/form/select'
 
 const DivRow = styled.div`
   display: flex;
@@ -41,94 +42,115 @@ const Container = styled.div`
 `
 
 export default function EditPriceModal({open, index, hideEditPriceModal, data}) {
-	// const context = useContext(Context)
-	const [itemPrice, setItemPrice] = useState(0);
-	const [margin, setMargin] = useState(0);
+	const [itemPrice, setItemPrice] = useState(0)
+	const [margin, setMargin] = useState(0)
 	//Note: Airline cost only available to authorized users
-	const [airlineCost, setAirlineCost] = useState(0);
-
-	useEffect(()=> {
+	const [airlineCost, setAirlineCost] = useState(0)
+	const [selectedReason, setSelectedReason] = useState(null)
+	const {updateCartItem, editPriceReasonCodes} = useContext(Context)
+	
+	const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
+	
+	useEffect(() => {
 		if (data && data.modalType === 'edit-price') {
-			let mutatedValue = data.itemPrice
-			let margin = calculateMargin(mutatedValue)
 			setItemPrice(data.itemPrice)
-			setMargin(margin)
-			setAirlineCost(data.airlineCost);
-		} else {
-
+			setMargin(calculateMargin(data.itemPrice))
+			setAirlineCost(data.airlineCost)
+			setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
 		}
 	}, [data])
 
-	function handleReset(){
-		let mutatedValue = data.originalItemPrice
+	function handleReset() {
 		setItemPrice(data.originalItemPrice)
-		let margin = calculateMargin(mutatedValue)
-		setMargin(margin)
+		setMargin(calculateMargin(data.originalItemPrice))
+		setSelectedReason(null)
+	}
+	
+	function calculateMargin(price) {
+		const margin = margin < 0 ? 0 : (price - data.airlineCost) / price
+		return (margin * 100).toFixed(1)
 	}
 
-	function handleClose(){
+	const handleChangePrice = type => (e, maskValue, floatValue) => {
+		if (type === 'price') {
+			setItemPrice(floatValue)
+			setMargin(calculateMargin(floatValue))
+		} else {
+			setMargin(floatValue)
+			setItemPrice(parseFloat((airlineCost / (1 - (floatValue/100))).toFixed(2)))
+		}
+	}
+	
+	const handleCancel = () => {
+		handleReset()
 		hideEditPriceModal()
 	}
-
-	function calculateMargin(mutatedValue){
-		let mutatedAirlineCost = data.airlineCost
-		let margin = (mutatedValue - mutatedAirlineCost)/mutatedValue
-		if (margin < 0){
-			margin = 0
-		}
-		return((margin * 100).toFixed(1))
-	}
-
-	function handleChangePrice(type, value){
-		if(type === 'price'){
-			let mutatedValue = Number(value.substring(1))
-			let margin = calculateMargin(mutatedValue)
-			setItemPrice(mutatedValue)
-			setMargin(margin)
+	
+	const handleSave = () => {
+		if (itemPrice === data.originalItemPrice) {
+			updateCartItem(index, 'priceOverride', null)
 		} else {
-			let mutatedValue = Number(value.slice(0, -1))
-			setMargin(mutatedValue)
-			let itemPrice = airlineCost /(1 - (mutatedValue/100))
-			setItemPrice(itemPrice)
+			updateCartItem(index, 'priceOverride', { priceOverride: itemPrice, reasonId: selectedReason.value })
 		}
+		hideEditPriceModal()
 	}
-  
-	return(
-		<Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '400px', 'borderRadius': '3px'}}>
+ 
+	const handleReasonCodeChange = value => {
+		setSelectedReason(reasonCodeOptions.find(code => code.value === value))
+	}
+	
+	return (
+		<Modal
+			open={open}
+			onClose={hideEditPriceModal}
+			contentStyle={{maxWidth: 400, borderRadius: 3}}
+		>
 			<Container>
 				<h4>Edit Item Price</h4>
 				<DivRow>
 					<DivItem>
-						<Label>Item Price: </Label><AirlineInput type="currency" value={itemPrice} width='100px' onChange={(e)=> handleChangePrice('price', e.target.value)}/>
+						<Label>Item Price: </Label>
+						<AirlineInput
+							type="currency"
+							value={itemPrice}
+							width='100px'
+							onChange={handleChangePrice('price')}
+						/>
 					</DivItem>
+					
 					<DivItem>
-						<Label>Margin: </Label><AirlineInput type="percent" value={margin} width='100px' onChange={(e)=> handleChangePrice('margin', e.target.value)}/>
+						<Label>Margin: </Label>
+						<AirlineInput
+							type="percent"
+							value={margin}
+							width='100px'
+							onChange={handleChangePrice('margin')}
+						/>
 					</DivItem>
+					
 					<DivItem>
-						<Label>Airline Cost: </Label><AirlineInput type="currency" disabled={true} value={airlineCost} width='100px' onChange={()=>{}}/>
+						<Label>Airline Cost: </Label>
+						<AirlineInput
+							type="currency"
+							disabled={true}
+							value={airlineCost}
+							width='100px'
+						/>
 					</DivItem>
 				</DivRow>
-				<Context.Consumer>
-					{({updateItem}) => (
-						<DivRow>
-							<ButtonBlack onClick={()=>{
-								handleReset()
-								handleClose()
-							}}>Cancel</ButtonBlack>
-							<ButtonBlack onClick={()=>{
-								handleReset()
-							}}>Reset</ButtonBlack>
-							<ButtonRed onClick={()=>{
-								if (itemPrice === data.originalItemPrice) {
-									updateItem(index, 'priceOverride', null)
-								} else {
-									updateItem(index, 'priceOverride', parseFloat(itemPrice))
-								}
-								handleClose()
-							}}>Save</ButtonRed>
-						</DivRow>
-					)}
-				</Context.Consumer>
+				
+				<AirlineSelect
+					label="Reason"
+					options={reasonCodeOptions}
+					value={selectedReason}
+					setValue={handleReasonCodeChange}
+				/>
+				
+				<DivRow>
+					<ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
+					<ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
+					<ButtonRed onClick={handleSave} disabled={!selectedReason || itemPrice === data?.originalItemPrice}>Save</ButtonRed>
+				</DivRow>
 			</Container>
 		</Modal>
 	)

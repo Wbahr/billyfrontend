@@ -58,37 +58,29 @@ const DivSave = styled(DivShare)`
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-	const { cart, moveItem, emptyCart, userInfo } = useContext(Context)
+	const { cart, moveItem, emptyCart, userInfo, saveShoppingCart } = useContext(Context)
 
 	const invMastUids = cart.map(item => item.frecno)
 
-	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+	const { data: itemsDetails } = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+		variables: { invMastUids }
+	})
+
+	const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
 		variables: {
-			'invMastUids': invMastUids
+			items: cart.map(cartItem => ({
+				invMastUid: cartItem.frecno,
+				quantity: cartItem.quantity
+			}))
 		}
 	})
 
-	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
-		variables: {
-			'items': cart.map(cartItem => {
-				return {
-					'invMastUid': cartItem.frecno,
-					'quantity': cartItem.quantity
-				}
-			})
-		}
+	const { data: itemsAvailability } = useQuery(GET_ITEM_AVAILABILITY, {
+		variables: { invMastUids }
 	})
 
-	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
-		variables: {
-			'invMastUids': invMastUids
-		}
-	})
-
-	const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers} = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
-		variables:{
-			'invMastUids': invMastUids
-		}
+	const { data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+		variables: { invMastUids }
 	})
 
 	useEffect(() => {
@@ -164,7 +156,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 									</DivSave>
 								: 	<Ashare></Ashare>
 						}
-					<DivSave onClick={() => { saveCart(); setSavedCart(true); }}>
+					<DivSave onClick={() => { saveShoppingCart(); setSavedCart(true); }}>
 						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
 						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
 					</DivSave>

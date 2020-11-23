@@ -1,30 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react'
-import _ from 'lodash'
-import { timeoutCollection } from 'time-events-manager'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import {
-    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ITEM_BY_ID, GET_ITEMS_BY_ID, GET_ORDERS, GET_WEB_USER_CONTACTS,
-    GET_INVOICES, GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS
+    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
+    GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
 } from './providerGQL'
-import { getRidOf__typename, logout } from '../pageComponents/_common/helpers/generalHelperFunctions'
+import { getRidOf__typename, logout, distinct } from '../pageComponents/_common/helpers/generalHelperFunctions'
 
 export default function Provider(props) {
     const didMountRef = useRef(false)
-    const justLoadedCart = useRef(false)
     const invoicesLoaded = useRef(false)
     const [shoppingCart, setShoppingCart] = useState([])
     const [orderNotes, setOrderNotes] = useState('')
-    const [shoppingCartPricing, setShoppingCartPricing] = useState({ 'state': 'stable', 'subTotal': '--', 'tariff': '--' })
+    const [shoppingCartPricing, setShoppingCartPricing] = useState({ state: 'stable', subTotal: '--', tariff: '--' })
     const [userInfo, setUserInfo] = useState(null)
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
         isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
     } : null);
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
-    const [userType, setUserType] = useState({ 'current': null, 'previous': null })
-    const [topAlert, setTopAlert] = useState({ 'show': false, 'message': '' })
-    const [timeoutId, setTimeoutId] = useState(null)
+    const [userType, setUserType] = useState({ current: null, previous: null })
+    const [topAlert, setTopAlert] = useState({ show: false, message: '' })
     const [ordersCache, setOrdersCache] = useState([])
     const [invoiceCache, setInvoiceCache] = useState([])
     const [invoiceBatchNumber, setInvoiceBatchNumber] = useState(0)
@@ -33,113 +29,87 @@ export default function Provider(props) {
     const [itemAvailabilities, setItemAvailabilities] = useState([])
     const [shoppingLists, setShoppingLists] = useState([])
     const [webUserContacts, setWebUserContacts] = useState([])
+    const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
+  
     const invoiceBatchSize = 1000
+  
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             manageUserInfo('load-context')
-            handleShoppingCart('retrieve')
+            retrieveShoppingCart()
+					  userInfo?.isAirlineUser && getPriceReasons()
         }
+			  didMountRef.current = true
     })
-
-    useEffect(() => { // Update cart in database if shoppingCart or orderNotes changes
-        if (didMountRef.current) {
-            if (!justLoadedCart.current) {
-                setShoppingCartPricing({ 'state': 'loading', 'subTotal': '--', 'tariff': '--' })
-                let currentTimeoutId
-                if (_.isNil(timeoutId)) {
-                    currentTimeoutId = window.setTimeout(() => { handleShoppingCart('update') }, 500)
-                } else {
-                    timeoutCollection.remove(timeoutId)
-                    currentTimeoutId = window.setTimeout(() => { handleShoppingCart('update') }, 800)
-                }
-                setTimeoutId(currentTimeoutId)
-            }
-            justLoadedCart.current = false
-        }
-        didMountRef.current = true
-    }, [shoppingCart, orderNotes])
-
-    const [updateCart] = useMutation(UPDATE_CART, {
+  
+    const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            let result = data.shoppingCart
-            if (result.action === 'merge' || result.action === 'retrieve') {
-                localStorage.setItem('shoppingCartToken', result.token)
-                let cartItems = result.cartItems
-                cartItems.forEach(elem => delete elem.__typename)
-                setShoppingCart(cartItems)
-                setOrderNotes(result.orderNotes)
-            }
-            setShoppingCartPricing({ 'state': 'stable', 'subTotal': result.subtotal.toFixed(2), 'tariff': result.tariff.toFixed(2) })
+          setEditPriceReasonCodes(data.priceReasons.map(({__typename, ...rest}) => rest))
         }
     })
 
-    const [handleStartImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
+    const [startImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             let requestData = data.impersonationBegin
             if (requestData.success) {
-                const {
-                    userInfo,
-                    impersonationUserInfo,
-                    token
-                } = requestData.authorizationInfo
+                const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
                 manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
-                handleUpdateOrders()
-                handleShoppingCart('retrieve')
-                let alertObj = {
-                    'show': true,
-                    'message': 'You are now impersonating a customer'
-                }
-                setTopAlert(alertObj)
-                window.setTimeout(() => { setTopAlert({show: false}) }, 2000)
+                getOrders()
+                retrieveShoppingCart()
+                showTopAlert('You are now impersonating a customer')
+                window.setTimeout(removeTopAlert, 2000)
             }
         }
     })
 
-    const [handleCancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
+    const [cancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
         fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            let requestData = data.impersonationEnd
+        onCompleted: ({impersonationEnd: requestData}) => {
             if (requestData.success) {
-                const {
-                    userInfo,
-                    impersonationUserInfo,
-                    token
-                } = requestData.authorizationInfo
+                const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
-                handleShoppingCart('retrieve')
+                retrieveShoppingCart('retrieve')
                 props.history.push('/')
             } else {
-                setErrorMessage(requestData.message)
+                //setErrorMessage(requestData.message) //this function doesn't exist... why? what happened? when? such mystery.
             }
         }
     })
 
-    const [handleUpdateTaxes] = useLazyQuery(GET_TAXES, {
+    const [updateTaxesApiCall] = useLazyQuery(GET_TAXES, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             console.log('got taxes ->', data)
         }
     })
+  
+    const updateTaxes = (zipcode, shipToId) => {
+			updateTaxesApiCall({
+        variables: {
+          anonymousCartToken: localStorage.getItem('shoppingCartToken'),
+          shipToId: shipToId,
+          zipcode: zipcode
+        }
+      })
+    }
 
-    const [handleGetOrders, getOrdersState] = useLazyQuery(GET_ORDERS, {
+    const [getOrders, getOrdersState] = useLazyQuery(GET_ORDERS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            let requestData = data.accountOrders
-            setOrdersCache(requestData)
+            setOrdersCache(data.accountOrders)
         }
     })
 
     const [handleGetInvoices] = useLazyQuery(GET_INVOICES, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            let requestData = data.accountInvoices
-            setInvoiceCache([...invoiceCache, ...requestData])
-            if (requestData.length >= invoiceBatchSize) {
-                handleUpdateInvoices()
+            setInvoiceCache([...invoiceCache, ... data.accountInvoices])
+            if ( data.accountInvoices.length >= invoiceBatchSize) {
+                getInvoices()
             } else {
                 invoicesLoaded.current = true
             }
@@ -152,8 +122,6 @@ export default function Provider(props) {
             setPurchaseHistory(data.purchaseHistory)
         }
     })
-
-    const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx;
 
     const [handleGetItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
         fetchPolicy: 'no-cache',
@@ -180,31 +148,32 @@ export default function Provider(props) {
     const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingList }) => {
-            const data = shoppingList.map(getRidOf__typename)
-            setShoppingLists(data)
+            setShoppingLists(shoppingList.map(getRidOf__typename))
         }
     })
 
     const [handleUpdateShoppingList, upsertShoppingListState] = useMutation(UPDATE_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
-        onCompleted: data => {
+        onCompleted: ({shoppingListEdit}) => {
             const distinctShoppingLists = (list, idx, self) => self.findIndex(l => l.id === list.id) === idx
-            if (data.shoppingListEdit.deleted) {
-                const foundListIdx = shoppingLists.findIndex(list => list.id === data.shoppingListEdit.id)
+            if (shoppingListEdit.deleted) {
+                const foundListIdx = shoppingLists.findIndex(list => list.id === shoppingListEdit.id)
                 if (foundListIdx !== -1) {
                     const shoppingListCopy = shoppingLists.slice()
                     shoppingListCopy.splice(foundListIdx, 1)
                     setShoppingLists(shoppingListCopy)
                 }
             } else {
-                setShoppingLists([getRidOf__typename(data.shoppingListEdit), ...shoppingLists].filter(distinctShoppingLists))
+                setShoppingLists([getRidOf__typename(shoppingListEdit), ...shoppingLists].filter(distinctShoppingLists))
             }
             return Promise.resolve(data)
         }
     })
 
     const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
-        const items = shoppingList.items.map(({ itemCode, frecno, invMastUid, quantity, customerPartNumberId }) => ({ itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }))
+        const items = shoppingList.items.map(({ itemCode, frecno, invMastUid, quantity, customerPartNumberId }) => (
+          { itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }
+        ))
         return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
     }
 
@@ -223,7 +192,7 @@ export default function Provider(props) {
             case 'load-context':
                 handleSetUserInfo(JSON.parse(userInfoStorage))
                 setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
-                if (_.isNil(userInfoStorage)) {
+                if (!userInfoStorage) {
                     currentUserType = 'Anon'
                 } else {
                     currentUserType = JSON.parse(userInfoStorage).role
@@ -272,172 +241,138 @@ export default function Provider(props) {
                 setInvoiceBatchNumber(0)
                 break
         }
-        setUserType({ 'current': currentUserType, 'previous': _.isNil(userType.current) ? 'Anon' : userType.current })
+        setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
     }
 
-    function resetTopAlert() {
+    function removeTopAlert() {
         setTopAlert({
-            'show': false,
-            'message': ''
+            show: false,
+            message: ''
         })
     }
+    
+    function showTopAlert(message) {
+        setTopAlert({ show: true, message })
+    }
 
-    function handleLogin(userInfo, mergeToken) {
+    function loginUser(userInfo, mergeToken) {
         if (shoppingCart.length > 0) {
-            handleShoppingCart('merge', mergeToken)
+            mergeShoppingCart(mergeToken)
         } else {
-            handleShoppingCart('retrieve')
+            retrieveShoppingCart('retrieve')
         }
         manageUserInfo('login', userInfo)
         let drift = drift || null;
         if (drift && userInfo.role === 'AirlineEmployee') {
             drift?.api?.widget?.hide();
         }
-        handleUpdateOrders()
-        setTopAlert({
-            'show': true,
-            'message': 'You have been successfully logged in.'
-        })
-        window.setTimeout(() => { resetTopAlert() }, 3000)
+        getOrders()
+			  showTopAlert('You have been successfully logged in.')
+        window.setTimeout(removeTopAlert, 3000)
     }
 
-    function handleLogout() {
+    function logoutUser() {
         if (drift) { drift.api.widget.show(); }
         manageUserInfo('logout')
         props.history.push('/')
-        handleEmptyCart()
-        setTopAlert({
-            'show': true,
-            'message': 'You have been logged out.'
-        })
-        window.setTimeout(() => { resetTopAlert() }, 3500)
+        emptyCart()
+        showTopAlert('You have been logged out.')
+        window.setTimeout(removeTopAlert, 3500)
+    }
+    
+    const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const result = data.shoppingCart
+            if (result.action === 'merge' || result.action === 'retrieve') {
+                localStorage.setItem('shoppingCartToken', result.token)
+                let cartItems = result.cartItems
+                cartItems.forEach(elem => delete elem.__typename)
+                setShoppingCart(cartItems)
+                setOrderNotes(result.orderNotes)
+            }
+            setShoppingCartPricing({ state: 'stable', subTotal: result.subtotal.toFixed(2), tariff: result.tariff.toFixed(2) })
+        }
+  })
+
+    const addItem = (item) => updateShoppingCart([...shoppingCart, item])
+
+    const addItems = (items) => updateShoppingCart([...shoppingCart, ...items])
+  
+    function removeItem(itemLocation) {
+        const newCart = shoppingCart.slice()
+			  newCart.splice(itemLocation, 1)
+			  updateShoppingCart(newCart)
     }
 
-    function handleAddItem(item) {
-        setShoppingCart([...shoppingCart, item])
+    function moveItem(itemLocation, newLocation) {
+        const newCart = shoppingCart.slice()
+        const movedItem = newCart.splice(itemLocation, 1)
+			  newCart.splice(newLocation, 0, movedItem[0])
+			  updateShoppingCart(newCart)
     }
 
-    function handleAddItems(items) {
-        setShoppingCart([...shoppingCart, ...items])
-        let itemFrecnos = []
-        items.forEach(elem => itemFrecnos.push(elem.frecno))
-    }
-
-    function handleRemoveItem(itemLocation) {
-        let mutatedCart = shoppingCart
-        mutatedCart.splice(itemLocation, 1)
-        setShoppingCart([...mutatedCart])
-    }
-
-    function handleMoveItem(itemLocation, newLocation) {
-        let mutatedCart = [...shoppingCart]
-        let movedItem = mutatedCart.splice(itemLocation, 1)
-        mutatedCart.splice(newLocation, 0, movedItem[0])
-        setShoppingCart([...mutatedCart])
-    }
-
-    function handleSplitItem(index, lineCount, lineQuantity) {
-        let splitItems = []
+    function splitItem(index, lineCount, lineQuantity) {
+        const splitItems = []
         for (let i = 0; i < lineCount; i++) {
             splitItems.push({
-                'frecno': shoppingCart[index].frecno,
-                'quantity': parseInt(lineQuantity, 10),
-                'itemNotes': shoppingCart[index].itemNotes,
+                frecno: shoppingCart[index].frecno,
+                quantity: parseInt(lineQuantity),
+                itemNotes: shoppingCart[index].itemNotes,
             })
         }
-        let frontCart = shoppingCart.slice(0, index) // returns cart item before split item
-        let backCart = shoppingCart.slice(index + 1) // returns cart item after split item
-        setShoppingCart([...frontCart, ...splitItems, ...backCart])
+        const frontCart = shoppingCart.slice(0, index) // returns cart item before split item
+        const backCart = shoppingCart.slice(index + 1) // returns cart item after split item
+        updateShoppingCart([...frontCart, ...splitItems, ...backCart])
     }
 
-    function handleUpdateItem(index, type, value) {
-        let mutatedCart = shoppingCart
-        switch (type) {
-            case 'quantity':
-                if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-                    let mutatedValue = ''
-                    if (!isNaN(value) && value.length > 0) {
-                        mutatedValue = parseInt(value, 10)
-                    }
-                    mutatedCart[index].quantity = mutatedValue
-                }
-                break
-            case 'notes':
-                mutatedCart[index].itemNotes = value
-                break
-            case 'priceOverride':
-                mutatedCart[index].itemUnitPriceOverride = value
-                break
-            case 'customerPartNumberId':
-                mutatedCart[index].customerPartNumberId = value
-                break
-        }
-        setShoppingCart([...mutatedCart])
+    const updateCartItem = (index, newItem) => {
+			  updateShoppingCart(shoppingCart.map((item, idx) => idx === index ? newItem : item))
     }
-
-    function handleShoppingCart(action, mergeToken) {
-        setShoppingCartPricing({ 'state': 'loading', 'subTotal': '--', 'tariff': '--' })
-        let shoppingCartToken = localStorage.getItem('shoppingCartToken')
-        let cartInfo
-        switch (action) {
-            case 'update':
-                setTimeoutId(null)
-                cartInfo = {
-                    'cartInfo': {
-                        'token': shoppingCartToken,
-                        'actionString': action,
-                        'orderNotes': orderNotes,
-                        'cartItems': shoppingCart
-                    }
-                }
-                break
-            case 'save':
-                cartInfo = {
-                    'cartInfo': {
-                        'token': shoppingCartToken,
-                        'actionString': action
-                    }
-                }
-                justLoadedCart.current = true
-                break
-            case 'merge':
-                cartInfo = {
-                    'cartInfo': {
-                        'token': mergeToken,
-                        'actionString': action
-                    }
-                }
-                justLoadedCart.current = true
-                break
-            case 'retrieve':
-                cartInfo = {
-                    'cartInfo': {
-                        'token': shoppingCartToken,
-                        'actionString': action
-                    }
-                }
-                justLoadedCart.current = true
-                break
-        }
-        updateCart({ variables: cartInfo })
+    
+    const updateCartItemField = (index, field, value) => {
+			  updateShoppingCart(shoppingCart.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
-
-    function handleEmptyCart() {
-        setShoppingCart([])
+    
+    const updateCartWrapper = cartInfo => {
+			const shoppingCartToken = localStorage.getItem('shoppingCartToken')
+			setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
+			shoppingCartApiCall({
+				variables: {
+					cartInfo: {
+						token: shoppingCartToken,
+            ...cartInfo
+					}
+				}
+			})
     }
-
-    function handleUpdateOrders() {
-        handleGetOrders()
+    
+    const updateOrderNotes = newOrderNotes => {
+        setOrderNotes(newOrderNotes)
+			  updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
     }
+    
+    const updateShoppingCart = cartItems => {
+        setShoppingCart(cartItems)
+			  updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
+    }
+    
+    const saveShoppingCart = () => updateCartWrapper({ actionString: 'save' })
+    
+    const retrieveShoppingCart = () => updateCartWrapper({ actionString: 'retrieve' })
+    
+    const mergeShoppingCart = token => updateCartWrapper({ actionString: 'retrieve', token })
 
-    function handleUpdateInvoices() {
+    const emptyCart = () => updateShoppingCart([])
+    
+    function getInvoices() {
         if (invoiceBatchNumber === 0) {
             invoicesLoaded.current = false
         }
         handleGetInvoices({
             variables: {
-                'batchNumber': invoiceBatchNumber,
-                'batchSize': invoiceBatchSize
+                batchNumber: invoiceBatchNumber,
+                batchSize: invoiceBatchSize
             }
         })
         setInvoiceBatchNumber(invoiceBatchNumber + 1)
@@ -446,73 +381,31 @@ export default function Provider(props) {
     return (
         <Context.Provider
             value={{
-                impersonatedCompanyInfo: impersonatedCompanyInfo,
-                startImpersonation: (customerId) => {
-                    handleStartImpersonation({ variables: { 'customerId': customerId } })
-                },
-                cancelImpersonation: () => {
-                    handleCancelImpersonation()
-                },
-                topAlert: topAlert,
-                removeTopAlert: () => {
-                    resetTopAlert()
-                },
-                userInfo: userInfo,
-                loginUser: (userInformation, mergeToken) => {
-                    handleLogin(userInformation, mergeToken)
-                },
-                logoutUser: () => {
-                    handleLogout()
-                },
+                impersonatedCompanyInfo,
+                startImpersonation: customerId => startImpersonation({ variables: { customerId } }),
+                cancelImpersonation,
+                topAlert,
+                removeTopAlert,
+                userInfo,
+                loginUser,
+                logoutUser,
                 cart: shoppingCart,
                 cartPricing: shoppingCartPricing,
-                orderNotes: orderNotes,
-                addItem: (item) => {
-                    handleAddItem(item)
-                },
-                addItems: (items) => {
-                    handleAddItems(items)
-                },
-                removeItem: (itemLocation) => {
-                    handleRemoveItem(itemLocation)
-                },
-                moveItem: (itemLocation, newLocation) => {
-                    handleMoveItem(itemLocation, newLocation)
-                },
-                splitItem: (index, lineCount, lineQuantity) => {
-                    handleSplitItem(index, lineCount, lineQuantity)
-                },
-                updateItem: (index, type, value) => {
-                    handleUpdateItem(index, type, value)
-                },
-                emptyCart: () => {
-                    handleEmptyCart()
-                },
-                saveCart: () => {
-                    handleShoppingCart('save')
-                },
-                updateTaxes: (zipcode, shipToId) => {
-                    handleUpdateTaxes({
-                        variables: {
-                            'anonymousCartToken': localStorage.getItem('shoppingCartToken'),
-                            'shipToId': shipToId,
-                            'zipcode': zipcode
-                        }
-                    }
-                    )
-                },
-                setOrderNotes: (orderNotes) => {
-                    setOrderNotes(orderNotes)
-                },
-                ordersCache: ordersCache,
-                getOrders: () => {
-                    handleUpdateOrders()
-                },
+                orderNotes,
+                addItem,
+                addItems,
+                removeItem,
+                moveItem,
+                splitItem,
+                emptyCart,
+                saveShoppingCart,
+                updateTaxes,
+                updateOrderNotes,
+                ordersCache,
+                getOrders,
                 getOrdersState,
-                invoiceCache: invoiceCache,
-                getInvoices: () => {
-                    handleUpdateInvoices()
-                },
+                invoiceCache,
+                getInvoices,
                 invoicesLoaded: invoicesLoaded.current,
                 purchaseHistory,
                 getPurchaseHistoryState,
@@ -528,7 +421,10 @@ export default function Provider(props) {
                 shoppingLists,
                 getWebUserContacts,
                 getWebUserContactsState,
-                webUserContacts
+                webUserContacts,
+                editPriceReasonCodes,
+							  updateCartItem,
+							  updateCartItemField
             }}
         >
             {props.children}
