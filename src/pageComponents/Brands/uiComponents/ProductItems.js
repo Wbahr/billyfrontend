@@ -12,7 +12,7 @@ const ImgDiv = styled.div`
 
 const Img = styled.img`
 	width: 100%;
-	object-fit: contain;
+	object-fit: scale-down;
 `
 
 const ProductsDetails = styled.div`
