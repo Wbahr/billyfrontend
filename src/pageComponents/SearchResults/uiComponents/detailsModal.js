@@ -147,7 +147,8 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 			if (data.getItemPrices[0]) {
 				setUnitPrice(data.getItemPrices[0].totalPrice)
 			}
-		}
+		},
+		fetchPolicy: 'no-cache'
 	})
 
 	function handleSetQuantity({target: {value}}) {
