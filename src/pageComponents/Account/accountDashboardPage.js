@@ -8,6 +8,7 @@ import PaymentManagementPage from './accountPages/paymentManagement'
 import AccountManagementPage from './accountPages/accountManagement'
 import ShipToManagementPage from './accountPages/shiptoManagement'
 import ShoppingListManagementPage from './accountPages/shoppingListManagement'
+import UserSettingsPage from './accountPages/userSettings'
 
 const AccountInfoContainer = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ export default function AccountDashboard({history}) {
 		if(page === 'dashboard'){
 			setPageComponent(<AccountManagementPage history={history}/>)
 		} else if (page === 'user-settings'){
-			setPageComponent(<AccountManagementPage history={history}/>)
+			setPageComponent(<UserSettingsPage history={history}/>)
 		} else if (page === 'shipping-preferences'){
 			setPageComponent(<ShipToManagementPage/>)
 		} else if (page === 'payment-preferences'){

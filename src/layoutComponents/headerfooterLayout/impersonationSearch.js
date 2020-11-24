@@ -26,6 +26,7 @@ const Div = styled.div`
 
 const DivLast = styled(Div)`
   border-radius: 0 30px 30px 0;
+  cursor: pointer;
 `
 
 const DivResults = styled.div`
