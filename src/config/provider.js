@@ -37,10 +37,13 @@ export default function Provider(props) {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             manageUserInfo('load-context')
             retrieveShoppingCart()
-					  userInfo?.isAirlineUser && getPriceReasons()
         }
 			  didMountRef.current = true
     })
+  
+    useEffect(() => {
+			userInfo?.isAirlineUser && getPriceReasons()
+    }, [userInfo])
   
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
         fetchPolicy: 'no-cache',
@@ -282,16 +285,13 @@ export default function Provider(props) {
     
     const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
         fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            const result = data.shoppingCart
-            if (result.action === 'merge' || result.action === 'retrieve') {
-                localStorage.setItem('shoppingCartToken', result.token)
-                let cartItems = result.cartItems
-                cartItems.forEach(elem => delete elem.__typename)
-                setShoppingCart(cartItems)
-                setOrderNotes(result.orderNotes)
+        onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes }}) => {
+            if (action === 'merge' || action === 'retrieve' || action === 'update') {
+                localStorage.setItem('shoppingCartToken', token)
+                setShoppingCart(cartItems.map(({__typename, ...rest}) => rest))
+                setOrderNotes(orderNotes)
             }
-            setShoppingCartPricing({ state: 'stable', subTotal: result.subtotal.toFixed(2), tariff: result.tariff.toFixed(2) })
+            setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
   })
 

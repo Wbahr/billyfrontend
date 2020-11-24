@@ -45,7 +45,6 @@ const Content = styled.div`
 	flex-grow: 1;
 	padding: 10px;
 	overflow-x: hidden;
-	overflow-y: scroll;
 `
 
 const AppBar = styled.div`
@@ -314,7 +313,7 @@ export default function SearchResultsPage({history}) {
 						}),
 					}}
 					PaperProps={{style: {position: 'relative'}}}
-					style={{height: contentHeight, overflowY: 'scroll'}}
+					style={{height: contentHeight}}
 				>
 					<CategoryFilter {...{isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen, setDrawerOpen}} />
 					<BrandFilter {...{brands, setBrands, classes, drawerOpen, setDrawerOpen}}/>
