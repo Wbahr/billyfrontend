@@ -71,7 +71,7 @@ export default function UserSettingsPage() {
 
     useEffect(() => {
         if (context.userInfo.role === 'AirlineEmployee' || context.userInfo.role === 'Impersonator') {
-            setAlertMessage("You cannot use this screen to change your password.");
+            setAlertMessage("This screen is intended for web customer users only.");
             setChangePasswordDisabled(true);
         }
     }, []);
