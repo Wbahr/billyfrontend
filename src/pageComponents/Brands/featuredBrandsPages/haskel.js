@@ -255,7 +255,7 @@ export default function Haskel() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv> <Img src="https://www.haskel.com/wp-content/uploads/aad-2-2.jpg" /></ImgDiv>
+					<ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-pressure.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Air pressure amplifiers</ProductsH4>
           Haskel air pressure amplifiers offer the most comprehensive operating range in the industry, combining simple principles of operation with rugged construction suitable for the most demanding industrial applications.  Capable of producing pressure outputs up to 5000 psi (345 bar), Haskel air amplifiers are compact, require no electrical or mechanical drive connections, are powered by the same air that they amplify, and can be mounted in any position.
@@ -278,10 +278,10 @@ export default function Haskel() {
             Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air-driven liquid pumps Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.haskel.com/wp-content/uploads/GFS35.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-driven.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.haskel.com/wp-content/uploads/Refrigerant-Pump.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-hydraulic.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Air & hydraulic-driven gas boosters</ProductsH4>
             Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk.

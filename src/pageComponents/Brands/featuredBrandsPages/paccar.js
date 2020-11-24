@@ -54,7 +54,7 @@ export default function Paccar() {
 				<SectionHeader
 					text="Products" />
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/bg_series.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/bg_series.png"
 					text="Braden’s BG Series is designed for long life and efficient operation to meet a variety of applications—from marine industry boom hoists to the dynamic swing winch systems used on dredges. Dynamic and static braking features provide safe, smooth operation."
 					title="Braden BG Series Planetary Hoists"
 					additionalText={<div>
@@ -74,7 +74,7 @@ export default function Paccar() {
 					</div>}
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/plantary_swing.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/plantary_swing.png"
 					text="The compact and durable Braden SD Planetary Swing Drive offers superior performance in a wide range of cost-effective configurations that provide turnkey power solutions for utility and construction applications."
 					title="Braden Planetary Swing Drives"
 					additionalText={<div>
@@ -101,7 +101,7 @@ export default function Paccar() {
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/PD18D.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
 					title="PD18D Utility Bumper"
 					text={<div>
 						<p>PD18D Standard Features:</p>

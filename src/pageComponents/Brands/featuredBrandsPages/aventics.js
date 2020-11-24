@@ -208,6 +208,7 @@ const ImgDiv = styled.div`
 `
 const Img = styled.img`
   width: 100%;
+  object-fit: scale-down;
 `
 const RelatedLinkDiv = styled.div`
   width: 100%;
@@ -259,7 +260,7 @@ export default function Aventics() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv>  <Img src="https://www.aventics.com/media/_processed_/a/6/zugankerzylinder-p_689622bbc4.jpg" /></ImgDiv>
+					<ImgDiv>  <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-cylinders.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Air Cylinders</ProductsH4>
             NFPA steel air cylinders, rodless shuttle cylinders, round mini cylinders, aluminum cylinders, stainless steel cylinders and compact cylinders. Construction grade (cast iron) and multi-position air cylinders normally used for mobile/construction and oilfield applications, mounting bracket kits for mating to SUNSTRAND pumps.
@@ -272,10 +273,10 @@ export default function Aventics() {
             Filters, regulators and lubricators with NPT or G(ISO) BSPP ports, as well as lockout valves, slow start valves and anti-freezer units.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Air Prep Equipment Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.aventics.com/media/_processed_/5/a/FRLs2019-p_09c5aff1f5.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-prep.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.aventics.com/media/_processed_/2/2/ventilsysteme-p_141dc6d694.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/valves.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Valves</ProductsH4>
             Pneumatic directional control valves, choose from in-line valves, manual / mechanical valves, plug-in valve manifold systems or traditional valve manifold systems. AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application.
@@ -288,14 +289,14 @@ export default function Aventics() {
             AVENTICS electro-pneumatic (E/P) pressure control valves offer industry leading performance. The converter valves provide graduated pneumatic pressure outputs directly proportional to analog electrical signal inputs (voltage or current). AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Electrical Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.aventics.com/media/_processed_/a/f/AVENTICS_EV03_E-P_Pair_21a36c392d.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/electrical.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.aventics.com/media/_processed_/d/7/CERAM-ib_2998298d11.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/pneumatic.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Pneumatic Accessories</ProductsH4>
             Accessory air valves and devices such as flow control valves and quick exhaust valves, plus part present sensing, air gauges, timing volumes, shock absorbers, fittings and air line tubing.
-						<ShopProducts href="https://www.airlinehyd.com/Results.aspx?cat=PNEUMATIC-COMPONENTS-5|2239"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Pneumatic Accessories Products</ShopProducts>
+						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Pneumatic Accessories Products</ShopProducts>
 					</ProductsDetails>
 				</ProductsDiv>
 

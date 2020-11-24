@@ -168,99 +168,99 @@ export default function BrandsPage() {
 			</H1Div>
 			<FullBrandsDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" />
+					<Link href="/Brands/featured/rexroth">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Rexroth-Logo_RGB.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/eaton_logo_new.png" />
+					<Link href="/Brands/featured/eaton">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Eaton_logo.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/Parker_web.jpg" />
+					<Link href="/Brands/featured/parker">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/parker_logo.jpg" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/butech.jpg" />
-					</Link>
-				</BrandsImgDiv>
-			</FullBrandsDiv>
-			<FullBrandsDiv>
-				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/paccar.jpg" />
-					</Link>
-				</BrandsImgDiv>
-				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/haskel-logo-master.png" />
-					</Link>
-				</BrandsImgDiv>
-				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/rittal.jpg" />
-					</Link>
-				</BrandsImgDiv>
-				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/schmersal.jpg" />
-					</Link>
-				</BrandsImgDiv>
-				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/smcweb.jpg" />
+					<Link href="/Brands/featured/butech">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/BuTech_Logo.png" />
 					</Link>
 				</BrandsImgDiv>
 			</FullBrandsDiv>
 			<FullBrandsDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/ross.jpg" />
+					<Link href="/Brands/featured/paccar">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/paccar-logo.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/ABBweb.jpg" />
+					<Link href="/Brands/featured/haskel">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Oriental_Motor.png" />
+					<Link href="/Brands/featured/rittal">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/RITTAL.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/adventicsweb.png" />
+					<Link href="/Brands/featured/schmersal">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" />
+					</Link>
+				</BrandsImgDiv>
+				<BrandsImgDiv>
+					<Link href="/Brands/featured/smc">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" />
 					</Link>
 				</BrandsImgDiv>
 			</FullBrandsDiv>
 			<FullBrandsDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/Phoenix_Contact.jpg" />
+					<Link href="/Brands/featured/ross">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ROSS_LOGO.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/omronweb.jpg" />
+					<Link href="/Brands/featured/abb">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ABB_logo.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/hydacweb.jpg" />
+					<Link href="/Brands/featured/oriental-motor">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/manufacturer_logos/LincolnSKFweb.png" />
+					<Link href="/Brands/featured/aventics">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" />
+					</Link>
+				</BrandsImgDiv>
+			</FullBrandsDiv>
+			<FullBrandsDiv>
+				<BrandsImgDiv>
+					<Link href="/Brands/featured/phoenix-contact">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png" />
 					</Link>
 				</BrandsImgDiv>
 				<BrandsImgDiv>
-					<Link href="#">
-						<BrandsImg src="https://www.airlinehyd.com/customer/aihyco/images/clippard.jpg" />
+					<Link href="/Brands/featured/omron">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/OMRON_logo.png" />
+					</Link>
+				</BrandsImgDiv>
+				<BrandsImgDiv>
+					<Link href="/Brands/featured/hydac">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/hydac.png" />
+					</Link>
+				</BrandsImgDiv>
+				<BrandsImgDiv>
+					<Link href="/Brands/featured/lincoln">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
+					</Link>
+				</BrandsImgDiv>
+				<BrandsImgDiv>
+					<Link href="/Brands/featured/clippard">
+						<BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Clippard.png" />
 					</Link>
 				</BrandsImgDiv>
 			</FullBrandsDiv>

@@ -54,24 +54,24 @@ export default function FeaturedManufacturers(){
 				text='Featured Manufacturers'
 			/>
 			<Wrapper>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/rexroth" logo="https://rodavigo.net/datos/logos-marcas-png/rexroth-neumatica.png" pop={17 === r1 || 17 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/smc" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured2.png" pop={0 === r1 || 0 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/eaton" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured3.png" pop={1 === r1 || 1 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/hydac" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured4.png" pop={2 === r1 || 2 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/omron" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured5.png" pop={3 === r1 || 3 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/abb" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured6.png" pop={4 === r1 || 4 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/butech" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured7.png" pop={5 === r1 || 5 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/clippard" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured8.png" pop={6 === r1 || 6 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/haskel" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured9.png" pop={7 === r1 || 7 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/lincoln" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured10.png" pop={8 === r1 || 8 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/oriental-motor" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured11.png" pop={9 === r1 || 9 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/paccar" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured12.png" pop={10 === r1 || 10 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/parker" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured13.png" pop={11 === r1 || 11 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/rittal" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured14.png" pop={12 === r1 || 12 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/ross" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured15.png" pop={13 === r1 || 13 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/schmersal" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured16.png" pop={14 === r1 || 14 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/phoenix-contact" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured17.png" pop={15 === r1 || 15 === r2}/>
-				<FeaturedManufacturerLink brandPagePath="/Brands/featured/aventics" logo="https://www.airlinehyd.com/customer/aihyco/images/Home/Featured18.png" pop={16 === r1 || 16 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/rexroth" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Rexroth-Logo_RGB.png" pop={17 === r1 || 17 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/smc" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" pop={0 === r1 || 0 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/eaton" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Eaton_logo.png" pop={1 === r1 || 1 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/hydac" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/hydac.png" pop={2 === r1 || 2 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/omron" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/OMRON_logo.png" pop={3 === r1 || 3 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/abb" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ABB_logo.png" pop={4 === r1 || 4 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/butech" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/BuTech_Logo.png" pop={5 === r1 || 5 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/clippard" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Clippard.png" pop={6 === r1 || 6 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/haskel" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" pop={7 === r1 || 7 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/lincoln" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" pop={8 === r1 || 8 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/oriental-motor" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" pop={9 === r1 || 9 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/paccar" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/paccar-logo.png" pop={10 === r1 || 10 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/parker" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/parker_logo.jpg" pop={11 === r1 || 11 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/rittal" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/RITTAL.png" pop={12 === r1 || 12 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/ross" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ROSS_LOGO.png" pop={13 === r1 || 13 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/schmersal" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" pop={14 === r1 || 14 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/phoenix-contact" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png" pop={15 === r1 || 15 === r2}/>
+				<FeaturedManufacturerLink brandPagePath="/Brands/featured/aventics" logo="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" pop={16 === r1 || 16 === r2}/>
 			</Wrapper>
 		</>
 		
