@@ -27,7 +27,9 @@ export default function UserSettingsPage() {
     };
 
     const validatePassword = (e) => {
-        if ((changePasswordForm.new1 && changePasswordForm.new2 && changePasswordForm.new1 != changePasswordForm.new2) || (changePasswordForm.new1 && !changePasswordForm.new2) || (changePasswordForm.new2 && !changePasswordForm.new1)) {
+        if ((changePasswordForm.new1 && changePasswordForm.new2 && changePasswordForm.new1 != changePasswordForm.new2) 
+        || (changePasswordForm.new1 && !changePasswordForm.new2) 
+        || (changePasswordForm.new2 && !changePasswordForm.new1)) {
             setAlertMessage('Passwords must match');
             return false;
         } else if (!changePasswordForm.orig) {
