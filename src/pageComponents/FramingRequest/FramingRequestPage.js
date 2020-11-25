@@ -79,14 +79,14 @@ export default function FramingRequestPage() {
 				<Div>
 					<Title_Div>
 						<Number_Div>
-							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-1.jpg" />
+							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-1.jpg" />
 						</Number_Div>
 						<div>
 							<Topic>Design</Topic>
 						</div>
 					</Title_Div>
 					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/sketch.jpg" />
+						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/sketch.jpg" />
 					</ImgDiv>
 					<DetailDiv>
 						<p>
@@ -97,14 +97,14 @@ export default function FramingRequestPage() {
 				<Div>
 					<Title_Div>
 						<Number_Div>
-							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-2.jpg" />
+							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-2.jpg" />
 						</Number_Div>
 						<div>
 							<Topic>Fabrication</Topic>
 						</div>
 					</Title_Div>
 					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingFabrication.jpg" />
+						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingFabrication.jpg" />
 					</ImgDiv>
 					<DetailDiv>
 						<p>
@@ -115,14 +115,14 @@ export default function FramingRequestPage() {
 				<Div>
 					<Title_Div>
 						<Number_Div>
-							<Number src="https://www.airlinehyd.com/customer/aihyco/images/Step-3.jpg" />
+							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-3.jpg" />
 						</Number_Div>
 						<div>
 							<Topic>Delivery/Installation</Topic>
 						</div>
 					</Title_Div>
 					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/FramingDelivery.jpg" />
+						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingDelivery.jpg" />
 					</ImgDiv>
 					<DetailDiv>
 						<p>

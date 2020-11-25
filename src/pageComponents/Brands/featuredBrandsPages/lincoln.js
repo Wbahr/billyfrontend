@@ -56,7 +56,7 @@ export default function Lincoln() {
 				<SectionHeader
 					text="Products" />
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/automatic_lubricators.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/automatic-lubricators.png"
 					text={<div>
 						<p>Daily lubrication is a required maintenance practice, vital to the life of the pins and bushings of your machinery. Frequent lubrication maintains the proper lubrication film to reduce wear and purge the pins and bushings of contamination. If rock dust, dirt, sand and water are allowed to work their way into these components, they will form a “grinding compound” that reduces bearing life dramatically. This will cause downtime and higher maintenance costs. Manual lubrication, done properly, can take up to 30 minutes per machine every day. Automatic lubrication systems from SKF/Lincoln optimize this process, reduce maintenance, improve productivity, enhance safety and minimize environmental impact.</p>
 						<p>Advantages:</p>
@@ -68,7 +68,7 @@ export default function Lincoln() {
 					title="Automatic Lubricators"
 				/>
 				<ProductItems
-					src="https://www.parker.com/Online/Product%20Images/Category/Quick-Couplings-1000x1000.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
 					title="Single-Line Systems"
 					text={<div>
 						<p>With single-line lubrication, a central pump station automatically delivers lubricant through a single supply line to the lubricant metering device. Each metering device serves only one lubrication point and may be adjusted to deliver the precise amount of grease or oil required. Systems can service one machine, different zones on one machine or even several separate machines.</p>
@@ -84,7 +84,7 @@ export default function Lincoln() {
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/dual-line.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/dual-line.png"
 					title="Dual-Line Systems"
 					text={<div>
 						<p>SKF dual-line systems, including SKF DuoFlex and Lincoln Helios, are designed for large machines with many lubrication points, long lines and harsh operating conditions. Typical applications include heavy industry, metal working plants, pulp and paper, mining, mineral processing and cement factories, deck cranes, power plants, sugar mills and more. These systems utilize two main lines that are supplied alternately with lubricant.</p>
@@ -98,7 +98,7 @@ export default function Lincoln() {
 					</div>}
 				/>
 				<ProductItems
-					src="https://www.parker.com/Online/Product%20Images/Category/Quick-Couplings-1000x1000.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/progressive_lubrication.png"
 					title="Progressive Lubrication Systems"
 					text={<div>
 						<p>Each SKF ProFlex and Lincoln Quicklub progressive system typically dispenses small measured amounts of lubricant at frequent intervals while machines are operating. The grease flow created by the pump is proportioned by progressive metering devices and distributed to each bearing according to its needs. These systems are designed to provide a relatively simple and inexpensive method of automating the lubrication of machinery bearings, pins and bushings.</p>
@@ -112,7 +112,7 @@ export default function Lincoln() {
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/multi-line.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/multi-line%20lubrication.png"
 					title="Multi-Line Lubrication Systems"
 					text={<div>
 						<p>These products, including SKF MultiFlex and Lincoln 205 and 215 systems, supply lubricant directly to lube points without extra metering devices. Each lubrication point has its own pumping element. The system design is simple, accurate and reliable and is used for demanding applications in the machine tool industry, oil and gas and heavy industries. SKF and Lincoln multi-line systems include a wide range of pumps featuring one to 32 outlets and are able to generate system pressures as high as 350 bars (5,076 psi). They operate in a wide temperature range and can be used to pump greases up to NLGI #3.</p>
@@ -125,7 +125,7 @@ export default function Lincoln() {
 					</div>}
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/circulating_oil.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/circulating%20oil%20lubracation.png"
 					title="Circulating Oil Lubracation Systems"
 					text={<div>
 						<p>An oil supply system delivers the lubricant to the metering devices with individual settings. The feed rates can be controlled visually or electronically. Monitoring systems are available for predictive maintenance. SKF CircOil systems include a wide range of customized turnkey solutions. All are simple to service and feature a modular design that can be easily expanded.</p>
@@ -139,7 +139,7 @@ export default function Lincoln() {
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/oil-and-air.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/oil-and-air-lubrication.png"
 					title="Oil and Air Lubrication Systems"
 					text={<div>
 						<p>The SKF Oil+Air line and Lincoln ORSCO lubrication systems, are designed for high-speed bearings, spindles, rack pinions, chains and special applications in the steel industry. A pump, progressive feeder or single-line metering device injects a small, metered amount of oil into a mixing valve. Utilizing compressed air, the oil moves slowly to the lubrication point and provides the bearing or chain with a small, continuous stream of oil and air. SKF Oil+Air lubrication systems are designed to your specifications and utilize leading oil-streak sensor technology for monitoring.</p>
@@ -152,7 +152,7 @@ export default function Lincoln() {
 					</div>}
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/MQL_MDS.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/MQL_MDS.png"
 					title="Minimal Quantity Lubrication Systems (MQL) and Microdosage Systems (MDS)"
 					text={<div>
 						<p>SKF MQL systems for machining processes use oil droplets finely dispersed in an air stream to provide precise, minimal quantities of lubricant between the tool and production line work piece.</p>
@@ -173,23 +173,23 @@ export default function Lincoln() {
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/hand-held.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/hand-held.png"
 					title="Hand-Held Lubrication Equipment"
 					text="Lincoln grease guns are designed with power and performance in mind. These tools are used around the world by technicians, mechanics, maintenance teams, farmers and others for almost every lubrication and preventative-maintenance task."
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/pumps-accessories.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/pumps-accessories.png"
 					title="Pumps and Accessories"
 					text="SKF offers a wide range of Lincoln medium- and high-pressure pumps used for pumping grease, oil and other fluids. We provide air-operated Series 20, 25 or 40 reciprocating pumps, diaphragm and transfer pumps, bulk oil systems and corresponding accessories to meet specific application requirements."
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/reels-meters.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/reels-meters.png"
 					title="Reels and Meters"
 					text="Years of engineering, testing and experience preceded the introduction of Lincoln hose reels and meters, which are manufactured with the quality and reliability that professionals expect."
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/used-fluid.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/used-fluid.png"
 					title="Used Fluid Systems"
 					text="Portable upright drains are designed for collecting fluids under lift-mounted vehicles. All models feature a height-adjustable collection bowl and large reservoir with capacity for multiple fluid changes. A combination of two ball bearing swivel casters and two fixed-axle wheels makes them portable and easy to handle."
 					reverse

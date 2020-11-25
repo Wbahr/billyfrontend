@@ -119,7 +119,17 @@ export default function OrderDetail({ history, orderId: quoteId}) {
 
 	let itemDetails = []
 	if(!isTableView){
-		let filteredListItems = matchSorter(lineItems, filter, {keys: ['itemCode']})
+		const filteredListItems = (!lineItems || !lineItems.length) 
+			? [] 
+			: lineItems.filter(i => {
+				if(!filter || !filter.length) return true;
+
+				var currentItemCode = i.itemCode.toLowerCase()
+				var filterLower = filter.toLowerCase()
+
+				return currentItemCode.indexOf(filterLower) > -1;
+			})
+			
 		itemDetails = filteredListItems?.map((item) => {
 			const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
 			const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)

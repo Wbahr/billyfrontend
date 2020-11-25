@@ -55,18 +55,18 @@ export default function Orientalmotor() {
 				<SectionHeader
 					text="Products" />
 				<ProductItems
-					src="https://www.orientalmotor.com/images/stepper-motors/stepper-motors-cat-az-200px.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/stepper-motors.png"
 					text="Stepper motors are used to achieve precise positioning via digital control. The motor operates by accurately synchronizing with the pulse signal output from the controller to the driver. Stepper motors, with their ability to produce high torque at low speed while minimizing vibration, are ideal for applications requiring quick positioning over a short distance."
 					title="Stepper Motors"
 				/>
 				<ProductItems
-					src="https://www.orientalmotor.com/images/cooling-fans/cooling-fan-products-350px.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/cooling-fan.png"
 					text="Oriental Motor offers a wide range of cooling fans, including a cooling module suitable for enclosure cooling, axial flow fans for local cooling, as well as fans with low-speed or stall alarms or variable flow type."
 					title="Cooling Fans"
 					reverse
 				/>
 				<ProductItems
-					src="https://www.orientalmotor.com/images/ac-motors/kii-single-phase-cat-350px.jpg"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/ac-motors.png"
 					title="AC Motors"
 					text="Standard AC motors and gear motors operate by simply connecting a capacitor and supplying power from a commercial power supply. Standard AC motors and gear motors include the basic induction motor and reversible motor. In addition, Oriental Motor offers electromagnetic brake motors, synchronous motors, torque motors and watertight, dust-resistant motors to meet specific application requirements."
 				/>

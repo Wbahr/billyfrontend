@@ -291,7 +291,7 @@ export default function Omron() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://assets.omron.com/m/185f8c7153567d63/Portrait_S-NX1P-jpg.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/automation.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Automation Systems</ProductsH4>
             Omron's Automation Systems include programmable controllers that support machine control, and network/software products to support easy information exchange with host systems.
@@ -324,10 +324,10 @@ export default function Omron() {
 						</ListItemDiv>
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Omron's Motion & Drives Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://assets.omron.com/m/4b8e678a29b13415/Portrait_S-Industrial_IPC_NY5_Product_Image-jpg.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/motion-drives.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://assets.omron.com/m/4b4fc4a4021f0778/Landscape_L-IMG_Product_E2E_NEXT_group_380x214.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/sensing.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Sensing</ProductsH4>
             OMRON Sensing Components detect, measure, analyze, and process various changes that occur on production sites, such as changes in position, length, height, displacement, and appearance. They also contribute to predicting and preventing future events. Their vast product range includes:
@@ -353,6 +353,7 @@ export default function Omron() {
 				<ProductsDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Control Components</ProductsH4>
+						From power suppliers to counters to temperature controllers, we have all needed components for a successful and complete automation solution.
 						<ListItemDiv>
 							<ul>
 								<li>Temperature Controllers</li>
@@ -366,10 +367,10 @@ export default function Omron() {
 						</ListItemDiv>
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Omron's Control Components Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://assets.omron.com/m/22c255df19ab15d6/Portrait_S-S8VK-WA-Product-Image.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/control-components.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://assets.omron.com/m/54bf3e780cd26513/Portrait_S-A22NN_A22NL_Pushbuttons-jpg.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/switching-components.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Switching Components</ProductsH4>
             OMRON Switching Components provide high levels of control, reliability and accuracy with a line that includes the following products:
@@ -386,11 +387,11 @@ export default function Omron() {
 				</ProductsDiv>
 				<ProductsDiv>
 					<ProductsDetails>
-						<ProductsH4 href="#">Control Components</ProductsH4>
+						<ProductsH4 href="#">Robotics</ProductsH4>
             Omron Robotic automation solutions enhance the most demanding manufacturing lines. Choose from collaborative robots (cobots), industrial SCARA robots, spider robots, six-axis robots, or AIV (Automated Intelligent Vehicle) mobile robots.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Omron's Control Components Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://assets.omron.com/m/467a917cb5aa5fd0/Landscape_L-Omron_TM-Series_Cobot_Product_Image.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/robotics.png" /></ImgDiv>
 				</ProductsDiv>
 
 
@@ -409,7 +410,7 @@ export default function Omron() {
 								<ArticlesPicture src="https://assets.omron.com/m/178c5ef7e77e4b3d/webimage-Blog-Post-20200413_E-Stops_EN_202004.jpg" />
 							</ArticlesImgDiv>
 							<ArticlesTopic>
-              Five essential requirements for the behavior of emergency stop devices
+								Five essential requirements for the behavior of emergency stop devices
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
 							<ArticlesContentDetails>Emergency stops are a must-have for any safety system, as they are often the last resort for stopping or mitigating a major accident on the factory floor. We’ve discussed the specific requirements for the layout, color and shape of an E-stop pushbutton in a previous blog post, but there are also several requirements for E-stop behavior that we will go over now. <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
@@ -421,7 +422,7 @@ export default function Omron() {
 								<ArticlesPicture src="https://assets.omron.com/m/2a34a840f7735446/webimage-auto-blog-march2.jpg" />
 							</ArticlesImgDiv>
 							<ArticlesTopic>
-              The importance of label verification in automotive manufacturing
+								The importance of label verification in automotive manufacturing
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
 							<ArticlesContentDetails>As many as 20,000 individual parts go into the production of a single vehicle, and each of these parts must be subjected to rigorous tracking. There are many ways to mark a part – including laser marking, dot peening, inkjet marking and labeling – and automakers generally use several of these, depending on the situation.<a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank" rel="noopener noreferrer"> Read more >> </a>
@@ -434,7 +435,7 @@ export default function Omron() {
 								<ArticlesPicture src="https://assets.omron.com/m/3ce72d310ea52cc5/webimage-ld250-blog-post-photo.jpg" />
 							</ArticlesImgDiv>
 							<ArticlesTopic>
-              Four major safety-related benefits of robots
+								Four major safety-related benefits of robots
 								<ArticlesShortLine></ArticlesShortLine>
 							</ArticlesTopic>
 							<ArticlesContentDetails>Manufacturing facilities employ a variety of hazardous machines, and safeguarding is paramount. While traditional safety strategies are designed to mitigate risk in hazardous situations, it’s possible to eliminate this risk altogether by letting robots cover the dangerous tasks. Let’s take a look at a few ways that robots make manufacturing safer overall. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank" rel="noopener noreferrer"> Read more >> </a>
@@ -462,7 +463,7 @@ export default function Omron() {
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='globe-americas' size='4x' />
 									</FontAwesomeDiv>
-                Hydac's US Website</LinkStyle>
+                Omron's US Website</LinkStyle>
 							</LinkStyleDiv>
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
@@ -480,7 +481,7 @@ export default function Omron() {
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='shopping-cart' size='4x' />
 									</FontAwesomeDiv>
-                Shop Hydac Products</LinkStyle>
+                Shop Omron Products</LinkStyle>
 							</LinkStyleDiv>
 						</RelatedLinkCircle>
 						<RelatedLinkCircle>
@@ -489,7 +490,7 @@ export default function Omron() {
 									<FontAwesomeDiv>
 										<FontAwesomeIcon icon='address-book' size='4x' />
 									</FontAwesomeDiv>
-                Hydac Catalogs</LinkStyle>
+                Omron Catalogs</LinkStyle>
 							</LinkStyleDiv>
 						</RelatedLinkCircle>
 					</RelatedContainer>

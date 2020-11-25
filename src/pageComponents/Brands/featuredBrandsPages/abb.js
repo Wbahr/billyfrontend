@@ -241,6 +241,7 @@ const ImgDiv = styled.div`
 `
 const Img = styled.img`
 	width: 100%;
+	object-fit: scale-down;
 `
 const RelatedLinkDiv = styled.div`
 	width: 100%;
@@ -286,7 +287,7 @@ export default function Abb() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://webimages.imagebank.abb.com/public/default/product/9AAC130891/preview" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/drives.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Drives</ProductsH4>
 						ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks.
@@ -299,10 +300,10 @@ export default function Abb() {
 						ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Motors and Generators Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src={Motor} /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/motors%20and%20generators.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv> <Img src="https://webimages.imagebank.abb.com/public/default/product/9AAC30300224/preview" /></ImgDiv>
+					<ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/transformers.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Transformers</ProductsH4>
 						ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers.
@@ -329,10 +330,10 @@ export default function Abb() {
 						</div>}
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Control Systems Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www07.abb.com/images/librariesprovider104/default-album/ac-800m-without-reflection-292x146.jpg?sfvrsn=1d63db1f_1&CropWidth=292&CropHeight=146&Quality=High&CropX=0&CropY=0&Width=292&Height=146&Method=CropToFixedAreaCropToFixedAreaArguments&Key=95cd1e3cafa590beaef40471cf162259" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/control%20systems.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv> <Img src="https://imageservice.abb.com/public/v2/2dd265e9-3194-4fbc-ae11-c32689b67dd3/preview.jpg?target=https%3A%2F%2Fwebimages.imagebank.abb.com%2fpublic%2fv2%2f2dd265e9-3194-4fbc-ae11-c32689b67dd3%2fpreview.jpg%3fcrop%3d0%2c0%2c0%2c0%26width%3d0%26height%3d0&key=5a9a85fb039414a94b82246eae7f93f8" /></ImgDiv>
+					<ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/low%20voltage%20products%20and%20systems.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Low Voltage Products and Systems</ProductsH4>
 						<LongProductDetails> ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:
@@ -421,7 +422,7 @@ export default function Abb() {
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop ABB's Medium Voltage Products and Systems Products</ShopProducts>
 
 					</ProductsDetails>
-					<ImgDiv><Img src="https://resources.news.e.abb.com/images/2020/3/12/3/9IBA252859_720x540.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/medium%20voltage%20products%20and%20systems.png" /></ImgDiv>
 				</ProductsDiv>
 
 				{/*.................................. ARTICLES................................... */}

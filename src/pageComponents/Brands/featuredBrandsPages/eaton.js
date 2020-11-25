@@ -232,7 +232,8 @@ const ImgDiv = styled.div`
   height: 250px;
 `
 const Img = styled.img`
-  width: 100%;
+	width: 100%;
+	object-fit: scale-down;
 `
 const RelatedLinkDiv = styled.div`
   width: 100%;
@@ -277,7 +278,7 @@ export default function Eaton() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv> <Img src="https://www.eaton.com/content/dam/eaton/products/electrical-circuit-protection/low-voltage-air-circuit-breakers/magnum-dssb-circuit-breakers/Magnum-breaker.jpg" /></ImgDiv>
+					<ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/circuit%20protection.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Circuit Protection</ProductsH4>
 						<LongProductDetails>Eaton’s complete line of low and medium voltage circuit breakers are used to provide circuit protection in a wide range of industries, where they protect against overloads and short circuits in conductors. These circuit breakers are applied in panel boards, switchboards, motor control centers, control panels, combination starters, individual enclosures, and as bus duct plug-in units. A partial list of Eaton’s circuit protection offering includes:
@@ -313,10 +314,10 @@ export default function Eaton() {
 						</ListItemDiv>
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Eaton's Contactors, Starters and Protective Relayst Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.eaton.com/content/dam/eaton/products/industrialcontrols-drives-automation-sensors/s611-soft-starters/s611-soft-starters-product-shot-500x500.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/contactors.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.eaton.com/content/dam/eaton/products/industrialcontrols-drives-automation-sensors/safety-relays-product-shot-500x500.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/safety-relays.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Safety Contactors</ProductsH4>
             Providing enhanced levels of safety, XTSE contactors integrate to applications to not only achieve the highest safety circuits, but provide additional levels of protection that reinforce end-user safety.
@@ -329,10 +330,10 @@ export default function Eaton() {
             Power distribution blocks provide a means for termination of up to 12 load wires in a single point while being supplied by a single line. Terminal blocks are suited to conserve space while allowing maximum flexibility, when labor cost reduction and ease of assembly is desired. Eaton’s fuse blocks and holders provide a simple DIN mounting device for protection in control circuits.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Eaton's Distribution and Termination Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/distribution_termination.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/distribution_termination.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/pushbuttons.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/pushbuttons.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Pushbuttons, Pilot Lights and Selector Switches</ProductsH4>
             Eaton offers an extensive variety of pushbuttons, pilot lights and selector switches to suit virtually any industrial or commercial application. Choose from:
@@ -352,10 +353,10 @@ export default function Eaton() {
             Eaton’s SmartWire-DT system uses a continuous green flat cable located in the control cabinet to connect motor starters, pushbutton actuators, and indicator lights.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Eaton's Connectivity Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/connectivity.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/connectivity.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/relays_timers.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/relays_timers.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Relays and Timers</ProductsH4>
             Whether you're a machine builder or end user, control panel designer or facility maintenance manager, Eaton's expansive offering of relay options with customization capabilities can meet all of your specific application requirements:
@@ -379,10 +380,10 @@ export default function Eaton() {
             Manufacturing environments are complex and require products that offer control, reduce downtime and increase efficiency. Eaton’s electronic operator interfaces (OI) do that while being easy to install, understand, modify and use. The features, hardware design, development software and high quality provide the best value on the market.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Eaton's Operator Interfaces Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/operator_interfaces.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/operator%20interfaces.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HMI-PLCs.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/HMI-PLCs.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">HMI-PLCs</ProductsH4>
             Eaton's Programmable Logic Controllers (PLCs) are microprocessor-based devices used to control industrial processes or machines. They provide advanced functions, including analog monitoring, control and high speed motion control as well as share data over communication networks.
@@ -396,7 +397,7 @@ export default function Eaton() {
             Adjustable frequency drives (also known as variable frequency drives) adjust a motor's speed to closely match output requirements, resulting in a typical energy savings of 10 to 50 percent.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Eaton's Variable Frequency Drives Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/variable_frequency_drives.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/variable_frequency_drives.png" /></ImgDiv>
 				</ProductsDiv>
 
 				{/*.................................. ARTICLES................................... */}

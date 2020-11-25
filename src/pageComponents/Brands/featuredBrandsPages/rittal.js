@@ -56,7 +56,7 @@ export default function Rittal() {
 				<SectionHeader
 					text="Products" />
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/Rittal_Enclosure.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rittal/Rittal_Enclosure.png"
 					text={<div>
 						<p>Millions of Rittal enclosures have been installed worldwide, providing reliable and secure protection for customers’ valuable equipment and resources. Their industrial enclosures are made from durable, quality materials including powder-coated sheet steel and stainless steel. Even in extreme conditions, stainless steel enclosures are wash-down friendly and corrosion resistant, ensuring a clean, consistent internal environment. With a wide range of sizes and door hinge configurations, Rittal offers an enclosure suitable for any application environment. Choose from:</p>
 						<ul>
@@ -71,7 +71,7 @@ export default function Rittal() {
 					title="Control Technology, I/O Systems and Automation"
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/Rittal_Climate.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rittal/Rittal_Climate.png"
 					text={<div>
 						<p>Rittal’s climate control products offer perfect solutions for forward-thinking and comprehensive process control. Perfectly coordinated enclosure systems, climate control technology and remote monitoring systems provide state-of-the-art security and availability for your production facility. Rittal is able to develop customized climate control solutions for virtually any application. Identical installation cutouts for a variety of air conditioners, heat exchangers and fans make the installation of climate control simple and adaptable for your individual cooling needs. Choose from:</p>
 						<ul>

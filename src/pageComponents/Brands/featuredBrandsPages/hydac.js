@@ -163,6 +163,7 @@ const ImgDiv = styled.div`
 `
 const Img = styled.img`
 	width: 100%;
+	object-fit: none;
 `
 const RelatedLinkDiv = styled.div`
 	width: 100%;
@@ -225,7 +226,7 @@ export default function Hydac() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC_Filters.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/Filters.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Filters & Filter Systems</ProductsH4>
 						The contamination in a hydraulic system may be invisible to the human eye, but these tiny particles act as an abrasive which "sand-blasts" the surface of all components in a hydraulic system, causing them to function inefficiently and eventually break down. In fact, it is estimated that nearly 85% of hydraulic component failures result from contaminated oil. Airline carries the HYDAC filtration products you need to help you maintain ISO cleanliness levels, increase machine uptime and lengthen component life.
@@ -252,10 +253,10 @@ export default function Hydac() {
 						Three distinct accumulator designs are available, ensuring the accumulator fits the application, rather than forcing the application to fit the accumulator. The designs are Bladder, Diaphragm and Piston. Available up to 15,000 psi working pressure. Specialized variations of Diaphragm and Bladder Accumulators are available for pulsation dampening, silencing and shock absorption. In addition, HYDAC carries accumulator accessories to ensure proper installation and correct maintenance.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Hydac's Air Accumulators Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC_Accumulators.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/Accumulators.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC_Accessories.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/valves.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Valves, Clamps & Accessories</ProductsH4>
 						HYDAC manufactures high-pressure ball valves, needle valves, flow control valves, check valves and cartridge valves to ensure safe and reliable operation. A complete range of DIN 3015 clamps for mounting hoses, tubes, and pipes is complimented by HYDAC's specialty and custom mounting solutions. Reservoir accessories include breathers, fluid level indicators, test points, gauge isolators and more.
@@ -268,10 +269,10 @@ export default function Hydac() {
 						HYDAC's product range includes diagnostics, pressure transducers and switches, temperature transducers and switches, flow sensors, level sensors, displays and accessories. HYDAC also offers intrinsically safe pressure transducers and sensors for applications in hazardous environments. OEM pressure transducers and switches are available for use in volume production machines.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Hydac's Electronics & Diagnostics Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC_Electronics.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/electronics.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC_Compact.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/compact.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Compact Hydraulics</ProductsH4>
 						HYDAC carries compact and high-pressure power units, cartridge valves, manifold assemblies and controls. Compact power units feature a seamless reservoir and pressure-balanced gear pump offering efficiencies over 90%, even at full load, greatly reducing wear and noise. HYDAC also has a wide range of cooling systems for mobile and industrial applications, including combination coolers, pump-filter cooler units, plate-in-frame coolers and brazed plate heat exchangers.
@@ -284,10 +285,10 @@ export default function Hydac() {
 						HYDAC line of directional control spool valves for mobile applications fulfill the requirements of truck-mounted cranes, front end loaders, wheel loaders, skid steer loaders, fork lift trucks, refuse trucks, roll off trucks & trailers, and many other specialized machine applications. The valves are characterized by highly advanced design solutions including customized spools for optimal metering and load interference management. Valve types include monoblock, sectional, cable or radio, pressure control valves and selector valves.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Hydac's Mobile Directional Control Valves Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/connectivity.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/mobile%20directional.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="http://www.hydac-na.com/sites/content/PublishingImages/Cylinders/TensioningCylinder_nobkgrnd.jpg"/></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/hydraulic-cylinders.png"/></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Hydraulic Cylinders</ProductsH4>
 						HYDAC is your source for custom hydraulic cylinders, available in bore sizes from 1.5" - 30" with stroke lengths up to 30'. Various engineered designs are available, including: welded, mobile type, mill type, custom hybrids, special custom tie rod type, and double rod end. Customers may specify virtually any mounting configuration or port options. These heavy-duty cylinders are ideal for the toughest applications, including: earthmoving, oilfield, logging and forestry equipment; steel and foundry machinery; press applications such as forming, stamping and molding; cranes and lifting equipment; and many others.

@@ -133,7 +133,7 @@ function BillingInfoForm(props) {
 
             });
         } else {
-           setFieldValue('billing', {
+            setFieldValue('billing', {
                 ...props.values.billing,
                 paymentMethod: value,
                 cardType: value === 'credit_card' ? cardType : ''
