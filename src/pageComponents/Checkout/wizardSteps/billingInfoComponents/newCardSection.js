@@ -28,11 +28,11 @@ const Label = styled.label`
 `
 
 export default function NewCardSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo }, setFieldTouched } = props
     const context = useContext(Context)
 
-    const handleSameAsShippingChange = ({ target: { checked } }) => {
-        if(checked) {
+    const handleSameAsShippingChange = (event) => {
+        if(event.target.checked) {
             setFieldValue('billing.firstName', values.shipto.firstName);
             setFieldValue('billing.lastName', values.shipto.lastName);
             setFieldValue('billing.address1', values.shipto.address1);
@@ -57,6 +57,11 @@ export default function NewCardSection(props) {
             setFieldValue('billing.email', defaultBilling.email);
             setFieldValue('billing.phone', defaultBilling.phone);
         }
+
+        //setFieldValue does not trigger validation. This is a workaround.
+        //Without this, selecting "same as shipping" would leave the 
+        //Continue button disabled.
+        setTimeout(() => setFieldTouched('billing.zip', true));
     };
 
     return (
