@@ -20,7 +20,7 @@ export default class missionStatementPage extends Component {
 			<MainContainer>
 				<Header text="Airline's core Values" />
 				<Img_Div>
-					<Img src="https://www.airlinehyd.com/customer/aihyco/images/Airline-Core-Values.jpg" />
+					<Img src="https://airlinemedia.airlinehyd.com/Static_pages/about/our-mission/Airline-Core-Values.jpg" />
 				</Img_Div>
 			</MainContainer>
 		)

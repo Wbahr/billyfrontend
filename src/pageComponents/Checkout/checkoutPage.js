@@ -226,14 +226,14 @@ function CheckoutPage({ history }) {
         itemsPrices: itemsPrices?.getItemPrices,
         itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
     }
-
+    
     const initValues = {
         contact: { ...defaultContact },
         schedule: {
             ...defaultQuote,
             cartWithDates: context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
             shoppingCartToken: localStorage.getItem('shoppingCartToken'),
-            isQuote: history.location.pathname === 'create-quote'
+            isQuote: history.location.pathname === '/create-quote'
         },
         shipto: {
             ...defaultShipTo,

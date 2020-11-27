@@ -213,6 +213,7 @@ const ImgDiv = styled.div`
 `
 const Img = styled.img`
   width: 100%;
+  object-fit: scale-down;
 `
 const RelatedLinkDiv = styled.div`
   width: 100%;
@@ -270,7 +271,7 @@ export default function Clippard() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="http://www.clippard.com/cms/sites/default/files/wiki_images/Clippard-Minimatic-Cylinders.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/cylinders.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Cylinders</ProductsH4>
           Minimatic Cylinders range from 5/32" to 1 1/8" in bore size, and are available in spring return and double acting models, with a full line of associated devices for mounting and use.
@@ -283,10 +284,10 @@ export default function Clippard() {
           Every air system is unique, and Clippard has the air valve you need. Clippard control valves are available in poppet or spool design; 2-, 3-, or 4-way functions, in sizes from #3-56 and #10-32 (M5) through 1/8” NPT (G1/8) ports; and for pressures to 300 psig/21 bar. They are available with solenoid, air pilot, manual and mechanical actuators. Mounting styles include in-line, panel mount, manifold mount or clearance holes for mounting screws.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard's Directional Control Valves Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="http://www.clippard.com/cms/sites/default/files/wiki_images/flow-controls.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/Directional%20control%20valves.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.clippard.com/cms/sites/default/files/wiki_images/Clippard-MME-Manifold-Stack.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/electronic%20valves.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Electronic Valves</ProductsH4>
 						<LongProductDetails> Clippard’s product range includes:
@@ -309,10 +310,10 @@ export default function Clippard() {
             Clippard clear acrylic pneumatic circuit boards are designed to provide a compact and highly efficient pneumatic control system, with the use of Clippard modular components and other Clippard products. Clippard’s pneumatic I/O devices are ideal for Intrinsically Safe environments; simple custom machinery requiring only one program; and PLC type applications that have all pneumatic components for inputs and outputs. This system provides a safe, simple, and cost-efficient answer for pneumatic automation control solutions.
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard's Circuit Boards & I/O Modules Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.clippard.com/cms/sites/default/files/wiki_images/clippard-value-added-subassembly-custom-acrylic-manifold.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/circuit%20boards.jpg" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.clippard.com/cms/sites/default/files/wiki_images/PQ-Fittings-Group.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/fitting.jpg" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Fittings</ProductsH4>
             Clippard precision fittings will save you time, space, and money when designing versatile, productive, trouble free, pneumatic circuits. Our endless variety of fittings insure that you find just the right “fit” when plumbing pneumatic circuits or assemblies. These fittings are small in size but large in performance, allowing for streamlining of pneumatic assemblies and eliminating the need for larger, more expensive, cumbersome fittings
@@ -323,12 +324,12 @@ export default function Clippard() {
 					<ProductsDetails>
 						<ProductsH4 href="#">Hose & Tubing</ProductsH4>
             Clippard offers a variety of miniature hose and tubing from copper and nylon tubing to flexible urethane, and vinyl.
-						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard'sHose & Tubing Products</ShopProducts>
+						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Clippard's Hose & Tubing Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.clippard.com/static/images/cache/5e/5e14e6ce57f031c0ff4a9c1fc20f0349e197031a-256.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.clippard.com/cms/sites/default/files/wiki_images/frl.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/air%20prep%20equipment.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Air Prep Equipment</ProductsH4>
 						<ClippardProduct><Span>Filters :</Span>  Filters capture solid particulate and remove water by “spinning” the air centrifugally. Water and larger particles are thrown against the side of the bowl where they condense and/or fall to the lower part of the bowl. Smaller particles are captured as the air flows through the filter element.</ClippardProduct>

@@ -125,55 +125,6 @@ const LinkStyle = styled.a`
     text-decoration: none;
   }
  `
-// const VideoDiv = styled.div`
-//   display: flex;
-//   flex-wrap: nowrap;
-//   width: 100%;
-//   margin-bottom: 30px; 
-//   justify-content: space-between;
-// `
-// const ArticlesVideo = styled.iframe`
-//   width: 100%;
-
-// `
-// const ArticlesContentDiv = styled.div`
-//   text-align: center;
-//   padding: 15px;
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-//   width: 100%;
-// `
-// const ArticlesPicture = styled.img`
-//   width: 100%;
-//   min-height: 100%;
-// `
-// const ArticlesShortLine = styled.div`
-//   display: flex;
-//   border-bottom: 2px solid #555555;
-//   width: 15%;
-//   margin: 25px 0 0;
-//   `
-// const ArticlesTopic = styled.h6`
-//   color: #B51F2B;
-//   font-weight: bold;
-//   margin: 25px 15px;
-//   font-size: 18px;
-//   text-align: left;
-// `
-// const ArticlesImgDiv = styled.div`
-//   max-width: 350px;
-//   padding: 20px;
-//   height: 300px;
-//   overflow: hidden;
-// `
-
-// const SmallArticlesContent = styled.div`
-//   display: flex
-//   flex-wrap: nowrap;
-//   max-width: 380px;
-//   margin-bottom: 30px;
-// `
 const FontAwesomeDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -207,28 +158,17 @@ const ImgDiv = styled.div`
 `
 const Img = styled.img`
   width: 100%;
+  object-fit: contain;
 `
 const RelatedLinkDiv = styled.div`
   width: 100%;
   height: 350px;
 `
-// const Video = styled.div`
-//   display: flex;
-//   flex: 1;
-//   max-width: 380px;
-//   height: 250px;
-// `
-// const ArticlesDiv = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   width: 100%;
-// `
 const RelatedContainer = styled.div`
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
 `
-
 const BannerImg = styled.img`
   width: 250px;
 `
@@ -255,7 +195,7 @@ export default function Butech() {
 					<BorderBottom></BorderBottom>
 				</SectionDiv>
 				<ProductsDiv>
-					<ImgDiv>  <Img src="https://www.haskel.com/wp-content/uploads/5K103-2.jpg" /></ImgDiv>
+					<ImgDiv>  <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/Ball%20Valves.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Ball Valves</ProductsH4>
             Ball valves are available in 2-way, 3-way, 4-way, and 5-way designs with pressures to 20,000 PSI (1,380 bar) at 72°F (22°C) and a wide range of connections including male and female NPT, low-pressure compression fittings, medium- and high-pressure tube ends, medium- and high-pressure female, JIC 37° flare, SAE O-ring boss, socket-weld, butt-weld, and metric connections. They are available with special seal materials or manufactured from any machinable material for extreme applications. They also can be fitted with pneumatic or electric actuators for remote control.
@@ -268,10 +208,10 @@ export default function Butech() {
             Low, Medium and High Pressure with pressure ratings to 150,000 psi (1030 bar), are designed for liquid and gas flow control in petroleum, chemical, power generating and general industrial applications. Available in a variety of body styles, the valves are designed for operation at temperatures ranging from -100° to +600°F (-73° to +315°C). Optional packings and/or extended stuffing boxes increase the range to -423° to +1200°F (-253° to +648°C).
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop BuTech's Needle Valves Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.haskel.com/wp-content/uploads/60UV41V.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/needle%20valves.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.haskel.com/wp-content/uploads/Subsea-Check-Valve-1.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/check%20valves.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">Check Valves</ProductsH4>
             BuTech check valves are designed for liquid and gas flow control in petroleum, chemical, power generating and general industrial applications. Available in a variety of body styles, the valves are designed for manual operation in temperatures ranging from 0° to 600°F (-18° to 315°C). Rugged construction provides assurance of fail-safe operation at pressures up to 15,000 PSI (1,030 bar). Note: BuTech Pressure Systems does not recommend compression sleeve connections below 0°F (-18°C) or above 650°F (343°C).
@@ -284,10 +224,10 @@ export default function Butech() {
             BuTech offers a complete line of elbows, tees, crosses, bulkhead fittings and nipples, as well as adapters and couplings to connect different sizes and pressure ratings of tubing and pipe. Standard construction is 316 cold – worked stainless steel
 						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop BuTech's High Pressure Fittings Products</ShopProducts>
 					</ProductsDetails>
-					<ImgDiv><Img src="https://www.haskel.com/wp-content/uploads/K206-1.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/high%20pressure%20fitting.png" /></ImgDiv>
 				</ProductsDiv>
 				<ProductsDiv>
-					<ImgDiv><Img src="https://www.flw.com/butech/images/butech-adapter.jpg" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/Butech%20accessories.png" /></ImgDiv>
 					<ProductsDetails>
 						<ProductsH4 href="#">BuTech Accessories</ProductsH4>
             BuTech Pressure Systems offers a complete line of accessories for use with its valve and pipe equipment.

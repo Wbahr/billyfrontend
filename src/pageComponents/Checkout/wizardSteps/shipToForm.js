@@ -46,22 +46,33 @@ export function ShipToForm(props) {
 		window.scrollTo({top: 0})
     }, [])
     
-    function handleSavedAddressChange(e, handleChange) {
+    function handleSavedAddressChange(changeEvent, handleChange) {
 		if (values.shipto.selectedShipTo) {
 			setFieldValue('shipto.selectedShipTo', -1);
-        }
-        handleChange(e);
+		}
+        handleChange(changeEvent);
+	}
+
+	const handleCarrierChange = (field, value) => {
+		setFieldValue(field, value)
 	}
 		
-	function handleCountryChange(e, value, handleChange) {
-        handleSavedAddressChange(e, handleChange);
+	function handleCountryChange(field, value, handleChange) {
+        handleSavedAddressChange(field, handleChange);
+		
+		//Changing the country resets the state/province
 		setFieldValue('shipto.stateOrProvince', '');
 	}
 
-	function handleZipChange(e, handleChange) {
-        handleSavedAddressChange(e, handleChange);
+	const handleStateChange = (field, value, handleChange) => {
+		handleSavedAddressChange(field, handleChange);
+		setFieldValue(field, value)
+	}
+
+	function handleZipChange(changeEvent, handleChange) {
+        handleSavedAddressChange(changeEvent, handleChange);
         //Pass the zip up to the parent component; tax needs to be recalculated
-		if (value.length >= 5) updateZip(values.shipto.selectedShipTo, value);
+		if (changeEvent.target.value.length >= 5) updateZip(values.shipto.selectedShipTo, changeEvent.target.value);
 	}
 	
 	function handleSavedAddressSelectChange(e, selectedShipTo, handleChange) {
@@ -157,7 +168,7 @@ export function ShipToForm(props) {
 						options={checkoutDropdownDataLabels.shiptos}
 						width="800px"
 						label="Saved Ship To"
-						changeFunction={(e, val) => handleSavedAddressSelectChange(e, val, handleChange)}
+						changeFunction={(field, value) => handleSavedAddressSelectChange(field, value, handleChange)}
 					/>
 					{(values.shipto.selectedShipTo === -1) && (
 						<FormRow>
@@ -225,7 +236,7 @@ export function ShipToForm(props) {
 					width="250px"
 					isSearchable={false}
 					label="Country*"
-					changeFunction={(e, val) => { handleCountryChange(e, val, handleChange)}}
+					changeFunction={(field, value) => { handleCountryChange(field, value, handleChange)}}
 				/>
 				{values.shipto.country  === 'us' && (
 					<Field
@@ -234,7 +245,7 @@ export function ShipToForm(props) {
 						options={StateList}
 						placeholder="Select a State"
 						label="State*"
-						changeFunction={(e, val) => { handleSavedAddressChange(e, handleChange)}}
+						changeFunction={(field, value) => { handleStateChange(field, value, handleChange)}}
 						width="200px"
 					/>
 				)}
@@ -245,7 +256,7 @@ export function ShipToForm(props) {
 						options={CanadianProvinceList}
 						placeholder="Select a Province"
 						label="Province*"
-						changeFunction={(e, val) => { handleSavedAddressChange(e, handleChange)}}
+						changeFunction={(field, value) => { handleStateChange(field, value, handleChange)}}
 						width="200px"
 					/>
 				)}
@@ -259,7 +270,7 @@ export function ShipToForm(props) {
 				placeholder="Select a Carrier"
                 label="Carrier*"
                 width="500px"
-                changeFunction={(e, val) => handleSavedAddressChange(e, handleChange)}
+                changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
 			    value={values.shipto.carrierId} 
 			/>
 			

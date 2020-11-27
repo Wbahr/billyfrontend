@@ -37,13 +37,13 @@ export default function fluidCleanliness() {
 			<Container>
 				<Div>
 					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/PA160065.png" />
+						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/services/fluid-cleanliness/PA160065.png" />
 					</ImgDiv>
 					<Detail>Approximately 85% of hydraulic component failures result from contaminated oil –from both particulates and water. Contaminated hydraulic fluids can damage systems and shut down your line.Airline service professionals will work with you to analyze component or system oil samples and compare the results with manufacturer’s recommendations for ISO cleanliness levels. Where are the best sample points? How often should you be taking samples? What are the sources of contamination? We help you answer these questions and more.Whether it’s an upgrade of the current filtration system or a one-time system filtration or flush, we will recommend and implement the best option to ensure the longest and most reliable service life for your system or component.</Detail>
 				</Div>
 				<Div1>
 					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/HYDAC%20Fluid%20Service1.png" />
+						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/services/fluid-cleanliness/HYDAC%20Fluid%20Service1.png" />
 					</ImgDiv>
 					<Detail>In addition, we can provide a comprehensive filtration program that regularly monitors fluid contamination.
 						<ul>

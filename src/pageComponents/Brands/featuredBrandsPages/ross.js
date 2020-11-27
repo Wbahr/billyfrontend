@@ -57,18 +57,18 @@ export default function Ross() {
 				<SectionHeader
 					text="Products" />
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/RossCont_pic1.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/line-mounted.png"
 					title="Line-Mounted Valves"
 					text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/RossCont_pic2.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/base-mounted.png"
 					title="Base-Mounted Valves"
 					text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/15_Series_LOX_Classic.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/safety-related.png"
 					title="Safety Related Products"
 					text={<div>
 						<p><Span>L-O-X Valves</Span></p>
@@ -80,13 +80,13 @@ export default function Ross() {
 					</div>}
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/RossCont_pic7.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/check-valves.png"
 					title="Check Valves"
 					text="Check valves allow full flow through a pneumatic circuit, but in only one direction. They are ideal for applications in which reverse flow of air pressure is unnecessary or detrimental. Pilot-operated check valves operate like regular check valves. The flow in only one direction, but when the pilot is actuated, the check valve is forced open so flow can go both ways. The pilot-operated check valve can stop a cylinder in any position."
 					reverse
 				/>
 				<ProductItems
-					src="https://www.airlinehyd.com/customer/aihyco/images/RossCont_pic8.png"
+					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/flow-control.png"
 					title="Flow Control Valves"
 					text="A flow control valve should be used on almost every pneumatic circuit. Some are mounted inline while others are placed directly into cylinder ports. Flow control valves allow air flow to go in both directions. In one direction, flow is at full speed. In the other direction, flow is metered. By managing the air flow out of the cylinder, a flow control valve controls the speed of the cylinder. Cylinder speed determines the speed of work processes."
 				/>
