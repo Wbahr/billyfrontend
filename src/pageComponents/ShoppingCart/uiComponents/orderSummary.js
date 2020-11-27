@@ -101,14 +101,10 @@ export default function OrderSummary({history}) {
 					<p>Shipping</p>
 					<p>(TBD)</p>
 				</DivLineItem>
-				{/* <DivLineItem>
-					<input placeholder='Coupon Code' value={couponCode} onChange={(e)=>setCouponCode(e.target.value)}/>
-					<button>Apply</button>
-				</DivLineItem>    */}
 				<DivLineItemTotal>
 					<p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
 				</DivLineItemTotal>
-				{context.cart.length > 0 &&
+				{context.cart?.length > 0 &&
 					<DivButtonContainer>
 						<Context.Consumer>
 							{({userInfo}) => {

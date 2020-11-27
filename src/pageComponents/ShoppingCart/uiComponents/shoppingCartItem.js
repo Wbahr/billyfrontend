@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
@@ -156,25 +156,24 @@ const P3 = styled.p`
 `
 
 export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index,
- 	showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) {
+ 	showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history, setCartItem}) {
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	const itemId = parseInt(cartItem.frecno,10)
 
-	const context = useContext(Context)
+	const {updateCartItemField, userInfo} = useContext(Context)
 
-	function selectCustomerPartNumber(value){
+	function selectCustomerPartNumber({target: {value}}){
 		if (value === -1) {
 			setSelectedCustomerPartNumber(0) // Reset Dropdown
-			context.updateCartItemField(index, 'customerPartNumberId', 0)
+			updateCartItemField(index, 'customerPartNumberId', 0)
 			showCustomerPartModal(index)
 		} else if (value === 0) {
 			setSelectedCustomerPartNumber(value)
-			context.updateCartItemField(index, 'customerPartNumberId', 0)
+			updateCartItemField(index, 'customerPartNumberId', 0)
 		} else {
-			
 			setSelectedCustomerPartNumber(value)
-			context.updateCartItemField(index, 'customerPartNumberId', Number(value))
+			updateCartItemField(index, 'customerPartNumberId', Number(value))
 		}
 	}
 
@@ -216,8 +215,16 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 	
 	const handleQuantityChange = ({target: {value}}) => {
 		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			context.updateCartItemField(index, 'quantity', value.length ? parseInt(value) : '')
+			setCartItem({...cartItem, quantity: value.length ? parseInt(value) : ''})
 		}
+	}
+	
+	const handleUpdateItemNotes = ({target: {value}}) => {
+		setCartItem({...cartItem, itemNotes: value})
+	}
+	
+	const handleRemoveItem = () => {
+		setCartItem(null)
 	}
 
 	return <DivContainer>
@@ -245,7 +252,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</CopyToClipboard>
 						</TextRow>
 						<TextRow>
-							<select value={selectedCustomerPartNumber} onChange={(e)=>selectCustomerPartNumber(e.target.value)} >
+							<select value={selectedCustomerPartNumber} onChange={selectCustomerPartNumber} >
 								<option value="0">Customer Part#</option>
 								{
 									customerPartNumbers?.map(elem => 
@@ -255,7 +262,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 								<option value="-1">Create Part#</option>
 							</select>
 							{ selectedCustomerPartNumber != 0 &&
-								<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={()=>clearCustomerPartNumber()}>
+								<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={clearCustomerPartNumber}>
 									<FontAwesomeIcon icon="times" color="grey" />
 								</div>
 							}
@@ -290,7 +297,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</DivItem>
 							<DivItem>
 								<DivRow>
-									{context.userInfo?.isAirlineUser && (
+									{userInfo?.isAirlineUser && (
 										cartItem.itemUnitPriceOverride ? (
 											<EditPriceDiv>
 												<NumberFormat
@@ -336,14 +343,14 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 									placeholder='Type item notes here'
 									minLength={0}
 									debounceTimeout={300}
-									onChange={(e) => context.updateCartItemField(index, 'itemNotes', e.target.value)}
+									onChange={handleUpdateItemNotes}
 									style={{'width': '300px'}}
 									value={cartItem.itemNotes}
 								/>
 							</DivItem>
 						</DivQuantity>
 					</DivCol3>
-					<DivRemove onClick={()=> context.removeItem(index)} alt='remove-item'>
+					<DivRemove onClick={handleRemoveItem} alt='remove-item'>
 						<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
 					</DivRemove>
 				</DivCard>

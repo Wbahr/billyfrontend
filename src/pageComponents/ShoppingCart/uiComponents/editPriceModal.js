@@ -139,12 +139,14 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 					</DivItem>
 				</DivRow>
 				
-				<AirlineSelect
-					label="Reason"
-					options={reasonCodeOptions}
-					value={selectedReason}
-					setValue={handleReasonCodeChange}
-				/>
+				{itemPrice !== data?.originalItemPrice && (
+					<AirlineSelect
+						label="Reason"
+						options={reasonCodeOptions}
+						value={selectedReason}
+						setValue={handleReasonCodeChange}
+					/>
+				)}
 				
 				<DivRow>
 					<ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>

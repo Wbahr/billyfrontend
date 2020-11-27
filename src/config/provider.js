@@ -10,7 +10,7 @@ import { getRidOf__typename, logout, distinct } from '../pageComponents/_common/
 export default function Provider(props) {
     const didMountRef = useRef(false)
     const invoicesLoaded = useRef(false)
-    const [shoppingCart, setShoppingCart] = useState([])
+    const [shoppingCart, setShoppingCart] = useState(null)
     const [orderNotes, setOrderNotes] = useState('')
     const [shoppingCartPricing, setShoppingCartPricing] = useState({ state: 'stable', subTotal: '--', tariff: '--' })
     const [userInfo, setUserInfo] = useState(null)
@@ -293,7 +293,25 @@ export default function Provider(props) {
             }
             setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
-  })
+    })
+	
+    const updateShoppingCart = cartItems => {
+      setShoppingCart(cartItems)
+      updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
+    }
+	
+    const updateCartWrapper = cartInfo => {
+      const shoppingCartToken = localStorage.getItem('shoppingCartToken')
+      setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
+      shoppingCartApiCall({
+        variables: {
+          cartInfo: {
+            token: shoppingCartToken,
+            ...cartInfo
+          }
+        }
+      })
+    }
 
     const addItem = (item) => updateShoppingCart([...shoppingCart, item])
 
@@ -334,36 +352,26 @@ export default function Provider(props) {
 			  updateShoppingCart(shoppingCart.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
     
-    const updateCartWrapper = cartInfo => {
-			const shoppingCartToken = localStorage.getItem('shoppingCartToken')
-			setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
-			shoppingCartApiCall({
-				variables: {
-					cartInfo: {
-						token: shoppingCartToken,
-            ...cartInfo
-					}
-				}
-			})
-    }
-    
     const updateOrderNotes = newOrderNotes => {
         setOrderNotes(newOrderNotes)
 			  updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
     }
     
-    const updateShoppingCart = cartItems => {
-        setShoppingCart(cartItems)
-			  updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
-    }
+    const saveShoppingCart = () => {
+      updateCartWrapper({ actionString: 'save' })
+		}
     
-    const saveShoppingCart = () => updateCartWrapper({ actionString: 'save' })
+    const retrieveShoppingCart = () => {
+      updateCartWrapper({ actionString: 'retrieve' })
+		}
     
-    const retrieveShoppingCart = () => updateCartWrapper({ actionString: 'retrieve' })
-    
-    const mergeShoppingCart = token => updateCartWrapper({ actionString: 'retrieve', token })
+    const mergeShoppingCart = token => {
+      updateCartWrapper({ actionString: 'retrieve', token })
+		}
 
-    const emptyCart = () => updateShoppingCart([])
+    const emptyCart = () => {
+      updateShoppingCart([])
+		}
     
     function getInvoices() {
         if (invoiceBatchNumber === 0) {
@@ -424,7 +432,8 @@ export default function Provider(props) {
                 webUserContacts,
                 editPriceReasonCodes,
 							  updateCartItem,
-							  updateCartItemField
+							  updateCartItemField,
+                updateShoppingCart
             }}
         >
             {props.children}

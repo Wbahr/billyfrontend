@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState} from 'react'
 import XLSX from "xlsx"
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -110,4 +110,15 @@ export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => 
 				: 'Call Airline Hydraulics Co. for lead time'
 		)
 		: ''
+}
+
+export const useDebounceValue = (value, time = 500) => {
+	const [debouncedValue, setDebouncedValue] = useState(value)
+	
+	useEffect(() => {
+		const timeout = setTimeout(() => setDebouncedValue(value), time)
+		return () => clearTimeout(timeout)
+	}, [value, time])
+	
+	return debouncedValue
 }

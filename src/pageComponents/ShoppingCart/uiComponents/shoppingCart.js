@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,6 +9,7 @@ import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
 import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import {useDebounceValue, useDidUpdateEffect} from "../../_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
 	display: flex;
@@ -56,11 +56,10 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
+	const { cart, emptyCart, userInfo, saveShoppingCart } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-	const { cart, moveItem, emptyCart, userInfo, saveShoppingCart } = useContext(Context)
-
-	const invMastUids = cart.map(item => item.frecno)
+	const invMastUids = cart?.map(item => item.frecno)
 
 	const { data: itemsDetails } = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
 		variables: { invMastUids }
@@ -68,7 +67,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 
 	const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
 		variables: {
-			items: cart.map(cartItem => ({
+			items: cart?.map(cartItem => ({
 				invMastUid: cartItem.frecno,
 				quantity: cartItem.quantity
 			}))
@@ -88,13 +87,93 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			setTimeout(() => setSavedCart(false), 1000)
 		}
 	}, [savedCart])
+	
+	const handleSaveAsShoppingList = () => {
+		setShowShoppingListModal(true)
+	}
 
-	const ShoppingCartItems = cart.map((cartItem, index) => {
+	const handleSaveCart = () => {
+		saveShoppingCart()
+		setSavedCart(true)
+	}
+	
+	return (
+		<>
+			<Div>
+				<DivRow>
+					<H3>Shopping Cart</H3>
+					<p onClick={emptyCart}>(empty cart)</p>
+				</DivRow>
+				<DivRow>
+						{
+							userInfo 
+								?	<DivSave onClick={handleSaveAsShoppingList}>
+										<Ashare>Save As Shopping List</Ashare>
+										<FontAwesomeIcon icon="list" color="grey" />
+									</DivSave>
+								: <Ashare/>
+						}
+					<DivSave onClick={handleSaveCart}>
+						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
+						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
+					</DivSave>
+					<DivShare>
+						<Ashare>Email Cart</Ashare>
+						<FontAwesomeIcon icon="share" color="grey" />
+					</DivShare>
+				</DivRow>
+			</Div>
+			{ cart && (
+				<CartComponent
+					{...{ history, cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
+						showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}}
+				/>
+			)}
+			{
+				userInfo && <SaveShoppingListModal
+					open={showShoppingListModal}
+					hide={() => setShowShoppingListModal(false)}
+					items={cart}
+					enableAddToExisting
+				/>
+			}
+		</>
+	)
+}
 
+const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
+ 	showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) => {
+	const {updateShoppingCart} = useContext(Context)
+	const [realTimeCart, setRealTimeCart] = useState(cart)
+	const debouncedCart = useDebounceValue(realTimeCart, 1000)
+	
+	useDidUpdateEffect(() => {
+		updateShoppingCart(debouncedCart)
+	}, [debouncedCart])
+	
+	const onDragEnd = ({destination, source}) => {
+		if (destination) {
+			const newCart = realTimeCart.slice()
+			const movedItem = newCart.splice(source.index, 1)
+			newCart.splice(destination.index, 0, movedItem[0])
+			setRealTimeCart(newCart)
+		}
+	}
+	
+	const setCartItem = index => newCartItem => {
+		if (newCartItem) {
+			setRealTimeCart(realTimeCart.map((cartItem, idx) => idx === index ? newCartItem : cartItem))
+		} else {
+			setRealTimeCart(realTimeCart.reduce((accum, cartItem, idx) => accum.concat(idx === index ? [] : cartItem), []))
+		}
+	}
+	
+	const ShoppingCartItems = realTimeCart.map((cartItem, index) => {
 		const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === cartItem.frecno)
 		const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === cartItem.frecno)
 		const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
 		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.customerPartNumbersBatch?.filter(p => p.invMastUid === cartItem.frecno)
+		
 		return (
 			<Draggable key={index} draggableId={String(index)} index={index}>
 				{(provided) => (
@@ -111,83 +190,32 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 								availabilityInfo={itemAvailability}
 								customerPartNumbers={itemCustomerPartNumbers}
 								key={index}
-								index={index}
-								showSplitLineModal={showSplitLineModal}
-								showFactoryStockModal={showFactoryStockModal}
-								showEditPriceModal={showEditPriceModal}
-								showCustomerPartModal={showCustomerPartModal}
-								handleSetModalData={handleSetModalData}
-								history={history}
+								setCartItem={setCartItem(index)}
+								{...{showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal,
+									handleSetModalData, history, index}}
 							/>
 							: <SkeletonItem index={index} />
 						}
+						{provided.placeholder}
 					</div>
 				)}
 			</Draggable>
-		)	
+		)
 	})
-
-	function onDragEnd(result) {
-		// if dropped outside the list
-		if (!result.destination) {
-			return
-		} else {
-			moveItem(result.source.index, result.destination.index)
-		}
-	}
-
-	const handleSaveAsShoppingList = () => {
-		setShowShoppingListModal(true)
-	}
-
+	
 	return (
-		<>
-			<Div>
-				<DivRow>
-					<H3>Shopping Cart</H3>
-					<p onClick={emptyCart}>(empty cart)</p>
-				</DivRow>
-				<DivRow>
-						{
-							userInfo 
-								?	<DivSave onClick={handleSaveAsShoppingList}>
-										<Ashare>Save As Shopping List</Ashare>
-										<FontAwesomeIcon icon="list" color="grey" />
-									</DivSave>
-								: 	<Ashare></Ashare>
-						}
-					<DivSave onClick={() => { saveShoppingCart(); setSavedCart(true); }}>
-						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
-						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
-					</DivSave>
-					<DivShare>
-						<Ashare>Email Cart</Ashare>
-						<FontAwesomeIcon icon="share" color="grey" />
-					</DivShare>
-				</DivRow>
-			</Div>
-			<DragDropContext onDragEnd={(result) => onDragEnd(result)}>
-				<Droppable droppableId="droppable">
-					{(provided) => (
-						<div
-							{...provided.droppableProps}
-							ref={provided.innerRef}
-						>
-							{ShoppingCartItems}
-						</div>
-					)}
-				</Droppable>
-			</DragDropContext>
-
-			{
-				userInfo && <SaveShoppingListModal
-					open={showShoppingListModal}
-					hide={() => setShowShoppingListModal(false)}
-					items={cart}
-					enableAddToExisting
-				/>
-			}
-			
-		</>
+		<DragDropContext onDragEnd={onDragEnd}>
+			<Droppable droppableId="droppable">
+				{(provided) => (
+					<div
+						{...provided.droppableProps}
+						ref={provided.innerRef}
+					>
+						{ShoppingCartItems}
+						{provided.placeholder}
+					</div>
+				)}
+			</Droppable>
+		</DragDropContext>
 	)
-}
+};
