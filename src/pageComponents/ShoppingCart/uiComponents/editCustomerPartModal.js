@@ -81,7 +81,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
 		createPartNumber({
 			'variables': {
 				'part': {
-					'invMastUid': cart[index].frecno,
+					'invMastUid': cart?.[index].frecno,
 					'theirItemId': partNumber
 				}
 			}

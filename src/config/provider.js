@@ -259,7 +259,7 @@ export default function Provider(props) {
     }
 
     function loginUser(userInfo, mergeToken) {
-        if (shoppingCart.length > 0) {
+        if (shoppingCart?.length > 0) {
             mergeShoppingCart(mergeToken)
         } else {
             retrieveShoppingCart('retrieve')
@@ -318,13 +318,13 @@ export default function Provider(props) {
     const addItems = (items) => updateShoppingCart([...shoppingCart, ...items])
   
     function removeItem(itemLocation) {
-        const newCart = shoppingCart.slice()
+        const newCart = shoppingCart?.slice() || []
 			  newCart.splice(itemLocation, 1)
 			  updateShoppingCart(newCart)
     }
 
     function moveItem(itemLocation, newLocation) {
-        const newCart = shoppingCart.slice()
+        const newCart = shoppingCart.slice() || []
         const movedItem = newCart.splice(itemLocation, 1)
 			  newCart.splice(newLocation, 0, movedItem[0])
 			  updateShoppingCart(newCart)
@@ -339,17 +339,17 @@ export default function Provider(props) {
                 itemNotes: shoppingCart[index].itemNotes,
             })
         }
-        const frontCart = shoppingCart.slice(0, index) // returns cart item before split item
-        const backCart = shoppingCart.slice(index + 1) // returns cart item after split item
+        const frontCart = shoppingCart?.slice(0, index) || []// returns cart item before split item
+        const backCart = shoppingCart?.slice(index + 1) || [] // returns cart item after split item
         updateShoppingCart([...frontCart, ...splitItems, ...backCart])
     }
 
     const updateCartItem = (index, newItem) => {
-			  updateShoppingCart(shoppingCart.map((item, idx) => idx === index ? newItem : item))
+			  updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
     }
     
     const updateCartItemField = (index, field, value) => {
-			  updateShoppingCart(shoppingCart.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
+			  updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
     
     const updateOrderNotes = newOrderNotes => {
