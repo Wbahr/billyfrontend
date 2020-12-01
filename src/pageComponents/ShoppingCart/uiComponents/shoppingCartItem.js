@@ -157,6 +157,7 @@ const P3 = styled.p`
 
 export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index,
  	showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history, setCartItem}) {
+	console.log('priceInfo', priceInfo)
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	const itemId = parseInt(cartItem.frecno,10)
@@ -202,6 +203,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
                 modalType: type,
                 originalItemPrice: priceInfo?.unitPrice,
                 itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+								spaType: priceInfo?.spaType,
                 airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
             		priceReasonId: cartItem.priceReasonId
             })
