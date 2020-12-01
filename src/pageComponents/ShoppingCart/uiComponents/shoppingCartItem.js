@@ -6,6 +6,8 @@ import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import FactoryStockModal from "./factoryStockModal";
+import EditPriceModal from "./editPriceModal";
 
 const DivContainer = styled.div`
 	display: flex;
@@ -156,10 +158,10 @@ const P3 = styled.p`
 `
 
 export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index,
- 	showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history, setCartItem}) {
-	console.log('priceInfo', priceInfo)
+ 	showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history, setCartItem}) {
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
+	const [editPriceModalData, setEditPriceModalData] = useState(null)
 	const itemId = parseInt(cartItem.frecno,10)
 
 	const {updateCartItemField, userInfo} = useContext(Context)
@@ -198,16 +200,16 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 			})
 			showFactoryStockModal(index)
 			break
-			case 'edit-price':
-            handleSetModalData({
-                modalType: type,
-                originalItemPrice: priceInfo?.unitPrice,
-                itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-								spaType: priceInfo?.spaType,
-                airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
-            		priceReasonId: cartItem.priceReasonId
-            })
-            showEditPriceModal(index)
+		case 'edit-price':
+			setEditPriceModalData({
+				modalType: type,
+				originalItemPrice: priceInfo?.unitPrice,
+				itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+				spaType: priceInfo?.spaType,
+				airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
+				priceReasonId: cartItem.priceReasonId,
+				cartItem
+			})
 			break
 		case 'customer-part':
 			showCustomerPartModal(index)
@@ -357,5 +359,12 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 					</DivRemove>
 				</DivCard>
 		}
+		
+		<EditPriceModal
+			open={!!editPriceModalData}
+			hideEditPriceModal={() => setEditPriceModalData(null)}
+			data={editPriceModalData}
+			setCartItem={setCartItem}
+		/>
 	</DivContainer>
 }

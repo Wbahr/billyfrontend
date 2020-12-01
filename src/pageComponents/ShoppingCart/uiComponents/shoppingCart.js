@@ -55,7 +55,7 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
-export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history }) {
+export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history }) {
 	const { cart, emptyCart, userInfo, saveShoppingCart } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
@@ -126,7 +126,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			{ cart && (
 				<CartComponent
 					{...{ history, cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
-						showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData}}
+						showFactoryStockModal, showCustomerPartModal, handleSetModalData}}
 				/>
 			)}
 			{
@@ -142,7 +142,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 }
 
 const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
- 	showFactoryStockModal, showEditPriceModal, showCustomerPartModal, handleSetModalData, history}) => {
+ 	showFactoryStockModal, showCustomerPartModal, handleSetModalData, history}) => {
 	const {updateShoppingCart} = useContext(Context)
 	const [realTimeCart, setRealTimeCart] = useState(cart)
 	const debouncedCart = useDebounceValue(realTimeCart, 1000)
@@ -191,8 +191,7 @@ const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, item
 								customerPartNumbers={itemCustomerPartNumbers}
 								key={index}
 								setCartItem={setCartItem(index)}
-								{...{showSplitLineModal, showFactoryStockModal, showEditPriceModal, showCustomerPartModal,
-									handleSetModalData, history, index}}
+								{...{showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history, index}}
 							/>
 							: <SkeletonItem index={index} />
 						}

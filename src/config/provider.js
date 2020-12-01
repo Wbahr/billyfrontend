@@ -77,8 +77,6 @@ export default function Provider(props) {
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
                 retrieveShoppingCart('retrieve')
                 props.history.push('/')
-            } else {
-                //setErrorMessage(requestData.message) //this function doesn't exist... why? what happened? when? such mystery.
             }
         }
     })

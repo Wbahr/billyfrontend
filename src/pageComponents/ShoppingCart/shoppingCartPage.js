@@ -5,7 +5,6 @@ import SubtotalBox from './uiComponents/subtotalBox'
 import OrderSummary from './uiComponents/orderSummary'
 import SplitLineModal from './uiComponents/splitLineModal'
 import FactoryStockModal from './uiComponents/factoryStockModal'
-import EditPriceModal from './uiComponents/editPriceModal'
 import CustomerPartModal from './uiComponents/editCustomerPartModal'
 
 const DivContainer = styled.div`
@@ -32,7 +31,6 @@ const DivOrderTotalCol = styled.div`
 export default function ShoppingCartPage(props) {
 	const [showSplitLineModal, setShowSplitLineModal] = useState(false)
 	const [showFactoryStockModal, setShowFactoryStockModal] = useState(false)
-	const [showEditPriceModal, setShowEditPriceModal] = useState(false)
 	const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
 	const [index, setIndex] = useState(null)
 	const [modalData, setModalData] = useState(null)
@@ -58,16 +56,7 @@ export default function ShoppingCartPage(props) {
 	function handleHideFactoryStockModal(){
 		setShowFactoryStockModal(false)
 	}
-
-	function handleShowEditPriceModal(index){
-		setIndex(index)
-		setShowEditPriceModal(true)
-	}
-
-	function handleHideEditPriceModal(){
-		setShowEditPriceModal(false)
-	}
-
+	
 	function handleShowCustomerPartModal(index){
 		setIndex(index)
 		setShowCustomerPartModal(true)
@@ -89,12 +78,6 @@ export default function ShoppingCartPage(props) {
 				hideFactoryStockModal={handleHideFactoryStockModal}
 				product={modalData}
 			/>
-			<EditPriceModal 
-				open={showEditPriceModal} 
-				hideEditPriceModal={handleHideEditPriceModal}
-				index={index}
-				data={modalData}
-			/>
 			<CustomerPartModal
 				open={showCustomerPartModal} 
 				hideCustomerPartModal={handleHideCustomerPartModal}
@@ -104,7 +87,6 @@ export default function ShoppingCartPage(props) {
 				<ShoppingCart
 					showSplitLineModal={handleShowSplitLineModal}
 					showFactoryStockModal={handleShowFactoryStockModal}
-					showEditPriceModal={handleShowEditPriceModal}
 					showCustomerPartModal={handleShowCustomerPartModal}
 					handleSetModalData={handleSetModalData}
 					history={props.history}

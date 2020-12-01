@@ -41,13 +41,13 @@ const Container = styled.div`
   }
 `
 
-export default function EditPriceModal({open, index, hideEditPriceModal, data}) {
+export default function EditPriceModal({open, hideEditPriceModal, setCartItem, data}) {
 	const [itemPrice, setItemPrice] = useState(0)
 	const [margin, setMargin] = useState(0)
 	//Note: Airline cost only available to authorized users
 	const [airlineCost, setAirlineCost] = useState(0)
 	const [selectedReason, setSelectedReason] = useState(null)
-	const {updateCartItem, editPriceReasonCodes} = useContext(Context)
+	const {editPriceReasonCodes} = useContext(Context)
 	
 	const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
 	
@@ -88,9 +88,9 @@ export default function EditPriceModal({open, index, hideEditPriceModal, data}) 
 	
 	const handleSave = () => {
 		if (itemPrice === data.originalItemPrice) {
-			updateCartItem(index, 'priceOverride', null)
+			setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null })
 		} else {
-			updateCartItem(index, 'priceOverride', { priceOverride: itemPrice, reasonId: selectedReason.value })
+			setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
 		}
 		hideEditPriceModal()
 	}
