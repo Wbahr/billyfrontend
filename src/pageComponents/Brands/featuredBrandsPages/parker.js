@@ -75,6 +75,7 @@ export default function Parker() {
 					</div>}
 				/>
 				<ShopProductBtn
+                    searchTerm="Parker"
 					text="Shop Products"
 				/>
 				<SectionHeader
