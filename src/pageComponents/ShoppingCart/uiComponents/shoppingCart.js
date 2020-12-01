@@ -63,18 +63,23 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	
 	useEffect(() => {
 		if (cart) {
-			const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
-			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
-			hasMissingItemDetails && getItemDetails(cart)
-			hasMissingPartNumbers && getCustomerPartNumbers(cart)
-			
 			const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
-			const hasMissingAvail = !!cart.find(item => !itemAvailabilities.find(avail => avail.invMastUid === item.frecno))
 			hasMissingPrices && getItemPrices(cart)
-			hasMissingAvail && getItemAvailabilities(cart)
-			console.log({hasMissingItemDetails, hasMissingPartNumbers, hasMissingPrices, hasMissingAvail})
 		}
 	}, [cart])
+	
+	useEffect(() => {
+		if (cart) {
+			const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
+			hasMissingItemDetails && getItemDetails(cart)
+			
+			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
+			hasMissingPartNumbers && getCustomerPartNumbers(cart)
+			
+			const hasMissingAvail = !!cart.find(item => !itemAvailabilities.find(avail => avail.invMastUid === item.frecno))
+			hasMissingAvail && getItemAvailabilities(cart)
+		}
+	}, [cart?.length])
 
 	useEffect(() => {
 		if (savedCart) {
