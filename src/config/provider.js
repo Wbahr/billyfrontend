@@ -6,6 +6,7 @@ import {
     GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
 } from './providerGQL'
 import { getRidOf__typename, logout, distinct } from '../pageComponents/_common/helpers/generalHelperFunctions'
+import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_SHOPPING_CART_ITEM_DETAIL} from "./gqlQueries/gqlItemQueries";
 
 export default function Provider(props) {
     const didMountRef = useRef(false)
@@ -27,6 +28,8 @@ export default function Provider(props) {
     const [purchaseHistory, setPurchaseHistory] = useState([])
     const [itemPrices, setItemPrices] = useState([])
     const [itemAvailabilities, setItemAvailabilities] = useState([])
+    const [itemDetails, setItemDetails] = useState([])
+    const [customerPartNumbers, setCustomerPartNumbers] = useState([])
     const [shoppingLists, setShoppingLists] = useState([])
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
@@ -137,13 +140,38 @@ export default function Provider(props) {
             setItemAvailabilities([...data.itemAvailability, ...itemAvailabilities].filter(distinct))
         }
     })
+	
+    const [handleGetItemDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+			  fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setItemDetails([...data.itemDetailsBatch, ...itemDetails].filter(distinct))
+        }
+    })
+  
+    const [handleGetCustomerPartNumbers] = useLazyQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+			  fetchPolicy: 'no-cache',
+        onCompleted: data => {
+					setCustomerPartNumbers([...data.customerPartNumbersBatch, ...customerPartNumbers].filter(distinct))
+        }
+    })
 
     function getItemPrices(items) {
-        handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno }) => ({ invMastUid: invMastUid || frecno, quantity: 1 })) } })
+        handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno, quantity }) => ({
+                invMastUid: invMastUid || frecno,
+                quantity: quantity !== null && quantity !== undefined ? quantity : 1
+        }))} })
     }
 
     function getItemAvailabilities(items) {
         handleGetItemAvailabilities({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+    }
+    
+    function getItemDetails(items) {
+        handleGetItemDetails({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+    }
+    
+    function getCustomerPartNumbers(items) {
+			  handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
 
     const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
@@ -417,9 +445,13 @@ export default function Provider(props) {
                 getPurchaseHistoryState,
                 itemPrices,
                 itemAvailabilities,
+                itemDetails,
+                customerPartNumbers,
                 getPurchaseHistory,
                 getItemPrices,
                 getItemAvailabilities,
+                getItemDetails,
+                getCustomerPartNumbers,
                 getShoppingLists,
                 getShoppingListsState,
                 upsertShoppingList,

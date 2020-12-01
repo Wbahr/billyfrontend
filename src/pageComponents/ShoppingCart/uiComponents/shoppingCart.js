@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
@@ -56,31 +56,25 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history }) {
-	const { cart, emptyCart, userInfo, saveShoppingCart } = useContext(Context)
+	const { cart, emptyCart, userInfo, saveShoppingCart, itemPrices, itemAvailabilities, itemDetails, customerPartNumbers,
+		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-	const invMastUids = cart?.map(item => item.frecno)
-
-	const { data: itemsDetails } = useQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
-		variables: { invMastUids }
-	})
-
-	const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
-		variables: {
-			items: cart?.map(cartItem => ({
-				invMastUid: cartItem.frecno,
-				quantity: cartItem.quantity
-			}))
+	
+	useEffect(() => {
+		if (cart) {
+			const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
+			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
+			hasMissingItemDetails && getItemDetails(cart)
+			hasMissingPartNumbers && getCustomerPartNumbers(cart)
+			
+			const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
+			const hasMissingAvail = !!cart.find(item => !itemAvailabilities.find(avail => avail.invMastUid === item.frecno))
+			hasMissingPrices && getItemPrices(cart)
+			hasMissingAvail && getItemAvailabilities(cart)
+			console.log({hasMissingItemDetails, hasMissingPartNumbers, hasMissingPrices, hasMissingAvail})
 		}
-	})
-
-	const { data: itemsAvailability } = useQuery(GET_ITEM_AVAILABILITY, {
-		variables: { invMastUids }
-	})
-
-	const { data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
-		variables: { invMastUids }
-	})
+	}, [cart])
 
 	useEffect(() => {
 		if (savedCart) {
@@ -125,7 +119,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			</Div>
 			{ cart && (
 				<CartComponent
-					{...{ history, cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
+					{...{ history, cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, showSplitLineModal,
 						showFactoryStockModal, showCustomerPartModal, handleSetModalData}}
 				/>
 			)}
@@ -141,7 +135,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	)
 }
 
-const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, itemsCustomerPartNumbers, showSplitLineModal,
+const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, itemsCustomerPartNumbers, showSplitLineModal,
  	showFactoryStockModal, showCustomerPartModal, handleSetModalData, history}) => {
 	const {updateShoppingCart} = useContext(Context)
 	const [realTimeCart, setRealTimeCart] = useState(cart)
@@ -169,10 +163,10 @@ const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, item
 	}
 	
 	const ShoppingCartItems = realTimeCart.map((cartItem, index) => {
-		const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === cartItem.frecno)
-		const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === cartItem.frecno)
-		const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
-		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.customerPartNumbersBatch?.filter(p => p.invMastUid === cartItem.frecno)
+		const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
+		const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
+		const itemAvailability = itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
+		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
 		
 		return (
 			<Draggable key={index} draggableId={String(index)} index={index}>
@@ -182,10 +176,10 @@ const CartComponent = ({cart, itemsDetails, itemsPrices, itemsAvailability, item
 						{...provided.draggableProps}
 						{...provided.dragHandleProps}
 					>
-						{itemDetails ?
+						{details ?
 							<ShoppingCartItem
 								cartItem={cartItem}
-								itemDetails={itemDetails}
+								itemDetails={details}
 								priceInfo={itemPrice}
 								availabilityInfo={itemAvailability}
 								customerPartNumbers={itemCustomerPartNumbers}
