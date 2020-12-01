@@ -4,7 +4,7 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import FeaturedBrandLogo from '../uiComponents/FeaturedBrandLogo'
 import H1 from '../uiComponents/H1'
 import BrandDetail from '../uiComponents/BrandDetail'
-import ShopProductBtn from '../uiComponents/ShopProductBtn'
+import ShopProductBtn, {  ProductConfiguratorBtn } from '../uiComponents/ShopProductBtn'
 import SectionHeader from '../uiComponents/SectionHeader'
 import ProductItems from '../uiComponents/ProductItems'
 import Videos from '../uiComponents/Videos'
@@ -43,8 +43,13 @@ export default function SMC() {
 					text="SMC has established a position as the world leader in pneumatic technology and supports a range of over 600,000 product variations to meet the complex and diversified needs of its customers. The company is continually applying world class design to pneumatic component and power control technology to develop advanced products with ever higher levels of performance."
 				/>
 				<ShopProductBtn
+                    searchTerm="SMC"
 					text="Shop Products"
 				/>
+                <ProductConfiguratorBtn
+                    url="/srf/SmcUSA"
+                    text="SMC Product Configurator"
+                />
 				<SectionHeader
 					text="Products" />
 				<ProductItems

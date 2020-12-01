@@ -49,6 +49,7 @@ export default function Paccar() {
 					text="PACCAR Winch Division is the industry leader in the design and manufacture of winch, hoist and drive systems. Their products are sold under the brands of Braden, Carco and Gearmatic. PACCAR manufactures high quality, high value winches, hoists and drive systems and offers custom-engineered products that meet the highest manufacturing standards."
 				/>
 				<ShopProductBtn
+                    searchTerm="Paccar"
 					text="Shop Products"
 				/>
 				<SectionHeader

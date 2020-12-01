@@ -52,6 +52,7 @@ export default function Ross() {
 					text="Ross controls is a global manufacturer of pneumatic valves, control systems and safety products. Their products are used anywhere compressed air is used to perform a work process."
 				/>
 				<ShopProductBtn
+                    searchTerm="Ross"
 					text="Shop Products"
 				/>
 				<SectionHeader
