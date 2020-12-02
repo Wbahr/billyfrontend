@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
-import Context from '../../../config/context'
 import { ButtonBlack } from '../../../styles/buttons'
 
 const DivItem = styled.div`
@@ -31,7 +30,7 @@ const Container = styled.div`
   }
 `
 
-export default function SplitLineModal({open, index, hideSplitLineModal}) {
+export default function SplitLineModal({open, index, hideSplitLineModal, cart, setCart}) {
 	const [lineCount, setLineCount] = useState(1)
 	const [lineQuantity, setLineQuantity] = useState(1)
 
@@ -40,25 +39,37 @@ export default function SplitLineModal({open, index, hideSplitLineModal}) {
 		setLineCount(1)
 		setLineQuantity(1)
 	}
+	
+	function splitItem() {
+		const splitItems = []
+		for (let i = 0; i < lineCount; i++) {
+			splitItems.push({
+				frecno: cart[index].frecno,
+				quantity: parseInt(lineQuantity),
+				itemNotes: cart[index].itemNotes,
+			})
+		}
+		const frontCart = cart?.slice(0, index) || []// returns cart item before split item
+		const backCart = cart?.slice(index + 1) || [] // returns cart item after split item
+		setCart([...frontCart, ...splitItems, ...backCart])
+	}
+	
+	const handleSplitClick = () => {
+		splitItem()
+		handleClose()
+	}
   
 	return(
-		<Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '350px', 'borderRadius': '5px'}}>
+		<Modal open={open} onClose={handleClose} contentStyle={{maxWidth: 350, borderRadius: 5}}>
 			<Container>
 				<h4>Split Line</h4>
 				<DivItem>
-					<Label>Line Count: </Label><input value={lineCount} style={{'width': '100px'}} onChange={(e)=> setLineCount(e.target.value)}/>
+					<Label>Line Count: </Label><input value={lineCount} style={{width: 100}} onChange={(e) => setLineCount(e.target.value)}/>
 				</DivItem>
 				<DivItem>
-					<Label>Quantity per Line: </Label><input value={lineQuantity} style={{'width': '100px'}} onChange={(e)=> setLineQuantity(e.target.value)}/>
+					<Label>Quantity per Line: </Label><input value={lineQuantity} style={{width: 100}} onChange={(e) => setLineQuantity(e.target.value)}/>
 				</DivItem>
-				<Context.Consumer>
-					{({splitItem}) => (
-						<ButtonBlack onClick={()=>{
-							splitItem(index,lineCount,lineQuantity)
-							handleClose()
-						}}>Split</ButtonBlack>
-					)}
-				</Context.Consumer>
+				<ButtonBlack onClick={handleSplitClick}>Split</ButtonBlack>
 			</Container>
 		</Modal>
 	)

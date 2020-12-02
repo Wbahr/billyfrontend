@@ -43,18 +43,10 @@ export default function ShoppingCartPage(props) {
 		setIndex(index)
 		setShowSplitLineModal(true)
 	}
-
-	function handleHideSplitLineModal(){
-		setShowSplitLineModal(false)
-	}
-
+	
 	function handleShowFactoryStockModal(index){
 		setIndex(index)
 		setShowFactoryStockModal(true)
-	}
-
-	function handleHideFactoryStockModal(){
-		setShowFactoryStockModal(false)
 	}
 	
 	function handleShowCustomerPartModal(index){
@@ -62,27 +54,9 @@ export default function ShoppingCartPage(props) {
 		setShowCustomerPartModal(true)
 	}
 
-	function handleHideCustomerPartModal(){
-		setShowCustomerPartModal(false)
-	}
 
 	return(
 		<DivContainer>
-			<SplitLineModal 
-				open={showSplitLineModal} 
-				hideSplitLineModal={handleHideSplitLineModal}
-				index={index}
-			/>
-			<FactoryStockModal
-				open={showFactoryStockModal}
-				hideFactoryStockModal={handleHideFactoryStockModal}
-				product={modalData}
-			/>
-			<CustomerPartModal
-				open={showCustomerPartModal} 
-				hideCustomerPartModal={handleHideCustomerPartModal}
-				index={index}
-			/>
 			<DivShoppingCartCol>
 				<ShoppingCart
 					showSplitLineModal={handleShowSplitLineModal}

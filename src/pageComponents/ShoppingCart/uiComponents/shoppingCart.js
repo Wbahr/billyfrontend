@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useLazyQuery } from '@apollo/client'
 import styled from 'styled-components'
 import Context from '../../../config/context'
 import ShoppingCartItem from './shoppingCartItem'
@@ -7,8 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
-import { GET_SHOPPING_CART_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
-import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 import {useDebounceValue, useDidUpdateEffect} from "../../_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
@@ -55,7 +52,7 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
-export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history }) {
+export default function ShoppingCart({ history }) {
 	const { cart, emptyCart, userInfo, saveShoppingCart, itemPrices, itemAvailabilities, itemDetails, customerPartNumbers,
 		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
@@ -124,8 +121,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 			</Div>
 			{ cart && (
 				<CartComponent
-					{...{ history, cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, showSplitLineModal,
-						showFactoryStockModal, showCustomerPartModal, handleSetModalData}}
+					{...{ history, cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers}}
 				/>
 			)}
 			{
@@ -140,8 +136,7 @@ export default function ShoppingCart({ showSplitLineModal, showFactoryStockModal
 	)
 }
 
-const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, itemsCustomerPartNumbers, showSplitLineModal,
- 	showFactoryStockModal, showCustomerPartModal, handleSetModalData, history}) => {
+const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, customerPartNumbers, history}) => {
 	const {updateShoppingCart} = useContext(Context)
 	const [realTimeCart, setRealTimeCart] = useState(cart)
 	const debouncedCart = useDebounceValue(realTimeCart, 1000)
@@ -167,11 +162,15 @@ const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, itemsCu
 		}
 	}
 	
+	const setCartItemField = index => (field, value) => {
+		setRealTimeCart(realTimeCart.map((cartItem, idx) => idx === index ? {...cartItem, [field]: value} : cartItem))
+	}
+	
 	const ShoppingCartItems = realTimeCart.map((cartItem, index) => {
 		const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
 		const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
 		const itemAvailability = itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
-		const itemCustomerPartNumbers = itemsCustomerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
+		const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
 		
 		return (
 			<Draggable key={index} draggableId={String(index)} index={index}>
@@ -189,8 +188,11 @@ const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, itemsCu
 								availabilityInfo={itemAvailability}
 								customerPartNumbers={itemCustomerPartNumbers}
 								key={index}
+								cart={realTimeCart}
+								setCart={setRealTimeCart}
 								setCartItem={setCartItem(index)}
-								{...{showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history, index}}
+								setCartItemField={setCartItemField(index)}
+								{...{history, index}}
 							/>
 							: <SkeletonItem index={index} />
 						}
