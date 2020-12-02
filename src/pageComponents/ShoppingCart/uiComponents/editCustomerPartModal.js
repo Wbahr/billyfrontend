@@ -61,7 +61,6 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
 	const [createPartNumber, { loading: mutationLoading }] = useMutation(CREATE_PART_NUMBER, {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({customerPartNumber}) => {
-			console.log('response', customerPartNumber)
 			if (customerPartNumber.success) {
 				setAlert(`Successfully created ${customerPartNumber.theirItemId}`)
 				addCustomerPartNumber({ id: customerPartNumber.xrefId, customerPartNumber: customerPartNumber.theirItemId, invMastUid })
