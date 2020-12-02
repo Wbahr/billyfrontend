@@ -654,6 +654,7 @@ export const GET_CHECKOUT_DATA = gql`
         physCountry
         collectNumberUps
         carrierId
+        shippingNote
       }
       carriers {
         id
