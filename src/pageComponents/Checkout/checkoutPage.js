@@ -118,7 +118,7 @@ function CheckoutPage({ history }) {
     );
 
     useEffect(() => {
-        if (!context.cart.length) {
+        if (!context.cart?.length) {
             history.replace('/cart')
         }
     }, [])
@@ -206,7 +206,7 @@ function CheckoutPage({ history }) {
 
     const { loading: pricesLoading, error: itemPricesError, data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
         variables: {
-            'items': context.cart.map(cartItem => {
+            'items': context.cart?.map(cartItem => {
                 return {
                     'invMastUid': cartItem.frecno,
                     'quantity': cartItem.quantity
@@ -231,7 +231,7 @@ function CheckoutPage({ history }) {
         contact: { ...defaultContact },
         schedule: {
             ...defaultQuote,
-            cartWithDates: context.cart.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
+            cartWithDates: context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
             shoppingCartToken: localStorage.getItem('shoppingCartToken'),
             isQuote: history.location.pathname === '/create-quote'
         },

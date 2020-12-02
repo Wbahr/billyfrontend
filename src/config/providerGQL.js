@@ -163,6 +163,7 @@ export const UPDATE_CART = gql`
         itemNotes
         itemUnitPriceOverride
         airlineCost
+        priceReasonId
       }
       subtotal
       tariff
@@ -392,6 +393,7 @@ export const GET_ITEM_PRICE = gql`
       quantity
       totalPrice
       unitPrice
+      spaType
     }
   }
 `
@@ -727,4 +729,13 @@ export const GET_ALL_USER_CARTS = gql`
             shoppingCartItemCount
         }
     }
+`
+
+export const GET_PRICE_REASONS = gql`
+  query GetPriceReasons {
+    priceReasons {
+      id
+      priceReason
+    }
+  }
 `

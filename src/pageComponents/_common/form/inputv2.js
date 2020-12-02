@@ -69,12 +69,12 @@ function InputV2(props) {
 	if (type === 'currency'){
 		return(
 			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
+				{label && <Label htmlFor={label}>{label}</Label>}
 				<MainCurrencyInput
 					value={value} 
 					prefix='$' 
 					style={{width: width || '400px'}} 
-					onChangeEvent={(e)=>onChange(e)}
+					onChangeEvent={onChange}
 					disabled={disabled}
 				/>
 			</DivContainer>
@@ -87,7 +87,7 @@ function InputV2(props) {
 					value={value} 
 					suffix='%' 
 					style={{width: width || '400px'}} 
-					onChangeEvent={(e)=>onChange(e)}
+					onChangeEvent={onChange}
 					precision="0"
 					disabled={disabled}
 				/>

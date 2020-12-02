@@ -60,7 +60,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
 	const [alert, setAlert] = useState(null)
 	const {
 		cart,
-		updateItem
+		updateCartItemField
 	} = context
 
 	const [createPartNumber, { loading: mutationLoading }] = useMutation(CREATE_PART_NUMBER, {
@@ -69,7 +69,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
 			let response = data.customerPartNumber
 			if(response.success) {
 				setAlert(`Successfully created ${response.theirItemId}`)
-				updateItem(index, 'customerPartNumberId', response.xrefId)
+				updateCartItemField(index, 'customerPartNumberId', response.xrefId)
 			} else {
 				setPartNumber('')
 				setAlert(response.message)
@@ -81,7 +81,7 @@ export default function EditCustomerPartNumberModal({open, index, hideCustomerPa
 		createPartNumber({
 			'variables': {
 				'part': {
-					'invMastUid': cart[index].frecno,
+					'invMastUid': cart?.[index].frecno,
 					'theirItemId': partNumber
 				}
 			}

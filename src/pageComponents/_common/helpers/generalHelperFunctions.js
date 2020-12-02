@@ -1,4 +1,4 @@
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState} from 'react'
 import XLSX from "xlsx"
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
@@ -7,6 +7,8 @@ import 'jspdf-autotable'
 export const getRidOf__typename = ({__typename, editors, items, ...rest}) => (
 	{ ...rest, editors: editors.map(({__typename, ...rest1}) => rest1), items: items.map(({__typename, ...rest2}) => rest2) }
 )
+
+export const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx;
 
 export const getCsvFormattedData = (data, columns, ignoreCols) => {
 	const filterCols = ({accessor}) => !ignoreCols.includes(accessor)
@@ -108,4 +110,15 @@ export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => 
 				: 'Call Airline Hydraulics Co. for lead time'
 		)
 		: ''
+}
+
+export const useDebounceValue = (value, time = 500) => {
+	const [debouncedValue, setDebouncedValue] = useState(value)
+	
+	useEffect(() => {
+		const timeout = setTimeout(() => setDebouncedValue(value), time)
+		return () => clearTimeout(timeout)
+	}, [value, time])
+	
+	return debouncedValue
 }
