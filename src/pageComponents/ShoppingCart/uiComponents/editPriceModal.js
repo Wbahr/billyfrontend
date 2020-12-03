@@ -67,7 +67,7 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 	}
 	
 	function calculateMargin(price) {
-		const margin = margin < 0 ? 0 : (price - data.airlineCost) / data.airlineCost
+		const margin = margin < 0 ? 0 : (price - data.airlineCost) / price
 		return (margin * 100).toFixed(1)
 	}
 
