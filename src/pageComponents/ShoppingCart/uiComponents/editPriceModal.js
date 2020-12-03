@@ -44,18 +44,15 @@ const Container = styled.div`
 export default function EditPriceModal({open, hideEditPriceModal, setCartItem, data}) {
 	const [itemPrice, setItemPrice] = useState(0)
 	const [margin, setMargin] = useState(0)
-	//Note: Airline cost only available to authorized users
-	const [airlineCost, setAirlineCost] = useState(0)
 	const [selectedReason, setSelectedReason] = useState(null)
 	const {editPriceReasonCodes} = useContext(Context)
 	
 	const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
 	
 	useEffect(() => {
-		if (data && data.modalType === 'edit-price') {
+		if (data) {
 			setItemPrice(data.itemPrice)
 			setMargin(calculateMargin(data.itemPrice))
-			setAirlineCost(data.airlineCost)
 			setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
 		}
 	}, [data])
@@ -77,7 +74,7 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 			setMargin(calculateMargin(floatValue))
 		} else {
 			setMargin(floatValue)
-			setItemPrice(parseFloat((airlineCost / (1 - (floatValue/100))).toFixed(2)))
+			setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
 		}
 	}
 	
@@ -133,7 +130,7 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 						<AirlineInput
 							type="currency"
 							disabled={true}
-							value={airlineCost}
+							value={data?.airlineCost}
 							width='100px'
 						/>
 					</DivItem>
