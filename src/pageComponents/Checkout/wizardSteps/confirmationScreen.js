@@ -245,6 +245,11 @@ export default function ConfirmationScreen(props) {
                         <P>Packing Basis:</P>
                         <p>{packingBasisName}</p>
                     </DivTextRow>
+                    {shipto.shippingNotes && 
+                        <DivTextRow>
+                            <P>Shipping Notes:</P>
+                            <p>{shipto.shippingNotes}</p>
+                        </DivTextRow>}
                 </SectionFields>
             </SectionContainer>
 

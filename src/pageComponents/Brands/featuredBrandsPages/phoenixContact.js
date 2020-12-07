@@ -49,6 +49,7 @@ export default function Phoenix() {
 					text="Phoenix Contact is a world leader for electronic components, systems, and solutions in the fields of electrical engineering, electronics, and automation. Phoenix Contact provides products for applications in a wide range of industries such as automotive, oil and gas, solar power, transportation, water management, and wind power."
 				/>
 				<ShopProductBtn
+                    searchTerm="Phoenix"
 					text="Shop Products"
 				/>
 				<SectionHeader

@@ -167,7 +167,11 @@ export default function SearchResultsPage({history}) {
 		} else {
 			setQueryParam('resultPage', 1)
 		}
-	}, [searchTerm, innerSearchTerms, sortType])
+	}, [innerSearchTerms, sortType])
+	
+	useDidUpdateEffect(() => {
+		setSearchState(initialSearchState)
+	}, [searchTerm])
 	
 	useEffect(() => {
 		performItemSearch()

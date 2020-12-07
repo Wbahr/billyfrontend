@@ -91,7 +91,9 @@ export function ShipToForm(props) {
 			saveShipTo: 0,
 			isCollect: shipToAddress?.collectNumberUps ? 1 : 0,
             collectNumber: shipToAddress?.collectNumberUps || '',
-            carrierId: shipToAddress?.carrierId || ''
+            carrierId: shipToAddress?.carrierId || '',
+            shippingNotes: shipToAddress?.shippingNote || '',
+
         }
         setFieldValue('shipto', shipto);
         shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode);

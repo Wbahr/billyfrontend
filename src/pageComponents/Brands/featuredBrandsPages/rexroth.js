@@ -53,6 +53,7 @@ export default function Rexroth() {
 					text="Bosch Rexroth is the world leader in the drive, motion and control technologies that power today’s most advanced manufacturing systems. We carry the full line of products from each of Bosch Rexroth’s technology areas: Industrial and Mobile Hydraulics, Pneumatics, Aluminum Structural Framing, Linear Motion Technologies and Electric Drives and Controls."
 				/>
 				<ShopProductBtn
+                    searchTerm="Rexroth"
 					text="Shop Products"
 				/>
 				<SectionHeader

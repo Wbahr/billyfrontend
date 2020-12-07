@@ -51,6 +51,7 @@ export default function Schmersal() {
 					Safety requirements for workers in almost all industries have evolved to ensure that safety in the workplace is no longer an option. Government organizations around the world have made worker safety a priority for companies which has drawn even greater attention to the topic of safety. The latest product developments from the Schmersal Group have focused on advanced safety systems designed to satisfy the most current safety standards and regulations."
 				/>
 				<ShopProductBtn
+                    searchTerm="Schmersal"
 					text="Shop Products"
 				/>
 				<SectionHeader

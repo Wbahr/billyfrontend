@@ -51,6 +51,7 @@ export default function Rittal() {
 					Let us help you take your project from start to finish with our automation engineering services or let our sub-assembly department provide you with a pre-assembled, ready to use unit."
 				/>
 				<ShopProductBtn
+                    searchTerm="Rittal"
 					text="Shop Products"
 				/>
 				<SectionHeader
