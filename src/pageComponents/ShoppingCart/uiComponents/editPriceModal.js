@@ -116,7 +116,7 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 					</DivItem>
 					
 					<DivItem>
-						<Label>Margin: {data?.spaType && '(SPA)'}</Label>
+						<Label>Margin: {data?.spaType && `(SPA: ${data.spaType})`}</Label>
 						<AirlineInput
 							type="percent"
 							value={margin}
