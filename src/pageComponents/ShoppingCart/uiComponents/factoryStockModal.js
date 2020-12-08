@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useLazyQuery, useMutation } from '@apollo/client'
@@ -74,13 +73,11 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 	const [factoryStockDetails, setFactoryStockDetails] = useState(null)
 
 	useEffect(() => {
-		if(open) {
-			getFactoryStock()
-		}
+		if (open) getFactoryStock()
 	}, [open])
 
 	useEffect(() => {
-		if(!_.isNil(factoryStockDetails)){
+		if (factoryStockDetails) {
 			setLeadTime(factoryStockDetails.leadTimeDays)
 			setQtyAvailable(factoryStockDetails.factoryAvailability)
 			setLastModified(factoryStockDetails.modifiedDate)
@@ -91,7 +88,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 	const [getFactoryStock] = useLazyQuery(GET_FACTORY_STOCK, {
 		fetchPolicy: 'no-cache',
 		variables: {
-			invMastUid: _.get(product,'frecno',0)
+			invMastUid: product?.frecno || 0
 		},
 		onCompleted: data => {
 			setFactoryStockDetails(data.factoryStock)
@@ -113,7 +110,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 			{
 				variables: {
 					'stockInput': {
-						'invMastUid': Number(_.get(product,'frecno',0)),
+						'invMastUid': Number(product?.frecno || 0),
 						'factoryAvailability': Number(qtyAvailable),
 						'leadTimeDays': Number(leadTime)
 					}
@@ -131,29 +128,38 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 	}
   
 	return(
-		<Modal open={open} onClose={()=>handleClose()} contentStyle={{'maxWidth': '300px', 'borderRadius': '3px'}}>
+		<Modal open={open} onClose={handleClose} contentStyle={{maxWidth: 300, borderRadius: 3}}>
 			<Container>
 				<h4>Factory Stock</h4>
-				<h6>{_.get(product,'name','')}</h6>
+				<h6>{product?.name || ''}</h6>
+				
 				<DivRow>
 					<DivItem>
-						<Label>Factory Availability: </Label><input id="qtyAvailable" type="number" value={qtyAvailable} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
+						<Label>Factory Availability: </Label>
+						<input id="qtyAvailable" type="number" value={qtyAvailable} style={{width: 100}} onChange={handleChange}/>
 					</DivItem>
+					
 					<DivItem>
-						<Label>Est. Lead Time (days): </Label><input id="leadTime" type="number" value={leadTime} style={{'width': '100px'}} onChange={(e)=> handleChange(e)}/>
+						<Label>Est. Lead Time (days): </Label>
+						<input id="leadTime" type="number" value={leadTime} style={{width: 100}} onChange={handleChange}/>
 					</DivItem>
 				</DivRow>
+				
 				<DivRow>
 					<DivItem>
-						<Label>Last Modified: </Label><input disabled value={lastModified} style={{'width': '250px'}}/>
+						<Label>Last Modified: </Label>
+						<input disabled value={lastModified} style={{width: 250}}/>
 					</DivItem>
 				</DivRow>
+				
 				<DivRow>
 					<DivItem>
-						<Label>Modified By: </Label><input disabled value={lastModifiedBy} style={{'width': '250px'}}/>
+						<Label>Modified By: </Label>
+						<input disabled value={lastModifiedBy} style={{width: 250}}/>
 					</DivItem>
 				</DivRow>
-				<ButtonBlack disabled={loading} onClick={()=>{handleUpdate()}}>Update</ButtonBlack>
+				
+				<ButtonBlack disabled={loading} onClick={handleUpdate}>Update</ButtonBlack>
 			</Container>
 		</Modal>
 	)

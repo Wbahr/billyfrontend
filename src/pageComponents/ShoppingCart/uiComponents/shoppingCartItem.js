@@ -8,6 +8,8 @@ import NumberFormat from 'react-number-format'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
+import SplitLineModal from "./splitLineModal";
+import CustomerPartModal from "./editCustomerPartModal";
 
 const DivContainer = styled.div`
 	display: flex;
@@ -157,64 +159,50 @@ const P3 = styled.p`
 	font-size: 12px !important;
 `
 
-export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, availabilityInfo, customerPartNumbers, index,
- 	showSplitLineModal, showFactoryStockModal, showCustomerPartModal, handleSetModalData, history, setCartItem}) {
+export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
+ 	priceInfo, availabilityInfo, customerPartNumbers, history}) {
 
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	const [editPriceModalData, setEditPriceModalData] = useState(null)
+	const [showSplitLineModal, setShowSplitLineModal] = useState(false)
+	const [factoryStockModalData, setFactoryStockModalData] = useState(false)
+	const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
 	const itemId = parseInt(cartItem.frecno,10)
 
-	const {updateCartItemField, userInfo} = useContext(Context)
+	const {userInfo} = useContext(Context)
 
-	function selectCustomerPartNumber({target: {value}}){
+	function selectCustomerPartNumber(value){
 		if (value === -1) {
 			setSelectedCustomerPartNumber(0) // Reset Dropdown
-			updateCartItemField(index, 'customerPartNumberId', 0)
-			showCustomerPartModal(index)
-		} else if (value === 0) {
-			setSelectedCustomerPartNumber(value)
-			updateCartItemField(index, 'customerPartNumberId', 0)
+			setCartItemField('customerPartNumberId', 0)
+			setShowCustomerPartModal(true)
 		} else {
 			setSelectedCustomerPartNumber(value)
-			updateCartItemField(index, 'customerPartNumberId', Number(value))
+			setCartItemField('customerPartNumberId', Number(value))
 		}
 	}
 
-	function clearCustomerPartNumber(){
-		selectCustomerPartNumber(0)
+	function clearCustomerPartNumber() {
+		setSelectedCustomerPartNumber(0)
+		setCartItemField('customerPartNumberId', 0)
 	}
 
-	function handleShowModal(type){
-		switch(type){
-		case 'split-line':
-			handleSetModalData({
-				modalType: type
-			})
-			showSplitLineModal(index)
-			break
-		case 'factory-stock':
-			handleSetModalData({
-				modalType: type,
-				name: itemDetails?.itemDesc,
-				frecno: itemId
-			})
-			showFactoryStockModal(index)
-			break
-		case 'edit-price':
-			setEditPriceModalData({
-				modalType: type,
-				originalItemPrice: priceInfo?.unitPrice,
-				itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-				spaType: priceInfo?.spaType,
-				airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
-				priceReasonId: cartItem.priceReasonId,
-				cartItem
-			})
-			break
-		case 'customer-part':
-			showCustomerPartModal(index)
-			break
-		}
+	const handleShowFactoryStockModal = () => {
+		setFactoryStockModalData({
+			name: itemDetails?.itemDesc,
+			frecno: itemId
+		})
+	}
+	
+	const handleShowEditPriceModal = () => {
+		setEditPriceModalData({
+			originalItemPrice: priceInfo?.unitPrice,
+			itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+			spaType: priceInfo?.spaType,
+			airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
+			priceReasonId: cartItem.priceReasonId,
+			cartItem
+		})
 	}
 	
 	const handleQuantityChange = ({target: {value}}) => {
@@ -256,7 +244,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</CopyToClipboard>
 						</TextRow>
 						<TextRow>
-							<select value={selectedCustomerPartNumber} onChange={selectCustomerPartNumber} >
+							<select value={selectedCustomerPartNumber} onChange={e => selectCustomerPartNumber(e.target.value)} >
 								<option value="0">Customer Part#</option>
 								{
 									customerPartNumbers?.map(elem => 
@@ -281,11 +269,11 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 							</P3>
 						</DivRow>
 						<DivRow>
-							<DivSplitLine onClick={()=>handleShowModal('split-line')}>Split Line</DivSplitLine>
+							<DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
 							<DivSplitLine>|</DivSplitLine>
-							<DivSplitLine onClick={()=>handleShowModal('factory-stock')}>Factory Stock</DivSplitLine>
+							<DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
 							<DivSplitLine>|</DivSplitLine>
-							<DivSplitLine onClick={()=>handleShowModal('customer-part')}>Custom Part No.</DivSplitLine>
+							<DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
 						</DivRow>
 					</DivCol2>
 					<DivCol3>
@@ -294,7 +282,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 								<Label>Qty:</Label>
 								<input
 									onChange={handleQuantityChange}
-									style={{'width': '50px'}}
+									style={{width: 50}}
 									value={cartItem.quantity}
 									disabled={cartItem.quoteId}
 								/>
@@ -312,7 +300,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 													decimalScale={2}
 													fixedDecimalScale
 												/>
-												<EditPriceIcon onClick={()=>handleShowModal('edit-price')}>
+												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
 											</EditPriceDiv>
@@ -326,7 +314,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 													decimalScale={2}
 													fixedDecimalScale
 												/>
-												<EditPriceIcon onClick={()=>handleShowModal('edit-price')}>
+												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
 											</EditPriceDiv>
@@ -348,7 +336,7 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 									minLength={0}
 									debounceTimeout={300}
 									onChange={handleUpdateItemNotes}
-									style={{'width': '300px'}}
+									style={{width: 300}}
 									value={cartItem.itemNotes}
 								/>
 							</DivItem>
@@ -365,6 +353,22 @@ export default function ShoppingCartItem({cartItem, itemDetails, priceInfo, avai
 			hideEditPriceModal={() => setEditPriceModalData(null)}
 			data={editPriceModalData}
 			setCartItem={setCartItem}
+		/>
+		<SplitLineModal
+			open={showSplitLineModal}
+			hideSplitLineModal={() => setShowSplitLineModal(false)}
+			{...{cart, setCart, index}}
+		/>
+		<FactoryStockModal
+			open={!!factoryStockModalData}
+			hideFactoryStockModal={() => setFactoryStockModalData(null)}
+			product={factoryStockModalData}
+		/>
+		<CustomerPartModal
+			open={showCustomerPartModal}
+			hideCustomerPartModal={() => setShowCustomerPartModal(false)}
+			invMastUid={cart?.[index].frecno}
+			{...{index, cartItem, setCartItem, selectCustomerPartNumber}}
 		/>
 	</DivContainer>
 }

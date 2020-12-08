@@ -173,6 +173,10 @@ export default function Provider(props) {
     function getCustomerPartNumbers(items) {
 			  handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
+    
+    const addCustomerPartNumber = newCustomerPartNumber => {
+        setCustomerPartNumbers([...customerPartNumbers, newCustomerPartNumber])
+    }
 
     const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
@@ -452,6 +456,7 @@ export default function Provider(props) {
                 getItemAvailabilities,
                 getItemDetails,
                 getCustomerPartNumbers,
+							  addCustomerPartNumber,
                 getShoppingLists,
                 getShoppingListsState,
                 upsertShoppingList,
