@@ -243,22 +243,24 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 								<P2>AHC{itemDetails.invMastUid}</P2>
 							</CopyToClipboard>
 						</TextRow>
-						<TextRow>
-							<select value={selectedCustomerPartNumber} onChange={e => selectCustomerPartNumber(e.target.value)} >
-								<option value="0">Customer Part#</option>
-								{
-									customerPartNumbers?.map(elem => 
-										<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
-									)
+						{userInfo && (
+							<TextRow>
+								<select value={selectedCustomerPartNumber} onChange={e => selectCustomerPartNumber(e.target.value)} >
+									<option value="0">Customer Part#</option>
+									{
+										customerPartNumbers?.map(elem =>
+											<option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
+										)
+									}
+									<option value="-1">Create Part#</option>
+								</select>
+								{ selectedCustomerPartNumber !== 0 &&
+									<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={clearCustomerPartNumber}>
+										<FontAwesomeIcon icon="times" color="grey" />
+									</div>
 								}
-								<option value="-1">Create Part#</option>
-							</select>
-							{ selectedCustomerPartNumber != 0 &&
-								<div style={{'marginLeft': '8px', 'cursor': 'pointer'}} onClick={clearCustomerPartNumber}>
-									<FontAwesomeIcon icon="times" color="grey" />
-								</div>
-							}
-						</TextRow>
+							</TextRow>
+						)}
 						<DivRow>
 							<P3>
 								Availability: {availabilityInfo?.availability}
