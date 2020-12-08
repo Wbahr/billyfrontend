@@ -136,7 +136,7 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, customerPartNumbers, history}) => {
+const CartComponent = ({cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, history}) => {
 	const {updateShoppingCart} = useContext(Context)
 	const [realTimeCart, setRealTimeCart] = useState(cart)
 	const debouncedCart = useDebounceValue(realTimeCart, 1000)
@@ -169,7 +169,7 @@ const CartComponent = ({cart, itemDetails, itemPrices, itemAvailability, custome
 	const ShoppingCartItems = realTimeCart.map((cartItem, index) => {
 		const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
 		const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
-		const itemAvailability = itemAvailability?.find(a => a.invMastUid === cartItem.frecno)
+		const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.frecno)
 		const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
 		
 		return (
