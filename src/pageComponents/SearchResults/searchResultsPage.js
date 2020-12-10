@@ -103,7 +103,7 @@ export default function SearchResultsPage({history}) {
 					featureName,
 					selected: true
 				}))
-		}))
+		})) 
 	const initialBrands = selectedBrands ? selectedBrands.split(',').map(b => ({brandName: b, selected: true})) : []
 	const initialSearchState = { brands: initialBrands, attributes: initialAttributes, parentCategories: initialParentCategories,
 		childCategories: initialChildCategories, isSynced: false }
@@ -390,7 +390,7 @@ const LoadingItems = () => (
 	</>
 )
 
-const drawerWidth = 280
+const drawerWidth = 290
 
 const useStyles = makeStyles((theme) => ({
 	sticky: {

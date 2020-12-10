@@ -9,7 +9,7 @@ import clsx from "clsx";
 const DivTitle = styled.div`
 	display: flex;
 	cursor: pointer;
-	width: 279px;
+	width: 281px;
 	height: 36px;
 	padding: 0 12px;
 	background-color: #f3f3f3;
