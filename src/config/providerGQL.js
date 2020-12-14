@@ -65,24 +65,9 @@ export const IMPERSONATION_SEARCH = gql`
   }
 `
 
-export const GET_TAXES = gql`
-  query GetCheckoutData($checkoutDataRequest: CheckoutDataRequestInputGraphType) {
-    getCheckoutData(checkoutDataRequest: $checkoutDataRequest) {
-      grandTotal
-      subTotal
-      tariffTotal
-      taxTotal
-      taxRate
-      checkoutItems {
-        frecno
-        itemNotes
-        itemTotalPrice
-        itemTotalTariff
-        itemUnitPrice
-        quantity
-        requestedShipDate
-      }
-    }
+export const GET_TAX_RATE = gql`
+  query GetTaxRate($taxRateRequest: TaxRateRequest) {
+    getTaxRate(taxRateRequest: $taxRateRequest)
   }
 `
 

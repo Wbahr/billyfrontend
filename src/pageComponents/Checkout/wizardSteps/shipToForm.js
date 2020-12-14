@@ -76,7 +76,8 @@ export function ShipToForm(props) {
 	}
 	
 	function handleSavedAddressSelectChange(e, selectedShipTo, handleChange) {
-        const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo);
+		const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo);
+
         //Update the formik context values state
         const shipto = {
 			...values.shipto,
@@ -92,11 +93,10 @@ export function ShipToForm(props) {
 			isCollect: shipToAddress?.collectNumberUps ? 1 : 0,
             collectNumber: shipToAddress?.collectNumberUps || '',
             carrierId: shipToAddress?.carrierId || '',
-            shippingNotes: shipToAddress?.shippingNote || '',
-
+            shippingNotes: shipToAddress?.shippingNote || ''
         }
-        setFieldValue('shipto', shipto);
-        shipToAddress && updateZip(shipToAddress.id, shipToAddress.mailPostalCode);
+		setFieldValue('shipto', shipto);
+        updateZip(shipToAddress?.id || -1, values.billing?.zip || '');
         handleChange(e);
 	}
 
