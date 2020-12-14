@@ -72,9 +72,11 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-export default function CheckoutOrderSummary({currentStep, taxAmount}) {
-	const {cartPricing: {subTotal, tariff}} = useContext(Context)
-	
+export default function CheckoutOrderSummary({currentStep, zipcode, taxRate, taxRateLoading}) {
+  const {cartPricing: {subTotal, tariff}} = useContext(Context)
+  
+  const taxAmount = subTotal * taxRate
+	console.log(`Current Step: ${currentStep} - Tax Amount: ${taxAmount}`)
 	return (
 		<Div>
 			<H4>Order Summary</H4>
@@ -93,20 +95,21 @@ export default function CheckoutOrderSummary({currentStep, taxAmount}) {
 				<p>Tax</p>
 				{/* If past step 1 (ship to), show tax */}
 				{
-					currentStep > 1 ? (
-						<p>
-							<NumberFormat
-								value={taxAmount}
-								displayType="text"
-								thousandSeparator={true}
-								prefix="$"
-								decimalScale={2}
-								fixedDecimalScale
-							/>
-						</p>
-					) : (
-						<p>(TBD)</p>
-					)
+          taxRateLoading 
+            ? <p>Loading...</p>
+            : (currentStep >= 1 && zipcode) ? (
+              <p>
+                <NumberFormat
+                  value={taxAmount}
+                  displayType="text"
+                  thousandSeparator={true}
+                  prefix="$"
+                  decimalScale={2}
+                  fixedDecimalScale
+                />
+              </p>
+            ) : <p>(TBD)</p>
+					
 				}
 			</DivLineItem>
 			

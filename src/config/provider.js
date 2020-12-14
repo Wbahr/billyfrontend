@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import {
-    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAXES, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
+    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAX_RATE, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
     GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
 } from './providerGQL'
 import { getRidOf__typename, logout, distinct } from '../pageComponents/_common/helpers/generalHelperFunctions'
@@ -84,7 +84,7 @@ export default function Provider(props) {
         }
     })
 
-    const [updateTaxesApiCall] = useLazyQuery(GET_TAXES, {
+    const [updateTaxesApiCall] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             console.log('got taxes ->', data)

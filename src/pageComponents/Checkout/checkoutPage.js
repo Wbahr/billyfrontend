@@ -6,7 +6,6 @@ import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { connect } from 'formik'
-import { GET_TAXES } from "../../config/providerGQL";
 import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/client'
 import { Formik } from 'formik'
@@ -15,11 +14,10 @@ import { ShipToForm } from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
-import { GET_CHECKOUT_DATA } from '../../config/providerGQL'
 import { defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo } from "./helpers";
 import { startOfTomorrow } from 'date-fns'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
-import { GET_ITEM_PRICE } from 'config/providerGQL'
+import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'config/providerGQL'
 import { contextType } from 'react-copy-to-clipboard'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
@@ -97,8 +95,9 @@ function CheckoutPage({ history }) {
     const [checkoutDropdownData, setCheckoutDropdownData] = useState([]);
     const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([]);
     const [paymentInfo, setPaymentInfo] = useState({});
-    const [shippingZipCode, setShippingZipCode] = useState({});
-    const [taxAmount, setTaxAmount] = useState(0);
+    const [taxRateRequestInfo, setTaxRateRequestInfo] = useState({});
+    const [taxRateLoading, setTaxRateLoading] = useState(false)
+    const [taxRate, setTaxRate] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [validationSchema, setValidationSchema] = useState(null);
 
@@ -123,27 +122,27 @@ function CheckoutPage({ history }) {
         }
     }, [])
 
-    const [getTaxAmount] = useLazyQuery(GET_TAXES, {
+    const [getTaxRate] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            const taxTotal = data?.getCheckoutData?.taxTotal || 0
-            setTaxAmount(taxTotal)
+        onCompleted: ({getTaxRate}) => {
+            setTaxRateLoading(false)
+            setTaxRate(getTaxRate)
         }
     })
 
     useEffect(() => {
-        if (!shippingZipCode) {
-            const anonymousCartToken = localStorage.getItem('cartToken')
-            getTaxAmount({
+        if (taxRateRequestInfo?.zipcode) {
+            setTaxRateLoading(true)
+            getTaxRate({
                 variables: {
-                    checkoutDataRequest: {
-                        anonymousCartToken,
-                        ...shippingZipCode
+                    taxRateRequest: {
+                        ...taxRateRequestInfo
                     }
                 }
             })
         }
-    }, [shippingZipCode])
+    }, [taxRateRequestInfo])
+
     const getFormStepComponent = currentStep => {
         switch (currentStep) {
             case 0:
@@ -287,7 +286,7 @@ function CheckoutPage({ history }) {
                                 <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
                                     <FormStepComponent {...{
                                         ...formikProps, ...itemInfo, paymentInfo, setPaymentInfo, isStepValid: stepValidated[currentStep], handleMoveStep,
-                                        checkoutDropdownData, checkoutDropdownDataLabels, updateZip: (shipToId, zipcode) => setShippingZipCode({ shipToId, zipcode }), history, showPoOption
+                                        checkoutDropdownData, checkoutDropdownDataLabels, updateZip: (shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode }), history, showPoOption
                                     }} />
                                 </form>
                             )}
@@ -299,7 +298,9 @@ function CheckoutPage({ history }) {
             <DivOrderTotalCol>
                 <CheckoutOrderSummary
                     currentStep={currentStep}
-                    taxAmount={taxAmount}
+                    zipcode={taxRateRequestInfo?.zipcode || ''}
+                    taxRate={taxRate}
+                    taxRateLoading={taxRateLoading}
                 />
             </DivOrderTotalCol>
         </DivContainer>
