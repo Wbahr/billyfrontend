@@ -74,9 +74,8 @@ const DivLineItemTotal = styled(DivLineItem)`
 
 export default function CheckoutOrderSummary({currentStep, zipcode, taxRate, taxRateLoading}) {
   const {cartPricing: {subTotal, tariff}} = useContext(Context)
-  
   const taxAmount = subTotal * taxRate
-	console.log(`Current Step: ${currentStep} - Tax Amount: ${taxAmount}`)
+
 	return (
 		<Div>
 			<H4>Order Summary</H4>

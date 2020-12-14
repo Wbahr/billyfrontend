@@ -96,7 +96,7 @@ export function ShipToForm(props) {
             shippingNotes: shipToAddress?.shippingNote || ''
         }
 		setFieldValue('shipto', shipto);
-        updateZip(shipToAddress?.id || -1, shipToAddress?.physPostalCode || '');
+        updateZip(shipToAddress?.id || -1, values.billing?.zip || '');
         handleChange(e);
 	}
 
