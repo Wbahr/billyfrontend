@@ -11,6 +11,7 @@ const MainAppDiv = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     margin: 50px 0;
+    text-align: center;
 `
 const ApplicationDiv = styled.div`
     display: flex;
@@ -37,6 +38,10 @@ const IosDownload = styled.a`
 const AndroidDownload = styled.a`
     font-size: 14px;
 `
+
+const WebBrowser = styled.a`
+    font-size: 14px;
+`
 export default function Apps() {
 	return (
 		<>
@@ -48,63 +53,41 @@ export default function Apps() {
 				<MainAppDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rexroth-GoToProducts.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rexroth-Academy.png" />
 						</AppImgDiv>
-						<AppName>GoTo Product</AppName>
-						<IosDownload href="https://apps.apple.com/us/app/gotoproducts/id559690249?ls=1" target="_blank">IosDownload Download</IosDownload>
-						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.bosch.gotoapp" target="_blank">Android Download</AndroidDownload>
+						<AppName>Rexroth Academy</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/bosch-rexroth-academy/id1479548064" target="_blank">IosDownload Download</IosDownload>
+						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.bosch.rexrothacademy" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rexroth-Fit4Filter.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rexroth-Fit4Filter.png" />
 						</AppImgDiv>
-						<AppName>Fit4Filter</AppName>
+						<AppName>Rexroth Fit4Filter</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/fit4filter-by-rexroth/id589385002" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.rexroth.filterfit" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Banner-Mobile-Library.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Eaton-Bussman-Fuse-Finder.png" />
 						</AppImgDiv>
-						<AppName>Mobile Library</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
-						<AndroidDownload href="#" target="_blank">Android Download</AndroidDownload>
-					</ApplicationDiv>
-					<ApplicationDiv>
-						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/CooperBussman-Fuse-Finder.jpg" />
-						</AppImgDiv>
-						<AppName>Fuse Finder</AppName>
+						<AppName>Eaton Fuse Finder</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/bussmann-by-eaton-fuse-finder/id609315532" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.cooperbussmann.fusefinder&hl=en" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/CooperBussman-Fault-Current-Calculator.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Fault-Current-Calculator.png" />
 						</AppImgDiv>
-						<AppName>Current Calculator</AppName>
+						<AppName>Eaton Fault Current Calculator</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/cooper-bussmann-fault-current/id647477910" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.cooperbussmann.faultcurrentcalculator&hl=en" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Eaton-Poweredge.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Murrelektronik-Online-Database.png" />
 						</AppImgDiv>
-						<AppName>Poweredge</AppName>
-						<IosDownload href="https://apps.apple.com/app/poweredge/id478301518" target="_blank">IosDownload Download</IosDownload>
-					</ApplicationDiv>
-					<ApplicationDiv>
-						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Eaton-UPS.jpg" />
-						</AppImgDiv>
-						<AppName>UPS</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
-					</ApplicationDiv>
-					<ApplicationDiv>
-						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Murrelektronik-Online-Database.jpg" />
-						</AppImgDiv>
-						<AppName>MurrOnline Database</AppName>
+						<AppName>Murrelektronik Online Database</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/murrelektronik/id485283655" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=de.neusta.ms.murrelektronik&hl=en" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
@@ -112,7 +95,7 @@ export default function Apps() {
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Parker-Fitting-Finder.jpg" />
 						</AppImgDiv>
-						<AppName>Fitting Finder</AppName>
+						<AppName>Parker Fitting Finder</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/parker-fitting-finder/id573942435" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.parker.tubefitter" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
@@ -122,41 +105,35 @@ export default function Apps() {
 						</AppImgDiv>
 						<AppName>Phoenix Catalog</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/phoenix-contact-catalog/id426916389" target="_blank">IosDownload Download</IosDownload>
-					</ApplicationDiv>
-					<ApplicationDiv>
-						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Phoenix-Contact-USA.jpg" />
-						</AppImgDiv>
-						<AppName>Phoenix USA</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=de.innomos.pxc.catalog" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Phoenix-Contact-Mini.jpg" />
 						</AppImgDiv>
-						<AppName>MINI Analog Pro</AppName>
-						<IosDownload href="https://apps.apple.com/us/app/id943455634" target="_blank">IosDownload Download</IosDownload>
+						<AppName>Phoenix MINI Analog Pro</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/mini-analog-pro-app/id943455634" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.phoenixcontact.minianalogpro" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Phoenix-Contact-Quint.jpg" />
 						</AppImgDiv>
-						<AppName>Quint Power</AppName>
+						<AppName>Phoenix Quint Power</AppName>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.phoenixcontact.quint4config" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/QC-Industries-Conveyor-Guide.jpg" />
 						</AppImgDiv>
-						<AppName>Conveyor Guide</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
+						<AppName>QC Conveyor Configurator</AppName>
+                        <WebBrowser href="https://qcconfig.com/QCConfig/" target="_blank">View in Browser<br/>(registration required)</WebBrowser>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-RiTherm.jpg" />
 						</AppImgDiv>
-						<AppName>RiTherm</AppName>
+						<AppName>Rittal Therm</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/ritherm/id519087469" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=de.rittal.ritherm" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
@@ -164,53 +141,54 @@ export default function Apps() {
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-RiMatrix.jpg" />
 						</AppImgDiv>
-						<AppName>RiMatrix S</AppName>
+						<AppName>Rittal Matrix S</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/rimatrix-s/id671017975" target="_blank">IosDownload Download</IosDownload>
 						<AndroidDownload href="https://play.google.com/store/apps/details?id=de.rittal.rimatrixs" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-WM-Tool.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-Chiller.png" />
 						</AppImgDiv>
-						<AppName>WM Tool</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
+						<AppName>Rittal Chiller</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/chiller/id1061065804" target="_blank">IosDownload Download</IosDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-TS-IT-Selector.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Rittal-Product-Scan.png" />
 						</AppImgDiv>
-						<AppName>TS IT Selector</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
-						<AndroidDownload href="#" target="_blank">Android Download</AndroidDownload>
+						<AppName>Rittal Product Scan</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/product-scan/id1444750517" target="_blank">IosDownload Download</IosDownload>
+						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.rittal.ProductScanApp" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
 							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Schmersal-Application-Finder.jpg" />
 						</AppImgDiv>
-						<AppName>Application Finder</AppName>
+						<AppName>Schmersal Application Finder</AppName>
 						<IosDownload href="https://apps.apple.com/us/app/schmersal-application-finder/id627399467" target="_blank">IosDownload Download</IosDownload>
 					</ApplicationDiv>
+                    <ApplicationDiv>
+						<AppImgDiv>
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/Schmersal-Configurator.png" />
+						</AppImgDiv>
+						<AppName>Schmersal PSC1 Configurator</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/protect-psc1-configurator/id1355610960" target="_blank">IosDownload Download</IosDownload>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=com.schmersal.psc1.configurator">Android Download</AndroidDownload>
+					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/SKF-Shelf.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/SKF-Shelf.png" />
 						</AppImgDiv>
 						<AppName>SKF Shelf</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
-						<AndroidDownload href="#" target="_blank">Android Download</AndroidDownload>
+						<AndroidDownload href="https://play.google.com/store/apps/details?id=com.skf.shelf3" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 					<ApplicationDiv>
 						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/WEG-Motor-Cross.jpg" />
+							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/WEG-Pilot-Devices.png" />
 						</AppImgDiv>
-						<AppName>Application Finder</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
-					</ApplicationDiv>
-					<ApplicationDiv>
-						<AppImgDiv>
-							<Img src="https://airlinemedia.airlinehyd.com/Static_pages/resources/apps/WEG-ECatalog.jpg" />
-						</AppImgDiv>
-						<AppName>Application Finder</AppName>
-						<IosDownload href="#" target="_blank">IosDownload Download</IosDownload>
+						<AppName>WEG Pilot Devices</AppName>
+						<IosDownload href="https://apps.apple.com/us/app/pilot-devices/id855187281" target="_blank">IosDownload Download</IosDownload>
+                        <AndroidDownload href="https://play.google.com/store/apps/details?id=com.morphy.weg.comandosinalizacao" target="_blank">Android Download</AndroidDownload>
 					</ApplicationDiv>
 				</MainAppDiv>
 			</Container>
