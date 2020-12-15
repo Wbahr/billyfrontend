@@ -51,8 +51,12 @@ const ImageTypes = {
 }
 const MediaType_Image = 0;
 
-const getTypeImage = (itemDetails, type) => itemDetails?.image?.filter(i => i.itemMediaType === type
-	&& i.mediaType === MediaType_Image && i.sequence === 1)?.[0]
+const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaType === MediaType_Image && i.sequence === 1;
+const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1;
+
+const getTypeImage = (itemDetails, type) => {
+	return itemDetails?.image?.find(firstMatchingImageType(type)) || itemDetails?.image?.find(firstImage)
+}
 
 export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
 

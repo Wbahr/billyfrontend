@@ -85,7 +85,7 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 	
 	const handleSave = () => {
 		if (itemPrice === data.originalItemPrice) {
-			setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null })
+			setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
 		} else {
 			setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
 		}
@@ -148,7 +148,13 @@ export default function EditPriceModal({open, hideEditPriceModal, setCartItem, d
 				<DivRow>
 					<ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
 					<ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
-					<ButtonRed onClick={handleSave} disabled={!selectedReason || itemPrice === data?.originalItemPrice}>Save</ButtonRed>
+					<ButtonRed
+						onClick={handleSave}
+					 disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason.value === data?.cartItem?.priceReasonId)
+					 || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)}
+					>
+						Save
+					</ButtonRed>
 				</DivRow>
 			</Container>
 		</Modal>

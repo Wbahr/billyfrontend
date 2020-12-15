@@ -245,6 +245,7 @@ export default function Provider(props) {
                 setPurchaseHistory([])
                 setShoppingLists([])
                 setWebUserContacts([])
+                setItemPrices([])
                 setImpersonatedCompanyInfo(impersonationInfo)
                 currentUserType = 'Impersonator'
                 break
@@ -258,6 +259,7 @@ export default function Provider(props) {
                 setInvoiceBatchNumber(0)
                 setOrdersCache([])
                 setPurchaseHistory([])
+							  setItemPrices([])
                 break
             case 'login':
                 handleSetUserInfo(userInfo)
@@ -272,6 +274,7 @@ export default function Provider(props) {
                 setInvoiceCache([])
                 setPurchaseHistory([])
                 setInvoiceBatchNumber(0)
+							  setItemPrices([])
                 break
         }
         setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
