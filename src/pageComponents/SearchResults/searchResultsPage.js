@@ -125,7 +125,7 @@ export default function SearchResultsPage({history}) {
 	const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
 	
 	const classes = useStyles();
-	const {getItemAvailabilities, getItemPrices} = useContext(Context)
+	const {getItemAvailabilities, getItemPrices, userInfo, impersonatedCompanyInfo} = useContext(Context)
 	
 	useDidUpdateEffect(() => {
 		if (ottoFindPart) {
@@ -177,6 +177,10 @@ export default function SearchResultsPage({history}) {
 		performItemSearch()
 	}, [resultPage])
 	
+	useEffect(() => {
+		searchData.results.length && getItemPrices(searchData.results)
+	}, [searchData.results, impersonatedCompanyInfo])
+	
 	const performItemSearch = () => {
 		handleSetSearchData({isSearching: true})
 		const payload = {
@@ -217,7 +221,6 @@ export default function SearchResultsPage({history}) {
 		const invMastUids = result.map(i => i.invMastUid)
 		getItemDetails({ variables: { invMastUids } })
 		getItemAvailabilities(result)
-		getItemPrices(result)
 		
 		if (results.length >= RESULT_SIZE * 2) setOttoFindPart(true)
 		

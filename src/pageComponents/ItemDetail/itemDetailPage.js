@@ -205,7 +205,7 @@ export default function ItemDetailPage({ history }) {
 		setShowAddedToCartModal(false);
 	}
 
-	const {loading: loadingItemInfo, error: errorItemInfo, data: itemInfo} = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
+	const {data: itemInfo} = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
 		variables: { invMastUid: invMastUid },
 		fetchPolicy: 'no-cache',
 		onCompleted: result => {
