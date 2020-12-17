@@ -17,6 +17,9 @@ const PasswordResetPageContainer = styled.div`
   margin: 28px auto;
   flex-grow: 99;
 `
+const Marge = styled.div`
+    margin: 16px auto;
+`
 
 const DivInput = styled.div`
   display: flex;
@@ -152,11 +155,13 @@ export default function PasswordResetPage({history}) {
 				<Label htmlFor='confirm_password'>Confirm Password</Label>
 				<Input id='confirm_password' type='password' onChange={(e)=>setConfirmPassword(e.target.value.replace(/\s/g, ''))} value={confirmPassword}/>
 			</DivInput>
-			<PasswordRequirements
-				password={password}
-				confirmPassword={confirmPassword} 
-				isValidPassword={(isValid)=>setPasswordIsValid(isValid)}
-			/>
+            <Marge>
+                <PasswordRequirements
+                    password={password}
+                    confirmPassword={confirmPassword} 
+                    isValidPassword={(isValid)=>setPasswordIsValid(isValid)}
+                />
+            </Marge>
 			<Button disabled={loading || !passwordIsValid} onClick={()=>handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
 			<A onClick={()=> history.push('/signup')}>Create an Account</A>
 		</PasswordResetPageContainer>

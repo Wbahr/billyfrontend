@@ -6,7 +6,6 @@ import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icon
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px auto;
 `
 const Row = styled.div`
   display: flex;
@@ -21,49 +20,112 @@ const P = styled.p`
   margin-left: 4px;
 `
 export default function PasswordRequirements({password, confirmPassword, isValidPassword}) {
-	const [validLength, setValidLength] = useState(false)
-	const [validAlphaNum, setValidAlphaNum] = useState(false)
-	const [validCases, setValidCases] = useState(false)
-	const [validMatch, setValidMatch] = useState(false)
+	const [hasMinLength, setHasMinLength] = useState(false);
+	const [hasCapitals, setHasCapitals] = useState(false);
+    const [hasLowers, setHasLowers] = useState(false);
+    const [hasNumber, setHasNumber] = useState(false);
+    const [containsSymbol, setContainsSymbol] = useState(false);
+    const [specialLength, setSpecialLength] = useState(false);
+    const [validMatch, setValidMatch] = useState(false);
+    const [hasThree, setHasThree] = useState(false);
 
 	useEffect(() => {
 		// Must be 8 or more characters long
-		if(password.length > 7){
-			setValidLength(true)
+		if(password.length >= 8) {
+			setHasMinLength(true);
 		} else {
-			setValidLength(false)
-		}
-		// Must contain both letters and numbers
-		if (/\d/.test(password) && /[a-zA-Z]/.test(password)) {
-			setValidAlphaNum(true)
+			setHasMinLength(false);
+        }
+        
+		// Captial letters
+		if (/[A-Z]/.test(password)) {
+			setHasCapitals(true)
 		} else {
-			setValidAlphaNum(false)
-		}
-		// Must contain at least one uppercase and one lowercase letter
-		if (/[a-z]/.test(password) && /[A-Z]/.test(password)) {
-			setValidCases(true)
+			setHasCapitals(false)
+        }
+        
+		// Lowercase letters
+		if (/[a-z]/.test(password)) {
+			setHasLowers(true)
 		} else {
-			setValidCases(false)
-		}
+			setHasLowers(false)
+        }
+
+        if(/[0-9]/.test(password)) {
+            setHasNumber(true);
+        } else {
+            setHasNumber(false);
+        }
+
+        //Symbols
+        if(/[\W]/.test(password)) {
+            setContainsSymbol(true);
+        } else {
+            setContainsSymbol(false);
+        }
+        
+        //14-length special 
+        if(/.{14,}/.test(password)) {
+            setSpecialLength(true);
+        } else {
+            setSpecialLength(false);
+        }
+
 		// Password and Confirm Password must match
-		if ( validLength && (password === confirmPassword)) {
-			setValidMatch(true)
+		if ( hasMinLength && (password === confirmPassword)) {
+			setValidMatch(true);
 		} else {
-			setValidMatch(false)
-		}
-		if (validLength && validAlphaNum && setValidCases && validMatch){
-			isValidPassword(true)
+			setValidMatch(false);
+        }
+        
+        const sum = (hasCapitals ? 1 : 0) + (hasLowers ? 1 : 0) + (hasNumber ? 1 : 0) + (containsSymbol ? 1 : 0) + (specialLength ? 1 : 0);
+        if(sum >= 3) {
+            setHasThree(true);
+        } else {
+            setHasThree(false);
+        }
+
+        if (hasThree && validMatch) {
+			isValidPassword(true);
 		} else {
-			isValidPassword(false)
+			isValidPassword(false);
 		}
-	})
+    });
+    
+    const colorFunc = (boolVal) => {
+        if(boolVal) {
+            return "#007bff";        
+        } else {
+            if(hasThree) {
+                return "#555";
+            } else {
+                return "#950f23";
+            }
+        }
+    };
+
+    const shapeFunc = (boolVal) => {
+        if(boolVal) {
+            return faCheckCircle;        
+        } else {
+            if(hasThree) {
+                return faCheckCircle;
+            } else {
+                return faTimesCircle;
+            }
+        }
+    };
 
 	return(
 		<Container>
-			<Row>{validLength ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Must be 8 or more characters long</P></Row>
-			<Row>{validAlphaNum ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Must contain both letters and numbers</P></Row>
-			<Row>{validCases ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Must contain at least one uppercase and one lowercase letter</P></Row>
-			<Row>{validMatch ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Password and Confirm Password must match</P></Row>
+			<Row>{hasMinLength ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Must be 8 or more characters long</P></Row>
+            <Row>{validMatch ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Password and Confirm Password must match</P></Row>
+            <Row>And three of the following:&nbsp;{hasThree ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff" /> : null}</Row>
+			<Row><FontAwesomeIcon icon={shapeFunc(hasCapitals)} color={colorFunc(hasCapitals)}/><P>Contains an upper case character</P></Row>
+			<Row><FontAwesomeIcon icon={shapeFunc(hasLowers)} color={colorFunc(hasLowers)}/><P>Contains a lower case character</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(hasNumber)} color={colorFunc(hasNumber)}/><P>Contains a number</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(containsSymbol)} color={colorFunc(containsSymbol)}/><P>Contains a symbol</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(specialLength)} color={colorFunc(specialLength)}/><P>14 or more characters</P></Row>
 		</Container>
-	)
+	);
 }
