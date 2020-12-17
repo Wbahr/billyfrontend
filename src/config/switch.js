@@ -118,7 +118,6 @@ class App extends React.Component {
 				<WrapperRoute exact path='/search/:searchTerm' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/search/categories/:parentCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/search/categories/:parentCategory/:childCategory' component={SearchResults} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/services' component={Home} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/services/engineered-systems-and-assemblies' component={EngineeredSystemsAndAssemblies} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/services/engineered-systems-and-assemblies/:page' component={EngineeredSystems} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/services/plant-services/:page' component={PlantServices} layout={HeaderFooterLayoutExpanded}/>
