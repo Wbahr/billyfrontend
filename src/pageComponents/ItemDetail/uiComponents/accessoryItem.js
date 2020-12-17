@@ -141,7 +141,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({ itemDetails, price, availability, history }) {
+export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
   const [quantity, setQuantity] = useState(1)
   
   const context = useContext(Context)
@@ -161,24 +161,29 @@ export default function AccessoryItem({ itemDetails, price, availability, histor
         itemUnitPriceOverride: null,
         customerPartNumberId: null
       })
+			setShowAddedToCartModal(true)
 		}
   }
 
-  if(!itemDetails) return <></>
+  if (!itemDetails) return <></>
     
   const imagePath = getThumbnailImagePath(itemDetails);
 
+  const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`;
+  
 	return (
     <DivItemResultContainer>
       <DivPartDetailsRow>
         <DivPartImg>
-          <Img 
-            src={imagePath} 
-            alt={itemDetails.itemCode}
-            onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}/>
+					<a href={itemLink}>
+						<Img
+							src={imagePath}
+							alt={itemDetails.itemCode}
+						/>
+					</a>
         </DivPartImg>
         <DivPartDetails>
-          <PpartTitle onClick={()=>{history.push(`/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`)}}>{itemDetails.itemCode}</PpartTitle>
+					<PpartTitle><a href={itemLink}>{itemDetails.itemCode}</a></PpartTitle>
         </DivPartDetails>
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>

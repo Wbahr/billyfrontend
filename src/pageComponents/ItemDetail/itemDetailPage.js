@@ -10,6 +10,8 @@ import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
 import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
+import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
+import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -81,7 +83,14 @@ const P = styled.p`
 `
 
 const Pbold = styled(P)`
+	cursor: pointer;
+	color: #328EFC;
 	font-weight: bold;
+	line-height: 26px;
+	margin-left: 10px;
+	& :hover {
+		text-decoration: underline;
+	}
 `
 
 const H4 = styled.h5`
@@ -200,6 +209,7 @@ export default function ItemDetailPage({ history }) {
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
 	const [showAddListModal, setShowAddListModal] = useState(false);
+	const [factoryStockModalData, setFactoryStockModalData] = useState(null)
 
 	function handleAddedToCart() {
 		setShowAddedToCartModal(false);
@@ -291,6 +301,13 @@ export default function ItemDetailPage({ history }) {
 			setQuantity(value)
 		}
 	}
+	
+	const handleShowFactoryStockModal = () => {
+		setFactoryStockModalData({
+			name: itemDetails?.itemDesc,
+			frecno: itemId
+		})
+	}
 
 	if (!itemDetails) {
 		return (<Loader />)
@@ -319,6 +336,7 @@ export default function ItemDetailPage({ history }) {
 					availability={availability}
 					price={price}
 					history={history}
+					setShowAddedToCartModal={setShowAddedToCartModal}
 				/>
 			)
 		})
@@ -344,7 +362,13 @@ export default function ItemDetailPage({ history }) {
 							<P> /each</P>
 						</Row>
 						
-						{itemAvailability.availability === 0 ? <Pbold>{itemAvailability.availability}</Pbold> : <Pbold>{`Available: ${itemAvailability.availability}`}</Pbold>}
+						<Pbold onClick={handleShowFactoryStockModal}>
+							{itemAvailability.availability === 0 ? (
+								itemAvailability.availability
+							) : (
+								`Available: ${itemAvailability.availability}`
+							)}
+						</Pbold>
 						
 						<DivPurchaseInfoButtons>
 							<RowCentered>
@@ -368,11 +392,13 @@ export default function ItemDetailPage({ history }) {
 					
 					<Row>
 						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
-						{itemAvailability.availability === 0 ? (
-							<Pbold>{`Lead time ${itemAvailability.leadTimeDays} days`}</Pbold>
-						) : (
-							<Pbold style={{margin: 'auto 10px'}}>{`Available: ${itemAvailability.availability}`}</Pbold>
-						)}
+						<Pbold onClick={handleShowFactoryStockModal}>
+							{itemAvailability.availability === 0 ? (
+								`Lead time ${itemAvailability.leadTimeDays} days`
+							) : (
+								`Available: ${itemAvailability.availability}`
+							)}
+						</Pbold>
 					</Row>
 					
 					<TABLE>
@@ -429,17 +455,21 @@ export default function ItemDetailPage({ history }) {
 					onClose={handleAddedToCart}
 					timeout={900}
 				/>
+				
+				<FactoryStockModal
+					open={!!factoryStockModalData}
+					hideFactoryStockModal={() => setFactoryStockModalData(null)}
+					product={factoryStockModalData}
+				/>
 
-				{
-					context.userInfo && <AddToShoppingListModal
+				{context.userInfo && (
+					<AddToShoppingListModal
 						open={showAddListModal}
 						hide={() => setShowAddListModal(false)}
 						item={itemDetails}
 						customerPartNumberId={selectedCustomerPartNumber}
 					/>
-				}
-				
-			
+				)}
 			</ItemDetailPageContainer>
 		)
 	}

@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { ButtonBlack } from '../../../styles/buttons'
 import Modal from '../../_common/modal'
+import {format as dateFormat} from "date-fns";
 
 const DivItem = styled.div`
   display: flex;
@@ -68,7 +69,7 @@ const MODIFY_FACTORY_STOCK = gql`
 export default function FactoryStockModal({open, product, hideFactoryStockModal}) {
 	const [qtyAvailable, setQtyAvailable] = useState(0)
 	const [leadTime, setLeadTime] = useState(0)
-	const [lastModified, setLastModified] = useState('--')
+	const [lastModified, setLastModified] = useState('')
 	const [lastModifiedBy, setLastModifiedBy] = useState('--')
 	const [factoryStockDetails, setFactoryStockDetails] = useState(null)
 
@@ -148,7 +149,7 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 				<DivRow>
 					<DivItem>
 						<Label>Last Modified: </Label>
-						<input disabled value={lastModified} style={{width: 250}}/>
+						<input disabled value={lastModified && dateFormat(new Date(lastModified), 'MM/dd/yy h:mm aa')} style={{width: 250}}/>
 					</DivItem>
 				</DivRow>
 				
