@@ -99,7 +99,7 @@ export function mapToApi(values) {
                 phoneExtension: values.phoneExtension,
                 fax: values.fax,
                 email: values.email,
-                password: values.password, 
+                password: values.password,
                 shippingCompanyName: values.shippingCompany,
                 shippingLine1: values.shippingAddress1,
                 shippingLine2: values.shippingAddress2,
@@ -169,7 +169,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
             <FormikFormContainer>
                 {showCustomerLookup === true && <CustomerLookup />}
                 <FormikFormGroup>
-                    <H3>Account Information</H3> 
+                    <H3>Account Information</H3>
                     {useExpandedMode === false && showCustomerLookup === false && <FormikInput label="Customer ID*" type="text" name="customerId" />}
                     <FormikInput label="First Name*" type="text" name="firstName" />
                     <FormikInput label="Last Name*" type="text" name="lastName" />
@@ -183,11 +183,11 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                     <DivRow>
                         <PasswordRequirements
                             password={values.password}
-                            confirmPassword={values.verifyPassword} 
-                            isValidPassword={(isValid)=>{ setFieldValue('passwordStrength',isValid); console.log("Setting valid: ", isValid)}} />
-                        <FormikFormFieldError style={{width: '400px'}}>
-					        <ErrorMessage name="passwordStrength" />
-				        </FormikFormFieldError> 
+                            confirmPassword={values.verifyPassword}
+                            isValidPassword={(isValid) => { setFieldValue('passwordStrength', isValid); console.log("Setting valid: ", isValid) }} />
+                        <FormikFormFieldError style={{ width: '400px' }}>
+                            <ErrorMessage name="passwordStrength" />
+                        </FormikFormFieldError>
                     </DivRow>
                 </FormikFormGroup>
                 {useExpandedMode === true && <>
@@ -200,7 +200,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                         <FormikInput label="State" type="text" name="shippingState" disabled={values.customerId != ''} />
                         <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" disabled={values.customerId != ''} />
                         <FormikInput label="Country" type="text" name="shippingCountry" disabled={values.customerId != ''} />
-                    </FormikFormGroup> 
+                    </FormikFormGroup>
                     <FormikFormGroup>
                         <H3>Billing Information</H3>
                         <CheckBox label="Same as Shipping" name="billingSame" disabled={values.customerId !== ''} />
@@ -211,8 +211,8 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                         <FormikInput label="State" type="text" name="billingState" disabled={values.customerId !== '' || values.billingSame == 1} />
                         <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.customerId !== '' || values.billingSame == 1} />
                         <FormikInput label="Country" type="text" name="billingCountry" disabled={values.customerId !== '' || values.billingSame == 1} />
-                    </FormikFormGroup> 
-                </> } 
+                    </FormikFormGroup>
+                </>}
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
             <DivCenter>

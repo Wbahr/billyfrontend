@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
@@ -19,9 +19,9 @@ const P = styled.p`
   margin: 0;
   margin-left: 4px;
 `
-export default function PasswordRequirements({password, confirmPassword, isValidPassword}) {
-	const [hasMinLength, setHasMinLength] = useState(false);
-	const [hasCapitals, setHasCapitals] = useState(false);
+export default function PasswordRequirements({ password, confirmPassword, isValidPassword }) {
+    const [hasMinLength, setHasMinLength] = useState(false);
+    const [hasCapitals, setHasCapitals] = useState(false);
     const [hasLowers, setHasLowers] = useState(false);
     const [hasNumber, setHasNumber] = useState(false);
     const [containsSymbol, setContainsSymbol] = useState(false);
@@ -29,35 +29,35 @@ export default function PasswordRequirements({password, confirmPassword, isValid
     const [validMatch, setValidMatch] = useState(false);
     const [hasThree, setHasThree] = useState(false);
 
-	useEffect(() => {
+    useEffect(() => {
         var sum = 0;
         var minLengthMet = false;
-		// Must be 8 or more characters long
-		if(password.length >= 8) {
+        // Must be 8 or more characters long
+        if (password.length >= 8) {
             setHasMinLength(true);
             minLengthMet = true;
             sum++;
-		} else {
-			setHasMinLength(false);
-        }
-        
-		// Captial letters
-		if (/[A-Z]/.test(password)) {
-            setHasCapitals(true)
-            sum++;
-		} else {
-			setHasCapitals(false)
-        }
-        
-		// Lowercase letters
-		if (/[a-z]/.test(password)) {
-            setHasLowers(true)
-            sum++;
-		} else {
-			setHasLowers(false)
+        } else {
+            setHasMinLength(false);
         }
 
-        if(/[0-9]/.test(password)) {
+        // Captial letters
+        if (/[A-Z]/.test(password)) {
+            setHasCapitals(true)
+            sum++;
+        } else {
+            setHasCapitals(false)
+        }
+
+        // Lowercase letters
+        if (/[a-z]/.test(password)) {
+            setHasLowers(true)
+            sum++;
+        } else {
+            setHasLowers(false)
+        }
+
+        if (/[0-9]/.test(password)) {
             setHasNumber(true);
             sum++;
         } else {
@@ -65,15 +65,15 @@ export default function PasswordRequirements({password, confirmPassword, isValid
         }
 
         //Symbols
-        if(/[\W]/.test(password)) {
+        if (/[\W]/.test(password)) {
             setContainsSymbol(true);
             sum++;
         } else {
             setContainsSymbol(false);
         }
-        
+
         //14-length special 
-        if(/.{14,}/.test(password)) {
+        if (/.{14,}/.test(password)) {
             setSpecialLength(true);
             sum++;
         } else {
@@ -81,32 +81,32 @@ export default function PasswordRequirements({password, confirmPassword, isValid
         }
 
         var hasValidMatch = false;
-		// Password and Confirm Password must match
-		if (minLengthMet && (password === confirmPassword)) {
+        // Password and Confirm Password must match
+        if (minLengthMet && (password === confirmPassword)) {
             setValidMatch(true);
             hasValidMatch = true;
-		} else {
-			setValidMatch(false);
+        } else {
+            setValidMatch(false);
         }
-        
-        if(sum >= 3) {
+
+        if (sum >= 3) {
             setHasThree(true);
         } else {
             setHasThree(false);
         }
 
         if (sum >= 3 && hasValidMatch) {
-			isValidPassword(true);
-		} else {
-			isValidPassword(false);
-		}
-    }, [password, confirmPassword]);
-    
-    const colorFunc = (boolVal) => {
-        if(boolVal) {
-            return "#007bff";        
+            isValidPassword(true);
         } else {
-            if(hasThree) {
+            isValidPassword(false);
+        }
+    }, [password, confirmPassword]);
+
+    const colorFunc = (boolVal) => {
+        if (boolVal) {
+            return "#007bff";
+        } else {
+            if (hasThree) {
                 return "#555";
             } else {
                 return "#950f23";
@@ -115,10 +115,10 @@ export default function PasswordRequirements({password, confirmPassword, isValid
     };
 
     const shapeFunc = (boolVal) => {
-        if(boolVal) {
-            return faCheckCircle;        
+        if (boolVal) {
+            return faCheckCircle;
         } else {
-            if(hasThree) {
+            if (hasThree) {
                 return faCheckCircle;
             } else {
                 return faTimesCircle;
@@ -126,16 +126,16 @@ export default function PasswordRequirements({password, confirmPassword, isValid
         }
     };
 
-	return(
-		<Container>
-			<Row>{hasMinLength ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Must be 8 or more characters long</P></Row>
-            <Row>{validMatch ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff"/> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23"/>}<P>Password and Confirm Password must match</P></Row>
+    return (
+        <Container>
+            <Row>{hasMinLength ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff" /> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23" />}<P>Must be 8 or more characters long</P></Row>
+            <Row>{validMatch ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff" /> : <FontAwesomeIcon icon={faTimesCircle} color="#950f23" />}<P>Password and Confirm Password must match</P></Row>
             <Row>And three of the following:&nbsp;{hasThree ? <FontAwesomeIcon icon={faCheckCircle} color="#007bff" /> : null}</Row>
-			<Row><FontAwesomeIcon icon={shapeFunc(hasCapitals)} color={colorFunc(hasCapitals)}/><P>Contains an upper case character</P></Row>
-			<Row><FontAwesomeIcon icon={shapeFunc(hasLowers)} color={colorFunc(hasLowers)}/><P>Contains a lower case character</P></Row>
-            <Row><FontAwesomeIcon icon={shapeFunc(hasNumber)} color={colorFunc(hasNumber)}/><P>Contains a number</P></Row>
-            <Row><FontAwesomeIcon icon={shapeFunc(containsSymbol)} color={colorFunc(containsSymbol)}/><P>Contains a symbol</P></Row>
-            <Row><FontAwesomeIcon icon={shapeFunc(specialLength)} color={colorFunc(specialLength)}/><P>14 or more characters</P></Row>
-		</Container>
-	);
+            <Row><FontAwesomeIcon icon={shapeFunc(hasCapitals)} color={colorFunc(hasCapitals)} /><P>Contains an upper case character</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(hasLowers)} color={colorFunc(hasLowers)} /><P>Contains a lower case character</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(hasNumber)} color={colorFunc(hasNumber)} /><P>Contains a number</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(containsSymbol)} color={colorFunc(containsSymbol)} /><P>Contains a symbol</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(specialLength)} color={colorFunc(specialLength)} /><P>14 or more characters</P></Row>
+        </Container>
+    );
 }

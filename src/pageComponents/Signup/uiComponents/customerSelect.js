@@ -59,34 +59,34 @@ const IconDiv = styled.div`
 `
 
 export default function CustomerSelectPage() {
-  const [signupType, setSignupType] = useState('');
+    const [signupType, setSignupType] = useState('');
 
-  if(signupType == 'existing') {
-    return ( <ExistingCustomer /> );
-  } else if(signupType == 'new') {
-    return ( <NewCustomer /> );
-  } else {
-    return (
-      <SignupPageContainer>
-        <DivRow onClick={()=>setSignupType('existing')}>
-          <IconDiv >
-            <FontAwesomeIcon icon="user" color="white" size="6x"/>
-            <p>Existing Customer</p>
-          </IconDiv>
-          <HelpDiv>
-            <PHelp>Your organization does business with Airline Hydraulics, and you need an account to login</PHelp>
-          </HelpDiv>
-        </DivRow>
-        <DivRow onClick={()=>setSignupType('new')}>
-          <IconDiv>
-            <FontAwesomeIcon icon="user-plus" color="white" size="6x"/>
-            <p>New Customer</p>
-          </IconDiv>
-          <HelpDiv>
-            <PHelp>You are new to Airline Hydraulics, and would like to set up a personal or business account</PHelp>
-          </HelpDiv>
-        </DivRow>
-      </SignupPageContainer>
-    );
-  }
+    if (signupType == 'existing') {
+        return (<ExistingCustomer />);
+    } else if (signupType == 'new') {
+        return (<NewCustomer />);
+    } else {
+        return (
+            <SignupPageContainer>
+                <DivRow onClick={() => setSignupType('existing')}>
+                    <IconDiv >
+                        <FontAwesomeIcon icon="user" color="white" size="6x" />
+                        <p>Existing Customer</p>
+                    </IconDiv>
+                    <HelpDiv>
+                        <PHelp>Your organization does business with Airline Hydraulics, and you need an account to login</PHelp>
+                    </HelpDiv>
+                </DivRow>
+                <DivRow onClick={() => setSignupType('new')}>
+                    <IconDiv>
+                        <FontAwesomeIcon icon="user-plus" color="white" size="6x" />
+                        <p>New Customer</p>
+                    </IconDiv>
+                    <HelpDiv>
+                        <PHelp>You are new to Airline Hydraulics, and would like to set up a personal or business account</PHelp>
+                    </HelpDiv>
+                </DivRow>
+            </SignupPageContainer>
+        );
+    }
 }

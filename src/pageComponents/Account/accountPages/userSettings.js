@@ -37,15 +37,15 @@ export default function UserSettingsPage() {
     };
 
     const validatePassword = (e) => {
-        if ((changePasswordForm.new1 && changePasswordForm.new2 && changePasswordForm.new1 != changePasswordForm.new2) 
-        || (changePasswordForm.new1 && !changePasswordForm.new2) 
-        || (changePasswordForm.new2 && !changePasswordForm.new1)) {
+        if ((changePasswordForm.new1 && changePasswordForm.new2 && changePasswordForm.new1 != changePasswordForm.new2)
+            || (changePasswordForm.new1 && !changePasswordForm.new2)
+            || (changePasswordForm.new2 && !changePasswordForm.new1)) {
             setAlertMessage('Passwords must match');
             return false;
         } else if (!changePasswordForm.orig) {
             setAlertMessage('Your current password is required to change it.');
             return false;
-        } else if(!isStrongPassword(changePasswordForm.new1)) {
+        } else if (!isStrongPassword(changePasswordForm.new1)) {
             setAlertMessage('Your new password is not strong enough.');
             return false;
         } else {
@@ -71,13 +71,13 @@ export default function UserSettingsPage() {
     const [doPasswordChange, { loading, error }] = useMutation(CHANGE_PASSWORD, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            if(data && data.changePassword) {
+            if (data && data.changePassword) {
                 if (data.changePassword.success === true) {
                     setAlertMessage(data.changePassword.message);
                     setChangePasswordDisabled(true);
                 } else {
                     setAlertMessage(data.changePassword.message);
-                } 
+                }
             } else {
                 setAlertMessage("There was a problem processing your request.");
             }
@@ -100,7 +100,7 @@ export default function UserSettingsPage() {
                 <strong>Change your password</strong>
             </div>
             <DivContainer>
-               
+
                 <DivChild>
                     <form onSubmit={handleSubmit}>
                         <FormikStyleInput disabled={changePasswordDisabled} type="password" value={changePasswordForm.orig} name="orig" label="Current Password:" onChange={handleChangePasswordFormChange} />
@@ -114,8 +114,8 @@ export default function UserSettingsPage() {
                 <DivRow>
                     <PasswordRequirements
                         password={changePasswordForm.new1}
-                        confirmPassword={changePasswordForm.new2} 
-                        isValidPassword={(isValid)=>setPasswordIsValid(isValid)} />
+                        confirmPassword={changePasswordForm.new2}
+                        isValidPassword={(isValid) => setPasswordIsValid(isValid)} />
                 </DivRow>
             </DivContainer>
         </div>
