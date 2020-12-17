@@ -83,7 +83,7 @@ export default function CustomerSelectPage() {
             <p>New Customer</p>
           </IconDiv>
           <HelpDiv>
-            <PHelp>Your organization is new to Airline Hydraulics, and would like to set up an account</PHelp>
+            <PHelp>You are new to Airline Hydraulics, and would like to set up a personal or business account</PHelp>
           </HelpDiv>
         </DivRow>
       </SignupPageContainer>

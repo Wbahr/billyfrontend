@@ -27,7 +27,9 @@ export const existingCustomerSchema = Yup.object().shape({
 		.max(1000),
 	verifyPassword: Yup.string()
 		.required('required')
-		.oneOf([Yup.ref('password')], "Passwords must match")
+        .oneOf([Yup.ref('password')], "Passwords must match"),
+    passwordStrength: Yup.boolean()
+        .equals([true], "Check the password complexity requirements."),
 
 });
 
@@ -41,7 +43,8 @@ export const existingCustomerInitialValues = {
     jobTitle: '',
     customerId: '', 
     password: '', 
-    verifyPassword: ''
+    verifyPassword: '',
+    passwordStrength: false,
 };
 
 export const editCustomerSchema =  Yup.object().shape({
@@ -150,7 +153,9 @@ export const newCustomerSchema = Yup.object().shape({
 	billingPostal: Yup.string()
 		.max(11),
 	billingCountry: Yup.string()
-		.max(60),
+        .max(60),
+    passwordStrength: Yup.boolean()
+        .equals([true], "Check the password complexity requirements."),
 });
 
 export const newCustomerInitialValues = {
@@ -181,4 +186,5 @@ export const newCustomerInitialValues = {
     billingState: '',
     billingPostal: '',
     billingCountry: '',
+    passwordStrength: false,
 }

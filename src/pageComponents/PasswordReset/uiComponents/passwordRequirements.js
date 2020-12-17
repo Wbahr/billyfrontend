@@ -30,29 +30,36 @@ export default function PasswordRequirements({password, confirmPassword, isValid
     const [hasThree, setHasThree] = useState(false);
 
 	useEffect(() => {
+        var sum = 0;
+        var minLengthMet = false;
 		// Must be 8 or more characters long
 		if(password.length >= 8) {
-			setHasMinLength(true);
+            setHasMinLength(true);
+            minLengthMet = true;
+            sum++;
 		} else {
 			setHasMinLength(false);
         }
         
 		// Captial letters
 		if (/[A-Z]/.test(password)) {
-			setHasCapitals(true)
+            setHasCapitals(true)
+            sum++;
 		} else {
 			setHasCapitals(false)
         }
         
 		// Lowercase letters
 		if (/[a-z]/.test(password)) {
-			setHasLowers(true)
+            setHasLowers(true)
+            sum++;
 		} else {
 			setHasLowers(false)
         }
 
         if(/[0-9]/.test(password)) {
             setHasNumber(true);
+            sum++;
         } else {
             setHasNumber(false);
         }
@@ -60,6 +67,7 @@ export default function PasswordRequirements({password, confirmPassword, isValid
         //Symbols
         if(/[\W]/.test(password)) {
             setContainsSymbol(true);
+            sum++;
         } else {
             setContainsSymbol(false);
         }
@@ -67,30 +75,32 @@ export default function PasswordRequirements({password, confirmPassword, isValid
         //14-length special 
         if(/.{14,}/.test(password)) {
             setSpecialLength(true);
+            sum++;
         } else {
             setSpecialLength(false);
         }
 
+        var hasValidMatch = false;
 		// Password and Confirm Password must match
-		if ( hasMinLength && (password === confirmPassword)) {
-			setValidMatch(true);
+		if (minLengthMet && (password === confirmPassword)) {
+            setValidMatch(true);
+            hasValidMatch = true;
 		} else {
 			setValidMatch(false);
         }
         
-        const sum = (hasCapitals ? 1 : 0) + (hasLowers ? 1 : 0) + (hasNumber ? 1 : 0) + (containsSymbol ? 1 : 0) + (specialLength ? 1 : 0);
         if(sum >= 3) {
             setHasThree(true);
         } else {
             setHasThree(false);
         }
 
-        if (hasThree && validMatch) {
+        if (sum >= 3 && hasValidMatch) {
 			isValidPassword(true);
 		} else {
 			isValidPassword(false);
 		}
-    });
+    }, [password, confirmPassword]);
     
     const colorFunc = (boolVal) => {
         if(boolVal) {

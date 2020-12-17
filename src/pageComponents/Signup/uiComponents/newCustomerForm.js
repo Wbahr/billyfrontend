@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Formik, Form, useFormikContext, Field } from 'formik'
+import { Formik, Form, useFormikContext, Field, ErrorMessage } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import { ButtonRed } from 'styles/buttons';
 import CheckBox from 'pageComponents/_common/formik/checkBox';
 import { ShowErrorAlert } from 'styles/alerts';
-import { FormikFormGroup, FormikFormContainer, FormikFormFieldContainer } from 'styles/formikForm';
+import { FormikFormGroup, FormikFormContainer, FormikFormFieldContainer, FormikFormFieldError } from 'styles/formikForm';
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search'
 import SearchCustomerModal from './searchCustomerModal';
 import { ButtonLink } from 'styles/tables';
+import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements';
 
 const DivCenter = styled.div`
   display: flex;
@@ -27,6 +28,9 @@ const H3 = styled.h3`
   font-size: 14px;
   font-weight: 800;
   color: black;
+`
+const DivRow = styled.div`
+  margin: 4px auto;
 `
 
 //Represents a reusable new customer form. Suitable for admin use or admin dash use
@@ -74,6 +78,7 @@ export function mapToForm(data) {
         billingState: data.billingState || '',
         billingPostal: data.billingZip || '',
         billingCountry: data.billingCountry || '',
+        passwordStrength: false,
     };
 }
 
@@ -175,6 +180,15 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                     <FormikInput label="Fax" type="text" name="fax" />
                     {choosePasswordEnabled === true && <FormikInput label="Password*" type="password" name="password" />}
                     {choosePasswordEnabled === true && <FormikInput label="Verify Password*" type="password" name="verifyPassword" />}
+                    <DivRow>
+                        <PasswordRequirements
+                            password={values.password}
+                            confirmPassword={values.verifyPassword} 
+                            isValidPassword={(isValid)=>{ setFieldValue('passwordStrength',isValid); console.log("Setting valid: ", isValid)}} />
+                        <FormikFormFieldError style={{width: '400px'}}>
+					        <ErrorMessage name="passwordStrength" />
+				        </FormikFormFieldError> 
+                    </DivRow>
                 </FormikFormGroup>
                 {useExpandedMode === true && <>
                     <FormikFormGroup>
