@@ -24,7 +24,8 @@ const DivOptions = styled.div`
 	flex-direction: column;
 	padding-right: 4px;
 	overflow-y: auto;
-  overflow-x: auto;
+	overflow-x: hidden;
+	max-height: 500px;
 `
 
 const DivOptionRow = styled.div`

@@ -16,7 +16,7 @@ const DivOptions = styled.div`
 	display: flex;
 	flex-direction: column;
 	max-height: 250px;
-	overflow-x: auto;
+	overflow-x: hidden;
 	overflow-y: auto;
 `
 
