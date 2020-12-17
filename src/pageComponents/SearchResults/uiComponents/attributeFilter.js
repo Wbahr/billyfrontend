@@ -18,6 +18,7 @@ const DivTitle = styled.div`
 	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
 	justify-content: space-between;
 	align-items: center;
+	overflow: hidden;
 `
 
 const P = styled.p`

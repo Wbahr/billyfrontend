@@ -456,7 +456,7 @@ const useStyles = makeStyles((theme) => ({
 		}),
 	},
 	expand: {
-		maxHeight: 660,
+		overflow: 'hidden',
 		transition: theme.transitions.create('max-height', {
 			easing: theme.transitions.easing.sharp,
 			duration: 300,

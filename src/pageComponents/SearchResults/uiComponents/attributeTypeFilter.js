@@ -16,7 +16,8 @@ const DivOptions = styled.div`
 	display: flex;
 	flex-direction: column;
 	max-height: 250px;
-	overflow: scroll;
+	overflow-x: auto;
+	overflow-y: auto;
 `
 
 const DivOptionRow = styled.div`
@@ -44,11 +45,12 @@ const PCount = styled.p`
 	color: #535353;
 	font-size: 12px;
 	margin-left: 4px;
+	padding-right: 5px;
 `
 
 const InputSearch = styled.input`
 	margin: 4px;
-	width: 220px;
+	width: 210px;
 `
 
 export default function AttributeTypeFilter({open, attribute, updateAttribute}) {

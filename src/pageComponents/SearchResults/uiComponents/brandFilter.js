@@ -22,8 +22,9 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
 	display: flex; 
 	flex-direction: column;
-	overflow: scroll;
 	padding-right: 4px;
+	overflow-y: auto;
+  overflow-x: auto;
 `
 
 const DivOptionRow = styled.div`
@@ -54,8 +55,8 @@ const PCount = styled.p`
 `
 
 const InputSearch = styled.input`
-	margin: 4px 16px;
-	width: 240px;
+	margin: 4px 0px;
+	width: 215px;
 `
 
 const BrandsDiv = styled.div`
