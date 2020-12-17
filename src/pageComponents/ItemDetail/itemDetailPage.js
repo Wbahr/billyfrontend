@@ -12,6 +12,7 @@ import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelper
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
 import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
 import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
+import LocationsModal from "../SearchResults/uiComponents/locationsModal";
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -209,7 +210,7 @@ export default function ItemDetailPage({ history }) {
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
 	const [showAddListModal, setShowAddListModal] = useState(false);
-	const [factoryStockModalData, setFactoryStockModalData] = useState(null)
+	const [locationsModalInvMastUid, setLocationModalInvMastUid] = useState(null)
 
 	function handleAddedToCart() {
 		setShowAddedToCartModal(false);
@@ -302,11 +303,12 @@ export default function ItemDetailPage({ history }) {
 		}
 	}
 	
-	const handleShowFactoryStockModal = () => {
-		setFactoryStockModalData({
-			name: itemDetails?.itemDesc,
-			frecno: itemId
-		})
+	const handleShowLocationsModal = () => {
+		setLocationModalInvMastUid(invMastUid)
+	}
+	
+	const handleHideLocationsModal = () => {
+		setLocationModalInvMastUid(null)
 	}
 
 	if (!itemDetails) {
@@ -336,6 +338,7 @@ export default function ItemDetailPage({ history }) {
 					availability={availability}
 					price={price}
 					history={history}
+					showLocationsModal={() => setLocationModalInvMastUid(details.invMastUid)}
 					setShowAddedToCartModal={setShowAddedToCartModal}
 				/>
 			)
@@ -362,7 +365,7 @@ export default function ItemDetailPage({ history }) {
 							<P> /each</P>
 						</Row>
 						
-						<Pbold onClick={handleShowFactoryStockModal}>
+						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
 								itemAvailability.availability
 							) : (
@@ -392,7 +395,7 @@ export default function ItemDetailPage({ history }) {
 					
 					<Row>
 						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
-						<Pbold onClick={handleShowFactoryStockModal}>
+						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
 								`Lead time ${itemAvailability.leadTimeDays} days`
 							) : (
@@ -456,10 +459,10 @@ export default function ItemDetailPage({ history }) {
 					timeout={900}
 				/>
 				
-				<FactoryStockModal
-					open={!!factoryStockModalData}
-					hideFactoryStockModal={() => setFactoryStockModalData(null)}
-					product={factoryStockModalData}
+				<LocationsModal
+					open={!!locationsModalInvMastUid}
+					hideLocationsModal={handleHideLocationsModal}
+					invMastUid={locationsModalInvMastUid}
 				/>
 
 				{context.userInfo && (

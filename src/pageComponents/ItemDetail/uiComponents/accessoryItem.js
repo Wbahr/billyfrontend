@@ -1,10 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Context from 'config/context'
-import _ from 'lodash'
-import Loader from '../../_common/loader'
 import styled from 'styled-components'
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/client'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivItemResultContainer = styled.div`
@@ -25,6 +21,19 @@ const DivPartNumberRow = styled.div`
   padding: 0 5px;
   font-size: 12px;
   font-family: Arial, sans-serif;
+`
+
+const DivAvailabilityRow = styled.div`
+	cursor: pointer;
+  width: 100%;
+  display: flex;
+  color: #000;
+  padding: 0 5px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  & :hover {
+  	text-decoration: underline;
+  }
 `
 
 const DivPartNumberRowSpread = styled(DivPartNumberRow)`
@@ -141,14 +150,14 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
+export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal, showLocationsModal }) {
   const [quantity, setQuantity] = useState(1)
   
   const context = useContext(Context)
 
-	function handleSetQuantity(quantity){
-		if (/^\+?(0|[1-9]\d*)$/.test(quantity) || quantity === ''){
-			setQuantity(quantity)
+	function handleSetQuantity({target: {value}}){
+		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
+			setQuantity(value)
 		}
 	}
 
@@ -176,19 +185,20 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
       <DivPartDetailsRow>
         <DivPartImg>
 					<a href={itemLink}>
-						<Img
-							src={imagePath}
-							alt={itemDetails.itemCode}
-						/>
+						<Img src={imagePath} alt={itemDetails.itemCode}/>
 					</a>
         </DivPartImg>
+				
         <DivPartDetails>
 					<PpartTitle><a href={itemLink}>{itemDetails.itemCode}</a></PpartTitle>
         </DivPartDetails>
+				
         <DivPartNumberRow>
           <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
         </DivPartNumberRow>
-        <DivPartNumberRow><PpartAvailability>Availability:</PpartAvailability>
+				
+        <DivAvailabilityRow onClick={showLocationsModal}>
+					<PpartAvailability>Availability:</PpartAvailability>
           {availability 
               ? <PBlue>{availability.availability 
                 ? availability.availability 
@@ -196,15 +206,20 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                   ? 'Lead Time ' + availability.leadTimeDays + ' days'
                   : 'Call airline for lead time' }</PBlue> 
               : <PBlue>Call Airline for Price</PBlue>}
-        </DivPartNumberRow>
+        </DivAvailabilityRow>
+				
         <DivPartNumberRowSpread>
-          <Div>Quantity:<InputQuantity value={quantity} onChange={(e) => handleSetQuantity(e.target.value)}/></Div>
+          <Div>
+						Quantity:
+						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+					</Div>
           {
             price
               ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
               : <ACall href="tel:+18009997378">Call for Price</ACall>
           }
         </DivPartNumberRowSpread>
+				
         <DivSpace>
         { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
         </DivSpace>
