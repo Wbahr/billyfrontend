@@ -8,7 +8,7 @@ import AttributeTypeFilter from './attributeTypeFilter'
 const DivTitle = styled.div`
 	display: flex;
 	cursor: pointer;
-	width: 279px;
+	width: 281px;
 	height: 36px;
 	padding: 0 12px;
 	background-color: #f3f3f3;
@@ -18,6 +18,7 @@ const DivTitle = styled.div`
 	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
 	justify-content: space-between;
 	align-items: center;
+	overflow: hidden;
 `
 
 const P = styled.p`
