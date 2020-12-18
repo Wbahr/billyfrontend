@@ -337,7 +337,6 @@ export default function Provider(props) {
     })
 	
     const updateShoppingCart = cartItems => {
-        console.log('cartItems', cartItems)
       setShoppingCart(cartItems)
       lastShoppingCartPayload.current = cartItems
       updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
