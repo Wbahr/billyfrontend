@@ -73,10 +73,20 @@ export default function SearchResultsPage({history}) {
 		history.push({ pathname: '/search', search })
 	}
 	
-	const [parsedQueryString, setParsedQueryString] = useState(queryString.parse(location.search))
+	const getParsedQueryString = () => {
+		const parsed = queryString.parse(location.search)
+		const { searchTerm, innerSearchTerms, sortType, nonweb, resultPage,
+			parentCategory, childCategory, brands, ...selectedAttributes} = parsed;
+		return {
+			parsedQueryString: parsed,
+			resetStateWhenTheseChange: {parentCategory, childCategory, brands, selectedAttributes}
+		}
+	}
+	
+	const [{parsedQueryString, resetStateWhenTheseChange}, setParsedQueryString] = useState(getParsedQueryString)
 	
 	useEffect(() => {
-		setParsedQueryString(queryString.parse(location.search))
+		setParsedQueryString(getParsedQueryString())
 	}, [location.search])
 	
 	const { searchTerm, innerSearchTerms, sortType='relevancy', nonweb='false', resultPage,
@@ -169,10 +179,6 @@ export default function SearchResultsPage({history}) {
 		}
 	}, [innerSearchTerms, sortType])
 	
-	useDidUpdateEffect(() => {
-		setSearchState(initialSearchState)
-	}, [searchTerm])
-	
 	useEffect(() => {
 		performItemSearch()
 	}, [resultPage])
@@ -180,6 +186,15 @@ export default function SearchResultsPage({history}) {
 	useEffect(() => {
 		searchData.results.length && getItemPrices(searchData.results)
 	}, [searchData.results, impersonatedCompanyInfo])
+	
+	useEffect(() => {
+		if (!resetStateWhenTheseChange.brands
+			&& !resetStateWhenTheseChange.childCategory
+			&& !resetStateWhenTheseChange.parentCategory
+			&& !Object.keys(resetStateWhenTheseChange.selectedAttributes)?.length) {
+			setSearchState(initialSearchState)
+		}
+	}, [resetStateWhenTheseChange])
 	
 	const performItemSearch = () => {
 		handleSetSearchData({isSearching: true})
