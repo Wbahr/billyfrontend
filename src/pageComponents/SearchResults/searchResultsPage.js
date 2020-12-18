@@ -187,7 +187,7 @@ export default function SearchResultsPage({history}) {
 		searchData.results.length && getItemPrices(searchData.results)
 	}, [searchData.results, impersonatedCompanyInfo])
 	
-	useEffect(() => {
+	useEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
 		if (!resetStateWhenTheseChange.brands
 			&& !resetStateWhenTheseChange.childCategory
 			&& !resetStateWhenTheseChange.parentCategory
