@@ -26,6 +26,7 @@ export default function PasswordRequirements({ password, confirmPassword, isVali
     const [hasNumber, setHasNumber] = useState(false);
     const [containsSymbol, setContainsSymbol] = useState(false);
     const [specialLength, setSpecialLength] = useState(false);
+    const [reallyLong, setReallyLong] = useState(false);
     const [validMatch, setValidMatch] = useState(false);
     const [hasThree, setHasThree] = useState(false);
 
@@ -78,6 +79,14 @@ export default function PasswordRequirements({ password, confirmPassword, isVali
             sum++;
         } else {
             setSpecialLength(false);
+        }
+
+        //21-length special 
+        if (/.{21,}/.test(password)) {
+            setReallyLong(true);
+            sum++;
+        } else {
+            setReallyLong(false);
         }
 
         var hasValidMatch = false;
@@ -136,6 +145,7 @@ export default function PasswordRequirements({ password, confirmPassword, isVali
             <Row><FontAwesomeIcon icon={shapeFunc(hasNumber)} color={colorFunc(hasNumber)} /><P>Contains a number</P></Row>
             <Row><FontAwesomeIcon icon={shapeFunc(containsSymbol)} color={colorFunc(containsSymbol)} /><P>Contains a symbol</P></Row>
             <Row><FontAwesomeIcon icon={shapeFunc(specialLength)} color={colorFunc(specialLength)} /><P>14 or more characters</P></Row>
+            <Row><FontAwesomeIcon icon={shapeFunc(reallyLong)} color={colorFunc(reallyLong)} /><P>21 or more characters</P></Row>
         </Container>
     );
 }
