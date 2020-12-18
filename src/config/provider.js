@@ -11,6 +11,7 @@ import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_SHOPPING_CART_ITEM_DETAIL} from "./g
 export default function Provider(props) {
     const didMountRef = useRef(false)
     const invoicesLoaded = useRef(false)
+    const lastShoppingCartPayload = useRef(null)
     const [shoppingCart, setShoppingCart] = useState(null)
     const [orderNotes, setOrderNotes] = useState('')
     const [shoppingCartPricing, setShoppingCartPricing] = useState({ state: 'stable', subTotal: '--', tariff: '--' })
@@ -320,16 +321,25 @@ export default function Provider(props) {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes }}) => {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
-                localStorage.setItem('shoppingCartToken', token)
-                setShoppingCart(cartItems.map(({__typename, ...rest}) => rest))
-                setOrderNotes(orderNotes)
+                const lastCartItems = lastShoppingCartPayload.current || [];
+                
+                const shouldUpdateState = shoppingCart === null || (cartItems.length === lastCartItems.length
+                  && !cartItems.find(item => !lastCartItems.find(i => i.frecno === item.frecno)))
+              
+                if (shouldUpdateState) {
+									  localStorage.setItem('shoppingCartToken', token)
+                    setShoppingCart(cartItems.map(({__typename, ...rest}) => rest))
+									  setOrderNotes(orderNotes)
+								}
             }
             setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
     })
 	
     const updateShoppingCart = cartItems => {
+        console.log('cartItems', cartItems)
       setShoppingCart(cartItems)
+      lastShoppingCartPayload.current = cartItems
       updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
     }
 	
@@ -403,7 +413,7 @@ export default function Provider(props) {
 		}
 
     const emptyCart = () => {
-      updateShoppingCart([])
+      updateShoppingCart(null)
 		}
     
     function getInvoices() {
