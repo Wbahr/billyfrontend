@@ -147,14 +147,26 @@ export function ShipToForm(props) {
 					/>
 					{values.contact.savedContact !== null && (
 						<div>
-							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact First Name*"
-													 name="contact.firstName"/>
-							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Last Name*"
-													 name="contact.lastName"/>
-							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Phone*"
-													 name="contact.phone"/>
-							<FormikInput disabled={values.contact.savedContact !== -1} label="Order Contact Email*"
-													 name="contact.email"/>
+							<FormikInput
+								disabled={values.contact.savedContact !== -1}
+								label="Order Contact First Name*"
+								name="contact.firstName"
+							/>
+							<FormikInput
+								disabled={values.contact.savedContact !== -1}
+								label="Order Contact Last Name*"
+								name="contact.lastName"
+							/>
+							<FormikInput
+								disabled={values.contact.savedContact !== -1}
+								label="Order Contact Phone*"
+								name="contact.phone"
+							/>
+							<FormikInput
+								disabled={values.contact.savedContact !== -1}
+								label="Order Contact Email*"
+								name="contact.email"
+							/>
 							{values.contact.savedContact !== -1 && (
 								<SavedContactDiv>
 									Need to change your Saved Contact info?
@@ -187,9 +199,7 @@ export function ShipToForm(props) {
 				label="Company Name"
 				name="shipto.companyName"
 				width={500}
-				onChange={(e) => {
-					handleSavedAddressChange(e, handleChange);
-				}}
+				onChange={(e) => handleSavedAddressChange(e, handleChange)}
 				value={values.shipto.companyName}
 			/>
 			
@@ -244,9 +254,7 @@ export function ShipToForm(props) {
 					width="250px"
 					isSearchable={false}
 					label="Country*"
-					changeFunction={(field, value) => {
-						handleCountryChange(field, value, handleChange)
-					}}
+					changeFunction={(field, value) => handleCountryChange(field, value, handleChange)}
 				/>
 				{values.shipto.country === 'us' && (
 					<Field
@@ -255,9 +263,7 @@ export function ShipToForm(props) {
 						options={StateList}
 						placeholder="Select a State"
 						label="State*"
-						changeFunction={(field, value) => {
-							handleStateChange(field, value, handleChange)
-						}}
+						changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
 						width="200px"
 					/>
 				)}
@@ -268,9 +274,7 @@ export function ShipToForm(props) {
 						options={CanadianProvinceList}
 						placeholder="Select a Province"
 						label="Province*"
-						changeFunction={(field, value) => {
-							handleStateChange(field, value, handleChange)
-						}}
+						changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
 						width="200px"
 					/>
 				)}
