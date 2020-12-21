@@ -41,7 +41,7 @@ const DivNavigation = styled.div`
 export function ShipToForm(props) {
 	const {history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep} = props
 	const context = useContext(Context);
-	console.log('values', values)
+	
 	useEffect(() => {
 		window.scrollTo({top: 0})
 	}, [])
