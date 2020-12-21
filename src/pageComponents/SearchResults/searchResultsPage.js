@@ -73,10 +73,20 @@ export default function SearchResultsPage({history}) {
 		history.push({ pathname: '/search', search })
 	}
 	
-	const [parsedQueryString, setParsedQueryString] = useState(queryString.parse(location.search))
+	const getParsedQueryString = () => {
+		const parsed = queryString.parse(location.search)
+		const { searchTerm, innerSearchTerms, sortType, nonweb, resultPage,
+			parentCategory, childCategory, brands, ...selectedAttributes} = parsed;
+		return {
+			parsedQueryString: parsed,
+			resetStateWhenTheseChange: {parentCategory, childCategory, brands, selectedAttributes}
+		}
+	}
+	
+	const [{parsedQueryString, resetStateWhenTheseChange}, setParsedQueryString] = useState(getParsedQueryString)
 	
 	useEffect(() => {
-		setParsedQueryString(queryString.parse(location.search))
+		setParsedQueryString(getParsedQueryString())
 	}, [location.search])
 	
 	const { searchTerm, innerSearchTerms, sortType='relevancy', nonweb='false', resultPage,
@@ -103,7 +113,7 @@ export default function SearchResultsPage({history}) {
 					featureName,
 					selected: true
 				}))
-		}))
+		})) 
 	const initialBrands = selectedBrands ? selectedBrands.split(',').map(b => ({brandName: b, selected: true})) : []
 	const initialSearchState = { brands: initialBrands, attributes: initialAttributes, parentCategories: initialParentCategories,
 		childCategories: initialChildCategories, isSynced: false }
@@ -125,7 +135,7 @@ export default function SearchResultsPage({history}) {
 	const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
 	
 	const classes = useStyles();
-	const {getItemAvailabilities, getItemPrices} = useContext(Context)
+	const {getItemAvailabilities, getItemPrices, userInfo, impersonatedCompanyInfo} = useContext(Context)
 	
 	useDidUpdateEffect(() => {
 		if (ottoFindPart) {
@@ -169,13 +179,22 @@ export default function SearchResultsPage({history}) {
 		}
 	}, [innerSearchTerms, sortType])
 	
-	useDidUpdateEffect(() => {
-		setSearchState(initialSearchState)
-	}, [searchTerm])
-	
 	useEffect(() => {
 		performItemSearch()
 	}, [resultPage])
+	
+	useEffect(() => {
+		searchData.results.length && getItemPrices(searchData.results)
+	}, [searchData.results, impersonatedCompanyInfo])
+	
+	useEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
+		if (!resetStateWhenTheseChange.brands
+			&& !resetStateWhenTheseChange.childCategory
+			&& !resetStateWhenTheseChange.parentCategory
+			&& !Object.keys(resetStateWhenTheseChange.selectedAttributes)?.length) {
+			setSearchState(initialSearchState)
+		}
+	}, [resetStateWhenTheseChange])
 	
 	const performItemSearch = () => {
 		handleSetSearchData({isSearching: true})
@@ -217,7 +236,6 @@ export default function SearchResultsPage({history}) {
 		const invMastUids = result.map(i => i.invMastUid)
 		getItemDetails({ variables: { invMastUids } })
 		getItemAvailabilities(result)
-		getItemPrices(result)
 		
 		if (results.length >= RESULT_SIZE * 2) setOttoFindPart(true)
 		
@@ -390,7 +408,7 @@ const LoadingItems = () => (
 	</>
 )
 
-const drawerWidth = 280
+const drawerWidth = 290
 
 const useStyles = makeStyles((theme) => ({
 	sticky: {
@@ -456,7 +474,7 @@ const useStyles = makeStyles((theme) => ({
 		}),
 	},
 	expand: {
-		maxHeight: 660,
+		overflow: 'hidden',
 		transition: theme.transitions.create('max-height', {
 			easing: theme.transitions.easing.sharp,
 			duration: 300,

@@ -41,11 +41,16 @@ export const GET_ACCESSORY_ITEMS_INFO = gql`
 		}
 		itemDetailsBatch(invMastUids: $invMastUids){
 			...ItemDetails
-			...Media
+			image {
+				path
+				sequence
+				itemMediaType
+				mediaType
+				mediaId
+			}
 		}
 	}
 	${FRAGMENT_ITEM_DETAIL}
-	${FRAGMENT_ITEM_DETAIL_MEDIA}
 	${FRAGMENT_ITEM_AVAILABILITY}
 `
 

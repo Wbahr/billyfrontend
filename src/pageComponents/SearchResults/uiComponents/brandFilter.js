@@ -8,7 +8,7 @@ import clsx from "clsx";
 const DivTitle = styled.div`
 	display: flex;
 	cursor: pointer;
-	width: 279px;
+	width: 281px;
 	height: 36px;
 	padding: 0 12px;
 	background-color: #f3f3f3;
@@ -22,7 +22,10 @@ const DivTitle = styled.div`
 const DivOptions = styled.div`
 	display: flex; 
 	flex-direction: column;
-	overflow: scroll;
+	padding-right: 4px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	max-height: 500px;
 `
 
 const DivOptionRow = styled.div`
@@ -40,7 +43,7 @@ const Label = styled.label`
 	cursor: pointer;
 	margin: 0;
 	color: #535353;
-	font-size: 12px;
+	font-size: 11px;
 	margin-left: 4px;
 	flex: 1;
 `
@@ -53,8 +56,8 @@ const PCount = styled.p`
 `
 
 const InputSearch = styled.input`
-	margin: 4px 16px;
-	width: 240px;
+	margin: 4px 0px;
+	width: 215px;
 `
 
 const BrandsDiv = styled.div`

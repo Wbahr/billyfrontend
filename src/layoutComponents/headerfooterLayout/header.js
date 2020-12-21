@@ -11,6 +11,7 @@ import { buildSearchString, onWindowResize } from "../../pageComponents/_common/
 import { useQuery } from '@apollo/client'
 import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
 import {Button, Menu} from '@material-ui/core'
+import queryString from 'query-string';
 
 const Nav = styled.div`
 	position: ${props => props.history.location.pathname === '/search' ? 'relative' : '-webkit-sticky'};
@@ -223,7 +224,10 @@ export default function HeaderComponent({history}) {
 	
 	const tabComponents = tabDeclaration.map(toMenu)
 	
-	const handleSearch = () => history.push(buildSearchString({searchTerm, nonweb: searchAsCustomer}))
+	const handleSearch = () => {
+		const search = searchTerm?.length ? searchTerm : queryString.parse(history.location.search).searchTerm
+		history.push(buildSearchString({searchTerm: search, nonweb: searchAsCustomer}))
+	}
 	
 	const handleKeyPress = e => e.key === 'Enter' && handleSearch()
 	
