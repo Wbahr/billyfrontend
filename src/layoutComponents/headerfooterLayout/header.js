@@ -398,11 +398,11 @@ const servicesSubItems = [
 	},
 	{
 		label: 'Fluid Cleanliness & Maintenance',
-		to: '/services/plant-services/fluid-cleanliness-and-maintenance'
+		to: '/pages/services/fluid-cleanliness-and-maintenance'
 	},
 	{
 		label: 'Engineered Systems & Assemblies',
-		to: '/services/engineered-systems-and-assemblies'
+		to: '/pages/services/engineered-systems-and-assemblies'
 	},
 	{
 		label: 'Energy Efficiency',
@@ -410,7 +410,7 @@ const servicesSubItems = [
 	},
 	{
 		label: 'Trola-Dyne Systems',
-		to: '/pages/trola-dyne'
+		to: '/pages/services/trola-dyne'
 	}
 ]
 
@@ -607,7 +607,7 @@ const headerTabs = categories => [
 	},
 	{
 		label: 'Services',
-		to: '/services',
+		to: '/pages/services',
 		subItems: servicesSubItems
 	},
 	{
