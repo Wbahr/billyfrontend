@@ -562,7 +562,7 @@ const aboutSubItems = [
 	},
 	{
 		label: 'Careers',
-		to: '/about/careers',
+		to: '/pages/about/careers',
 	},
 	{
 		label: 'Quality Policy',
@@ -612,7 +612,7 @@ const headerTabs = categories => [
 	},
 	{
 		label: 'Industries',
-		to: '/industries',
+		to: '/pages/industries',
 		subItems: industriesSubItems
 	},
 	{
@@ -622,12 +622,12 @@ const headerTabs = categories => [
 	},
 	{
 		label: 'Resources',
-		to: '/resources',
+		to: '/pages/resources',
 		subItems: resourcesSubItems
 	},
 	{
 		label: 'About',
-		to: '/about',
+		to: '/pages/about',
 		subItems: aboutSubItems
 	},
 	{

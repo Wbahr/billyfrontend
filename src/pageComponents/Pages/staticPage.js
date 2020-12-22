@@ -16,6 +16,9 @@ const Container = styled.div`
   width: 100%;
   padding: 0 10px;
   margin: 0 auto;
+}
+
+
 `
 
 const DivRow = styled.div`
@@ -30,6 +33,14 @@ const DivRowHeader = styled.div`
   text-transform: uppercase;
   font-size: 32px;
   letter-spacing : 2px;
+  font-family: verdana;
+  color: #333;
+  margin-top: 40px;
+`
+const DivBorder = styled.div`
+    border-bottom: 3px solid #B51F2B;
+    width: 10%;
+    margin: 0 auto;
 `
 
 const GET_STATIC_PAGE = gql`
@@ -126,6 +137,7 @@ export default function StaticPage({ match }) {
             <DivRowHeader>
                 <Crumbs currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pagesecondaryAncestor} baseUrl={match.path.split('/:')[0]} />
             </DivRowHeader>
+            <DivBorder />
             <DivRow>
                 {pageHtml}
             </DivRow>

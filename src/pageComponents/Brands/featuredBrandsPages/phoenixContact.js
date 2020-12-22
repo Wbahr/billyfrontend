@@ -58,39 +58,46 @@ export default function Phoenix() {
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/control.png"
 					text="The heart of your control cabinet is the logic platform. For OEMs and control engineers alike, it has never been easier to build smaller, smarter machines faster - and free themselves from using controllers and equipment based solely on prior familiarity or specification. Industrial PCs/HMIs and scalable controllers can streamline functionality, reduce equipment and costs, as well as usher in the next generation of intelligent machine control."
 					title="Control"
+					learnMoreLink="/pages/phoenix/control"
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/power-reliability.png"
 					title="Power Reliability"
 					text="Don't overlook the basics. No matter how sophisticated your control system, a 'line down' situation is only one power disturbance away. Manufacturing processes depend on being properly powered and protected. Surge and circuit protection, UPS backup, and redundant power solutions are the foundation of your control system's reliability."
+					learnMoreLink="/pages/phoenix/power-reliability"
 					reverse
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/connectivity.png"
 					title="Connectivity"
 					text="Every wire in your control cabinet is there for a reason. The connections of those wires-via spring, screw, IDC, or crimp-are only as reliable as the integrity of the terminations. For nearly a century, Phoenix Contact has been the trusted partner for reliable connections."
+					learnMoreLink="/pages/phoenix/connectivity"
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/etherNet.png"
 					title="EtherNet I/P and Profinet"
 					text="Liberate your EtherNet/IP application from dependence on a single vendor. Phoenix Contact offers EtherNet/IP IO, Ethernet switches, and wireless components to make cost-effective and open solutions a reality."
+					learnMoreLink="/pages/phoenix/ethernetIP-profinet"
 					reverse
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/networking.png"
 					title="Networking & Remote"
 					text="Smarter factories and convergences with enterprise IT are increasing the demand for remote access and collection of real-time data. With this power comes responsibility. In a single network, everything is vulnerable. Intelligent network infrastructure starts with the selection of switches, routers, wireless, and security components to harness opportunity and minimize risk."
+					learnMoreLink="/pages/phoenix/networking"
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/safety..png"
 					title="Safety"
 					text="Emergency stop, light grid or safety door - safety relays from Phoenix Contact can be used to implement all safety functions for applications with one function, one device."
+					learnMoreLink="/pages/phoenix/safety"
 					reverse
 				/>
 				<ProductItems
 					src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Phoenix/control/floor.png"
 					title="Floor Productivity"
 					text="Time is money. Efficiently building a quality control cabinet starts with what you use to build it. Quick, flexible marking systems, automated tools and hand tools, cable/wire management, and cabinet accessories are often overlooked methods to reduce errors and cut commissioning time. Thoughtful selection of these 'secret weapons' translates directly to the bottom line profitability of any shop floor."
+					learnMoreLink="/pages/phoenix/shop-floor-productivity"
 				/>
 				
 				<SectionHeader
