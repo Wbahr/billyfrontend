@@ -125,7 +125,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
 				<WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute exact path='/pages/:pageId/:subPageId?/:subSubPageId?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
+				<WrapperRoute exact path='/pages/:pageId1/:pageId2?/:pageId3?/:pageId4?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
 
 				{/* ADMIN INTERNAL TOOLS (MANAGES ITS OWN SUB ROUTES)*/}
 				<WrapperRoute path='/admin-dashboard' auth roles={['AirlineEmployee','Impersonator']} component={AdminHome} layout={AdminLayout}/>
