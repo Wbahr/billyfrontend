@@ -321,9 +321,10 @@ export default function Provider(props) {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes }}) => {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
-                const lastCartItems = lastShoppingCartPayload.current || [];
+                const lastCartItems = lastShoppingCartPayload.current;
                 
-                const shouldUpdateState = shoppingCart === null || (cartItems.length === lastCartItems.length
+                const shouldUpdateState = shoppingCart === null || !lastCartItems
+                  || (cartItems.length === lastCartItems.length
                   && !cartItems.find(item => !lastCartItems.find(i => i.frecno === item.frecno)))
               
                 if (shouldUpdateState) {
@@ -404,10 +405,12 @@ export default function Provider(props) {
 		}
     
     const retrieveShoppingCart = () => {
+			lastShoppingCartPayload.current = null
       updateCartWrapper({ actionString: 'retrieve' })
 		}
     
     const mergeShoppingCart = token => {
+			lastShoppingCartPayload.current = null
       updateCartWrapper({ actionString: 'retrieve', token })
 		}
 
