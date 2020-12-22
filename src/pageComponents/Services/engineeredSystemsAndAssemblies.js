@@ -40,10 +40,7 @@ export default function engineeredSystemsAndAssemblies() {
 		<>
 			<Header text="Engineered Systems & Assemblies" />
 			<Container>
-				<ServiceHomepageDiv>
-					<FontAwesomeIcon icon='home' size="1x" color="#555555" />
-					<ServiceHomepage href="/services">Services</ServiceHomepage>
-				</ServiceHomepageDiv>
+
 				<SubDetail
 					text="No matter your requirement - integrated component sub-assemblies or fully-engineered customized system - you can rely on Airline to deliver an innovative solution and unmatched customer service. We pride ourselves on satisfying our customers with best-in-class prodcuts built through our dedicated team of experienced sales engineers, system engineers and assembly technicians, in our ISO 9001:2015 certified facilities."
 				/>
