@@ -339,7 +339,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 									debounceTimeout={300}
 									onChange={handleUpdateItemNotes}
 									style={{width: 300}}
-									value={cartItem.itemNotes}
+									value={cartItem.itemNotes || ''}
 								/>
 							</DivItem>
 						</DivQuantity>

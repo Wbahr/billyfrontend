@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
-import {useDebounceValue, useDidUpdateEffect} from "../../_common/helpers/generalHelperFunctions";
 
 const Div = styled.div`
 	display: flex;
@@ -54,7 +53,7 @@ const DivSave = styled(DivShare)`
 
 export default function ShoppingCart({ history }) {
 	const { cart, emptyCart, userInfo, saveShoppingCart, itemPrices, itemAvailabilities, itemDetails, customerPartNumbers,
-		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers } = useContext(Context)
+		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers, updateShoppingCart } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	
@@ -101,14 +100,12 @@ export default function ShoppingCart({ history }) {
 					<p onClick={emptyCart}>(empty cart)</p>
 				</DivRow>
 				<DivRow>
-						{
-							userInfo 
-								?	<DivSave onClick={handleSaveAsShoppingList}>
-										<Ashare>Save As Shopping List</Ashare>
-										<FontAwesomeIcon icon="list" color="grey" />
-									</DivSave>
-								: <Ashare/>
-						}
+					{userInfo ?	(
+						<DivSave onClick={handleSaveAsShoppingList}>
+							<Ashare>Save As Shopping List</Ashare>
+							<FontAwesomeIcon icon="list" color="grey" />
+						</DivSave>
+					) : <Ashare/>}
 					<DivSave onClick={handleSaveCart}>
 						{savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
 						{savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
@@ -119,11 +116,9 @@ export default function ShoppingCart({ history }) {
 					</DivShare>
 				</DivRow>
 			</Div>
-			{ cart && (
-				<CartComponent
-					{...{ history, cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers}}
-				/>
-			)}
+			<CartComponent
+				{...{ history, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cart, updateShoppingCart}}
+			/>
 			{
 				userInfo && <SaveShoppingListModal
 					open={showShoppingListModal}
@@ -136,37 +131,44 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, history}) => {
-	const {updateShoppingCart} = useContext(Context)
-	const [realTimeCart, setRealTimeCart] = useState(cart)
-	const debouncedCart = useDebounceValue(realTimeCart, 1000)
+const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, history}) => {
+	const [shoppingCart, setShoppingCart] = useState(cart || [])
 	
-	useDidUpdateEffect(() => {
-		updateShoppingCart(debouncedCart)
-	}, [debouncedCart])
+	useEffect(() => {
+		setShoppingCart(cart)
+	}, [cart])
 	
 	const onDragEnd = ({destination, source}) => {
 		if (destination) {
-			const newCart = realTimeCart.slice()
+			const newCart = shoppingCart.slice()
 			const movedItem = newCart.splice(source.index, 1)
 			newCart.splice(destination.index, 0, movedItem[0])
-			setRealTimeCart(newCart)
+			setShoppingCart(newCart)
+			updateShoppingCart(newCart)
 		}
+	}
+	
+	const setCart = newCart => {
+		setShoppingCart(newCart)
+		updateShoppingCart(newCart)
 	}
 	
 	const setCartItem = index => newCartItem => {
+		const newCart = shoppingCart.slice()
 		if (newCartItem) {
-			setRealTimeCart(realTimeCart.map((cartItem, idx) => idx === index ? newCartItem : cartItem))
+			newCart[index] = newCartItem
 		} else {
-			setRealTimeCart(realTimeCart.reduce((accum, cartItem, idx) => accum.concat(idx === index ? [] : cartItem), []))
+			newCart.splice(index, 1)
 		}
+		setShoppingCart(newCart)
+		updateShoppingCart(newCart)
 	}
 	
 	const setCartItemField = index => (field, value) => {
-		setRealTimeCart(realTimeCart.map((cartItem, idx) => idx === index ? {...cartItem, [field]: value} : cartItem))
+		updateShoppingCart(shoppingCart.map((cartItem, idx) => idx === index ? {...cartItem, [field]: value} : cartItem))
 	}
 	
-	const ShoppingCartItems = realTimeCart.map((cartItem, index) => {
+	const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {
 		const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
 		const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
 		const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.frecno)
@@ -188,8 +190,8 @@ const CartComponent = ({cart, itemDetails, itemPrices, itemAvailabilities, custo
 								availabilityInfo={itemAvailability}
 								customerPartNumbers={itemCustomerPartNumbers}
 								key={index}
-								cart={realTimeCart}
-								setCart={setRealTimeCart}
+								cart={shoppingCart || []}
+								setCart={setCart}
 								setCartItem={setCartItem(index)}
 								setCartItemField={setCartItemField(index)}
 								{...{history, index}}

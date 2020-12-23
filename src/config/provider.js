@@ -5,7 +5,12 @@ import {
     UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAX_RATE, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
     GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
 } from './providerGQL'
-import { getRidOf__typename, logout, distinct } from '../pageComponents/_common/helpers/generalHelperFunctions'
+import {
+	getRidOf__typename,
+	logout,
+	distinct,
+	useDebounceValue
+} from '../pageComponents/_common/helpers/generalHelperFunctions'
 import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_SHOPPING_CART_ITEM_DETAIL} from "./gqlQueries/gqlItemQueries";
 
 export default function Provider(props) {
@@ -13,6 +18,7 @@ export default function Provider(props) {
     const invoicesLoaded = useRef(false)
     const lastShoppingCartPayload = useRef(null)
     const [shoppingCart, setShoppingCart] = useState(null)
+    const debouncedCart = useDebounceValue(shoppingCart, 1000)
     const [orderNotes, setOrderNotes] = useState('')
     const [shoppingCartPricing, setShoppingCartPricing] = useState({ state: 'stable', subTotal: '--', tariff: '--' })
     const [userInfo, setUserInfo] = useState(null)
@@ -442,7 +448,7 @@ export default function Provider(props) {
                 userInfo,
                 loginUser,
                 logoutUser,
-                cart: shoppingCart,
+                cart: debouncedCart,
                 cartPricing: shoppingCartPricing,
                 orderNotes,
                 addItem,
