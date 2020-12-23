@@ -165,7 +165,9 @@ const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemA
 	}
 	
 	const setCartItemField = index => (field, value) => {
-		updateShoppingCart(shoppingCart.map((cartItem, idx) => idx === index ? {...cartItem, [field]: value} : cartItem))
+		const newCart = shoppingCart.map((cartItem, idx) => idx === index ? {...cartItem, [field]: value} : cartItem)
+		setShoppingCart(newCart)
+		updateShoppingCart(newCart)
 	}
 	
 	const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {

@@ -331,7 +331,7 @@ export default function Provider(props) {
                 
                 const shouldUpdateState = shoppingCart === null || !lastCartItems
                   || (cartItems.length === lastCartItems.length
-                  && !cartItems.find(item => !lastCartItems.find(i => i.frecno === item.frecno)))
+                  && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
               
                 if (shouldUpdateState) {
 									  localStorage.setItem('shoppingCartToken', token)

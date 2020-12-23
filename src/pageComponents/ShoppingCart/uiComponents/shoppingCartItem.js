@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../config/context'
@@ -161,14 +161,19 @@ const P3 = styled.p`
 
 export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
  	priceInfo, availabilityInfo, customerPartNumbers, history}) {
-
+	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
+	
+	useEffect(() => {
+		setSelectedCustomerPartNumber(cartItem.customerPartNumberId)
+	}, [cartItem])
+	
 	const [editPriceModalData, setEditPriceModalData] = useState(null)
 	const [showSplitLineModal, setShowSplitLineModal] = useState(false)
 	const [factoryStockModalData, setFactoryStockModalData] = useState(false)
 	const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
 	const itemId = parseInt(cartItem.frecno,10)
-
+	
 	const {userInfo} = useContext(Context)
 
 	function selectCustomerPartNumber(value){
