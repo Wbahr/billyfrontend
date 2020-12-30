@@ -137,26 +137,26 @@ export default function FactoryStockModal({open, product, hideFactoryStockModal}
 				<DivRow>
 					<DivItem>
 						<Label>Factory Availability: </Label>
-						<input id="qtyAvailable" type="number" value={qtyAvailable} style={{width: 100}} onChange={handleChange}/>
+						<input id="qtyAvailable" type="number" value={qtyAvailable || ''} style={{width: 100}} onChange={handleChange}/>
 					</DivItem>
 					
 					<DivItem>
 						<Label>Est. Lead Time (days): </Label>
-						<input id="leadTime" type="number" value={leadTime} style={{width: 100}} onChange={handleChange}/>
+						<input id="leadTime" type="number" value={leadTime || ''} style={{width: 100}} onChange={handleChange}/>
 					</DivItem>
 				</DivRow>
 				
 				<DivRow>
 					<DivItem>
 						<Label>Last Modified: </Label>
-						<input disabled value={lastModified && dateFormat(new Date(lastModified), 'MM/dd/yy h:mm aa')} style={{width: 250}}/>
+						<input disabled value={lastModified ? dateFormat(new Date(lastModified), 'MM/dd/yy h:mm aa') : ''} style={{width: 250}}/>
 					</DivItem>
 				</DivRow>
 				
 				<DivRow>
 					<DivItem>
 						<Label>Modified By: </Label>
-						<input disabled value={lastModifiedBy} style={{width: 250}}/>
+						<input disabled value={lastModifiedBy || ''} style={{width: 250}}/>
 					</DivItem>
 				</DivRow>
 				
