@@ -6,7 +6,7 @@ import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
 import { useQuery } from '@apollo/client'
-import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
+import { GET_ROOT_CATEGORIES_HOMEPAGE } from 'config/providerGQL'
 import SectionHeader from "../_common/sectionHeader";
 import {CategoryContainer} from "../ProductCategories/categoriesPage";
 import CategoryList from "../ProductCategories/uiComponents/categoryList";
@@ -23,9 +23,9 @@ const ContentScreenContainer = styled.div`
 export default function HomePage(props) {
 	const [categories, setCategories] = useState(null);
 
-	useQuery(GET_CATEGORY_SEARCH, {
+	useQuery(GET_ROOT_CATEGORIES_HOMEPAGE, {
 		onCompleted: data => { 
-			setCategories(data.getAllParentCategories);
+			setCategories(data.getAllRootCategories);
 		}
 	});
     

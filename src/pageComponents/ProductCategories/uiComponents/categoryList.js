@@ -9,7 +9,7 @@ export default function CategoryList(props) {
 	return (
 		<>
 			{categories.map((c) => (
-					<Category key={c.nameForUrl} text={c.name} linkTo={`${match.url}/${c.nameForUrl}`} image={c.bannerUrl}/>
+					<Category key={c.urlSlug} text={c.name} linkTo={`${match.url}/${c.urlSlug}`} image={c.imageUrl}/>
 				)
 			)}
 		</>
