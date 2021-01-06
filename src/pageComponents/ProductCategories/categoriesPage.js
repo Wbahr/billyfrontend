@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
-import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
+import { GET_ROOT_CATEGORIES_PAGE } from 'config/providerGQL'
 
 export const CategoryContainer = styled.div`
 	display: flex;
@@ -15,9 +15,9 @@ export const CategoryContainer = styled.div`
 export default function CategoriesPage(props) {
 	const [categories, setCategories] = useState(null);
 
-	const { loading, error, data } = useQuery(GET_CATEGORY_SEARCH, {
+	const { loading, error, data } = useQuery(GET_ROOT_CATEGORIES_PAGE, {
 		onCompleted: data => { 
-			setCategories(data.getAllParentCategories);
+			setCategories(data.getAllRootCategories);
 		}
 	});
 
