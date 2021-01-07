@@ -688,23 +688,39 @@ export const GET_PAYMENT_METHOD_INFO = gql`
   }
   `
 
-  export const GET_CATEGORY_SEARCH = gql`
-  {
-      getAllParentCategories {
-          name
-          nameForUrl
-          bannerUrl
-          parentId
-          id
-          children {
-              name
-              nameForUrl
-              bannerUrl
-              parentId
-              id
-          }
-      }
+export const GET_ROOT_CATEGORIES_HOMEPAGE =  gql`
+  query GetRootCategoriesHomepage {
+    getAllRootCategories{
+      id
+      name
+      urlSlug
+      imageUrl
+    }
   }
+`
+
+export const GET_ROOT_CATEGORIES_HEADER = gql`
+{
+    getAllRootCategories {
+        id
+        name
+        urlSlug
+        imageUrl
+        seoHtml
+    }
+}
+`
+
+export const GET_ROOT_CATEGORIES_PAGE = gql`
+{
+    getAllRootCategories {
+        id
+        name
+        urlSlug
+        imageUrl
+        seoHtml
+    }
+}
 `
 
 export const GET_ALL_USER_CARTS = gql`

@@ -9,7 +9,7 @@ import ImpersonationSearch from './impersonationSearch'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString, onWindowResize } from "../../pageComponents/_common/helpers/generalHelperFunctions";
 import { useQuery } from '@apollo/client'
-import { GET_CATEGORY_SEARCH } from 'config/providerGQL'
+import { GET_ROOT_CATEGORIES_HEADER } from 'config/providerGQL'
 import {Button, Menu} from '@material-ui/core'
 import queryString from 'query-string';
 
@@ -184,9 +184,9 @@ export default function HeaderComponent({history}) {
 	const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
 	const context = useContext(Context)
 	
-	useQuery(GET_CATEGORY_SEARCH, {
+	useQuery(GET_ROOT_CATEGORIES_HEADER, {
 		onCompleted: data => {
-			setCategories(data.getAllParentCategories)
+			setCategories(data.getAllRootCategories)
 		}
 	})
 	
@@ -600,9 +600,9 @@ const headerTabs = categories => [
 	{
 		label: 'Shop',
 		to: '/categories',
-		subItems: categories.map(({name, nameForUrl}) => ({
+		subItems: categories.map(({name, urlSlug}) => ({
 			label: name,
-			to: `/categories/${nameForUrl}`
+			to: `/categories/${urlSlug}`
 		}))
 	},
 	{
