@@ -381,6 +381,7 @@ export const GET_ITEM_PRICE = gql`
       unitOfMeasure
       isUnitConversion
       roundType
+      unitSize
       spaType
     }
   }

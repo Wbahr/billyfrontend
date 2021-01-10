@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import {getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
+import DebounceInput from 'react-debounce-input'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -156,16 +157,23 @@ const Option = ({partNumber, partId}) => <option key={partNumber} value={partId}
 const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
 export default function ItemResult({result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
-	const [quantity, setQuantity] = useState(1)
-	const context = useContext(Context)
-	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
+	const {itemAvailabilities, itemPrices} = useContext(Context)
+	
+	const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 	const {availability, leadTimeDays} = foundAvailability || {}
 	
-	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.invMastUid)
-	const {unitPrice, unitOfMeasure, isUnitConversion, roundType} = foundPrice || {}
-	
+	const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
+	const {unitPrice, unitOfMeasure, isUnitConversion, unitSize, roundType} = foundPrice || {}
+
+	const [quantity, setQuantity] = useState(unitSize || 1)
+	const unitIncrement = unitSize || 1
+
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
+
+	useEffect(() => {
+		setQuantity(unitSize || 1) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+	}, [itemPrices])
 	
 	useEffect(() => {
 		setCustomerPartOptions(getCustomerPartOptions(details))
@@ -174,9 +182,38 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		}
 	}, [details.customerPartNumbers])
 	
-	function handleSetQuantity({target: {value}}) {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-			setQuantity(value)
+	const handleSetQuantity = (event) => {
+		const {target: {value}, preventDefault} = event
+
+		var valueToSet = Number(value)
+
+		if(Number.isInteger(valueToSet)) {
+			if(isUnitConversion && valueToSet % unitIncrement !== 0){
+				switch (roundType) {
+					case 'U':
+						valueToSet = valueToSet - (valueToSet % unitIncrement) + unitIncrement
+						break;
+					case 'D':
+						valueToSet = valueToSet - (valueToSet % unitIncrement)
+						break;
+					case 'S':
+						valueToSet = (valueToSet % unitIncrement) >= (valueToSet / 2)
+							? valueToSet - (valueToSet % unitIncrement) + unitIncrement
+							: valueToSet - (valueToSet % unitIncrement)
+						break;
+					case 'N':
+						//Keep the value the same
+						break;
+					default:
+						break;
+				}
+			}
+
+			setQuantity(0) //Resets the value. Prevents value from seemingly not properly updating.
+			setQuantity(valueToSet)
+		}
+		else {
+			setQuantity(0)
 		}
 	}
 	
@@ -261,7 +298,14 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 				
 				<DivPartNumberRowSpread>
 					<Div>Quantity:
-						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+						<DebounceInput
+							debounceTimeout={1000}
+							onChange={handleSetQuantity}
+							value={quantity}
+							type='number'
+							min='0'
+							step={unitIncrement}
+						/>
 					</Div>
 					
 					{unitPrice ? (
