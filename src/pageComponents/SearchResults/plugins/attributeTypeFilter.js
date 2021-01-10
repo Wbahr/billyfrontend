@@ -55,7 +55,6 @@ const InputSearch = styled.input`
 
 export default function AttributeTypeFilter({open, attribute, updateAttribute}) {
 	const [isOpen, setIsOpen] = useState(open)
-	// console.log(attribute.attributeNameDisplay, isOpen)
 	const toggleOpen = () => setIsOpen(!isOpen)
 	const [filter, setFilter] = useState('')
 	
