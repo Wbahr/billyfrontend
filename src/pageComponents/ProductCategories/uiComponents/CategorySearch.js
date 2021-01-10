@@ -80,7 +80,8 @@ export default function CategorySearch({ match, history }) {
 			setCategorySearch(categorySearch)
 			if (variables.searchParams === lastSearchPayload.searchParams) {
 				const newSearchState = cleanSearchState({ searchState: categorySearch })
-				handleSetSearchState({ ...newSearchState, isSynced: true, isSearching: false, results: categorySearch.result, totalResults: categorySearch.searchTotalCount })
+				const {result: results, searchTotalCount: totalResults} = categorySearch
+				handleSetSearchState({ ...newSearchState, isSynced: true, isSearching: false, results, totalResults })
 			}
 		}
 	})
