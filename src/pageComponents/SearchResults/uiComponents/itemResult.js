@@ -162,7 +162,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const {availability, leadTimeDays} = foundAvailability || {}
 	
 	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.invMastUid)
-	const {unitPrice} = foundPrice || {}
+	const {unitPrice, unitOfMeasure, isUnitConversion, roundType} = foundPrice || {}
 	
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
@@ -267,12 +267,11 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 					{unitPrice ? (
 						<Div>
 							<Pprice>${unitPrice.toFixed(2)}</Pprice>
-							<P>/EA</P>
+							<P>/{unitOfMeasure}</P>
 						</Div>
 					) : !foundPrice ? (
 						<Div>
 							<SkeletonDetail style={{margin: 'auto 0 auto 75px', width: 50}}/>
-							<P>/EA</P>
 						</Div>
 					) : (
 						<ACall href="tel:+18009997378">Call for Price</ACall>
