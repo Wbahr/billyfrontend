@@ -74,35 +74,9 @@ export default function CategorySearch({ match, history }) {
 	const categoryUrlSlug = match.params.categoryUrlSlug
 	const categoryName = categorySearch?.category?.name
 	
-	const [categorySearchApiCall, {variables}] = useLazyQuery(CATEGORY_SEARCH, {
-		fetchPolicy: 'no-cache',
-		onCompleted: ({categorySearch}) => {
-			setCategorySearch(categorySearch)
-			if (variables.searchParams === lastSearchPayload.searchParams) {
-				const newSearchState = cleanSearchState({ searchState: categorySearch })
-				const {result: results, searchTotalCount: totalResults} = categorySearch
-				handleSetSearchState({ ...newSearchState, isSynced: true, isSearching: false, results, totalResults })
-			}
-		}
-	})
-	
-	const performCategorySearch = () => {
-		handleSetSearchState({isSearching: true})
-		const payload = {
-			searchParams: {
-				categorySlug: categoryUrlSlug,
-				innerSearchTerms: searchTerms,
-				searchType: 'web',
-				resultSize: RESULT_SIZE,
-				resultPage,
-				sortType,
-				brands,
-				attributes
-			}
-		}
-		setLastSearchPayload(payload)
-		return categorySearchApiCall({ variables: payload })
-	}
+	useEffect(() => {
+		performCategorySearch()
+	}, [resultPage])
 	
 	useDidUpdateEffect(() => {
 		if (resultPage !== 1) {
@@ -122,9 +96,35 @@ export default function CategorySearch({ match, history }) {
 		}
 	}, [brands, attributes])
 	
-	useEffect(() => {
-		performCategorySearch()
-	}, [resultPage])
+	const performCategorySearch = () => {
+		handleSetSearchState({isSearching: true})
+		const payload = {
+			searchParams: {
+				categorySlug: categoryUrlSlug,
+				innerSearchTerms: searchTerms,
+				searchType: 'web',
+				resultSize: RESULT_SIZE,
+				resultPage,
+				sortType,
+				brands,
+				attributes
+			}
+		}
+		setLastSearchPayload(payload)
+		return categorySearchApiCall({ variables: payload })
+	}
+	
+	const [categorySearchApiCall, {variables}] = useLazyQuery(CATEGORY_SEARCH, {
+		fetchPolicy: 'no-cache',
+		onCompleted: ({categorySearch}) => {
+			setCategorySearch(categorySearch)
+			if (variables.searchParams === lastSearchPayload.searchParams) {
+				const newSearchState = cleanSearchState({ searchState: categorySearch })
+				const {result: results, searchTotalCount: totalResults} = categorySearch
+				handleSetSearchState({ ...newSearchState, isSynced: true, isSearching: false, results, totalResults })
+			}
+		}
+	})
 	
 	const categoryList = (categorySearch?.category?.children || []).map(({urlSlug, name, imageUrl}) => (
 		<Category
