@@ -305,7 +305,11 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 							type='number'
 							min='0'
 							step={unitIncrement}
+							style={{width: '60px'}}
 						/>
+						{
+							isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitSize}`}</span>
+						}
 					</Div>
 					
 					{unitPrice ? (
