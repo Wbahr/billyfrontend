@@ -157,7 +157,7 @@ const Option = ({partNumber, partId}) => <option key={partNumber} value={partId}
 const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
 export default function ItemResult({result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
-	const {itemAvailabilities, itemPrices} = useContext(Context)
+	const {itemAvailabilities, itemPrices, addItem} = useContext(Context)
 	
 	const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 	const {availability, leadTimeDays} = foundAvailability || {}
@@ -226,7 +226,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	}
 	
 	const handleAddToCart = () => {
-		context.addItem({
+		addItem({
 			frecno: result.invMastUid,
 			quantity: parseInt(quantity),
 			itemNotes: '',
