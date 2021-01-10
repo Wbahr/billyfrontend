@@ -20,7 +20,7 @@ const DivTitle = styled.div`
 	align-items: center;
 `
 const DivOptions = styled.div`
-	display: flex; 
+	display: flex;
 	flex-direction: column;
 	padding-right: 4px;
 	overflow-y: auto;
@@ -30,7 +30,7 @@ const DivOptions = styled.div`
 
 const DivOptionRow = styled.div`
 	cursor: pointer;
-	display: flex; 
+	display: flex;
 	align-items: center;
 	margin: 4px 0;
 `
@@ -64,14 +64,14 @@ const BrandsDiv = styled.div`
 	margin-left: 48px;
 `
 
-export default function BrandFilter({brands, setBrands, drawerOpen, setDrawerOpen, classes}) {
+export default function BrandsPlugin({brands, setBrands, drawerOpen, setDrawerOpen, classes}) {
 	const [isOpen, setIsOpen] = useState(true)
 	const [filter, setFilter] = useState('')
 	
 	useEffect(() => {
 		if (drawerOpen) setIsOpen(true)
 	}, [drawerOpen])
-
+	
 	const handleFeatureToggle = idx => () => {
 		const newBrands = brands.slice()
 		newBrands[idx].selected = !brands[idx].selected
@@ -117,7 +117,7 @@ export default function BrandFilter({brands, setBrands, drawerOpen, setDrawerOpe
 	)
 	
 	const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
-
+	
 	return (
 		<div>
 			<DivTitle onClick={() => {
@@ -144,8 +144,4 @@ export default function BrandFilter({brands, setBrands, drawerOpen, setDrawerOpe
 			</BrandsDiv>
 		</div>
 	)
-}
-
-BrandFilter.propTypes = {
-	brands: PropTypes.array.isRequired,
 }

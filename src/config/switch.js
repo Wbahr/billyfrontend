@@ -96,7 +96,7 @@ class App extends React.Component {
 				<WrapperRoute exact path='/brands' component={brandsPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/:page' component={generalMinimalBrand} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/brands/featured/:page' component={generalFullBrand} layout={HeaderFooterLayoutExpanded}/>
-				<WrapperRoute path='/categories' component={CategoriesPage} layout={HeaderFooterLayout}/>
+				<WrapperRoute path='/categories' component={CategoriesPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/checkout' component={Checkout} layout={HeaderFooterLayout}/>
 				<WrapperRoute exact path='/contact-us' component={contactPage} layout={HeaderFooterLayoutExpanded}/>
 				<WrapperRoute exact path='/create-quote' component={Checkout} layout={HeaderFooterLayout}/>

@@ -14,8 +14,8 @@ import {Button, Menu} from '@material-ui/core'
 import queryString from 'query-string';
 
 const Nav = styled.div`
-	position: ${props => props.history.location.pathname === '/search' ? 'relative' : '-webkit-sticky'};
-	position: ${props => props.history.location.pathname === '/search' ? 'relative' : 'sticky'};
+	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
+	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
 	top: 0;
 	z-index: 2;
 `

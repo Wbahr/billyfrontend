@@ -126,3 +126,39 @@ export const useDebounceValue = (value, time = 500) => {
 	
 	return debouncedValue
 }
+
+export const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
+	const removeTypeName = ({__typename, ...rest}) => rest
+	return {
+		brands: brands?.map(removeTypeName) || [],
+		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+		parentCategories: parentCategories?.map(removeTypeName) || [],
+		childCategories: childCategories?.map(removeTypeName) || []
+	}
+}
+
+export function scrollHorizontal(element, change, duration) {
+	const start = element.scrollLeft
+	let currentTime = 0
+	const increment = 20
+	
+	const animateScroll = () => {
+		currentTime += increment;
+		element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration);
+		if (currentTime < duration) {
+			setTimeout(animateScroll, increment);
+		}
+	};
+	animateScroll();
+}
+
+//t = current time
+//s = start value
+//c = change in value
+//d = duration
+Math.easeInOutQuad = (t, s, c, d) => {
+	t /= d/2;
+	if (t < 1) return c/2 * t * t + s;
+	t--;
+	return -c/2 * (t * (t-2) - 1) + s;
+};
