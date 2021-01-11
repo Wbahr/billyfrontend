@@ -1,3 +1,4 @@
+//The 'callback' is intended to be the react hook that sets the quantity of an item's quantity input.
 export const handleSetQuantity = (event, isUnitConversion, unitIncrement, roundType, callback) => {
     const {target: {value}} = event
 
