@@ -4,6 +4,7 @@ import Context from '../../../config/context'
 import {getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
 import DebounceInput from 'react-debounce-input'
+import { handleSetQuantity, initializeQuantity } from '../../../pageComponents/_common/helpers/addToCartLogic'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -163,16 +164,23 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const {availability, leadTimeDays} = foundAvailability || {}
 	
 	const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
-	const {unitPrice, unitOfMeasure, isUnitConversion, unitSize, roundType} = foundPrice || {}
+	const {
+		unitPrice, 
+		unitOfMeasure, 
+		isUnitConversion, 
+		unitSize, 
+		roundType} = foundPrice || {}
 
 	const [quantity, setQuantity] = useState(unitSize || 1)
-	const unitIncrement = unitSize || 1
+	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
 
 	useEffect(() => {
-		setQuantity(unitSize || 1) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+		if(foundPrice){
+			initializeQuantity(isUnitConversion, unitIncrement || 1) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+		}
 	}, [itemPrices])
 	
 	useEffect(() => {
@@ -182,39 +190,8 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		}
 	}, [details.customerPartNumbers])
 	
-	const handleSetQuantity = (event) => {
-		const {target: {value}, preventDefault} = event
-
-		var valueToSet = Number(value)
-
-		if(Number.isInteger(valueToSet)) {
-			if(isUnitConversion && valueToSet % unitIncrement !== 0){
-				switch (roundType) {
-					case 'U':
-						valueToSet = valueToSet - (valueToSet % unitIncrement) + unitIncrement
-						break;
-					case 'D':
-						valueToSet = valueToSet - (valueToSet % unitIncrement)
-						break;
-					case 'S':
-						valueToSet = (valueToSet % unitIncrement) >= (valueToSet / 2)
-							? valueToSet - (valueToSet % unitIncrement) + unitIncrement
-							: valueToSet - (valueToSet % unitIncrement)
-						break;
-					case 'N':
-						//Keep the value the same
-						break;
-					default:
-						break;
-				}
-			}
-
-			setQuantity(0) //Resets the value. Prevents value from seemingly not properly updating.
-			setQuantity(valueToSet)
-		}
-		else {
-			setQuantity(0)
-		}
+	const setQuantityHandler = (event) => {
+		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', setQuantity)
 	}
 	
 	const handlePartClick = () => {
@@ -300,7 +277,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 					<Div>Quantity:
 						<DebounceInput
 							debounceTimeout={1000}
-							onChange={handleSetQuantity}
+							onChange={setQuantityHandler}
 							value={quantity}
 							type='number'
 							min='0'
@@ -308,7 +285,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 							style={{width: '60px'}}
 						/>
 						{
-							isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitSize}`}</span>
+							isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitIncrement}`}</span>
 						}
 					</Div>
 					
