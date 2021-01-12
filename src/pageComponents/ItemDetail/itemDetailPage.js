@@ -207,7 +207,7 @@ export default function ItemDetailPage({ history }) {
 	const [accessoryItems, setAccessoryItems] = useState([])
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
 	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
-	const [quantity, setQuantity] = useState(1);
+	const [quantity, setQuantity] = useState({ qty: 1});
 
 	const [priceInfo, setPriceInfo] = useState(null)
 	const {
@@ -230,7 +230,12 @@ export default function ItemDetailPage({ history }) {
 	//Updates the quantity when
 	useEffect(() => {
 		if(priceInfo){
-			initializeQuantity(isUnitConversion, unitIncrement || 1, setQuantity) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+			initializeQuantity(isUnitConversion, unitIncrement || 1, (qty) => {
+				setQuantity({
+					...quantity,
+					qty: qty
+				})
+			})
 		}
 	}, [priceInfo])
 
@@ -308,17 +313,27 @@ export default function ItemDetailPage({ history }) {
 	const handleAddToCart = () => {
 		context.addItem({
 			frecno: invMastUid,
-			quantity: parseInt(quantity, 10),
+			quantity: parseInt(quantity.qty, 10),
 			itemNotes: null,
 			itemUnitPriceOverride: null,
 			customerPartNumberId: selectedCustomerPartNumber || null
 		})
 		setShowAddedToCartModal(true)
-		setQuantity(unitIncrement)
+		initializeQuantity(isUnitConversion, unitSize, (qty) => {
+			setQuantity({
+				...quantity,
+				qty: qty
+			})
+		})
 	}
 	
 	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', setQuantity)
+		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
+			setQuantity({
+				...quantity,
+				qty: qty
+			})
+		})
 	}
 	
 	const handleShowLocationsModal = () => {
@@ -366,8 +381,6 @@ export default function ItemDetailPage({ history }) {
 			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
 		))
 
-		console.log(priceInfo)
-
 		return (
 			<ItemDetailPageContainer>
 				<DivTitle>
@@ -387,7 +400,7 @@ export default function ItemDetailPage({ history }) {
 						
 						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
-								itemAvailability.availability
+								`Lead time ${itemAvailability.leadTimeDays} days`
 							) : (
 								`Available: ${itemAvailability.availability}`
 							)}
@@ -399,7 +412,7 @@ export default function ItemDetailPage({ history }) {
 								<DebounceInput
 									debounceTimeout={1000}
 									onChange={setQuantityHandler}
-									value={quantity}
+									value={quantity.qty}
 									type='number'
 									min='0'
 									step={unitIncrement}
@@ -425,7 +438,7 @@ export default function ItemDetailPage({ history }) {
 					<PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 					
 					<Row>
-						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
+						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
 								`Lead time ${itemAvailability.leadTimeDays} days`
