@@ -11,7 +11,7 @@ export default function DrawerPlugin(props) {
 	
 	const classes = useStyles();
 	
-	const filterValidTypes = child => PLUGIN_TYPES.includes(child.type.name || child.type.type.name)
+	const filterValidTypes = child => PLUGIN_TYPES.includes(child.type.name)
 	const injectProps = child => React.cloneElement(child, {...props, classes})
 	const childArray = React.Children.map(React.Children.toArray(children).filter(filterValidTypes), injectProps)
 	
