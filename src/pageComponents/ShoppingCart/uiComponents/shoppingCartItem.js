@@ -6,6 +6,7 @@ import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
 import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
 import SplitLineModal from "./splitLineModal";
@@ -160,7 +161,15 @@ const P3 = styled.p`
 `
 
 export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
- 	priceInfo, availabilityInfo, customerPartNumbers, history}) {
+ 	priceInfo, availabilityInfo, customerPartNumbers, cartPricing, history}) {
+
+	const {
+		unitPrice, 
+		unitOfMeasure, 
+		isUnitConversion, 
+		unitSize, 
+		roundType} = priceInfo || {}
+	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	
@@ -210,10 +219,10 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 		})
 	}
 	
-	const handleQuantityChange = ({target: {value}}) => {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setCartItem({...cartItem, quantity: value.length ? parseInt(value) : ''})
-		}
+	const setQuantityHandler = (event) => {
+		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
+			setCartItem({...cartItem, quantity: qty})
+		})
 	}
 	
 	const handleUpdateItemNotes = ({target: {value}}) => {
@@ -287,12 +296,23 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						<DivQuantity>
 							<DivItem>
 								<Label>Qty:</Label>
-								<input
-									onChange={handleQuantityChange}
-									style={{width: 50}}
+								<DebounceInput
+									debounceTimeout={500}
+									onChange={setQuantityHandler}
 									value={cartItem.quantity}
-									disabled={cartItem.quoteId}
+									type='number'
+									disabled={cartItem.quoteId || cartPricing.state === 'loading'}
+									min='0'
+									step={unitIncrement}
+									style={{width: '60px'}}
 								/>
+								<div>
+									{
+										isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Increment ${unitIncrement}/`}</span>
+									}
+									<span>{unitOfMeasure}</span>
+								</div>
+								
 							</DivItem>
 							<DivItem>
 								<DivRow>

@@ -382,7 +382,7 @@ export default function ItemDetailPage({ history }) {
 					<DivPurchaseInfo>
 						<Row>
 							<Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
-							<P> /each</P>
+							<P> /{unitOfMeasure}</P>
 						</Row>
 						
 						<Pbold onClick={handleShowLocationsModal}>

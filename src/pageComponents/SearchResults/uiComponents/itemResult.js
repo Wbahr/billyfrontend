@@ -171,7 +171,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		unitSize, 
 		roundType} = foundPrice || {}
 
-	const [quantity, setQuantity] = useState(unitSize || 1)
+	const [quantity, setQuantity] = useState({ qty: unitSize || 1})
 	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
@@ -179,7 +179,10 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 
 	useEffect(() => {
 		if(foundPrice){
-			initializeQuantity(isUnitConversion, unitIncrement || 1) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+			initializeQuantity(isUnitConversion, {
+				...quantity,
+				qty: unitIncrement || 1
+			}) //The '|| 1' prevents an undefined value from creating an uncontrolled input
 		}
 	}, [itemPrices])
 	
@@ -191,7 +194,12 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	}, [details.customerPartNumbers])
 	
 	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', setQuantity)
+		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
+			setQuantity({
+				...quantity,
+				qty: qty
+			})
+		})
 	}
 	
 	const handlePartClick = () => {
@@ -211,7 +219,12 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 			customerPartNumberId: customerPartNumber
 		})
 		addedToCart()
-		setQuantity(1)
+		initializeQuantity(isUnitConversion, unitSize, (qty) => {
+			setQuantity({
+				...quantity,
+				qty: qty
+			})
+		})
 	}
 	
 	const handlePartNumberChange = ({target}) => setCustomerPartNumber(target.value)
