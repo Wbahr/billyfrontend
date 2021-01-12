@@ -54,7 +54,6 @@ export default function Carousel({children, scrollDeltaOverride, ...props}) {
 	
 	const scrollRight = () => {
 		const carouselScrollDelta = scrollDeltaOverride || window.innerWidth * .65
-		console.log('carouselScrollDelta', carouselScrollDelta)
 		scrollHorizontal(carouselRef.current, carouselScrollDelta, 500)
 	}
 	

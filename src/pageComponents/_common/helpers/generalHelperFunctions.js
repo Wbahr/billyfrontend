@@ -90,7 +90,7 @@ export const logout = () => {
 	keysToRemove.forEach(key => localStorage.removeItem(key))
 }
 
-export const useDidUpdateEffect = (create, deps) => {
+export const useDidUpdateEffect = (create, deps) => { //Does not trigger on mount, only on successive re-renders
 	const didMountRef = useRef(false);
 	
 	useEffect(() => {

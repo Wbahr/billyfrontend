@@ -38,7 +38,7 @@ const BorderContainer = styled.div`
   flex-direction: column;
   width: ${props => {
   	const categoryName = props.children[0].props.children
-		const approximateLetterWidth = 22;
+		const approximateLetterWidth = 22; //This makes sure the h1 doesn't overflow off the page for mobile users
   	if (categoryName.length * approximateLetterWidth > window.innerWidth) {
   		return 'min-content'
 		} else {
@@ -73,6 +73,7 @@ export default function CategorySearch({ match, history }) {
 	
 	const categoryUrlSlug = match.params.categoryUrlSlug
 	const categoryName = categorySearch?.category?.name
+	const seoHtml = categorySearch?.category?.seoHtml
 	
 	useEffect(() => {
 		performCategorySearch()
@@ -146,6 +147,8 @@ export default function CategorySearch({ match, history }) {
 					<H1>{categoryName}</H1>
 					<ShortBorder/>
 				</BorderContainer>
+				
+				{seoHtml && <div style={{padding: '20px 10px'}} dangerouslySetInnerHTML={{__html: seoHtml}}/>}
 				
 				{results ? (
 					<Carousel>

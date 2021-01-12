@@ -226,7 +226,7 @@ export default function HeaderComponent({history}) {
 	
 	const handleSearch = () => {
 		const search = searchTerm?.length ? searchTerm : queryString.parse(history.location.search).searchTerm
-		history.push(buildSearchString({searchTerm: search, nonweb: searchAsCustomer}))
+		if (search?.length) history.push(buildSearchString({searchTerm: search, nonweb: searchAsCustomer}))
 	}
 	
 	const handleKeyPress = e => e.key === 'Enter' && handleSearch()
