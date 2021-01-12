@@ -177,6 +177,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
 
+	//Updates the quantity when the price info changes
 	useEffect(() => {
 		if(foundPrice){
 			initializeQuantity(isUnitConversion, unitSize, (qty) => {

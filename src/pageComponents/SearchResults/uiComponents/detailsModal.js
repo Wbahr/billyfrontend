@@ -7,6 +7,8 @@ import AirlineModal from '../../_common/modal'
 import {GET_ITEM_PRICE} from "config/providerGQL";
 import { GET_QUICK_LOOK_ITEM_DETAIL } from "config/gqlQueries/gqlItemQueries"
 import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_common/helpers/generalHelperFunctions";
+import DebounceInput from 'react-debounce-input'
+import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
 
 const Div = styled.div`
   display: flex;
@@ -125,8 +127,16 @@ const getItemPricePayload = invMastUid => ({
 
 export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const [item, setItem] = useState(null)
-	const [unitPrice, setUnitPrice] = useState(null)
-	const [quantity, setQuantity] = useState(1)
+	const [priceInfo, setPriceInfo] = useState(null);
+	const {
+		unitPrice, 
+		unitOfMeasure, 
+		isUnitConversion, 
+		unitSize, 
+		roundType} = priceInfo || {}
+	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
+
+	const [quantity, setQuantity] = useState({ qty: 1 })
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
 	const [itemAvailability, setItemAvailability] = useState(null)
@@ -145,22 +155,39 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 		...getItemPricePayload(invMastUid),
 		onCompleted: data => {
 			if (data.getItemPrices[0]) {
-				setUnitPrice(data.getItemPrices[0].totalPrice)
+				setPriceInfo(data.getItemPrices[0])
 			}
 		},
 		fetchPolicy: 'no-cache'
 	})
 
-	function handleSetQuantity({target: {value}}) {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setQuantity(value)
+	//Updates the quantity when the price info changes
+	useEffect(() => {
+		if(priceInfo){
+			initializeQuantity(isUnitConversion, unitIncrement || 1, (qty) => {
+				setQuantity({
+					...quantity,
+					qty: qty
+				})
+			})
 		}
+	}, [priceInfo])
+
+	const setQuantityHandler = (event) => {
+		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
+			setQuantity({
+				...quantity,
+				qty: qty
+			})
+		})
 	}
 
 	function handleCloseModal() {
 		setItem(null)
-		setUnitPrice(null)
-		setQuantity(1)
+		setPriceInfo(null)
+		setQuantity({
+			qty: 0
+		})
 		hideDetailsModal()
 	}
 	
@@ -171,7 +198,7 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const handleAddToCart = () => {
 		context.addItem({
 			frecno: invMastUid,
-			quantity: parseInt(quantity),
+			quantity: parseInt(quantity.qty),
 			itemNotes: '',
 			itemUnitPriceOverride: null,
 			customerPartNumberId: customerPartNumber
@@ -218,12 +245,23 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 								<DivRow>
 									<DivRow>
 										<p>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</p>
-										<p> /each</p>
+										<p> /{unitOfMeasure}</p>
 									</DivRow>
 									
 									<DivRow>
 										<span>Qty:</span>
-										<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+										<DebounceInput
+											debounceTimeout={1000}
+											onChange={setQuantityHandler}
+											value={quantity.qty}
+											type='number'
+											min='0'
+											step={unitIncrement}
+											style={{width: '60px'}}
+										/>
+										{
+											isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitIncrement}`}</span>
+										}
 										<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 									</DivRow>
 								</DivRow>

@@ -207,7 +207,7 @@ export default function ItemDetailPage({ history }) {
 	const [accessoryItems, setAccessoryItems] = useState([])
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
 	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
-	const [quantity, setQuantity] = useState({ qty: 1});
+	const [quantity, setQuantity] = useState({ qty: 1 });
 
 	const [priceInfo, setPriceInfo] = useState(null)
 	const {
@@ -227,7 +227,7 @@ export default function ItemDetailPage({ history }) {
 		setShowAddedToCartModal(false);
 	}
 
-	//Updates the quantity when
+	//Updates the quantity when the price info changes
 	useEffect(() => {
 		if(priceInfo){
 			initializeQuantity(isUnitConversion, unitIncrement || 1, (qty) => {
