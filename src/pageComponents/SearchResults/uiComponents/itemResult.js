@@ -179,10 +179,12 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 
 	useEffect(() => {
 		if(foundPrice){
-			initializeQuantity(isUnitConversion, {
-				...quantity,
-				qty: unitIncrement || 1
-			}) //The '|| 1' prevents an undefined value from creating an uncontrolled input
+			initializeQuantity(isUnitConversion, unitSize, (qty) => {
+				setQuantity({
+					...quantity,
+					qty: qty,
+				})
+			})
 		}
 	}, [itemPrices])
 	
@@ -213,7 +215,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const handleAddToCart = () => {
 		addItem({
 			frecno: result.invMastUid,
-			quantity: parseInt(quantity),
+			quantity: parseInt(quantity.qty),
 			itemNotes: '',
 			itemUnitPriceOverride: null,
 			customerPartNumberId: customerPartNumber
@@ -291,7 +293,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 						<DebounceInput
 							debounceTimeout={1000}
 							onChange={setQuantityHandler}
-							value={quantity}
+							value={quantity.qty}
 							type='number'
 							min='0'
 							step={unitIncrement}
