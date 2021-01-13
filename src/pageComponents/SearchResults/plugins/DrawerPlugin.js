@@ -3,15 +3,18 @@ import {Drawer} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {onWindowResize} from "../../_common/helpers/generalHelperFunctions";
+import CategoriesPlugin from "./CategoriesPlugin";
+import BrandsPlugin from "./BrandsPlugin";
+import AttributesPlugin from "./AttributesPlugin";
 
-const PLUGIN_TYPES = ['CategoriesPlugin', 'BrandsPlugin', 'AttributesPlugin']
+const PLUGIN_TYPES = [CategoriesPlugin, BrandsPlugin, AttributesPlugin]
 
 export default function DrawerPlugin(props) {
 	const { drawerOpen, children } = props
 	
 	const classes = useStyles();
 	
-	const filterValidTypes = child => PLUGIN_TYPES.includes(child.type.name)
+	const filterValidTypes = child => PLUGIN_TYPES.includes(child.type)
 	const injectProps = child => React.cloneElement(child, {...props, classes})
 	const childArray = React.Children.map(React.Children.toArray(children).filter(filterValidTypes), injectProps)
 	
