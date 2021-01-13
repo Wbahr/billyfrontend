@@ -258,7 +258,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						</TextRow>
 						{userInfo && (
 							<TextRow>
-								<select value={selectedCustomerPartNumber || ''} onChange={e => selectCustomerPartNumber(e.target.value)} >
+								<select value={selectedCustomerPartNumber || 0} onChange={e => selectCustomerPartNumber(e.target.value)} >
 									<option value="0">Customer Part#</option>
 									{
 										customerPartNumbers?.map(elem =>
