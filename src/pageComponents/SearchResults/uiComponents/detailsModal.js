@@ -7,8 +7,6 @@ import AirlineModal from '../../_common/modal'
 import {GET_ITEM_PRICE} from "config/providerGQL";
 import { GET_QUICK_LOOK_ITEM_DETAIL } from "config/gqlQueries/gqlItemQueries"
 import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_common/helpers/generalHelperFunctions";
-import DebounceInput from 'react-debounce-input'
-import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 

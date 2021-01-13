@@ -6,11 +6,12 @@ import DebounceInput from 'react-debounce-input'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
-import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
 import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
 import SplitLineModal from "./splitLineModal";
 import CustomerPartModal from "./editCustomerPartModal";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -219,10 +220,9 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 		})
 	}
 	
-	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
-			setCartItem({...cartItem, quantity: qty})
-		})
+	const setQuantityHandler = (qty) => {
+		console.log(`SetQuantityHandler: ${qty}`)
+		setCartItem({...cartItem, quantity: qty})
 	}
 	
 	const handleUpdateItemNotes = ({target: {value}}) => {
@@ -296,20 +296,17 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						<DivQuantity>
 							<DivItem>
 								<Label>Qty:</Label>
-								<DebounceInput
-									debounceTimeout={500}
-									onChange={setQuantityHandler}
-									value={cartItem.quantity}
-									type='number'
-									disabled={cartItem.quoteId || cartPricing.state === 'loading'}
+								<QuantityInput
+									quantity={cartItem.quantity}
+									isUnitConversion={isUnitConversion}
+									unitSize={unitSize}
+									unitOfMeasure={unitOfMeasure}
+									roundType={roundType}
+									handleUpdate={setQuantityHandler}
 									min='0'
-									step={unitIncrement}
-									style={{width: '60px'}}
-								/>
+									debounce
+								/>	
 								<div>
-									{
-										isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Increment ${unitIncrement}/`}</span>
-									}
 									<span>{unitOfMeasure}</span>
 								</div>
 								
