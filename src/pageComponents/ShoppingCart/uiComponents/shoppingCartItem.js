@@ -295,19 +295,29 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 					<DivCol3>
 						<DivQuantity>
 							<DivItem>
-								<Label>Qty:</Label>
-								<QuantityInput
-									quantity={cartItem.quantity}
-									isUnitConversion={isUnitConversion}
-									unitSize={unitSize}
-									unitOfMeasure={unitOfMeasure}
-									roundType={roundType}
-									handleUpdate={setQuantityHandler}
-									min='0'
-									debounce
-								/>	
 								<div>
-									<span>{unitOfMeasure}</span>
+									<Label>Qty:</Label>
+									{
+										isUnitConversion && <AirlineChip style={{
+											marginLeft: '0.5rem', 
+											fontSize: '0.7rem',
+											padding: '0 0.5rem'}}>
+											X {unitIncrement }
+										</AirlineChip>
+									}
+								</div>
+								
+								<div>
+									<QuantityInput
+										quantity={cartItem.quantity}
+										isUnitConversion={isUnitConversion}
+										unitSize={unitSize}
+										unitOfMeasure={unitOfMeasure}
+										roundType={roundType}
+										handleUpdate={setQuantityHandler}
+										min='0'
+										debounce
+									/>
 								</div>
 								
 							</DivItem>
@@ -324,6 +334,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													decimalScale={2}
 													fixedDecimalScale
 												/>
+												<span>{`/${unitOfMeasure}`}</span>
 												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
@@ -338,6 +349,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													decimalScale={2}
 													fixedDecimalScale
 												/>
+												<span>{`/${unitOfMeasure}`}</span>
 												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>

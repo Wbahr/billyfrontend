@@ -157,7 +157,7 @@ const QuantityInput = (props) => {
         width: width || '60px'
     }
 
-    return <div>
+    return <span>
 
         <IncrementDecrementButton 
             onClick={(event) => { incrementDecrementHandler(-unitIncrement)}}
@@ -202,7 +202,7 @@ const QuantityInput = (props) => {
             }}>
             +
         </IncrementDecrementButton>
-    </div>
+    </span>
 }
 
 export default QuantityInput
