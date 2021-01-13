@@ -13,8 +13,8 @@ import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config
 import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
 import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 import LocationsModal from "../SearchResults/uiComponents/locationsModal";
-import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
-import { DebounceInput } from 'react-debounce-input'
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -207,7 +207,7 @@ export default function ItemDetailPage({ history }) {
 	const [accessoryItems, setAccessoryItems] = useState([])
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
 	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
-	const [quantity, setQuantity] = useState({ qty: 1 });
+	const [quantity, setQuantity] = useState(1);
 
 	const [priceInfo, setPriceInfo] = useState(null)
 	const {
@@ -226,18 +226,6 @@ export default function ItemDetailPage({ history }) {
 	function handleAddedToCart() {
 		setShowAddedToCartModal(false);
 	}
-
-	//Updates the quantity when the price info changes
-	useEffect(() => {
-		if(priceInfo){
-			initializeQuantity(isUnitConversion, unitIncrement || 1, (qty) => {
-				setQuantity({
-					...quantity,
-					qty: qty
-				})
-			})
-		}
-	}, [priceInfo])
 
 	const {data: itemInfo} = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
 		variables: { invMastUid: invMastUid },
@@ -313,27 +301,17 @@ export default function ItemDetailPage({ history }) {
 	const handleAddToCart = () => {
 		context.addItem({
 			frecno: invMastUid,
-			quantity: parseInt(quantity.qty, 10),
+			quantity: parseInt(quantity, 10),
 			itemNotes: null,
 			itemUnitPriceOverride: null,
 			customerPartNumberId: selectedCustomerPartNumber || null
 		})
 		setShowAddedToCartModal(true)
-		initializeQuantity(isUnitConversion, unitSize, (qty) => {
-			setQuantity({
-				...quantity,
-				qty: qty
-			})
-		})
+		setQuantity(1)
 	}
 	
-	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
-			setQuantity({
-				...quantity,
-				qty: qty
-			})
-		})
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 	
 	const handleShowLocationsModal = () => {
@@ -409,17 +387,19 @@ export default function ItemDetailPage({ history }) {
 						<DivPurchaseInfoButtons>
 							<RowCentered>
 								<span>Qty:</span>
-								<DebounceInput
-									debounceTimeout={1000}
-									onChange={setQuantityHandler}
-									value={quantity.qty}
-									type='number'
+								<QuantityInput
+									quantity={quantity}
+									isUnitConversion={isUnitConversion}
+									unitSize={unitSize}
+									unitOfMeasure={unitOfMeasure}
+									roundType={roundType}
+									handleUpdate={setQuantityHandler}
 									min='0'
-									step={unitIncrement}
-									style={{width: '60px'}}
 								/>
 								{
-									isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitIncrement}`}</span>
+									isUnitConversion && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
+										X {unitIncrement }
+									</AirlineChip>
 								}
 							</RowCentered>
 							
