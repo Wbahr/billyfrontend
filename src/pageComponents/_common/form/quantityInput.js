@@ -39,11 +39,16 @@ const QuantityInput = (props) => {
     useEffect(() => {
         let newQuantity = quantity
 
+        //If there is no unit increment, allow free-form typing input
+        if(unitIncrement === 1 || roundType === 'N'){
+            return
+        }
+
         if(Number.isInteger(newQuantity)) {
 			if(isUnitConversion && newQuantity % unitIncrement !== 0){
 				switch (roundType) {
 					case 'U':
-						newQuantity = newQuantity - (newQuantity % unitIncrement) + unitIncrement
+                        newQuantity = newQuantity - (newQuantity % unitIncrement) + unitIncrement
 						break;
 					case 'D':
 						newQuantity = newQuantity - (newQuantity % unitIncrement)
@@ -52,9 +57,6 @@ const QuantityInput = (props) => {
 						newQuantity = (newQuantity % unitIncrement) >= (newQuantity / 2)
 							? newQuantity - (newQuantity % unitIncrement) + unitIncrement
 							: newQuantity - (newQuantity % unitIncrement)
-						break;
-					case 'N':
-						//Keep the value the same
 						break;
 					default:
 						break;
@@ -68,7 +70,9 @@ const QuantityInput = (props) => {
     })
 
     const changeQuantity = (amount) => {
-        var newQuantity = quantity + amount
+        const enterAmount = Number(amount)
+
+        var newQuantity = quantity + enterAmount
         if(!isNaN(min) && Number.isInteger(Number(min))
             && newQuantity < Number(min)) 
             return
@@ -76,7 +80,7 @@ const QuantityInput = (props) => {
             && newQuantity > Number(max)) 
             return
 
-        handleUpdate(quantity + amount)
+        handleUpdate(newQuantity)
     }
 
     const stylesToApply = {
@@ -93,8 +97,10 @@ const QuantityInput = (props) => {
             -
         </IncrementDecrementButton>
         <input 
-            readOnly
-            onKeyPress={event => event.preventDefault()}
+            readOnly={unitIncrement > 1}
+            onChange={(unitIncrement > 1 ? null : (event) => {
+                handleUpdate(Number(event.target.value))
+            })}
             value={quantity}
             step={unitIncrement || 1}
             style={{
