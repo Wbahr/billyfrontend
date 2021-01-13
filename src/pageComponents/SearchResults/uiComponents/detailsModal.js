@@ -10,6 +10,7 @@ import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_commo
 import DebounceInput from 'react-debounce-input'
 import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const Div = styled.div`
   display: flex;
@@ -233,7 +234,7 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 							
 							<DivCol2>
 								<PpartTitle>
-									{ unitIncrement > 1 && <QuantityHighlight>X {unitIncrement }</QuantityHighlight> }
+									{ unitIncrement > 1 && <AirlineChip>X {unitIncrement }</AirlineChip> }
 									<span>{item.itemDesc}</span>
 								</PpartTitle>
 								<p>{item.extendedDesc}</p>
