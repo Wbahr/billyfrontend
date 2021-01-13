@@ -9,6 +9,7 @@ import { GET_QUICK_LOOK_ITEM_DETAIL } from "config/gqlQueries/gqlItemQueries"
 import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_common/helpers/generalHelperFunctions";
 import DebounceInput from 'react-debounce-input'
 import { handleSetQuantity, initializeQuantity } from 'pageComponents/_common/helpers/addToCartLogic'
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
 
 const Div = styled.div`
   display: flex;
@@ -116,6 +117,17 @@ const ButtonBlack = styled.button`
   margin: 4px auto 0 auto;
 `
 
+const QuantityHighlight = styled.span`
+	display: inline-block;
+	margin: 0;
+	margin-right: 1rem;
+	padding: 3px 0.5rem;
+	border-radius: 5px;
+	background-color: ${props => props.theme.backgrounds.blue.main};
+	color: ${props => props.theme.backgrounds.blue.contrastText};
+	font-size: 0.75rem;
+`
+
 const getItemPricePayload = invMastUid => ({
 	variables: {
 		items: [{
@@ -136,7 +148,7 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 		roundType} = priceInfo || {}
 	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
-	const [quantity, setQuantity] = useState({ qty: 1 })
+	const [quantity, setQuantity] = useState(1)
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
 	const [itemAvailability, setItemAvailability] = useState(null)
@@ -161,33 +173,14 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 		fetchPolicy: 'no-cache'
 	})
 
-	//Updates the quantity when the price info changes
-	useEffect(() => {
-		if(priceInfo){
-			initializeQuantity(isUnitConversion, unitIncrement || 1, (qty) => {
-				setQuantity({
-					...quantity,
-					qty: qty
-				})
-			})
-		}
-	}, [priceInfo])
-
-	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
-			setQuantity({
-				...quantity,
-				qty: qty
-			})
-		})
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 
 	function handleCloseModal() {
 		setItem(null)
 		setPriceInfo(null)
-		setQuantity({
-			qty: 0
-		})
+		setQuantity(1)
 		hideDetailsModal()
 	}
 	
@@ -198,7 +191,7 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const handleAddToCart = () => {
 		context.addItem({
 			frecno: invMastUid,
-			quantity: parseInt(quantity.qty),
+			quantity: parseInt(quantity),
 			itemNotes: '',
 			itemUnitPriceOverride: null,
 			customerPartNumberId: customerPartNumber
@@ -239,7 +232,10 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 							</DivCol1>
 							
 							<DivCol2>
-								<PpartTitle>{item.itemDesc}</PpartTitle>
+								<PpartTitle>
+									{ unitIncrement > 1 && <QuantityHighlight>X {unitIncrement }</QuantityHighlight> }
+									<span>{item.itemDesc}</span>
+								</PpartTitle>
 								<p>{item.extendedDesc}</p>
 								
 								<DivRow>
@@ -250,18 +246,14 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 									
 									<DivRow>
 										<span>Qty:</span>
-										<DebounceInput
-											debounceTimeout={1000}
-											onChange={setQuantityHandler}
-											value={quantity.qty}
-											type='number'
-											min='0'
-											step={unitIncrement}
-											style={{width: '60px'}}
-										/>
-										{
-											isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitIncrement}`}</span>
-										}
+										<QuantityInput
+											quantity={quantity}
+											isUnitConversion
+											unitSize={unitSize}
+											unitOfMeasure={unitOfMeasure}
+											roundType={roundType}
+											handleUpdate={setQuantityHandler}
+										/>										
 										<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 									</DivRow>
 								</DivRow>
