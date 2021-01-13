@@ -498,6 +498,71 @@ export const QUERY_ITEM_SEARCH = gql`
 	}
 `
 
+export const CATEGORY_SEARCH = gql`
+	query CategorySearch($searchParams: CategorySearchRequest){
+  categorySearch(searchParams: $searchParams){
+    category{
+      id
+      name
+      urlSlug
+      imageUrl
+      seoHtml
+      breadCrumbs{
+        breadCrumbUrl
+        breadcrumbTrail{
+          id
+          name
+          urlSlug
+          imageUrl
+          seoHtml
+        }
+      }
+      children{
+        id
+        name
+        urlSlug
+        imageUrl
+        seoHtml
+        breadCrumbs{
+          breadCrumbUrl
+          breadcrumbTrail{
+            id
+            name
+            urlSlug
+            imageUrl
+            seoHtml
+          }
+        }
+      }
+    }
+    attributes {
+      attributeName
+      attributeNameDisplay
+      features {
+        featureName
+        featureNameDisplay
+        featureCount
+        selected
+      }
+    }
+    brands {
+      brandName
+      brandNameDisplay
+      brandCount
+      selected
+    }
+    innerSearchTerms
+    resultPage
+    resultSize
+    searchType
+    sortType
+    searchTotalCount
+    result
+  }
+}
+
+`
+
 export const QUERY_STOCK_AVAILABILITY = gql`
     query GetStockAvailability($invMastUid: Int){
         airlineStock(invMastUid: $invMastUid){

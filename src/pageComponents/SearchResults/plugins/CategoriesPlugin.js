@@ -34,7 +34,7 @@ const DivOption = styled.div`
 `
 
 const DivOptionRow = styled.div`
-	display: flex; 
+	display: flex;
 	align-items: center;
 	margin: 4px 0;
 `
@@ -67,7 +67,7 @@ const CategoriesDiv = styled.div`
 	margin-left: 48px;
 `
 
-export default function CategoryFilter({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen}) {
+export default function CategoriesPlugin({isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen}) {
 	const [isOpen, setIsOpen] = useState(true)
 	const selectedParentIdx = parentCategories.findIndex(category => category.selected)
 	const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
@@ -143,7 +143,7 @@ export default function CategoryFilter({isSearching, parentCategories, childCate
 	)
 	
 	const ParentCategories = () => <>{(parentCategories || []).reduce(sortAndMapToOption(toParentCategory), [])}</>
-
+	
 	return (
 		<div>
 			<DivTitle onClick={() => setIsOpen(!isOpen)}>

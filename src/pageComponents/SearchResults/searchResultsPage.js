@@ -1,149 +1,41 @@
-import React, { useState, useEffect, useMemo, useContext, useRef } from 'react'
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import styled from 'styled-components'
-import queryString from 'query-string'
-import ItemResult from './uiComponents/itemResult'
-import ResultsSearch from './uiComponents/resultsSearch'
-import ResultsSummary from './uiComponents/resultsSummary'
-import AttributeFilter from './uiComponents/attributeFilter'
-import BrandFilter from './uiComponents/brandFilter'
-import CategoryFilter from './uiComponents/categoryFilter'
-import LocationsModal from './uiComponents/locationsModal'
-import DetailsModal from './uiComponents/detailsModal'
-import AddedModal from './uiComponents/addedModal'
+import React, { useState, useEffect,  } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import {QUERY_ITEM_SEARCH, GET_ITEMS_BY_ID} from '../../config/providerGQL'
-import SkeletonItem from './uiComponents/skeletonItem'
-import Context from '../../config/context'
-import {buildSearchString, useDidUpdateEffect, onWindowResize} from "../_common/helpers/generalHelperFunctions";
-import {Pagination} from '@material-ui/lab'
-import {AccountTree as AttributeIcon, Category as CategoryIcon, Tune as FilterIcon, FormatBold as BrandIcon, Store, ChevronLeft as ChevronLeftIcon} from '@material-ui/icons';
-import {Drawer, Typography, IconButton} from '@material-ui/core'
-
-const Flex = styled.div`
-	display: flex;
-`
-
-const FlexCol = styled.div`
-	display: flex;
-	flex-direction: column;
-`
-
-const FlexWrap = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-`
-
-const PaginationContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	max-width: 420px
-`
-
-const Content = styled.div`
-	flex-grow: 1;
-	padding: 10px;
-	overflow-x: hidden;
-`
-
-const AppBar = styled.div`
-	z-index: 1;
-	display: flex;
-	width: 100%;
-	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
-`
+import {QUERY_ITEM_SEARCH} from '../../config/providerGQL'
+import {buildSearchString, useDidUpdateEffect, cleanSearchState} from "../_common/helpers/generalHelperFunctions";
+import AppBarPlugin from "./plugins/AppBarPlugin";
+import DrawerPlugin from "./plugins/DrawerPlugin";
+import BrandsPlugin from "./plugins/BrandsPlugin";
+import AttributesPlugin from "./plugins/AttributesPlugin";
+import SortPlugin from "./plugins/SortPlugin";
+import SearchTermsPlugin from "./plugins/SearchTermsPlugin";
+import PaginationPlugin from "./plugins/PaginationPlugin";
+import SearchContainer from "./uiComponents/SearchContainer";
+import {useSearchState, useSearchQueryParams} from "./hooks";
+import CategoriesPlugin from "./plugins/CategoriesPlugin";
+import ResultSummaryPlugin from "./plugins/ResultSummaryPlugin";
 
 const RESULT_SIZE = 24
 
-const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
-	const removeTypeName = ({__typename, ...rest}) => rest
-	return {
-		brands: brands?.map(removeTypeName) || [],
-		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
-		parentCategories: parentCategories?.map(removeTypeName) || [],
-		childCategories: childCategories?.map(removeTypeName) || []
-	}
-}
-
 export default function SearchResultsPage({history}) {
+	const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
+	const { sortType, searchTerm, searchTerms, resultPage, nonweb } = searchQueryParams
 	
-	const setQueryParam = (fieldName, value) => {
-		const search = queryString.stringify({ ...queryString.parse(location.search), [fieldName]: value })
-		history.push({ pathname: '/search', search })
-	}
-	
-	const getParsedQueryString = () => {
-		const parsed = queryString.parse(location.search)
-		const { searchTerm, innerSearchTerms, sortType, nonweb, resultPage,
-			parentCategory, childCategory, brands, ...selectedAttributes} = parsed;
-		return {
-			parsedQueryString: parsed,
-			resetStateWhenTheseChange: {parentCategory, childCategory, brands, selectedAttributes}
-		}
-	}
-	
-	const [{parsedQueryString, resetStateWhenTheseChange}, setParsedQueryString] = useState(getParsedQueryString)
-	
-	useEffect(() => {
-		setParsedQueryString(getParsedQueryString())
-	}, [location.search])
-	
-	const { searchTerm, innerSearchTerms, sortType='relevancy', nonweb='false', resultPage,
-		parentCategory, childCategory, brands: selectedBrands, ...selectedAttributes } = parsedQueryString
-	
-	const setInnerSearchTerms = newInnerSearchTerms => {
+	const setSearchTerms = newInnerSearchTerms => {
 		setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
+		handleSetSearchState({searchTerms: newInnerSearchTerms})
 	}
 	
-	const setSortType = newSortType => setQueryParam('sortType', newSortType)
+	const setSortType = newSortType => {
+		setQueryParam('sortType', newSortType)
+		handleSetSearchState({sortType: newSortType})
+	}
 	
-	const [searchData, setSearchData] = useState({results: [], totalResults: '--', isSearching: false})
-	const handleSetSearchData = newSearchData => setSearchData({...searchData, ...newSearchData})
-	const {results, totalResults, isSearching} = searchData
+	const queryParamSearchState = { ...searchQueryParams, isSynced: false, results: [], totalResults: '--', isSearching: false }
+	const [searchState, setSearchState, {setBrands, setAttributes, setParentCategory, setChildCategory}] = useSearchState(queryParamSearchState)
+	const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
+	const { totalResults, isSynced, brands, attributes, parentCategories, childCategories } = searchState
 	
-	const initialParentCategories = parentCategory ? [{parentCategoryName: parentCategory, parentCategoryDisplayName: parentCategory, selected: true}] : []
-	const initialChildCategories = childCategory ? [{childCategoryName: childCategory, childCategoryDisplayName: childCategory, selected: true}] : []
-	const initialAttributes = Object.keys(selectedAttributes)
-		.map(attributeName => ({
-			attributeName,
-			features: selectedAttributes[attributeName]
-				.split(',')
-				.map(featureName => ({
-					featureName,
-					selected: true
-				}))
-		})) 
-	const initialBrands = selectedBrands ? selectedBrands.split(',').map(b => ({brandName: b, selected: true})) : []
-	const initialSearchState = { brands: initialBrands, attributes: initialAttributes, parentCategories: initialParentCategories,
-		childCategories: initialChildCategories, isSynced: false }
-	
-	const [searchState, setSearchState] = useState(initialSearchState)
-	const { brands, attributes, parentCategories, childCategories, isSynced } = searchState
-	
-	const setBrands = brands => setSearchState({ ...searchState, brands, isSynced: false })
-	const setAttributes = attributes => setSearchState({ ...searchState, attributes, isSynced: false })
-	const setParentCategories = parentCategories => setSearchState({ ...searchState, childCategories: null, parentCategories, isSynced: false })
-	const setChildCategories = childCategories => setSearchState({ ...searchState, childCategories, isSynced: false })
-	
-	const [showAddedToCartModal, setShowAddedToCartModal] = useState(false)
-	const [locationsModalItem, setLocationsModalItem] = useState(null)
-	const [detailsModalInvMastUid, setDetailsModalItem] = useState(0)
-	const [ottoFindPart, setOttoFindPart] = useState(false)
-	const [itemDetails, setItemDetails] = useState([])
 	const [lastSearchPayload, setLastSearchPayload] = useState({})
-	const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
-	
-	const classes = useStyles();
-	const {getItemAvailabilities, getItemPrices, userInfo, impersonatedCompanyInfo} = useContext(Context)
-	
-	useDidUpdateEffect(() => {
-		if (ottoFindPart) {
-			drift.api?.startInteraction({ interactionId: 126679 })
-		} else {
-			drift.api?.hideChat()
-		}
-	}, [ottoFindPart])
 	
 	useDidUpdateEffect(() => {
 		if (!isSynced) {
@@ -158,7 +50,7 @@ export default function SearchResultsPage({history}) {
 			
 			history.replace(buildSearchString({
 				searchTerm,
-				innerSearchTerms,
+				innerSearchTerms: searchTerms,
 				sortType,
 				nonweb,
 				resultPage: 1,
@@ -167,9 +59,10 @@ export default function SearchResultsPage({history}) {
 				brands: selectedBrands,
 				...selectedAttributes
 			}))
+			
 			if (resultPage === '1') performItemSearch()
 		}
-	}, [searchState])
+	}, [searchState.brands, searchState.attributes, searchState.childCategories, searchState.parentCategories])
 	
 	useDidUpdateEffect(() => {
 		if (resultPage === '1') {
@@ -177,31 +70,36 @@ export default function SearchResultsPage({history}) {
 		} else {
 			setQueryParam('resultPage', 1)
 		}
-	}, [innerSearchTerms, sortType])
+	}, [searchTerms, sortType])
 	
 	useEffect(() => {
 		performItemSearch()
 	}, [resultPage])
 	
 	useEffect(() => {
-		searchData.results.length && getItemPrices(searchData.results)
-	}, [searchData.results, impersonatedCompanyInfo])
-	
-	useEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
-		if (!resetStateWhenTheseChange.brands
-			&& !resetStateWhenTheseChange.childCategory
-			&& !resetStateWhenTheseChange.parentCategory
-			&& !Object.keys(resetStateWhenTheseChange.selectedAttributes)?.length) {
-			setSearchState(initialSearchState)
+		if (resultPage === '1') {
+			performItemSearch()
+		} else {
+			setQueryParam('resultPage', 1)
 		}
-	}, [resetStateWhenTheseChange])
+	}, [searchTerm])
+	
+	useDidUpdateEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
+		if (!searchQueryParams.parentCategories.length
+			&& !searchQueryParams.childCategories.length
+			&& !searchQueryParams.brands.length
+			&& !searchQueryParams.attributes.length //If these contain values, that means the search state updated the query string, so we do not need to reset
+		) {
+			setSearchState(queryParamSearchState)
+		}
+	}, [searchQueryParams.parentCategories.length, searchQueryParams.childCategories.length, searchQueryParams.brands.length, searchQueryParams.attributes.length])
 	
 	const performItemSearch = () => {
-		handleSetSearchData({isSearching: true})
+		handleSetSearchState({isSearching: true})
 		const payload = {
 			search: {
 				searchTerm,
-				innerSearchTerms: innerSearchTerms ? innerSearchTerms.split(',') : [],
+				innerSearchTerms: searchTerms ? searchTerms.split(',') : [],
 				searchType: nonweb === 'true' ? 'nonweb' :'web',
 				sortType,
 				resultPage,
@@ -222,9 +120,8 @@ export default function SearchResultsPage({history}) {
 		fetchPolicy: 'no-cache',
 		onCompleted: ({itemSearch}) => {
 			if (variables.search === lastSearchPayload.search) {
-				const searchState = cleanSearchState(itemSearch)
-				setSearchState({ ...searchState, isSynced: true })
-				parseSearchResults(itemSearch)
+				const newSearchState = cleanSearchState(itemSearch)
+				handleSetSearchState({ ...newSearchState, isSynced: true, results: itemSearch.result, totalResults: itemSearch.searchTotalCount, isSearching: false })
 			}
 		},
 		onError: () => {
@@ -232,260 +129,49 @@ export default function SearchResultsPage({history}) {
 		}
 	})
 	
-	function parseSearchResults({result, searchTotalCount}) {
-		const invMastUids = result.map(i => i.invMastUid)
-		getItemDetails({ variables: { invMastUids } })
-		getItemAvailabilities(result)
-		
-		if (results.length >= RESULT_SIZE * 2) setOttoFindPart(true)
-		
-		handleSetSearchData({results: result, totalResults: searchTotalCount, isSearching: false})
-	}
-	
-	const [getItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
-		fetchPolicy: 'no-cache',
-		onCompleted: ({itemDetailsBatch, customerPartNumbersBatch}) => {
-			const mergedDetails = itemDetailsBatch.map(details => ({
-				...details,
-				customerPartNumbers: customerPartNumbersBatch
-					.filter(({invMastUid}) => details.invMastUid === invMastUid)
-					.map(part => ({partNumber: part.customerPartNumber, partId: part.id}))
-			}))
-			setItemDetails([...itemDetails, ...mergedDetails])
-		}
-	})
-	
-	const handleShowLocationsModal = (invMastUid) => setLocationsModalItem(invMastUid)
-
-	const handleHideLocationsModal = () => setLocationsModalItem(null)
-
-	const handleShowDetailsModal = (invMastUid) => setDetailsModalItem(invMastUid)
-
-	const handleHideDetailsModal = () => setDetailsModalItem(0)
-	
-	const handleAddedToCart = () => setShowAddedToCartModal(true)
-	
-	const handleAddedToCartModal = () => setShowAddedToCartModal(false)
-	
-	const toggleDrawer = () => setDrawerOpen(!drawerOpen)
-	
-	const itemSearchResults = useMemo(() => results.map(result => (
-		<ItemResult
-			key={result.invMastUid}
-			result={result}
-			details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
-			history={history}
-			toggleDetailsModal={handleShowDetailsModal}
-			toggleLocationsModal={handleShowLocationsModal}
-			addedToCart={handleAddedToCart}
-		/>
-	)), [results, itemDetails])
-	
-	const handlePageChange = (e, page) => {
-		setQueryParam('resultPage', page)
-		window.scrollTo({top: 0, behavior: 'smooth'})
-	}
-	
-	const PaginationComponent = () => (
-		<PaginationContainer>
-			<Pagination
-				count={Math.ceil(totalResults / RESULT_SIZE)}
-				page={parseInt(resultPage)}
-				onChange={handlePageChange}
-			/>
-		</PaginationContainer>
-	)
-	
-	const [contentHeight, setContentHeight] = useState(window.innerHeight - 48)
-	
-	useEffect(() => {
-		onWindowResize(() => setContentHeight(window.innerHeight - 48))
-	}, [])
+	const handlePageChange = page => setQueryParam('resultPage', page)
 	
 	return (
-		<div>
-			<AppBar className={classes.sticky}>
-				<IconButton
-					aria-label="toggle drawer"
-					onClick={toggleDrawer}
-					className={classes.menuButton}
-				>
-					<FilterIcon />
-					<ChevronLeftIcon className={clsx({
-						[classes.chevronRight]: !drawerOpen,
-						[classes.chevronLeft]: drawerOpen
-					})} />
-				</IconButton>
-				<Typography variant="h6" noWrap style={{margin: 'auto 0', color: 'white'}}>
-					Search Results
-				</Typography>
-			</AppBar>
-			
-			<Flex>
-				<Drawer
-					variant="permanent"
-					className={clsx(classes.drawer, {
-						[classes.drawerOpen]: drawerOpen,
-						[classes.drawerClose]: !drawerOpen,
-					})}
-					classes={{
-						paper: clsx({
-							[classes.drawerOpen]: drawerOpen,
-							[classes.drawerClose]: !drawerOpen,
-						}),
-					}}
-					PaperProps={{style: {position: 'relative'}}}
-					style={{height: contentHeight}}
-				>
-					<CategoryFilter {...{isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen, setDrawerOpen}} />
-					<BrandFilter {...{brands, setBrands, classes, drawerOpen, setDrawerOpen}}/>
-					<AttributeFilter {...{attributes, setAttributes, classes, drawerOpen, setDrawerOpen}} />
-				</Drawer>
-				
-				<Content>
-					<FlexCol>
-						<ResultsSummary
-							searchTerm={searchTerm}
-							totalResults={totalResults}
-							isSearching={isSearching}
-						/>
-						
-						<ResultsSearch
-							sortType={sortType}
-							setSortType={setSortType}
-							innerSearchTerms={innerSearchTerms}
-							setInnerSearchTerms={setInnerSearchTerms}
-						/>
-						
-						<PaginationComponent/>
-					</FlexCol>
-					
-					<FlexWrap>
-						{isSearching && <LoadingItems/>}
-						{!isSearching && itemSearchResults}
-					</FlexWrap>
-					
-					<PaginationComponent/>
-				</Content>
-			</Flex>
-		
-			<AddedModal
-				open={showAddedToCartModal}
-				text="Added to Cart!"
-				onClose={handleAddedToCartModal}
-				timeout={900}
+		<SearchContainer
+			searchTerm={searchTerm}
+			searchState={searchState}
+			history={history}
+		>
+			<AppBarPlugin
+				title="Search Results"
 			/>
-			
-			<LocationsModal
-				open={!!locationsModalItem}
-				hideLocationsModal={handleHideLocationsModal}
-				invMastUid={locationsModalItem}
+			<DrawerPlugin>
+				<CategoriesPlugin
+					childCategories={childCategories}
+					setChildCategories={setChildCategory}
+					parentCategories={parentCategories}
+					setParentCategories={setParentCategory}
+				/>
+				<BrandsPlugin
+					brands={searchState.brands}
+					setBrands={setBrands}
+				/>
+				<AttributesPlugin
+					attributes={searchState.attributes}
+					setAttributes={setAttributes}
+				/>
+			</DrawerPlugin>
+			<ResultSummaryPlugin
+				searchTerm={searchTerm}
 			/>
-			
-			<DetailsModal
-				hideDetailsModal={handleHideDetailsModal}
-				invMastUid={detailsModalInvMastUid}
-				history={history}
+			<SortPlugin
+				sortType={sortType}
+				setSortType={setSortType}
 			/>
-		</div>
+			<SearchTermsPlugin
+				searchTerms={searchTerms}
+				setSearchTerms={setSearchTerms}
+			/>
+			<PaginationPlugin
+				page={resultPage}
+				onPageChange={handlePageChange}
+				totalResults={totalResults}
+			/>
+		</SearchContainer>
 	)
 }
-
-const LoadingItems = () => (
-	<>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-		<SkeletonItem/>
-	</>
-)
-
-const drawerWidth = 290
-
-const useStyles = makeStyles((theme) => ({
-	sticky: {
-		position: 'sticky',
-		'-webkit-sticky': 'sticky',
-		width: '100%',
-		top: 0,
-		alignSelf: 'flex-start'
-	},
-	appBarShift: {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	menuButton: {
-		marginRight: 24,
-		color: 'white'
-	},
-	hide: {
-		display: 'none',
-	},
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-		position: 'sticky',
-		alignSelf: 'flex-start',
-		top: 48,
-	},
-	drawerOpen: {
-		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		})
-	},
-	drawerClose: {
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		overflowX: 'hidden',
-		width: theme.spacing(6) + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing(6) + 1,
-		},
-	},
-	chevronLeft: {
-		transform: 'rotate(0deg)',
-		transition: theme.transitions.create('transform', {
-			easing: theme.transitions.easing.sharp,
-			duration: 300,
-		}),
-	},
-	chevronRight: {
-		transform: 'rotate(180deg)',
-		transition: theme.transitions.create('transform', {
-			easing: theme.transitions.easing.sharp,
-			duration: 300,
-		}),
-	},
-	expand: {
-		overflow: 'hidden',
-		transition: theme.transitions.create('max-height', {
-			easing: theme.transitions.easing.sharp,
-			duration: 300,
-		}),
-	},
-	collapse: {
-		maxHeight: 0,
-		overflow: 'hidden',
-		transition: theme.transitions.create('max-height', {
-			easing: theme.transitions.easing.sharp,
-			duration: 300,
-		}),
-	}
-}));
