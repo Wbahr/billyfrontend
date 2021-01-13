@@ -11,7 +11,7 @@ const CategoryBlock = styled.div`
   height: ${props => props.size === 'small' ? 'auto' : '160px'};
   cursor: pointer;
   border: ${props => props.size === 'small' ? '' : `3px solid ${props.theme.backgroundColor}`};
-  &: hover {
+  &:hover {
       border: ${props => props.size === 'small' ? '' : `3px solid ${props.theme.mainColor}`};
   }
   padding: 3px;

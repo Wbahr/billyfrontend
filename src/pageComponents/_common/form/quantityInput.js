@@ -121,7 +121,7 @@ const QuantityInput = (props) => {
             }
         } else{
             var newQuantity = quantity + enterAmount
-            console.log(`New Quantity - ${newQuantity}`)
+            
             //Update the quantity immediately if the value is valid
             if(isValueValid(newQuantity)){
                 handleUpdate(newQuantity)
