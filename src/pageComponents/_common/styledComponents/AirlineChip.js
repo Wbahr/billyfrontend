@@ -10,7 +10,6 @@ const AirlineChip = (props) => {
     const defaultStyles = {
         display: 'inline-block',
         margin: '0',
-        marginRight: '1rem',
         padding: '3px 0.5rem',
         borderRadius: '5px',
         backgroundColor: airlineRedTheme.backgrounds.blue.main,

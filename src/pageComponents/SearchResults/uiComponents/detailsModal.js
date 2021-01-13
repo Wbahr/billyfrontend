@@ -234,7 +234,11 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 							
 							<DivCol2>
 								<PpartTitle>
-									{ unitIncrement > 1 && <AirlineChip>X {unitIncrement }</AirlineChip> }
+									{ 
+										unitIncrement > 1 && <AirlineChip style={{marginRight: '0.5rem'}}>
+											X {unitIncrement }
+										</AirlineChip> 
+									}
 									<span>{item.itemDesc}</span>
 								</PpartTitle>
 								<p>{item.extendedDesc}</p>

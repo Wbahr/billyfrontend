@@ -270,9 +270,6 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 				
 				<DivPartNumberRowSpread>
 					<Div>
-						{
-							isUnitConversion && <AirlineChip>X {unitIncrement }</AirlineChip>
-						}
 						<span>Quantity:</span>
 						<QuantityInput
 							quantity={quantity}
@@ -283,6 +280,11 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 							handleUpdate={setQuantityHandler}
 							min='0'
 						/>
+						{
+							isUnitConversion && <AirlineChip style={{marginLeft: '0.5rem'}}>
+								X {unitIncrement }
+							</AirlineChip>
+						}
 					</Div>
 					
 					{unitPrice ? (
