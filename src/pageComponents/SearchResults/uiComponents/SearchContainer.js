@@ -10,14 +10,20 @@ import {GET_ITEMS_BY_ID} from "../../../config/providerGQL";
 import ItemResult from "./itemResult";
 import SkeletonItem from "./skeletonItem";
 import {makeStyles} from "@material-ui/core/styles";
+import AppBarPlugin from "../plugins/AppBarPlugin";
+import DrawerPlugin from "../plugins/DrawerPlugin";
+import ResultSummaryPlugin from "../plugins/ResultSummaryPlugin";
+import PaginationPlugin from "../plugins/PaginationPlugin";
+import SortPlugin from "../plugins/SortPlugin";
+import SearchTermsPlugin from "../plugins/SearchTermsPlugin";
 
 const PLUGINS = {
-	APP_BAR: 'AppBarPlugin',
-	DRAWER: 'DrawerPlugin',
-	RESULT_SUMMARY: 'ResultSummaryPlugin',
-	PAGINATION: 'PaginationPlugin',
-	SORT: 'SortPlugin',
-	SEARCH_TERMS: 'SearchTermsPlugin'
+	APP_BAR: AppBarPlugin,
+	DRAWER: DrawerPlugin,
+	RESULT_SUMMARY: ResultSummaryPlugin,
+	PAGINATION: PaginationPlugin,
+	SORT: SortPlugin,
+	SEARCH_TERMS: SearchTermsPlugin
 }
 
 const Flex = styled.div`
@@ -43,7 +49,7 @@ const DEFAULT_RESULT_SIZE = 24
 
 
 const clonePluginAndInjectProps = (children, type, props) => {
-	const findPluginType = pluginType => child => child.type.name === pluginType
+	const findPluginType = pluginType => child => child.type === pluginType
 	const foundElement = children.find(findPluginType(type))
 	return foundElement ? React.cloneElement(foundElement, props) : null
 }
