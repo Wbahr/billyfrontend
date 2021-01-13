@@ -10,6 +10,8 @@ import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
 import SplitLineModal from "./splitLineModal";
 import CustomerPartModal from "./editCustomerPartModal";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -160,7 +162,15 @@ const P3 = styled.p`
 `
 
 export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
- 	priceInfo, availabilityInfo, customerPartNumbers, history}) {
+ 	priceInfo, availabilityInfo, customerPartNumbers, cartPricing, history}) {
+
+	const {
+		unitPrice, 
+		unitOfMeasure, 
+		isUnitConversion, 
+		unitSize, 
+		roundType} = priceInfo || {}
+	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	
@@ -210,10 +220,9 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 		})
 	}
 	
-	const handleQuantityChange = ({target: {value}}) => {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setCartItem({...cartItem, quantity: value.length ? parseInt(value) : ''})
-		}
+	const setQuantityHandler = (qty) => {
+		console.log(`SetQuantityHandler: ${qty}`)
+		setCartItem({...cartItem, quantity: qty})
 	}
 	
 	const handleUpdateItemNotes = ({target: {value}}) => {
@@ -286,13 +295,31 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 					<DivCol3>
 						<DivQuantity>
 							<DivItem>
-								<Label>Qty:</Label>
-								<input
-									onChange={handleQuantityChange}
-									style={{width: 50}}
-									value={cartItem.quantity}
-									disabled={cartItem.quoteId}
-								/>
+								<div>
+									<Label>Qty:</Label>
+									{
+										isUnitConversion && <AirlineChip style={{
+											marginLeft: '0.5rem', 
+											fontSize: '0.7rem',
+											padding: '0 0.5rem'}}>
+											X {unitIncrement }
+										</AirlineChip>
+									}
+								</div>
+								
+								<div>
+									<QuantityInput
+										quantity={cartItem.quantity}
+										isUnitConversion={isUnitConversion}
+										unitSize={unitSize}
+										unitOfMeasure={unitOfMeasure}
+										roundType={roundType}
+										handleUpdate={setQuantityHandler}
+										min='0'
+										debounce
+									/>
+								</div>
+								
 							</DivItem>
 							<DivItem>
 								<DivRow>
@@ -307,6 +334,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													decimalScale={2}
 													fixedDecimalScale
 												/>
+												<span>{`/${unitOfMeasure}`}</span>
 												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
@@ -321,6 +349,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													decimalScale={2}
 													fixedDecimalScale
 												/>
+												<span>{`/${unitOfMeasure}`}</span>
 												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>

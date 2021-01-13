@@ -13,6 +13,8 @@ import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config
 import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
 import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 import LocationsModal from "../SearchResults/uiComponents/locationsModal";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -206,7 +208,16 @@ export default function ItemDetailPage({ history }) {
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
 	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
 	const [quantity, setQuantity] = useState(1);
-	const [unitPrice, setUnitPrice] = useState(null);
+
+	const [priceInfo, setPriceInfo] = useState(null)
+	const {
+		unitPrice, 
+		unitOfMeasure, 
+		isUnitConversion, 
+		unitSize, 
+		roundType} = priceInfo || {}
+	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
+
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
 	const [showAddListModal, setShowAddListModal] = useState(false);
@@ -266,9 +277,11 @@ export default function ItemDetailPage({ history }) {
 	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
 			if(data.getItemPrices.length){
-				setUnitPrice(data.getItemPrices[0].unitPrice)
+				setPriceInfo(data.getItemPrices[0])
 			} else{
-				setUnitPrice(0)
+				setPriceInfo({
+					unitPrice: 0
+				})
 			}
 		}
 	})
@@ -297,10 +310,8 @@ export default function ItemDetailPage({ history }) {
 		setQuantity(1)
 	}
 	
-	const handleSetQuantity = ({target: {value}}) => {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setQuantity(value)
-		}
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 	
 	const handleShowLocationsModal = () => {
@@ -361,13 +372,13 @@ export default function ItemDetailPage({ history }) {
 					
 					<DivPurchaseInfo>
 						<Row>
-							<Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
-							<P> /each</P>
+							<Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
+							<P> /{unitOfMeasure}</P>
 						</Row>
 						
 						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
-								itemAvailability.availability
+								`Lead time ${itemAvailability.leadTimeDays} days`
 							) : (
 								`Available: ${itemAvailability.availability}`
 							)}
@@ -376,7 +387,20 @@ export default function ItemDetailPage({ history }) {
 						<DivPurchaseInfoButtons>
 							<RowCentered>
 								<span>Qty:</span>
-								<InputQuantity value={quantity} onChange={handleSetQuantity} />
+								<QuantityInput
+									quantity={quantity}
+									isUnitConversion={isUnitConversion}
+									unitSize={unitSize}
+									unitOfMeasure={unitOfMeasure}
+									roundType={roundType}
+									handleUpdate={setQuantityHandler}
+									min='0'
+								/>
+								{
+									isUnitConversion && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
+										X {unitIncrement }
+									</AirlineChip>
+								}
 							</RowCentered>
 							
 							<ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
@@ -394,7 +418,7 @@ export default function ItemDetailPage({ history }) {
 					<PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 					
 					<Row>
-						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
+						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 						<Pbold onClick={handleShowLocationsModal}>
 							{itemAvailability.availability === 0 ? (
 								`Lead time ${itemAvailability.leadTimeDays} days`

@@ -52,8 +52,20 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ history }) {
-	const { cart, emptyCart, userInfo, saveShoppingCart, itemPrices, itemAvailabilities, itemDetails, customerPartNumbers,
-		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers, updateShoppingCart } = useContext(Context)
+	const { cart, 
+			emptyCart, 
+			userInfo, 
+			saveShoppingCart, 
+			itemPrices, 
+			itemAvailabilities, 
+			itemDetails, 
+			customerPartNumbers,
+			getItemPrices, 
+			getItemAvailabilities, 
+			getItemDetails, 
+			getCustomerPartNumbers, 
+			updateShoppingCart,
+			cartPricing } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
 	
@@ -117,7 +129,18 @@ export default function ShoppingCart({ history }) {
 				</DivRow>
 			</Div>
 			<CartComponent
-				{...{ history, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cart, updateShoppingCart}}
+				{
+					...{ 
+						history, 
+						itemDetails, 
+						itemPrices, 
+						itemAvailabilities, 
+						customerPartNumbers, 
+						cart, 
+						updateShoppingCart, 
+						cartPricing
+					}
+				}
 			/>
 			{
 				userInfo && <SaveShoppingListModal
@@ -131,7 +154,7 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, history}) => {
+const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cartPricing, history}) => {
 	const [shoppingCart, setShoppingCart] = useState(cart || [])
 	
 	useEffect(() => {
@@ -196,6 +219,7 @@ const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemA
 								setCart={setCart}
 								setCartItem={setCartItem(index)}
 								setCartItemField={setCartItemField(index)}
+								cartPricing={cartPricing}
 								{...{history, index}}
 							/>
 							: <SkeletonItem index={index} />

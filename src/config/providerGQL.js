@@ -378,6 +378,10 @@ export const GET_ITEM_PRICE = gql`
       quantity
       totalPrice
       unitPrice
+      unitOfMeasure
+      isUnitConversion
+      roundType
+      unitSize
       spaType
     }
   }
