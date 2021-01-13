@@ -4,7 +4,8 @@ import Context from '../../../config/context'
 import {getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
 import DebounceInput from 'react-debounce-input'
-import { handleSetQuantity, initializeQuantity } from '../../../pageComponents/_common/helpers/addToCartLogic'
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -171,23 +172,11 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		unitSize, 
 		roundType} = foundPrice || {}
 
-	const [quantity, setQuantity] = useState({ qty: unitSize || 1})
+	const [quantity, setQuantity] = useState(1)
 	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
-
-	//Updates the quantity when the price info changes
-	useEffect(() => {
-		if(foundPrice){
-			initializeQuantity(isUnitConversion, unitSize, (qty) => {
-				setQuantity({
-					...quantity,
-					qty: qty,
-				})
-			})
-		}
-	}, [itemPrices])
 	
 	useEffect(() => {
 		setCustomerPartOptions(getCustomerPartOptions(details))
@@ -196,13 +185,8 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		}
 	}, [details.customerPartNumbers])
 	
-	const setQuantityHandler = (event) => {
-		handleSetQuantity(event, isUnitConversion || false, unitIncrement || 1, roundType || 'U', (qty) => {
-			setQuantity({
-				...quantity,
-				qty: qty
-			})
-		})
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 	
 	const handlePartClick = () => {
@@ -222,12 +206,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 			customerPartNumberId: customerPartNumber
 		})
 		addedToCart()
-		initializeQuantity(isUnitConversion, unitSize, (qty) => {
-			setQuantity({
-				...quantity,
-				qty: qty
-			})
-		})
+		setQuantity(1)
 	}
 	
 	const handlePartNumberChange = ({target}) => setCustomerPartNumber(target.value)
@@ -290,19 +269,20 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 				</DivPartNumberRow>
 				
 				<DivPartNumberRowSpread>
-					<Div>Quantity:
-						<DebounceInput
-							debounceTimeout={1000}
-							onChange={setQuantityHandler}
-							value={quantity.qty}
-							type='number'
-							min='0'
-							step={unitIncrement}
-							style={{width: '60px'}}
-						/>
+					<Div>
 						{
-							isUnitConversion && <span style={{paddingLeft: '0.25rem'}}>{`Inc. ${unitIncrement}`}</span>
+							isUnitConversion && <AirlineChip>X {unitIncrement }</AirlineChip>
 						}
+						<span>Quantity:</span>
+						<QuantityInput
+							quantity={quantity}
+							isUnitConversion={isUnitConversion}
+							unitSize={unitSize}
+							unitOfMeasure={unitOfMeasure}
+							roundType={roundType}
+							handleUpdate={setQuantityHandler}
+							min='0'
+						/>
 					</Div>
 					
 					{unitPrice ? (

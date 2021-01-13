@@ -3,8 +3,6 @@ import { airlineRedTheme } from 'styles/theme'
 
 const AirlineChip = (props) => {
 
-    console.log(props)
-
     const {
         style
     } = props

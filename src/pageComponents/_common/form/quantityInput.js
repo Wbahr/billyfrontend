@@ -22,7 +22,11 @@ const QuantityInput = (props) => {
 		isUnitConversion, 
         unitSize,
         roundType,
-        handleUpdate
+        handleUpdate,
+        min,
+        max,
+        fontSize,
+        width
     } = props
 
     const unitIncrement = isUnitConversion ? unitSize || 1 : 1
@@ -64,20 +68,47 @@ const QuantityInput = (props) => {
     })
 
     const changeQuantity = (amount) => {
+        var newQuantity = quantity + amount
+        if(!isNaN(min) && Number.isInteger(Number(min))
+            && newQuantity < Number(min)) 
+            return
+        if(!isNaN(max) && Number.isInteger(Number(max))
+            && newQuantity > Number(max)) 
+            return
+
         handleUpdate(quantity + amount)
     }
 
+    const stylesToApply = {
+        fontSize: fontSize || '1rem',
+        width: width || '60px'
+    }
+
     return <>
-        <IncrementDecrementButton onClick={(event) => { changeQuantity(-unitIncrement)}}>-</IncrementDecrementButton>
+        <IncrementDecrementButton 
+            onClick={(event) => { changeQuantity(-unitIncrement)}}
+            style={{
+                fontSize: stylesToApply.fontSize
+            }}>
+            -
+        </IncrementDecrementButton>
         <input 
             readOnly
             onKeyPress={event => event.preventDefault()}
             value={quantity}
-            min='0'
             step={unitIncrement || 1}
-            style={{width: '60px'}}
+            style={{
+                fontSize: stylesToApply.fontSize,
+                width: stylesToApply.width
+            }}
         />
-        <IncrementDecrementButton onClick={(event) => { changeQuantity(unitIncrement)}}>+</IncrementDecrementButton>
+        <IncrementDecrementButton 
+            onClick={(event) => { changeQuantity(unitIncrement)}}
+            style={{
+                fontSize: stylesToApply.fontSize
+            }}>
+            +
+        </IncrementDecrementButton>
     </>
 }
 

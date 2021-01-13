@@ -249,11 +249,12 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 										<span>Qty:</span>
 										<QuantityInput
 											quantity={quantity}
-											isUnitConversion
+											isUnitConversion={isUnitConversion}
 											unitSize={unitSize}
 											unitOfMeasure={unitOfMeasure}
 											roundType={roundType}
 											handleUpdate={setQuantityHandler}
+											min='0'
 										/>										
 										<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 									</DivRow>
