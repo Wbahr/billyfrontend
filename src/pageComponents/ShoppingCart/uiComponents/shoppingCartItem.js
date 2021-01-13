@@ -85,7 +85,7 @@ const DivCol2 = styled.div`
 	align-items: flex-start;
 	width: 300px;
 	height: 100%;
-	margin-right: 50px;
+	margin: 0 50px;
 	p {
 		font-size: 16px;
 		margin: 0;

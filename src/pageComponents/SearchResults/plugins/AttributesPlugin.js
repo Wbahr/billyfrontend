@@ -29,7 +29,7 @@ const AttributesDiv = styled.div`
 	margin-left: 48px;
 `
 
-export default function AttributeFilter({attributes, setAttributes, updateAttribute, classes, drawerOpen, setDrawerOpen}) {
+export default function AttributesPlugin({attributes, setAttributes, classes, drawerOpen, setDrawerOpen}) {
 	const [isOpen, setIsOpen] = useState(true)
 	
 	const toggleOpen = () => {
