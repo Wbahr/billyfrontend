@@ -40,7 +40,7 @@ const CategoryBlock = styled.div`
 
 export default ({size, text, linkTo, Image, ...rest }) => {
   return (
-    <Link to={linkTo}>
+    <Link to={linkTo || '#'}>
       <CategoryBlock {...{...rest, size}}>
         {Image}
         <section>{text}</section>
