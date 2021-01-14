@@ -7,11 +7,9 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
-import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
-import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
-import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 import LocationsModal from "../SearchResults/uiComponents/locationsModal";
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
@@ -170,12 +168,6 @@ const Pprice = styled.p`
 	margin: 0;
 `
 
-const InputQuantity = styled.input`
-	width: 50px;
-	height: 25px;
-	margin-left: 4px;
-`
-
 const TABLE = styled.table`
 	margin-top: 20px;
 `
@@ -211,7 +203,6 @@ export default function ItemDetailPage({ history }) {
 
 	const [priceInfo, setPriceInfo] = useState(null)
 	const {
-		unitPrice, 
 		unitOfMeasure, 
 		isUnitConversion, 
 		unitSize, 
@@ -358,6 +349,18 @@ export default function ItemDetailPage({ history }) {
 		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
 			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
 		))
+		
+		const Availability = () => (
+			<Pbold onClick={handleShowLocationsModal}>
+				{itemAvailability.availability ? (
+					`Available: ${itemAvailability.availability}`
+				) : itemAvailability.leadTimeDays ? (
+					`Lead time ${itemAvailability.leadTimeDays} days`
+				) : (
+					'Call for lead time'
+				)}
+			</Pbold>
+		)
 
 		return (
 			<ItemDetailPageContainer>
@@ -376,13 +379,7 @@ export default function ItemDetailPage({ history }) {
 							<P> /{unitOfMeasure}</P>
 						</Row>
 						
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								`Lead time ${itemAvailability.leadTimeDays} days`
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						<Availability/>
 						
 						<DivPurchaseInfoButtons>
 							<RowCentered>
@@ -419,13 +416,8 @@ export default function ItemDetailPage({ history }) {
 					
 					<Row>
 						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								`Lead time ${itemAvailability.leadTimeDays} days`
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						
+						<Availability/>
 					</Row>
 					
 					<TABLE>
