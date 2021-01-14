@@ -359,7 +359,30 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 							</DivItem>
 							<DivItem>
 								<DivTotalPrice>
-									<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+									<p>
+										{
+											!cartItem.itemUnitPriceOverride 
+												? <NumberFormat 
+													value={
+														(priceInfo?.unitPrice 
+															? priceInfo.unitPrice 
+															: 0.0
+														).toFixed(2) * cartItem.quantity
+													} 
+													displayType={'text'} 
+													thousandSeparator={true} 
+													prefix={'$'} 
+													decimalScale={2} 
+													fixedDecimalScale/> 
+												: <NumberFormat 
+													value={cartItem.itemUnitPriceOverride * cartItem.quantity} 
+													displayType={'text'} 
+													thousandSeparator={true} 
+													prefix={'$'} 
+													decimalScale={2} 
+													fixedDecimalScale/>
+										}
+									</p>
 								</DivTotalPrice>
 							</DivItem>
 						</DivQuantity>
