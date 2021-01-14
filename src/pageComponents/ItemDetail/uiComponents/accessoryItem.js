@@ -190,7 +190,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
         </DivPartImg>
 				
         <DivPartDetails>
-					<PpartTitle><a href={itemLink}>{itemDetails.itemCode}</a></PpartTitle>
+					<PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
         </DivPartDetails>
 				
         <DivPartNumberRow>
