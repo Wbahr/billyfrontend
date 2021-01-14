@@ -200,7 +200,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const handleAddToCart = () => {
 		addItem({
 			frecno: result.invMastUid,
-			quantity: parseInt(quantity.qty),
+			quantity: parseInt(quantity),
 			itemNotes: '',
 			itemUnitPriceOverride: null,
 			customerPartNumberId: customerPartNumber
