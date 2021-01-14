@@ -338,22 +338,24 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
 											</EditPriceDiv>
-										) : priceInfo?.unitPrice ? (
-											<EditPriceDiv>
-												<NumberFormat
-													value={priceInfo?.unitPrice}
-													displayType={'text'}
-													thousandSeparator={true}
-													prefix={'$'}
-													decimalScale={2}
-													fixedDecimalScale
-												/>
-												<span>{`/${unitOfMeasure}`}</span>
-												<EditPriceIcon onClick={handleShowEditPriceModal}>
-													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-												</EditPriceIcon>
-											</EditPriceDiv>
-										) : null
+										) : priceInfo?.unitPrice 
+											? (
+												<EditPriceDiv>
+													<NumberFormat
+														value={priceInfo?.unitPrice}
+														displayType={'text'}
+														thousandSeparator={true}
+														prefix={'$'}
+														decimalScale={2}
+														fixedDecimalScale
+													/>
+													<span>{`/${unitOfMeasure}`}</span>
+													<EditPriceIcon onClick={handleShowEditPriceModal}>
+														<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+													</EditPriceIcon>
+												</EditPriceDiv>
+											) 
+											: null
 									)}
 								</DivRow>
 							</DivItem>
