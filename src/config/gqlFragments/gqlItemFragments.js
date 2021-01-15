@@ -3,7 +3,6 @@ import gql from 'graphql-tag'
 export const FRAGMENT_ITEM_DETAIL = gql`
     fragment ItemDetails on ItemGraphType {
         availability
-        availabilityMessage
         brandId
         dateCreated
         dateModified
@@ -15,7 +14,6 @@ export const FRAGMENT_ITEM_DETAIL = gql`
         itemDesc
         mfgPartNo
         modelCode
-        p21NonWeb
         popularity
         relevancy
         supplierId

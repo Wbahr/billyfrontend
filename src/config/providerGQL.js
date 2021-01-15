@@ -92,7 +92,6 @@ export const GET_ITEM_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
-      availabilityMessage
       itemMedia {
         path
         sequence
@@ -119,7 +118,6 @@ export const GET_ITEMS_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
-      availabilityMessage
       itemMedia {
         path
         sequence
@@ -377,7 +375,6 @@ export const GET_ITEM_PRICE = gql`
       totalPrice
       unitPrice
       unitOfMeasure
-      isUnitConversion
       roundType
       unitSize
       spaType

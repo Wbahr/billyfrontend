@@ -213,10 +213,8 @@ export default function ItemDetailPage({ history }) {
 	const {
 		unitPrice, 
 		unitOfMeasure, 
-		isUnitConversion, 
 		unitSize, 
 		roundType} = priceInfo || {}
-	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
@@ -389,7 +387,6 @@ export default function ItemDetailPage({ history }) {
 								<span>Qty:</span>
 								<QuantityInput
 									quantity={quantity}
-									isUnitConversion={isUnitConversion}
 									unitSize={unitSize}
 									unitOfMeasure={unitOfMeasure}
 									roundType={roundType}
@@ -397,8 +394,8 @@ export default function ItemDetailPage({ history }) {
 									min='0'
 								/>
 								{
-									isUnitConversion && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
-										X {unitIncrement }
+									(unitSize > 1) && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
+										X {unitSize }
 									</AirlineChip>
 								}
 							</RowCentered>

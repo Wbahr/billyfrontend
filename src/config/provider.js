@@ -362,21 +362,25 @@ export default function Provider(props) {
       })
     }
 
-    const addItem = (item) => updateShoppingCart([...shoppingCart, item])
+    const addItem = (item) => {
+        updateShoppingCart([...shoppingCart, item])
+    }
 
-    const addItems = (items) => updateShoppingCart([...shoppingCart, ...items])
+    const addItems = (items) => {
+        updateShoppingCart([...shoppingCart, ...items])
+    }
   
     function removeItem(itemLocation) {
         const newCart = shoppingCart?.slice() || []
-			  newCart.splice(itemLocation, 1)
-			  updateShoppingCart(newCart)
+        newCart.splice(itemLocation, 1)
+        updateShoppingCart(newCart)
     }
 
     function moveItem(itemLocation, newLocation) {
         const newCart = shoppingCart.slice() || []
         const movedItem = newCart.splice(itemLocation, 1)
-			  newCart.splice(newLocation, 0, movedItem[0])
-			  updateShoppingCart(newCart)
+        newCart.splice(newLocation, 0, movedItem[0])
+        updateShoppingCart(newCart)
     }
 
     function splitItem(index, lineCount, lineQuantity) {
@@ -394,35 +398,35 @@ export default function Provider(props) {
     }
 
     const updateCartItem = (index, newItem) => {
-			  updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
+	    updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
     }
     
     const updateCartItemField = (index, field, value) => {
-			  updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
+	    updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
     
     const updateOrderNotes = newOrderNotes => {
         setOrderNotes(newOrderNotes)
-			  updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
+	    updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
     }
     
     const saveShoppingCart = () => {
-      updateCartWrapper({ actionString: 'save' })
-		}
+        updateCartWrapper({ actionString: 'save' })
+	}
     
     const retrieveShoppingCart = () => {
-			lastShoppingCartPayload.current = null
-      updateCartWrapper({ actionString: 'retrieve' })
-		}
+        lastShoppingCartPayload.current = null
+        updateCartWrapper({ actionString: 'retrieve' })
+	}
     
     const mergeShoppingCart = token => {
-			lastShoppingCartPayload.current = null
-      updateCartWrapper({ actionString: 'retrieve', token })
-		}
+        lastShoppingCartPayload.current = null
+        updateCartWrapper({ actionString: 'retrieve', token })
+	}
 
     const emptyCart = () => {
-      updateShoppingCart(null)
-		}
+        updateShoppingCart(null)
+	}
     
     function getInvoices() {
         if (invoiceBatchNumber === 0) {
