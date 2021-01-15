@@ -326,7 +326,7 @@ export default function ItemDetailPage({ history }) {
 		return (<p>No item found</p>)
 	} else {
 		const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-		const TechSpecItems = itemDetails.techSpecs.map((elem, idx) => (
+		const TechSpecItems = itemDetails.itemTechSpecs.map((elem, idx) => (
 			<TR key={idx}>
 				<TD>{elem.name}</TD>
 				<TD>{elem.value}</TD>
@@ -406,7 +406,7 @@ export default function ItemDetailPage({ history }) {
 						</DivPurchaseInfoButtons>
 						
 						{itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
-						{itemDetails.techSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
+						{itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
 						{accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
 					</DivPurchaseInfo>
 				</DivLeftCol>

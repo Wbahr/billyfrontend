@@ -98,7 +98,7 @@ export const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
 
 export const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
     fragment TechSpecs on ItemGraphType {
-        techSpecs {
+        itemTechSpecs {
             attributeId
             createDate
             createdBy
