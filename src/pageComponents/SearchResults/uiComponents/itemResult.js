@@ -167,13 +167,11 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
 	const {
 		unitPrice, 
-		unitOfMeasure, 
-		isUnitConversion, 
+		unitOfMeasure,
 		unitSize, 
 		roundType} = foundPrice || {}
 
 	const [quantity, setQuantity] = useState(1)
-	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
@@ -219,7 +217,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		<DivItemResultContainer>
 			<DivPartDetailsRow>
 				<DivPartImg onClick={handlePartClick} style={{cursor: 'pointer'}}>
-					{!details.image ? (
+					{!details.itemMedia ? (
 						<SkeletonImage/>
 					) : (
 						<Img src={getLargeImagePath(details)}/>
@@ -273,7 +271,6 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 						<span>Quantity:</span>
 						<QuantityInput
 							quantity={quantity}
-							isUnitConversion={isUnitConversion}
 							unitSize={unitSize}
 							unitOfMeasure={unitOfMeasure}
 							roundType={roundType}
@@ -281,8 +278,8 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 							min='0'
 						/>
 						{
-							isUnitConversion && <AirlineChip style={{marginLeft: '0.5rem'}}>
-								X {unitIncrement }
+							(unitSize > 1) && <AirlineChip style={{marginLeft: '0.5rem'}}>
+								X {unitSize}
 							</AirlineChip>
 						}
 					</Div>

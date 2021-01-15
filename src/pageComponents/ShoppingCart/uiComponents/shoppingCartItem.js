@@ -166,11 +166,9 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 
 	const {
 		unitPrice, 
-		unitOfMeasure, 
-		isUnitConversion, 
+		unitOfMeasure,
 		unitSize, 
 		roundType} = priceInfo || {}
-	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	
@@ -297,11 +295,11 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 								<div>
 									<Label>Qty:</Label>
 									{
-										isUnitConversion && <AirlineChip style={{
+										(unitSize > 1) && <AirlineChip style={{
 											marginLeft: '0.5rem', 
 											fontSize: '0.7rem',
 											padding: '0 0.5rem'}}>
-											X {unitIncrement }
+											X {unitSize }
 										</AirlineChip>
 									}
 								</div>
@@ -309,7 +307,6 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 								<div>
 									<QuantityInput
 										quantity={cartItem.quantity}
-										isUnitConversion={isUnitConversion}
 										unitSize={unitSize}
 										unitOfMeasure={unitOfMeasure}
 										roundType={roundType}

@@ -21,7 +21,6 @@ const QuantityInput = (props) => {
     const {
         quantity,
         unitOfMeasure, 
-		isUnitConversion, 
         unitSize,
         roundType,
         handleUpdate,
@@ -31,8 +30,7 @@ const QuantityInput = (props) => {
         width,
         debounce
     } = props
-
-    const unitIncrement = isUnitConversion ? unitSize || 1 : 1
+    const unitSizeVal = unitSize || 1
 
     const [increment, setIncrement] = useState(0)
     const [debounceIncrement] = useDebounce(increment, 500)
@@ -77,7 +75,7 @@ const QuantityInput = (props) => {
     useEffect(() => {
 
         //If there is no unit increment, allow free-form typing input
-        if(unitIncrement === 1 || roundType === 'N'){
+        if(unitSizeVal === 1 || roundType === 'N'){
             return
         }
 
@@ -85,18 +83,19 @@ const QuantityInput = (props) => {
 
         //If the quantity is not a multiple of its increment, round the quantity and emit it to the callback
         if(Number.isInteger(newQuantity)) {
-			if(isUnitConversion && newQuantity % unitIncrement !== 0){
+			if(newQuantity % unitSizeVal !== 0){
+
 				switch (roundType) {
 					case 'U':
-                        newQuantity = newQuantity - (newQuantity % unitIncrement) + unitIncrement
+                        newQuantity = newQuantity - (newQuantity % unitSizeVal) + unitSizeVal
 						break;
 					case 'D':
-						newQuantity = newQuantity - (newQuantity % unitIncrement)
+						newQuantity = newQuantity - (newQuantity % unitSizeVal)
 						break;
 					case 'S':
-						newQuantity = (newQuantity % unitIncrement) >= (newQuantity / 2)
-							? newQuantity - (newQuantity % unitIncrement) + unitIncrement
-							: newQuantity - (newQuantity % unitIncrement)
+						newQuantity = (newQuantity % unitSizeVal) >= (newQuantity / 2)
+							? newQuantity - (newQuantity % unitSizeVal) + unitSizeVal
+							: newQuantity - (newQuantity % unitSizeVal)
 						break;
 					default:
 						break;
@@ -160,7 +159,7 @@ const QuantityInput = (props) => {
     return <span>
 
         <IncrementDecrementButton 
-            onClick={(event) => { incrementDecrementHandler(-unitIncrement)}}
+            onClick={(event) => { incrementDecrementHandler(-unitSizeVal)}}
             style={{
                 fontSize: stylesToApply.fontSize
             }}>
@@ -170,24 +169,24 @@ const QuantityInput = (props) => {
             debounce 
                 ? <DebounceInput //This is for manual value entries
                     debounceTimeout={500}
-                    readOnly={unitIncrement > 1}
-                    onChange={(unitIncrement > 1 ? null : (event) => {
+                    readOnly={unitSizeVal > 1}
+                    onChange={(unitSizeVal > 1 ? null : (event) => {
                         textBoxChangeHandler(event)
                     })}
                     value={displayQuantity}
-                    step={unitIncrement || 1}
+                    step={unitSizeVal || 1}
                     style={{
                         fontSize: stylesToApply.fontSize,
                         width: stylesToApply.width
                     }}
                 /> 
                 : <input 
-                    readOnly={unitIncrement > 1}
-                    onChange={(unitIncrement > 1 ? null : (event) => {
+                    readOnly={unitSizeVal > 1}
+                    onChange={(unitSizeVal > 1 ? null : (event) => {
                         textBoxChangeHandler(event)
                     })}
                     value={quantity}
-                    step={unitIncrement || 1}
+                    step={unitSizeVal || 1}
                     style={{
                         fontSize: stylesToApply.fontSize,
                         width: stylesToApply.width
@@ -196,7 +195,7 @@ const QuantityInput = (props) => {
         }
 
         <IncrementDecrementButton 
-            onClick={(event) => { incrementDecrementHandler(unitIncrement)}}
+            onClick={(event) => { incrementDecrementHandler(unitSizeVal)}}
             style={{
                 fontSize: stylesToApply.fontSize
             }}>

@@ -141,11 +141,9 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const [priceInfo, setPriceInfo] = useState(null);
 	const {
 		unitPrice, 
-		unitOfMeasure, 
-		isUnitConversion, 
+		unitOfMeasure,
 		unitSize, 
 		roundType} = priceInfo || {}
-	const unitIncrement = isUnitConversion ? unitSize || 1 : 1
 
 	const [quantity, setQuantity] = useState(1)
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
@@ -233,8 +231,8 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 							<DivCol2>
 								<PpartTitle>
 									{ 
-										unitIncrement > 1 && <AirlineChip style={{marginRight: '0.5rem'}}>
-											X {unitIncrement }
+										(unitSize > 1) && <AirlineChip style={{marginRight: '0.5rem'}}>
+											X {unitSize}
 										</AirlineChip> 
 									}
 									<span>{item.itemDesc}</span>
@@ -251,7 +249,6 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 										<span>Qty:</span>
 										<QuantityInput
 											quantity={quantity}
-											isUnitConversion={isUnitConversion}
 											unitSize={unitSize}
 											unitOfMeasure={unitOfMeasure}
 											roundType={roundType}
