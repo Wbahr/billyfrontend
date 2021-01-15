@@ -55,9 +55,11 @@ const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaT
 const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1;
 
 const getTypeImage = (itemDetails, type) => {
-	return itemDetails?.image?.find(firstMatchingImageType(type)) || itemDetails?.image?.find(firstImage)
+	return itemDetails?.itemMedia?.find(firstMatchingImageType(type)) || itemDetails?.itemMedia?.find(firstImage)
 }
 
+//TODO: Change this back to ImageTypes.Thumbnail once the thumbnail images are loaded properly
+//John changed this to ImageTypes.Large because the thumbnail images weren't loading.
 export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
 
 export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);

@@ -327,15 +327,15 @@ export default function ItemDetailPage({ history }) {
 	} else if (!itemDetails.invMastUid) {
 		return (<p>No item found</p>)
 	} else {
-		const FeatureItems = itemDetails.feature.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-		const TechSpecItems = itemDetails.techSpec.map((elem, idx) => (
+		const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
+		const TechSpecItems = itemDetails.techSpecs.map((elem, idx) => (
 			<TR key={idx}>
 				<TD>{elem.name}</TD>
 				<TD>{elem.value}</TD>
 			</TR>
 		))
 
-		const ItemLinks = itemDetails.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+		const ItemLinks = itemDetails.itemLinks.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
 		const AccessoryItems = accessoryItems.map((ai, idx) => {
 
 			const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
@@ -408,8 +408,8 @@ export default function ItemDetailPage({ history }) {
 							<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 						</DivPurchaseInfoButtons>
 						
-						{itemDetails.feature.length > 0 && <a href='#feature'>Features</a>}
-						{itemDetails.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
+						{itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
+						{itemDetails.techSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
 						{accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
 					</DivPurchaseInfo>
 				</DivLeftCol>
@@ -466,7 +466,7 @@ export default function ItemDetailPage({ history }) {
 						</tbody>
 					</Table>
 					
-					{itemDetails.itemLink.length > 0 && <H4>Links</H4>}
+					{itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
 					<DivSection>{ItemLinks}</DivSection>
 					
 					{accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}

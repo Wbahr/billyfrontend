@@ -2,15 +2,12 @@ import gql from 'graphql-tag'
 
 export const FRAGMENT_ITEM_DETAIL = gql`
     fragment ItemDetails on ItemGraphType {
-        anonPrice
-        assembly
         availability
         availabilityMessage
-        cBrandId
+        brandId
         dateCreated
         dateModified
         extendedDesc
-        filters
         hideOnWeb
         invMastUid
         itemCode
@@ -18,14 +15,9 @@ export const FRAGMENT_ITEM_DETAIL = gql`
         itemDesc
         mfgPartNo
         modelCode
-        p21ItemDesc
         p21NonWeb
         popularity
-        preferredSourceLoc
         relevancy
-        restrictedCustomerCodes
-        rootCategoryUids
-        showPrice
         supplierId
         tariff
         unitSizeMultiple
@@ -45,7 +37,7 @@ export const FRAGMENT_ITEM_DETAIL_BRANDS = gql`
 
 export const FRAGMENT_ITEM_DETAIL_FEATURES = gql`
     fragment Features on ItemGraphType {
-        feature {
+        itemFeatures {
             createDate
             createdBy
             invMastUid
@@ -61,7 +53,7 @@ export const FRAGMENT_ITEM_DETAIL_FEATURES = gql`
 
 export const FRAGMENT_ITEM_DETAIL_MEDIA = gql`
     fragment Media on ItemGraphType {
-        image {
+        itemMedia {
             path
             sequence
             itemMediaType
@@ -89,7 +81,7 @@ export const FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS = gql`
 
 export const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
     fragment ItemLinks on ItemGraphType {
-        itemLink {
+        itemLinks {
             audienceType
             createDate
             createdBy
@@ -108,7 +100,7 @@ export const FRAGMENT_ITEM_DETAIL_ITEM_LINKS = gql`
 
 export const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
     fragment TechSpecs on ItemGraphType {
-        techSpec {
+        techSpecs {
             attributeId
             createDate
             createdBy

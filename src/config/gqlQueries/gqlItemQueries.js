@@ -41,7 +41,7 @@ export const GET_ACCESSORY_ITEMS_INFO = gql`
 		}
 		itemDetailsBatch(invMastUids: $invMastUids){
 			...ItemDetails
-			image {
+			itemMedia {
 				path
 				sequence
 				itemMediaType
@@ -58,7 +58,7 @@ export const GET_SHOPPING_CART_ITEM_DETAIL = gql`
     query GetShoppingCartItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
-			image {
+			itemMedia {
 				path
 				sequence
 				itemMediaType
@@ -74,7 +74,7 @@ export const GET_CHECKOUT_ITEM_DETAIL = gql`
     query GetCheckoutItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
-			image {
+			itemMedia {
 				path
 				sequence
 				itemMediaType
@@ -90,7 +90,7 @@ export const GET_ORDER_DETAIL_ITEM_DETAIL = gql`
     query GetOrderDetailItemsDetails($invMastUids: [Int]){
         itemDetailsBatch(invMastUids: $invMastUids){
             ...ItemDetails
-			image {
+			itemMedia {
 				path
 				sequence
 				itemMediaType

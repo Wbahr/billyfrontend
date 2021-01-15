@@ -219,7 +219,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		<DivItemResultContainer>
 			<DivPartDetailsRow>
 				<DivPartImg onClick={handlePartClick} style={{cursor: 'pointer'}}>
-					{!details.image ? (
+					{!details.itemMedia ? (
 						<SkeletonImage/>
 					) : (
 						<Img src={getLargeImagePath(details)}/>

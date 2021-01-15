@@ -83,7 +83,6 @@ export const SUBMIT_ORDER = gql`
 export const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
-      anonPrice
       invMastUid
       itemCode
       itemCodeUrlSanitized
@@ -94,7 +93,7 @@ export const GET_ITEM_BY_ID = gql`
       unitSizeMultiple
       availability
       availabilityMessage
-      image {
+      itemMedia {
         path
         sequence
         itemMediaType
@@ -111,7 +110,6 @@ export const GET_ITEM_BY_ID = gql`
 export const GET_ITEMS_BY_ID = gql`
   query GetItemDetails($invMastUids: [Int]){
     itemDetailsBatch(invMastUids: $invMastUids){
-      anonPrice
       invMastUid
       itemCode
       itemCodeUrlSanitized
@@ -122,7 +120,7 @@ export const GET_ITEMS_BY_ID = gql`
       unitSizeMultiple
       availability
       availabilityMessage
-      image {
+      itemMedia {
         path
         sequence
         mediaType
