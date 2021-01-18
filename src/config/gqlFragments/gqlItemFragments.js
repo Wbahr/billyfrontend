@@ -116,8 +116,10 @@ export const FRAGMENT_ITEM_DETAIL_TECH_SPECS = gql`
 export const FRAGMENT_ITEM_AVAILABILITY = gql`
     fragment ItemAvailability on ItemAvailability {
         invMastUid
+        totalQuantity
         availability
         leadTimeDays
+        leadTimeMessage
     }
 `
 
