@@ -391,6 +391,15 @@ export const GET_ITEM_AVAILABILITY = gql`
   ${FRAGMENT_ITEM_AVAILABILITY}
 `
 
+export const GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES = gql`
+  query GetCartItemAvailabilityAndLeadTimes($itemsAndQuantities: [ItemAndQuantityInput]){
+    itemAvailabilityAndLeadTimes(itemsAndQuantities: $itemsAndQuantities) {
+      ...ItemAvailability
+    }
+  }
+  ${FRAGMENT_ITEM_AVAILABILITY}
+`
+
 export const GET_SHOPPING_LISTS = gql`
 	query GetShoppingLists {
 		shoppingList {

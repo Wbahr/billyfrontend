@@ -276,8 +276,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 							<P3>
 								Availability: {availabilityInfo?.availability}
 								{
-									(cartItem.quantity > availabilityInfo?.availability) && 
-										(' | ' + getAvailabilityMessage(cartItem.quantity, availabilityInfo?.availability, availabilityInfo?.leadTimeDays))
+									(availabilityInfo?.leadTimeDays) &&  (' | ' + availabilityInfo.leadTimeMessage)
 								}
 							</P3>
 						</DivRow>

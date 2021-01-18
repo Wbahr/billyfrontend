@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
+import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'config/providerGQL'
+import { useLazyQuery } from '@apollo/client'
 
 const Div = styled.div`
 	display: flex;
@@ -56,23 +58,39 @@ export default function ShoppingCart({ history }) {
 			emptyCart, 
 			userInfo, 
 			saveShoppingCart, 
-			itemPrices, 
-			itemAvailabilities, 
+			itemPrices,
 			itemDetails, 
 			customerPartNumbers,
-			getItemPrices, 
-			getItemAvailabilities, 
+			getItemPrices,
 			getItemDetails, 
 			getCustomerPartNumbers, 
 			updateShoppingCart,
 			cartPricing } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
+	const [itemAvailabilities, setItemAvailabilities] = useState([])
+
+	const [getAvailabilitiesWithLeadTimes] = useLazyQuery(GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
+        }
+    })
 	
 	useEffect(() => {
 		if (cart) {
 			const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
 			hasMissingPrices && getItemPrices(cart)
+			getAvailabilitiesWithLeadTimes({ 
+				variables: { 
+					itemsAndQuantities: cart.map(({ frecno, quantity }) => {
+						return {
+							invMastUid: frecno,
+							quantity: quantity
+						}
+					}) 
+				} 
+			})
 		}
 	}, [cart])
 	
@@ -83,9 +101,6 @@ export default function ShoppingCart({ history }) {
 			
 			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
 			hasMissingPartNumbers && getCustomerPartNumbers(cart)
-			
-			const hasMissingAvail = !!cart.find(item => !itemAvailabilities.find(avail => avail.invMastUid === item.frecno))
-			hasMissingAvail && getItemAvailabilities(cart)
 		}
 	}, [cart?.length])
 

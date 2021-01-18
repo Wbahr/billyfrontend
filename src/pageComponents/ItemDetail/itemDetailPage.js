@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/client'
@@ -7,11 +7,9 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
-import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
-import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
-import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 import LocationsModal from "../SearchResults/uiComponents/locationsModal";
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
