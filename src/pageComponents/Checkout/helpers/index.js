@@ -20,7 +20,7 @@ export const defaultBilling = {
 
 export const defaultConfirmationEmail = {
 	sendToShipTo: true,
-	imagesOnQuotes: false,
+	imagesOnQuote: false,
 	ccEmails: []
 }
 

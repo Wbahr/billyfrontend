@@ -140,7 +140,7 @@ export function getBillToSchema(requirePoNumber) {
 export const confirmationSchema = object({
 	confirmationEmail: object({
 		sendToShipTo: boolean(),
-		imagesOnQuotes: boolean(),
+		imagesOnQuote: boolean(),
 		ccEmails: array().of(string()
 			.email('Email is not valid')
 			.required('Email is required'))
