@@ -89,7 +89,7 @@ export default function ConfirmationScreen(props) {
             },
             confirmationEmail: {
                 sendToShipTo,
-                imagesOnQuotes
+                imagesOnQuote
             }
         },
         paymentInfo,
@@ -177,7 +177,7 @@ export default function ConfirmationScreen(props) {
                     <SectionTitle>Confirmation Email</SectionTitle>
                     <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
                     <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-                    {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuotes} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
+                    {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuote} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
                 </SectionContainerBlue>
             )}
 
