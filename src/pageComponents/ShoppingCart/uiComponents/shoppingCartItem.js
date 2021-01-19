@@ -242,7 +242,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						<Img src={getThumbnailImagePath(itemDetails)} />
 					</DivCol1>
 					<DivCol2>
-						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
 						<CopyToClipboard text={itemDetails.itemDesc}>
 							<P2>Copy Item Desc</P2>
 						</CopyToClipboard>
