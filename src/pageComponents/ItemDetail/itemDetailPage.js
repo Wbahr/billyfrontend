@@ -168,12 +168,6 @@ const Pprice = styled.p`
 	margin: 0;
 `
 
-const InputQuantity = styled.input`
-	width: 50px;
-	height: 25px;
-	margin-left: 4px;
-`
-
 const TABLE = styled.table`
 	margin-top: 20px;
 `
@@ -209,7 +203,6 @@ export default function ItemDetailPage({ history }) {
 
 	const [priceInfo, setPriceInfo] = useState(null)
 	const {
-		unitPrice, 
 		unitOfMeasure, 
 		unitSize, 
 		roundType} = priceInfo || {}
@@ -354,6 +347,18 @@ export default function ItemDetailPage({ history }) {
 		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
 			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
 		))
+		
+		const Availability = () => (
+			<Pbold onClick={handleShowLocationsModal}>
+				{itemAvailability.availability ? (
+					`Available: ${itemAvailability.availability}`
+				) : itemAvailability.leadTimeDays ? (
+					`Lead time ${itemAvailability.leadTimeDays} days`
+				) : (
+					'Call for lead time'
+				)}
+			</Pbold>
+		)
 
 		return (
 			<ItemDetailPageContainer>
@@ -372,13 +377,7 @@ export default function ItemDetailPage({ history }) {
 							<P> /{unitOfMeasure}</P>
 						</Row>
 						
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								`Lead time ${itemAvailability.leadTimeDays} days`
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						<Availability/>
 						
 						<DivPurchaseInfoButtons>
 							<RowCentered>
@@ -414,13 +413,8 @@ export default function ItemDetailPage({ history }) {
 					
 					<Row>
 						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								`Lead time ${itemAvailability.leadTimeDays} days`
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						
+						<Availability/>
 					</Row>
 					
 					<TABLE>
