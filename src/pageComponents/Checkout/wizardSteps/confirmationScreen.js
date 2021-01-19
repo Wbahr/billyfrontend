@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/checkoutDropdownData'
@@ -86,6 +86,10 @@ export default function ConfirmationScreen(props) {
             billing: {
                 sameAsShipping,
                 ...billing
+            },
+            confirmationEmail: {
+                sendToShipTo,
+                imagesOnQuotes
             }
         },
         paymentInfo,
@@ -94,8 +98,14 @@ export default function ConfirmationScreen(props) {
         handleMoveStep,
         itemsDetails,
         itemsPrices,
-        itemsCustomerPartNumbers
+        itemsCustomerPartNumbers,
+        isStepValid,
+        validateForm
     } = props
+  
+  useEffect(() => {
+      validateForm() // this is the only page we want to validate on mount
+  }, [])
 
     const { userInfo, emptyCart } = useContext(Context)
     const [submitting, setSubmitting] = useState(false)
@@ -159,15 +169,15 @@ export default function ConfirmationScreen(props) {
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
-
+  
     return (
         <div>
             {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
-                    <FormikCheckbox label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
+                    <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
                     <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-                    {history.location.pathname === '/create-quote' && <FormikCheckbox label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
+                    {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuotes} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
                 </SectionContainerBlue>
             )}
 
@@ -262,7 +272,7 @@ export default function ConfirmationScreen(props) {
 
             <DivNavigation>
                 <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
-                <ButtonRed onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white" />Submit</ButtonRed>
+                <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white" />Submit</ButtonRed>
             </DivNavigation>
 
             {submitting && <ProcessingOrderModal />}

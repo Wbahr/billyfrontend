@@ -19,7 +19,7 @@ import { startOfTomorrow } from 'date-fns'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'config/providerGQL'
 import { contextType } from 'react-copy-to-clipboard'
-import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema } from './helpers/validationSchema'
+import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
 
 const DivContainer = styled.div`
@@ -142,6 +142,10 @@ function CheckoutPage({ history }) {
             })
         }
     }, [taxRateRequestInfo])
+  
+    useEffect(() => {
+        getCheckoutData()
+    }, [context.impersonatedCompanyInfo])
 
     const getFormStepComponent = currentStep => {
         switch (currentStep) {
@@ -162,7 +166,8 @@ function CheckoutPage({ history }) {
         return {
             0: shippingScheduleSchema,
             1: shipToSchema,
-            2: getBillToSchema(requiresPONumber)
+            2: getBillToSchema(requiresPONumber),
+            3: confirmationSchema
         };
     };
 
@@ -170,11 +175,12 @@ function CheckoutPage({ history }) {
         return {
             0: shippingScheduleSchema,
             1: airlineShipToSchema,
-            2: getBillToSchema(requiresPONumber)
+            2: getBillToSchema(requiresPONumber),
+            3: confirmationSchema
         };
     };
 
-    useQuery(GET_CHECKOUT_DATA, {
+    const [getCheckoutData] = useLazyQuery(GET_CHECKOUT_DATA, {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
             const mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
@@ -197,13 +203,13 @@ function CheckoutPage({ history }) {
     };
 
     const invMastUids = context.cart?.map(item => item.frecno)
-    const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
+    const { data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
         variables: {
             'invMastUids': invMastUids
         }
     })
 
-    const { loading: pricesLoading, error: itemPricesError, data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
+    const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
         variables: {
             'items': context.cart?.map(cartItem => {
                 return {
@@ -214,7 +220,7 @@ function CheckoutPage({ history }) {
         }
     })
 
-    const { loading: customerPartNumbersLoading, error: customerPartNumbersError, data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+    const {data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
         variables: {
             'invMastUids': invMastUids
         }
@@ -273,7 +279,7 @@ function CheckoutPage({ history }) {
 
                 <Container>
                     <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                    {validationSchema &&
+                    {validationSchema && (
                         <Formik
                             initialValues={initValues}
                             enableReinitialize={false}
@@ -290,7 +296,8 @@ function CheckoutPage({ history }) {
                                     }} />
                                 </form>
                             )}
-                        </Formik>}
+                        </Formik>
+                    )}
                     {!validationSchema && <Loader />}
                 </Container>
             </DivCheckoutCol>
