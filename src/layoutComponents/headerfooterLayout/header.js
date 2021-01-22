@@ -424,16 +424,32 @@ const industriesSubItems = [
 		to: '/pages/industries/covid-medical-structures'
 	},
 	{
-		label: 'All Brands',
-		to: '/brands'
+		label: 'Primary Metals',
+		to: '/pages/industries/primary-metals'
 	},
 	{
-		label: 'ABB',
-		to: '/brands/featured/abb'
+		label: 'Power Generation',
+		to: '/pages/industries/power-generation'
 	},
 	{
-		label: 'Aventics',
-		to: '/brands/featured/aventics'
+		label: 'Marine',
+		to: '/pages/industries/marine'
+	},
+	{
+		label: 'Food Beverage & Packaging',
+		to: '/pages/industries/food-beverage-and-packaging'
+	},
+	{
+		label: 'Plastics & Rubber',
+		to: '/pages/industries/plastics-and-rubber'
+	},
+	{
+		label: 'Construction and Off Road',
+		to: '/pages/industries/construction-and-off-road'
+	},
+	{
+		label: 'Life Sciences',
+		to: '/pages/industries/life-sciences'
 	},
 	{
 		label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
