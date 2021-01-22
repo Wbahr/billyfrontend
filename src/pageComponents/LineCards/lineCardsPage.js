@@ -188,7 +188,7 @@ export default function BlogPage() {
                     <SideDiv>
                         <LineCardName text="Manufacturers's Catalogs" />
                         <LinkDiv>
-                            <A href="#">Search By Manufacturer</A>
+                            <A href="https://share.hsforms.com/1QtDhXW8ITASry2kp9tNnhw51h24">Catalog Request</A>
                         </LinkDiv>
                     </SideDiv>
                     <Blog1>
