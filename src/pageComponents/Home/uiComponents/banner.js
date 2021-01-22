@@ -80,12 +80,12 @@ export default () =>  (
 	<BannerContainer>
 		<Col>
 			<LgBanner>
-				<LgImg src={Header} />
+				<LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/covid-banner.png" />
 			</LgBanner>
 			
 			<SmBanner>
 				<BannerDiv>
-					<ImgDiv><Img src={otto} /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" /></ImgDiv>
 					
 					<AboutAirline>
 						<H5>About Airline Hydraulics</H5>
@@ -94,7 +94,7 @@ export default () =>  (
 				</BannerDiv>
 				
 				<BannerDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
+					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" /></ImgDiv>
 					
 					<AboutAirline>
 						<P> We're 100% Employee Owned and proud of it! </P>
