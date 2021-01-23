@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { DebounceInput } from 'react-debounce-input'
 import styled from 'styled-components'
-import { useDebounce } from 'use-debounce/lib'
+import { useDebounce } from 'use-debounce'
 
 const IncrementDecrementButton = styled.button`
     box-shadow: none;

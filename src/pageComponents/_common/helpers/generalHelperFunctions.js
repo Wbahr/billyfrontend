@@ -1,8 +1,6 @@
 import {useRef, useEffect, useState} from 'react'
-import XLSX from "xlsx"
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-
 
 export const getRidOf__typename = ({__typename, editors, items, ...rest}) => (
 	{ ...rest, editors: editors.map(({__typename, ...rest1}) => rest1), items: items.map(({__typename, ...rest2}) => rest2) }
@@ -19,11 +17,13 @@ export const getCsvFormattedData = (data, columns, ignoreCols) => {
 }
 
 export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
-	const excelFormat = getCsvFormattedData(data, columns, ignoreCols)
-	const worksheet = XLSX.utils.aoa_to_sheet(excelFormat)
-	const workBook = XLSX.utils.book_new();
-	XLSX.utils.book_append_sheet(workBook, worksheet, name);
-	XLSX.writeFile(workBook, `${name}.xlsx`)
+	import('xlsx').then(XLSX => {
+		const excelFormat = getCsvFormattedData(data, columns, ignoreCols)
+		const worksheet = XLSX.utils.aoa_to_sheet(excelFormat)
+		const workBook = XLSX.utils.book_new();
+		XLSX.utils.book_append_sheet(workBook, worksheet, name);
+		XLSX.writeFile(workBook, `${name}.xlsx`)
+	})
 }
 
 export const exportToPdf = (data, columns, name, ignoreCols=[]) => {

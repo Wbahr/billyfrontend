@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Select from 'react-select'
-import styled from '@emotion/styled'
+import styled from 'styled-components'
 
 const ErrorMessage = styled.div`
   color: red

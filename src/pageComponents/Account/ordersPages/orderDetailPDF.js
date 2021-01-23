@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@react-pdf/styled-components'
 import _ from 'lodash'
-import AirlineLogo from '../../../imgs/airline/airline-shop.png'
+import AirlineLogo from '../../../imgs/airline/Airline-shop.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'

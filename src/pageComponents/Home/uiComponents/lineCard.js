@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import SectionHeader from '../../_common/sectionHeader.js'
-import LineCard from '../../../imgs/homepage/lineCard.png'
+import LineCard from '../../../imgs/homepage/LineCard.png'
 import Hydraulic from '../../../imgs/homepage/HydraulicCatalog.png'
 import Automation from '../../../imgs/homepage/AutomationCatalog.png'
 

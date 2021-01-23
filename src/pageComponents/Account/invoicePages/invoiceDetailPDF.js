@@ -4,8 +4,7 @@ import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
-import NumberFormat from 'react-number-format'
-import { Page, Text, View, Link, Image, Document, StyleSheet } from '@react-pdf/renderer'
+import { Page, Image, Document, StyleSheet } from '@react-pdf/renderer'
 
 // Create styles
 const styles = StyleSheet.create({

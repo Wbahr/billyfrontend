@@ -1,5 +1,4 @@
 import React, {useContext, useMemo, useEffect, useRef, useState} from 'react'
-import _ from 'lodash'
 import Select from '../../_common/form/select'
 import AirlineInput from "../../_common/form/inputv2";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

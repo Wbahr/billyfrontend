@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
+import React  from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import 'react-datepicker/dist/react-datepicker.css'
-import Context from '../../../config/context'
 import NumberFormat from 'react-number-format'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 

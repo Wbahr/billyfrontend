@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import _ from 'lodash'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'

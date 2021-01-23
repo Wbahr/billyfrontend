@@ -5,8 +5,6 @@ import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 // import AdaptallPage from './minimalBrandsPages/adaptall'
 // import AdsensPage from './minimalBrandsPages/adsens'
 
-// import _ from 'lodash'
-
 
 
 // class FullBrand extends React.Component {

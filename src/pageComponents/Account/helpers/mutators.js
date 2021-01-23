@@ -1,6 +1,5 @@
 import React from 'react'
 import _ from 'lodash'
-import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 
 export function formatTableData(type, data, orderId){

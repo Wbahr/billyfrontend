@@ -21,7 +21,7 @@ library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRi
 const customHistory = createBrowserHistory()
 
 const client = new ApolloClient({
-	uri: `${process.env.API_URL}/graphql`,
+	uri: `${process.env.REACT_APP_API_URL}/graphql`,
 	request: (operation) => {
 		const token = localStorage.getItem('apiToken')
 		operation.setContext({
@@ -38,7 +38,7 @@ const client = new ApolloClient({
 	}
 })
 
-const stripePromise = loadStripe(process.env.STRIPE_KEY)
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
 ReactDOM.render(
 	<ApolloProvider client={client}>

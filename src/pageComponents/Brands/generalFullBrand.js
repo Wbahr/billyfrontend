@@ -19,7 +19,6 @@ import AbbPage from './featuredBrandsPages/abb'
 import OrientalmotorPage from './featuredBrandsPages/orientalmotor'
 import AventicsPage from './featuredBrandsPages/aventics'
 import PhoenixContactPage from './featuredBrandsPages/phoenixContact'
-// import _ from 'lodash'
 
 export default function GeneralFullBrand({history}) {
 	const [pageComponent, setPageComponent] = useState()
