@@ -1,11 +1,11 @@
 import React from 'react'
-import ReactTable from "react-table"
+import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import styled from 'styled-components'
 
 import AccountSectionHeader from '../_common/sectionHeader'
 import Input from '../_common/form/input'
-import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
+import { PCenterAlign, PRightAlign, ButtonLink } from '../../styles/tables'
 import _ from 'lodash'
 import { StyledText0, StyledText1 } from '../../styles/fonts'
 
@@ -51,10 +51,6 @@ class RMAtable extends React.Component {
     filterAll: ''
   }
 
-  componentWillMount() {
-
-  }
-
   componentDidUpdate(prevProps, prevState) {
     const {
       returnItems: prevReturnItems
@@ -70,10 +66,10 @@ class RMAtable extends React.Component {
   }
 
   handleViewDetails = (selectedRMANum) => {
-    for(let i = 0; i < returnItems.length; i++){
-      let item = returnItems[i]
-      if(item.rmaNum === selectedRMANum){
-        this.setState({selectedReturn: item})
+    for (let i = 0; i < returnItems.length; i++){
+      const item = returnItems[i]
+      if (item.rmaNum === selectedRMANum){
+        this.setState({ selectedReturn: item })
         break
       }
     }
@@ -82,11 +78,11 @@ class RMAtable extends React.Component {
   calculateRefundAndFee = (returnItems) => {
     let totalRefund = 0
     let totalRestockingFee = 0
-    let minRestockingFee = 15
-    let restockingPercentage = 0.25
+    const minRestockingFee = 15
+    const restockingPercentage = 0.25
 
-    for(let i = 0; i < returnItems.length; i++) {
-      let item = returnItems[i]
+    for (let i = 0; i < returnItems.length; i++) {
+      const item = returnItems[i]
       if (item.hasReturnFee) {
         totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
       }
@@ -94,10 +90,10 @@ class RMAtable extends React.Component {
     }
     if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
       totalRefund = totalRefund - minRestockingFee
-      this.setState({totalRefund: totalRefund.toFixed(2)})
+      this.setState({ totalRefund: totalRefund.toFixed(2) })
     } else {
       totalRefund = totalRefund - totalRestockingFee
-      this.setState({totalRefund: totalRefund.toFixed(2)})
+      this.setState({ totalRefund: totalRefund.toFixed(2) })
     }
   }
 
@@ -109,19 +105,19 @@ class RMAtable extends React.Component {
     // extra check for the "filterAll"
     if (filtered.length > 1 && this.state.filterAll.length) {
       // NOTE: this removes any FILTER ALL filter
-      const filterAll = '';
+      const filterAll = ''
       this.setState({ filtered: filtered.filter((item) => item.id != 'all'), filterAll })
     }
     else
-      this.setState({ filtered });
+      this.setState({ filtered })
   }
 
   filterAll = (e) => {
-    const { value } = e.target;
-    const filterAll = value;
-    const filtered = [{ id: 'all', value: filterAll }];
+    const { value } = e.target
+    const filterAll = value
+    const filtered = [{ id: 'all', value: filterAll }]
     // NOTE: this completely clears any COLUMN filters
-    this.setState({ filterAll, filtered });
+    this.setState({ filterAll, filtered })
   }
 
   render(){
@@ -161,26 +157,26 @@ class RMAtable extends React.Component {
         id: 'status',
         filterable: true,
         filterMethod: (filter, row) => {
-          if (filter.value === "all") {
-            return true;
+          if (filter.value === 'all') {
+            return true
           }
-          if (filter.value === "complete") {
-            return row[filter.id] >= 21;
-          } else if (filter.value === "pending") {
-            return row[filter.id] < 21;
+          if (filter.value === 'complete') {
+            return row[filter.id] >= 21
+          } else if (filter.value === 'pending') {
+            return row[filter.id] < 21
           }
         },
-        Filter: ({ filter, onChange }) =>
+        Filter: ({ filter, onChange }) => (
           <select
             onChange={event => onChange(event.target.value)}
-            style={{width: "100%"}}
-            value={filter ? filter.value : "all"}
+            style={{ width: '100%' }}
+            value={filter ? filter.value : 'all'}
           >
             <option value="all">Show All</option>
             <option value="complete">Complete</option>
             <option value="pending">Pending</option>
           </select>
-      },
+        ) },
       {
         Header: '',
         accessor: 'rmaNum',
@@ -189,7 +185,7 @@ class RMAtable extends React.Component {
       }
     ]
 
-    let itemBars = []
+    const itemBars = []
 
     if (returnItems.length > 0) {
       _.each(returnItems, (item) => {
@@ -201,15 +197,19 @@ class RMAtable extends React.Component {
             </PItemDetail>
             <PItemDetail>
               <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
-              {item.hasReturnFee ? <PItemRestockingFee
-                as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee> : null}
+              {item.hasReturnFee ? (
+                <PItemRestockingFee
+                  as='div'
+                >{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}
+                </PItemRestockingFee>
+              ) : null}
             </PItemDetail>
           </DivItem>
         )
       })
     }
 
-    return(
+    return (
       <React.Fragment>
         <AccountSectionHeader
           text={'Return Material Authorization (RMA)'}
@@ -227,28 +227,28 @@ class RMAtable extends React.Component {
           className="-striped -highlight"
         />
         {
-         !_.isNil(selectedReturn) &&
-           <>
-            <AccountSectionHeader
-              text={`Return Details - ${selectedReturn.rmaNum}`}
-            />
-           <DivRMADetails>
-            <DivRMAList>
-              <StyledText0><StyledText1>Return Date: </StyledText1>{selectedReturn.returnDate}</StyledText0>
-              <StyledText0><StyledText1>RMA Number: </StyledText1>{selectedReturn.rmaNum}</StyledText0>
-              <StyledText0><StyledText1>Invoice Number: </StyledText1>{selectedReturn.invoiceNum}</StyledText0>
-            </DivRMAList>
-            <DivRMAList>
-              <StyledText0><StyledText1>Return Total: </StyledText1>{selectedReturn.returnTotal}</StyledText0>
-              <StyledText0><StyledText1>Return Status: </StyledText1>{selectedReturn.returnStatus}</StyledText0>
-            </DivRMAList>
-           </DivRMADetails>
-             {itemBars}
-           <DivTotal as='div'>
-            {`Total: $${totalRefund}`}
-           </DivTotal>
-           </>
-        }
+          !_.isNil(selectedReturn) && (
+            <>
+              <AccountSectionHeader
+                text={`Return Details - ${selectedReturn.rmaNum}`}
+              />
+              <DivRMADetails>
+                <DivRMAList>
+                  <StyledText0><StyledText1>Return Date: </StyledText1>{selectedReturn.returnDate}</StyledText0>
+                  <StyledText0><StyledText1>RMA Number: </StyledText1>{selectedReturn.rmaNum}</StyledText0>
+                  <StyledText0><StyledText1>Invoice Number: </StyledText1>{selectedReturn.invoiceNum}</StyledText0>
+                </DivRMAList>
+                <DivRMAList>
+                  <StyledText0><StyledText1>Return Total: </StyledText1>{selectedReturn.returnTotal}</StyledText0>
+                  <StyledText0><StyledText1>Return Status: </StyledText1>{selectedReturn.returnStatus}</StyledText0>
+                </DivRMAList>
+              </DivRMADetails>
+              {itemBars}
+              <DivTotal as='div'>
+                {`Total: $${totalRefund}`}
+              </DivTotal>
+            </>
+          )}
       </React.Fragment>
     )
   }

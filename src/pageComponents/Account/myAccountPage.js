@@ -17,62 +17,62 @@ const Container = styled.div`
   display: flex;
 `
 
-export default function AccountManagementPage({history}) {
-	const [pageComponent, setPageComponent] = useState()
-	let { page, orderId } = useParams()
+export default function AccountManagementPage({ history }) {
+  const [pageComponent, setPageComponent] = useState()
+  const { page, orderId } = useParams()
 
-	useEffect(() => {
-		switch(page){
-		case 'dashboard':
-			setPageComponent(<AccountDashboard history={history}/>)
-			break
-		case 'shopping-lists':
-			setPageComponent(<AccountDashboard history={history}/>)
-			break
-		case 'user-settings':
-			setPageComponent(<AccountDashboard history={history}/>)
-			break
-		case 'shipping-preferences':
-			setPageComponent(<AccountDashboard history={history}/>)
-			break
-		case 'payment-preferences':
-			setPageComponent(<AccountDashboard history={history}/>)
-			break
-		case 'orders':
-			setPageComponent(<OrdersTable history={history}/>)
-			break
-		case 'open-orders-report':
-			setPageComponent(<OpenOrdersTable history={history}/>)
-			break
-		case 'my-ordered-items':
-			setPageComponent(<ItemOrdersTable history={history}/>)
-			break
-		case 'open-quotes':
-			setPageComponent(<OpenQuotesTable history={history}/>)
-			break
-		case 'invoices':
-			setPageComponent(<InvoicesTable history={history}/>)
-			break
-		case 'order-detail':
-			setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
-			break
-		case 'quote-detail':
-			setPageComponent(<QuoteDetail history={history} orderId={orderId}/>)
-			break
-		case 'invoice-detail':
-			setPageComponent(<InvoiceDetail history={history} invoiceId={orderId}/>)
-			break
-		}
-	}, [page])
+  useEffect(() => {
+    switch (page){
+    case 'dashboard':
+      setPageComponent(<AccountDashboard history={history}/>)
+      break
+    case 'shopping-lists':
+      setPageComponent(<AccountDashboard history={history}/>)
+      break
+    case 'user-settings':
+      setPageComponent(<AccountDashboard history={history}/>)
+      break
+    case 'shipping-preferences':
+      setPageComponent(<AccountDashboard history={history}/>)
+      break
+    case 'payment-preferences':
+      setPageComponent(<AccountDashboard history={history}/>)
+      break
+    case 'orders':
+      setPageComponent(<OrdersTable history={history}/>)
+      break
+    case 'open-orders-report':
+      setPageComponent(<OpenOrdersTable history={history}/>)
+      break
+    case 'my-ordered-items':
+      setPageComponent(<ItemOrdersTable history={history}/>)
+      break
+    case 'open-quotes':
+      setPageComponent(<OpenQuotesTable history={history}/>)
+      break
+    case 'invoices':
+      setPageComponent(<InvoicesTable history={history}/>)
+      break
+    case 'order-detail':
+      setPageComponent(<OrderDetail history={history} orderId={orderId}/>)
+      break
+    case 'quote-detail':
+      setPageComponent(<QuoteDetail history={history} orderId={orderId}/>)
+      break
+    case 'invoice-detail':
+      setPageComponent(<InvoiceDetail history={history} invoiceId={orderId}/>)
+      break
+    }
+  }, [page])
 
-	return(
-		<Container>
-			<AccountNavPanel history={history}/>
-			{pageComponent}
-		</Container>
-	)
+  return (
+    <Container>
+      <AccountNavPanel history={history}/>
+      {pageComponent}
+    </Container>
+  )
 }
 
 AccountManagementPage.propTypes = {
-	history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired
 }

@@ -155,14 +155,14 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
   
   const context = useContext(Context)
 
-	function handleSetQuantity({target: {value}}){
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-			setQuantity(value)
-		}
-	}
+  function handleSetQuantity({ target: { value } }){
+    if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
+      setQuantity(value)
+    }
+  }
 
-	function handleAddToCart() {
-		if (quantity > 0){
+  function handleAddToCart() {
+    if (quantity > 0){
       context.addItem({
         frecno: itemDetails?.invMastUid,
         quantity: quantity,
@@ -170,27 +170,27 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
         itemUnitPriceOverride: null,
         customerPartNumberId: null
       })
-			setShowAddedToCartModal(true)
-		}
+      setShowAddedToCartModal(true)
+    }
   }
 
   if (!itemDetails) return <></>
     
-  const imagePath = getThumbnailImagePath(itemDetails);
+  const imagePath = getThumbnailImagePath(itemDetails)
 
-  const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`;
+  const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`
   
-	return (
+  return (
     <DivItemResultContainer>
       <DivPartDetailsRow>
         <DivPartImg>
-					<a href={itemLink}>
-						<Img src={imagePath} alt={itemDetails.itemCode}/>
-					</a>
+          <a href={itemLink}>
+            <Img src={imagePath} alt={itemDetails.itemCode}/>
+          </a>
         </DivPartImg>
 				
         <DivPartDetails>
-					<PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
+          <PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
         </DivPartDetails>
 				
         <DivPartNumberRow>
@@ -198,21 +198,24 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
         </DivPartNumberRow>
 				
         <DivAvailabilityRow onClick={showLocationsModal}>
-					<PpartAvailability>Availability:</PpartAvailability>
+          <PpartAvailability>Availability:</PpartAvailability>
           {availability 
-              ? <PBlue>{availability.availability 
+            ? (
+              <PBlue>{availability.availability 
                 ? availability.availability 
                 : availability.leadTimeDays
                   ? 'Lead Time ' + availability.leadTimeDays + ' days'
-                  : 'Call airline for lead time' }</PBlue> 
-              : <PBlue>Call Airline for Price</PBlue>}
+                  : 'Call airline for lead time' }
+              </PBlue>
+            ) 
+            : <PBlue>Call Airline for Price</PBlue>}
         </DivAvailabilityRow>
 				
         <DivPartNumberRowSpread>
           <Div>
-						Quantity:
-						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
-					</Div>
+            Quantity:
+            <InputQuantity value={quantity} onChange={handleSetQuantity}/>
+          </Div>
           {
             price
               ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
@@ -221,9 +224,9 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
         </DivPartNumberRowSpread>
 				
         <DivSpace>
-        { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
+          { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
         </DivSpace>
       </DivPartDetailsRow>
     </DivItemResultContainer>
-	)
+  )
 }

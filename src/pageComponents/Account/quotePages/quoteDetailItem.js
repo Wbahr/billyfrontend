@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../config/context'
-import {CopyToClipboard} from 'react-copy-to-clipboard'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
@@ -25,14 +25,6 @@ const DivCard = styled.div`
 		display: flex;
 		align-items: center;
 		width: 100%;
-	`
-
-const DivRemove = styled.div`
-		cursor: pointer;
-		display: flex;
-		width: auto;
-		margin: auto 12px;
-		align-items: center;
 	`
 
 const DivCol1 = styled.div`
@@ -102,72 +94,74 @@ const ButtonSmall = styled.button`
 	`
 
 export default function OrderDetailItem({ item, quoteId, itemDetails, availability, priceInfo }) {
-	const [quantity, setQuantity] = useState(item.quantityOrdered)
-	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-    let imagePath = getThumbnailImagePath(itemDetails);
-
-	function handleAddedToCart(){
-		setShowAddedToCartModal(false);
-	}
-	
-	return(
-		<DivContainer>
-			<AddedModal 
-				open={showShowAddedToCartModal} 
-				text={'Added to Cart!'} 
-				onClose={handleAddedToCart}
-				timeout={900}
-			/>
-			<DivCard>
-				<DivCol1>
-					<Img src={imagePath} />
-				</DivCol1>
-				<DivCol2>
-					<CopyToClipboard text={item.itemCode}>
-						<P1>{item.itemCode}</P1>
-					</CopyToClipboard>
-					<TextRow>
-						<CopyToClipboard text={`AHC${item.invMastUid}`}>
-							<P2>AHC{item.invMastUid}</P2>
-						</CopyToClipboard>
-						{
-							item.customerPartNumber && (
-								<>
-									<P2>|</P2>
-									<CopyToClipboard text={item.customerPartNumber}>
-										<P2>{item.customerPartNumber}</P2>
-									</CopyToClipboard>
-								</>
-							)
-						}
-					</TextRow>
-					<P2>Quantity Ordered: {item.quantityOrdered}</P2>
-				</DivCol2>
-				<DivCol2>
-					<P2>Quote Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
-					<P2>Quote Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
-					<P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
-				</DivCol2>
-				<DivCol3>
-					<DivRow>Availability: {availability?.availability}</DivRow>
-					<DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
-					<DivRow>Quantity: {item.quantityOrdered}</DivRow>
-					<Context.Consumer>
-						{({addItem}) => (
-							<ButtonSmall onClick={()=>{
-								addItem({
-									'frecno': item.invMastUid,
-									'quantity': parseInt(quantity, 10),
-									'itemNotes': `Quote ${quoteId}`,
-									'itemUnitPriceOverride': null,
-									'customerPartNumberId': item.customerPartNumberId,
-									//'quoteId': quoteId
-								}), setShowAddedToCartModal(true), setQuantity(1)
-							}}>Add to Cart</ButtonSmall>
-						)}
-					</Context.Consumer>
-				</DivCol3>
-			</DivCard>
-		</DivContainer>
-	)
+  const [quantity, setQuantity] = useState(item.quantityOrdered)
+  const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+  const imagePath = getThumbnailImagePath(itemDetails)
+  
+  function handleAddedToCart(){
+    setShowAddedToCartModal(false)
+  }
+  
+  return (
+    <DivContainer>
+      <AddedModal
+        open={showShowAddedToCartModal}
+        text={'Added to Cart!'}
+        onClose={handleAddedToCart}
+        timeout={900}
+      />
+      <DivCard>
+        <DivCol1>
+          <Img src={imagePath} />
+        </DivCol1>
+        <DivCol2>
+          <CopyToClipboard text={item.itemCode}>
+            <P1>{item.itemCode}</P1>
+          </CopyToClipboard>
+          <TextRow>
+            <CopyToClipboard text={`AHC${item.invMastUid}`}>
+              <P2>AHC{item.invMastUid}</P2>
+            </CopyToClipboard>
+            {
+              item.customerPartNumber && (
+                <>
+                  <P2>|</P2>
+                  <CopyToClipboard text={item.customerPartNumber}>
+                    <P2>{item.customerPartNumber}</P2>
+                  </CopyToClipboard>
+                </>
+              )
+            }
+          </TextRow>
+          <P2>Quantity Ordered: {item.quantityOrdered}</P2>
+        </DivCol2>
+        <DivCol2>
+          <P2>Quote Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+          <P2>Quote Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+          <P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
+        </DivCol2>
+        <DivCol3>
+          <DivRow>Availability: {availability?.availability}</DivRow>
+          <DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
+          <DivRow>Quantity: {item.quantityOrdered}</DivRow>
+          <Context.Consumer>
+            {({ addItem }) => (
+              <ButtonSmall onClick={() => {
+                addItem({
+                  'frecno': item.invMastUid,
+                  'quantity': parseInt(quantity, 10),
+                  'itemNotes': `Quote ${quoteId}`,
+                  'itemUnitPriceOverride': null,
+                  'customerPartNumberId': item.customerPartNumberId,
+                  //'quoteId': quoteId
+                }), setShowAddedToCartModal(true), setQuantity(1)
+              }}
+              >Add to Cart
+              </ButtonSmall>
+            )}
+          </Context.Consumer>
+        </DivCol3>
+      </DivCard>
+    </DivContainer>
+  )
 }

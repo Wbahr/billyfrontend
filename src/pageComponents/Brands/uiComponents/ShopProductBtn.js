@@ -26,27 +26,27 @@ const ShopBtn = styled.a`
       color: ${props => props.theme.buttonForegroundColor};
       background-image: linear-gradient(to bottom right, ${props => props.theme.mainColorBlend}, ${props => props.theme.mainColor});
   }
-`;
+`
 
 const ConfiguratorBtn = styled(ShopBtn)`
   background-image: linear-gradient(to top left, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   &:hover {
     background-image: linear-gradient(to bottom right, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   }
-`;
+`
 
 export default function ShopProductBtn(props) {
-    return (
-        <Div>
-            <ShopBtn href={`/search?searchTerm=${props.searchTerm}`}>{props.text}</ShopBtn>
-        </Div>
-    );
+  return (
+    <Div>
+      <ShopBtn href={`/search?searchTerm=${props.searchTerm}`}>{props.text}</ShopBtn>
+    </Div>
+  )
 }
 
 export function ProductConfiguratorBtn(props) {
-    return (
-        <Div>
-            <ConfiguratorBtn href={props.url}>{props.text}</ConfiguratorBtn>
-        </Div>
-    );
+  return (
+    <Div>
+      <ConfiguratorBtn href={props.url}>{props.text}</ConfiguratorBtn>
+    </Div>
+  )
 }

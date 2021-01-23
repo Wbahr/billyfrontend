@@ -61,158 +61,160 @@ const ButtonSmall = styled.button`
     }
   `
 
-export default function OrderDetail({ history, orderId: quoteId}) {
-	const context = useContext(Context)
-	const [filter, setFilter] = useState('')
-	const [isTableView, setIsTableView] = useState(false)
-	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+export default function OrderDetail({ history, orderId: quoteId }) {
+  const context = useContext(Context)
+  const [filter, setFilter] = useState('')
+  const [isTableView, setIsTableView] = useState(false)
+  const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-	const { loading: isOrderDetailsLoading, error: orderDetailsError, data: orderDetails} = useQuery(GET_ORDERS_DETAIL, {
-		fetchPolicy: 'no-cache',
-		variables: { orderNumber: String(quoteId) }
-	})
+  const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
+    fetchPolicy: 'no-cache',
+    variables: { orderNumber: String(quoteId) }
+  })
 
-	const {
-		orderDate,
-		poNo,
-		status,
-		packingBasis,
-		total,
-		shipToName,
-		shipToAddress1,
-		shipToAddress2,
-		shipToAddress3,
-		shipToCity,
-		shipToState,
-		shipToZip,
-		promiseDate,
-		lineItems
-	} = orderDetails?.accountOrderDetails || {}
+  const {
+    orderDate,
+    poNo,
+    status,
+    packingBasis,
+    total,
+    shipToName,
+    shipToAddress1,
+    shipToAddress2,
+    shipToAddress3,
+    shipToCity,
+    shipToState,
+    shipToZip,
+    lineItems
+  } = orderDetails?.accountOrderDetails || {}
 
-	const invMastUids = lineItems?.map(item => item.invMastUid) || []
+  const invMastUids = lineItems?.map(item => item.invMastUid) || []
 
-	const { loading: itemDetailsLoading, error: itemDetailsError, data: itemsDetails} = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
-		variables: {
-			'invMastUids': invMastUids
-		}
-	})
+  const { data: itemsDetails } = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
+    variables: {
+      'invMastUids': invMastUids
+    }
+  })
 
-	const { loading: pricesLoading, error: itemPricesError, data: itemsPrices} = useQuery(GET_ITEM_PRICE, {
-		variables: {
-			'items': invMastUids.map(invMastUid => {
-				return {
-					'invMastUid': invMastUid,
-					'quantity': 1
-				}
-			})
-		}
-	})
+  const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
+    variables: {
+      'items': invMastUids.map(invMastUid => {
+        return {
+          'invMastUid': invMastUid,
+          'quantity': 1
+        }
+      })
+    }
+  })
 
-	const { loading: availabilityLoading, error: itemAvailabilityError, data: itemsAvailability} = useQuery(GET_ITEM_AVAILABILITY, {
-		variables: {
-			'invMastUids': invMastUids
-		}
-	})
+  const { data: itemsAvailability } = useQuery(GET_ITEM_AVAILABILITY, {
+    variables: {
+      'invMastUids': invMastUids
+    }
+  })
 
-	let itemDetails = []
-	if(!isTableView){
-		const filteredListItems = (!lineItems || !lineItems.length) 
-			? [] 
-			: lineItems.filter(i => {
-				if(!filter || !filter.length) return true;
+  let itemDetails = []
+  if (!isTableView){
+    const filteredListItems = (!lineItems || !lineItems.length) 
+      ? [] 
+      : lineItems.filter(i => {
+        if (!filter || !filter.length) return true
 
-				var currentItemCode = i.itemCode.toLowerCase()
-				var filterLower = filter.toLowerCase()
+        const currentItemCode = i.itemCode.toLowerCase()
+        const filterLower = filter.toLowerCase()
 
-				return currentItemCode.indexOf(filterLower) > -1;
-			})
+        return currentItemCode.indexOf(filterLower) > -1
+      })
 			
-		itemDetails = filteredListItems?.map((item) => {
-			const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
-			const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
-			const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
-			return <QuoteDetailItem 
-						key={item.lineNumber} 
-						quoteId={quoteId}
-						item={item}
-						itemDetails={itemDetails}
-						availability={itemAvailability}
-						priceInfo={itemPrice} />
-		})
+    itemDetails = filteredListItems?.map((item) => {
+      const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
+      const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
+      const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
+      return (
+        <QuoteDetailItem 
+          key={item.lineNumber} 
+          quoteId={quoteId}
+          item={item}
+          itemDetails={itemDetails}
+          availability={itemAvailability}
+          priceInfo={itemPrice}
+        />
+      )
+    })
 
-		if (!itemDetails || itemDetails.length === 0) {
-			itemDetails = <p>No items found matching search.</p>
-		}
-	}
+    if (!itemDetails || itemDetails.length === 0) {
+      itemDetails = <p>No items found matching search.</p>
+    }
+  }
 
-	function handleAddQuote() {
-		let items = lineItems.map(item => {
-			return {
-				'frecno': item.invMastUid,
-				'quantity': parseInt(item.quantityOrdered, 10),
-				'itemNotes': '',
-				'itemUnitPriceOverride': null,
-				'customerPartNumberId': item.customerPartNumberId,
-				//'quoteId': quoteId
-			}
-		})
+  function handleAddQuote() {
+    const items = lineItems.map(item => {
+      return {
+        'frecno': item.invMastUid,
+        'quantity': parseInt(item.quantityOrdered, 10),
+        'itemNotes': '',
+        'itemUnitPriceOverride': null,
+        'customerPartNumberId': item.customerPartNumberId,
+        //'quoteId': quoteId
+      }
+    })
 
-		context.addItems(items)
-		setShowAddedToCartModal(true)
-	}
+    context.addItems(items)
+    setShowAddedToCartModal(true)
+  }
 
-	function handleAddedToCart(){
-		setShowAddedToCartModal(false)
-	}
+  function handleAddedToCart(){
+    setShowAddedToCartModal(false)
+  }
 
-	if(isOrderDetailsLoading){
-		return(
-			<p>Loading Quote Data...</p>
-		)
-	} else {
-		return(
-			<div>
-				<AddedModal 
-					open={showShowAddedToCartModal} 
-					text={'Added to Cart!'} 
-					onClose={handleAddedToCart}
-					timeout={900}
-				/>
-				<DivHeader>
-					<h4>Quote #{quoteId}</h4>
-					<p onClick={()=>{history.push('/account/open-quotes')}}>Back to Quotes</p>
-					<ButtonSmall onClick={()=>handleAddQuote()}>Add Quote to Cart</ButtonSmall>
-				</DivHeader>
-				<DivOrderInfoContainer>
-					<DivOrderInfo>
-						<p>Order Date: {orderDate ? dateFormat(new Date(orderDate), 'MM/dd/yyyy') : '--'}</p>
-						<p>Quote Number: {quoteId}</p>
-						<p>P.O. Number: {poNo}</p>
-						<p>Status: {status}</p>
-						<p>Packing Basis: {packingBasis}</p>
-						<p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
-					</DivOrderInfo>
-					<DivOrderInfo>
-						<p>Ship-to-Address:</p>
-						<p>{shipToName}</p>
-						<p>{shipToAddress1}</p>
-						{shipToAddress2 && <p>{shipToAddress2}</p>}
-						{shipToAddress3 && <p>{shipToAddress3}</p>}
-						<p>{shipToCity}, {shipToState} {shipToZip}</p>
-					</DivOrderInfo>
-				</DivOrderInfoContainer>
-				<div>
-					<ToggleSwitch 
-						label='View:'
-						text='Table'
-						text2='List'
-						toggled={isTableView}
-						setToggled={(value)=>setIsTableView(value)}
-					/>
-					<Input value={filter} placeholder='Search by Item ID' onChange={(e)=>setFilter(e.target.value)}/>
-				</div>
-				{itemDetails}
-			</div>
-		)
-	}
+  if (isOrderDetailsLoading){
+    return (
+      <p>Loading Quote Data...</p>
+    )
+  } else {
+    return (
+      <div>
+        <AddedModal 
+          open={showShowAddedToCartModal} 
+          text={'Added to Cart!'} 
+          onClose={handleAddedToCart}
+          timeout={900}
+        />
+        <DivHeader>
+          <h4>Quote #{quoteId}</h4>
+          <p onClick={() => {history.push('/account/open-quotes')}}>Back to Quotes</p>
+          <ButtonSmall onClick={() => handleAddQuote()}>Add Quote to Cart</ButtonSmall>
+        </DivHeader>
+        <DivOrderInfoContainer>
+          <DivOrderInfo>
+            <p>Order Date: {orderDate ? dateFormat(new Date(orderDate), 'MM/dd/yyyy') : '--'}</p>
+            <p>Quote Number: {quoteId}</p>
+            <p>P.O. Number: {poNo}</p>
+            <p>Status: {status}</p>
+            <p>Packing Basis: {packingBasis}</p>
+            <p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+          </DivOrderInfo>
+          <DivOrderInfo>
+            <p>Ship-to-Address:</p>
+            <p>{shipToName}</p>
+            <p>{shipToAddress1}</p>
+            {shipToAddress2 && <p>{shipToAddress2}</p>}
+            {shipToAddress3 && <p>{shipToAddress3}</p>}
+            <p>{shipToCity}, {shipToState} {shipToZip}</p>
+          </DivOrderInfo>
+        </DivOrderInfoContainer>
+        <div>
+          <ToggleSwitch 
+            label='View:'
+            text='Table'
+            text2='List'
+            toggled={isTableView}
+            setToggled={(value) => setIsTableView(value)}
+          />
+          <Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)}/>
+        </div>
+        {itemDetails}
+      </div>
+    )
+  }
 }

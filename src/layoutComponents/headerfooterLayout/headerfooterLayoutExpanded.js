@@ -20,8 +20,8 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HeaderFooterLayoutExpanded(props) {
-	return(
-		<Div>
+  return (
+    <Div>
       <ThemeProvider theme={airlineRedTheme}>
         <Header {...props}/>
         <ContentScreenContainer {...props}>
@@ -29,6 +29,6 @@ export default function HeaderFooterLayoutExpanded(props) {
         </ContentScreenContainer>
         <Footer />
       </ThemeProvider>
-		</Div>
-	)
+    </Div>
+  )
 }

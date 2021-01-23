@@ -7,15 +7,15 @@ const MainDropdown = styled.select`
 `
 
 class Dropdown extends React.Component {
-	render(){
+  render(){
 
-		let Options = <option>Test</option>
-		return(
-			<MainDropdown>
-				{Options}
-			</MainDropdown>
-		)
-	}
+    const Options = <option>Test</option>
+    return (
+      <MainDropdown>
+        {Options}
+      </MainDropdown>
+    )
+  }
 }
 
 export default Dropdown

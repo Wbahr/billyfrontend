@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {DebounceInput} from 'react-debounce-input'
+import { DebounceInput } from 'react-debounce-input'
 import Context from '../../../config/context'
 import NumberFormat from 'react-number-format'
 
@@ -46,52 +46,54 @@ const DivQuoteButton = styled(DivCheckoutButton)`
 	background-color: #535353;
 `
 
-export default function SubtotalBox({history}) {
-	const {cart, cartPricing, updateOrderNotes, orderNotes, userInfo} = useContext(Context)
+export default function SubtotalBox({ history }) {
+  const { cart, cartPricing, updateOrderNotes, orderNotes, userInfo } = useContext(Context)
 
-	const subtotal = cartPricing.state === 'loading'
-		? 'Calculating...'
-		: <NumberFormat
-				value={cartPricing.subTotal}
-				displayType="text"
-				thousandSeparator={true}
-				prefix="$"
-				decimalScale={2}
-				fixedDecimalScale
-		/>
+  const subtotal = cartPricing.state === 'loading'
+    ? 'Calculating...'
+    : (
+      <NumberFormat
+        value={cartPricing.subTotal}
+        displayType="text"
+        thousandSeparator={true}
+        prefix="$"
+        decimalScale={2}
+        fixedDecimalScale
+      />
+    )
 	
-	return (
-		<Container>
-			<DebounceInput
-				element="textarea"
-				minLength={2}
-				debounceTimeout={300}
-				onChange={e => updateOrderNotes(e.target.value)}
-				placeholder='Type Order Notes here'
-				style={{width: 600}}
-				value={orderNotes}
-			/>
+  return (
+    <Container>
+      <DebounceInput
+        element="textarea"
+        minLength={2}
+        debounceTimeout={300}
+        onChange={e => updateOrderNotes(e.target.value)}
+        placeholder='Type Order Notes here'
+        style={{ width: 600 }}
+        value={orderNotes}
+      />
 
-			<Div>
-				<h5>Subtotal: {subtotal}</h5>
+      <Div>
+        <h5>Subtotal: {subtotal}</h5>
 				
-				{ cart?.length > 0 && (
-					<>
-						{userInfo?.role !== 'AirlineEmployee' && (
-							<DivCheckoutButton onClick={() => history.push('/checkout')}>
-								<FontAwesomeIcon icon="lock" color="white"/>
-								<p>Start Secure Checkout</p>
-							</DivCheckoutButton>
-						)}
-						{userInfo?.isAirlineUser && (
-							<DivQuoteButton onClick={() => history.push('/create-quote')}>
-								<FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-								<p>Create a Quote</p>
-							</DivQuoteButton>
-						)}
-					</>
-				)}
-			</Div>
-		</Container>
-	)
+        { cart?.length > 0 && (
+          <>
+            {userInfo?.role !== 'AirlineEmployee' && (
+              <DivCheckoutButton onClick={() => history.push('/checkout')}>
+                <FontAwesomeIcon icon="lock" color="white"/>
+                <p>Start Secure Checkout</p>
+              </DivCheckoutButton>
+            )}
+            {userInfo?.isAirlineUser && (
+              <DivQuoteButton onClick={() => history.push('/create-quote')}>
+                <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                <p>Create a Quote</p>
+              </DivQuoteButton>
+            )}
+          </>
+        )}
+      </Div>
+    </Container>
+  )
 }

@@ -23,22 +23,22 @@ const Span = styled.p`
 		font-size: 13px;
 `
 export default function serviceLayout(props) {
-	const {
-		src,
-		title,
-		text,
-	} = props
-	return (
-		<>
-			<Div>
-				<div>
-					<Img src={src} />
-					<DetailDiv>
-						<Span>{title} </Span>
-						<Detail> {text}</Detail>
-					</DetailDiv>
-				</div>
-			</Div>
-		</>
-	)
+  const {
+    src,
+    title,
+    text,
+  } = props
+  return (
+    <>
+      <Div>
+        <div>
+          <Img src={src} />
+          <DetailDiv>
+            <Span>{title} </Span>
+            <Detail> {text}</Detail>
+          </DetailDiv>
+        </div>
+      </Div>
+    </>
+  )
 }

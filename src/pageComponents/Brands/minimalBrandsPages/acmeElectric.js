@@ -95,57 +95,57 @@ const RelatedLinkH6 = styled.h6`
     font-weight: bold;
 `
 export default function AcmeElectric() {
-	return (
-		<PageContainer>
-			<BrandHeaderDiv>
-				<BrandHeaderH1>Acme Electric</BrandHeaderH1>
-				<ShortLine></ShortLine>
-			</BrandHeaderDiv>
-			<BrandDetailsDiv>
-				<BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"></BrandLogo>
-				<BrandDetails>
-					<BrandNameSpan>Acme Electric</BrandNameSpan> is a manufacturer of dry-type distribution transformers that for decades has covered a full spectrum of applications including general commercial power distribution, high harmonic conditions, specific industrial motor drive/factory automation systems and low-voltage landscape lighting.
-				</BrandDetails>
-			</BrandDetailsDiv>
-			<RelatedLinkDiv>
-				<RelatedLinkH6>Related Links</RelatedLinkH6>
-				<ShortLine></ShortLine>
-			</RelatedLinkDiv> 
-			<Div>
-				<LinkDetailDiv>
-					<LinkStyleDiv>
-						<LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank" rel="noopener noreferrer">
-							<IconDiv>
-								<FontAwesomeIcon icon='globe-americas' size='2x' />
-							</IconDiv>
-                            Acme Electric's Website</LinkStyle>
-					</LinkStyleDiv>
-				</LinkDetailDiv>
-				<LinkDetailDiv>
-					<LinkStyleDiv>
-						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
-							<IconDiv>
-								<FontAwesomeIcon icon='shopping-cart' size='2x' />
-							</IconDiv>
-                            Shop Acme Electric Products</LinkStyle>
-					</LinkStyleDiv>
-				</LinkDetailDiv>
-				<LinkDetailDiv>
-					<LinkStyleDiv>
-						<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
-							<IconDiv>
-								<FontAwesomeIcon icon='address-book' size='2x' />
-							</IconDiv>
-                            Acme Electric Catalogs</LinkStyle>
-					</LinkStyleDiv>
-				</LinkDetailDiv>
-			</Div>
-		</PageContainer>
+  return (
+    <PageContainer>
+      <BrandHeaderDiv>
+        <BrandHeaderH1>Acme Electric</BrandHeaderH1>
+        <ShortLine></ShortLine>
+      </BrandHeaderDiv>
+      <BrandDetailsDiv>
+        <BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"></BrandLogo>
+        <BrandDetails>
+          <BrandNameSpan>Acme Electric</BrandNameSpan> is a manufacturer of dry-type distribution transformers that for decades has covered a full spectrum of applications including general commercial power distribution, high harmonic conditions, specific industrial motor drive/factory automation systems and low-voltage landscape lighting.
+        </BrandDetails>
+      </BrandDetailsDiv>
+      <RelatedLinkDiv>
+        <RelatedLinkH6>Related Links</RelatedLinkH6>
+        <ShortLine></ShortLine>
+      </RelatedLinkDiv> 
+      <Div>
+        <LinkDetailDiv>
+          <LinkStyleDiv>
+            <LinkStyle href="https://www.hubbell.com/acmeelectric/en/" target="_blank" rel="noopener noreferrer">
+              <IconDiv>
+                <FontAwesomeIcon icon='globe-americas' size='2x' />
+              </IconDiv>
+              Acme Electric's Website
+            </LinkStyle>
+          </LinkStyleDiv>
+        </LinkDetailDiv>
+        <LinkDetailDiv>
+          <LinkStyleDiv>
+            <LinkStyle href="#" target="_blank" rel="noopener noreferrer">
+              <IconDiv>
+                <FontAwesomeIcon icon='shopping-cart' size='2x' />
+              </IconDiv>
+              Shop Acme Electric Products
+            </LinkStyle>
+          </LinkStyleDiv>
+        </LinkDetailDiv>
+        <LinkDetailDiv>
+          <LinkStyleDiv>
+            <LinkStyle href="#" target="_blank" rel="noopener noreferrer">
+              <IconDiv>
+                <FontAwesomeIcon icon='address-book' size='2x' />
+              </IconDiv>
+              Acme Electric Catalogs
+            </LinkStyle>
+          </LinkStyleDiv>
+        </LinkDetailDiv>
+      </Div>
+    </PageContainer>
 
 
-
-
-
-	)
+  )
 }
 

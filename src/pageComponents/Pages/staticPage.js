@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
-import ApolloClient, { useQuery } from '@apollo/client';
-import FourOFourPage from 'pageComponents/Error/fourOFourPage';
-import Loader from 'pageComponents/_common/loader';
+import { useQuery } from '@apollo/client'
+import FourOFourPage from 'pageComponents/Error/fourOFourPage'
+import Loader from 'pageComponents/_common/loader'
 import styled from 'styled-components'
-import { matchPath } from 'react-router'
-import { Link } from 'react-router-dom';
-import  'style.scss';
+import { Link } from 'react-router-dom'
+import  'style.scss'
 
 const Container = styled.div`
   display: flex;
@@ -79,94 +78,94 @@ const GET_STATIC_PAGE = gql`
 `
 
 function Crumb({ baseUrl, ancestor }) {
-    if (ancestor) {
-        const match = matchPath(baseUrl,);
-        if(ancestor.pageIdTertiary) {
-            return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}/${ancestor.pageIdSecondary}/${ancestor.pageIdTertiary}`}>{ancestor.name}</CrumbLink>
-        } else if (ancestor.pageIdSecondary) {
-            return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}/${ancestor.pageIdSecondary}`}>{ancestor.name}</CrumbLink>;
-        } else {
-            return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}`}>{ancestor.name}</CrumbLink>;
-        }
+  if (ancestor) {
+    if (ancestor.pageIdTertiary) {
+      return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}/${ancestor.pageIdSecondary}/${ancestor.pageIdTertiary}`}>{ancestor.name}</CrumbLink>
+    } else if (ancestor.pageIdSecondary) {
+      return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}/${ancestor.pageIdSecondary}`}>{ancestor.name}</CrumbLink>
     } else {
-        return null;
+      return <CrumbLink to={`${baseUrl}/${ancestor.pageIdPrimary}`}>{ancestor.name}</CrumbLink>
     }
+  } else {
+    return null
+  }
 }
 
 function Crumbs({ currentPageName, primary, secondary, tertiary, baseUrl }) {
-    let primaryCrumb = null;
-    let secondaryCrumb = null;
-    let tertiaryCrumb = null;
+  let primaryCrumb = null
+  let secondaryCrumb = null
+  let tertiaryCrumb = null
 
-    if (primary) {
-        primaryCrumb = <Crumb baseUrl={baseUrl} ancestor={primary}></Crumb>;
-    }
-    if (secondary) {
-        secondaryCrumb = <Crumb baseUrl={baseUrl} ancestor={secondary}></Crumb>;
-    }
-    if(tertiary) {
-        tertiaryCrumb = <Crumb baseUrl={baseUrl} ancestor={tertiary}></Crumb>;
-    }
-    return (<>
-        <h1>{currentPageName}</h1>
-        <CrumbContainer>
-            {primaryCrumb && <>&nbsp;&#8627;&nbsp;</> }
-            {primaryCrumb}
-            {secondaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
-            {secondaryCrumb}
-            {tertiaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
-            {tertiaryCrumb}
-        </CrumbContainer>
-    </>);
+  if (primary) {
+    primaryCrumb = <Crumb baseUrl={baseUrl} ancestor={primary}></Crumb>
+  }
+  if (secondary) {
+    secondaryCrumb = <Crumb baseUrl={baseUrl} ancestor={secondary}></Crumb>
+  }
+  if (tertiary) {
+    tertiaryCrumb = <Crumb baseUrl={baseUrl} ancestor={tertiary}></Crumb>
+  }
+  return (
+    <>
+      <h1>{currentPageName}</h1>
+      <CrumbContainer>
+        {primaryCrumb && <>&nbsp;&#8627;&nbsp;</> }
+        {primaryCrumb}
+        {secondaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
+        {secondaryCrumb}
+        {tertiaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
+        {tertiaryCrumb}
+      </CrumbContainer>
+    </>
+  )
 }
 
 export default function StaticPage({ match }) {
-    const pageId1 = match.params.pageId1;
-    const pageId2 = match.params.pageId2 || null;
-    const pageId3 = match.params.pageId3 || null;
-    const pageId4 = match.params.pageId4 || null;
+  const pageId1 = match.params.pageId1
+  const pageId2 = match.params.pageId2 || null
+  const pageId3 = match.params.pageId3 || null
+  const pageId4 = match.params.pageId4 || null
 
-    const [pageName, setPageName] = useState('');
-    const [pageHtml, setPageHtml] = useState(<Loader />);
-    const [pageJs, setPageJs] = useState(';');
-    const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null);
-    const [pageSecondaryAncestor, setPageSecondaryAncestor] = useState(null);
-    const [pageTeritaryAncestor, setPageTeriaryAncestor] = useState(null);
+  const [pageName, setPageName] = useState('')
+  const [pageHtml, setPageHtml] = useState(<Loader />)
+  const [pageJs, setPageJs] = useState(';')
+  const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null)
+  const [pageSecondaryAncestor, setPageSecondaryAncestor] = useState(null)
+  const [pageTeritaryAncestor, setPageTeriaryAncestor] = useState(null)
 
-    const createMarkup = (htmlString) => { return { __html: htmlString } };
+  const createMarkup = (htmlString) => { return { __html: htmlString } }
 
-    useQuery(GET_STATIC_PAGE, {
-        variables: { pageId1, pageId2, pageId3, pageId4 },
-        onCompleted: result => {
-            if (result && result.getStaticPage) {
-                setPageName(result.getStaticPage.name);
-                setPageHtml(<div dangerouslySetInnerHTML={createMarkup(result.getStaticPage.html)} />);
-                setPageJs(result.getStaticPage.javascript);
-                setPagePrimaryAncestor(result.getStaticPage.primaryAncestor);
-                setPageSecondaryAncestor(result.getStaticPage.secondaryAncestor);
-                setPageTeriaryAncestor(result.getStaticPage.tertiaryAncestor);
-            } else {
-                console.log("Unknown page", pageId1, pageId2, pageId3, pageId4);
-                setPageHtml(<FourOFourPage />)
-            }
-        },
-        onError: () => {
-            console.log("Unknown page", pageId, subPageId, subSubPageId, subSubSubPageId);
-            setPageHtml(<FourOFourPage />)
-        }
-    });
+  useQuery(GET_STATIC_PAGE, {
+    variables: { pageId1, pageId2, pageId3, pageId4 },
+    onCompleted: result => {
+      if (result && result.getStaticPage) {
+        setPageName(result.getStaticPage.name)
+        setPageHtml(<div dangerouslySetInnerHTML={createMarkup(result.getStaticPage.html)} />)
+        setPageJs(result.getStaticPage.javascript)
+        setPagePrimaryAncestor(result.getStaticPage.primaryAncestor)
+        setPageSecondaryAncestor(result.getStaticPage.secondaryAncestor)
+        setPageTeriaryAncestor(result.getStaticPage.tertiaryAncestor)
+      } else {
+        console.log('Unknown page', pageId1, pageId2, pageId3, pageId4)
+        setPageHtml(<FourOFourPage />)
+      }
+    },
+    onError: () => {
+      setPageHtml(<FourOFourPage />)
+    }
+  })
 
-    useEffect(() => { eval(pageJs); }, [pageJs]);
+  useEffect(() => { eval(pageJs) }, [pageJs])
 
-    return (
-        <Container>
-            <DivRowHeader>
-                <Crumbs currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pageSecondaryAncestor} tertiary={pageTeritaryAncestor} baseUrl={match.path.split('/:')[0]} />
-            </DivRowHeader>
-            <ShortBorder />
-            <DivRow>
-                {pageHtml}
-            </DivRow>
-        </Container>
-    )
+  return (
+    <Container>
+      <DivRowHeader>
+        <Crumbs currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pageSecondaryAncestor} tertiary={pageTeritaryAncestor} baseUrl={match.path.split('/:')[0]} />
+      </DivRowHeader>
+      <ShortBorder />
+      <DivRow>
+        {pageHtml}
+      </DivRow>
+    </Container>
+  )
 }

@@ -75,45 +75,45 @@ const Wrapper = styled.div`
 `
 export default function TechnicallySpeaking() {
 
-	return (
-		<>
-			<SectionHeader text='Technically Speaking'/>
-			<Wrapper>
-				<Container>
-					<Row>
-						<div>
-							<Img src="https://world-nuclear-news.org/originalimages/uploads/1/MHI-steam_generators.jpg" />
-						</div>
+  return (
+    <>
+      <SectionHeader text='Technically Speaking'/>
+      <Wrapper>
+        <Container>
+          <Row>
+            <div>
+              <Img src="https://world-nuclear-news.org/originalimages/uploads/1/MHI-steam_generators.jpg" />
+            </div>
 						
-						<TextDiv> 
-							<Details >Lorem Ipsum has been the industry's standard dummy text 
-								<ButtonDiv> <Button>Watch More</Button></ButtonDiv>
-							</Details> 
-						</TextDiv>
-					</Row>
+            <TextDiv> 
+              <Details >Lorem Ipsum has been the industry's standard dummy text 
+                <ButtonDiv> <Button>Watch More</Button></ButtonDiv>
+              </Details> 
+            </TextDiv>
+          </Row>
 					
-					<Row>
-						<div>
-							<Img src="https://www.power-eng.com/wp-content/uploads/content/dam/pe/online-articles/2016/04/LNG-solution.jpg" />
-						</div>
+          <Row>
+            <div>
+              <Img src="https://www.power-eng.com/wp-content/uploads/content/dam/pe/online-articles/2016/04/LNG-solution.jpg" />
+            </div>
 						
-						<TextDiv>
-							<Details>
-								Lorem Ipsum has been the industry's standard dummy text
-								<ButtonDiv>
-									<Button>Read More</Button>
-								</ButtonDiv>
-							</Details>
-						</TextDiv>
-					</Row>
-				</Container>
+            <TextDiv>
+              <Details>
+                Lorem Ipsum has been the industry's standard dummy text
+                <ButtonDiv>
+                  <Button>Read More</Button>
+                </ButtonDiv>
+              </Details>
+            </TextDiv>
+          </Row>
+        </Container>
 				
-				<div>
-					<SeeAll>
-						<A href="#">See all videos and articles <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
-					</SeeAll>
-				</div>
-			</Wrapper>
-		</>
-	)
+        <div>
+          <SeeAll>
+            <A href="#">See all videos and articles <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
+          </SeeAll>
+        </div>
+      </Wrapper>
+    </>
+  )
 }

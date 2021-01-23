@@ -76,25 +76,6 @@ const Img = styled.img`
 const CustomerServiceDiv = styled.div`
   display: flex;
 `
-const CustomerServiceBtn = styled.button`
-  display: flex;
-  border: none;
-  font-size: 18px;
-  font-family: verdana;
-  border-radius: 7px;
-  text-decoration: none;
-  color: #FFFFFF;
-  background-color: #B51F2B;
-  transition: all 0.2s;
-  padding: 12px 25px;
-  // width: 86%;
-  align-items: center;
-  justify-content: center;
-  &:hover{
-    // background-color:#133752;
-    transform: scale(1.1);
-  }
-`
 
 const BtnText = styled.p`
   margin: -4px 0px 10px 10px;
@@ -128,68 +109,68 @@ const Border = styled.div`
   border-bottom: 3px solid #ebe7e7;
   width: 30%;
   margin: 0 auto;
-` 
+`
 
 export default function ContactUsSidebar() {
-	return (
-		<SideDiv>
+  return (
+    <SideDiv>
       <CustomerServiceDiv>
         <BtnText>
-				  <FontAwesomeIcon icon="phone-alt" size="1x" /> Customer Service
+          <FontAwesomeIcon icon="phone-alt" size="1x" /> Customer Service
         </BtnText>
-			</CustomerServiceDiv>
-			<CallCustomerServiceDiv>
-				<PhoneNumber href="tel:1-800-999-7378">1-800-999-7378</PhoneNumber>
-			</CallCustomerServiceDiv>
-			<OtherContactDiv>
-				<Border></Border>
-				<SaleDiv>
-					<EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Government Sales </EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#"> govsales@airlinehyd.com</EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<SaleDiv>
-					<EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Credit</EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#">credit@airlinehyd.com </EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<SaleDiv>
-					<EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Marketing</EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#">marketing@airlinehyd.com</EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<SaleDiv>
-					<EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Repairs</EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#">repair@airlinehyd.com </EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<SaleDiv>
-					<EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Training</EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#">training@airlinehyd.com</EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<SaleDiv>
-					<EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Sales</EmailTo>
-					<EmailListDiv>
-						<Email><EmailAddress href="#">sales@airlinehyd.com</EmailAddress></Email>
-					</EmailListDiv>
-				</SaleDiv>
-				<Border></Border>
-			</OtherContactDiv>
-			<HeadquartersDiv>
-				<Text>Headquarters</Text>
-				<div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank" rel="noopener noreferrer"> 3557 Progress Drive<br /> Bensalem, PA 19020</Address></div>
-				<IconDiv><FontAwesomeIcon icon="phone-alt" size="1x" /> (215) 638-4700</IconDiv>
-				<IconDiv><FontAwesomeIcon icon="print" size="1x" /> (215) 638-1707</IconDiv>
-			</HeadquartersDiv>
-			<LocationImgDiv>
-				<Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
-			</LocationImgDiv>
-		</SideDiv>      
-	)
+      </CustomerServiceDiv>
+      <CallCustomerServiceDiv>
+        <PhoneNumber href="tel:1-800-999-7378">1-800-999-7378</PhoneNumber>
+      </CallCustomerServiceDiv>
+      <OtherContactDiv>
+        <Border></Border>
+        <SaleDiv>
+          <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Government Sales </EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#"> govsales@airlinehyd.com</EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <SaleDiv>
+          <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Credit</EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#">credit@airlinehyd.com </EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <SaleDiv>
+          <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Marketing</EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#">marketing@airlinehyd.com</EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <SaleDiv>
+          <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Repairs</EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#">repair@airlinehyd.com </EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <SaleDiv>
+          <EmailTo> <FontAwesomeIcon icon="envelope" size="1x" /> Training</EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#">training@airlinehyd.com</EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <SaleDiv>
+          <EmailTo><FontAwesomeIcon icon="envelope" size="1x" /> Sales</EmailTo>
+          <EmailListDiv>
+            <Email><EmailAddress href="#">sales@airlinehyd.com</EmailAddress></Email>
+          </EmailListDiv>
+        </SaleDiv>
+        <Border></Border>
+      </OtherContactDiv>
+      <HeadquartersDiv>
+        <Text>Headquarters</Text>
+        <div><FontAwesomeIcon icon="map-marker-alt" /><Address href="https://www.google.com/maps/place/3557+Progress+Dr,+Bensalem,+PA+19020/@40.0862477,-74.9261714,17z/data=!3m1!4b1!4m5!3m4!1s0x89c14cfe538e2f31:0x59632a43cd81d74c!8m2!3d40.0861435!4d-74.9240374" target="_blank" rel="noopener noreferrer"> 3557 Progress Drive<br /> Bensalem, PA 19020</Address></div>
+        <IconDiv><FontAwesomeIcon icon="phone-alt" size="1x" /> (215) 638-4700</IconDiv>
+        <IconDiv><FontAwesomeIcon icon="print" size="1x" /> (215) 638-1707</IconDiv>
+      </HeadquartersDiv>
+      <LocationImgDiv>
+        <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
+      </LocationImgDiv>
+    </SideDiv>
+  )
 }

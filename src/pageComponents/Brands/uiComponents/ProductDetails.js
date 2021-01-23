@@ -12,9 +12,9 @@ const ProductsDetailsDiv = styled.div`
 `
 
 export default function ProductDetails(props) {
-	return (
-		<ProductsDetailsDiv>
-			{props.text}
-		</ProductsDetailsDiv>
-	)
+  return (
+    <ProductsDetailsDiv>
+      {props.text}
+    </ProductsDetailsDiv>
+  )
 }

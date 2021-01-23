@@ -10,9 +10,9 @@ const DivContainer = styled.div`
 `
 
 const Loader = () => (
-	<DivContainer>
-		<ReactLoading type={'bubbles'} color={'#bbb'}/>
-	</DivContainer>
+  <DivContainer>
+    <ReactLoading type={'bubbles'} color={'#bbb'}/>
+  </DivContainer>
 )
 
 export default Loader

@@ -9,11 +9,11 @@ const Container = styled.div`
     flex-direction: column;
 `
 export default function Events() {
-	return (
-		<>
-			<Container>
-				<Header text="Events"/>
-			</Container>
-		</>
-	)
+  return (
+    <>
+      <Container>
+        <Header text="Events"/>
+      </Container>
+    </>
+  )
 }

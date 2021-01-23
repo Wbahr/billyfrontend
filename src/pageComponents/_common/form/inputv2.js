@@ -55,61 +55,61 @@ const MainCurrencyInput = styled(CurrencyInput)`
 
 function InputV2(props) {
 
-	const {
-		type,
-		placeholder,
-		value,
-		disabled,
-		label,
-		error,
-		width,
-		onChange
-	} = props
+  const {
+    type,
+    placeholder,
+    value,
+    disabled,
+    label,
+    error,
+    width,
+    onChange
+  } = props
 
-	if (type === 'currency'){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{label}</Label>}
-				<MainCurrencyInput
-					value={value} 
-					prefix='$' 
-					style={{width: width || '400px'}} 
-					onChangeEvent={onChange}
-					disabled={disabled}
-				/>
-			</DivContainer>
-		)
-	} else if (type === 'percent'){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainCurrencyInput
-					value={value} 
-					suffix='%' 
-					style={{width: width || '400px'}} 
-					onChangeEvent={onChange}
-					precision="0"
-					disabled={disabled}
-				/>
-			</DivContainer>
-		)
-	} else {
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}
-				<MainInput
-					disabled={disabled}
-					type={type || ''}
-					value={value}
-					placeholder={placeholder}
-					onChange={(e)=>onChange(e)}
-					name={label}
-					style={{width: width || '400px'}}
-				/>
-				{error && <span>{error}</span>}
-			</DivContainer>
-		)
-	}
+  if (type === 'currency'){
+    return (
+      <DivContainer>
+        {label && <Label htmlFor={label}>{label}</Label>}
+        <MainCurrencyInput
+          value={value} 
+          prefix='$' 
+          style={{ width: width || '400px' }} 
+          onChangeEvent={onChange}
+          disabled={disabled}
+        />
+      </DivContainer>
+    )
+  } else if (type === 'percent'){
+    return (
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainCurrencyInput
+          value={value} 
+          suffix='%' 
+          style={{ width: width || '400px' }} 
+          onChangeEvent={onChange}
+          precision="0"
+          disabled={disabled}
+        />
+      </DivContainer>
+    )
+  } else {
+    return (
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}
+        <MainInput
+          disabled={disabled}
+          type={type || ''}
+          value={value}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e)}
+          name={label}
+          style={{ width: width || '400px' }}
+        />
+        {error && <span>{error}</span>}
+      </DivContainer>
+    )
+  }
 }
 
 export default InputV2

@@ -365,7 +365,7 @@ export const GET_PURCHASE_HISTORY = gql`
       }
     }
   }
-`;
+`
 
 export const GET_ITEM_PRICE = gql`
   query GetItemPrices($items: [ItemQuantityInput]) {

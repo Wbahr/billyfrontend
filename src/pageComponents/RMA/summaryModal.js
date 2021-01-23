@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
 import Button from '../_common/button'
-import {StyledText0, StyledText1} from '../../styles/fonts'
+import { StyledText0, StyledText1 } from '../../styles/fonts'
 import Callout from '../_common/callout'
 
 const DivContainer = styled.div`
@@ -86,11 +86,6 @@ const DivErrors = styled.div`
   text-align: center;
 `
 
-const restockFee = function(total) {
-  let restockFee = (total * 0.25).toFixed(2)
-  return restockFee
-}
-
 class SummaryModal extends React.Component {
 
   state = {
@@ -99,11 +94,11 @@ class SummaryModal extends React.Component {
     minimumRestockingFee: false
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.calculateRefundAndFee(this.props.returnItems)
   }
 
-  componentWillUpdate(prevProps, prevState) {
+  UNSAFE_componentWillUpdate(prevProps) {
     const {
       submitError
     } = this.props
@@ -112,8 +107,8 @@ class SummaryModal extends React.Component {
       submitError: prevSubmitError
     } = prevProps
 
-    if(submitError && !prevSubmitError){
-      this.setState({inFlight: false})
+    if (submitError && !prevSubmitError){
+      this.setState({ inFlight: false })
     }
   }
 
@@ -133,17 +128,17 @@ class SummaryModal extends React.Component {
   }
 
   toggleCheckbox = () => {
-    this.setState({reviewedSummary: !this.state.reviewedSummary})
+    this.setState({ reviewedSummary: !this.state.reviewedSummary })
   }
 
   calculateRefundAndFee = (returnItems) => {
     let totalRefund = 0
     let totalRestockingFee = 0
-    let minRestockingFee = 15
-    let restockingPercentage = 0.25
+    const minRestockingFee = 15
+    const restockingPercentage = 0.25
 
-    for(let i = 0; i < returnItems.length; i++) {
-      let item = returnItems[i]
+    for (let i = 0; i < returnItems.length; i++) {
+      const item = returnItems[i]
       if (item.hasReturnFee) {
         totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
       }
@@ -151,10 +146,10 @@ class SummaryModal extends React.Component {
     }
     if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
       totalRefund = totalRefund - minRestockingFee
-      this.setState({totalRefund: totalRefund.toFixed(2), minimumRestockingFee: true})
+      this.setState({ totalRefund: totalRefund.toFixed(2), minimumRestockingFee: true })
     } else {
       totalRefund = totalRefund - totalRestockingFee
-      this.setState({totalRefund: totalRefund.toFixed(2)})
+      this.setState({ totalRefund: totalRefund.toFixed(2) })
     }
   }
 
@@ -195,9 +190,9 @@ class SummaryModal extends React.Component {
       )
     }
 
-    let agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
+    const agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
     if (submitSuccess) {
-      return(
+      return (
         <DivContainer>
           <DivHeader>
             <PHeader>Return Request Submitted</PHeader>
@@ -225,7 +220,8 @@ class SummaryModal extends React.Component {
           <DivActionbar>
             <Button color='secondary' onClick={this.handleOnClose} text='Cancel'/>
             <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return'
-                    inFlight={inFlight} inFlightText={'Confirming...'}/>
+              inFlight={inFlight} inFlightText={'Confirming...'}
+            />
           </DivActionbar>
         </DivContainer>
       )

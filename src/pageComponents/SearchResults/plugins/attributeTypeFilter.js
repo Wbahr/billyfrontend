@@ -53,75 +53,75 @@ const InputSearch = styled.input`
 	width: 210px;
 `
 
-export default function AttributeTypeFilter({open, attribute, updateAttribute}) {
-	const [isOpen, setIsOpen] = useState(open)
-	const toggleOpen = () => setIsOpen(!isOpen)
-	const [filter, setFilter] = useState('')
+export default function AttributeTypeFilter({ open, attribute, updateAttribute }) {
+  const [isOpen, setIsOpen] = useState(open)
+  const toggleOpen = () => setIsOpen(!isOpen)
+  const [filter, setFilter] = useState('')
 	
-	const handleFeatureClick = idx => () => {
-		const features = attribute.features.slice()
-		features[idx].selected = !features[idx].selected
-		updateAttribute({ ...attribute, features })
-	}
+  const handleFeatureClick = idx => () => {
+    const features = attribute.features.slice()
+    features[idx].selected = !features[idx].selected
+    updateAttribute({ ...attribute, features })
+  }
 	
-	const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
+  const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
 	
-	const hasSelectedFeature = attribute.features.find(f => f.selected)
-	const shouldShowFeatureCount = selected => selected || !hasSelectedFeature
+  const hasSelectedFeature = attribute.features.find(f => f.selected)
+  const shouldShowFeatureCount = selected => selected || !hasSelectedFeature
 	
-	const toOption = ({selected, featureName, featureNameDisplay, featureCount}, idx) => (
-		<DivOptionRow key={idx} onClick={handleFeatureClick(idx)}>
-			<input
-				type="checkbox"
-				defaultChecked={selected}
-				style={{cursor: 'pointer'}}
-			/>
-			<Label htmlFor={featureName}>{featureNameDisplay}</Label>
-			{
-				shouldShowFeatureCount(selected)
-					? <PCount>({featureCount})</PCount>
-					: <FontAwesomeIcon icon="plus" color="#535353"/>
-			}
-		</DivOptionRow>
-	)
+  const toOption = ({ selected, featureName, featureNameDisplay, featureCount }, idx) => (
+    <DivOptionRow key={idx} onClick={handleFeatureClick(idx)}>
+      <input
+        type="checkbox"
+        defaultChecked={selected}
+        style={{ cursor: 'pointer' }}
+      />
+      <Label htmlFor={featureName}>{featureNameDisplay}</Label>
+      {
+        shouldShowFeatureCount(selected)
+          ? <PCount>({featureCount})</PCount>
+          : <FontAwesomeIcon icon="plus" color="#535353"/>
+      }
+    </DivOptionRow>
+  )
 	
-	const searchSortAndMapToOption = (accum, curVal, idx) => {
-		if (searchFilter(curVal)) {
-			if (curVal.selected) {
-				accum.unshift(toOption(curVal, idx))
-			} else {
-				accum.push(toOption(curVal, idx))
-			}
-		}
-		return accum
-	}
+  const searchSortAndMapToOption = (accum, curVal, idx) => {
+    if (searchFilter(curVal)) {
+      if (curVal.selected) {
+        accum.unshift(toOption(curVal, idx))
+      } else {
+        accum.push(toOption(curVal, idx))
+      }
+    }
+    return accum
+  }
 	
-	const AttributeOptions = () => (
-		<DivOptions>
-			{attribute.features.reduce(searchSortAndMapToOption, [])}
-		</DivOptions>
-	)
+  const AttributeOptions = () => (
+    <DivOptions>
+      {attribute.features.reduce(searchSortAndMapToOption, [])}
+    </DivOptions>
+  )
 	
-	const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
+  const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
 	
-	return (
-		<div>
-			<DivTitle onClick={toggleOpen}>
-				<P>{attribute.attributeNameDisplay}</P>
-				<FontAwesomeIcon icon={isOpen ? "caret-up" : "caret-down"} color="black"/>
-			</DivTitle>
-			{isOpen && (
-				<>
-					{attribute.features.length > 10 && (
-						<InputSearch
-							placeholder={`Search ${attribute.attributeNameDisplay}`}
-							onChange={handleSearchChange}
-							value={filter}
-						/>
-					)}
-					<AttributeOptions/>
-				</>
-			)}
-		</div>
-	)
+  return (
+    <div>
+      <DivTitle onClick={toggleOpen}>
+        <P>{attribute.attributeNameDisplay}</P>
+        <FontAwesomeIcon icon={isOpen ? 'caret-up' : 'caret-down'} color="black"/>
+      </DivTitle>
+      {isOpen && (
+        <>
+          {attribute.features.length > 10 && (
+            <InputSearch
+              placeholder={`Search ${attribute.attributeNameDisplay}`}
+              onChange={handleSearchChange}
+              value={filter}
+            />
+          )}
+          <AttributeOptions/>
+        </>
+      )}
+    </div>
+  )
 }

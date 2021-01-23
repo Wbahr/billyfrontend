@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const DivDefault = styled.div`
@@ -38,8 +38,8 @@ const DivRow = styled.div`
   display: flex;
 `
 
-export default function AddressCard({setDefault, deleteLocation, location, defaultLocation}) {
-	const Div = styled.div`
+export default function AddressCard({ deleteLocation, defaultLocation }) {
+  const Div = styled.div`
     display: flex;
     flex-direction: column;
     width: 340px;
@@ -51,22 +51,22 @@ export default function AddressCard({setDefault, deleteLocation, location, defau
       font-size: 14px;
     }
   `
-	return(
-		<Div>
-			{defaultLocation ? <DivDefault><p>Default Shipping Location</p></DivDefault> : <DivLocation><p>Set as Default</p></DivLocation>}
-			<DivRow>
-				<DivDetails>
-					<p>Company Name</p>
-					<p>Robert Panczer</p>
-					<p>1234 Main Street</p>
-					<p>Nazareth, PA 18064</p>
-					<p>484-547-5664</p>
-					<p>bobby.panczer@gmail.com</p>
-				</DivDetails>
-				<DivDelete>
-					<p onClick={()=>deleteLocation()}>Delete</p>
-				</DivDelete>
-			</DivRow>
-		</Div>
-	)
+  return (
+    <Div>
+      {defaultLocation ? <DivDefault><p>Default Shipping Location</p></DivDefault> : <DivLocation><p>Set as Default</p></DivLocation>}
+      <DivRow>
+        <DivDetails>
+          <p>Company Name</p>
+          <p>Robert Panczer</p>
+          <p>1234 Main Street</p>
+          <p>Nazareth, PA 18064</p>
+          <p>484-547-5664</p>
+          <p>bobby.panczer@gmail.com</p>
+        </DivDetails>
+        <DivDelete>
+          <p onClick={() => deleteLocation()}>Delete</p>
+        </DivDelete>
+      </DivRow>
+    </Div>
+  )
 }

@@ -22,12 +22,12 @@ const ShortBorder = styled.div`
   width: 120px;
 `
 export default function Header(props) {
-	return (
-		<>
-			<HeaderDiv>
-				<H2>{props.text}</H2>
-				<ShortBorder></ShortBorder>
-			</HeaderDiv>
-		</>
-	)
+  return (
+    <>
+      <HeaderDiv>
+        <H2>{props.text}</H2>
+        <ShortBorder></ShortBorder>
+      </HeaderDiv>
+    </>
+  )
 }

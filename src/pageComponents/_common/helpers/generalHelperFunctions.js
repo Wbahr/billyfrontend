@@ -1,157 +1,157 @@
-import {useRef, useEffect, useState} from 'react'
+import { useRef, useEffect, useState } from 'react'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 
-export const getRidOf__typename = ({__typename, editors, items, ...rest}) => (
-	{ ...rest, editors: editors.map(({__typename, ...rest1}) => rest1), items: items.map(({__typename, ...rest2}) => rest2) }
+export const getRidOf__typename = ({ __typename, editors, items, ...rest }) => (
+  { ...rest, editors: editors.map(({ __typename, ...rest1 }) => rest1), items: items.map(({ __typename, ...rest2 }) => rest2) }
 )
 
-export const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx;
+export const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx
 
 export const getCsvFormattedData = (data, columns, ignoreCols) => {
-	const filterCols = ({accessor}) => !ignoreCols.includes(accessor)
-	return [
-		columns.filter(filterCols).map(({Header}) => Header),
-		...data.map(d => columns.filter(filterCols).map(({accessor}) => d[accessor]))
-	]
+  const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
+  return [
+    columns.filter(filterCols).map(({ Header }) => Header),
+    ...data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+  ]
 }
 
 export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
-	import('xlsx').then(XLSX => {
-		const excelFormat = getCsvFormattedData(data, columns, ignoreCols)
-		const worksheet = XLSX.utils.aoa_to_sheet(excelFormat)
-		const workBook = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(workBook, worksheet, name);
-		XLSX.writeFile(workBook, `${name}.xlsx`)
-	})
+  import('xlsx').then(XLSX => {
+    const excelFormat = getCsvFormattedData(data, columns, ignoreCols)
+    const worksheet = XLSX.utils.aoa_to_sheet(excelFormat)
+    const workBook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workBook, worksheet, name)
+    XLSX.writeFile(workBook, `${name}.xlsx`)
+  })
 }
 
 export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
-	const filterCols = ({accessor}) => !ignoreCols.includes(accessor)
-	const pdfFormat = {
-		head: [columns.filter(filterCols).map(({Header}) => Header)],
-		body: data.map(d => columns.filter(filterCols).map(({accessor}) => d[accessor]))
-	}
-	const doc = new jsPDF()
-	doc.autoTable(pdfFormat)
-	doc.save(`${name}.pdf`)
+  const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
+  const pdfFormat = {
+    head: [columns.filter(filterCols).map(({ Header }) => Header)],
+    body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+  }
+  const doc = new jsPDF()
+  doc.autoTable(pdfFormat)
+  doc.save(`${name}.pdf`)
 }
 
 export const getImagePath = path => {
-	return path
-		? '//' + path
-		: 'https://www.airlinehyd.com/images/no-image.jpg';
+  return path
+    ? '//' + path
+    : 'https://www.airlinehyd.com/images/no-image.jpg'
 }
 
 const ImageTypes = {
-	Original: 0,
-	Large: 1,
-	Zoom: 2,
-	Thumbnail: 3,
+  Original: 0,
+  Large: 1,
+  Zoom: 2,
+  Thumbnail: 3,
 }
-const MediaType_Image = 0;
+const MediaType_Image = 0
 
-const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaType === MediaType_Image && i.sequence === 1;
-const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1;
+const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaType === MediaType_Image && i.sequence === 1
+const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1
 
 const getTypeImage = (itemDetails, type) => {
-	return itemDetails?.itemMedia?.find(firstMatchingImageType(type)) || itemDetails?.itemMedia?.find(firstImage)
+  return itemDetails?.itemMedia?.find(firstMatchingImageType(type)) || itemDetails?.itemMedia?.find(firstImage)
 }
 
 //TODO: Change this back to ImageTypes.Thumbnail once the thumbnail images are loaded properly
 //John changed this to ImageTypes.Large because the thumbnail images weren't loading.
-export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
+export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path)
 
-export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
+export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path)
 
-export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path);
+export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path)
 
 export const buildSearchString = ({
- searchTerm,
- sortType='relevancy',
- nonweb='false',
- innerSearchTerms,
- parentCategory,
- childCategory,
- brands,
- resultPage='1',
-	...attributes
+  searchTerm,
+  sortType='relevancy',
+  nonweb='false',
+  innerSearchTerms,
+  parentCategory,
+  childCategory,
+  brands,
+  resultPage='1',
+  ...attributes
 }) => {
-	return convertObjectToSearchQuery({searchTerm, sortType, nonweb, innerSearchTerms, parentCategory,
-		childCategory, brands, resultPage, ...attributes})
+  return convertObjectToSearchQuery({ searchTerm, sortType, nonweb, innerSearchTerms, parentCategory,
+    childCategory, brands, resultPage, ...attributes })
 }
 
 const convertObjectToSearchQuery = object => {
-	return `/search?${Object.keys(object).filter(key => object[key]).map(key => {
-		return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`
-	}).join('&')}`
+  return `/search?${Object.keys(object).filter(key => object[key]).map(key => {
+    return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`
+  }).join('&')}`
 }
 
 export const logout = () => {
-	const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
-	keysToRemove.forEach(key => localStorage.removeItem(key))
+  const keysToRemove = ['userInfo', 'apiToken', 'shoppingCartToken', 'imperInfo']
+  keysToRemove.forEach(key => localStorage.removeItem(key))
 }
 
 export const useDidUpdateEffect = (create, deps) => { //Does not trigger on mount, only on successive re-renders
-	const didMountRef = useRef(false);
+  const didMountRef = useRef(false)
 	
-	useEffect(() => {
-		if (didMountRef.current)
-			create();
-		else
-			didMountRef.current = true;
-	}, deps);
+  useEffect(() => {
+    if (didMountRef.current)
+      create()
+    else
+      didMountRef.current = true
+  }, deps)
 }
 
 export function onWindowResize(callback) {
-	window.addEventListener('resize', callback)
-	return () => window.removeEventListener('resize', callback)
+  window.addEventListener('resize', callback)
+  return () => window.removeEventListener('resize', callback)
 }
 
 export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => {
-	return quantity > (availability || 0)
-		? (
-			(leadTimeDays || 0) 
-				? `Lead time ${availability?.leadTimeDays || 25} days`
-				: 'Call Airline Hydraulics Co. for lead time'
-		)
-		: ''
+  return quantity > (availability || 0)
+    ? (
+      (leadTimeDays || 0) 
+        ? `Lead time ${availability?.leadTimeDays || 25} days`
+        : 'Call Airline Hydraulics Co. for lead time'
+    )
+    : ''
 }
 
 export const useDebounceValue = (value, time = 500) => {
-	const [debouncedValue, setDebouncedValue] = useState(value)
+  const [debouncedValue, setDebouncedValue] = useState(value)
 	
-	useEffect(() => {
-		const timeout = setTimeout(() => setDebouncedValue(value), time)
-		return () => clearTimeout(timeout)
-	}, [value, time])
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedValue(value), time)
+    return () => clearTimeout(timeout)
+  }, [value, time])
 	
-	return debouncedValue
+  return debouncedValue
 }
 
-export const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
-	const removeTypeName = ({__typename, ...rest}) => rest
-	return {
-		brands: brands?.map(removeTypeName) || [],
-		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
-		parentCategories: parentCategories?.map(removeTypeName) || [],
-		childCategories: childCategories?.map(removeTypeName) || []
-	}
+export const cleanSearchState = ({ searchState: { brands, attributes, parentCategories, childCategories } }) => {
+  const removeTypeName = ({ __typename, ...rest }) => rest
+  return {
+    brands: brands?.map(removeTypeName) || [],
+    attributes: attributes?.map(({ __typename, features, ...rest }) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+    parentCategories: parentCategories?.map(removeTypeName) || [],
+    childCategories: childCategories?.map(removeTypeName) || []
+  }
 }
 
 export function scrollHorizontal(element, change, duration) {
-	const start = element.scrollLeft
-	let currentTime = 0
-	const increment = 20
+  const start = element.scrollLeft
+  let currentTime = 0
+  const increment = 20
 	
-	const animateScroll = () => {
-		currentTime += increment;
-		element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration);
-		if (currentTime < duration) {
-			setTimeout(animateScroll, increment);
-		}
-	};
-	animateScroll();
+  const animateScroll = () => {
+    currentTime += increment
+    element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration)
+    if (currentTime < duration) {
+      setTimeout(animateScroll, increment)
+    }
+  }
+  animateScroll()
 }
 
 //t = current time
@@ -159,8 +159,8 @@ export function scrollHorizontal(element, change, duration) {
 //c = change in value
 //d = duration
 Math.easeInOutQuad = (t, s, c, d) => {
-	t /= d/2;
-	if (t < 1) return c/2 * t * t + s;
-	t--;
-	return -c/2 * (t * (t-2) - 1) + s;
-};
+  t /= d/2
+  if (t < 1) return c/2 * t * t + s
+  t--
+  return -c/2 * (t * (t-2) - 1) + s
+}

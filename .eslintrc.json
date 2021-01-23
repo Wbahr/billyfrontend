@@ -1,11 +1,14 @@
 {
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
+    "node": true,
     "es6": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -15,19 +18,26 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react"
+    "react",
+    "react-hooks"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "linebreak-style": [
       "off"
     ],
-    "no-unused-vars": [
-      "error",
-      { "vars": "local" }
-    ],
     "indent": [
       "error",
-      2
+      2,
+      {
+        "ignoredNodes": [
+          "JSXAttribute"
+        ]
+      }
     ],
     "quotes": [
       "error",
@@ -40,6 +50,14 @@
     "keyword-spacing": [
       "error"
     ],
+    "key-spacing": [
+      "error",
+      {
+        "beforeColon": false,
+        "afterColon": true,
+        "mode": "strict"
+      }
+    ],
     "comma-spacing": [
       "error"
     ],
@@ -47,8 +65,35 @@
       "error",
       "always"
     ],
-    "no-console": [
+    "arrow-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "local",
+        "ignoreRestSiblings": true,
+        "args": "after-used"
+      }
+    ],
+    "no-multiple-empty-lines": [
       "error"
+    ],
+    "no-console": [
+      "warn"
+    ],
+    "no-var": [
+      "error"
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "all"
+      }
     ],
     "react/prop-types": [
       "off"
@@ -57,6 +102,46 @@
       "off"
     ],
     "react/display-name": [
+      "off"
+    ],
+    "react/jsx-closing-bracket-location": [
+      "error",
+      "line-aligned"
+    ],
+    "react/jsx-closing-tag-location": [
+      "error"
+    ],
+    "react/jsx-indent": [
+      "error",
+      2,
+      {
+        "checkAttributes": true,
+        "indentLogicalExpressions": true
+      }
+    ],
+    "react/jsx-indent-props": [
+      "error",
+      2
+    ],
+    "react/jsx-props-no-multi-spaces": [
+      "error"
+    ],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "parens-new-line",
+        "prop": "parens-new-line"
+      }
+    ],
+    "react-hooks/rules-of-hooks": [
+      "error"
+    ],
+    "react-hooks/exhaustive-deps": [
       "off"
     ]
   }

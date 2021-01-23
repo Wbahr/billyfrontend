@@ -36,22 +36,22 @@ const Container = styled.div`
 `
 
 export default function SearchCustomerModal({ open, hideModal, initialValue, setSelectedCustomerIdCallback }) {
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
-    if(initialValue) {
-      setSearchQuery(String(initialValue));
+    if (initialValue) {
+      setSearchQuery(String(initialValue))
     }
-  }, [initialValue]);
+  }, [initialValue])
 
   const [performSearch, { loading, data }] = useLazyQuery(IMPERSONATION_SEARCH, {
-      fetchPolicy: 'no-cache',
-      onCompleted() {
-        setSearchResults(data.getImpersonationCustomerList);
-      }
+    fetchPolicy: 'no-cache',
+    onCompleted() {
+      setSearchResults(data.getImpersonationCustomerList)
     }
-  );
+  }
+  )
 
   return (
     <Modal open={open} onClose={() => hideModal()} >
@@ -60,17 +60,17 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
           <FormikStyleInput name="customerSearch" type="text" label="Search Customer" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
         </DivRow>
         <DivRow>
-          <ButtonRed type="button" onClick={() => performSearch({ variables: { searchString: searchQuery }})}><SearchIcon /> Search</ButtonRed>
+          <ButtonRed type="button" onClick={() => performSearch({ variables: { searchString: searchQuery } })}><SearchIcon /> Search</ButtonRed>
         </DivRow>
         <DivRow>
           {loading && <Loader />}
           <ul>
             {searchResults && searchResults.map(({ customerIdP21, name }) => {
-              return <ResultListItem key={customerIdP21}><a onClick={() => { hideModal(); setSelectedCustomerIdCallback(customerIdP21); }}>{name}</a></ResultListItem>
+              return <ResultListItem key={customerIdP21}><a onClick={() => { hideModal(); setSelectedCustomerIdCallback(customerIdP21) }}>{name}</a></ResultListItem>
             })}
           </ul>
         </DivRow>
       </Container>
     </Modal>
-  );
+  )
 }

@@ -26,31 +26,31 @@ const PHeader = styled.p`
 
 class ConfirmationModal extends React.Component {
 
-	render(){
-		const {
-			submitSuccess
-		} = this.props
+  render(){
+    const {
+      submitSuccess
+    } = this.props
 
-		if (submitSuccess) {
-			return(
-				<DivContainer>
-					<StyledHeaderDiv>
-						<PHeader>Invoice Payment Submitted</PHeader>
-						<p>You will now be redirected to the Invoice Screen</p>
-					</StyledHeaderDiv>
-				</DivContainer>
-			)
-		} else {
-			return(
-				<DivContainer>
-					<StyledHeaderDiv>
-						<PHeader>Error</PHeader>
-						<p>There was a problem submitting your payment. Please contact us at 1-800-555-5555</p>
-					</StyledHeaderDiv>
-				</DivContainer>
-			)
-		}
-	}
+    if (submitSuccess) {
+      return (
+        <DivContainer>
+          <StyledHeaderDiv>
+            <PHeader>Invoice Payment Submitted</PHeader>
+            <p>You will now be redirected to the Invoice Screen</p>
+          </StyledHeaderDiv>
+        </DivContainer>
+      )
+    } else {
+      return (
+        <DivContainer>
+          <StyledHeaderDiv>
+            <PHeader>Error</PHeader>
+            <p>There was a problem submitting your payment. Please contact us at 1-800-555-5555</p>
+          </StyledHeaderDiv>
+        </DivContainer>
+      )
+    }
+  }
 }
 
 export default ConfirmationModal

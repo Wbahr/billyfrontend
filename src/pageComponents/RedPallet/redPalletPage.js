@@ -45,8 +45,8 @@ class RedPalletPage extends React.Component {
   }
 
   userDataMutator = (response) => {
-    let mutatedResponse = response
-    for(let i = 0; i < mutatedResponse.ShipTos.length;i++) {
+    const mutatedResponse = response
+    for (let i = 0; i < mutatedResponse.ShipTos.length;i++) {
       if (mutatedResponse.ShipTos[i].IsDefault){
         mutatedResponse.address_1 = response.ShipTos[i].Line1
         mutatedResponse.address_2 = response.ShipTos[i].Line2
@@ -61,13 +61,6 @@ class RedPalletPage extends React.Component {
     mutatedResponse.Company = response.CustomerName
     return mutatedResponse
   }
-  componentWillMount() {
-    // getUserData().then(
-    //   (response) => this.userDataMutator(response)
-    // ).then(
-    //   (mutatedResponse) => {this.setState({ initValues: mutatedResponse })}
-    // )
-  }
 
   render(){
     return (
@@ -80,7 +73,8 @@ class RedPalletPage extends React.Component {
           </StyledTextGrey>
           <DivAlert>
             <span>Note: There will be a minimum charge of $95.00 per item for tear down & evaluation. If an order is not placed, item
-          will be returned as is un-assembled.</span>
+              will be returned as is un-assembled.
+            </span>
           </DivAlert>
         </DivRedPallet>
         {/* { !_.isNil(this.state.initValues) &&

@@ -1,10 +1,10 @@
 import React from 'react'
-import ReactTable from "react-table"
+import ReactTable from 'react-table'
 import _ from 'lodash'
 import 'react-table/react-table.css'
 import AccountSectionHeader from '../_common/sectionHeader'
 import Input from '../_common/form/input'
-import { PCenterAlign, PRightAlign, ButtonLink} from '../../styles/tables'
+import { PCenterAlign, PRightAlign, ButtonLink } from '../../styles/tables'
 import InvoicePaymentDetail from './invoicePaymentDetail'
 
 class InvoicePaymentTable extends React.Component {
@@ -14,10 +14,10 @@ class InvoicePaymentTable extends React.Component {
   }
 
   handleViewDetails = (selectedInvoiceNum) => {
-    for(let i = 0; i < outstandingInvoices.length; i++){
-      let invoice = outstandingInvoices[i]
-      if(invoice.invoiceNum === selectedInvoiceNum){
-        this.setState({selectedInvoice: invoice})
+    for (let i = 0; i < outstandingInvoices.length; i++){
+      const invoice = outstandingInvoices[i]
+      if (invoice.invoiceNum === selectedInvoiceNum){
+        this.setState({ selectedInvoice: invoice })
         break
       }
     }
@@ -73,8 +73,8 @@ class InvoicePaymentTable extends React.Component {
       }
     ]
 
-    if(_.isNil(selectedInvoice)){
-      return(
+    if (_.isNil(selectedInvoice)){
+      return (
         <>
           <AccountSectionHeader
             text={'Outstanding Invoices'}

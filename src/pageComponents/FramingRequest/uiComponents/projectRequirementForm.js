@@ -28,18 +28,18 @@ const Form = styled.form`
 `
 
 const initValues = {
-	firstName: '',
-	lastName: '',
-	jobTitle: '',
-	company: '',
-	city: '',
-	state: '',
-	zip: '',
-	email: '',
-	phone: '',
-	jobOrder: '',
-	message: '',
-	subMailingList: '0'
+  firstName: '',
+  lastName: '',
+  jobTitle: '',
+  company: '',
+  city: '',
+  state: '',
+  zip: '',
+  email: '',
+  phone: '',
+  jobOrder: '',
+  message: '',
+  subMailingList: '0'
 }
 const P = styled.p`
     text-align: center;
@@ -48,26 +48,26 @@ const P = styled.p`
     letter-spacing: 2px;
 `
 export default function ProjectRequirementForm(props) {
-	return (
-		<FormContainer>
-			<P>{props.text}</P>
-			<Formik 
-				initialValues={initValues}
-			>
-				{formikProps => (
-					<Form name="contactUsForm" {...formikProps}>
-						<FormikInput label="Project Type" name="projectType" />
-						<FormikInput label="Quantity" name="quantity" />
-						<FormikInput label="Measurement Type" name="measurementType" />
-						<FormikInput label="Framing Type" name="framingType" />
-						<FormikInput label="Quote Requested By" name="quoteRequestedBy" />
-						<FormikInput label="Salesperson" name="salesperson" />
-						<FormikTextArea label="Project Comments" name="message" placeholder="Please Enter your Message.." rows="3" />
-						<FormikCheckbox label="Salesperson Submission:" name="subMailingList"/>
-						<Button type="submit" color="main" text="Submit"/>
-					</Form>
-				)}
-			</Formik>
-		</FormContainer>
-	)
+  return (
+    <FormContainer>
+      <P>{props.text}</P>
+      <Formik 
+        initialValues={initValues}
+      >
+        {formikProps => (
+          <Form name="contactUsForm" {...formikProps}>
+            <FormikInput label="Project Type" name="projectType" />
+            <FormikInput label="Quantity" name="quantity" />
+            <FormikInput label="Measurement Type" name="measurementType" />
+            <FormikInput label="Framing Type" name="framingType" />
+            <FormikInput label="Quote Requested By" name="quoteRequestedBy" />
+            <FormikInput label="Salesperson" name="salesperson" />
+            <FormikTextArea label="Project Comments" name="message" placeholder="Please Enter your Message.." rows="3" />
+            <FormikCheckbox label="Salesperson Submission:" name="subMailingList"/>
+            <Button type="submit" color="main" text="Submit"/>
+          </Form>
+        )}
+      </Formik>
+    </FormContainer>
+  )
 }

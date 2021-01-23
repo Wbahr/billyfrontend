@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const UlProgressBar = styled.ul`
@@ -43,7 +43,7 @@ li:first-child:after {
 }
 ` 
 
-let LI = styled.li`
+const LI = styled.li`
 	:before {
 		background-color: ${props => props.validated ? '#000080' : 'white'};
 	}
@@ -58,40 +58,40 @@ const LiSelected = styled.li`
 	}
 `
 
-export default function CheckoutProgress({stepLabels, currentStep, handleMoveStep, stepValidated}) {
-	const cursor = index => stepValidated[index] || (index === currentStep) ? 'pointer' : 'default'
-	const mapStepLabels = (stepName, index) => index === currentStep
-		? (
-			<LiSelected
-				key={index}
-				cursor={cursor(index)}
-				validated={stepValidated[index]}
-				onClick={() => handleMoveStep(index)}
-			>
-				{stepName}
-			</LiSelected>
-		) : (
-			<LI
-				key={index}
-				cursor={cursor(index)}
-				validated={stepValidated[index]}
-				onClick={() => handleMoveStep(index)}
-			>
-				{stepName}
-			</LI>
-		)
+export default function CheckoutProgress({ stepLabels, currentStep, handleMoveStep, stepValidated }) {
+  const cursor = index => stepValidated[index] || (index === currentStep) ? 'pointer' : 'default'
+  const mapStepLabels = (stepName, index) => index === currentStep
+    ? (
+      <LiSelected
+        key={index}
+        cursor={cursor(index)}
+        validated={stepValidated[index]}
+        onClick={() => handleMoveStep(index)}
+      >
+        {stepName}
+      </LiSelected>
+    ) : (
+      <LI
+        key={index}
+        cursor={cursor(index)}
+        validated={stepValidated[index]}
+        onClick={() => handleMoveStep(index)}
+      >
+        {stepName}
+      </LI>
+    )
 	
-	const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
+  const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
 	
-	useEffect(() => {
-		setSteps(stepLabels.map(mapStepLabels))
-	}, [stepLabels, currentStep, stepValidated])
+  useEffect(() => {
+    setSteps(stepLabels.map(mapStepLabels))
+  }, [stepLabels, currentStep, stepValidated])
 	
-	return (
-		<div>
-			<UlProgressBar>
-				{steps}
-			</UlProgressBar>
-		</div>
-	)
+  return (
+    <div>
+      <UlProgressBar>
+        {steps}
+      </UlProgressBar>
+    </div>
+  )
 }

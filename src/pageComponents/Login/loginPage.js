@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
@@ -98,97 +98,97 @@ const QUERY_LOGIN = gql`
 `
 
 export default function LoginPage(props) {
-	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
-	const [errorMessage, setErrorMessage] = useState('')
-	const [infoMessage, setInfoMessage] = useState('')
-	const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [infoMessage, setInfoMessage] = useState('')
+  const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
-	const context = useContext(Context)
-	const history = props.history
+  const context = useContext(Context)
+  const history = props.history
 
-	// Account for delays in loading context
-	useEffect(() => {
-		if (!_.isNil(context.userInfo)) {
-			let urlParams = new URLSearchParams(props.location.search)
-			let redirect = urlParams.get('next')
-			if(!_.isNil(redirect)){
-				history.push(redirect)
-			}
-		}
-	},[context.userInfo])
+  // Account for delays in loading context
+  useEffect(() => {
+    if (!_.isNil(context.userInfo)) {
+      const urlParams = new URLSearchParams(props.location.search)
+      const redirect = urlParams.get('next')
+      if (!_.isNil(redirect)){
+        history.push(redirect)
+      }
+    }
+  }, [context.userInfo])
 
-	const [executeLogIn, { loading, error }] = useLazyQuery(QUERY_LOGIN, {
-		fetchPolicy: 'no-cache',
-		onCompleted: data => {
-			const requestData = data.submitLogin
-			if (requestData.success) {
-				// Need to reset password
-				if (requestData.isPasswordReset) {
-					setErrorMessage('')
-					setInfoMessage(requestData.message)
-					setPassword('')
-				} else {
-					let mergeToken = localStorage.getItem('shoppingCartToken')
-					localStorage.setItem('apiToken', requestData.authorizationInfo.token)
-					localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-					context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
-					const urlParams = new URLSearchParams(props.location.search)
-					const redirect = urlParams.get('next')
-					if (!_.isNil(redirect)) {
-						history.push(redirect)
-					} else {
-						history.push('/')
-					}
-				}
-			} else {
-				setErrorMessage(requestData.message)
-				setPassword('')
-			}
-		}
-	})
+  const [executeLogIn, { loading, error }] = useLazyQuery(QUERY_LOGIN, {
+    fetchPolicy: 'no-cache',
+    onCompleted: data => {
+      const requestData = data.submitLogin
+      if (requestData.success) {
+        // Need to reset password
+        if (requestData.isPasswordReset) {
+          setErrorMessage('')
+          setInfoMessage(requestData.message)
+          setPassword('')
+        } else {
+          const mergeToken = localStorage.getItem('shoppingCartToken')
+          localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+          localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
+          context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
+          const urlParams = new URLSearchParams(props.location.search)
+          const redirect = urlParams.get('next')
+          if (!_.isNil(redirect)) {
+            history.push(redirect)
+          } else {
+            history.push('/')
+          }
+        }
+      } else {
+        setErrorMessage(requestData.message)
+        setPassword('')
+      }
+    }
+  })
 
-	function handleSignin() {
-		if (email.length === 0 || password.length === 0) {
-			setErrorMessage('Email and Password Required')
-		} else {
-			setErrorMessage('')
-			executeLogIn(
-				{
-					variables: {
-						'loginInfo': {
-							'loginId': email,
-							'password': password
-						}
-					}
-				}
-			)
-		}
-	}
+  function handleSignin() {
+    if (email.length === 0 || password.length === 0) {
+      setErrorMessage('Email and Password Required')
+    } else {
+      setErrorMessage('')
+      executeLogIn(
+        {
+          variables: {
+            'loginInfo': {
+              'loginId': email,
+              'password': password
+            }
+          }
+        }
+      )
+    }
+  }
 	
-	return(
-		<LoginPageContainer>
-			<PasswordResetModal 
-				open={showPasswordResetModal} 
-				hideModal={()=>{setShowPasswordResetModal(false)}}
-			/>
-			<Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
-			<P>Airline Hydraulics Login</P>
-			{errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
-			{infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
-			{error && <p>An unexpected error has occured. Please try again or contact us.</p>}
-			<DivInput>
-				<Label htmlFor='email'>Username or Email</Label>
-				<Input id='email' onChange={(e)=>setEmail(e.target.value)} value={email} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
-			</DivInput>
-			<DivInput>
-				<Label htmlFor='password'>Password</Label>
-				<Input id='password' type='password' onChange={(e)=>setPassword(e.target.value)} value={password} onKeyPress={(e)=>{e.key === 'Enter' ? handleSignin() : null}}/>
-			</DivInput>
-			<Button disabled={loading} onClick={handleSignin}>{loading ? 'Logging In...' : 'Log In'}</Button>
-			<A onClick={()=>setShowPasswordResetModal(true)}>Forgot your Password?</A>
-			<A onClick={()=> history.push('/signup')}>Create an Account</A>
+  return (
+    <LoginPageContainer>
+      <PasswordResetModal 
+        open={showPasswordResetModal} 
+        hideModal={() => {setShowPasswordResetModal(false)}}
+      />
+      <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
+      <P>Airline Hydraulics Login</P>
+      {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
+      {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
+      {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
+      <DivInput>
+        <Label htmlFor='email'>Username or Email</Label>
+        <Input id='email' onChange={(e) => setEmail(e.target.value)} value={email} onKeyPress={(e) => {e.key === 'Enter' ? handleSignin() : null}}/>
+      </DivInput>
+      <DivInput>
+        <Label htmlFor='password'>Password</Label>
+        <Input id='password' type='password' onChange={(e) => setPassword(e.target.value)} value={password} onKeyPress={(e) => {e.key === 'Enter' ? handleSignin() : null}}/>
+      </DivInput>
+      <Button disabled={loading} onClick={handleSignin}>{loading ? 'Logging In...' : 'Log In'}</Button>
+      <A onClick={() => setShowPasswordResetModal(true)}>Forgot your Password?</A>
+      <A onClick={() => history.push('/signup')}>Create an Account</A>
 
-		</LoginPageContainer>
-	)
+    </LoginPageContainer>
+  )
 }

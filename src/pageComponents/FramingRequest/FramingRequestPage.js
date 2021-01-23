@@ -68,80 +68,80 @@ const ContactSection = styled.div`
 `
 
 export default function FramingRequestPage() {
-	return (
-		<Container>
-			<Header text="framing request" />
-			<SubHeader
-				text="Let Airline's engineering and manufacturing team transform your ideas into reality."
-				details="Structural framing can be configured to support a variety of applications including workstations, lean manufacturing cells, safety guards, large area enclosures, clean rooms, machine bases, solar racking an much more. Get the process started with a framing application in your facility by submitting the form below."
-			/>
-			<SectionDiv>
-				<Div>
-					<Title_Div>
-						<Number_Div>
-							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-1.jpg" />
-						</Number_Div>
-						<div>
-							<Topic>Design</Topic>
-						</div>
-					</Title_Div>
-					<ImgDiv>
-						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/sketch.jpg" />
-					</ImgDiv>
-					<DetailDiv>
-						<p>
-               After completing the form below, an Airline Application Engineer will consult with you and develop concepts based on your needs. At Airline, an AutoCAD or Inventor drawing and proposal are generated for your review and approval. Once the order is placed; the design, BOM and details for production are finalized.
-						</p>
-					</DetailDiv>
-				</Div>
-				<Div>
-					<Title_Div>
-						<Number_Div>
-							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-2.jpg" />
-						</Number_Div>
-						<div>
-							<Topic>Fabrication</Topic>
-						</div>
-					</Title_Div>
-					<ImgDiv>
-						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingFabrication.jpg" />
-					</ImgDiv>
-					<DetailDiv>
-						<p>
+  return (
+    <Container>
+      <Header text="framing request" />
+      <SubHeader
+        text="Let Airline's engineering and manufacturing team transform your ideas into reality."
+        details="Structural framing can be configured to support a variety of applications including workstations, lean manufacturing cells, safety guards, large area enclosures, clean rooms, machine bases, solar racking an much more. Get the process started with a framing application in your facility by submitting the form below."
+      />
+      <SectionDiv>
+        <Div>
+          <Title_Div>
+            <Number_Div>
+              <Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-1.jpg" />
+            </Number_Div>
+            <div>
+              <Topic>Design</Topic>
+            </div>
+          </Title_Div>
+          <ImgDiv>
+            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/sketch.jpg" />
+          </ImgDiv>
+          <DetailDiv>
+            <p>
+              After completing the form below, an Airline Application Engineer will consult with you and develop concepts based on your needs. At Airline, an AutoCAD or Inventor drawing and proposal are generated for your review and approval. Once the order is placed; the design, BOM and details for production are finalized.
+            </p>
+          </DetailDiv>
+        </Div>
+        <Div>
+          <Title_Div>
+            <Number_Div>
+              <Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-2.jpg" />
+            </Number_Div>
+            <div>
+              <Topic>Fabrication</Topic>
+            </div>
+          </Title_Div>
+          <ImgDiv>
+            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingFabrication.jpg" />
+          </ImgDiv>
+          <DetailDiv>
+            <p>
               Airline's fabrication facilities offer the best in local manufacturing support. We can supply pre-cut and pre-machined kitted parts ready for final assembly by your technicians or we can provide completely assembled structures for quick and easy installation.
-						</p>
-					</DetailDiv>
-				</Div>
-				<Div>
-					<Title_Div>
-						<Number_Div>
-							<Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-3.jpg" />
-						</Number_Div>
-						<div>
-							<Topic>Delivery/Installation</Topic>
-						</div>
-					</Title_Div>
-					<ImgDiv>
-						<Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingDelivery.jpg" />
-					</ImgDiv>
-					<DetailDiv>
-						<p>
-               If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
-						</p>
-					</DetailDiv>
-				</Div>
-			</SectionDiv>
-			<SubTitle>
-				<H5>Please enter the information about your guarding needs below. Required fields are marked with an asterisk (*)</H5>
-			</SubTitle>
-			<ContactSection>
-				<ContactDiv>
-					<ContactForm text="Contact Information"/>
-				</ContactDiv>
-				<ContactDiv>
-					<ProjectForm text="Project Requirements"/>
-				</ContactDiv>
-			</ContactSection>
-		</Container>
-	)
+            </p>
+          </DetailDiv>
+        </Div>
+        <Div>
+          <Title_Div>
+            <Number_Div>
+              <Number src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/Step-3.jpg" />
+            </Number_Div>
+            <div>
+              <Topic>Delivery/Installation</Topic>
+            </div>
+          </Title_Div>
+          <ImgDiv>
+            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/contact/framing-request/FramingDelivery.jpg" />
+          </ImgDiv>
+          <DetailDiv>
+            <p>
+              If required, our field service team will deliver your designed and manufactured component to your location. Skilled technicians can install your new components and get you up and running in no time.
+            </p>
+          </DetailDiv>
+        </Div>
+      </SectionDiv>
+      <SubTitle>
+        <H5>Please enter the information about your guarding needs below. Required fields are marked with an asterisk (*)</H5>
+      </SubTitle>
+      <ContactSection>
+        <ContactDiv>
+          <ContactForm text="Contact Information"/>
+        </ContactDiv>
+        <ContactDiv>
+          <ProjectForm text="Project Requirements"/>
+        </ContactDiv>
+      </ContactSection>
+    </Container>
+  )
 }

@@ -6,11 +6,11 @@ import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
-import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
+import AddToShoppingListModal from '../_common/modals/AddToShoppingListModal'
 import { GET_ITEM_PRICE } from 'config/providerGQL'
-import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getOriginalImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
-import LocationsModal from "../SearchResults/uiComponents/locationsModal";
+import LocationsModal from '../SearchResults/uiComponents/locationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
@@ -193,300 +193,302 @@ const IMG = styled.img`
 `
 
 export default function ItemDetailPage({ history }) {
-	const context = useContext(Context)
-	const { itemId, customerPartNumber } = useParams()
-	const invMastUid = parseInt(itemId)
-	const [accessoryItems, setAccessoryItems] = useState([])
-	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
-	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
-	const [quantity, setQuantity] = useState(1);
+  const context = useContext(Context)
+  const { itemId, customerPartNumber } = useParams()
+  const invMastUid = parseInt(itemId)
+  const [accessoryItems, setAccessoryItems] = useState([])
+  const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
+  const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
+  const [quantity, setQuantity] = useState(1)
 
-	const [priceInfo, setPriceInfo] = useState(null)
-	const {
-		unitOfMeasure, 
-		unitSize, 
-		roundType} = priceInfo || {}
+  const [priceInfo, setPriceInfo] = useState(null)
+  const {
+    unitOfMeasure, 
+    unitSize, 
+    roundType } = priceInfo || {}
 
-	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
-	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
-	const [showAddListModal, setShowAddListModal] = useState(false);
-	const [locationsModalInvMastUid, setLocationModalInvMastUid] = useState(null)
+  const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '')
+  const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+  const [showAddListModal, setShowAddListModal] = useState(false)
+  const [locationsModalInvMastUid, setLocationModalInvMastUid] = useState(null)
 
-	function handleAddedToCart() {
-		setShowAddedToCartModal(false);
-	}
+  function handleAddedToCart() {
+    setShowAddedToCartModal(false)
+  }
 
-	const {data: itemInfo} = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
-		variables: { invMastUid: invMastUid },
-		fetchPolicy: 'no-cache',
-		onCompleted: result => {
-			const details = result.itemDetails
-			queryItemPrice({
-				variables: {
-					'items': [{
-						'invMastUid': details.invMastUid,
-						'quantity': 1
-					}]
-				}
-			})
+  const { data: itemInfo } = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
+    variables: { invMastUid: invMastUid },
+    fetchPolicy: 'no-cache',
+    onCompleted: result => {
+      const details = result.itemDetails
+      queryItemPrice({
+        variables: {
+          'items': [{
+            'invMastUid': details.invMastUid,
+            'quantity': 1
+          }]
+        }
+      })
 
-			//If there are accessory items attached to this item, query for their details
-			if(details.associatedItems.length){
-				setAccessoryItems(details.associatedItems)
+      //If there are accessory items attached to this item, query for their details
+      if (details.associatedItems.length){
+        setAccessoryItems(details.associatedItems)
 
-				//Build the price request objects
-				const accessoryItemPriceRequests = details.associatedItems.map(i => {
-					return {
-						'invMastUid': i.associatedInvMastUid,
-						'quantity': 1
-					}
-				})
+        //Build the price request objects
+        const accessoryItemPriceRequests = details.associatedItems.map(i => {
+          return {
+            'invMastUid': i.associatedInvMastUid,
+            'quantity': 1
+          }
+        })
 
-				queryAccessoryItemPrices({
-					variables: {
-						'items': accessoryItemPriceRequests
-					}
-				})
+        queryAccessoryItemPrices({
+          variables: {
+            'items': accessoryItemPriceRequests
+          }
+        })
 
-				queryAccessoryItemsInfo({
-					variables: {
-						'invMastUids': details.associatedItems.map(i => i.associatedInvMastUid)
-					}
-				})
-			} else{
-				setAccessoryItems([])
-			}
-		}
-	})
+        queryAccessoryItemsInfo({
+          variables: {
+            'invMastUids': details.associatedItems.map(i => i.associatedInvMastUid)
+          }
+        })
+      } else {
+        setAccessoryItems([])
+      }
+    }
+  })
 
-	const itemDetails = itemInfo?.itemDetails
-	const customerPartNumbers = itemInfo?.customerPartNumbers
-	const itemAvailability = itemInfo?.itemAvailabilitySingular
+  const itemDetails = itemInfo?.itemDetails
+  const customerPartNumbers = itemInfo?.customerPartNumbers
+  const itemAvailability = itemInfo?.itemAvailabilitySingular
 
-	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
-		onCompleted: data => {
-			if(data.getItemPrices.length){
-				setPriceInfo(data.getItemPrices[0])
-			} else{
-				setPriceInfo({
-					unitPrice: 0
-				})
-			}
-		}
-	})
+  const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
+    onCompleted: data => {
+      if (data.getItemPrices.length){
+        setPriceInfo(data.getItemPrices[0])
+      } else {
+        setPriceInfo({
+          unitPrice: 0
+        })
+      }
+    }
+  })
 
-	const [queryAccessoryItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
-		onCompleted: data => {
-			setAccessoryItemPrices(data.getItemPrices)
-		}
-	})
+  const [queryAccessoryItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
+    onCompleted: data => {
+      setAccessoryItemPrices(data.getItemPrices)
+    }
+  })
 
-	const [queryAccessoryItemsInfo] = useLazyQuery(GET_ACCESSORY_ITEMS_INFO, {
-		onCompleted: ({itemAvailability, itemDetailsBatch}) => {
-			setAccessoryItemsInfo({itemAvailability, itemDetailsBatch})
-		}
-	})
+  const [queryAccessoryItemsInfo] = useLazyQuery(GET_ACCESSORY_ITEMS_INFO, {
+    onCompleted: ({ itemAvailability, itemDetailsBatch }) => {
+      setAccessoryItemsInfo({ itemAvailability, itemDetailsBatch })
+    }
+  })
 	
-	const handleAddToCart = () => {
-		context.addItem({
-			frecno: invMastUid,
-			quantity: parseInt(quantity, 10),
-			itemNotes: null,
-			itemUnitPriceOverride: null,
-			customerPartNumberId: selectedCustomerPartNumber || null
-		})
-		setShowAddedToCartModal(true)
-		setQuantity(1)
-	}
+  const handleAddToCart = () => {
+    context.addItem({
+      frecno: invMastUid,
+      quantity: parseInt(quantity, 10),
+      itemNotes: null,
+      itemUnitPriceOverride: null,
+      customerPartNumberId: selectedCustomerPartNumber || null
+    })
+    setShowAddedToCartModal(true)
+    setQuantity(1)
+  }
 	
-	const setQuantityHandler = (qty) => {
-		setQuantity(qty)
-	}
+  const setQuantityHandler = (qty) => {
+    setQuantity(qty)
+  }
 	
-	const handleShowLocationsModal = () => {
-		setLocationModalInvMastUid(invMastUid)
-	}
+  const handleShowLocationsModal = () => {
+    setLocationModalInvMastUid(invMastUid)
+  }
 	
-	const handleHideLocationsModal = () => {
-		setLocationModalInvMastUid(null)
-	}
+  const handleHideLocationsModal = () => {
+    setLocationModalInvMastUid(null)
+  }
 
-	if (!itemDetails) {
-		return (<Loader />)
-	} else if (!itemDetails.invMastUid) {
-		return (<p>No item found</p>)
-	} else {
-		const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-		const TechSpecItems = itemDetails.itemTechSpecs.map((elem, idx) => (
-			<TR key={idx}>
-				<TD>{elem.name}</TD>
-				<TD>{elem.value}</TD>
-			</TR>
-		))
+  if (!itemDetails) {
+    return (<Loader />)
+  } else if (!itemDetails.invMastUid) {
+    return (<p>No item found</p>)
+  } else {
+    const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
+    const TechSpecItems = itemDetails.itemTechSpecs.map((elem, idx) => (
+      <TR key={idx}>
+        <TD>{elem.name}</TD>
+        <TD>{elem.value}</TD>
+      </TR>
+    ))
 
-		const ItemLinks = itemDetails.itemLinks.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-		const AccessoryItems = accessoryItems.map((ai, idx) => {
+    const ItemLinks = itemDetails.itemLinks.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+    const AccessoryItems = accessoryItems.map((ai, idx) => {
 
-			const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
-			const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
-			const price = accessoryItemPrices.find(p => p.invMastUid === ai.associatedInvMastUid)
+      const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
+      const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
+      const price = accessoryItemPrices.find(p => p.invMastUid === ai.associatedInvMastUid)
 
-			return (
-				<AccessoryItem
-					key={idx}
-					itemDetails={details}
-					availability={availability}
-					price={price}
-					history={history}
-					showLocationsModal={() => setLocationModalInvMastUid(details.invMastUid)}
-					setShowAddedToCartModal={setShowAddedToCartModal}
-				/>
-			)
-		})
+      return (
+        <AccessoryItem
+          key={idx}
+          itemDetails={details}
+          availability={availability}
+          price={price}
+          history={history}
+          showLocationsModal={() => setLocationModalInvMastUid(details.invMastUid)}
+          setShowAddedToCartModal={setShowAddedToCartModal}
+        />
+      )
+    })
 
-		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
-			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
-		))
+    const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
+      <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
+    ))
 		
-		const Availability = () => (
-			<Pbold onClick={handleShowLocationsModal}>
-				{itemAvailability.availability ? (
-					`Available: ${itemAvailability.availability}`
-				) : itemAvailability.leadTimeDays ? (
-					`Lead time ${itemAvailability.leadTimeDays} days`
-				) : (
-					'Call for lead time'
-				)}
-			</Pbold>
-		)
+    const Availability = () => (
+      <Pbold onClick={handleShowLocationsModal}>
+        {itemAvailability.availability ? (
+          `Available: ${itemAvailability.availability}`
+        ) : itemAvailability.leadTimeDays ? (
+          `Lead time ${itemAvailability.leadTimeDays} days`
+        ) : (
+          'Call for lead time'
+        )}
+      </Pbold>
+    )
 
-		return (
-			<ItemDetailPageContainer>
-				<DivTitle>
-					<H2ItemTitle>{itemDetails.itemDesc}</H2ItemTitle>
-				</DivTitle>
+    return (
+      <ItemDetailPageContainer>
+        <DivTitle>
+          <H2ItemTitle>{itemDetails.itemDesc}</H2ItemTitle>
+        </DivTitle>
 				
-				<DivLeftCol>
-					<DivPhoto>
-						<Img src={getOriginalImagePath(itemDetails)} alt={itemDetails.invMastUid} />
-					</DivPhoto>
+        <DivLeftCol>
+          <DivPhoto>
+            <Img src={getOriginalImagePath(itemDetails)} alt={itemDetails.invMastUid} />
+          </DivPhoto>
 					
-					<DivPurchaseInfo>
-						<Row>
-							<Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
-							<P> /{unitOfMeasure}</P>
-						</Row>
+          <DivPurchaseInfo>
+            <Row>
+              <Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
+              <P> /{unitOfMeasure}</P>
+            </Row>
 						
-						<Availability/>
+            <Availability/>
 						
-						<DivPurchaseInfoButtons>
-							<RowCentered>
-								<span>Qty:</span>
-								<QuantityInput
-									quantity={quantity}
-									unitSize={unitSize}
-									unitOfMeasure={unitOfMeasure}
-									roundType={roundType}
-									handleUpdate={setQuantityHandler}
-									min='0'
-								/>
-								{
-									(unitSize > 1) && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
-										X {unitSize }
-									</AirlineChip>
-								}
-							</RowCentered>
+            <DivPurchaseInfoButtons>
+              <RowCentered>
+                <span>Qty:</span>
+                <QuantityInput
+                  quantity={quantity}
+                  unitSize={unitSize}
+                  unitOfMeasure={unitOfMeasure}
+                  roundType={roundType}
+                  handleUpdate={setQuantityHandler}
+                  min='0'
+                />
+                {
+                  (unitSize > 1) && (
+                    <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                      X {unitSize }
+                    </AirlineChip>
+                  )
+                }
+              </RowCentered>
 							
-							<ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
+              <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
 							
-							<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
-						</DivPurchaseInfoButtons>
+              <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+            </DivPurchaseInfoButtons>
 						
-						{itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
-						{itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
-						{accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
-					</DivPurchaseInfo>
-				</DivLeftCol>
+            {itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
+            {itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
+            {accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
+          </DivPurchaseInfo>
+        </DivLeftCol>
 				
-				<DivDetails>
-					<PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
+        <DivDetails>
+          <PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 					
-					<Row>
-						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
+          <Row>
+            <Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 						
-						<Availability/>
-					</Row>
+            <Availability/>
+          </Row>
 					
-					<TABLE>
-						<tbody>
-							<TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand.logoLink} /></TDWhite></TR2>
-							<TR2><TDGrey>Item ID</TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
-							<TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
-							<TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
+          <TABLE>
+            <tbody>
+              <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand.logoLink} /></TDWhite></TR2>
+              <TR2><TDGrey>Item ID</TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
+              <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
+              <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
 							
-							{!!CustomerPartOptions.length && (
-								<TR2>
-									<TDGrey>Customer Part #</TDGrey>
-									<TDWhite>
-										<select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
-											<option>Select a Part No.</option>
-											{CustomerPartOptions}
-										</select>
-									</TDWhite>
-								</TR2>
-							)}
+              {!!CustomerPartOptions.length && (
+                <TR2>
+                  <TDGrey>Customer Part #</TDGrey>
+                  <TDWhite>
+                    <select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
+                      <option>Select a Part No.</option>
+                      {CustomerPartOptions}
+                    </select>
+                  </TDWhite>
+                </TR2>
+              )}
 							
-							<TR2>
-								<TDGrey>Unit Size</TDGrey>
-								<TDWhite>{itemDetails.unitSizeMultiple}</TDWhite>
-							</TR2>
-						</tbody>
-					</TABLE>
+              <TR2>
+                <TDGrey>Unit Size</TDGrey>
+                <TDWhite>{itemDetails.unitSizeMultiple}</TDWhite>
+              </TR2>
+            </tbody>
+          </TABLE>
 					
-					<hr />
+          <hr />
 					
-					<H4 id='feature'>Features</H4>
-					<ul>{FeatureItems}</ul>
+          <H4 id='feature'>Features</H4>
+          <ul>{FeatureItems}</ul>
 					
-					<H4 id='techspec'>Tech Specifications</H4>
-					<Table>
-						<tbody>
-						{TechSpecItems}
-						</tbody>
-					</Table>
+          <H4 id='techspec'>Tech Specifications</H4>
+          <Table>
+            <tbody>
+              {TechSpecItems}
+            </tbody>
+          </Table>
 					
-					{itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
-					<DivSection>{ItemLinks}</DivSection>
+          {itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
+          <DivSection>{ItemLinks}</DivSection>
 					
-					{accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
+          {accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
 					
-					<DivAccessoryItems>
-						{AccessoryItems}
-					</DivAccessoryItems>
-				</DivDetails>
+          <DivAccessoryItems>
+            {AccessoryItems}
+          </DivAccessoryItems>
+        </DivDetails>
 				
-				<AddedModal
-					open={showShowAddedToCartModal}
-					text="Added to Cart!"
-					onClose={handleAddedToCart}
-					timeout={900}
-				/>
+        <AddedModal
+          open={showShowAddedToCartModal}
+          text="Added to Cart!"
+          onClose={handleAddedToCart}
+          timeout={900}
+        />
 				
-				<LocationsModal
-					open={!!locationsModalInvMastUid}
-					hideLocationsModal={handleHideLocationsModal}
-					invMastUid={locationsModalInvMastUid}
-				/>
+        <LocationsModal
+          open={!!locationsModalInvMastUid}
+          hideLocationsModal={handleHideLocationsModal}
+          invMastUid={locationsModalInvMastUid}
+        />
 
-				{context.userInfo && (
-					<AddToShoppingListModal
-						open={showAddListModal}
-						hide={() => setShowAddListModal(false)}
-						item={itemDetails}
-						customerPartNumberId={selectedCustomerPartNumber}
-					/>
-				)}
-			</ItemDetailPageContainer>
-		)
-	}
+        {context.userInfo && (
+          <AddToShoppingListModal
+            open={showAddListModal}
+            hide={() => setShowAddListModal(false)}
+            item={itemDetails}
+            customerPartNumberId={selectedCustomerPartNumber}
+          />
+        )}
+      </ItemDetailPageContainer>
+    )
+  }
 }

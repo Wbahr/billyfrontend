@@ -40,59 +40,59 @@ const MainInput = styled(FormikField)`
   }
 `
 
-export default function TextArea({type, disabled, name, label, placeholder, width, changeFunction, maxlength, rows}){
-	if(type === 'text' && _.isNil(changeFunction)){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainInput 
-					type="text" 
-					as="textarea"
-					name={name} 
-					placeholder={placeholder} 
-					disabled={disabled} 
-					style={{width: width || '400px'}}
-					maxLength={maxlength}
-					rows={rows}
-				/>
-			</DivContainer>
-		)
-	} else if(type === 'text' && !_.isNil(changeFunction)){
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}`}</Label>}        
-				<MainInput 
-					type="text" 
-					as="textarea"
-					name={name} 
-					placeholder={placeholder} 
-					disabled={disabled} 
-					style={{width: width || '400px'}}
-					onChange={(e)=>changeFunction(name, e.target.value)}
-					maxLength={maxlength}
-					rows={rows}
-				/>
-			</DivContainer>
-		)
-	} else {
-		return(
-			<FormikField type={type} name={name} />
-		)
-	}
+export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxlength, rows }){
+  if (type === 'text' && _.isNil(changeFunction)){
+    return (
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainInput 
+          type="text" 
+          as="textarea"
+          name={name} 
+          placeholder={placeholder} 
+          disabled={disabled} 
+          style={{ width: width || '400px' }}
+          maxLength={maxlength}
+          rows={rows}
+        />
+      </DivContainer>
+    )
+  } else if (type === 'text' && !_.isNil(changeFunction)){
+    return (
+      <DivContainer>
+        {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+        <MainInput 
+          type="text" 
+          as="textarea"
+          name={name} 
+          placeholder={placeholder} 
+          disabled={disabled} 
+          style={{ width: width || '400px' }}
+          onChange={(e) => changeFunction(name, e.target.value)}
+          maxLength={maxlength}
+          rows={rows}
+        />
+      </DivContainer>
+    )
+  } else {
+    return (
+      <FormikField type={type} name={name} />
+    )
+  }
 }
 
 TextArea.propTypes = {
-	name: PropTypes.string.isRequired,
-	type: PropTypes.string,
-	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	placeholder: PropTypes.string,
-	onChange: PropTypes.string
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.string
 }
 
 TextArea.defaultProps = {
-	type: 'text',
-	placeholder: '',
-	maxlength: 'none',
-	rows: '3'
+  type: 'text',
+  placeholder: '',
+  maxlength: 'none',
+  rows: '3'
 }

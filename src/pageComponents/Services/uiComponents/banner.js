@@ -17,9 +17,9 @@ const Title = styled.h1`
     letter-spacing: 2px;
 `
 export default function banner(props) {
-	return (
-		<Banner>
-			<Title>{props.text}</Title>
-		</Banner>
-	)
+  return (
+    <Banner>
+      <Title>{props.text}</Title>
+    </Banner>
+  )
 }

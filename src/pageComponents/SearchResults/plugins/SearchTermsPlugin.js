@@ -45,46 +45,46 @@ const SearchChipDiv = styled.div`
  	margin: 5px 0px;
 `
 
-export default function SearchTermsPlugin({searchTerms, setSearchTerms}) {
-	const [searchTerm, setSearchTerm] = useState('')
-	const innerSearchTermsArray = searchTerms ? searchTerms.split(',') : []
+export default function SearchTermsPlugin({ searchTerms, setSearchTerms }) {
+  const [searchTerm, setSearchTerm] = useState('')
+  const innerSearchTermsArray = searchTerms ? searchTerms.split(',') : []
 	
-	const handleUpdateSearchTerm = () => {
-		if (searchTerm?.trim()?.length) {
-			setSearchTerms([...innerSearchTermsArray, ...searchTerm.split(' ')])
-			setSearchTerm('')
-		}
-	}
+  const handleUpdateSearchTerm = () => {
+    if (searchTerm?.trim()?.length) {
+      setSearchTerms([...innerSearchTermsArray, ...searchTerm.split(' ')])
+      setSearchTerm('')
+    }
+  }
 	
-	const handleRemoveSearchTerm = (idx) => () => {
-		const innerSearchTermsCopy = innerSearchTermsArray.slice()
-		innerSearchTermsCopy.splice(idx, 1)
-		setSearchTerms(innerSearchTermsCopy)
-	}
+  const handleRemoveSearchTerm = (idx) => () => {
+    const innerSearchTermsCopy = innerSearchTermsArray.slice()
+    innerSearchTermsCopy.splice(idx, 1)
+    setSearchTerms(innerSearchTermsCopy)
+  }
 	
-	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
+  const handleSetSearchTerm = e => setSearchTerm(e.target.value)
 	
-	const handleKeyPress = e => {
-		if (e.key === 'Enter') handleUpdateSearchTerm()
-	}
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') handleUpdateSearchTerm()
+  }
 	
-	return(
-		<Div>
-			<SearchChipDiv>
-				{innerSearchTermsArray.map((term, idx) => (
-					<SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>
-				))}
-			</SearchChipDiv>
+  return (
+    <Div>
+      <SearchChipDiv>
+        {innerSearchTermsArray.map((term, idx) => (
+          <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>
+        ))}
+      </SearchChipDiv>
 			
-			<DivResultsSearch>
-				<InputSearch
-					placeholder="Add keywords to refine results"
-					onChange={handleSetSearchTerm}
-					onKeyDown={handleKeyPress}
-					value={searchTerm}
-				/>
-				<ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
-			</DivResultsSearch>
-		</Div>
-	)
+      <DivResultsSearch>
+        <InputSearch
+          placeholder="Add keywords to refine results"
+          onChange={handleSetSearchTerm}
+          onKeyDown={handleKeyPress}
+          value={searchTerm}
+        />
+        <ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
+      </DivResultsSearch>
+    </Div>
+  )
 }
