@@ -3,7 +3,7 @@ import AirlineModal from '../../_common/modal'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
 import Loader from '../../_common/loader'
-import { QUERY_STOCK_AVAILABILITY } from '../../../config/providerGQL'
+import { QUERY_STOCK_AVAILABILITY } from '../../../setup/providerGQL'
 
 const Table = styled.table`
   margin: 0 16px;

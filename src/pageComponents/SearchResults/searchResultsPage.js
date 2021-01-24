@@ -1,6 +1,6 @@
 import React, { useState, useEffect,  } from 'react'
 import { useLazyQuery } from '@apollo/client'
-import { QUERY_ITEM_SEARCH } from '../../config/providerGQL'
+import { QUERY_ITEM_SEARCH } from '../../setup/providerGQL'
 import { buildSearchString, useDidUpdateEffect, cleanSearchState } from '../_common/helpers/generalHelperFunctions'
 import AppBarPlugin from './plugins/AppBarPlugin'
 import DrawerPlugin from './plugins/DrawerPlugin'

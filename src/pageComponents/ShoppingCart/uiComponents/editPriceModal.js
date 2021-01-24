@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../../_common/form/inputv2'
 import AirlineSelect from '../../_common/form/select'

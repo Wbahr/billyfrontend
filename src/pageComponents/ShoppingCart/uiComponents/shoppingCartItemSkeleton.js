@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 
 const gradientAnimation = keyframes`
 	0% {

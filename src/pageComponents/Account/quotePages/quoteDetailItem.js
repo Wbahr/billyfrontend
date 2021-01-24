@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'

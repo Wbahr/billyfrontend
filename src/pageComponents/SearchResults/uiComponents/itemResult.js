@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { getLargeImagePath } from '../../_common/helpers/generalHelperFunctions'
 import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonItem'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'

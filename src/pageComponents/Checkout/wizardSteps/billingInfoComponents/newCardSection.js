@@ -7,7 +7,7 @@ import FormikInput from '../../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { defaultBilling } from '../../helpers'
 import FormikCheckbox from '../../../_common/formik/checkBox'
-import Context from '../../../../config/context'
+import Context from '../../../../setup/context'
 
 const StyledCheckbox = styled.input`
 	width: 15px;

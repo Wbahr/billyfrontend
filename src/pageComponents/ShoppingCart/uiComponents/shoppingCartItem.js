@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import DebounceInput from 'react-debounce-input'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'

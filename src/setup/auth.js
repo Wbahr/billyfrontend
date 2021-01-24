@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import _ from 'lodash'
-import Context from '../config/context'
+import Context from './/context'
 
 export default function Auth(props) {
   const context = useContext(Context)

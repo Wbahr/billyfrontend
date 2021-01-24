@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 
 const TableContainer = styled.div`
 	display: flex;

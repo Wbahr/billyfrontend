@@ -128,7 +128,7 @@ module.exports = function (webpackEnv) {
               stage: 3,
             }),
             // Adds PostCSS Normalize as the reset css with default options,
-            // so that it honors browserslist config in package.json
+            // so that it honors browserslist setup in package.json
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
           ],
@@ -365,7 +365,7 @@ module.exports = function (webpackEnv) {
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
           oneOf: [
-            // TODO: Merge this config once `image/avif` is in the mime-db
+            // TODO: Merge this setup once `image/avif` is in the mime-db
             // https://github.com/jshttp/mime-db
             {
               test: [/\.avif$/],
@@ -721,7 +721,7 @@ module.exports = function (webpackEnv) {
         cwd: paths.appPath,
         resolvePluginsRelativeTo: __dirname,
         baseConfig: {
-          extends: [require.resolve('eslint-config-react-app/base')],
+          extends: [require.resolve('eslint-setup-react-app/base')],
           rules: {
             ...(!hasJsxRuntime && {
               'react/react-in-jsx-scope': 'error',

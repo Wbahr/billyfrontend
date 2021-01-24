@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/client'

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DebounceInput } from 'react-debounce-input'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import NumberFormat from 'react-number-format'
 
 const Container = styled.div`

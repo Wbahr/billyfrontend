@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import Context from '../../config/context'
+import Context from '../../setup/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
 import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 

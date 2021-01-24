@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import _ from 'lodash'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NumberFormat from 'react-number-format'
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
 import { ButtonRed } from 'styles/buttons'
 import { useMutation } from '@apollo/client'

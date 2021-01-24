@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import NumberFormat from 'react-number-format'
 
 const Div = styled.div`

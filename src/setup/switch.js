@@ -68,12 +68,12 @@ class App extends React.Component {
   // componentDidUpdate (prevProps) {
   // if (this.props.location !== prevProps.location) {
   //   // track google analytics page view
-  //   window.gtag('config', 'UA-57868840-4', {
+  //   window.gtag('setup', 'UA-57868840-4', {
   //     'page_path': this.props.location.pathname
   //   })
 
   //   // track adwords page view
-  //   window.gtag('config', 'AW-798297408', {
+  //   window.gtag('setup', 'AW-798297408', {
   //     'page_path': this.props.location.pathname
   //   })
 

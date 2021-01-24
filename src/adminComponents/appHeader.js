@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Context from '../config/context'
+import Context from '../setup/context'
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import _ from 'lodash'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 
 export default function AccountManagementPage() {
   const context = useContext(Context)

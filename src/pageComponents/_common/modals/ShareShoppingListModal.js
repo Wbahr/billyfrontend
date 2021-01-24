@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Modal from '../modal'
 import styled from 'styled-components'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import Select from 'react-select'
 

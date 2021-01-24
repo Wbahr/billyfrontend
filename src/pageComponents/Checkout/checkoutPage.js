@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
-import Context from '../../config/context'
+import Context from '../../setup/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CheckoutProgress from './uiComponents/checkoutProgress'

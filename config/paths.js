@@ -48,7 +48,7 @@ const resolveModule = (resolveFn, filePath) => {
   return resolveFn(`${filePath}.js`);
 };
 
-// config after eject: we're in ./config/
+// setup after eject: we're in ./setup/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
