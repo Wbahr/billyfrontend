@@ -9,8 +9,8 @@ import ToggleSwitch from '../../_common/toggleSwitch'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
-import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'config/gqlQueries/gqlItemQueries'
+import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/providerGQL'
+import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'setup/gqlQueries/gqlItemQueries'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;

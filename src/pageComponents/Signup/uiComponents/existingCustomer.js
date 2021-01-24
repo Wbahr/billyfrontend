@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
 import Summary from '../summary'
 import { existingCustomerInitialValues, existingCustomerSchema } from '../validationSchemas'
-import { SAVE_NEW_CUSTOMER } from 'config/providerGQL'
+import { SAVE_NEW_CUSTOMER } from 'setup/providerGQL'
 import NewCustomerForm from './newCustomerForm'
 
 const H4 = styled.h4`

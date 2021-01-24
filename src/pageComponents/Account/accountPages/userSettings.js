@@ -4,7 +4,7 @@ import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
 import { ButtonRed } from 'styles/buttons'
 import { useMutation } from '@apollo/client'
 import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
-import { CHANGE_PASSWORD } from 'config/providerGQL'
+import { CHANGE_PASSWORD } from 'setup/providerGQL'
 import styled from 'styled-components'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
 

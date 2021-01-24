@@ -9,7 +9,7 @@ import ImpersonationSearch from './impersonationSearch'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
-import { GET_ROOT_CATEGORIES_HEADER } from 'config/providerGQL'
+import { GET_ROOT_CATEGORIES_HEADER } from 'setup/providerGQL'
 import { Button, Menu } from '@material-ui/core'
 import queryString from 'query-string'
 

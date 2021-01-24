@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import Context from 'config/context'
+import Context from 'setup/context'
 import styled from 'styled-components'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 

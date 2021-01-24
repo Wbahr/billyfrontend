@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
-import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'config/providerGQL'
+import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
 import { useLazyQuery } from '@apollo/client'
 
 const Div = styled.div`

@@ -9,7 +9,7 @@ import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm'
 import * as Yup from 'yup'
 import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts'
 import Modal from 'pageComponents/_common/modal'
-import { GET_ALL_SETTINGS, SAVE_ALL_SETTINGS } from 'config/providerGQL'
+import { GET_ALL_SETTINGS, SAVE_ALL_SETTINGS } from 'setup/providerGQL'
 import FormikInput from 'pageComponents/_common/formik/input_v2'
 
 const H3 = styled.h3`

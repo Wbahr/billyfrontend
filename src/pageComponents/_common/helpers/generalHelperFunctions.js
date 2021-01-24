@@ -1,6 +1,4 @@
 import { useRef, useEffect, useState } from 'react'
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
 
 export const getRidOf__typename = ({ __typename, editors, items, ...rest }) => (
   { ...rest, editors: editors.map(({ __typename, ...rest1 }) => rest1), items: items.map(({ __typename, ...rest2 }) => rest2) }
@@ -27,14 +25,18 @@ export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
 }
 
 export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
-  const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
-  const pdfFormat = {
-    head: [columns.filter(filterCols).map(({ Header }) => Header)],
-    body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
-  }
-  const doc = new jsPDF()
-  doc.autoTable(pdfFormat)
-  doc.save(`${name}.pdf`)
+  import('jspdf').then(jsPDF => {
+    import('jspdf-autotable').then(() => {
+      const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
+      const pdfFormat = {
+        head: [columns.filter(filterCols).map(({ Header }) => Header)],
+        body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+      }
+      const doc = new jsPDF()
+      doc.autoTable(pdfFormat)
+      doc.save(`${name}.pdf`)
+    })
+  })
 }
 
 export const getImagePath = path => {
