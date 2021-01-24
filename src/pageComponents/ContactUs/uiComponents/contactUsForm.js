@@ -43,7 +43,6 @@ export default function ContactUsForm() {
         initialValues={initValues}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            console.log(values)
             alert(JSON.stringify(values, null, 2))
             setSubmitting(false)
           }, 1000)
@@ -51,7 +50,7 @@ export default function ContactUsForm() {
       >
         {({ isSubmitting, isValid }) => (
           <Form name="contactUsForm">
-            { !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}
+            {/*{ !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}*/}
             <FormikFormContainerColumnMajor>
               <FormikFormGroup>
                 <Input label="First Name*" name="firstName" />

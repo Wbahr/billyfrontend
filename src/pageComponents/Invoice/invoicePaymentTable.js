@@ -14,13 +14,13 @@ class InvoicePaymentTable extends React.Component {
   }
 
   handleViewDetails = (selectedInvoiceNum) => {
-    for (let i = 0; i < outstandingInvoices.length; i++){
-      const invoice = outstandingInvoices[i]
-      if (invoice.invoiceNum === selectedInvoiceNum){
-        this.setState({ selectedInvoice: invoice })
-        break
-      }
-    }
+    // for (let i = 0; i < outstandingInvoices.length; i++){
+    //   const invoice = outstandingInvoices[i]
+    //   if (invoice.invoiceNum === selectedInvoiceNum){
+    //     this.setState({ selectedInvoice: invoice })
+    //     break
+    //   }
+    // }
   }
 
   clearSelectedInvoice = () => {

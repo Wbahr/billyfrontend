@@ -36,14 +36,14 @@ class IQCard extends React.Component {
       selectedCard
     } = this.props
 
-    let imageSource
-    switch (text){
-    case 'haskell':
-      imageSource = './img/ffdosk'
-      break
-    default:
-      imageSource = null
-    }
+    // let imageSource
+    // switch (text){
+    // case 'haskell':
+    //   imageSource = './img/ffdosk'
+    //   break
+    // default:
+    //   imageSource = null
+    // }
     if (selectedCard === '' || selectedCard === text) {
       return (
         <DivCard onClick={this.handleCardClick}>

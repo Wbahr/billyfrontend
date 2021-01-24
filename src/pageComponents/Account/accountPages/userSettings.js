@@ -3,7 +3,7 @@ import Context from '../../../config/context'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
 import { ButtonRed } from 'styles/buttons'
 import { useMutation } from '@apollo/client'
-import { ShowInfoAlert, ShowErrorAlert, InfoAlert } from 'styles/alerts'
+import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 import { CHANGE_PASSWORD } from 'config/providerGQL'
 import styled from 'styled-components'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
@@ -34,7 +34,7 @@ export default function UserSettingsPage() {
     })
   }
 
-  const validatePassword = (e) => {
+  const validatePassword = () => {
     if ((changePasswordForm.new1 && changePasswordForm.new2 && changePasswordForm.new1 != changePasswordForm.new2)
             || (changePasswordForm.new1 && !changePasswordForm.new2)
             || (changePasswordForm.new2 && !changePasswordForm.new1)) {
@@ -43,10 +43,12 @@ export default function UserSettingsPage() {
     } else if (!changePasswordForm.orig) {
       setAlertMessage('Your current password is required to change it.')
       return false
-    } else if (!isStrongPassword(changePasswordForm.new1)) {
-      setAlertMessage('Your new password is not strong enough.')
-      return false
-    } else {
+    }
+    // else if (!isStrongPassword(changePasswordForm.new1)) {
+    //   setAlertMessage('Your new password is not strong enough.')
+    //   return false
+    // }
+    else {
       setAlertMessage(null)
       return true
     }
@@ -66,7 +68,7 @@ export default function UserSettingsPage() {
     }
   }
 
-  const [doPasswordChange, { loading, error }] = useMutation(CHANGE_PASSWORD, {
+  const [doPasswordChange, { error }] = useMutation(CHANGE_PASSWORD, {
     fetchPolicy: 'no-cache',
     onCompleted: data => {
       if (data && data.changePassword) {

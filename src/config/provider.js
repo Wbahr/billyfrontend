@@ -315,7 +315,7 @@ export default function Provider(props) {
   }
   
   function logoutUser() {
-    if (drift) drift.api.widget.show()
+    if (window.drift) window.drift.api.widget.show()
     manageUserInfo('logout')
     props.history.push('/')
     emptyCart()

@@ -66,13 +66,13 @@ class RMAtable extends React.Component {
   }
 
   handleViewDetails = (selectedRMANum) => {
-    for (let i = 0; i < returnItems.length; i++){
-      const item = returnItems[i]
-      if (item.rmaNum === selectedRMANum){
-        this.setState({ selectedReturn: item })
-        break
-      }
-    }
+    // for (let i = 0; i < returnItems.length; i++){
+    //   const item = returnItems[i]
+    //   if (item.rmaNum === selectedRMANum){
+    //     this.setState({ selectedReturn: item })
+    //     break
+    //   }
+    // }
   }
 
   calculateRefundAndFee = (returnItems) => {
@@ -197,12 +197,12 @@ class RMAtable extends React.Component {
             </PItemDetail>
             <PItemDetail>
               <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
-              {item.hasReturnFee ? (
-                <PItemRestockingFee
-                  as='div'
-                >{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}
-                </PItemRestockingFee>
-              ) : null}
+              {/*{item.hasReturnFee ? (*/}
+              {/*  <PItemRestockingFee*/}
+              {/*    as='div'*/}
+              {/*  >{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}*/}
+              {/*  </PItemRestockingFee>*/}
+              {/*) : null}*/}
             </PItemDetail>
           </DivItem>
         )

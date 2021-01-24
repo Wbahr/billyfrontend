@@ -77,9 +77,9 @@ export default (props) => {
 	
   useDidUpdateEffect(() => {
     if (ottoFindPart) {
-      drift.api?.startInteraction({ interactionId: 126679 })
+      window.drift.api?.startInteraction({ interactionId: 126679 })
     } else {
-      drift.api?.hideChat()
+      window.drift.api?.hideChat()
     }
   }, [ottoFindPart])
 	
