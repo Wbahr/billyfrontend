@@ -156,9 +156,9 @@ export default function LoginPage(props) {
       executeLogIn(
         {
           variables: {
-            'loginInfo': {
-              'loginId': email,
-              'password': password
+            loginInfo: {
+              loginId: email,
+              password: password
             }
           }
         }

@@ -148,13 +148,15 @@ export default function OrderDetailItem({ item, quoteId, itemDetails, availabili
             {({ addItem }) => (
               <ButtonSmall onClick={() => {
                 addItem({
-                  'frecno': item.invMastUid,
-                  'quantity': parseInt(quantity, 10),
-                  'itemNotes': `Quote ${quoteId}`,
-                  'itemUnitPriceOverride': null,
-                  'customerPartNumberId': item.customerPartNumberId,
+                  frecno: item.invMastUid,
+                  quantity: parseInt(quantity, 10),
+                  itemNotes: `Quote ${quoteId}`,
+                  itemUnitPriceOverride: null,
+                  customerPartNumberId: item.customerPartNumberId,
                   //'quoteId': quoteId
-                }), setShowAddedToCartModal(true), setQuantity(1)
+                })
+                setShowAddedToCartModal(true)
+                setQuantity(1)
               }}
               >Add to Cart
               </ButtonSmall>

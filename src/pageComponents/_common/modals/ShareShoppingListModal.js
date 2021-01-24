@@ -65,7 +65,7 @@ export default function ShareShoppingListModal({ open, hide, shoppingList }) {
   }
 	
   return (
-    <Modal open={open} onClose={handleClose} contentStyle={{ 'maxWidth': '350px', 'borderRadius': '3px' }}>
+    <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
       <Container>
         <div>
           <p>Select users to access list: {shoppingList.name}</p>

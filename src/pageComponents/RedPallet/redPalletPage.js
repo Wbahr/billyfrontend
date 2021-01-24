@@ -25,15 +25,15 @@ const DivAlert = styled.div`
 `
 
 const emptyItem = {
-  'repairType': '',
-  'po': '',
-  'urgency': 'normal',
-  'manufacturer': '',
-  'model': '',
-  'part': '',
-  'warranty': 'false',
-  'issue': '',
-  'quantity': '1'
+  repairType: '',
+  po: '',
+  urgency: 'normal',
+  manufacturer: '',
+  model: '',
+  part: '',
+  warranty: 'false',
+  issue: '',
+  quantity: '1'
 }
 
 class RedPalletPage extends React.Component {

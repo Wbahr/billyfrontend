@@ -179,7 +179,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
             <PasswordRequirements
               password={values.password}
               confirmPassword={values.verifyPassword}
-              isValidPassword={(isValid) => { setFieldValue('passwordStrength', isValid); console.log('Setting valid: ', isValid) }}
+              isValidPassword={(isValid) => setFieldValue('passwordStrength', isValid)}
             />
             <FormikFormFieldError style={{ width: '400px' }}>
               <ErrorMessage name="passwordStrength" />

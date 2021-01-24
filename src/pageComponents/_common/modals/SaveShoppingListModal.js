@@ -141,7 +141,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
   const handleUserChange = value => setSelectedUser(userOptions.find(user => user.value === value))
 	
   return (
-    <Modal open={open} onClose={handleClose} contentStyle={{ 'maxWidth': '350px', 'borderRadius': '3px' }}>
+    <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
       <Container>
         <h4>Save Shopping List</h4>
 				

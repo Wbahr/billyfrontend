@@ -47,7 +47,7 @@ export default function ItemCreationModal({ submitResponse, handleCloseModal }) 
   }
 
   return (
-    <Popup open={true} onClose={() => {handleCloseModal()}} closeOnDocumentClick contentStyle={{ 'maxWidth': '300px', 'borderRadius': '3px' }}>
+    <Popup open={true} onClose={() => {handleCloseModal()}} closeOnDocumentClick contentStyle={{ maxWidth: '300px', borderRadius: '3px' }}>
       {PopupContent}
     </Popup>
   )

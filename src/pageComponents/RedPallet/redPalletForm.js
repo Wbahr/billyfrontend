@@ -249,7 +249,10 @@ const RMAform = ({ initValues, emptyItem }) => (
                     <FormText1>Ship To*:</FormText1>
                     <SelectInput
                       {...field}
-                      onChange={(e) => { setAddress(e.target.value, form); form.setFieldValue('pickup', '-1')}}
+                      onChange={(e) => {
+                        setAddress(e.target.value, form)
+                        form.setFieldValue('pickup', '-1')
+                      }}
                     >
                       {values.ShipTos.map((shipto, index) => (
                         <option key={index} value={shipto.Id} selected={shipto.IsDefault}>{shipto.Line1 + ' - ' + shipto.City + ', ' + shipto.State}</option>
@@ -294,7 +297,10 @@ const RMAform = ({ initValues, emptyItem }) => (
                     <FormText1>State*:</FormText1>
                     <SelectInput
                       {...field}
-                      onChange={(e) => { form.setFieldValue('state', e.target.value); form.setFieldValue('pickup', '-1')}}
+                      onChange={(e) => {
+                        form.setFieldValue('state', e.target.value)
+                        form.setFieldValue('pickup', '-1')}
+                      }
                     >
                       <option value='' selected disabled hidden>--</option>
                       <option value='AL'>AL</option>

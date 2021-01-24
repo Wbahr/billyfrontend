@@ -203,16 +203,16 @@ function CheckoutPage({ history }) {
   const invMastUids = context.cart?.map(item => item.frecno)
   const { data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
     variables: {
-      'invMastUids': invMastUids
+      invMastUids: invMastUids
     }
   })
 
   const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
     variables: {
-      'items': context.cart?.map(cartItem => {
+      items: context.cart?.map(cartItem => {
         return {
-          'invMastUid': cartItem.frecno,
-          'quantity': cartItem.quantity
+          invMastUid: cartItem.frecno,
+          quantity: cartItem.quantity
         }
       })
     }
@@ -220,7 +220,7 @@ function CheckoutPage({ history }) {
 
   const { data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
     variables: {
-      'invMastUids': invMastUids
+      invMastUids: invMastUids
     }
   })
 

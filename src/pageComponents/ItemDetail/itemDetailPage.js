@@ -223,9 +223,9 @@ export default function ItemDetailPage({ history }) {
       const details = result.itemDetails
       queryItemPrice({
         variables: {
-          'items': [{
-            'invMastUid': details.invMastUid,
-            'quantity': 1
+          items: [{
+            invMastUid: details.invMastUid,
+            quantity: 1
           }]
         }
       })
@@ -237,20 +237,20 @@ export default function ItemDetailPage({ history }) {
         //Build the price request objects
         const accessoryItemPriceRequests = details.associatedItems.map(i => {
           return {
-            'invMastUid': i.associatedInvMastUid,
-            'quantity': 1
+            invMastUid: i.associatedInvMastUid,
+            quantity: 1
           }
         })
 
         queryAccessoryItemPrices({
           variables: {
-            'items': accessoryItemPriceRequests
+            items: accessoryItemPriceRequests
           }
         })
 
         queryAccessoryItemsInfo({
           variables: {
-            'invMastUids': details.associatedItems.map(i => i.associatedInvMastUid)
+            invMastUids: details.associatedItems.map(i => i.associatedInvMastUid)
           }
         })
       } else {

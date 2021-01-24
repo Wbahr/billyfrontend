@@ -129,7 +129,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
   }, [selectedLists])
 	
   return (
-    <Modal open={open} onClose={handleClose} contentStyle={{ 'maxWidth': '350px', 'borderRadius': '3px', marginTop: 115 }}>
+    <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px', marginTop: 115 }}>
       <Container>
         { !context.userInfo?.contactId && (
           <DivItem style={{ width: 200 }}>

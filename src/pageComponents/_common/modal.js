@@ -21,7 +21,7 @@ export default function Modal(props) {
   return (
     <Popup open={!!open} onClose={onClose} closeOnDocumentClick contentStyle={contentStyle}>
       <>
-        <CloseDiv><FontAwesomeIcon style={{ 'cursor': 'pointer' }} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
+        <CloseDiv><FontAwesomeIcon style={{ cursor: 'pointer' }} onClick={onClose} icon='times' size='lg' color='lightgrey'/></CloseDiv>
         {props.children}
       </>
     </Popup>

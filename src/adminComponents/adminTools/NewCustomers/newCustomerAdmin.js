@@ -365,7 +365,13 @@ function SelectRejectReasonModal({ valueCallback, visible, close }){
         {showOtherField && <FormikStyleInput label="Custom Reason (this will be sent to the customer)" type="text" name="customReason" value={formValues.customReason} onChange={changeHandler} />}
         <DivRow>
           <ButtonBlack onClick={close}>Cancel</ButtonBlack>
-          <ButtonRed onClick={() => { close(); valueCallback(formValues.customReason || formValues.reason)}}>Reject</ButtonRed>
+          <ButtonRed onClick={() => {
+            close()
+            valueCallback(formValues.customReason || formValues.reason)}
+          }
+          >
+            Reject
+          </ButtonRed>
         </DivRow>
       </Container>
     </Modal>

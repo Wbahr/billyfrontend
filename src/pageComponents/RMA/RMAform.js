@@ -237,7 +237,10 @@ const RMAform = ({ items, clickedContinue }) => (
                             {({ field, form }) => (
                               <select
                                 {...field}
-                                onChange={(e) => {form.setFieldValue(`items.${index}.returnReason`, e.target.value); form.setFieldValue(`items.${index}.refundType`, '') }}
+                                onChange={(e) => {
+                                  form.setFieldValue(`items.${index}.returnReason`, e.target.value)
+                                  form.setFieldValue(`items.${index}.refundType`, '')
+                                }}
                               >
                                 <option value='' selected disabled hidden>Select Return Reason</option>
                                 <option value='mistake'>Purchased by Mistake</option>

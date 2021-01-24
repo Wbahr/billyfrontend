@@ -29,7 +29,10 @@ export default function ResetPasswordModal({ open, hideModal }) {
       const requestData = data.requestPasswordReset
       if (requestData.success){
         setMessage(requestData.message)
-        setTimeout(() => {handleClose(), history.push('/login')}, 5000)
+        setTimeout(() => {
+          handleClose()
+          history.push('/login')
+        }, 5000)
       } else {
         setMessage('An error has occured. Please check your email/username and try again or contact us.')
         setUsername('')
@@ -47,8 +50,8 @@ export default function ResetPasswordModal({ open, hideModal }) {
     executePasswordResetRequest(
       {
         variables: {
-          'resetInfo': {
-            'username': username
+          resetInfo: {
+            username: username
           }
         }
       }
@@ -56,7 +59,7 @@ export default function ResetPasswordModal({ open, hideModal }) {
   }
   
   return (
-    <Popup open={open} onClose={() => handleClose()} closeOnDocumentClick contentStyle={{ 'maxWidth': '350px', 'borderRadius': '5px' }}>
+    <Popup open={open} onClose={() => handleClose()} closeOnDocumentClick contentStyle={{ maxWidth: '350px', borderRadius: '5px' }}>
       <DivContainer>
         <p>Reset Password</p>
         {message && <p>{message}</p>}

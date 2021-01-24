@@ -110,10 +110,10 @@ export default function FactoryStockModal({ open, product, hideFactoryStockModal
     modifyFactoryStock(
       {
         variables: {
-          'stockInput': {
-            'invMastUid': Number(product?.frecno || 0),
-            'factoryAvailability': Number(qtyAvailable),
-            'leadTimeDays': Number(leadTime)
+          stockInput: {
+            invMastUid: Number(product?.frecno || 0),
+            factoryAvailability: Number(qtyAvailable),
+            leadTimeDays: Number(leadTime)
           }
         }
       }

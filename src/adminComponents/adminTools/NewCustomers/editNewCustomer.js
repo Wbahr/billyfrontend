@@ -30,7 +30,7 @@ export default function EditNewCustomer() {
   const { loading, error: errorGet } = useQuery(GET_NEW_CUSTOMER, {
     fetchPolicy: 'no-cache',
     variables: {
-      'id': regId
+      id: regId
     },
     onCompleted: result => {
       setData(mapToForm(result.newCustomer))

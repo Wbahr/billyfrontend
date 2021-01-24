@@ -101,16 +101,16 @@ export default function OrderDetail({ history, orderId }) {
 
   const { data: itemsDetails } = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
     variables: {
-      'invMastUids': invMastUids
+      invMastUids: invMastUids
     }
   })
 
   const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
     variables: {
-      'items': invMastUids.map(invMastUid => {
+      items: invMastUids.map(invMastUid => {
         return {
-          'invMastUid': invMastUid,
-          'quantity': 1
+          invMastUid: invMastUid,
+          quantity: 1
         }
       })
     }
@@ -118,7 +118,7 @@ export default function OrderDetail({ history, orderId }) {
 
   const { data: itemsAvailability } = useQuery(GET_ITEM_AVAILABILITY, {
     variables: {
-      'invMastUids': invMastUids
+      invMastUids: invMastUids
     }
   })
 
@@ -158,11 +158,11 @@ export default function OrderDetail({ history, orderId }) {
   function handleAddOrder() {
     const items = lineItems.map(item => {
       return {
-        'frecno': item.invMastUid,
-        'quantity': parseInt(item.quantityOrdered, 10),
-        'itemNotes': '',
-        'itemUnitPriceOverride': null,
-        'customerPartNumberId': item.customerPartNumberId
+        frecno: item.invMastUid,
+        quantity: parseInt(item.quantityOrdered, 10),
+        itemNotes: '',
+        itemUnitPriceOverride: null,
+        customerPartNumberId: item.customerPartNumberId
       }
     })
 

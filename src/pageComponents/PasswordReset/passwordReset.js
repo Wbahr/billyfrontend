@@ -103,7 +103,7 @@ export default function PasswordResetPage({ history }) {
         setShowResendToken('')
         setErrorMessage('')
         setInfoMessage(responseData.message)
-        setTimeout(() => { history.push('/login') }, 1500)
+        setTimeout(() => history.push('/login'), 1500)
       } else {
         setErrorMessage(responseData.message)
         setShowResendToken(true)
@@ -120,10 +120,10 @@ export default function PasswordResetPage({ history }) {
       executePasswordReset(
         {
           variables: {
-            'passwordInfo': {
-              'token': passwordToken,
-              'username': username,
-              'newPassword': password
+            passwordInfo: {
+              token: passwordToken,
+              username: username,
+              newPassword: password
             }
           }
         }

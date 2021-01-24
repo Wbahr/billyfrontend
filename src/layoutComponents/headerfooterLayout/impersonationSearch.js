@@ -129,7 +129,12 @@ export default function ImpersonationSearchComponent() {
       <Div onClick={() => context.startImpersonation(impersonationTerm)}>
         <FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
       </Div>
-      <DivLast tabIndex={1} onClick={() => { usersCarts(); setShowOtherCartsDropdown(true)}}
+      <DivLast
+        tabIndex={1}
+        onClick={() => {
+          usersCarts()
+          setShowOtherCartsDropdown(true)}
+        }
         onBlur={() => { setShowOtherCartsDropdown(false)}}
       >
         <FontAwesomeIcon icon={faCartArrowDown} color="whitesmoke"/>

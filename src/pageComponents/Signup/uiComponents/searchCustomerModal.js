@@ -66,7 +66,17 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
           {loading && <Loader />}
           <ul>
             {searchResults && searchResults.map(({ customerIdP21, name }) => {
-              return <ResultListItem key={customerIdP21}><a onClick={() => { hideModal(); setSelectedCustomerIdCallback(customerIdP21) }}>{name}</a></ResultListItem>
+              return (
+                <ResultListItem key={customerIdP21}>
+                  <a onClick={() => {
+                    hideModal()
+                    setSelectedCustomerIdCallback(customerIdP21)
+                  }}
+                  >
+                    {name}
+                  </a>
+                </ResultListItem>
+              )
             })}
           </ul>
         </DivRow>

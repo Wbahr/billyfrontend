@@ -43,6 +43,10 @@
       "error",
       "single"
     ],
+    "quote-props": [
+      "error",
+      "as-needed"
+    ],
     "semi": [
       "error",
       "never"
@@ -71,6 +75,15 @@
         "before": true,
         "after": true
       }
+    ],
+    "max-statements-per-line": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "no-sequences": [
+      "error"
     ],
     "no-unused-vars": [
       "warn",

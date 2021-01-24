@@ -109,7 +109,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
   useQuery(GET_INVOICE, {
     fetchPolicy: 'no-cache',
     variables: {
-      'invoiceNumber': String(invoiceId)
+      invoiceNumber: String(invoiceId)
     },
     onCompleted: result => {
       setData(result.accountInvoiceDetail)
@@ -193,7 +193,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
       <PageContainer>
         <DivHeader>
           <img src={AirlineLogo} height="40px"/>
-          <h4 style={{ 'paddingLeft': '8px' }}>Invoice #{invoiceId}</h4>
+          <h4 style={{ paddingLeft: '8px' }}>Invoice #{invoiceId}</h4>
           <PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
             {({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
           </PDFDownloadLink>

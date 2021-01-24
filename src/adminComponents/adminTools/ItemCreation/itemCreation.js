@@ -157,8 +157,8 @@ export default function ItemCreationPage() {
           sortType: 'relevancy',
           brandFilters: [],
           categoryFilter: {
-            'parentCategory': '',
-            'childCategory': ''
+            parentCategory: '',
+            childCategory: ''
           },
           attributeFilters: []
         }
@@ -232,7 +232,7 @@ export default function ItemCreationPage() {
               name="supplierNameSearch"
               placeholder='Select a Supplier'
               value={selectedSupplier}
-              options={[{ 'id': null, 'name': null, 'prefix': null }, ...supplierList]}
+              options={[{ id: null, name: null, prefix: null }, ...supplierList]}
               changeFunction={handleChange}
               getOptionLabel={(option) => {
                 if (option.name === null) {

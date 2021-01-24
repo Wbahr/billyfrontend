@@ -261,7 +261,7 @@ export default function ShoppingCartItem({ cart, setCart, cartItem, setCartItem,
                       <option value="-1">Create Part#</option>
                     </select>
                     { selectedCustomerPartNumber !== 0 && (
-                      <div style={{ 'marginLeft': '8px', 'cursor': 'pointer' }} onClick={clearCustomerPartNumber}>
+                      <div style={{ marginLeft: '8px', cursor: 'pointer' }} onClick={clearCustomerPartNumber}>
                         <FontAwesomeIcon icon="times" color="grey" />
                       </div>
                     )}

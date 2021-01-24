@@ -82,7 +82,7 @@ function ShiptoManagementPage() {
                 <Field
                   name="country"
                   component={SelectField}
-                  options={[{ 'label': 'United States', 'value': 'us' }, { 'label': 'Canada', 'value': 'canada' }]}
+                  options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
                   placeholder="Select a Country"
                   width="250px"
                   isSearchable={false}

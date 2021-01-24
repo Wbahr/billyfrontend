@@ -133,7 +133,7 @@ export default function StaticPage({ match }) {
   const [pageSecondaryAncestor, setPageSecondaryAncestor] = useState(null)
   const [pageTeritaryAncestor, setPageTeriaryAncestor] = useState(null)
 
-  const createMarkup = (htmlString) => { return { __html: htmlString } }
+  const createMarkup = (htmlString) => ({ __html: htmlString })
 
   useQuery(GET_STATIC_PAGE, {
     variables: { pageId1, pageId2, pageId3, pageId4 },
@@ -155,7 +155,9 @@ export default function StaticPage({ match }) {
     }
   })
 
-  useEffect(() => { eval(pageJs) }, [pageJs])
+  useEffect(() => {
+    eval(pageJs)
+  }, [pageJs])
 
   return (
     <Container>

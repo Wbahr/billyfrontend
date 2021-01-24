@@ -98,7 +98,7 @@ export default function AdminHome() {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Link component={RouterLink} to="/">
-            <img src={AirlineLogo} height="50px" style={{ 'paddingRight': '20px' }} />
+            <img src={AirlineLogo} height="50px" style={{ paddingRight: '20px' }} />
           </Link>
           <h4>Admin Tools</h4>
         </Toolbar>

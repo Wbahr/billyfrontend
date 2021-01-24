@@ -24,24 +24,24 @@ export default function AccountDashboard({ history }) {
 
   const AccountPages = [
     {
-      'label': 'Home',
-      'page': 'dashboard'
+      label: 'Home',
+      page: 'dashboard'
     },
     {
-      'label': 'User Settings',
-      'page': 'user-settings'
+      label: 'User Settings',
+      page: 'user-settings'
     },
     {
-      'label': 'Shipping',
-      'page': 'shipping-preferences'
+      label: 'Shipping',
+      page: 'shipping-preferences'
     },
     {
-      'label': 'Billing',
-      'page': 'payment-preferences'
+      label: 'Billing',
+      page: 'payment-preferences'
     },
     {
-      'label': 'Shopping Lists',
-      'page': 'shopping-lists'
+      label: 'Shopping Lists',
+      page: 'shopping-lists'
     }
   ]
   useEffect(() => {

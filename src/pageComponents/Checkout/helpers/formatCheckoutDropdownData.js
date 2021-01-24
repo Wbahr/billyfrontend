@@ -7,23 +7,23 @@ export default function formatCheckoutDropdownData(data){
   const mutatedCarriers = formatCarriers(data.carriers)
   const mutatedContacts = formatContacts(data.contacts)
   return {
-    'shiptos': mutatedShipTos,
-    'carriers': mutatedCarriers,
-    'contacts': mutatedContacts
+    shiptos: mutatedShipTos,
+    carriers: mutatedCarriers,
+    contacts: mutatedContacts
   }
 }
 
 function formatShipToData(data){
   const mutatedData = [{
-    'label': 'Custom Ship To',
-    'value': -1
+    label: 'Custom Ship To',
+    value: -1
   }]
   if (!_.isNil(data)){
     for (let i=0;data.length > i;i++){
       const element = data[i]
       mutatedData.push({
-        'label': element.companyName + ' - ' + element.physAddress1 + ' ' + element.physCity +', ' + element.physState + ' ' + element.physPostalCode,
-        'value': element.id
+        label: element.companyName + ' - ' + element.physAddress1 + ' ' + element.physCity +', ' + element.physState + ' ' + element.physPostalCode,
+        value: element.id
       })
     }
   }
@@ -36,8 +36,8 @@ function formatCarriers(data){
     for (let i=0;data.length > i;i++){
       const element = data[i]
       mutatedData.push({
-        'label': element.name,
-        'value': String(element.id) /* P21 carrier ID is a string */
+        label: element.name,
+        value: String(element.id) /* P21 carrier ID is a string */
       })
     }
   }
@@ -46,15 +46,15 @@ function formatCarriers(data){
 
 function formatContacts(data){
   const mutatedData = [{
-    'label': 'Custom Contact',
-    'value': -1
+    label: 'Custom Contact',
+    value: -1
   }]
   if (!_.isNil(data)){
     for (let i=0;data.length > i;i++){
       const element = data[i]
       mutatedData.push({
-        'label': element.firstName + ' ' + element.lastName,
-        'value': element.id
+        label: element.firstName + ' ' + element.lastName,
+        value: element.id
       })
     }
   }

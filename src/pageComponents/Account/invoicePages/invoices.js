@@ -242,7 +242,7 @@ export default function InvoicesTable({ history }) {
           onChange={(value) => setDateFrom(value)}
         />
         <DivSpacer onClick={() => {setDateFrom(null)}}>
-          <FontAwesomeIcon style={{ 'cursor': 'pointer' }} icon="times-circle" color="lightgrey"/>
+          <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
         </DivSpacer>
       </DivRowDate>
       {/* Date To */}
@@ -256,7 +256,7 @@ export default function InvoicesTable({ history }) {
           onChange={(value) => setDateTo(value)}
         />
         <DivSpacer onClick={() => {setDateTo(null)}}>
-          <FontAwesomeIcon style={{ 'cursor': 'pointer' }} icon="times-circle" color="lightgrey"/>
+          <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
         </DivSpacer>
       </DivRowDate>
       <Table {...getTableProps()}>

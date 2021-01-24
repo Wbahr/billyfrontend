@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 export default () => (
-  <Popup open={true} closeOnDocumentClick={true} contentStyle={{ 'maxWidth': '350px', 'borderRadius': '5px' }}>
+  <Popup open={true} closeOnDocumentClick={true} contentStyle={{ maxWidth: '350px', borderRadius: '5px' }}>
     <Container>
       <h5>Order Failed</h5>
       <p>Please Contact us at 1-800-999-7378.</p>

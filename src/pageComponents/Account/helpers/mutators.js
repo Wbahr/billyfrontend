@@ -19,14 +19,14 @@ export function formatTableData(type, data, orderId){
         const displayTotal = <NumberFormat value={elem.total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
         mutatedData.push(
           {
-            'orderNumber': elem.orderNumber,
-            'orderDate': elem.orderDate,
-            'poNo': elem.poNo,
-            'status': elem.status,
-            'buyer': elem.buyer,
-            'total': displayTotal,
-            'filter': filterField,
-            'orderType': elem.orderType
+            orderNumber: elem.orderNumber,
+            orderDate: elem.orderDate,
+            poNo: elem.poNo,
+            status: elem.status,
+            buyer: elem.buyer,
+            total: displayTotal,
+            filter: filterField,
+            orderType: elem.orderType
           }
         )
       }
@@ -45,17 +45,17 @@ export function formatTableData(type, data, orderId){
           filterField = filterField.toUpperCase()
           mutatedData.push(
             {
-              'orderNumber': elem.orderNumber,
-              'orderDate': elem.orderDate,
-              'line': j + 1,
-              'poNo': elem.poNo,
-              'promiseDate': '1/1/2020',
-              'itemId': lineItem.itemCode,
-              'customerPartId': lineItem.customerPartNumber,
-              'qtyRemaining': `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
-              'unitPrice': unitPrice,
-              'extPrice': extPrice,
-              'filter': filterField
+              orderNumber: elem.orderNumber,
+              orderDate: elem.orderDate,
+              line: j + 1,
+              poNo: elem.poNo,
+              promiseDate: '1/1/2020',
+              itemId: lineItem.itemCode,
+              customerPartId: lineItem.customerPartNumber,
+              qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
+              unitPrice: unitPrice,
+              extPrice: extPrice,
+              filter: filterField
             }
           )
         }
@@ -76,11 +76,11 @@ export function formatTableData(type, data, orderId){
         const displayTotal = '$' + elem.total.toFixed(2)
         mutatedData.push(
           {
-            'quoteNumber': elem.orderNumber,
-            'quoteDate': elem.orderDate,
-            'quoteRefNo': 'quoteRefNo',
-            'total': displayTotal,
-            'filter': filterField,
+            quoteNumber: elem.orderNumber,
+            quoteDate: elem.orderDate,
+            quoteRefNo: 'quoteRefNo',
+            total: displayTotal,
+            filter: filterField,
           }
         )
       }
@@ -109,15 +109,15 @@ export function formatTableData(type, data, orderId){
       const amountDue = '$' + elem.amountDue.toFixed(2)
       mutatedData.push(
         {
-          'dueDate': elem.netDueDate,
-          'invoiceDate': elem.invoiceDate,
-          'invoiceNumber': elem.invoiceNumber,
-          'orderNumber': elem.orderNumber,
-          'poNo': elem.poNo,
-          'status': elem.status,
-          'amountPaid': amountPaid,
-          'amountDue': amountDue,
-          'filter': filterField,
+          dueDate: elem.netDueDate,
+          invoiceDate: elem.invoiceDate,
+          invoiceNumber: elem.invoiceNumber,
+          orderNumber: elem.orderNumber,
+          poNo: elem.poNo,
+          status: elem.status,
+          amountPaid: amountPaid,
+          amountDue: amountDue,
+          filter: filterField,
         }
       )
     }		
