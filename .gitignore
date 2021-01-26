@@ -16,3 +16,4 @@ src/.DS_Store
 src/uiComponents/.DS_Store
 src/uiComponents/Brands/.DS_Store
 .eslintcache
+.env.local
