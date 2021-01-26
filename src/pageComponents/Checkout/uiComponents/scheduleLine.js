@@ -87,60 +87,60 @@ const DivSpacer = styled.div`
 `
 
 const getContent = (itemDetails, item, customerPartNumbers, index) => {
-  if (!itemDetails) {
-    return <p>{item.frecno}</p>
-  } else {
-    const imagePath = getThumbnailImagePath(itemDetails)
-    const tomorrowDate = new Date()
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
-    const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
+    if (!itemDetails) {
+        return <p>{item.frecno}</p>
+    } else {
+        const imagePath = getThumbnailImagePath(itemDetails)
+        const tomorrowDate = new Date()
+        tomorrowDate.setDate(tomorrowDate.getDate() + 1)
+        const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
 		
-    return (
-      <DivCard>
-        <DivCol1>
-          <Img height='65px' src={imagePath} alt={item.frecno} />
-        </DivCol1>
+        return (
+            <DivCard>
+                <DivCol1>
+                    <Img height='65px' src={imagePath} alt={item.frecno} />
+                </DivCol1>
 				
-        <DivCol2>
-          <P1>{itemDetails.itemDesc}</P1>
-          <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!!selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
-        </DivCol2>
+                <DivCol2>
+                    <P1>{itemDetails.itemDesc}</P1>
+                    <P2>{itemDetails.itemCode} | AHC{itemDetails.invMastUid} {!!selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+                </DivCol2>
 				
-        <DivCol3>
-          <DivQuantity>
-            <DivItem>
-              <Label>Qty: {item.quantity}</Label>
-            </DivItem>
-          </DivQuantity>
-        </DivCol3>
+                <DivCol3>
+                    <DivQuantity>
+                        <DivItem>
+                            <Label>Qty: {item.quantity}</Label>
+                        </DivItem>
+                    </DivQuantity>
+                </DivCol3>
 				
-        <div>
-          <Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
-            {({ field, form }) => (
-              <DivRow>
-                <DivSpacer>
-                  <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                </DivSpacer>
+                <div>
+                    <Field name={`schedule.cartWithDates.${index}.requestedShipDate`}>
+                        {({ field, form }) => (
+                            <DivRow>
+                                <DivSpacer>
+                                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                                </DivSpacer>
 								
-                <DatePicker
-                  minDate={tomorrowDate}
-                  selected={Date.parse(field.value)}
-                  onChange={(value) => form.setFieldValue(field.name, value)}
-                />
-              </DivRow>
-            )}
-          </Field>
-        </div>
-      </DivCard>
-    )
-  }
+                                <DatePicker
+                                    minDate={tomorrowDate}
+                                    selected={Date.parse(field.value)}
+                                    onChange={(value) => form.setFieldValue(field.name, value)}
+                                />
+                            </DivRow>
+                        )}
+                    </Field>
+                </div>
+            </DivCard>
+        )
+    }
 }
 
 export default function ScheduleLine({ item, itemDetails, customerPartNumbers, index }) {
 	
-  return (
-    <DivContainer key={index}>
-      {getContent(itemDetails, item, customerPartNumbers, index)}
-    </DivContainer>
-  )
+    return (
+        <DivContainer key={index}>
+            {getContent(itemDetails, item, customerPartNumbers, index)}
+        </DivContainer>
+    )
 }

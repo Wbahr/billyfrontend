@@ -24,17 +24,17 @@ const Brandsdiv = styled.div`
 `
 
 export default function FeaturedManufacturerLink(props) {
-  const {
-    brandPagePath, 
-    logo, 
-    pop
-  } = props
+    const {
+        brandPagePath, 
+        logo, 
+        pop
+    } = props
   
-  return (
-    <Brandsdiv pop={pop}>
-      <a href={brandPagePath}>
-        <LogoImg src={logo} />
-      </a>
-    </Brandsdiv>
-  )
+    return (
+        <Brandsdiv pop={pop}>
+            <a href={brandPagePath}>
+                <LogoImg src={logo} />
+            </a>
+        </Brandsdiv>
+    )
 }

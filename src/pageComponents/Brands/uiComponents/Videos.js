@@ -13,9 +13,9 @@ const ArticlesVideo = styled.iframe`
 `
 
 export default function Videos(props) {
-  return (  
-    <Video>
-      <ArticlesVideo src={props.src} />
-    </Video>	 
-  )
+    return (  
+        <Video>
+            <ArticlesVideo src={props.src} />
+        </Video>	 
+    )
 }

@@ -36,16 +36,16 @@ const P = styled.p`
 `
 
 export default function Modal({ open, text, onClose, timeout }) {
-  useEffect(() => {
-    if (open) setTimeout(onClose, timeout)
-  }, [open])
+    useEffect(() => {
+        if (open) setTimeout(onClose, timeout)
+    }, [open])
 	
-  return open && (
-    <Div onClick={onClose}>
-      <Container>
-        <FontAwesomeIcon icon="shopping-cart" size="5x" color="#328EFC" />
-        <P>{text}</P>
-      </Container>
-    </Div>
-  )
+    return open && (
+        <Div onClick={onClose}>
+            <Container>
+                <FontAwesomeIcon icon="shopping-cart" size="5x" color="#328EFC" />
+                <P>{text}</P>
+            </Container>
+        </Div>
+    )
 }

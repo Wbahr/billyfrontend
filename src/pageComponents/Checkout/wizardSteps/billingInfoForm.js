@@ -37,182 +37,182 @@ const DivNavigation = styled.div`
 `
 
 function BillingInfoForm(props) {
-  const { setValues, setFieldValue, values: { contact, billing: { paymentMethod, cardType } }, checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, setPaymentInfo, showPoOption } = props
-  const stripe = useStripe()
-  const elements = useElements()
-  const context = useContext(Context)
-  const [selectedCard, setSelectedCard] = useState('new_card')
-  const [cardIsValid, setCardIsValid] = useState(false)
+    const { setValues, setFieldValue, values: { contact, billing: { paymentMethod, cardType } }, checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, setPaymentInfo, showPoOption } = props
+    const stripe = useStripe()
+    const elements = useElements()
+    const context = useContext(Context)
+    const [selectedCard, setSelectedCard] = useState('new_card')
+    const [cardIsValid, setCardIsValid] = useState(false)
   
-  useEffect(() => {
-    if (context.userInfo) {
-      getPaymentInfo(transformForPaymentInfo(props.values))
-    }
-  }, [context.userInfo])
+    useEffect(() => {
+        if (context.userInfo) {
+            getPaymentInfo(transformForPaymentInfo(props.values))
+        }
+    }, [context.userInfo])
   
-  useEffect(() => {
-    window.scrollTo({ top: 0 })
-    if (!paymentMethod) {
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+        if (!paymentMethod) {
       
-      setFieldValue('billing.paymentMethod', context.userInfo && billingInfo.isNetTerms ? 'purchase_order' : 'credit_card')
+            setFieldValue('billing.paymentMethod', context.userInfo && billingInfo.isNetTerms ? 'purchase_order' : 'credit_card')
+        }
+    }, [])
+  
+    const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ paymentMethodInfo }) => {
+            setPaymentInfo(paymentMethodInfo)
+        }
+    })
+  
+    const confirmCardSetup = () => {
+        if (cardType === 'new_card') {
+            const cardElement = elements.getElement(CardElement)
+            stripe
+                .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
+                .then(data => {
+                    setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
+                    handleMoveStep(3)
+                })
+        } else {
+            setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
+            handleMoveStep(3)
+        }
     }
-  }, [])
   
-  const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
-    fetchPolicy: 'no-cache',
-    onCompleted: ({ paymentMethodInfo }) => {
-      setPaymentInfo(paymentMethodInfo)
+    const handleContinueClick = () => {
+        if (paymentMethod !== 'purchase_order') {
+            if (context.userInfo) {
+                confirmCardSetup()
+            } else {
+                getPaymentInfo(transformForPaymentInfo(props.values))
+                handleMoveStep(3)
+            }
+        } else {
+            handleMoveStep(3)
+        }
     }
-  })
   
-  const confirmCardSetup = () => {
-    if (cardType === 'new_card') {
-      const cardElement = elements.getElement(CardElement)
-      stripe
-        .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
-        .then(data => {
-          setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
-          handleMoveStep(3)
-        })
-    } else {
-      setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
-      handleMoveStep(3)
+    const mapPaymentMethods = ({ paymentMethodId, card }) => ({
+        value: paymentMethodId,
+        label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
+    })
+  
+    const newOrSavedCardOptions = [
+        { label: 'New Card', value: 'new_card' },
+        ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
+    ]
+  
+    const handleCardChange = value => {
+        setValues({ ...props.values, billing: { ...props.values.billing, cardType: value === 'new_card' ? value : 'saved_card' } })
+        setSelectedCard(value)
     }
-  }
   
-  const handleContinueClick = () => {
-    if (paymentMethod !== 'purchase_order') {
-      if (context.userInfo) {
-        confirmCardSetup()
-      } else {
-        getPaymentInfo(transformForPaymentInfo(props.values))
-        handleMoveStep(3)
-      }
-    } else {
-      handleMoveStep(3)
-    }
-  }
-  
-  const mapPaymentMethods = ({ paymentMethodId, card }) => ({
-    value: paymentMethodId,
-    label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
-  })
-  
-  const newOrSavedCardOptions = [
-    { label: 'New Card', value: 'new_card' },
-    ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
-  ]
-  
-  const handleCardChange = value => {
-    setValues({ ...props.values, billing: { ...props.values.billing, cardType: value === 'new_card' ? value : 'saved_card' } })
-    setSelectedCard(value)
-  }
-  
-  const handleRadioButtonClick = ({ target: { value } }) => {
-    const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
+    const handleRadioButtonClick = ({ target: { value } }) => {
+        const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
     
-    //If the customer requires a PO, we need to reload the canned data 
-    // and not persist changes made in Credit Card mode.
-    if (billingInfo?.isNetTerms)
-    {
-      setFieldValue('billing', {
-        ...props.values.billing,
-        paymentMethod: value,
-        cardType: value === 'credit_card' ? cardType : '',
-        companyName: billingInfo?.companyName || '',
-        address1: billingInfo?.address1 || '',
-        address2: billingInfo?.address2 || '',
-        city: billingInfo?.city || '',
-        stateOrProvince: billingInfo?.state || '',
-        zip: billingInfo?.zip || '',
-        country: billingInfo?.country.toLowerCase() || '',
-        firstName: contact?.firstName || '',
-        lastName: contact?.lastName || '',
-        email: contact?.email || '',
-        phone: contact?.phone || '',
+        //If the customer requires a PO, we need to reload the canned data 
+        // and not persist changes made in Credit Card mode.
+        if (billingInfo?.isNetTerms)
+        {
+            setFieldValue('billing', {
+                ...props.values.billing,
+                paymentMethod: value,
+                cardType: value === 'credit_card' ? cardType : '',
+                companyName: billingInfo?.companyName || '',
+                address1: billingInfo?.address1 || '',
+                address2: billingInfo?.address2 || '',
+                city: billingInfo?.city || '',
+                stateOrProvince: billingInfo?.state || '',
+                zip: billingInfo?.zip || '',
+                country: billingInfo?.country.toLowerCase() || '',
+                firstName: contact?.firstName || '',
+                lastName: contact?.lastName || '',
+                email: contact?.email || '',
+                phone: contact?.phone || '',
         
-      })
-    } else {
-      setFieldValue('billing', {
-        ...props.values.billing,
-        paymentMethod: value,
-        cardType: value === 'credit_card' ? cardType : ''
-      })
+            })
+        } else {
+            setFieldValue('billing', {
+                ...props.values.billing,
+                paymentMethod: value,
+                cardType: value === 'credit_card' ? cardType : ''
+            })
+        }
     }
-  }
   
-  const disabled = paymentMethod === 'credit_card' && cardType === 'new_card'
-    ? !isStepValid || !cardIsValid
-    : !isStepValid
+    const disabled = paymentMethod === 'credit_card' && cardType === 'new_card'
+        ? !isStepValid || !cardIsValid
+        : !isStepValid
   
-  const RadioButtons = ({ field }) => (
-    <>
-      <div>
-        <input
-          disabled={!context.userInfo}
-          value="purchase_order"
-          onChange={handleRadioButtonClick}
-          checked={field.value === 'purchase_order'}
-          type="radio"
-        />
-        <label>Purchase Order</label>
-      </div>
+    const RadioButtons = ({ field }) => (
+        <>
+            <div>
+                <input
+                    disabled={!context.userInfo}
+                    value="purchase_order"
+                    onChange={handleRadioButtonClick}
+                    checked={field.value === 'purchase_order'}
+                    type="radio"
+                />
+                <label>Purchase Order</label>
+            </div>
       
-      <div>
-        <input
-          value="credit_card"
-          onChange={handleRadioButtonClick}
-          checked={field.value === 'credit_card'}
-          type="radio"
-        />
-        <label>Credit Card</label>
-      </div>
-    </>
-  )
+            <div>
+                <input
+                    value="credit_card"
+                    onChange={handleRadioButtonClick}
+                    checked={field.value === 'credit_card'}
+                    type="radio"
+                />
+                <label>Credit Card</label>
+            </div>
+        </>
+    )
   
-  return (
-    <WrapForm>
-      {showPoOption && (
-        <FormRow>
-          <label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
-          <Field
-            name="billing.paymentMethod"
-            component={RadioButtons}
-            options={[{ label: 'Purchase Order', value: 'purchase_order' }, { label: 'Credit Card', value: 'credit_card' }]}
-            placeholder="Select a Payment Method"
-            isSearchable={false}
-            value="purchase_order"
-          />
-        </FormRow>
-      )}
+    return (
+        <WrapForm>
+            {showPoOption && (
+                <FormRow>
+                    <label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
+                    <Field
+                        name="billing.paymentMethod"
+                        component={RadioButtons}
+                        options={[{ label: 'Purchase Order', value: 'purchase_order' }, { label: 'Credit Card', value: 'credit_card' }]}
+                        placeholder="Select a Payment Method"
+                        isSearchable={false}
+                        value="purchase_order"
+                    />
+                </FormRow>
+            )}
       
-      {paymentMethod === 'credit_card' && (
-        <FormRow>
-          <label htmlFor="billing.cardType">New or Saved Card?*</label>
-          <Select
-            name="billing.cardType"
-            value={newOrSavedCardOptions.find(o => o.value === selectedCard)}
-            setValue={handleCardChange}
-            options={newOrSavedCardOptions}
-            isSearchable={false}
-          />
-        </FormRow>
-      )}
+            {paymentMethod === 'credit_card' && (
+                <FormRow>
+                    <label htmlFor="billing.cardType">New or Saved Card?*</label>
+                    <Select
+                        name="billing.cardType"
+                        value={newOrSavedCardOptions.find(o => o.value === selectedCard)}
+                        setValue={handleCardChange}
+                        options={newOrSavedCardOptions}
+                        isSearchable={false}
+                    />
+                </FormRow>
+            )}
       
-      {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
-      {paymentMethod === 'credit_card' && cardType === 'new_card' && (
-        <NewCardSection {...props} setCardIsValid={setCardIsValid}/>
-      )}
-      {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
-        <FormikInput label={billingInfo.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
-      )}
+            {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
+            {paymentMethod === 'credit_card' && cardType === 'new_card' && (
+                <NewCardSection {...props} setCardIsValid={setCardIsValid}/>
+            )}
+            {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
+                <FormikInput label={billingInfo.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
+            )}
       
-      <DivNavigation>
-        <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
-        <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
-      </DivNavigation>
-    </WrapForm>
-  )
+            <DivNavigation>
+                <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
+                <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
+            </DivNavigation>
+        </WrapForm>
+    )
 }
 
 export default BillingInfoForm

@@ -171,468 +171,468 @@ const AccountSectionRow = styled.div`
 `
 
 export default function HeaderComponent({ history }) {
-  const tabContainerRef = useRef(null)
-  const tabRefs = useRef([])
+    const tabContainerRef = useRef(null)
+    const tabRefs = useRef([])
 	
-  const [categories, setCategories] = useState([])
-  const tabDeclaration = headerTabs(categories)
-  const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
-  const [overflowMenu, setOverflowMenu] = useState(null)
+    const [categories, setCategories] = useState([])
+    const tabDeclaration = headerTabs(categories)
+    const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
+    const [overflowMenu, setOverflowMenu] = useState(null)
 	
-  const [searchTerm, setSearchTerm] = useState('')
-  const [searchAsCustomer, setSearchAsCustomer] = useState(false)
-  const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
-  const context = useContext(Context)
+    const [searchTerm, setSearchTerm] = useState('')
+    const [searchAsCustomer, setSearchAsCustomer] = useState(false)
+    const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
+    const context = useContext(Context)
 	
-  useQuery(GET_ROOT_CATEGORIES_HEADER, {
-    onCompleted: data => {
-      setCategories(data.getAllRootCategories)
+    useQuery(GET_ROOT_CATEGORIES_HEADER, {
+        onCompleted: data => {
+            setCategories(data.getAllRootCategories)
+        }
+    })
+	
+    const calculateTabs = () => {
+        const containerRight = tabContainerRef.current && tabContainerRef.current.getBoundingClientRect().right
+        const widthOfTheComponentsToTheRightOfTheTabs = containerRight < 745 ? 70 : 395 //SearchBar wraps at < 745
+        const count = tabRefs.current.reduce((count, tabRight) => {
+            if (tabRight <= (containerRight - widthOfTheComponentsToTheRightOfTheTabs)) {
+                count += 1
+            }
+            return count
+        }, 0)
+        setVisibleTabCount(count)
     }
-  })
 	
-  const calculateTabs = () => {
-    const containerRight = tabContainerRef.current && tabContainerRef.current.getBoundingClientRect().right
-    const widthOfTheComponentsToTheRightOfTheTabs = containerRight < 745 ? 70 : 395 //SearchBar wraps at < 745
-    const count = tabRefs.current.reduce((count, tabRight) => {
-      if (tabRight <= (containerRight - widthOfTheComponentsToTheRightOfTheTabs)) {
-        count += 1
-      }
-      return count
-    }, 0)
-    setVisibleTabCount(count)
-  }
+    useEffect(() => {
+        calculateTabs()
+        onWindowResize(calculateTabs)
+    }, [tabRefs.current])
 	
-  useEffect(() => {
-    calculateTabs()
-    onWindowResize(calculateTabs)
-  }, [tabRefs.current])
+    const setTabRef = idx => ref => {
+        const right = ref && ref.getBoundingClientRect().right
+        if (right) tabRefs.current[idx] = right
+    }
 	
-  const setTabRef = idx => ref => {
-    const right = ref && ref.getBoundingClientRect().right
-    if (right) tabRefs.current[idx] = right
-  }
+    const toMenu = ({ label, to, subItems }, idx) => (
+        <NavigationItemContainer to={to} text={label} key={label} ref={setTabRef(idx)}>
+            <DropdownMenu>
+                {subItems.map(toMenuItem)}
+            </DropdownMenu>
+        </NavigationItemContainer>
+    )
 	
-  const toMenu = ({ label, to, subItems }, idx) => (
-    <NavigationItemContainer to={to} text={label} key={label} ref={setTabRef(idx)}>
-      <DropdownMenu>
-        {subItems.map(toMenuItem)}
-      </DropdownMenu>
-    </NavigationItemContainer>
-  )
+    const toMenuItem = ({ label, to }) => <DropdownMenuItem key={label} to={to}>{label}</DropdownMenuItem>
 	
-  const toMenuItem = ({ label, to }) => <DropdownMenuItem key={label} to={to}>{label}</DropdownMenuItem>
+    const tabComponents = tabDeclaration.map(toMenu)
 	
-  const tabComponents = tabDeclaration.map(toMenu)
+    const handleSearch = () => {
+        const search = searchTerm?.length ? searchTerm : queryString.parse(history.location.search).searchTerm
+        if (search?.length) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
+    }
 	
-  const handleSearch = () => {
-    const search = searchTerm?.length ? searchTerm : queryString.parse(history.location.search).searchTerm
-    if (search?.length) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
-  }
+    const handleKeyPress = e => e.key === 'Enter' && handleSearch()
 	
-  const handleKeyPress = e => e.key === 'Enter' && handleSearch()
+    const searchPlaceholder = searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'
 	
-  const searchPlaceholder = searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'
-	
-  const MyAccountDropdown = () => (
-    <div
-      id="myAccount"
-      onMouseEnter={() => setShowMyAccountDropdown(true)}
-      onMouseLeave={() => setShowMyAccountDropdown(false)}
-    >
-      <Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
-        <P id="myAccount">My Account</P>
-      </Link>
-			
-      <MyAccountDropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
-        <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
-        <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
-        <DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
-        <DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
-        <DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
-        <DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
-        <DropdownMenuItem to="/account/open-orders-report">Open Orders Report</DropdownMenuItem>
-        <DropdownMenuItem to="/account/open-quotes">Open Quotes</DropdownMenuItem>
-        <DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
-        <DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
-        <DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
-      </MyAccountDropdownMenu>
-    </div>
-  )
-	
-  const AccountSection = () => (
-    <AccountSectionRow>
-      <Row style={{ justifyContent: 'center' }}>
-        <FontAwesomeIcon icon="phone-alt" color="white" />
-        <Aphone href="tel:+18009997378">800-999-7378</Aphone>
-      </Row>
-			
-      <Row style={{ justifyContent: 'center' }}>
-        {context.userInfo
-          ? <P onClick={context.logoutUser}>Sign Out</P>
-          : <P onClick={() => history.push('/login')}>Sign In</P>
-        }
-				
-        <P>|</P>
-				
-        {context.userInfo
-          ? <MyAccountDropdown/>
-          : <A href="/signup">Create Account</A>
-        }
-				
-        <P>|</P>
-				
-        {context.cart && (
-          <Link to='/cart' style={{ textDecoration: 'none' }}>
-            <P>Cart({context.cart.length})</P>
-          </Link>
-        )}
-      </Row>
-    </AccountSectionRow>
-  )
-	
-  const SearchBar = (
-    <SearchBarRow>
-      {context.userInfo?.isAirlineUser && (
-        <ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
-          { searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
-        </ButtonSearchType>
-      )}
-			
-      <InputSearch
-        value={searchTerm}
-        placeholder={searchPlaceholder}
-        onChange={e => setSearchTerm(e.target.value)}
-        onKeyPress={handleKeyPress}
-      />
-			
-      <ButtonSearch onClick={handleSearch}>
-        <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
-      </ButtonSearch>
-    </SearchBarRow>
-  )
-	
-  return (
-    <Nav history={history}>
-      {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
-      <NavTop>
-        <ReverseNavContainer>
-          <AccountSection/>
-					
-          <UserNameSection {...context}/>
-        </ReverseNavContainer>
-      </NavTop>
-			
-      <NavBottom>
-        <NavContainer ref={tabContainerRef}>
-          <Row>
-            <Link to="/">
-              <img src={AirlineLogo} width="135px" />
+    const MyAccountDropdown = () => (
+        <div
+            id="myAccount"
+            onMouseEnter={() => setShowMyAccountDropdown(true)}
+            onMouseLeave={() => setShowMyAccountDropdown(false)}
+        >
+            <Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
+                <P id="myAccount">My Account</P>
             </Link>
-						
-						
-            <LinkContainer>
-              {tabComponents.slice(0, visibleTabCount)}
-							
-              {visibleTabCount < tabDeclaration.length && (
-                <Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
-                  <FontAwesomeIcon icon="ellipsis-h"/>
-                </Button>
-              )}
-							
-              <Menu
-                MenuListProps={{ style: { backgroundColor: '#535353' } }}
-                anchorEl={overflowMenu}
-                open={!!overflowMenu}
-                onClose={() => setOverflowMenu(null)}
-              >
-                {tabDeclaration
-                  .slice(visibleTabCount, tabDeclaration.length)
-                  .map(toMenuItem)
+			
+            <MyAccountDropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
+                <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
+                <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
+                <DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
+                <DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
+                <DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
+                <DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
+                <DropdownMenuItem to="/account/open-orders-report">Open Orders Report</DropdownMenuItem>
+                <DropdownMenuItem to="/account/open-quotes">Open Quotes</DropdownMenuItem>
+                <DropdownMenuItem to="/account/dashboard">Open Payables</DropdownMenuItem>
+                <DropdownMenuItem to="/account/my-ordered-items">Purchase History</DropdownMenuItem>
+                <DropdownMenuItem to="/account/dashboard">Suspended Orders</DropdownMenuItem>
+            </MyAccountDropdownMenu>
+        </div>
+    )
+	
+    const AccountSection = () => (
+        <AccountSectionRow>
+            <Row style={{ justifyContent: 'center' }}>
+                <FontAwesomeIcon icon="phone-alt" color="white" />
+                <Aphone href="tel:+18009997378">800-999-7378</Aphone>
+            </Row>
+			
+            <Row style={{ justifyContent: 'center' }}>
+                {context.userInfo
+                    ? <P onClick={context.logoutUser}>Sign Out</P>
+                    : <P onClick={() => history.push('/login')}>Sign In</P>
                 }
-              </Menu>
-            </LinkContainer>
-          </Row>
+				
+                <P>|</P>
+				
+                {context.userInfo
+                    ? <MyAccountDropdown/>
+                    : <A href="/signup">Create Account</A>
+                }
+				
+                <P>|</P>
+				
+                {context.cart && (
+                    <Link to='/cart' style={{ textDecoration: 'none' }}>
+                        <P>Cart({context.cart.length})</P>
+                    </Link>
+                )}
+            </Row>
+        </AccountSectionRow>
+    )
+	
+    const SearchBar = (
+        <SearchBarRow>
+            {context.userInfo?.isAirlineUser && (
+                <ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
+                    { searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
+                </ButtonSearchType>
+            )}
+			
+            <InputSearch
+                value={searchTerm}
+                placeholder={searchPlaceholder}
+                onChange={e => setSearchTerm(e.target.value)}
+                onKeyPress={handleKeyPress}
+            />
+			
+            <ButtonSearch onClick={handleSearch}>
+                <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
+            </ButtonSearch>
+        </SearchBarRow>
+    )
+	
+    return (
+        <Nav history={history}>
+            {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
+            <NavTop>
+                <ReverseNavContainer>
+                    <AccountSection/>
 					
-          {SearchBar}
-        </NavContainer>
-      </NavBottom>
-    </Nav>
-  )
+                    <UserNameSection {...context}/>
+                </ReverseNavContainer>
+            </NavTop>
+			
+            <NavBottom>
+                <NavContainer ref={tabContainerRef}>
+                    <Row>
+                        <Link to="/">
+                            <img src={AirlineLogo} width="135px" />
+                        </Link>
+						
+						
+                        <LinkContainer>
+                            {tabComponents.slice(0, visibleTabCount)}
+							
+                            {visibleTabCount < tabDeclaration.length && (
+                                <Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
+                                    <FontAwesomeIcon icon="ellipsis-h"/>
+                                </Button>
+                            )}
+							
+                            <Menu
+                                MenuListProps={{ style: { backgroundColor: '#535353' } }}
+                                anchorEl={overflowMenu}
+                                open={!!overflowMenu}
+                                onClose={() => setOverflowMenu(null)}
+                            >
+                                {tabDeclaration
+                                    .slice(visibleTabCount, tabDeclaration.length)
+                                    .map(toMenuItem)
+                                }
+                            </Menu>
+                        </LinkContainer>
+                    </Row>
+					
+                    {SearchBar}
+                </NavContainer>
+            </NavBottom>
+        </Nav>
+    )
 }
 
 function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonation }) {
-  if (userInfo && !impersonatedCompanyInfo) {
-    return (
-      <UserNameRow style={{ flex: 1 }}>
-        <Puser>
-          Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
-        </Puser>
-        {userInfo.role === 'AirlineEmployee' && <ImpersonationSearch/>}
-      </UserNameRow>
-    )
-  } else if (userInfo && impersonatedCompanyInfo) {
-    return (
-      <UserNameRow style={{ flex: 1 }}>
-        <PeUser>
-          <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
-          {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
-        </PeUser>
-        <DivCancelImpersonation onClick={cancelImpersonation}>
-          <FontAwesomeIcon icon="times" color="white" />
-        </DivCancelImpersonation>
-        <ImpersonationSearch />
-      </UserNameRow>
-    )
-  }
-  return null
+    if (userInfo && !impersonatedCompanyInfo) {
+        return (
+            <UserNameRow style={{ flex: 1 }}>
+                <Puser>
+                    Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
+                </Puser>
+                {userInfo.role === 'AirlineEmployee' && <ImpersonationSearch/>}
+            </UserNameRow>
+        )
+    } else if (userInfo && impersonatedCompanyInfo) {
+        return (
+            <UserNameRow style={{ flex: 1 }}>
+                <PeUser>
+                    <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
+                    {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
+                </PeUser>
+                <DivCancelImpersonation onClick={cancelImpersonation}>
+                    <FontAwesomeIcon icon="times" color="white" />
+                </DivCancelImpersonation>
+                <ImpersonationSearch />
+            </UserNameRow>
+        )
+    }
+    return null
 }
 
 const servicesSubItems = [
-  {
-    label: 'Arc Flash Safety',
-    to: '/pages/services/arc-flash-safety'
-  },
-  {
-    label: 'Machine Safeguarding',
-    to: '/pages/services/machine-safeguarding'
-  },
-  {
-    label: 'Fluid Cleanliness & Maintenance',
-    to: '/pages/services/fluid-cleanliness-and-maintenance'
-  },
-  {
-    label: 'Engineered Systems & Assemblies',
-    to: '/pages/services/engineered-systems-and-assemblies'
-  },
-  {
-    label: 'Energy Efficiency',
-    to: '/pages/services/energy-efficiency'
-  },
-  {
-    label: 'Trola-Dyne Systems',
-    to: '/pages/services/trola-dyne'
-  }
+    {
+        label: 'Arc Flash Safety',
+        to: '/pages/services/arc-flash-safety'
+    },
+    {
+        label: 'Machine Safeguarding',
+        to: '/pages/services/machine-safeguarding'
+    },
+    {
+        label: 'Fluid Cleanliness & Maintenance',
+        to: '/pages/services/fluid-cleanliness-and-maintenance'
+    },
+    {
+        label: 'Engineered Systems & Assemblies',
+        to: '/pages/services/engineered-systems-and-assemblies'
+    },
+    {
+        label: 'Energy Efficiency',
+        to: '/pages/services/energy-efficiency'
+    },
+    {
+        label: 'Trola-Dyne Systems',
+        to: '/pages/services/trola-dyne'
+    }
 ]
 
 const industriesSubItems = [
-  {
-    label: 'Physical Distancing Barriers',
-    to: '/pages/industries/commercial-protective-barriers'
-  },
-  {
-    label: 'Covid Medical Structures',
-    to: '/pages/industries/covid-medical-structures'
-  },
-  {
-    label: 'All Brands',
-    to: '/brands'
-  },
-  {
-    label: 'ABB',
-    to: '/brands/featured/abb'
-  },
-  {
-    label: 'Aventics',
-    to: '/brands/featured/aventics'
-  },
-  {
-    label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
-    to: '/power-distribution-products-and-electrical-enclosures'
-  }
+    {
+        label: 'Physical Distancing Barriers',
+        to: '/pages/industries/commercial-protective-barriers'
+    },
+    {
+        label: 'Covid Medical Structures',
+        to: '/pages/industries/covid-medical-structures'
+    },
+    {
+        label: 'All Brands',
+        to: '/brands'
+    },
+    {
+        label: 'ABB',
+        to: '/brands/featured/abb'
+    },
+    {
+        label: 'Aventics',
+        to: '/brands/featured/aventics'
+    },
+    {
+        label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
+        to: '/power-distribution-products-and-electrical-enclosures'
+    }
 ]
 
 const brandsSubItems = [
-  {
-    label: 'All Brands',
-    to: '/brands'
-  },
-  {
-    label: 'ABB',
-    to: '/brands/featured/abb'
-  },
-  {
-    label: 'Aventics',
-    to: '/brands/featured/aventics'
-  },
-  {
-    label: 'Butech',
-    to: '/brands/featured/butech'
-  },
-  {
-    label: 'Clippard',
-    to: '/brands/featured/clippard'
-  },
-  {
-    label: 'Eaton',
-    to: '/brands/featured/eaton'
-  },
-  {
-    label: 'Haskel',
-    to: '/brands/featured/haskel'
-  },
-  {
-    label: 'Hydac',
-    to: '/brands/featured/hydac'
-  },
-  {
-    label: 'Lincoln',
-    to: '/brands/featured/lincoln'
-  },
-  {
-    label: 'Omron',
-    to: '/brands/featured/omron'
-  },
-  {
-    label: 'Oriental Motor',
-    to: '/brands/featured/oriental-motor'
-  },
-  {
-    label: 'Paccar',
-    to: '/brands/featured/paccar'
-  },
-  {
-    label: 'Parker',
-    to: '/brands/featured/parker'
-  },
-  {
-    label: 'Phoenix Contact',
-    to: '/brands/featured/phoenix-contact'
-  },
-  {
-    label: 'Rexroth',
-    to: '/brands/featured/rexroth'
-  },
-  {
-    label: 'Rittal',
-    to: '/brands/featured/rittal'
-  },
-  {
-    label: 'Ross',
-    to: '/brands/featured/ross'
-  },
-  {
-    label: 'Schmersal',
-    to: '/brands/featured/schmersal'
-  },
-  {
-    label: 'SMC',
-    to: '/brands/featured/smc'
-  }
+    {
+        label: 'All Brands',
+        to: '/brands'
+    },
+    {
+        label: 'ABB',
+        to: '/brands/featured/abb'
+    },
+    {
+        label: 'Aventics',
+        to: '/brands/featured/aventics'
+    },
+    {
+        label: 'Butech',
+        to: '/brands/featured/butech'
+    },
+    {
+        label: 'Clippard',
+        to: '/brands/featured/clippard'
+    },
+    {
+        label: 'Eaton',
+        to: '/brands/featured/eaton'
+    },
+    {
+        label: 'Haskel',
+        to: '/brands/featured/haskel'
+    },
+    {
+        label: 'Hydac',
+        to: '/brands/featured/hydac'
+    },
+    {
+        label: 'Lincoln',
+        to: '/brands/featured/lincoln'
+    },
+    {
+        label: 'Omron',
+        to: '/brands/featured/omron'
+    },
+    {
+        label: 'Oriental Motor',
+        to: '/brands/featured/oriental-motor'
+    },
+    {
+        label: 'Paccar',
+        to: '/brands/featured/paccar'
+    },
+    {
+        label: 'Parker',
+        to: '/brands/featured/parker'
+    },
+    {
+        label: 'Phoenix Contact',
+        to: '/brands/featured/phoenix-contact'
+    },
+    {
+        label: 'Rexroth',
+        to: '/brands/featured/rexroth'
+    },
+    {
+        label: 'Rittal',
+        to: '/brands/featured/rittal'
+    },
+    {
+        label: 'Ross',
+        to: '/brands/featured/ross'
+    },
+    {
+        label: 'Schmersal',
+        to: '/brands/featured/schmersal'
+    },
+    {
+        label: 'SMC',
+        to: '/brands/featured/smc'
+    }
 ]
 
 const resourcesSubItems = [
-  {
-    label: 'Blog - Technically Speaking',
-    to: '/blog'
-  },
-  {
-    label: 'Youtube Channel',
-    to: 'https://www.youtube.com/channel/UCdZYpFsi2IES53d5BZr03fw/'
-  },
-  {
-    label: 'Knowledge Center & FAQ',
-    to: '/knowledge-center-and-faq'
-  },
-  {
-    label: 'Line Cards & Brochures',
-    to: '/linecards'
-  },
-  {
-    label: 'Apps',
-    to: '/apps'
-  }
+    {
+        label: 'Blog - Technically Speaking',
+        to: '/blog'
+    },
+    {
+        label: 'Youtube Channel',
+        to: 'https://www.youtube.com/channel/UCdZYpFsi2IES53d5BZr03fw/'
+    },
+    {
+        label: 'Knowledge Center & FAQ',
+        to: '/knowledge-center-and-faq'
+    },
+    {
+        label: 'Line Cards & Brochures',
+        to: '/linecards'
+    },
+    {
+        label: 'Apps',
+        to: '/apps'
+    }
 ]
 
 const aboutSubItems = [
-  {
-    label: 'Locations',
-    to: '/about/locations',
-  },
-  {
-    label: 'Transactional Services',
-    to: '/about/transactional-services',
-  },
-  {
-    label: 'News',
-    to: '/about/news',
-  },
-  {
-    label: 'Events',
-    to: '/about/events',
-  },
-  {
-    label: 'Careers',
-    to: '/about/careers',
-  },
-  {
-    label: 'Quality Policy',
-    to: '/about/quality-policy',
-  },
-  {
-    label: 'Our History',
-    to: '/about/our-history',
-  },
-  {
-    label: 'Our Mission',
-    to: '/about/mission-statement',
-  }
+    {
+        label: 'Locations',
+        to: '/about/locations',
+    },
+    {
+        label: 'Transactional Services',
+        to: '/about/transactional-services',
+    },
+    {
+        label: 'News',
+        to: '/about/news',
+    },
+    {
+        label: 'Events',
+        to: '/about/events',
+    },
+    {
+        label: 'Careers',
+        to: '/about/careers',
+    },
+    {
+        label: 'Quality Policy',
+        to: '/about/quality-policy',
+    },
+    {
+        label: 'Our History',
+        to: '/about/our-history',
+    },
+    {
+        label: 'Our Mission',
+        to: '/about/mission-statement',
+    }
 ]
 
 const contactSubItems = [
-  {
-    label: 'Contact Us',
-    to: '/contact-us'
-  },
-  {
-    label: 'Credit Application',
-    to: '/credit-application'
-  },
-  {
-    label: 'Framing Request',
-    to: '/framing-request'
-  },
-  {
-    label: 'Government Sales',
-    to: '/government-sales'
-  }
+    {
+        label: 'Contact Us',
+        to: '/contact-us'
+    },
+    {
+        label: 'Credit Application',
+        to: '/credit-application'
+    },
+    {
+        label: 'Framing Request',
+        to: '/framing-request'
+    },
+    {
+        label: 'Government Sales',
+        to: '/government-sales'
+    }
 ]
 const headerTabs = categories => [
-  {
-    label: 'Shop',
-    to: '/categories',
-    subItems: categories.map(({ name, urlSlug }) => ({
-      label: name,
-      to: `/categories/${urlSlug}`
-    }))
-  },
-  {
-    label: 'Services',
-    to: '/pages/services',
-    subItems: servicesSubItems
-  },
-  {
-    label: 'Industries',
-    to: '/industries',
-    subItems: industriesSubItems
-  },
-  {
-    label: 'Brands',
-    to: '/brands',
-    subItems: brandsSubItems
-  },
-  {
-    label: 'Resources',
-    to: '/resources',
-    subItems: resourcesSubItems
-  },
-  {
-    label: 'About',
-    to: '/about',
-    subItems: aboutSubItems
-  },
-  {
-    label: 'Contact',
-    to: '/contact-us',
-    subItems: contactSubItems
-  }
+    {
+        label: 'Shop',
+        to: '/categories',
+        subItems: categories.map(({ name, urlSlug }) => ({
+            label: name,
+            to: `/categories/${urlSlug}`
+        }))
+    },
+    {
+        label: 'Services',
+        to: '/pages/services',
+        subItems: servicesSubItems
+    },
+    {
+        label: 'Industries',
+        to: '/industries',
+        subItems: industriesSubItems
+    },
+    {
+        label: 'Brands',
+        to: '/brands',
+        subItems: brandsSubItems
+    },
+    {
+        label: 'Resources',
+        to: '/resources',
+        subItems: resourcesSubItems
+    },
+    {
+        label: 'About',
+        to: '/about',
+        subItems: aboutSubItems
+    },
+    {
+        label: 'Contact',
+        to: '/contact-us',
+        subItems: contactSubItems
+    }
 ]

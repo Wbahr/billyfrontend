@@ -78,61 +78,61 @@ const DivQuoteButton = styled(DivCheckoutButton)`
 `
 
 export default function OrderSummary({ history }) {
-  const context = useContext(Context)
+    const context = useContext(Context)
   
-  return (
-    <>
-      <Div>
-        <H4>Order Summary</H4>
-        <DivLineItem>
-          <p>Subtotal</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}
-          </p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Tariff</p>
-          <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Tax</p>
-          <p>(TBD - At Checkout)</p>
-        </DivLineItem>
-        <DivLineItem>
-          <p>Shipping</p>
-          <p>(TBD)</p>
-        </DivLineItem>
-        <DivLineItemTotal>
-          <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
-        </DivLineItemTotal>
-        {context.cart?.length > 0 && (
-          <DivButtonContainer>
-            <Context.Consumer>
-              {({ userInfo }) => {
-                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== 'AirlineEmployee')){
-                  return (
-                    <DivCheckoutButton onClick={() => history.push('/checkout')}>
-                      <FontAwesomeIcon icon="lock" color="white"/>
-                      <p>Start Secure Checkout</p>
-                    </DivCheckoutButton>
-                  )
-                }
-              }}
-            </Context.Consumer>
-            <Context.Consumer>
-              {({ userInfo }) => {
-                if (!_.isNil(userInfo) && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')){
-                  return (
-                    <DivQuoteButton onClick={() => history.push('/create-quote')}>
-                      <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-                      <p>Create a Quote</p>
-                    </DivQuoteButton>
-                  )
-                }
-              }}
-            </Context.Consumer>
-          </DivButtonContainer>
-        )}
-      </Div>
-    </>
-  )
+    return (
+        <>
+            <Div>
+                <H4>Order Summary</H4>
+                <DivLineItem>
+                    <p>Subtotal</p>
+                    <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}
+                    </p>
+                </DivLineItem>
+                <DivLineItem>
+                    <p>Tariff</p>
+                    <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+                </DivLineItem>
+                <DivLineItem>
+                    <p>Tax</p>
+                    <p>(TBD - At Checkout)</p>
+                </DivLineItem>
+                <DivLineItem>
+                    <p>Shipping</p>
+                    <p>(TBD)</p>
+                </DivLineItem>
+                <DivLineItemTotal>
+                    <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+                </DivLineItemTotal>
+                {context.cart?.length > 0 && (
+                    <DivButtonContainer>
+                        <Context.Consumer>
+                            {({ userInfo }) => {
+                                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== 'AirlineEmployee')){
+                                    return (
+                                        <DivCheckoutButton onClick={() => history.push('/checkout')}>
+                                            <FontAwesomeIcon icon="lock" color="white"/>
+                                            <p>Start Secure Checkout</p>
+                                        </DivCheckoutButton>
+                                    )
+                                }
+                            }}
+                        </Context.Consumer>
+                        <Context.Consumer>
+                            {({ userInfo }) => {
+                                if (!_.isNil(userInfo) && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')){
+                                    return (
+                                        <DivQuoteButton onClick={() => history.push('/create-quote')}>
+                                            <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                                            <p>Create a Quote</p>
+                                        </DivQuoteButton>
+                                    )
+                                }
+                            }}
+                        </Context.Consumer>
+                    </DivButtonContainer>
+                )}
+            </Div>
+        </>
+    )
 }

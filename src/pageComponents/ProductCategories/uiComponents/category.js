@@ -39,12 +39,12 @@ const CategoryBlock = styled.div`
 `
 
 export default ({ size, text, linkTo, Image, ...rest }) => {
-  return (
-    <Link to={linkTo || '#'}>
-      <CategoryBlock {...{ ...rest, size }}>
-        {Image}
-        <section>{text}</section>
-      </CategoryBlock>
-    </Link>
-  )
+    return (
+        <Link to={linkTo || '#'}>
+            <CategoryBlock {...{ ...rest, size }}>
+                {Image}
+                <section>{text}</section>
+            </CategoryBlock>
+        </Link>
+    )
 }

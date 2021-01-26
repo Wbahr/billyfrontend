@@ -151,82 +151,82 @@ const Img = styled.img`
 `
 
 export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal, showLocationsModal }) {
-  const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1)
   
-  const context = useContext(Context)
+    const context = useContext(Context)
 
-  function handleSetQuantity({ target: { value } }){
-    if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-      setQuantity(value)
+    function handleSetQuantity({ target: { value } }){
+        if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
+            setQuantity(value)
+        }
     }
-  }
 
-  function handleAddToCart() {
-    if (quantity > 0){
-      context.addItem({
-        frecno: itemDetails?.invMastUid,
-        quantity: quantity,
-        itemNotes: null,
-        itemUnitPriceOverride: null,
-        customerPartNumberId: null
-      })
-      setShowAddedToCartModal(true)
+    function handleAddToCart() {
+        if (quantity > 0){
+            context.addItem({
+                frecno: itemDetails?.invMastUid,
+                quantity: quantity,
+                itemNotes: null,
+                itemUnitPriceOverride: null,
+                customerPartNumberId: null
+            })
+            setShowAddedToCartModal(true)
+        }
     }
-  }
 
-  if (!itemDetails) return <></>
+    if (!itemDetails) return <></>
     
-  const imagePath = getThumbnailImagePath(itemDetails)
+    const imagePath = getThumbnailImagePath(itemDetails)
 
-  const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`
+    const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`
   
-  return (
-    <DivItemResultContainer>
-      <DivPartDetailsRow>
-        <DivPartImg>
-          <a href={itemLink}>
-            <Img src={imagePath} alt={itemDetails.itemCode}/>
-          </a>
-        </DivPartImg>
+    return (
+        <DivItemResultContainer>
+            <DivPartDetailsRow>
+                <DivPartImg>
+                    <a href={itemLink}>
+                        <Img src={imagePath} alt={itemDetails.itemCode}/>
+                    </a>
+                </DivPartImg>
 				
-        <DivPartDetails>
-          <PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
-        </DivPartDetails>
+                <DivPartDetails>
+                    <PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
+                </DivPartDetails>
 				
-        <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
-        </DivPartNumberRow>
+                <DivPartNumberRow>
+                    <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
+                </DivPartNumberRow>
 				
-        <DivAvailabilityRow onClick={showLocationsModal}>
-          <PpartAvailability>Availability:</PpartAvailability>
-          {availability 
-            ? (
-              <PBlue>{availability.availability 
-                ? availability.availability 
-                : availability.leadTimeDays
-                  ? 'Lead Time ' + availability.leadTimeDays + ' days'
-                  : 'Call airline for lead time' }
-              </PBlue>
-            ) 
-            : <PBlue>Call Airline for Price</PBlue>}
-        </DivAvailabilityRow>
+                <DivAvailabilityRow onClick={showLocationsModal}>
+                    <PpartAvailability>Availability:</PpartAvailability>
+                    {availability 
+                        ? (
+                            <PBlue>{availability.availability 
+                                ? availability.availability 
+                                : availability.leadTimeDays
+                                    ? 'Lead Time ' + availability.leadTimeDays + ' days'
+                                    : 'Call airline for lead time' }
+                            </PBlue>
+                        ) 
+                        : <PBlue>Call Airline for Price</PBlue>}
+                </DivAvailabilityRow>
 				
-        <DivPartNumberRowSpread>
-          <Div>
-            Quantity:
-            <InputQuantity value={quantity} onChange={handleSetQuantity}/>
-          </Div>
-          {
-            price
-              ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
-              : <ACall href="tel:+18009997378">Call for Price</ACall>
-          }
-        </DivPartNumberRowSpread>
+                <DivPartNumberRowSpread>
+                    <Div>
+                        Quantity:
+                        <InputQuantity value={quantity} onChange={handleSetQuantity}/>
+                    </Div>
+                    {
+                        price
+                            ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
+                            : <ACall href="tel:+18009997378">Call for Price</ACall>
+                    }
+                </DivPartNumberRowSpread>
 				
-        <DivSpace>
-          { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
-        </DivSpace>
-      </DivPartDetailsRow>
-    </DivItemResultContainer>
-  )
+                <DivSpace>
+                    { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
+                </DivSpace>
+            </DivPartDetailsRow>
+        </DivItemResultContainer>
+    )
 }

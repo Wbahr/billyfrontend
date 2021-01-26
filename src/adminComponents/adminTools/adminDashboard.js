@@ -2,9 +2,9 @@ import React from 'react'
 
 export default function AdminDashboard() {
 
-  return (
-    <>
-      <p>Admin Dashboard</p>
-    </>
-  )
+    return (
+        <>
+            <p>Admin Dashboard</p>
+        </>
+    )
 }

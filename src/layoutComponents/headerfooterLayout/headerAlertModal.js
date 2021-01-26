@@ -22,12 +22,12 @@ const DivCancel = styled.div`
 
 export default function HeaderAlertModal({ message, close }) {
 
-  return (
-    <Container>
-      <span>{message}</span>
-      <DivCancel onClick={close}>
-        <FontAwesomeIcon icon='times' />
-      </DivCancel>
-    </Container>
-  )
+    return (
+        <Container>
+            <span>{message}</span>
+            <DivCancel onClick={close}>
+                <FontAwesomeIcon icon='times' />
+            </DivCancel>
+        </Container>
+    )
 }

@@ -81,72 +81,72 @@ const P2 = styled.p`
 //TODO rename this; it has the same name as the component in scheduleLine.js
 export default function ScheduleLineDisplay({ item, price, itemDetails, customerPartNumbers }) {
 
-  const imagePath = getThumbnailImagePath(itemDetails)
-  let date = item.requestedShipDate
-  date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
+    const imagePath = getThumbnailImagePath(itemDetails)
+    let date = item.requestedShipDate
+    date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
-  const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
-  const totalPrice = Number(item.quantity) * (
-    (item.itemUnitPriceOverride || price)
-      ? Number(item.itemUnitPriceOverride ? item.itemUnitPriceOverride : price.unitPrice)
-      : 0
-  )
+    const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
+    const totalPrice = Number(item.quantity) * (
+        (item.itemUnitPriceOverride || price)
+            ? Number(item.itemUnitPriceOverride ? item.itemUnitPriceOverride : price.unitPrice)
+            : 0
+    )
 
-  const Content = () => (
-    <DivCard>
-      <DivCol1>
-        <Img height='65px' src={imagePath} />
-      </DivCol1>
+    const Content = () => (
+        <DivCard>
+            <DivCol1>
+                <Img height='65px' src={imagePath} />
+            </DivCol1>
 			
-      <DivCol2>
-        <P1>{itemDetails?.itemDesc}</P1>
-        <P2>{itemDetails?.itemCode} | AHC{itemDetails?.invMastUid} {selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
-        <P2>Requested Date: {date}</P2>
-      </DivCol2>
+            <DivCol2>
+                <P1>{itemDetails?.itemDesc}</P1>
+                <P2>{itemDetails?.itemCode} | AHC{itemDetails?.invMastUid} {selectedCustomerPartNumber && `| ${selectedCustomerPartNumber.customerPartNumber}`}</P2>
+                <P2>Requested Date: {date}</P2>
+            </DivCol2>
 			
-      <DivCol3>
-        <DivQuantity>
-          <DivItem>
-            <Label>
-              <NumberFormat
-                value={item.itemUnitPriceOverride ? item.itemUnitPriceOverride : (price ? price.unitPrice : 0) }
-                displayType="text"
-                thousandSeparator={true}
-                prefix="$"
-                decimalScale={2}
-                fixedDecimalScale
-              />/each
-            </Label>
-          </DivItem>
-        </DivQuantity>
+            <DivCol3>
+                <DivQuantity>
+                    <DivItem>
+                        <Label>
+                            <NumberFormat
+                                value={item.itemUnitPriceOverride ? item.itemUnitPriceOverride : (price ? price.unitPrice : 0) }
+                                displayType="text"
+                                thousandSeparator={true}
+                                prefix="$"
+                                decimalScale={2}
+                                fixedDecimalScale
+                            />/each
+                        </Label>
+                    </DivItem>
+                </DivQuantity>
 				
-        <DivQuantity>
-          <DivItem>
-            <Label>Qty: {item.quantity}</Label>
-          </DivItem>
-        </DivQuantity>
+                <DivQuantity>
+                    <DivItem>
+                        <Label>Qty: {item.quantity}</Label>
+                    </DivItem>
+                </DivQuantity>
 				
-        <DivQuantity>
-          <DivItem>
-            <LabelBold>
-              <NumberFormat
-                value={totalPrice}
-                displayType="text"
-                thousandSeparator={true}
-                prefix="$"
-                decimalScale={2}
-                fixedDecimalScale
-              />
-            </LabelBold>
-          </DivItem>
-        </DivQuantity>
-      </DivCol3>
-    </DivCard>
-  )
+                <DivQuantity>
+                    <DivItem>
+                        <LabelBold>
+                            <NumberFormat
+                                value={totalPrice}
+                                displayType="text"
+                                thousandSeparator={true}
+                                prefix="$"
+                                decimalScale={2}
+                                fixedDecimalScale
+                            />
+                        </LabelBold>
+                    </DivItem>
+                </DivQuantity>
+            </DivCol3>
+        </DivCard>
+    )
 	
-  return (
-    <DivContainer>
-      <Content/>
-    </DivContainer>
-  )
+    return (
+        <DivContainer>
+            <Content/>
+        </DivContainer>
+    )
 }

@@ -42,59 +42,59 @@ const Inputm = styled(Input)`
 
 class RedPalletSerialNumbers extends  React.Component {
 
-  render() {
-    const {
-      fieldCount,
-      index
-    } = this.props
-    const Fields = []
-    let fieldNumber = 0
-    while (fieldCount > fieldNumber) {
-      if (fieldCount - fieldNumber >= 2){
-        Fields.push(
-          <DivLeftAlign>
-            <Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
-              {({ field }) => (
-                <Inputm {...field}
-                  component='input'
-                  placeholder='Serial #'
-                />
-              )}
-            </Field>
-            <Field name={`RepairItems.${index}.serialNumber.${fieldNumber + 1}`}>
-              {({ field }) => (
-                <Inputm {...field}
-                  component='input'
-                  placeholder='Serial #'
-                />
-              )}
-            </Field>
-          </DivLeftAlign>
-        )
-        fieldNumber += 2
-      } else {
-        Fields.push(
-          <DivLeftAlign>
-            <Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
-              {({ field }) => (
-                <Inputm {...field}
-                  component='input'
-                  placeholder='Serial #'
-                />
-              )}
-            </Field>
-          </DivLeftAlign>
-        )
-        fieldNumber += 1
-      }
-    }
+    render() {
+        const {
+            fieldCount,
+            index
+        } = this.props
+        const Fields = []
+        let fieldNumber = 0
+        while (fieldCount > fieldNumber) {
+            if (fieldCount - fieldNumber >= 2){
+                Fields.push(
+                    <DivLeftAlign>
+                        <Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
+                            {({ field }) => (
+                                <Inputm {...field}
+                                    component='input'
+                                    placeholder='Serial #'
+                                />
+                            )}
+                        </Field>
+                        <Field name={`RepairItems.${index}.serialNumber.${fieldNumber + 1}`}>
+                            {({ field }) => (
+                                <Inputm {...field}
+                                    component='input'
+                                    placeholder='Serial #'
+                                />
+                            )}
+                        </Field>
+                    </DivLeftAlign>
+                )
+                fieldNumber += 2
+            } else {
+                Fields.push(
+                    <DivLeftAlign>
+                        <Field name={`RepairItems.${index}.serialNumber.${fieldNumber}`}>
+                            {({ field }) => (
+                                <Inputm {...field}
+                                    component='input'
+                                    placeholder='Serial #'
+                                />
+                            )}
+                        </Field>
+                    </DivLeftAlign>
+                )
+                fieldNumber += 1
+            }
+        }
 
-    return (
-      <>
-        {Fields}
-      </>
-    )
-  }
+        return (
+            <>
+                {Fields}
+            </>
+        )
+    }
 }
 
 export default RedPalletSerialNumbers

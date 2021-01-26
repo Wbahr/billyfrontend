@@ -5,7 +5,7 @@ const BannerPic = styled.img`
   width: 250px;
 `
 export default function BannerImg(props) {
-  return (
-    <BannerPic src={props.src}/>
-  )
+    return (
+        <BannerPic src={props.src}/>
+    )
 }

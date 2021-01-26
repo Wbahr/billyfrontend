@@ -152,151 +152,151 @@ const Option = ({ partNumber, partId }) => <option key={partNumber} value={partI
 const getCustomerPartOptions = ({ customerPartNumbers=[] }) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
 export default function ItemResult({ result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart }) {
-  const { itemAvailabilities, itemPrices, addItem } = useContext(Context)
+    const { itemAvailabilities, itemPrices, addItem } = useContext(Context)
   
-  const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
-  const { availability, leadTimeDays } = foundAvailability || {}
+    const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
+    const { availability, leadTimeDays } = foundAvailability || {}
   
-  const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
-  const {
-    unitPrice,
-    unitOfMeasure,
-    unitSize,
-    roundType } = foundPrice || {}
+    const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
+    const {
+        unitPrice,
+        unitOfMeasure,
+        unitSize,
+        roundType } = foundPrice || {}
   
-  const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1)
   
-  const [customerPartNumber, setCustomerPartNumber] = useState(0)
-  const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
+    const [customerPartNumber, setCustomerPartNumber] = useState(0)
+    const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
   
-  useEffect(() => {
-    setCustomerPartOptions(getCustomerPartOptions(details))
-    if (details.customerPartNumbers?.length === 1) {
-      setCustomerPartNumber(details.customerPartNumbers[0].partId)
+    useEffect(() => {
+        setCustomerPartOptions(getCustomerPartOptions(details))
+        if (details.customerPartNumbers?.length === 1) {
+            setCustomerPartNumber(details.customerPartNumbers[0].partId)
+        }
+    }, [details.customerPartNumbers])
+  
+    const setQuantityHandler = (qty) => {
+        setQuantity(qty)
     }
-  }, [details.customerPartNumbers])
   
-  const setQuantityHandler = (qty) => {
-    setQuantity(qty)
-  }
-  
-  const handlePartClick = () => {
-    if (customerPartNumber) {
-      history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}/${customerPartNumber}`)
-    } else {
-      history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}`)
+    const handlePartClick = () => {
+        if (customerPartNumber) {
+            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}/${customerPartNumber}`)
+        } else {
+            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}`)
+        }
     }
-  }
   
-  const handleAddToCart = () => {
-    addItem({
-      frecno: result.invMastUid,
-      quantity: parseInt(quantity),
-      itemNotes: '',
-      itemUnitPriceOverride: null,
-      customerPartNumberId: customerPartNumber
-    })
-    addedToCart()
-    setQuantity(1)
-  }
+    const handleAddToCart = () => {
+        addItem({
+            frecno: result.invMastUid,
+            quantity: parseInt(quantity),
+            itemNotes: '',
+            itemUnitPriceOverride: null,
+            customerPartNumberId: customerPartNumber
+        })
+        addedToCart()
+        setQuantity(1)
+    }
   
-  const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
+    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
   
-  const handleAvailabilityClick = () => toggleLocationsModal(result.invMastUid)
+    const handleAvailabilityClick = () => toggleLocationsModal(result.invMastUid)
   
-  const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
+    const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
   
-  return (
-    <DivItemResultContainer>
-      <DivPartDetailsRow>
-        <DivPartImg onClick={handlePartClick} style={{ cursor: 'pointer' }}>
-          {!details.itemMedia ? (
-            <SkeletonImage/>
-          ) : (
-            <Img src={getLargeImagePath(details)}/>
-          )}
-        </DivPartImg>
+    return (
+        <DivItemResultContainer>
+            <DivPartDetailsRow>
+                <DivPartImg onClick={handlePartClick} style={{ cursor: 'pointer' }}>
+                    {!details.itemMedia ? (
+                        <SkeletonImage/>
+                    ) : (
+                        <Img src={getLargeImagePath(details)}/>
+                    )}
+                </DivPartImg>
         
-        <ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
+                <ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
         
-        <DivPartDetails>
-          <PpartTitle onClick={handlePartClick}>{result.itemDescription}</PpartTitle>
-        </DivPartDetails>
+                <DivPartDetails>
+                    <PpartTitle onClick={handlePartClick}>{result.itemDescription}</PpartTitle>
+                </DivPartDetails>
         
-        <DivPartNumberRow>
-          <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
-        </DivPartNumberRow>
+                <DivPartNumberRow>
+                    <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
+                </DivPartNumberRow>
         
-        <DivPartNumberRow>
-          <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
-        </DivPartNumberRow>
+                <DivPartNumberRow>
+                    <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
+                </DivPartNumberRow>
         
-        {!!customerPartOptions.length && (
-          <DivPartNumberRow>
-            <PpartAvailability>
-              Customer Part #:
-              <select value={customerPartNumber} onChange={handlePartNumberChange}>
-                <option>Select a Part No.</option>
-                {customerPartOptions}
-              </select>
-            </PpartAvailability>
-          </DivPartNumberRow>
-        )}
+                {!!customerPartOptions.length && (
+                    <DivPartNumberRow>
+                        <PpartAvailability>
+                            Customer Part #:
+                            <select value={customerPartNumber} onChange={handlePartNumberChange}>
+                                <option>Select a Part No.</option>
+                                {customerPartOptions}
+                            </select>
+                        </PpartAvailability>
+                    </DivPartNumberRow>
+                )}
         
-        <DivPartNumberRow>
-          <PpartAvailability>Availability:</PpartAvailability>
+                <DivPartNumberRow>
+                    <PpartAvailability>Availability:</PpartAvailability>
           
-          {!unitPrice || !availability ? (
-            <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : 'Call for availability'}</PBlue>
-          )	: !foundAvailability ? (
-            <SkeletonDetail style={{ margin: 'auto 0' }}/>
-          ) : (
-            <DivRow>
-              <PBlue onClick={handleAvailabilityClick}>
-                {availability} (Show Locations)
-              </PBlue>
-            </DivRow>
-          )}
-        </DivPartNumberRow>
+                    {!unitPrice || !availability ? (
+                        <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : 'Call for availability'}</PBlue>
+                    )	: !foundAvailability ? (
+                        <SkeletonDetail style={{ margin: 'auto 0' }}/>
+                    ) : (
+                        <DivRow>
+                            <PBlue onClick={handleAvailabilityClick}>
+                                {availability} (Show Locations)
+                            </PBlue>
+                        </DivRow>
+                    )}
+                </DivPartNumberRow>
         
-        <DivPartNumberRowSpread>
-          <Div>
-            <span>Quantity:</span>
-            <QuantityInput
-              quantity={quantity}
-              unitSize={unitSize}
-              unitOfMeasure={unitOfMeasure}
-              roundType={roundType}
-              handleUpdate={setQuantityHandler}
-              min='0'
-            />
-            {
-              (unitSize > 1) && (
-                <AirlineChip style={{ marginLeft: '0.5rem' }}>
-                  X {unitSize}
-                </AirlineChip>
-              )
-            }
-          </Div>
+                <DivPartNumberRowSpread>
+                    <Div>
+                        <span>Quantity:</span>
+                        <QuantityInput
+                            quantity={quantity}
+                            unitSize={unitSize}
+                            unitOfMeasure={unitOfMeasure}
+                            roundType={roundType}
+                            handleUpdate={setQuantityHandler}
+                            min='0'
+                        />
+                        {
+                            (unitSize > 1) && (
+                                <AirlineChip style={{ marginLeft: '0.5rem' }}>
+                                    X {unitSize}
+                                </AirlineChip>
+                            )
+                        }
+                    </Div>
           
-          {unitPrice ? (
-            <Div>
-              <Pprice>${unitPrice.toFixed(2)}</Pprice>
-              <P>/{unitOfMeasure}</P>
-            </Div>
-          ) : !foundPrice ? (
-            <Div>
-              <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
-            </Div>
-          ) : (
-            <ACall href="tel:+18009997378">Call for Price</ACall>
-          )}
-        </DivPartNumberRowSpread>
+                    {unitPrice ? (
+                        <Div>
+                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                            <P>/{unitOfMeasure}</P>
+                        </Div>
+                    ) : !foundPrice ? (
+                        <Div>
+                            <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
+                        </Div>
+                    ) : (
+                        <ACall href="tel:+18009997378">Call for Price</ACall>
+                    )}
+                </DivPartNumberRowSpread>
         
-        <DivSpace>
-          {!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
-        </DivSpace>
-      </DivPartDetailsRow>
-    </DivItemResultContainer>
-  )
+                <DivSpace>
+                    {!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                </DivSpace>
+            </DivPartDetailsRow>
+        </DivItemResultContainer>
+    )
 }

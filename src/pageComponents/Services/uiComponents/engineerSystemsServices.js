@@ -23,20 +23,20 @@ const TittleDetail = styled.p`
     font-size: 14px;
 `
 export default function engineerSystemsServices(props) {
-  const {
-    src,
-    title,
-    text, 
-  } = props
-  return (
-    <>
-      <div>
-        <ImgDiv><Img src={src} /></ImgDiv>
-      </div>
-      <TitleDiv>
-        <Title>{title}</Title>
-        <TittleDetail>{text}</TittleDetail>
-      </TitleDiv>
-    </>
-  )
+    const {
+        src,
+        title,
+        text, 
+    } = props
+    return (
+        <>
+            <div>
+                <ImgDiv><Img src={src} /></ImgDiv>
+            </div>
+            <TitleDiv>
+                <Title>{title}</Title>
+                <TittleDetail>{text}</TittleDetail>
+            </TitleDiv>
+        </>
+    )
 }

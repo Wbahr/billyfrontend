@@ -89,143 +89,143 @@ const DivErrors = styled.div`
 class SummaryModal extends React.Component {
 
   state = {
-    reviewedSummary: false,
-    totalRefund: 0,
-    minimumRestockingFee: false
+      reviewedSummary: false,
+      totalRefund: 0,
+      minimumRestockingFee: false
   }
 
   UNSAFE_componentWillMount() {
-    this.calculateRefundAndFee(this.props.returnItems)
+      this.calculateRefundAndFee(this.props.returnItems)
   }
 
   UNSAFE_componentWillUpdate(prevProps) {
-    const {
-      submitError
-    } = this.props
+      const {
+          submitError
+      } = this.props
 
-    const {
-      submitError: prevSubmitError
-    } = prevProps
+      const {
+          submitError: prevSubmitError
+      } = prevProps
 
-    if (submitError && !prevSubmitError){
-      this.setState({ inFlight: false })
-    }
+      if (submitError && !prevSubmitError){
+          this.setState({ inFlight: false })
+      }
   }
 
   handleConfirmReturn = () => {
-    const {
-      onConfirmReturn
-    } = this.props
+      const {
+          onConfirmReturn
+      } = this.props
 
-    onConfirmReturn()
+      onConfirmReturn()
   }
 
   handleOnClose = () => {
-    const {
-      onClose
-    } = this.props
-    onClose()
+      const {
+          onClose
+      } = this.props
+      onClose()
   }
 
   toggleCheckbox = () => {
-    this.setState({ reviewedSummary: !this.state.reviewedSummary })
+      this.setState({ reviewedSummary: !this.state.reviewedSummary })
   }
 
   calculateRefundAndFee = (returnItems) => {
-    let totalRefund = 0
-    let totalRestockingFee = 0
-    const minRestockingFee = 15
-    const restockingPercentage = 0.25
+      let totalRefund = 0
+      let totalRestockingFee = 0
+      const minRestockingFee = 15
+      const restockingPercentage = 0.25
 
-    for (let i = 0; i < returnItems.length; i++) {
-      const item = returnItems[i]
-      if (item.hasReturnFee) {
-        totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
+      for (let i = 0; i < returnItems.length; i++) {
+          const item = returnItems[i]
+          if (item.hasReturnFee) {
+              totalRestockingFee += (item.returnQuantity * item.unitPrice) * restockingPercentage
+          }
+          totalRefund = totalRefund + (item.returnQuantity * item.unitPrice)
       }
-      totalRefund = totalRefund + (item.returnQuantity * item.unitPrice)
-    }
-    if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
-      totalRefund = totalRefund - minRestockingFee
-      this.setState({ totalRefund: totalRefund.toFixed(2), minimumRestockingFee: true })
-    } else {
-      totalRefund = totalRefund - totalRestockingFee
-      this.setState({ totalRefund: totalRefund.toFixed(2) })
-    }
+      if (totalRestockingFee < minRestockingFee && totalRestockingFee !== 0) {
+          totalRefund = totalRefund - minRestockingFee
+          this.setState({ totalRefund: totalRefund.toFixed(2), minimumRestockingFee: true })
+      } else {
+          totalRefund = totalRefund - totalRestockingFee
+          this.setState({ totalRefund: totalRefund.toFixed(2) })
+      }
   }
 
   render(){
-    const {
-      returnItems,
-      inFlight,
-      submitError,
-      submitSuccess
-    } = this.props
+      const {
+          returnItems,
+          inFlight,
+          submitError,
+          submitSuccess
+      } = this.props
 
-    const {
-      reviewedSummary,
-      totalRefund,
-      minimumRestockingFee
-    } = this.state
+      const {
+          reviewedSummary,
+          totalRefund,
+          minimumRestockingFee
+      } = this.state
 
-    let itemBars = []
+      let itemBars = []
 
-    if (returnItems.length > 0) {
-      _.each(returnItems, (item) => {
-        itemBars.push(
-          <DivItem>
-            <PItemDetail>
-              <StyledText1>{`AHC-${item.frecnoNum} - (Qty ${item.returnQuantity})`}</StyledText1>
-              <StyledText0>{`$${(item.returnQuantity * item.unitPrice).toFixed(2)}`}</StyledText0>
-            </PItemDetail>
-            <PItemDetail>
-              <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
-              {item.hasReturnFee && <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee>}
-            </PItemDetail>
-          </DivItem>
-        )
-      })
-    } else {
-      itemBars = (
-        <Callout text='No Items selected for Return' />
-      )
-    }
+      if (returnItems.length > 0) {
+          _.each(returnItems, (item) => {
+              itemBars.push(
+                  <DivItem>
+                      <PItemDetail>
+                          <StyledText1>{`AHC-${item.frecnoNum} - (Qty ${item.returnQuantity})`}</StyledText1>
+                          <StyledText0>{`$${(item.returnQuantity * item.unitPrice).toFixed(2)}`}</StyledText0>
+                      </PItemDetail>
+                      <PItemDetail>
+                          <StyledText0>{`Item ID: ${item.itemId}`}</StyledText0>
+                          {item.hasReturnFee && <PItemRestockingFee as='div'>{`Restocking Fee: $${(item.returnQuantity * item.unitPrice * 0.25).toFixed(2)}`}</PItemRestockingFee>}
+                      </PItemDetail>
+                  </DivItem>
+              )
+          })
+      } else {
+          itemBars = (
+              <Callout text='No Items selected for Return' />
+          )
+      }
 
-    const agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
-    if (submitSuccess) {
-      return (
-        <DivContainer>
-          <DivHeader>
-            <PHeader>Return Request Submitted</PHeader>
-            <p>You will now be redirected to the Invoice Screen</p>
-          </DivHeader>
-        </DivContainer>
-      )
-    } else {
-      return (
-        <DivContainer>
-          <DivHeader>
-            <PHeader>Return Summary</PHeader>
-          </DivHeader>
-          <DivItemlist>
-            {itemBars}
-            <DivTotal as='div'>
-              {returnItems.length !== 0 && `Total: $${totalRefund}`}
-            </DivTotal>
-            <DivAgree>
-              <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary}/>
-              <InputAgree as='label' htmlFor='agree'>{agreementText}</InputAgree>
-            </DivAgree>
-            {submitError && <DivErrors>Submit failed</DivErrors>}
-          </DivItemlist>
-          <DivActionbar>
-            <Button color='secondary' onClick={this.handleOnClose} text='Cancel'/>
-            <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return'
-              inFlight={inFlight} inFlightText={'Confirming...'}
-            />
-          </DivActionbar>
-        </DivContainer>
-      )
-    }
+      const agreementText = minimumRestockingFee ? 'I\'ve reviewed the above return Summary. Note that the minimum restocking fee is $15.00' : 'I\'ve reviewed the above return Summary.'
+      if (submitSuccess) {
+          return (
+              <DivContainer>
+                  <DivHeader>
+                      <PHeader>Return Request Submitted</PHeader>
+                      <p>You will now be redirected to the Invoice Screen</p>
+                  </DivHeader>
+              </DivContainer>
+          )
+      } else {
+          return (
+              <DivContainer>
+                  <DivHeader>
+                      <PHeader>Return Summary</PHeader>
+                  </DivHeader>
+                  <DivItemlist>
+                      {itemBars}
+                      <DivTotal as='div'>
+                          {returnItems.length !== 0 && `Total: $${totalRefund}`}
+                      </DivTotal>
+                      <DivAgree>
+                          <InputAgree id='agree' type='checkbox' disabled={returnItems.length === 0} onChange={this.toggleCheckbox} value={this.state.reviewedSummary}/>
+                          <InputAgree as='label' htmlFor='agree'>{agreementText}</InputAgree>
+                      </DivAgree>
+                      {submitError && <DivErrors>Submit failed</DivErrors>}
+                  </DivItemlist>
+                  <DivActionbar>
+                      <Button color='secondary' onClick={this.handleOnClose} text='Cancel'/>
+                      <Button onClick={this.handleConfirmReturn} disabled={!reviewedSummary} text='Confirm Return'
+                          inFlight={inFlight} inFlightText={'Confirming...'}
+                      />
+                  </DivActionbar>
+              </DivContainer>
+          )
+      }
   }
 }
 

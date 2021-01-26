@@ -11,12 +11,12 @@ export const CategoryContainer = styled.div`
 `
 
 export default function CategoriesPage() {
-  return (
-    <CategoryContainer>
-      <Switch>
-        <Route path="/categories/:categoryUrlSlug" component={CategorySearch}/>
-        <Route path="/categories" component={RootCategories}/>
-      </Switch>
-    </CategoryContainer>
-  )
+    return (
+        <CategoryContainer>
+            <Switch>
+                <Route path="/categories/:categoryUrlSlug" component={CategorySearch}/>
+                <Route path="/categories" component={RootCategories}/>
+            </Switch>
+        </CategoryContainer>
+    )
 }

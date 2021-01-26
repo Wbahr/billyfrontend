@@ -23,23 +23,23 @@ export const InfoAlert = styled(Alert)`
 
 //A message box area for forms that displays a message, no icon
 export function ShowAlert({ message }) {
-  return (
-    <Alert>{message}</Alert>
-  )
+    return (
+        <Alert>{message}</Alert>
+    )
 }
 
 //A message box area for forms that displays an informational alert
 export function ShowInfoAlert({ message }) {
-  return (
-    <InfoAlert><FontAwesomeIcon icon={faInfoCircle} /> {message}</InfoAlert>
-  )
+    return (
+        <InfoAlert><FontAwesomeIcon icon={faInfoCircle} /> {message}</InfoAlert>
+    )
 }
 
 //A message box area for forms that displays an error alert
 export function ShowErrorAlert({ message }) {
-  return (
-    <ErrorAlert><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
-  )
+    return (
+        <ErrorAlert><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
+    )
 }
 
 

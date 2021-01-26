@@ -13,17 +13,17 @@ const StyledMainCallout = styled.div`
 `
 
 class Callout extends React.Component {
-  render(){
-    const {
-      text
-    } = this.props
+    render(){
+        const {
+            text
+        } = this.props
 
-    return (
-      <StyledMainCallout>
-        {text}
-      </StyledMainCallout>
-    )
-  }
+        return (
+            <StyledMainCallout>
+                {text}
+            </StyledMainCallout>
+        )
+    }
 }
 
 export default Callout

@@ -13,9 +13,9 @@ const FeaturedBrandBg = styled.div`
   `
 
 export default function FeaturedBrandLogo(props) {
-  return (
-    <FeaturedBrandBg>
-      <BannerImg src={props.src}/>
-    </FeaturedBrandBg>
-  )
+    return (
+        <FeaturedBrandBg>
+            <BannerImg src={props.src}/>
+        </FeaturedBrandBg>
+    )
 }

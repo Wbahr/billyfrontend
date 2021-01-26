@@ -28,19 +28,19 @@ const Fax = styled.a`
 `
 
 export default function LocationsList(props) {
-  const {
-    city,
-    address,
-    phone,
-    fax
-  } = props
-  return (
-    <ListDiv>
-      <City>{city}</City>
-      <Address href={address}><FontAwesomeIcon icon="map-marker-alt" /> {address}</Address>
-      <Phone href={phone}><FontAwesomeIcon icon="phone-alt" size="2px" /> {phone}</Phone>
-      <Fax href={fax}><FontAwesomeIcon icon="print" size="2px" /> {fax}</Fax>
-      {/* <TollFree>Toll Free: {tollFree}</TollFree> */}
-    </ListDiv>
-  )
+    const {
+        city,
+        address,
+        phone,
+        fax
+    } = props
+    return (
+        <ListDiv>
+            <City>{city}</City>
+            <Address href={address}><FontAwesomeIcon icon="map-marker-alt" /> {address}</Address>
+            <Phone href={phone}><FontAwesomeIcon icon="phone-alt" size="2px" /> {phone}</Phone>
+            <Fax href={fax}><FontAwesomeIcon icon="print" size="2px" /> {fax}</Fax>
+            {/* <TollFree>Toll Free: {tollFree}</TollFree> */}
+        </ListDiv>
+    )
 }

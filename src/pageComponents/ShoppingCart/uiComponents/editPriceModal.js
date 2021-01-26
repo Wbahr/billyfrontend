@@ -42,121 +42,121 @@ const Container = styled.div`
 `
 
 export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data }) {
-  const [itemPrice, setItemPrice] = useState(0)
-  const [margin, setMargin] = useState(0)
-  const [selectedReason, setSelectedReason] = useState(null)
-  const { editPriceReasonCodes } = useContext(Context)
+    const [itemPrice, setItemPrice] = useState(0)
+    const [margin, setMargin] = useState(0)
+    const [selectedReason, setSelectedReason] = useState(null)
+    const { editPriceReasonCodes } = useContext(Context)
   
-  const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
+    const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
   
-  useEffect(() => {
-    if (data) {
-      setItemPrice(data.itemPrice)
-      setMargin(calculateMargin(data.itemPrice))
-      setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
+    useEffect(() => {
+        if (data) {
+            setItemPrice(data.itemPrice)
+            setMargin(calculateMargin(data.itemPrice))
+            setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
+        }
+    }, [data])
+  
+    function handleReset() {
+        setItemPrice(data.originalItemPrice)
+        setMargin(calculateMargin(data.originalItemPrice))
+        setSelectedReason(null)
     }
-  }, [data])
   
-  function handleReset() {
-    setItemPrice(data.originalItemPrice)
-    setMargin(calculateMargin(data.originalItemPrice))
-    setSelectedReason(null)
-  }
-  
-  function calculateMargin(price) {
-    const newMargin = margin < 0 ? 0 : (price - data.airlineCost) / price
-    return (newMargin * 100).toFixed(1)
-  }
-  
-  const handleChangePrice = type => (e, maskValue, floatValue) => {
-    if (type === 'price') {
-      setItemPrice(floatValue)
-      setMargin(calculateMargin(floatValue))
-    } else {
-      setMargin(floatValue)
-      setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
+    function calculateMargin(price) {
+        const newMargin = margin < 0 ? 0 : (price - data.airlineCost) / price
+        return (newMargin * 100).toFixed(1)
     }
-  }
   
-  const handleCancel = () => {
-    handleReset()
-    hideEditPriceModal()
-  }
-  
-  const handleSave = () => {
-    if (itemPrice === data.originalItemPrice) {
-      setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
-    } else {
-      setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
+    const handleChangePrice = type => (e, maskValue, floatValue) => {
+        if (type === 'price') {
+            setItemPrice(floatValue)
+            setMargin(calculateMargin(floatValue))
+        } else {
+            setMargin(floatValue)
+            setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
+        }
     }
-    hideEditPriceModal()
-  }
   
-  const handleReasonCodeChange = value => {
-    setSelectedReason(reasonCodeOptions.find(code => code.value === value))
-  }
+    const handleCancel = () => {
+        handleReset()
+        hideEditPriceModal()
+    }
   
-  return (
-    <Modal
-      open={open}
-      onClose={hideEditPriceModal}
-      contentStyle={{ maxWidth: 400, borderRadius: 3 }}
-    >
-      <Container>
-        <h4>Edit Item Price</h4>
-        <DivRow>
-          <DivItem>
-            <Label>Item Price: </Label>
-            <AirlineInput
-              type="currency"
-              value={itemPrice}
-              width='100px'
-              onChange={handleChangePrice('price')}
-            />
-          </DivItem>
+    const handleSave = () => {
+        if (itemPrice === data.originalItemPrice) {
+            setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
+        } else {
+            setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
+        }
+        hideEditPriceModal()
+    }
+  
+    const handleReasonCodeChange = value => {
+        setSelectedReason(reasonCodeOptions.find(code => code.value === value))
+    }
+  
+    return (
+        <Modal
+            open={open}
+            onClose={hideEditPriceModal}
+            contentStyle={{ maxWidth: 400, borderRadius: 3 }}
+        >
+            <Container>
+                <h4>Edit Item Price</h4>
+                <DivRow>
+                    <DivItem>
+                        <Label>Item Price: </Label>
+                        <AirlineInput
+                            type="currency"
+                            value={itemPrice}
+                            width='100px'
+                            onChange={handleChangePrice('price')}
+                        />
+                    </DivItem>
           
-          <DivItem>
-            <Label>Margin: {data?.spaType && `(SPA: ${data.spaType})`}</Label>
-            <AirlineInput
-              type="percent"
-              value={margin}
-              width='100px'
-              onChange={handleChangePrice('margin')}
-            />
-          </DivItem>
+                    <DivItem>
+                        <Label>Margin: {data?.spaType && `(SPA: ${data.spaType})`}</Label>
+                        <AirlineInput
+                            type="percent"
+                            value={margin}
+                            width='100px'
+                            onChange={handleChangePrice('margin')}
+                        />
+                    </DivItem>
           
-          <DivItem>
-            <Label>Airline Cost: </Label>
-            <AirlineInput
-              type="currency"
-              disabled={true}
-              value={data?.airlineCost}
-              width='100px'
-            />
-          </DivItem>
-        </DivRow>
+                    <DivItem>
+                        <Label>Airline Cost: </Label>
+                        <AirlineInput
+                            type="currency"
+                            disabled={true}
+                            value={data?.airlineCost}
+                            width='100px'
+                        />
+                    </DivItem>
+                </DivRow>
         
-        {itemPrice !== data?.originalItemPrice && (
-          <AirlineSelect
-            label="Reason"
-            options={reasonCodeOptions}
-            value={selectedReason}
-            setValue={handleReasonCodeChange}
-          />
-        )}
+                {itemPrice !== data?.originalItemPrice && (
+                    <AirlineSelect
+                        label="Reason"
+                        options={reasonCodeOptions}
+                        value={selectedReason}
+                        setValue={handleReasonCodeChange}
+                    />
+                )}
         
-        <DivRow>
-          <ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
-          <ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
-          <ButtonRed
-            onClick={handleSave}
-            disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason.value === data?.cartItem?.priceReasonId)
+                <DivRow>
+                    <ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
+                    <ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
+                    <ButtonRed
+                        onClick={handleSave}
+                        disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason.value === data?.cartItem?.priceReasonId)
             || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)}
-          >
-            Save
-          </ButtonRed>
-        </DivRow>
-      </Container>
-    </Modal>
-  )
+                    >
+                        Save
+                    </ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    )
 }

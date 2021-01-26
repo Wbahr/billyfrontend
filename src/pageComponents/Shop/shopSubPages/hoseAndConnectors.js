@@ -5,9 +5,9 @@ import React from 'react'
 // import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 export default function HoseAndConnectors() {
-  return (
-    <div>
+    return (
+        <div>
             
-    </div>
-  )
+        </div>
+    )
 }

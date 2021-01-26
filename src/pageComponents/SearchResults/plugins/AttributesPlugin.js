@@ -30,42 +30,42 @@ const AttributesDiv = styled.div`
 `
 
 export default function AttributesPlugin({ attributes, setAttributes, classes, drawerOpen, setDrawerOpen }) {
-  const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(true)
 	
-  const toggleOpen = () => {
-    if (!drawerOpen) setDrawerOpen(true)
-    setIsOpen(!isOpen)
-  }
+    const toggleOpen = () => {
+        if (!drawerOpen) setDrawerOpen(true)
+        setIsOpen(!isOpen)
+    }
 	
-  const handleUpdateAttributes = index => newAttr => {
-    const newAttributes = attributes.slice()
-    newAttributes[index] = newAttr
-    setAttributes(newAttributes)
-  }
+    const handleUpdateAttributes = index => newAttr => {
+        const newAttributes = attributes.slice()
+        newAttributes[index] = newAttr
+        setAttributes(newAttributes)
+    }
 	
-  const attributeFilters = useMemo(() => attributes.map((attribute, index) => (
-    <AttributeTypeFilter
-      key={index}
-      attribute={attribute}
-      updateAttribute={handleUpdateAttributes(index)}
-    />
-  )), [attributes])
+    const attributeFilters = useMemo(() => attributes.map((attribute, index) => (
+        <AttributeTypeFilter
+            key={index}
+            attribute={attribute}
+            updateAttribute={handleUpdateAttributes(index)}
+        />
+    )), [attributes])
 	
-  return (
-    <div>
-      <DivTitle onClick={toggleOpen}>
-        <AttributeIcon/>
-        <P>Attributes</P>
-        <FontAwesomeIcon icon={isOpen ? 'caret-up' : 'caret-down'} color="white"/>
-      </DivTitle>
+    return (
+        <div>
+            <DivTitle onClick={toggleOpen}>
+                <AttributeIcon/>
+                <P>Attributes</P>
+                <FontAwesomeIcon icon={isOpen ? 'caret-up' : 'caret-down'} color="white"/>
+            </DivTitle>
 			
-      <AttributesDiv className={clsx({
-        [classes.expand]: drawerOpen || isOpen,
-        [classes.collapse]: !isOpen || !drawerOpen
-      })}
-      >
-        {attributeFilters}
-      </AttributesDiv>
-    </div>
-  )
+            <AttributesDiv className={clsx({
+                [classes.expand]: drawerOpen || isOpen,
+                [classes.collapse]: !isOpen || !drawerOpen
+            })}
+            >
+                {attributeFilters}
+            </AttributesDiv>
+        </div>
+    )
 }

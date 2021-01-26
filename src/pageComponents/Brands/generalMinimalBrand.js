@@ -30,45 +30,45 @@ import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 // export default FullBrand
 
 export default function GeneralMinimalBrand() {
-  const [pageComponent, setPageComponent] = useState()
-  const { page } = useParams()
+    const [pageComponent, setPageComponent] = useState()
+    const { page } = useParams()
 
-  // const MinimalBrandPages = [
-  //   {
-  //     'label': 'AcmeElectric',
-  //     'page': 'acme-electric'
-  //   },
-  //   {
-  //     'label': 'Adaptall',
-  //     'page': 'adaptall'
-  //   },
-  //   {
-  //     'label': 'Adsens',
-  //     'page': 'adsens'
-  //   }
-  // ]
-  useEffect(() => {
-    if (page === 'acme-electric'){
-      setPageComponent(<AcmeElectricPage/>)
-    } else if (page === 'adaptall'){
-      setPageComponent(<AcmeElectricPage/>) // Swap this when Adaptall page is completed
-      // setPageComponent(<AdaptallPage/>)
-    } else if (page === 'adsens'){
-      setPageComponent(<AcmeElectricPage/>) // Swap this when Adsens page is completed
-      // setPageComponent(<AdsensPage/>)
-    } 
+    // const MinimalBrandPages = [
+    //   {
+    //     'label': 'AcmeElectric',
+    //     'page': 'acme-electric'
+    //   },
+    //   {
+    //     'label': 'Adaptall',
+    //     'page': 'adaptall'
+    //   },
+    //   {
+    //     'label': 'Adsens',
+    //     'page': 'adsens'
+    //   }
+    // ]
+    useEffect(() => {
+        if (page === 'acme-electric'){
+            setPageComponent(<AcmeElectricPage/>)
+        } else if (page === 'adaptall'){
+            setPageComponent(<AcmeElectricPage/>) // Swap this when Adaptall page is completed
+            // setPageComponent(<AdaptallPage/>)
+        } else if (page === 'adsens'){
+            setPageComponent(<AcmeElectricPage/>) // Swap this when Adsens page is completed
+            // setPageComponent(<AdsensPage/>)
+        } 
     
-  }, [page])
+    }, [page])
       
-  return (
-    <> 
-      {pageComponent}      
+    return (
+        <> 
+            {pageComponent}      
   
 
-    </>
-  )
+        </>
+    )
 }
 
 GeneralMinimalBrand.propTypes = {
-  history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 }

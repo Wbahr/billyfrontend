@@ -37,50 +37,50 @@ const DivAddMore = styled.div`
 `
 
 export default function FormikFieldArray({ name, label, addMore }){
-  let valueArray = 'values.' + name
-  valueArray = eval(valueArray)
-  return (
-    <FieldArray
-      name={name}
-      render={arrayHelpers => (
-        <FormikFormFieldContainer>
-          <Label>{label}</Label>
-          {valueArray && valueArray.length > 0 ? (
-            valueArray.map((elem, index) => (
-              <React.Fragment key={index}>
-                <ButtonContainer>
-                  <FormikFormField name={`${name}.${index}`} />
+    let valueArray = 'values.' + name
+    valueArray = eval(valueArray)
+    return (
+        <FieldArray
+            name={name}
+            render={arrayHelpers => (
+                <FormikFormFieldContainer>
+                    <Label>{label}</Label>
+                    {valueArray && valueArray.length > 0 ? (
+                        valueArray.map((elem, index) => (
+                            <React.Fragment key={index}>
+                                <ButtonContainer>
+                                    <FormikFormField name={`${name}.${index}`} />
                   
-                  <div onClick={() => arrayHelpers.remove(index)}>
-                    <FontAwesomeIcon icon="minus-circle" color="grey"/>
-                  </div>
+                                    <div onClick={() => arrayHelpers.remove(index)}>
+                                        <FontAwesomeIcon icon="minus-circle" color="grey"/>
+                                    </div>
                   
-                  { ((index + 1) === valueArray.length && index < 4) && (
-                    <div onClick={() => arrayHelpers.insert(index, '')}>
-                      <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
-                    </div>
-                  )}
-                </ButtonContainer>
+                                    { ((index + 1) === valueArray.length && index < 4) && (
+                                        <div onClick={() => arrayHelpers.insert(index, '')}>
+                                            <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
+                                        </div>
+                                    )}
+                                </ButtonContainer>
                 
-                <FormikFormFieldError>
-                  <ErrorMessage name={`${name}.${index}`} />
-                </FormikFormFieldError>
-              </React.Fragment>
-            ))
-          ) : (
-            <DivAddMore onClick={() => arrayHelpers.insert(0, '')}>
-              {addMore}
-              <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
-            </DivAddMore>
-          )}
-        </FormikFormFieldContainer>
-      )}
-    />
-  )
+                                <FormikFormFieldError>
+                                    <ErrorMessage name={`${name}.${index}`} />
+                                </FormikFormFieldError>
+                            </React.Fragment>
+                        ))
+                    ) : (
+                        <DivAddMore onClick={() => arrayHelpers.insert(0, '')}>
+                            {addMore}
+                            <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
+                        </DivAddMore>
+                    )}
+                </FormikFormFieldContainer>
+            )}
+        />
+    )
 }
 
 FormikFieldArray.propTypes = {
-  name: PropTypes.string.isRequired,
-  addMore: PropTypes.string.isRequired,
-  label: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    addMore: PropTypes.string.isRequired,
+    label: PropTypes.string,
 }

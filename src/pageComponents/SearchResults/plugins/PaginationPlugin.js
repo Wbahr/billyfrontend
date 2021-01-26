@@ -11,18 +11,18 @@ const PaginationContainer = styled.div`
 const DEFAULT_RESULT_SIZE = 24
 
 export default function PaginationPlugin({ totalResults, resultSize=DEFAULT_RESULT_SIZE, page, onPageChange }) {
-  const handlePageChange = (e, p) => {
-    onPageChange(p)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+    const handlePageChange = (e, p) => {
+        onPageChange(p)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
 	
-  return (
-    <PaginationContainer>
-      <Pagination
-        count={Math.ceil(totalResults / resultSize)}
-        page={parseInt(page)}
-        onChange={handlePageChange}
-      />
-    </PaginationContainer>
-  )
+    return (
+        <PaginationContainer>
+            <Pagination
+                count={Math.ceil(totalResults / resultSize)}
+                page={parseInt(page)}
+                onChange={handlePageChange}
+            />
+        </PaginationContainer>
+    )
 }

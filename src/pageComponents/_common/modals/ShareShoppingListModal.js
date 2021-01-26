@@ -34,56 +34,56 @@ const ErrorSpan = styled.div`
 `
 
 export default function ShareShoppingListModal({ open, hide, shoppingList }) {
-  const context = useContext(Context)
-  const [selectedUsers, setSelectedUsers] = useState([])
-  const [error, setError] = useState('')
+    const context = useContext(Context)
+    const [selectedUsers, setSelectedUsers] = useState([])
+    const [error, setError] = useState('')
 	
-  const loading = context.upsertShoppingListState?.loading
+    const loading = context.upsertShoppingListState?.loading
 	
-  const mapUserOptions = ({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId })
+    const mapUserOptions = ({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId })
 	
-  const userOptions = context.webUserContacts
-    .filter(user => shoppingList.contactIdOwner !== user.contactId)
-    .map(mapUserOptions)
+    const userOptions = context.webUserContacts
+        .filter(user => shoppingList.contactIdOwner !== user.contactId)
+        .map(mapUserOptions)
 	
-  useEffect(() => {
-    if (shoppingList.editors) setSelectedUsers(shoppingList.editors.map(mapUserOptions))
-  }, [shoppingList])
+    useEffect(() => {
+        if (shoppingList.editors) setSelectedUsers(shoppingList.editors.map(mapUserOptions))
+    }, [shoppingList])
 	
-  const handleClose = () => {
-    setError('')
-    hide()
-  }
-	
-  const handleShare = () => {
-    if (!context.userInfo.contactId && !selectedUsers.length) {
-      setError('Please select a user')
-    } else {
-      context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({ contactId: u.value })) })
-        .then(() => hide())
+    const handleClose = () => {
+        setError('')
+        hide()
     }
-  }
 	
-  return (
-    <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
-      <Container>
-        <div>
-          <p>Select users to access list: {shoppingList.name}</p>
-          <Select
-            isMulti
-            value={selectedUsers}
-            onChange={setSelectedUsers}
-            options={userOptions}
-            placeholder='Search user'
-            width={225}
-          />
-        </div>
-        <ErrorSpan>{error}</ErrorSpan>
-        <DivRow>
-          <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-          <ButtonRed disabled={loading} onClick={handleShare}>{loading ? 'Sharing...' : 'Share'}</ButtonRed>
-        </DivRow>
-      </Container>
-    </Modal>
-  )
+    const handleShare = () => {
+        if (!context.userInfo.contactId && !selectedUsers.length) {
+            setError('Please select a user')
+        } else {
+            context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({ contactId: u.value })) })
+                .then(() => hide())
+        }
+    }
+	
+    return (
+        <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
+            <Container>
+                <div>
+                    <p>Select users to access list: {shoppingList.name}</p>
+                    <Select
+                        isMulti
+                        value={selectedUsers}
+                        onChange={setSelectedUsers}
+                        options={userOptions}
+                        placeholder='Search user'
+                        width={225}
+                    />
+                </div>
+                <ErrorSpan>{error}</ErrorSpan>
+                <DivRow>
+                    <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
+                    <ButtonRed disabled={loading} onClick={handleShare}>{loading ? 'Sharing...' : 'Share'}</ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    )
 }

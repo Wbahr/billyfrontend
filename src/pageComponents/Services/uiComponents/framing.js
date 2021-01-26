@@ -20,19 +20,19 @@ const P = styled.p`
     padding: 0 15px;
 `
 export default function framing(props) {
-  const {
-    link,
-    src,
-    text,
-  } = props
-  return (
-    <>
-      <FramingDiv href={link} target="_blank">
-        <div>
-          <img src={src} />
-        </div>
-        <P>{text}</P>
-      </FramingDiv>
-    </>
-  )
+    const {
+        link,
+        src,
+        text,
+    } = props
+    return (
+        <>
+            <FramingDiv href={link} target="_blank">
+                <div>
+                    <img src={src} />
+                </div>
+                <P>{text}</P>
+            </FramingDiv>
+        </>
+    )
 }

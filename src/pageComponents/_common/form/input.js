@@ -32,33 +32,33 @@ const Label = styled.label`
 class Input extends React.Component {
 
   handleOnChange = (e) => {
-    this.props.onChange(e)
+      this.props.onChange(e)
   }
 
   render(){
-    const {
-      type,
-      placeholder,
-      value,
-      disabled,
-      label,
-      error
-    } = this.props
+      const {
+          type,
+          placeholder,
+          value,
+          disabled,
+          label,
+          error
+      } = this.props
 
-    return (
-      <DivContainer>
-        {label && <Label htmlFor={label}>{`${label}:`}</Label>}
-        <MainInput
-          disabled={disabled}
-          type={type || ''}
-          value={value}
-          placeholder={placeholder}
-          onChange={this.handleOnChange}
-          name={label}
-        />
-        {error && <span>{error}</span>}
-      </DivContainer>
-    )
+      return (
+          <DivContainer>
+              {label && <Label htmlFor={label}>{`${label}:`}</Label>}
+              <MainInput
+                  disabled={disabled}
+                  type={type || ''}
+                  value={value}
+                  placeholder={placeholder}
+                  onChange={this.handleOnChange}
+                  name={label}
+              />
+              {error && <span>{error}</span>}
+          </DivContainer>
+      )
   }
 }
 

@@ -9,11 +9,11 @@ const Container = styled.div`
     flex-direction: column;
 `
 export default function Careers() {
-  return (
-    <>
-      <Container>
-        <Header text="Careers"/>
-      </Container>
-    </>
-  )
+    return (
+        <>
+            <Container>
+                <Header text="Careers"/>
+            </Container>
+        </>
+    )
 }

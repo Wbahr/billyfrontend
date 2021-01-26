@@ -18,21 +18,21 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HomePage() {
-  return (
-    <ContentScreenContainer>
-      <Banner />
+    return (
+        <ContentScreenContainer>
+            <Banner />
 			
-      <div>
-        <SectionHeader text='Shop by Categories' />
+            <div>
+                <SectionHeader text='Shop by Categories' />
 			
-        <CategoryContainer>
-          <RootCategories/>
-        </CategoryContainer>
-      </div>
+                <CategoryContainer>
+                    <RootCategories/>
+                </CategoryContainer>
+            </div>
 			
-      <TechnicallySpeaking />
-      <FeaturedManufacturers />
-      <LineCards />
-    </ContentScreenContainer>
-  )
+            <TechnicallySpeaking />
+            <FeaturedManufacturers />
+            <LineCards />
+        </ContentScreenContainer>
+    )
 }

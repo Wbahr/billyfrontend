@@ -29,66 +29,66 @@ const DivStripeCard = styled.div`
 `
 
 function noScroll(){
-  window.scrollTo(0, 0)
+    window.scrollTo(0, 0)
 }
 
 class ProductConfigSearch extends React.Component {
   state = {
-    selectedCard: ''
+      selectedCard: ''
   }
 
   UNSAFE_componentWillMount() {
-    window.removeEventListener('scroll', noScroll)
+      window.removeEventListener('scroll', noScroll)
   }
 
   scrollToQuestions = () => {
-    document.getElementById('product').scrollIntoView({ behavior: 'smooth' })
+      document.getElementById('product').scrollIntoView({ behavior: 'smooth' })
   }
 
   scrollToCards = () => {
-    document.getElementById('cards').scrollIntoView({ behavior: 'smooth' })
+      document.getElementById('cards').scrollIntoView({ behavior: 'smooth' })
   }
 
   cardClick = (brand) => {
-    this.setState({ selectedCard: brand }, this.scrollToQuestions)
+      this.setState({ selectedCard: brand }, this.scrollToQuestions)
   }
 
   backClick = () => {
-    this.setState({ selectedCard: '' }, this.scrollToCards)
+      this.setState({ selectedCard: '' }, this.scrollToCards)
   }
 
   render(){
 
-    return (
-      <>
-        <DivCardContainer id='cards'>
-          <DivRow>
-            <IQCard
-              text='Haskell Pump'
-              selectedCard={this.state.selectedCard}
-              cardClick={this.cardClick}
-            />
-            <IQCard
-              text='Haskell Hydraulic'
-              selectedCard={this.state.selectedCard}
-              cardClick={this.cardClick}
-            />
-            <IQCard
-              text='Haskell Pipe'
-              selectedCard={this.state.selectedCard}
-              cardClick={this.cardClick}
-            />
-          </DivRow>
-        </DivCardContainer>
-        <DivCardContainerGrey id='product'>
-          <span onClick={this.backClick}>back to cards</span>
-          <span>{this.state.selectedCard}</span>
-          <DivStripeCard>
-            <CardElement />
-          </DivStripeCard>
-        </DivCardContainerGrey>
-      </>
-    )
+      return (
+          <>
+              <DivCardContainer id='cards'>
+                  <DivRow>
+                      <IQCard
+                          text='Haskell Pump'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                      <IQCard
+                          text='Haskell Hydraulic'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                      <IQCard
+                          text='Haskell Pipe'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                  </DivRow>
+              </DivCardContainer>
+              <DivCardContainerGrey id='product'>
+                  <span onClick={this.backClick}>back to cards</span>
+                  <span>{this.state.selectedCard}</span>
+                  <DivStripeCard>
+                      <CardElement />
+                  </DivStripeCard>
+              </DivCardContainerGrey>
+          </>
+      )
   }
 }
 

@@ -14,7 +14,7 @@ const ProductItem = styled.a`
   `
 
 export default function ProductName({ text }) {
-  return (
-    <ProductItem>{text}</ProductItem>
-  )
+    return (
+        <ProductItem>{text}</ProductItem>
+    )
 }

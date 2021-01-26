@@ -8,15 +8,15 @@ const DivResultsSearch = styled.div`
 `
 
 export default function SortPlugin({ sortType, setSortType }) {
-  const handleSetSortType = e => setSortType(e.target.value)
+    const handleSetSortType = e => setSortType(e.target.value)
 	
-  return (
-    <DivResultsSearch>
-      <select value={sortType} onChange={handleSetSortType}>
-        <option value={'relevancy'}>Sort by Relevance</option>
-        <option value={'availability'}>Sort by Availability</option>
-        <option value={'popularity'}>Sort by Popularity</option>
-      </select>
-    </DivResultsSearch>
-  )
+    return (
+        <DivResultsSearch>
+            <select value={sortType} onChange={handleSetSortType}>
+                <option value={'relevancy'}>Sort by Relevance</option>
+                <option value={'availability'}>Sort by Availability</option>
+                <option value={'popularity'}>Sort by Popularity</option>
+            </select>
+        </DivResultsSearch>
+    )
 }

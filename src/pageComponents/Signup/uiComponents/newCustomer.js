@@ -14,36 +14,36 @@ const H4 = styled.h4`
 `
 
 export default function NewCustomer() {
-  const [saved, setSaved] = useState(false)
-  const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER, { 
-    onCompleted() {
-      setSaved(true)
+    const [saved, setSaved] = useState(false)
+    const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER, { 
+        onCompleted() {
+            setSaved(true)
+        }
+    })
+
+    const onSubmit = (values, { setSubmitting }) => {
+        setTimeout(() => { 
+            saveNewCustomer(mapToApi(values))
+            setSubmitting(false)
+        }, 1000)
     }
-  })
 
-  const onSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => { 
-      saveNewCustomer(mapToApi(values))
-      setSubmitting(false)
-    }, 1000)
-  }
-
-  if (saved === true) {
-    return <Summary />
-  } else {
-    return (
-      <>
-        <H4>New Customer</H4>
-        <NewCustomerForm 
-          useExpandedMode={true}
-          showCustomerLookup={false}
-          newCustomerInitialValues={newCustomerInitialValues} 
-          validationSchema={newCustomerSchema} 
-          onSubmit={onSubmit} 
-          choosePasswordEnabled={true} 
-          buttonText="Register Account"
-        />
-      </>
-    )
-  }
+    if (saved === true) {
+        return <Summary />
+    } else {
+        return (
+            <>
+                <H4>New Customer</H4>
+                <NewCustomerForm 
+                    useExpandedMode={true}
+                    showCustomerLookup={false}
+                    newCustomerInitialValues={newCustomerInitialValues} 
+                    validationSchema={newCustomerSchema} 
+                    onSubmit={onSubmit} 
+                    choosePasswordEnabled={true} 
+                    buttonText="Register Account"
+                />
+            </>
+        )
+    }
 }

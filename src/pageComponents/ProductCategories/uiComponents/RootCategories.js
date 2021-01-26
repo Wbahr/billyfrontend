@@ -11,20 +11,20 @@ const DivRow = styled.div`
 `
 
 export default () => {
-  const [categories, setCategories] = useState(null)
+    const [categories, setCategories] = useState(null)
 	
-  const { loading } = useQuery(GET_ROOT_CATEGORIES_PAGE, {
-    onCompleted: data => setCategories(data.getAllRootCategories)
-  })
+    const { loading } = useQuery(GET_ROOT_CATEGORIES_PAGE, {
+        onCompleted: data => setCategories(data.getAllRootCategories)
+    })
 	
-  return loading || !categories ? (
-    <Loader />
-  ) : (
-    <>
-      <DivRow><p>All Categories</p></DivRow>
-      {(categories || []).map(({ urlSlug, name, imageUrl }) => (
-        <Category key={urlSlug} text={name} linkTo={`/categories/${urlSlug}`} Image={<img src={imageUrl} alt={name} title={name}/>}/>
-      ))}
-    </>
-  )
+    return loading || !categories ? (
+        <Loader />
+    ) : (
+        <>
+            <DivRow><p>All Categories</p></DivRow>
+            {(categories || []).map(({ urlSlug, name, imageUrl }) => (
+                <Category key={urlSlug} text={name} linkTo={`/categories/${urlSlug}`} Image={<img src={imageUrl} alt={name} title={name}/>}/>
+            ))}
+        </>
+    )
 }

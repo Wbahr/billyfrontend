@@ -78,208 +78,208 @@ const DivNavigation = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-  const {
-    history,
-    values: {
-      schedule,
-      shipto,
-      billing: {
-        sameAsShipping,
-        ...billing
-      },
-      confirmationEmail: {
-        sendToShipTo,
-        imagesOnQuote
-      }
-    },
-    paymentInfo,
-    checkoutDropdownData,
-    checkoutDropdownDataLabels,
-    handleMoveStep,
-    itemsDetails,
-    itemsPrices,
-    itemsCustomerPartNumbers,
-    isStepValid,
-    validateForm
-  } = props
+    const {
+        history,
+        values: {
+            schedule,
+            shipto,
+            billing: {
+                sameAsShipping,
+                ...billing
+            },
+            confirmationEmail: {
+                sendToShipTo,
+                imagesOnQuote
+            }
+        },
+        paymentInfo,
+        checkoutDropdownData,
+        checkoutDropdownDataLabels,
+        handleMoveStep,
+        itemsDetails,
+        itemsPrices,
+        itemsCustomerPartNumbers,
+        isStepValid,
+        validateForm
+    } = props
   
-  useEffect(() => {
-    validateForm() // this is the only page we want to validate on mount
-  }, [])
+    useEffect(() => {
+        validateForm() // this is the only page we want to validate on mount
+    }, [])
 
-  const { userInfo, emptyCart } = useContext(Context)
-  const [submitting, setSubmitting] = useState(false)
-  const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
+    const { userInfo, emptyCart } = useContext(Context)
+    const [submitting, setSubmitting] = useState(false)
+    const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
 
-  const [submitOrder] = useMutation(SUBMIT_ORDER, {
-    fetchPolicy: 'no-cache',
-    onCompleted: ({ submitOrder }) => {
-      const orderId = submitOrder?.webReferenceId || null
-      if (orderId) {
-        localStorage.removeItem('shoppingCartToken')
-        emptyCart()
-        history.push(`/order-complete/${orderId}`)
-      } else {
-        setShowOrderFailedModal(true)
-      }
-      setSubmitting(false)
-    },
-    onError: () => {
-      setSubmitting(false)
-      setShowOrderFailedModal(true)
-    }
-  })
-
-  const handlePreviousClick = () => {
-    if (history.location.pathname === '/create-quote') {
-      handleMoveStep(1)
-    } else {
-      handleMoveStep(2)
-    }
-  }
-
-  const handleCheckoutSubmit = () => {
-    setSubmitting(true)
-    submitOrder({
-      variables: {
-        order: {
-          ...props.values,
-          billing: { ...billing },
-          paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
-          paymentMethodId: paymentInfo.paymentMethodId
+    const [submitOrder] = useMutation(SUBMIT_ORDER, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ submitOrder }) => {
+            const orderId = submitOrder?.webReferenceId || null
+            if (orderId) {
+                localStorage.removeItem('shoppingCartToken')
+                emptyCart()
+                history.push(`/order-complete/${orderId}`)
+            } else {
+                setShowOrderFailedModal(true)
+            }
+            setSubmitting(false)
+        },
+        onError: () => {
+            setSubmitting(false)
+            setShowOrderFailedModal(true)
         }
-      }
     })
-  }
 
-  const CartDates = schedule.cartWithDates.map((item, index) => {
-    const price = itemsPrices?.find(price => price.invMastUid === item.frecno)
-    const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
-    const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+    const handlePreviousClick = () => {
+        if (history.location.pathname === '/create-quote') {
+            handleMoveStep(1)
+        } else {
+            handleMoveStep(2)
+        }
+    }
 
-    return (
-      <ShippingScheduleLineDisplay
-        key={index}
-        item={item}
-        price={price}
-        itemDetails={details}
-        customerPartNumbers={customerPartNumbers}
-        index={index}
-      />
-    )
-  })
+    const handleCheckoutSubmit = () => {
+        setSubmitting(true)
+        submitOrder({
+            variables: {
+                order: {
+                    ...props.values,
+                    billing: { ...billing },
+                    paymentSystemCustomerId: paymentInfo.paymentSystemCustomerId,
+                    paymentMethodId: paymentInfo.paymentMethodId
+                }
+            }
+        })
+    }
 
-  const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
-  const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
+    const CartDates = schedule.cartWithDates.map((item, index) => {
+        const price = itemsPrices?.find(price => price.invMastUid === item.frecno)
+        const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
+        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+
+        return (
+            <ShippingScheduleLineDisplay
+                key={index}
+                item={item}
+                price={price}
+                itemDetails={details}
+                customerPartNumbers={customerPartNumbers}
+                index={index}
+            />
+        )
+    })
+
+    const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
+    const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
   
-  return (
-    <div>
-      {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
-        <SectionContainerBlue>
-          <SectionTitle>Confirmation Email</SectionTitle>
-          <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
-          <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-          {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuote} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
-        </SectionContainerBlue>
-      )}
-
-      <SectionRow>
-        <SectionContainerHalf>
-          <SectionTitle>Ship To</SectionTitle>
-          <SectionFields>
-            <DivAddressSection>
-              <Pbold>{shipto.companyName}</Pbold>
-              <Pbold>{shipto.address1}</Pbold>
-              <Pbold>{shipto.address2}</Pbold>
-              <Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
-            </DivAddressSection>
-
-            <p>{shipto.phone}</p>
-            <p>{shipto.email}</p>
-
-            <DivTextRow>
-              <P>Carrier:</P>
-              <p>{carrierName}</p>
-            </DivTextRow>
-
-            <DivTextRow>
-              <P>Is Collect?</P>
-              <p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p>
-            </DivTextRow>
-
-            {shipto.isCollect === 1 && (
-              <DivTextRow>
-                <P>Collect Number:</P>
-                <p>{shipto.collectNumber}</p>
-              </DivTextRow>
+    return (
+        <div>
+            {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
+                <SectionContainerBlue>
+                    <SectionTitle>Confirmation Email</SectionTitle>
+                    <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
+                    <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
+                    {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuote} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
+                </SectionContainerBlue>
             )}
-          </SectionFields>
-        </SectionContainerHalf>
 
-        <SectionContainerHalf>
-          <SectionTitle>Bill To</SectionTitle>
-          <SectionFields>
-            <DivAddressSection>
-              <Pbold>{billing.companyName ? billing.companyName : billing.firstName + ' ' + billing.lastName}</Pbold>
-              <Pbold>{billing.address1}</Pbold>
-              <Pbold>{billing.address2}</Pbold>
-              <Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
-            </DivAddressSection>
+            <SectionRow>
+                <SectionContainerHalf>
+                    <SectionTitle>Ship To</SectionTitle>
+                    <SectionFields>
+                        <DivAddressSection>
+                            <Pbold>{shipto.companyName}</Pbold>
+                            <Pbold>{shipto.address1}</Pbold>
+                            <Pbold>{shipto.address2}</Pbold>
+                            <Pbold>{shipto.city}, {shipto.stateOrProvince} {shipto.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+                        </DivAddressSection>
 
-            <p>{billing.phone}</p>
-            <p>{billing.email}</p>
+                        <p>{shipto.phone}</p>
+                        <p>{shipto.email}</p>
 
-            <DivTextRow>
-              <P>Payment Method:</P>
-              <p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
-            </DivTextRow>
-            {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>}
+                        <DivTextRow>
+                            <P>Carrier:</P>
+                            <p>{carrierName}</p>
+                        </DivTextRow>
+
+                        <DivTextRow>
+                            <P>Is Collect?</P>
+                            <p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p>
+                        </DivTextRow>
+
+                        {shipto.isCollect === 1 && (
+                            <DivTextRow>
+                                <P>Collect Number:</P>
+                                <p>{shipto.collectNumber}</p>
+                            </DivTextRow>
+                        )}
+                    </SectionFields>
+                </SectionContainerHalf>
+
+                <SectionContainerHalf>
+                    <SectionTitle>Bill To</SectionTitle>
+                    <SectionFields>
+                        <DivAddressSection>
+                            <Pbold>{billing.companyName ? billing.companyName : billing.firstName + ' ' + billing.lastName}</Pbold>
+                            <Pbold>{billing.address1}</Pbold>
+                            <Pbold>{billing.address2}</Pbold>
+                            <Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
+                        </DivAddressSection>
+
+                        <p>{billing.phone}</p>
+                        <p>{billing.email}</p>
+
+                        <DivTextRow>
+                            <P>Payment Method:</P>
+                            <p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
+                        </DivTextRow>
+                        {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>}
                     
-            {billing.paymentMethod === 'credit_card' && (
-              <DivTextRow>
-                <P>Card Type:</P>
-                <p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>
-              </DivTextRow>
-            )}
+                        {billing.paymentMethod === 'credit_card' && (
+                            <DivTextRow>
+                                <P>Card Type:</P>
+                                <p>{billing.cardType === 'new_card' ? 'New Card' : 'Saved Card'}</p>
+                            </DivTextRow>
+                        )}
 
-            <DivTextRow>
-              <P>Purchase Order:</P>
-              <p>{billing.purchaseOrder}</p>
-            </DivTextRow>
-          </SectionFields>
-        </SectionContainerHalf>
-      </SectionRow>
+                        <DivTextRow>
+                            <P>Purchase Order:</P>
+                            <p>{billing.purchaseOrder}</p>
+                        </DivTextRow>
+                    </SectionFields>
+                </SectionContainerHalf>
+            </SectionRow>
 
-      <SectionContainer>
-        <SectionTitle>Shipping Schedule</SectionTitle>
-        <SectionFields>
-          <DivTextRow>
-            <P>Packing Basis:</P>
-            <p>{packingBasisName}</p>
-          </DivTextRow>
-          {shipto.shippingNotes && (
-            <DivTextRow>
-              <P>Shipping Notes:</P>
-              <p>{shipto.shippingNotes}</p>
-            </DivTextRow>
-          )}
-        </SectionFields>
-      </SectionContainer>
+            <SectionContainer>
+                <SectionTitle>Shipping Schedule</SectionTitle>
+                <SectionFields>
+                    <DivTextRow>
+                        <P>Packing Basis:</P>
+                        <p>{packingBasisName}</p>
+                    </DivTextRow>
+                    {shipto.shippingNotes && (
+                        <DivTextRow>
+                            <P>Shipping Notes:</P>
+                            <p>{shipto.shippingNotes}</p>
+                        </DivTextRow>
+                    )}
+                </SectionFields>
+            </SectionContainer>
 
-      <SectionContainer>
-        <SectionTitle>Items</SectionTitle>
-        <SectionFields>
-          {CartDates}
-        </SectionFields>
-      </SectionContainer>
+            <SectionContainer>
+                <SectionTitle>Items</SectionTitle>
+                <SectionFields>
+                    {CartDates}
+                </SectionFields>
+            </SectionContainer>
 
-      <DivNavigation>
-        <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
-        <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white" />Submit</ButtonRed>
-      </DivNavigation>
+            <DivNavigation>
+                <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
+                <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white" />Submit</ButtonRed>
+            </DivNavigation>
 
-      {submitting && <ProcessingOrderModal />}
-      {showOrderFailedModal && <OrderFailedModal />}
-    </div>
-  )
+            {submitting && <ProcessingOrderModal />}
+            {showOrderFailedModal && <OrderFailedModal />}
+        </div>
+    )
 }

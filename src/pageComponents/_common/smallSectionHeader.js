@@ -16,19 +16,19 @@ const StyledHeaderDiv = styled.div`
 `
 
 class smallSectionHeader extends React.Component {
-  render(){
-    const {
-      text
-    } = this.props
+    render(){
+        const {
+            text
+        } = this.props
 
-    return (
-      <Div>
-        <StyledHeaderDiv>
-          <H4>{text}</H4>
-        </StyledHeaderDiv>
-      </Div>
-    )
-  }
+        return (
+            <Div>
+                <StyledHeaderDiv>
+                    <H4>{text}</H4>
+                </StyledHeaderDiv>
+            </Div>
+        )
+    }
 }
 
 export default smallSectionHeader

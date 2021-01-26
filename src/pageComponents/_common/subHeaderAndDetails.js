@@ -9,14 +9,14 @@ const H5 = styled.h5`
     color: #555555;
 `
 export default function subHeaderAndDetails(props) {
-  const {
-    text,
-    details,
-  } = props
-  return (
-    <Header>
-      <H5>{text}</H5>
-      <p>{details}</p>
-    </Header>
-  )
+    const {
+        text,
+        details,
+    } = props
+    return (
+        <Header>
+            <H5>{text}</H5>
+            <p>{details}</p>
+        </Header>
+    )
 }

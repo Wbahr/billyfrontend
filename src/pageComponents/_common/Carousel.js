@@ -45,29 +45,29 @@ const DivRow = styled.div`
 `
 
 export default function Carousel({ children, scrollDeltaOverride, ...props }) {
-  const carouselRef = useRef(null)
+    const carouselRef = useRef(null)
 	
-  const scrollLeft = () => {
-    const carouselScrollDelta = scrollDeltaOverride || window.innerWidth * .65
-    scrollHorizontal(carouselRef.current, -carouselScrollDelta, 500)
-  }
+    const scrollLeft = () => {
+        const carouselScrollDelta = scrollDeltaOverride || window.innerWidth * .65
+        scrollHorizontal(carouselRef.current, -carouselScrollDelta, 500)
+    }
 	
-  const scrollRight = () => {
-    const carouselScrollDelta = scrollDeltaOverride || window.innerWidth * .65
-    scrollHorizontal(carouselRef.current, carouselScrollDelta, 500)
-  }
+    const scrollRight = () => {
+        const carouselScrollDelta = scrollDeltaOverride || window.innerWidth * .65
+        scrollHorizontal(carouselRef.current, carouselScrollDelta, 500)
+    }
 	
-  return (
-    <DivRow ref={carouselRef} {...props}>
-      {children}
+    return (
+        <DivRow ref={carouselRef} {...props}>
+            {children}
 			
-      <LeftScrollControl onClick={scrollLeft}>
-        <ChevronLeft size="large"/>
-      </LeftScrollControl>
+            <LeftScrollControl onClick={scrollLeft}>
+                <ChevronLeft size="large"/>
+            </LeftScrollControl>
 			
-      <RightScrollControl onClick={scrollRight}>
-        <ChevronRight size="large"/>
-      </RightScrollControl>
-    </DivRow>
-  )
+            <RightScrollControl onClick={scrollRight}>
+                <ChevronRight size="large"/>
+            </RightScrollControl>
+        </DivRow>
+    )
 }

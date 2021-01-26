@@ -59,39 +59,39 @@ const LiSelected = styled.li`
 `
 
 export default function CheckoutProgress({ stepLabels, currentStep, handleMoveStep, stepValidated }) {
-  const cursor = index => stepValidated[index] || (index === currentStep) ? 'pointer' : 'default'
-  const mapStepLabels = (stepName, index) => index === currentStep
-    ? (
-      <LiSelected
-        key={index}
-        cursor={cursor(index)}
-        validated={stepValidated[index]}
-        onClick={() => handleMoveStep(index)}
-      >
-        {stepName}
-      </LiSelected>
-    ) : (
-      <LI
-        key={index}
-        cursor={cursor(index)}
-        validated={stepValidated[index]}
-        onClick={() => handleMoveStep(index)}
-      >
-        {stepName}
-      </LI>
+    const cursor = index => stepValidated[index] || (index === currentStep) ? 'pointer' : 'default'
+    const mapStepLabels = (stepName, index) => index === currentStep
+        ? (
+            <LiSelected
+                key={index}
+                cursor={cursor(index)}
+                validated={stepValidated[index]}
+                onClick={() => handleMoveStep(index)}
+            >
+                {stepName}
+            </LiSelected>
+        ) : (
+            <LI
+                key={index}
+                cursor={cursor(index)}
+                validated={stepValidated[index]}
+                onClick={() => handleMoveStep(index)}
+            >
+                {stepName}
+            </LI>
+        )
+	
+    const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
+	
+    useEffect(() => {
+        setSteps(stepLabels.map(mapStepLabels))
+    }, [stepLabels, currentStep, stepValidated])
+	
+    return (
+        <div>
+            <UlProgressBar>
+                {steps}
+            </UlProgressBar>
+        </div>
     )
-	
-  const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
-	
-  useEffect(() => {
-    setSteps(stepLabels.map(mapStepLabels))
-  }, [stepLabels, currentStep, stepValidated])
-	
-  return (
-    <div>
-      <UlProgressBar>
-        {steps}
-      </UlProgressBar>
-    </div>
-  )
 }

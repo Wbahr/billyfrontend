@@ -7,9 +7,9 @@ const Container = styled.div`
   margin: 0 auto;
 `
 export default function CreditApplicationPage() {
-  return (
-    <Container>
-      <Header text="Credit Application" />
-    </Container>
-  )
+    return (
+        <Container>
+            <Header text="Credit Application" />
+        </Container>
+    )
 }

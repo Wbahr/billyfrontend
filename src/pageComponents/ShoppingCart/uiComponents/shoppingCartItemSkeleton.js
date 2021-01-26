@@ -159,41 +159,41 @@ const DivRemove = styled.div`
 `
 
 export default function SkeletonItem({ index }){
-  return (
-    <SkeletonDiv>
-      <DivCard>
-        <DivMove>
-          <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
-        </DivMove>
-        <DivCol1>
-          <Img max-height='100%' max-width='100%' />
-        </DivCol1>
-        <DivCol2>
-          <Title />
-          <Row>
-            <Detail1 />
-            <Detail2 />
-          </Row>
-          <Detail3 />
-        </DivCol2>
-        <DivCol3>
-          <Row>
-            <Detail4 />
-            <Detail5 />
-          </Row>
-          <Detail6 />
-        </DivCol3>
-        <Price />
-        <Context.Consumer>
-          {({ removeItem }) => (
-            <>
-              <DivRemove onClick={() => removeItem(index)} alt='remove-item'>
-                <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
-              </DivRemove>
-            </>
-          )}
-        </Context.Consumer>
-      </DivCard>
-    </SkeletonDiv>
-  )
+    return (
+        <SkeletonDiv>
+            <DivCard>
+                <DivMove>
+                    <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+                </DivMove>
+                <DivCol1>
+                    <Img max-height='100%' max-width='100%' />
+                </DivCol1>
+                <DivCol2>
+                    <Title />
+                    <Row>
+                        <Detail1 />
+                        <Detail2 />
+                    </Row>
+                    <Detail3 />
+                </DivCol2>
+                <DivCol3>
+                    <Row>
+                        <Detail4 />
+                        <Detail5 />
+                    </Row>
+                    <Detail6 />
+                </DivCol3>
+                <Price />
+                <Context.Consumer>
+                    {({ removeItem }) => (
+                        <>
+                            <DivRemove onClick={() => removeItem(index)} alt='remove-item'>
+                                <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                            </DivRemove>
+                        </>
+                    )}
+                </Context.Consumer>
+            </DivCard>
+        </SkeletonDiv>
+    )
 }

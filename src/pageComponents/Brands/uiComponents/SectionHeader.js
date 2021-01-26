@@ -24,10 +24,10 @@ const Border = styled.div`
   flex-grow: 99;
   `
 export default function SectionHeader(props) {
-  return (
-    <SectionDiv>
-      <SectionName>{props.text}</SectionName>
-      <Border></Border>
-    </SectionDiv>
-  )
+    return (
+        <SectionDiv>
+            <SectionName>{props.text}</SectionName>
+            <Border></Border>
+        </SectionDiv>
+    )
 }

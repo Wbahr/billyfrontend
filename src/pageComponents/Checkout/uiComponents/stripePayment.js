@@ -26,38 +26,38 @@ const Label = styled.label`
 `
 
 const cardStyle = {
-  style: {
-    base: {
-      color: '#32325d',
-      fontFamily: 'Arial, sans-serif',
-      fontSmoothing: 'antialiased',
-      fontSize: '16px',
-      '::placeholder': {
-        color: '#32325d'
-      }
-    },
-    invalid: {
-      color: '#fa755a',
-      iconColor: '#fa755a'
+    style: {
+        base: {
+            color: '#32325d',
+            fontFamily: 'Arial, sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+                color: '#32325d'
+            }
+        },
+        invalid: {
+            color: '#fa755a',
+            iconColor: '#fa755a'
+        }
     }
-  }
 }
 
 export default function StripePaymentSection({ setCardIsValid }) {
-  const [error, setError] = useState(null)
+    const [error, setError] = useState(null)
 	
-  const handleChange = async (event) => {
-    setCardIsValid(event.complete && !event.error)
-    setError(event.error ? event.error.message : '')
-  }
+    const handleChange = async (event) => {
+        setCardIsValid(event.complete && !event.error)
+        setError(event.error ? event.error.message : '')
+    }
 	
-  return (
-    <Container>
-      <Label>Credit Card</Label>
-      <Div>
-        <CardElement style={cardStyle} onChange={handleChange}/>
-        <p>{error}</p>
-      </Div>
-    </Container>
-  )
+    return (
+        <Container>
+            <Label>Credit Card</Label>
+            <Div>
+                <CardElement style={cardStyle} onChange={handleChange}/>
+                <p>{error}</p>
+            </Div>
+        </Container>
+    )
 }

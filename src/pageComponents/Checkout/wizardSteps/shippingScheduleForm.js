@@ -53,99 +53,99 @@ const DivNavigation = styled.div`
 `
 
 const getInfoMessage = packingBasisName => {
-  switch (packingBasisName) {
-  case 1:
-    return <Pinfo>Your order will ship complete when all parts are available.</Pinfo>
-  case 2:
-    return <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>
-  case 3:
-    return <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>
-  case 4:
-    return (
-      <div>
-        <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
-        <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
-      </div>
-    )
-  default:
-    return <div/>
-  }
+    switch (packingBasisName) {
+    case 1:
+        return <Pinfo>Your order will ship complete when all parts are available.</Pinfo>
+    case 2:
+        return <Pinfo>In-stock items will ship within 2 business days. Non-stock items ship complete when they all become available.</Pinfo>
+    case 3:
+        return <Pinfo>Your order will ship by line as items become available. Multiple shipping charges may apply.</Pinfo>
+    case 4:
+        return (
+            <div>
+                <Pinfo>Please specify dates by line (below) for when you want each part to ship.</Pinfo>
+                <DivScheduleHeader><p>Item</p><p>Requested Shipment Date</p></DivScheduleHeader>
+            </div>
+        )
+    default:
+        return <div/>
+    }
 }
 
 export function ShippingScheduleForm(props) {
-  const {
-    history,
-    values: {
-      schedule: { cartWithDates, packingBasisName }
-    },
-    setFieldValue,
-    isStepValid,
-    handleMoveStep,
-    itemsDetails,
-    itemsCustomerPartNumbers
-  } = props
+    const {
+        history,
+        values: {
+            schedule: { cartWithDates, packingBasisName }
+        },
+        setFieldValue,
+        isStepValid,
+        handleMoveStep,
+        itemsDetails,
+        itemsCustomerPartNumbers
+    } = props
   
-  function handlePackingBasisChange(name, value) {
-    setFieldValue(name, value)
-    const foundPackingBasis = packingBasis.find(elem => elem.value === value)
-    setFieldValue('schedule.packingBasis', foundPackingBasis.apiValue)
-  }
+    function handlePackingBasisChange(name, value) {
+        setFieldValue(name, value)
+        const foundPackingBasis = packingBasis.find(elem => elem.value === value)
+        setFieldValue('schedule.packingBasis', foundPackingBasis.apiValue)
+    }
   
-  const InfoMessage = ({ packingBasisName }) => getInfoMessage(packingBasisName)
+    const InfoMessage = ({ packingBasisName }) => getInfoMessage(packingBasisName)
   
-  const mapShippingScheduleLines = (item, index) => {
-    const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
-    const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+    const mapShippingScheduleLines = (item, index) => {
+        const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
+        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
     
+        return (
+            <ShippingScheduleLine
+                key={index}
+                item={item}
+                itemDetails={details}
+                customerPartNumbers={customerPartNumbers}
+                index={index}
+            />
+        )
+    }
+  
+    const renderLineItems = () => cartWithDates?.length
+        ? cartWithDates.map(mapShippingScheduleLines)
+        : <p>No Cart Items</p>
+  
     return (
-      <ShippingScheduleLine
-        key={index}
-        item={item}
-        itemDetails={details}
-        customerPartNumbers={customerPartNumbers}
-        index={index}
-      />
-    )
-  }
-  
-  const renderLineItems = () => cartWithDates?.length
-    ? cartWithDates.map(mapShippingScheduleLines)
-    : <p>No Cart Items</p>
-  
-  return (
-    <>
-      <FormRow>
-        <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
-        <div style={{ flexGrow: 99 }}>
-          <Field
-            name="schedule.packingBasisName"
-            component={SelectField}
-            options={packingBasis}
-            isSearchable={false}
-            changeFunction={handlePackingBasisChange}
-          />
-          <FormikInput type="hidden" name="schedule.packingBasis" />
-        </div>
-      </FormRow>
+        <>
+            <FormRow>
+                <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
+                <div style={{ flexGrow: 99 }}>
+                    <Field
+                        name="schedule.packingBasisName"
+                        component={SelectField}
+                        options={packingBasis}
+                        isSearchable={false}
+                        changeFunction={handlePackingBasisChange}
+                    />
+                    <FormikInput type="hidden" name="schedule.packingBasis" />
+                </div>
+            </FormRow>
       
-      <InfoMessage packingBasisName={packingBasisName}/>
+            <InfoMessage packingBasisName={packingBasisName}/>
       
-      {
-        packingBasisName === 4 && (
-          <FieldArray
-            name="schedule.cartWithDates"
-            render={renderLineItems}
-          />
-        )}
+            {
+                packingBasisName === 4 && (
+                    <FieldArray
+                        name="schedule.cartWithDates"
+                        render={renderLineItems}
+                    />
+                )}
       
-      <DivNavigation>
-        <ButtonBlack onClick={() => history.push('/cart')}>
-          <FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>
-          Back to Cart
-        </ButtonBlack>
+            <DivNavigation>
+                <ButtonBlack onClick={() => history.push('/cart')}>
+                    <FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>
+                    Back to Cart
+                </ButtonBlack>
         
-        <ButtonRed disabled={!isStepValid} onClick={() => handleMoveStep(1)}>Continue</ButtonRed>
-      </DivNavigation>
-    </>
-  )
+                <ButtonRed disabled={!isStepValid} onClick={() => handleMoveStep(1)}>Continue</ButtonRed>
+            </DivNavigation>
+        </>
+    )
 }

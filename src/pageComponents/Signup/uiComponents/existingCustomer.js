@@ -13,53 +13,53 @@ const H4 = styled.h4`
 `
 
 export default function ExistingCustomer() {
-  const [saved, setSaved] = useState(false)
-  const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
-    {
-      onCompleted() {
-        setSaved(true)
-      }
-    }
-  )
-
-  const map = (values) => {
-    return { variables: { 
-      reg: {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        password: values.password,
-        customerIdP21: values.customerId,
-        email: values.email,
-        fax: values.fax,
-        jobTitle: values.jobTitle,
-        phone: values.phone,
-        phoneExtension: values.phoneExtension
-      }
-    } }
-  }
-    
-  const onSubmit = (values, { setSubmitting }) => {	
-    saveNewCustomer(map(values))
-    setSubmitting(false)
-  }
-
-  if (saved === true) {
-    return <Summary />
-  } else {
-    return (
-      <>
-        <H4>Existing Customer</H4>
-        <NewCustomerForm 
-          useExpandedMode={false}
-          showCustomerLookup={false}
-          newCustomerInitialValues={existingCustomerInitialValues} 
-          validationSchema={existingCustomerSchema} 
-          onSubmit={onSubmit} 
-          choosePasswordEnabled={true} 
-          buttonText="Register Account"
-        />
-      </>
+    const [saved, setSaved] = useState(false)
+    const [saveNewCustomer] = useMutation(SAVE_NEW_CUSTOMER,
+        {
+            onCompleted() {
+                setSaved(true)
+            }
+        }
     )
-  }
+
+    const map = (values) => {
+        return { variables: { 
+            reg: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                password: values.password,
+                customerIdP21: values.customerId,
+                email: values.email,
+                fax: values.fax,
+                jobTitle: values.jobTitle,
+                phone: values.phone,
+                phoneExtension: values.phoneExtension
+            }
+        } }
+    }
+    
+    const onSubmit = (values, { setSubmitting }) => {	
+        saveNewCustomer(map(values))
+        setSubmitting(false)
+    }
+
+    if (saved === true) {
+        return <Summary />
+    } else {
+        return (
+            <>
+                <H4>Existing Customer</H4>
+                <NewCustomerForm 
+                    useExpandedMode={false}
+                    showCustomerLookup={false}
+                    newCustomerInitialValues={existingCustomerInitialValues} 
+                    validationSchema={existingCustomerSchema} 
+                    onSubmit={onSubmit} 
+                    choosePasswordEnabled={true} 
+                    buttonText="Register Account"
+                />
+            </>
+        )
+    }
 }
 

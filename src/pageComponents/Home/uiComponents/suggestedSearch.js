@@ -30,29 +30,29 @@ const Suggestion = styled.div`
 
 export default function ShopOurProducts(props) {
 
-  function handleSearch(searchTerm) {
-    props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+    function handleSearch(searchTerm) {
+        props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
 
-  }
-  return (
-    <>
-      <DivContainer>
-        <Suggestion onClick={() => handleSearch('Solenoid Valve')} >
-          Solenoid Valve
-        </Suggestion>
-        <Suggestion onClick={() => handleSearch('SY Valve')}>
-          SY Valve
-        </Suggestion>
-        <Suggestion onClick={() => handleSearch('Manifold')}>
-          Manifold
-        </Suggestion>
-        <Suggestion onClick={() => handleSearch('Phoenix Terminal Block')}>
-          Phoenix Terminal Block
-        </Suggestion>
-        <Suggestion onClick={() => handleSearch('Valve')}>
-          Valve
-        </Suggestion>
-      </DivContainer>      
-    </>
-  )
+    }
+    return (
+        <>
+            <DivContainer>
+                <Suggestion onClick={() => handleSearch('Solenoid Valve')} >
+                    Solenoid Valve
+                </Suggestion>
+                <Suggestion onClick={() => handleSearch('SY Valve')}>
+                    SY Valve
+                </Suggestion>
+                <Suggestion onClick={() => handleSearch('Manifold')}>
+                    Manifold
+                </Suggestion>
+                <Suggestion onClick={() => handleSearch('Phoenix Terminal Block')}>
+                    Phoenix Terminal Block
+                </Suggestion>
+                <Suggestion onClick={() => handleSearch('Valve')}>
+                    Valve
+                </Suggestion>
+            </DivContainer>      
+        </>
+    )
 }

@@ -93,199 +93,199 @@ const ButtonContainer = styled.div`
 `
 
 export default function ItemCreationPage() {
-  const [searchTerm, setSearchTerm] = useState('') //Search term initial value
-  const [selectedSupplier, setSelectedSupplier] = useState(null)
-  const [searchEnabled, setSearchEnabled] = useState(false)
-  const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
-  const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
-  const [productGroupsList, setProductGroups] = useState([])
-  const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
-  const [showNewItemForm, setShowNewItemForm] = useState(false)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [isSearching, setIsSearching] = useState(false)
-  const [searched, setSearched] = useState(false)
-  const [submitResponse, setSubmitResponse] = useState(null)
+    const [searchTerm, setSearchTerm] = useState('') //Search term initial value
+    const [selectedSupplier, setSelectedSupplier] = useState(null)
+    const [searchEnabled, setSearchEnabled] = useState(false)
+    const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
+    const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
+    const [productGroupsList, setProductGroups] = useState([])
+    const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
+    const [showNewItemForm, setShowNewItemForm] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [isSearching, setIsSearching] = useState(false)
+    const [searched, setSearched] = useState(false)
+    const [submitResponse, setSubmitResponse] = useState(null)
   
-  useEffect(() => {
-    if (searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)) {
-      setSearchEnabled(true)
-    } else {
-      if (searchEnabled) {
-        setSearchEnabled(false)
-      }
-    }
-  }, [searchTerm, selectedSupplier])
-  
-  const maxPage = 3
-  useQuery(QUERY_ITEM_CREATION_DATA, {
-    onCompleted: data => {
-      setSupplierList(data.suppliers)
-      setUnitsOfMeasure(unit(data.unitsOfMeasure))
-      setProductGroups(data.productGroups)
-    }
-  })
-  function unit(units) {
-    const newUnits = []
-    for (let i = 0; i < units.length; i++) {
-      if (units[i].value !== 'EACH') {
-        newUnits.push(units[i])
-      }
-    }
-    return newUnits
-  }
-  const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
-    fetchPolicy: 'no-cache',
-    onCompleted: data => {
-      setCurrentPage(currentPage + 1)
-      setIsSearching(false)
-      setSearched(true)
-      setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
-    }
-  })
-  
-  
-  function searchItems() {
-    setIsSearching(true)
-    const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-    const SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
-    performItemSearch({
-      variables: {
-        searchParams: {
-          searchTerm: SearchTerm,
-          resultSize: 10,
-          resultPage: currentPage,
-          sortType: 'relevancy',
-          brandFilters: [],
-          categoryFilter: {
-            parentCategory: '',
-            childCategory: ''
-          },
-          attributeFilters: []
+    useEffect(() => {
+        if (searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)) {
+            setSearchEnabled(true)
+        } else {
+            if (searchEnabled) {
+                setSearchEnabled(false)
+            }
         }
-      }
+    }, [searchTerm, selectedSupplier])
+  
+    const maxPage = 3
+    useQuery(QUERY_ITEM_CREATION_DATA, {
+        onCompleted: data => {
+            setSupplierList(data.suppliers)
+            setUnitsOfMeasure(unit(data.unitsOfMeasure))
+            setProductGroups(data.productGroups)
+        }
     })
-  }
-  
-  function loadMoreItems() {
-    searchItems()
-  }
-  
-  function handleChange(newSelection) {
-    setSelectedSupplier(newSelection)
-  }
-  
-  function resetItem() {
-    setSearchTerm('')
-    setSelectedSupplier(null)
-    setItemSearchResult([])
-    setCurrentPage(1)
-    setShowNewItemForm(false)
-    setSearched(false)
-  }
-  
-  function mutateItemId(itemId) {
-    const mutatedItemId = itemId.replace(/\s/g, '-')
-    return (mutatedItemId)
-  }
-  
-  function showModal(response) {
-    setSubmitResponse(response)
-    if (response.success) {
-      resetItem()
+    function unit(units) {
+        const newUnits = []
+        for (let i = 0; i < units.length; i++) {
+            if (units[i].value !== 'EACH') {
+                newUnits.push(units[i])
+            }
+        }
+        return newUnits
     }
-  }
+    const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setCurrentPage(currentPage + 1)
+            setIsSearching(false)
+            setSearched(true)
+            setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
+        }
+    })
   
   
-  const searchResultItems = []
-  itemSearchResult.map((element, index) => {
-    const resultImage = getImagePath(element.thumbnail_image_path)
-    
-    const mutatedItemId = mutateItemId(element.itemCode)
-    searchResultItems.push(
-      <DivSearchItemContainer key={index}>
-        <img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.itemCode} ></img>
-        <h6>{element.itemCode}</h6>
-        <p>{element.itemDescription}</p>
-        <a href={`/product/${mutatedItemId}/${element.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
-      </DivSearchItemContainer>
-    )
-  })
-  
-  return (
-    <>
-      {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={() => setSubmitResponse(null)} />}
-      <ContentScreenContainer>
-        <DivSearchInputWrapper>
-          <DivSpacer>
-            <AirlineInput
-              label="Manufacturer ID:"
-              type="text"
-              placeholder="Enter Manufacturer ID"
-              name="itemIDSearch"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-          </DivSpacer>
-          <DivSpacer>
-            <AirlineSelect
-              label="Supplier Name:"
-              name="supplierNameSearch"
-              placeholder='Select a Supplier'
-              value={selectedSupplier}
-              options={[{ id: null, name: null, prefix: null }, ...supplierList]}
-              changeFunction={handleChange}
-              getOptionLabel={(option) => {
-                if (option.name === null) {
-                  return ('Select a Supplier')
-                } else {
-                  return (option.id + ' - ' + option.name)
+    function searchItems() {
+        setIsSearching(true)
+        const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
+        const SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
+        performItemSearch({
+            variables: {
+                searchParams: {
+                    searchTerm: SearchTerm,
+                    resultSize: 10,
+                    resultPage: currentPage,
+                    sortType: 'relevancy',
+                    brandFilters: [],
+                    categoryFilter: {
+                        parentCategory: '',
+                        childCategory: ''
+                    },
+                    attributeFilters: []
                 }
-              }}
-              getOptionValue={(option) => option.name}
-              isClearable={true}
-              isLoading={supplierList.length === 0}
-            />
-          </DivSpacer>
-        </DivSearchInputWrapper>
-        <ButtonContainer>
-          <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
-            Clear Item
-          </Button>
-          <Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => { searchItems() }}>
-            {isSearching ? 'Searching Items..' : 'Search for Item'}
-          </Button>
-        </ButtonContainer>
-        {searched && (
-          <div>
-            <SearchResultsContainer>
-              {searchResultItems}
-              {searchResultItems.length === 0 && <p>No Items Found</p>}
-            </SearchResultsContainer>
-            <ButtonContainer>
-              <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
-                Clear Item
-              </Button>
-              <Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
-                {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
-              </Button>
-              <Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
-                Create a New Item
-              </Button>
-            </ButtonContainer>
-          </div>
-        )}
-        {showNewItemForm && (
-          <NewItemForm
-            searchTerm={searchTerm}
-            selectedSupplier={selectedSupplier}
-            supplierList={supplierList}
-            unitsOfMeasureList={unitsOfMeasureList}
-            productGroupsList={productGroupsList}
-            clearForm={() => resetItem()}
-            showModal={response => showModal(response)}
-          />
-        )}
-      </ContentScreenContainer>
-    </>
-  )
+            }
+        })
+    }
+  
+    function loadMoreItems() {
+        searchItems()
+    }
+  
+    function handleChange(newSelection) {
+        setSelectedSupplier(newSelection)
+    }
+  
+    function resetItem() {
+        setSearchTerm('')
+        setSelectedSupplier(null)
+        setItemSearchResult([])
+        setCurrentPage(1)
+        setShowNewItemForm(false)
+        setSearched(false)
+    }
+  
+    function mutateItemId(itemId) {
+        const mutatedItemId = itemId.replace(/\s/g, '-')
+        return (mutatedItemId)
+    }
+  
+    function showModal(response) {
+        setSubmitResponse(response)
+        if (response.success) {
+            resetItem()
+        }
+    }
+  
+  
+    const searchResultItems = []
+    itemSearchResult.map((element, index) => {
+        const resultImage = getImagePath(element.thumbnail_image_path)
+    
+        const mutatedItemId = mutateItemId(element.itemCode)
+        searchResultItems.push(
+            <DivSearchItemContainer key={index}>
+                <img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.itemCode} ></img>
+                <h6>{element.itemCode}</h6>
+                <p>{element.itemDescription}</p>
+                <a href={`/product/${mutatedItemId}/${element.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
+            </DivSearchItemContainer>
+        )
+    })
+  
+    return (
+        <>
+            {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={() => setSubmitResponse(null)} />}
+            <ContentScreenContainer>
+                <DivSearchInputWrapper>
+                    <DivSpacer>
+                        <AirlineInput
+                            label="Manufacturer ID:"
+                            type="text"
+                            placeholder="Enter Manufacturer ID"
+                            name="itemIDSearch"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                    </DivSpacer>
+                    <DivSpacer>
+                        <AirlineSelect
+                            label="Supplier Name:"
+                            name="supplierNameSearch"
+                            placeholder='Select a Supplier'
+                            value={selectedSupplier}
+                            options={[{ id: null, name: null, prefix: null }, ...supplierList]}
+                            changeFunction={handleChange}
+                            getOptionLabel={(option) => {
+                                if (option.name === null) {
+                                    return ('Select a Supplier')
+                                } else {
+                                    return (option.id + ' - ' + option.name)
+                                }
+                            }}
+                            getOptionValue={(option) => option.name}
+                            isClearable={true}
+                            isLoading={supplierList.length === 0}
+                        />
+                    </DivSpacer>
+                </DivSearchInputWrapper>
+                <ButtonContainer>
+                    <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+                        Clear Item
+                    </Button>
+                    <Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => { searchItems() }}>
+                        {isSearching ? 'Searching Items..' : 'Search for Item'}
+                    </Button>
+                </ButtonContainer>
+                {searched && (
+                    <div>
+                        <SearchResultsContainer>
+                            {searchResultItems}
+                            {searchResultItems.length === 0 && <p>No Items Found</p>}
+                        </SearchResultsContainer>
+                        <ButtonContainer>
+                            <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+                                Clear Item
+                            </Button>
+                            <Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
+                                {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
+                            </Button>
+                            <Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
+                                Create a New Item
+                            </Button>
+                        </ButtonContainer>
+                    </div>
+                )}
+                {showNewItemForm && (
+                    <NewItemForm
+                        searchTerm={searchTerm}
+                        selectedSupplier={selectedSupplier}
+                        supplierList={supplierList}
+                        unitsOfMeasureList={unitsOfMeasureList}
+                        productGroupsList={productGroupsList}
+                        clearForm={() => resetItem()}
+                        showModal={response => showModal(response)}
+                    />
+                )}
+            </ContentScreenContainer>
+        </>
+    )
 }

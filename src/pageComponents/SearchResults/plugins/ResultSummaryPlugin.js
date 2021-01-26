@@ -23,17 +23,17 @@ const Red = styled.span`
 `
 
 export default function ResultSummaryPlugin({ searchTerm, totalResults, isSearching }) {
-  return (
-    <DivResultsSummaryContainer>
-      <Div>
-        {
-          isSearching ? (
-            <Pgrey>Searching for: <Red>{searchTerm}</Red></Pgrey>
-          ) : (
-            <Pgrey>{totalResults >= 10000 ?  '10,000+' : totalResults} results returned for: <Red>{searchTerm}</Red></Pgrey>
-          )
-        }
-      </Div>
-    </DivResultsSummaryContainer>
-  )
+    return (
+        <DivResultsSummaryContainer>
+            <Div>
+                {
+                    isSearching ? (
+                        <Pgrey>Searching for: <Red>{searchTerm}</Red></Pgrey>
+                    ) : (
+                        <Pgrey>{totalResults >= 10000 ?  '10,000+' : totalResults} results returned for: <Red>{searchTerm}</Red></Pgrey>
+                    )
+                }
+            </Div>
+        </DivResultsSummaryContainer>
+    )
 }
