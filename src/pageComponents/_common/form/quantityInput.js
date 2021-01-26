@@ -78,7 +78,7 @@ const QuantityInput = (props) => {
       return
     }
     
-    let newQuantity = quantity
+    let newQuantity = quantity //TODO: put switch case in function <-- Saige :)
     
     //If the quantity is not a multiple of its increment, round the quantity and emit it to the callback
     if (Number.isInteger(newQuantity)) {
@@ -129,12 +129,7 @@ const QuantityInput = (props) => {
   
   //The handler for manually entered values
   const textBoxChangeHandler = (event) => {
-    const {
-      target: {
-        value
-      }
-    } = event
-    
+    const { target: { value } } = event
     handleUpdate(Number(value))
   }
   
@@ -167,36 +162,34 @@ const QuantityInput = (props) => {
         -
       </IncrementDecrementButton>
       {
-        debounce
-          ? (
-            <DebounceInput //This is for manual value entries
-              debounceTimeout={500}
-              readOnly={unitSizeVal > 1}
-              onChange={(unitSizeVal > 1 ? null : (event) => {
-                textBoxChangeHandler(event)
-              })}
-              value={displayQuantity}
-              step={unitSizeVal || 1}
-              style={{
-                fontSize: stylesToApply.fontSize,
-                width: stylesToApply.width
-              }}
-            />
-          )
-          : (
-            <input
-              readOnly={unitSizeVal > 1}
-              onChange={(unitSizeVal > 1 ? null : (event) => {
-                textBoxChangeHandler(event)
-              })}
-              value={quantity}
-              step={unitSizeVal || 1}
-              style={{
-                fontSize: stylesToApply.fontSize,
-                width: stylesToApply.width
-              }}
-            />
-          )
+        debounce ? (
+          <DebounceInput //This is for manual value entries
+            debounceTimeout={500}
+            readOnly={unitSizeVal > 1}
+            onChange={(unitSizeVal > 1 ? null : (event) => {
+              textBoxChangeHandler(event)
+            })}
+            value={displayQuantity}
+            step={unitSizeVal || 1}
+            style={{
+              fontSize: stylesToApply.fontSize,
+              width: stylesToApply.width
+            }}
+          />
+        ) : (
+          <input
+            readOnly={unitSizeVal > 1}
+            onChange={(unitSizeVal > 1 ? null : (event) => {
+              textBoxChangeHandler(event)
+            })}
+            value={quantity}
+            step={unitSizeVal || 1}
+            style={{
+              fontSize: stylesToApply.fontSize,
+              width: stylesToApply.width
+            }}
+          />
+        )
       }
       
       <IncrementDecrementButton

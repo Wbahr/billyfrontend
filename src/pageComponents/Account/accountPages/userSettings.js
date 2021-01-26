@@ -115,7 +115,7 @@ export default function UserSettingsPage() {
           <PasswordRequirements
             password={changePasswordForm.new1}
             confirmPassword={changePasswordForm.new2}
-            isValidPassword={(isValid) => setPasswordIsValid(isValid)}
+            isValidPassword={setPasswordIsValid}
           />
         </DivRow>
       </DivContainer>

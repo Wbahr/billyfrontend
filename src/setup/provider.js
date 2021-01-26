@@ -305,7 +305,7 @@ export default function Provider(props) {
       retrieveShoppingCart('retrieve')
     }
     manageUserInfo('login', userInfo)
-    const drift = drift || null
+    const drift = window.drift || null
     if (drift && userInfo.role === 'AirlineEmployee') {
       drift?.api?.widget?.hide()
     }

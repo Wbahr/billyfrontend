@@ -25,7 +25,7 @@ const Label = styled.label`
 `
 
 const Container = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px 24px;
@@ -64,8 +64,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
   }
   
   function calculateMargin(price) {
-    const margin = margin < 0 ? 0 : (price - data.airlineCost) / price
-    return (margin * 100).toFixed(1)
+    const newMargin = margin < 0 ? 0 : (price - data.airlineCost) / price
+    return (newMargin * 100).toFixed(1)
   }
   
   const handleChangePrice = type => (e, maskValue, floatValue) => {

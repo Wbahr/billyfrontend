@@ -28,7 +28,8 @@
   },
   "rules": {
     "linebreak-style": [
-      "off"
+      "error",
+      "unix"
     ],
     "indent": [
       "error",

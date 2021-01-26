@@ -1,5 +1,5 @@
 'use strict'
-
+//https://create-react-app.dev/docs/getting-started <-- go here for details on what this does
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')

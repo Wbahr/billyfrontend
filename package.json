@@ -8,14 +8,13 @@
     "lint:fix": "eslint ./src --fix",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "analyze": "node scripts/build.js && source-map-explorer 'dist/static/js/*.js'",
     "test": "node scripts/test.js",
-    "local": "webpack-dev-server --mode development --open --hot --env.ENVIRONMENT=local",
-    "build-deploy": "webpack --mode production --env.ENVIRONMENT=deploy",
-    "build-dev": "webpack --mode development --env.ENVIRONMENT=dev",
-    "build-test": "webpack --mode development --env.ENVIRONMENT=devtest",
-    "build-qa": "webpack --mode development --env.ENVIRONMENT=qa",
-    "build-prod": "webpack --mode production --env.ENVIRONMENT=production"
+    "build-deploy": "node scripts/build.js --env.ENVIRONMENT=deploy",
+    "build-dev": "node scripts/build.js --env.ENVIRONMENT=dev",
+    "build-test": "node scripts/build.js --env.ENVIRONMENT=devtest",
+    "build-qa": "node scripts/build.js --env.ENVIRONMENT=qa",
+    "build-prod": "node scripts/build.js --env.ENVIRONMENT=production"
   },
   "repository": {
     "type": "git",
