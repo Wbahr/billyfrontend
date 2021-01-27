@@ -48,7 +48,6 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
   const [performSearch, { loading, data }] = useLazyQuery(IMPERSONATION_SEARCH, {
       fetchPolicy: 'no-cache',
       onCompleted() {
-        console.log(data);
         setSearchResults(data.getImpersonationCustomerList);
       }
     }

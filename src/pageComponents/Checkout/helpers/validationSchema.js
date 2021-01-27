@@ -1,4 +1,4 @@
-const { object, string, number } = require('yup')
+const { object, string, number, boolean, array } = require('yup')
 
 // Step 1
 export const shippingScheduleSchema = object({
@@ -136,3 +136,13 @@ export function getBillToSchema(requirePoNumber) {
         })
     })
 }
+
+export const confirmationSchema = object({
+	confirmationEmail: object({
+		sendToShipTo: boolean(),
+		imagesOnQuote: boolean(),
+		ccEmails: array().of(string()
+			.email('Email is not valid')
+			.required('Email is required'))
+	})
+})

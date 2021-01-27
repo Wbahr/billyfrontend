@@ -64,22 +64,25 @@ export default function FormikFieldArray({name, label, addMore}){
 					<Label>{label}</Label>
 					{valueArray && valueArray.length > 0 ? (
 						valueArray.map((elem, index) => (
-							<>
+							<React.Fragment key={index}>
 								<ButtonContainer>
 									<FormikFormField name={`${name}.${index}`} />
+									
 									<div onClick={() => arrayHelpers.remove(index)}> 
 										<FontAwesomeIcon icon="minus-circle" color="grey"/>
 									</div>
+									
 									{ ((index + 1) === valueArray.length && index < 4) &&
 										<div onClick={() => arrayHelpers.insert(index, '')}>
 											<FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
 										</div>
 									}
 								</ButtonContainer>
+								
 								<FormikFormFieldError>
 									<ErrorMessage name={`${name}.${index}`} />
 								</FormikFormFieldError> 
-							</>
+							</React.Fragment>
 						))
 					) : (
 						<DivAddMore onClick={() => arrayHelpers.insert(index, '')}>

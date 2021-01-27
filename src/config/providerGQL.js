@@ -83,7 +83,6 @@ export const SUBMIT_ORDER = gql`
 export const GET_ITEM_BY_ID = gql`
   query ItemById($itemId: Int){
     itemDetails(invMastUid: $itemId) {
-      anonPrice
       invMastUid
       itemCode
       itemCodeUrlSanitized
@@ -93,8 +92,7 @@ export const GET_ITEM_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
-      availabilityMessage
-      image {
+      itemMedia {
         path
         sequence
         itemMediaType
@@ -111,7 +109,6 @@ export const GET_ITEM_BY_ID = gql`
 export const GET_ITEMS_BY_ID = gql`
   query GetItemDetails($invMastUids: [Int]){
     itemDetailsBatch(invMastUids: $invMastUids){
-      anonPrice
       invMastUid
       itemCode
       itemCodeUrlSanitized
@@ -121,8 +118,7 @@ export const GET_ITEMS_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
-      availabilityMessage
-      image {
+      itemMedia {
         path
         sequence
         mediaType
@@ -378,6 +374,9 @@ export const GET_ITEM_PRICE = gql`
       quantity
       totalPrice
       unitPrice
+      unitOfMeasure
+      roundType
+      unitSize
       spaType
     }
   }
@@ -386,6 +385,15 @@ export const GET_ITEM_PRICE = gql`
 export const GET_ITEM_AVAILABILITY = gql`
   query GetItemAvailability($invMastUids: [Int]){
     itemAvailability(invMastUids: $invMastUids) {
+      ...ItemAvailability
+    }
+  }
+  ${FRAGMENT_ITEM_AVAILABILITY}
+`
+
+export const GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES = gql`
+  query GetCartItemAvailabilityAndLeadTimes($itemsAndQuantities: [ItemAndQuantityInput]){
+    itemAvailabilityAndLeadTimes(itemsAndQuantities: $itemsAndQuantities) {
       ...ItemAvailability
     }
   }
@@ -496,6 +504,71 @@ export const QUERY_ITEM_SEARCH = gql`
 			result
 		}
 	}
+`
+
+export const CATEGORY_SEARCH = gql`
+	query CategorySearch($searchParams: CategorySearchRequest){
+  categorySearch(searchParams: $searchParams){
+    category{
+      id
+      name
+      urlSlug
+      imageUrl
+      seoHtml
+      breadCrumbs{
+        breadCrumbUrl
+        breadcrumbTrail{
+          id
+          name
+          urlSlug
+          imageUrl
+          seoHtml
+        }
+      }
+      children{
+        id
+        name
+        urlSlug
+        imageUrl
+        seoHtml
+        breadCrumbs{
+          breadCrumbUrl
+          breadcrumbTrail{
+            id
+            name
+            urlSlug
+            imageUrl
+            seoHtml
+          }
+        }
+      }
+    }
+    attributes {
+      attributeName
+      attributeNameDisplay
+      features {
+        featureName
+        featureNameDisplay
+        featureCount
+        selected
+      }
+    }
+    brands {
+      brandName
+      brandNameDisplay
+      brandCount
+      selected
+    }
+    innerSearchTerms
+    resultPage
+    resultSize
+    searchType
+    sortType
+    searchTotalCount
+    result
+  }
+}
+
 `
 
 export const QUERY_STOCK_AVAILABILITY = gql`

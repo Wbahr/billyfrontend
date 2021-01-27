@@ -7,6 +7,8 @@ import AirlineModal from '../../_common/modal'
 import {GET_ITEM_PRICE} from "config/providerGQL";
 import { GET_QUICK_LOOK_ITEM_DETAIL } from "config/gqlQueries/gqlItemQueries"
 import { getLargeImagePath, getAvailabilityMessage } from "pageComponents/_common/helpers/generalHelperFunctions";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const Div = styled.div`
   display: flex;
@@ -114,6 +116,17 @@ const ButtonBlack = styled.button`
   margin: 4px auto 0 auto;
 `
 
+const QuantityHighlight = styled.span`
+	display: inline-block;
+	margin: 0;
+	margin-right: 1rem;
+	padding: 3px 0.5rem;
+	border-radius: 5px;
+	background-color: ${props => props.theme.backgrounds.blue.main};
+	color: ${props => props.theme.backgrounds.blue.contrastText};
+	font-size: 0.75rem;
+`
+
 const getItemPricePayload = invMastUid => ({
 	variables: {
 		items: [{
@@ -125,7 +138,13 @@ const getItemPricePayload = invMastUid => ({
 
 export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 	const [item, setItem] = useState(null)
-	const [unitPrice, setUnitPrice] = useState(null)
+	const [priceInfo, setPriceInfo] = useState(null);
+	const {
+		unitPrice, 
+		unitOfMeasure,
+		unitSize, 
+		roundType} = priceInfo || {}
+
 	const [quantity, setQuantity] = useState(1)
 	const [customerPartNumber, setCustomerPartNumber] = useState(null)
 	const [customerPartNumbers, setCustomerPartNumbers] = useState([])
@@ -145,21 +164,19 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 		...getItemPricePayload(invMastUid),
 		onCompleted: data => {
 			if (data.getItemPrices[0]) {
-				setUnitPrice(data.getItemPrices[0].totalPrice)
+				setPriceInfo(data.getItemPrices[0])
 			}
 		},
 		fetchPolicy: 'no-cache'
 	})
 
-	function handleSetQuantity({target: {value}}) {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setQuantity(value)
-		}
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 
 	function handleCloseModal() {
 		setItem(null)
-		setUnitPrice(null)
+		setPriceInfo(null)
 		setQuantity(1)
 		hideDetailsModal()
 	}
@@ -212,18 +229,32 @@ export default function DetailsModal({hideDetailsModal, history, invMastUid }) {
 							</DivCol1>
 							
 							<DivCol2>
-								<PpartTitle>{item.itemDesc}</PpartTitle>
+								<PpartTitle>
+									{ 
+										(unitSize > 1) && <AirlineChip style={{marginRight: '0.5rem'}}>
+											X {unitSize}
+										</AirlineChip> 
+									}
+									<span>{item.itemDesc}</span>
+								</PpartTitle>
 								<p>{item.extendedDesc}</p>
 								
 								<DivRow>
 									<DivRow>
 										<p>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</p>
-										<p> /each</p>
+										<p> /{unitOfMeasure}</p>
 									</DivRow>
 									
 									<DivRow>
 										<span>Qty:</span>
-										<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+										<QuantityInput
+											quantity={quantity}
+											unitSize={unitSize}
+											unitOfMeasure={unitOfMeasure}
+											roundType={roundType}
+											handleUpdate={setQuantityHandler}
+											min='0'
+										/>										
 										<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 									</DivRow>
 								</DivRow>

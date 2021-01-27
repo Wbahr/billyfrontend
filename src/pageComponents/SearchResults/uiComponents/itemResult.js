@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import Context from '../../../config/context'
 import {getLargeImagePath} from "../../_common/helpers/generalHelperFunctions";
 import {Image as SkeletonImage, Detail1 as SkeletonDetail} from "./skeletonItem";
+import DebounceInput from 'react-debounce-input'
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -156,14 +159,20 @@ const Option = ({partNumber, partId}) => <option key={partNumber} value={partId}
 const getCustomerPartOptions = ({customerPartNumbers=[]}) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
 export default function ItemResult({result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart}) {
-	const [quantity, setQuantity] = useState(1)
-	const context = useContext(Context)
-	const foundAvailability = context.itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
+	const {itemAvailabilities, itemPrices, addItem} = useContext(Context)
+	
+	const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 	const {availability, leadTimeDays} = foundAvailability || {}
 	
-	const foundPrice = context.itemPrices.find(item => item.invMastUid === result.invMastUid)
-	const {unitPrice} = foundPrice || {}
-	
+	const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
+	const {
+		unitPrice, 
+		unitOfMeasure,
+		unitSize, 
+		roundType} = foundPrice || {}
+
+	const [quantity, setQuantity] = useState(1)
+
 	const [customerPartNumber, setCustomerPartNumber] = useState(0)
 	const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
 	
@@ -174,10 +183,8 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		}
 	}, [details.customerPartNumbers])
 	
-	function handleSetQuantity({target: {value}}) {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-			setQuantity(value)
-		}
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 	
 	const handlePartClick = () => {
@@ -189,7 +196,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 	}
 	
 	const handleAddToCart = () => {
-		context.addItem({
+		addItem({
 			frecno: result.invMastUid,
 			quantity: parseInt(quantity),
 			itemNotes: '',
@@ -210,7 +217,7 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 		<DivItemResultContainer>
 			<DivPartDetailsRow>
 				<DivPartImg onClick={handlePartClick} style={{cursor: 'pointer'}}>
-					{!details.image ? (
+					{!details.itemMedia ? (
 						<SkeletonImage/>
 					) : (
 						<Img src={getLargeImagePath(details)}/>
@@ -260,19 +267,31 @@ export default function ItemResult({result, details, history, toggleDetailsModal
 				</DivPartNumberRow>
 				
 				<DivPartNumberRowSpread>
-					<Div>Quantity:
-						<InputQuantity value={quantity} onChange={handleSetQuantity}/>
+					<Div>
+						<span>Quantity:</span>
+						<QuantityInput
+							quantity={quantity}
+							unitSize={unitSize}
+							unitOfMeasure={unitOfMeasure}
+							roundType={roundType}
+							handleUpdate={setQuantityHandler}
+							min='0'
+						/>
+						{
+							(unitSize > 1) && <AirlineChip style={{marginLeft: '0.5rem'}}>
+								X {unitSize}
+							</AirlineChip>
+						}
 					</Div>
 					
 					{unitPrice ? (
 						<Div>
 							<Pprice>${unitPrice.toFixed(2)}</Pprice>
-							<P>/EA</P>
+							<P>/{unitOfMeasure}</P>
 						</Div>
 					) : !foundPrice ? (
 						<Div>
 							<SkeletonDetail style={{margin: 'auto 0 auto 75px', width: 50}}/>
-							<P>/EA</P>
 						</Div>
 					) : (
 						<ACall href="tel:+18009997378">Call for Price</ACall>

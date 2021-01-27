@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery, useLazyQuery } from '@apollo/client'
@@ -7,12 +7,12 @@ import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../config/context'
 import AddToShoppingListModal from "../_common/modals/AddToShoppingListModal";
-import { GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'config/providerGQL'
+import { GET_ITEM_PRICE } from 'config/providerGQL'
 import {getOriginalImagePath} from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'config/gqlQueries/gqlItemQueries'
-import SplitLineModal from "../ShoppingCart/uiComponents/splitLineModal";
-import FactoryStockModal from "../ShoppingCart/uiComponents/factoryStockModal";
 import LocationsModal from "../SearchResults/uiComponents/locationsModal";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -168,12 +168,6 @@ const Pprice = styled.p`
 	margin: 0;
 `
 
-const InputQuantity = styled.input`
-	width: 50px;
-	height: 25px;
-	margin-left: 4px;
-`
-
 const TABLE = styled.table`
 	margin-top: 20px;
 `
@@ -206,7 +200,13 @@ export default function ItemDetailPage({ history }) {
 	const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
 	const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
 	const [quantity, setQuantity] = useState(1);
-	const [unitPrice, setUnitPrice] = useState(null);
+
+	const [priceInfo, setPriceInfo] = useState(null)
+	const {
+		unitOfMeasure, 
+		unitSize, 
+		roundType} = priceInfo || {}
+
 	const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '');
 	const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false);
 	const [showAddListModal, setShowAddListModal] = useState(false);
@@ -266,9 +266,11 @@ export default function ItemDetailPage({ history }) {
 	const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
 		onCompleted: data => {
 			if(data.getItemPrices.length){
-				setUnitPrice(data.getItemPrices[0].unitPrice)
+				setPriceInfo(data.getItemPrices[0])
 			} else{
-				setUnitPrice(0)
+				setPriceInfo({
+					unitPrice: 0
+				})
 			}
 		}
 	})
@@ -297,10 +299,8 @@ export default function ItemDetailPage({ history }) {
 		setQuantity(1)
 	}
 	
-	const handleSetQuantity = ({target: {value}}) => {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setQuantity(value)
-		}
+	const setQuantityHandler = (qty) => {
+		setQuantity(qty)
 	}
 	
 	const handleShowLocationsModal = () => {
@@ -316,15 +316,15 @@ export default function ItemDetailPage({ history }) {
 	} else if (!itemDetails.invMastUid) {
 		return (<p>No item found</p>)
 	} else {
-		const FeatureItems = itemDetails.feature.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-		const TechSpecItems = itemDetails.techSpec.map((elem, idx) => (
+		const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
+		const TechSpecItems = itemDetails.itemTechSpecs.map((elem, idx) => (
 			<TR key={idx}>
 				<TD>{elem.name}</TD>
 				<TD>{elem.value}</TD>
 			</TR>
 		))
 
-		const ItemLinks = itemDetails.itemLink.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+		const ItemLinks = itemDetails.itemLinks.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
 		const AccessoryItems = accessoryItems.map((ai, idx) => {
 
 			const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
@@ -347,6 +347,18 @@ export default function ItemDetailPage({ history }) {
 		const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
 			<option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
 		))
+		
+		const Availability = () => (
+			<Pbold onClick={handleShowLocationsModal}>
+				{itemAvailability.availability ? (
+					`Available: ${itemAvailability.availability}`
+				) : itemAvailability.leadTimeDays ? (
+					`Lead time ${itemAvailability.leadTimeDays} days`
+				) : (
+					'Call for lead time'
+				)}
+			</Pbold>
+		)
 
 		return (
 			<ItemDetailPageContainer>
@@ -361,22 +373,28 @@ export default function ItemDetailPage({ history }) {
 					
 					<DivPurchaseInfo>
 						<Row>
-							<Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
-							<P> /each</P>
+							<Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
+							<P> /{unitOfMeasure}</P>
 						</Row>
 						
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								itemAvailability.availability
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						<Availability/>
 						
 						<DivPurchaseInfoButtons>
 							<RowCentered>
 								<span>Qty:</span>
-								<InputQuantity value={quantity} onChange={handleSetQuantity} />
+								<QuantityInput
+									quantity={quantity}
+									unitSize={unitSize}
+									unitOfMeasure={unitOfMeasure}
+									roundType={roundType}
+									handleUpdate={setQuantityHandler}
+									min='0'
+								/>
+								{
+									(unitSize > 1) && <AirlineChip style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>
+										X {unitSize }
+									</AirlineChip>
+								}
 							</RowCentered>
 							
 							<ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
@@ -384,8 +402,8 @@ export default function ItemDetailPage({ history }) {
 							<ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
 						</DivPurchaseInfoButtons>
 						
-						{itemDetails.feature.length > 0 && <a href='#feature'>Features</a>}
-						{itemDetails.techSpec.length > 0 && <a href='#techspec'>Tech Specs</a>}
+						{itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
+						{itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
 						{accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
 					</DivPurchaseInfo>
 				</DivLeftCol>
@@ -394,14 +412,9 @@ export default function ItemDetailPage({ history }) {
 					<PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 					
 					<Row>
-						<Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}`}</Pprice>
-						<Pbold onClick={handleShowLocationsModal}>
-							{itemAvailability.availability === 0 ? (
-								`Lead time ${itemAvailability.leadTimeDays} days`
-							) : (
-								`Available: ${itemAvailability.availability}`
-							)}
-						</Pbold>
+						<Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
+						
+						<Availability/>
 					</Row>
 					
 					<TABLE>
@@ -442,7 +455,7 @@ export default function ItemDetailPage({ history }) {
 						</tbody>
 					</Table>
 					
-					{itemDetails.itemLink.length > 0 && <H4>Links</H4>}
+					{itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
 					<DivSection>{ItemLinks}</DivSection>
 					
 					{accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}

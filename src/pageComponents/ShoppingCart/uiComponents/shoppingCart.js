@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from "../../_common/modals/SaveShoppingListModal";
+import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'config/providerGQL'
+import { useLazyQuery } from '@apollo/client'
 
 const Div = styled.div`
 	display: flex;
@@ -52,15 +54,43 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ history }) {
-	const { cart, emptyCart, userInfo, saveShoppingCart, itemPrices, itemAvailabilities, itemDetails, customerPartNumbers,
-		getItemPrices, getItemAvailabilities, getItemDetails, getCustomerPartNumbers, updateShoppingCart } = useContext(Context)
+	const { cart, 
+			emptyCart, 
+			userInfo, 
+			saveShoppingCart, 
+			itemPrices,
+			itemDetails, 
+			customerPartNumbers,
+			getItemPrices,
+			getItemDetails, 
+			getCustomerPartNumbers, 
+			updateShoppingCart,
+			cartPricing } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
 	const [showShoppingListModal, setShowShoppingListModal] = useState(false)
+	const [itemAvailabilities, setItemAvailabilities] = useState([])
+
+	const [getAvailabilitiesWithLeadTimes] = useLazyQuery(GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
+        }
+    })
 	
 	useEffect(() => {
 		if (cart) {
 			const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
 			hasMissingPrices && getItemPrices(cart)
+			getAvailabilitiesWithLeadTimes({ 
+				variables: { 
+					itemsAndQuantities: cart.map(({ frecno, quantity }) => {
+						return {
+							invMastUid: frecno,
+							quantity: quantity
+						}
+					}) 
+				} 
+			})
 		}
 	}, [cart])
 	
@@ -71,9 +101,6 @@ export default function ShoppingCart({ history }) {
 			
 			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
 			hasMissingPartNumbers && getCustomerPartNumbers(cart)
-			
-			const hasMissingAvail = !!cart.find(item => !itemAvailabilities.find(avail => avail.invMastUid === item.frecno))
-			hasMissingAvail && getItemAvailabilities(cart)
 		}
 	}, [cart?.length])
 
@@ -117,7 +144,18 @@ export default function ShoppingCart({ history }) {
 				</DivRow>
 			</Div>
 			<CartComponent
-				{...{ history, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cart, updateShoppingCart}}
+				{
+					...{ 
+						history, 
+						itemDetails, 
+						itemPrices, 
+						itemAvailabilities, 
+						customerPartNumbers, 
+						cart, 
+						updateShoppingCart, 
+						cartPricing
+					}
+				}
 			/>
 			{
 				userInfo && <SaveShoppingListModal
@@ -131,7 +169,7 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, history}) => {
+const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cartPricing, history}) => {
 	const [shoppingCart, setShoppingCart] = useState(cart || [])
 	
 	useEffect(() => {
@@ -196,6 +234,7 @@ const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemA
 								setCart={setCart}
 								setCartItem={setCartItem(index)}
 								setCartItemField={setCartItemField(index)}
+								cartPricing={cartPricing}
 								{...{history, index}}
 							/>
 							: <SkeletonItem index={index} />

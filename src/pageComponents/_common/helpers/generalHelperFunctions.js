@@ -55,9 +55,11 @@ const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaT
 const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1;
 
 const getTypeImage = (itemDetails, type) => {
-	return itemDetails?.image?.find(firstMatchingImageType(type)) || itemDetails?.image?.find(firstImage)
+	return itemDetails?.itemMedia?.find(firstMatchingImageType(type)) || itemDetails?.itemMedia?.find(firstImage)
 }
 
+//TODO: Change this back to ImageTypes.Thumbnail once the thumbnail images are loaded properly
+//John changed this to ImageTypes.Large because the thumbnail images weren't loading.
 export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
 
 export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path);
@@ -90,7 +92,7 @@ export const logout = () => {
 	keysToRemove.forEach(key => localStorage.removeItem(key))
 }
 
-export const useDidUpdateEffect = (create, deps) => {
+export const useDidUpdateEffect = (create, deps) => { //Does not trigger on mount, only on successive re-renders
 	const didMountRef = useRef(false);
 	
 	useEffect(() => {
@@ -126,3 +128,39 @@ export const useDebounceValue = (value, time = 500) => {
 	
 	return debouncedValue
 }
+
+export const cleanSearchState = ({searchState: {brands, attributes, parentCategories, childCategories}}) => {
+	const removeTypeName = ({__typename, ...rest}) => rest
+	return {
+		brands: brands?.map(removeTypeName) || [],
+		attributes: attributes?.map(({__typename, features, ...rest}) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+		parentCategories: parentCategories?.map(removeTypeName) || [],
+		childCategories: childCategories?.map(removeTypeName) || []
+	}
+}
+
+export function scrollHorizontal(element, change, duration) {
+	const start = element.scrollLeft
+	let currentTime = 0
+	const increment = 20
+	
+	const animateScroll = () => {
+		currentTime += increment;
+		element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration);
+		if (currentTime < duration) {
+			setTimeout(animateScroll, increment);
+		}
+	};
+	animateScroll();
+}
+
+//t = current time
+//s = start value
+//c = change in value
+//d = duration
+Math.easeInOutQuad = (t, s, c, d) => {
+	t /= d/2;
+	if (t < 1) return c/2 * t * t + s;
+	t--;
+	return -c/2 * (t * (t-2) - 1) + s;
+};

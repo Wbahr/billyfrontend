@@ -1,5 +1,22 @@
 import styled from 'styled-components'
 
+const PALETTE = {
+    primary: { //Red
+        main: '#b51f2b', //Airline Red
+        dark1: '#950f23', //Button Gradient 1
+        dark2: '#db1633', //Button Gradient 2
+    },
+    secondary: { //Blue
+        main: '#246696',
+        contrastText: 'white'
+    },
+    grays: {
+        light: '#f2f3f4',
+        medium: '#bababa',
+        dark: '#555555'
+    }
+}
+
 //Place reusable bits of data here that can be referred to inline in styled`` sections, eg, ${props => props.theme.mainColorHover}
 // The props will be accessible by any styled component located within a ThemeProvider wrapper
 export const airlineRedTheme = {
@@ -16,6 +33,26 @@ export const airlineRedTheme = {
     fancyFontNameBold: "ProximaBold",
     headingFont: "Verdana",
     textFont: "",
-    backgroundColor: "#535353"
+    backgroundColor: "#535353",
+    accents: {
+        primary: PALETTE.primary.main
+    },
+    buttons: {
+        primary: {
+            backgroundGradientLeft: PALETTE.primary.dark1,
+            backgroundGradientRight: PALETTE.primary.dark2,
+            textColor: PALETTE.grays.light,
+        },
+        secondary: {
+            backgroundColor: PALETTE.secondary.main,
+            textColor: PALETTE.grays.light
+        }
+    },
+    backgrounds: {
+        blue: {
+            main: PALETTE.secondary.main,
+            contrastText: PALETTE.grays.light
+        }
+    }
 };
 

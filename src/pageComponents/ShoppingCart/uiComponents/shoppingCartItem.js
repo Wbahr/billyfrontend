@@ -10,6 +10,8 @@ import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
 import SplitLineModal from "./splitLineModal";
 import CustomerPartModal from "./editCustomerPartModal";
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -83,7 +85,7 @@ const DivCol2 = styled.div`
 	align-items: flex-start;
 	width: 300px;
 	height: 100%;
-	margin-right: 50px;
+	margin: 0 50px;
 	p {
 		font-size: 16px;
 		margin: 0;
@@ -160,7 +162,13 @@ const P3 = styled.p`
 `
 
 export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
- 	priceInfo, availabilityInfo, customerPartNumbers, history}) {
+ 	priceInfo, availabilityInfo, customerPartNumbers, cartPricing, history}) {
+
+	const {
+		unitPrice, 
+		unitOfMeasure,
+		unitSize, 
+		roundType} = priceInfo || {}
 	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 	
@@ -210,10 +218,8 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 		})
 	}
 	
-	const handleQuantityChange = ({target: {value}}) => {
-		if (/^\+?(0|[1-9]\d*)$/.test(value) || value === '') {
-			setCartItem({...cartItem, quantity: value.length ? parseInt(value) : ''})
-		}
+	const setQuantityHandler = (qty) => {
+		setCartItem({...cartItem, quantity: qty})
 	}
 	
 	const handleUpdateItemNotes = ({target: {value}}) => {
@@ -236,7 +242,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						<Img src={getThumbnailImagePath(itemDetails)} />
 					</DivCol1>
 					<DivCol2>
-						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCode}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+						<A1 onClick={()=>{history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
 						<CopyToClipboard text={itemDetails.itemDesc}>
 							<P2>Copy Item Desc</P2>
 						</CopyToClipboard>
@@ -250,7 +256,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 						</TextRow>
 						{userInfo && (
 							<TextRow>
-								<select value={selectedCustomerPartNumber} onChange={e => selectCustomerPartNumber(e.target.value)} >
+								<select value={selectedCustomerPartNumber || 0} onChange={e => selectCustomerPartNumber(e.target.value)} >
 									<option value="0">Customer Part#</option>
 									{
 										customerPartNumbers?.map(elem =>
@@ -270,8 +276,7 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 							<P3>
 								Availability: {availabilityInfo?.availability}
 								{
-									(cartItem.quantity > availabilityInfo?.availability) && 
-										(' | ' + getAvailabilityMessage(cartItem.quantity, availabilityInfo?.availability, availabilityInfo?.leadTimeDays))
+									(availabilityInfo?.leadTimeDays) &&  (' | ' + availabilityInfo.leadTimeMessage)
 								}
 							</P3>
 						</DivRow>
@@ -286,13 +291,30 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 					<DivCol3>
 						<DivQuantity>
 							<DivItem>
-								<Label>Qty:</Label>
-								<input
-									onChange={handleQuantityChange}
-									style={{width: 50}}
-									value={cartItem.quantity}
-									disabled={cartItem.quoteId}
-								/>
+								<div>
+									<Label>Qty:</Label>
+									{
+										(unitSize > 1) && <AirlineChip style={{
+											marginLeft: '0.5rem', 
+											fontSize: '0.7rem',
+											padding: '0 0.5rem'}}>
+											X {unitSize }
+										</AirlineChip>
+									}
+								</div>
+								
+								<div>
+									<QuantityInput
+										quantity={cartItem.quantity}
+										unitSize={unitSize}
+										unitOfMeasure={unitOfMeasure}
+										roundType={roundType}
+										handleUpdate={setQuantityHandler}
+										min='0'
+										debounce
+									/>
+								</div>
+								
 							</DivItem>
 							<DivItem>
 								<DivRow>
@@ -307,31 +329,58 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 													decimalScale={2}
 													fixedDecimalScale
 												/>
+												<span>{`/${unitOfMeasure}`}</span>
 												<EditPriceIcon onClick={handleShowEditPriceModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
 											</EditPriceDiv>
-										) : priceInfo?.unitPrice ? (
-											<EditPriceDiv>
-												<NumberFormat
-													value={priceInfo?.unitPrice}
-													displayType={'text'}
-													thousandSeparator={true}
-													prefix={'$'}
-													decimalScale={2}
-													fixedDecimalScale
-												/>
-												<EditPriceIcon onClick={handleShowEditPriceModal}>
-													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-												</EditPriceIcon>
-											</EditPriceDiv>
-										) : null
+										) : priceInfo?.unitPrice 
+											? (
+												<EditPriceDiv>
+													<NumberFormat
+														value={priceInfo?.unitPrice}
+														displayType={'text'}
+														thousandSeparator={true}
+														prefix={'$'}
+														decimalScale={2}
+														fixedDecimalScale
+													/>
+													<span>{`/${unitOfMeasure}`}</span>
+													<EditPriceIcon onClick={handleShowEditPriceModal}>
+														<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+													</EditPriceIcon>
+												</EditPriceDiv>
+											) 
+											: null
 									)}
 								</DivRow>
 							</DivItem>
 							<DivItem>
 								<DivTotalPrice>
-									<p>{!cartItem.itemUnitPriceOverride ? <NumberFormat value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/> : <NumberFormat value={cartItem.itemUnitPriceOverride * cartItem.quantity} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+									<p>
+										{
+											!cartItem.itemUnitPriceOverride 
+												? <NumberFormat 
+													value={
+														(priceInfo?.unitPrice 
+															? priceInfo.unitPrice 
+															: 0.0
+														).toFixed(2) * cartItem.quantity
+													} 
+													displayType={'text'} 
+													thousandSeparator={true} 
+													prefix={'$'} 
+													decimalScale={2} 
+													fixedDecimalScale/> 
+												: <NumberFormat 
+													value={cartItem.itemUnitPriceOverride * cartItem.quantity} 
+													displayType={'text'} 
+													thousandSeparator={true} 
+													prefix={'$'} 
+													decimalScale={2} 
+													fixedDecimalScale/>
+										}
+									</p>
 								</DivTotalPrice>
 							</DivItem>
 						</DivQuantity>

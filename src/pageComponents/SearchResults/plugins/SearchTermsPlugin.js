@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import SearchTermChip from './SearchTermChip'
+import SearchTermChip from '../uiComponents/SearchTermChip'
 
 const Div = styled.div`
   display: flex;
@@ -45,24 +45,24 @@ const SearchChipDiv = styled.div`
  	margin: 5px 0px;
 `
 
-export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, setSortType, sortType}) {
+export default function SearchTermsPlugin({searchTerms, setSearchTerms}) {
 	const [searchTerm, setSearchTerm] = useState('')
-	const innerSearchTermsArray = innerSearchTerms ? innerSearchTerms.split(',') : []
-
+	const innerSearchTermsArray = searchTerms ? searchTerms.split(',') : []
+	
 	const handleUpdateSearchTerm = () => {
-		setInnerSearchTerms([...innerSearchTermsArray, ...searchTerm.split(' ')])
-		setSearchTerm('')
+		if (searchTerm?.trim()?.length) {
+			setSearchTerms([...innerSearchTermsArray, ...searchTerm.split(' ')])
+			setSearchTerm('')
+		}
 	}
 	
 	const handleRemoveSearchTerm = (idx) => () => {
 		const innerSearchTermsCopy = innerSearchTermsArray.slice()
 		innerSearchTermsCopy.splice(idx, 1)
-		setInnerSearchTerms(innerSearchTermsCopy)
+		setSearchTerms(innerSearchTermsCopy)
 	}
-
-	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
 	
-	const handleSetSortType = e => setSortType(e.target.value)
+	const handleSetSearchTerm = e => setSearchTerm(e.target.value)
 	
 	const handleKeyPress = e => {
 		if (e.key === 'Enter') handleUpdateSearchTerm()
@@ -71,20 +71,19 @@ export default function ResultsSearch({innerSearchTerms, setInnerSearchTerms, se
 	return(
 		<Div>
 			<SearchChipDiv>
-				{innerSearchTermsArray.map((term, idx) => <SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>)}
+				{innerSearchTermsArray.map((term, idx) => (
+					<SearchTermChip key={idx} label={term} onClose={handleRemoveSearchTerm(idx)}/>
+				))}
 			</SearchChipDiv>
 			
 			<DivResultsSearch>
-				<InputSearch placeholder="Add keywords to refine results" onChange={handleSetSearchTerm} onKeyDown={handleKeyPress} value={searchTerm}/>
+				<InputSearch
+					placeholder="Add keywords to refine results"
+					onChange={handleSetSearchTerm}
+					onKeyDown={handleKeyPress}
+					value={searchTerm}
+				/>
 				<ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
-			</DivResultsSearch>
-			
-			<DivResultsSearch>
-				<select value={sortType} onChange={handleSetSortType}>
-					<option value={'relevancy'}>Sort by Relevance</option>
-					<option value={'availability'}>Sort by Availability</option>
-					<option value={'popularity'}>Sort by Popularity</option>
-				</select>
 			</DivResultsSearch>
 		</Div>
 	)
