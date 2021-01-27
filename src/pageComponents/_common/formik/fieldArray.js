@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { FieldArray, ErrorMessage } from 'formik'
+import { FieldArray, ErrorMessage, useFormikContext } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FormikFormFieldContainer, FormikFormField, FormikFormFieldError } from 'styles/formikForm'
 
@@ -37,8 +37,8 @@ const DivAddMore = styled.div`
 `
 
 export default function FormikFieldArray({ name, label, addMore }){
-    let valueArray = 'values.' + name
-    valueArray = eval(valueArray)
+    const { values } = useFormikContext()
+    const valueArray = values[name]
     return (
         <FieldArray
             name={name}
@@ -50,18 +50,18 @@ export default function FormikFieldArray({ name, label, addMore }){
                             <React.Fragment key={index}>
                                 <ButtonContainer>
                                     <FormikFormField name={`${name}.${index}`} />
-                  
+
                                     <div onClick={() => arrayHelpers.remove(index)}>
                                         <FontAwesomeIcon icon="minus-circle" color="grey"/>
                                     </div>
-                  
+
                                     { ((index + 1) === valueArray.length && index < 4) && (
                                         <div onClick={() => arrayHelpers.insert(index, '')}>
                                             <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
                                         </div>
                                     )}
                                 </ButtonContainer>
-                
+
                                 <FormikFormFieldError>
                                     <ErrorMessage name={`${name}.${index}`} />
                                 </FormikFormFieldError>
