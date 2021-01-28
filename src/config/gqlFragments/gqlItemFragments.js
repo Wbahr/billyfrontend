@@ -130,3 +130,10 @@ export const FRAGMENT_ITEM_CUSTOMER_PART_NUMBER = gql`
         customerPartNumber
     }
 `
+
+export const FRAGMENT_ITEM_SOURCE_LOCATION = gql`
+    fragment ItemSourceLocation on SourceLocation {
+        invMastUid
+        sourceLocId
+    }
+`

@@ -61,9 +61,11 @@ export default function ShoppingCart({ history }) {
 			itemPrices,
 			itemDetails, 
 			customerPartNumbers,
+			sourceLocations,
 			getItemPrices,
 			getItemDetails, 
-			getCustomerPartNumbers, 
+			getCustomerPartNumbers,
+			getSourceLocations,
 			updateShoppingCart,
 			cartPricing } = useContext(Context)
 	const [savedCart, setSavedCart] = useState(false)
@@ -101,6 +103,9 @@ export default function ShoppingCart({ history }) {
 			
 			const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
 			hasMissingPartNumbers && getCustomerPartNumbers(cart)
+
+			const hasMissingSourceLocations = !!cart.find(item => !sourceLocations?.find(loc => loc.invMastUid === item.frecno))
+			hasMissingSourceLocations && getSourceLocations(cart)
 		}
 	}, [cart?.length])
 
@@ -150,7 +155,8 @@ export default function ShoppingCart({ history }) {
 						itemDetails, 
 						itemPrices, 
 						itemAvailabilities, 
-						customerPartNumbers, 
+						customerPartNumbers,
+						sourceLocations, 
 						cart, 
 						updateShoppingCart, 
 						cartPricing
@@ -169,7 +175,7 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cartPricing, history}) => {
+const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, sourceLocations, cartPricing, history}) => {
 	const [shoppingCart, setShoppingCart] = useState(cart || [])
 	
 	useEffect(() => {
@@ -213,6 +219,7 @@ const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemA
 		const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
 		const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.frecno)
 		const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
+		const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.frecno)
 		
 		return (
 			<Draggable key={index} draggableId={String(index)} index={index}>
@@ -229,6 +236,7 @@ const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemA
 								priceInfo={itemPrice}
 								availabilityInfo={itemAvailability}
 								customerPartNumbers={itemCustomerPartNumbers}
+								sourceLocations={itemSourceLocations}
 								key={index}
 								cart={shoppingCart || []}
 								setCart={setCart}

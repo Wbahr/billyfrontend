@@ -161,8 +161,22 @@ const P3 = styled.p`
 	font-size: 12px !important;
 `
 
-export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, setCartItemField, index, itemDetails,
- 	priceInfo, availabilityInfo, customerPartNumbers, cartPricing, history}) {
+export default function ShoppingCartItem(props) {
+
+	const {
+		cart, 
+		setCart, 
+		cartItem, 
+		setCartItem, 
+		setCartItemField, 
+		index, 
+		itemDetails,
+		priceInfo, 
+		availabilityInfo, 
+		customerPartNumbers, 
+		sourceLocations, 
+		cartPricing, 
+		history} = props
 
 	const {
 		unitPrice, 
@@ -318,40 +332,21 @@ export default function ShoppingCartItem({cart, setCart, cartItem, setCartItem, 
 							</DivItem>
 							<DivItem>
 								<DivRow>
-									{userInfo?.isAirlineUser && (
-										cartItem.itemUnitPriceOverride ? (
-											<EditPriceDiv>
-												<NumberFormat
-													value={cartItem.itemUnitPriceOverride}
-													displayType={'text'}
-													thousandSeparator={true}
-													prefix={'$'}
-													decimalScale={2}
-													fixedDecimalScale
-												/>
-												<span>{`/${unitOfMeasure}`}</span>
-												<EditPriceIcon onClick={handleShowEditPriceModal}>
-													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-												</EditPriceIcon>
-											</EditPriceDiv>
-										) : priceInfo?.unitPrice 
-											? (
-												<EditPriceDiv>
-													<NumberFormat
-														value={priceInfo?.unitPrice}
-														displayType={'text'}
-														thousandSeparator={true}
-														prefix={'$'}
-														decimalScale={2}
-														fixedDecimalScale
-													/>
-													<span>{`/${unitOfMeasure}`}</span>
-													<EditPriceIcon onClick={handleShowEditPriceModal}>
-														<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-													</EditPriceIcon>
-												</EditPriceDiv>
-											) 
-											: null
+									{(userInfo?.isAirlineUser && !!priceInfo) && (
+										<EditPriceDiv>
+											<NumberFormat
+												value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
+												displayType={'text'}
+												thousandSeparator={true}
+												prefix={'$'}
+												decimalScale={2}
+												fixedDecimalScale
+											/>
+											<span>{`/${unitOfMeasure}`}</span>
+											<EditPriceIcon onClick={handleShowEditPriceModal}>
+												<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+											</EditPriceIcon>
+										</EditPriceDiv>
 									)}
 								</DivRow>
 							</DivItem>

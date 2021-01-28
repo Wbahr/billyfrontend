@@ -11,7 +11,7 @@ import {
 	distinct,
 	useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
-import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_SHOPPING_CART_ITEM_DETAIL} from "./gqlQueries/gqlItemQueries";
+import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL} from "./gqlQueries/gqlItemQueries";
 
 export default function Provider(props) {
     const didMountRef = useRef(false)
@@ -37,6 +37,7 @@ export default function Provider(props) {
     const [itemAvailabilities, setItemAvailabilities] = useState([])
     const [itemDetails, setItemDetails] = useState([])
     const [customerPartNumbers, setCustomerPartNumbers] = useState([])
+    const [sourceLocations, setSourceLocations] = useState([])
     const [shoppingLists, setShoppingLists] = useState([])
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
@@ -162,6 +163,13 @@ export default function Provider(props) {
         }
     })
 
+    const [handleGetSourceLocations] = useLazyQuery(GET_ITEM_SOURCE_LOCATIONS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setSourceLocations([...data.sourceLocations, ...sourceLocations].filter(distinct))
+        }
+    })
+
     function getItemPrices(items) {
         handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno, quantity }) => ({
                 invMastUid: invMastUid || frecno,
@@ -179,6 +187,10 @@ export default function Provider(props) {
     
     function getCustomerPartNumbers(items) {
 			  handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+    }
+
+    function getSourceLocations(items) {
+        handleGetSourceLocations({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
     
     const addCustomerPartNumber = newCustomerPartNumber => {
@@ -481,7 +493,8 @@ export default function Provider(props) {
                 getItemAvailabilities,
                 getItemDetails,
                 getCustomerPartNumbers,
-							  addCustomerPartNumber,
+                addCustomerPartNumber,
+                getSourceLocations,
                 getShoppingLists,
                 getShoppingListsState,
                 upsertShoppingList,
