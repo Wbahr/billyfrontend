@@ -331,24 +331,36 @@ export default function ShoppingCartItem(props) {
 								
 							</DivItem>
 							<DivItem>
-								<DivRow>
+								<div>
 									{(userInfo?.isAirlineUser && !!priceInfo) && (
-										<EditPriceDiv>
-											<NumberFormat
-												value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
-												displayType={'text'}
-												thousandSeparator={true}
-												prefix={'$'}
-												decimalScale={2}
-												fixedDecimalScale
-											/>
-											<span>{`/${unitOfMeasure}`}</span>
-											<EditPriceIcon onClick={handleShowEditPriceModal}>
-												<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-											</EditPriceIcon>
-										</EditPriceDiv>
+										<div>
+											<EditPriceDiv>
+												<NumberFormat
+													value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
+													displayType={'text'}
+													thousandSeparator={true}
+													prefix={'$'}
+													decimalScale={2}
+													fixedDecimalScale
+												/>
+												<span>{`/${unitOfMeasure}`}</span>
+												<EditPriceIcon onClick={handleShowEditPriceModal}>
+													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+												</EditPriceIcon>
+											</EditPriceDiv>
+										</div>
+
 									)}
-								</DivRow>
+									{userInfo?.isAirlineUser && (
+										<div style={{display: 'flex', fontSize: '0.85rem'}}>
+											<span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
+											<EditPriceIcon>
+												<FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
+											</EditPriceIcon>
+										</div>
+									)}
+								</div>
+								
 							</DivItem>
 							<DivItem>
 								<DivTotalPrice>
