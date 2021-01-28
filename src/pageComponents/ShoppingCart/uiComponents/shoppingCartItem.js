@@ -9,6 +9,7 @@ import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_c
 import FactoryStockModal from "./factoryStockModal";
 import EditPriceModal from "./editPriceModal";
 import SplitLineModal from "./splitLineModal";
+import SourceLocationModal from './SourceLocationModal'
 import CustomerPartModal from "./editCustomerPartModal";
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
@@ -194,6 +195,7 @@ export default function ShoppingCartItem(props) {
 	const [showSplitLineModal, setShowSplitLineModal] = useState(false)
 	const [factoryStockModalData, setFactoryStockModalData] = useState(false)
 	const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
+	const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
 	const itemId = parseInt(cartItem.frecno,10)
 	
 	const {userInfo} = useContext(Context)
@@ -230,6 +232,10 @@ export default function ShoppingCartItem(props) {
 			priceReasonId: cartItem.priceReasonId,
 			cartItem
 		})
+	}
+
+	const handleShowSourceLocModal = () => {
+		setShowSourceLocationModal(true)
 	}
 	
 	const setQuantityHandler = (qty) => {
@@ -354,7 +360,7 @@ export default function ShoppingCartItem(props) {
 									{userInfo?.isAirlineUser && (
 										<div style={{display: 'flex', fontSize: '0.85rem'}}>
 											<span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
-											<EditPriceIcon>
+											<EditPriceIcon onClick={handleShowSourceLocModal}>
 												<FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
 											</EditPriceIcon>
 										</div>
@@ -432,6 +438,12 @@ export default function ShoppingCartItem(props) {
 			hideCustomerPartModal={() => setShowCustomerPartModal(false)}
 			invMastUid={cart?.[index].frecno}
 			{...{index, cartItem, setCartItem, selectCustomerPartNumber}}
+		/>
+		<SourceLocationModal
+			open={showSourceLocationModal}
+			hide={() => setShowSourceLocationModal(false)}
+			sourceLocations={sourceLocations}
+			{...{cartItem, setCartItem}}
 		/>
 	</DivContainer>
 }
