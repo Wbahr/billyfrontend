@@ -145,6 +145,8 @@ export const UPDATE_CART = gql`
         itemUnitPriceOverride
         airlineCost
         priceReasonId
+        sourceLocId
+        disposition
       }
       subtotal
       tariff

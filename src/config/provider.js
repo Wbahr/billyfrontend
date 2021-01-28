@@ -186,7 +186,7 @@ export default function Provider(props) {
     }
     
     function getCustomerPartNumbers(items) {
-			  handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+		handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
 
     function getSourceLocations(items) {
@@ -488,6 +488,7 @@ export default function Provider(props) {
                 itemAvailabilities,
                 itemDetails,
                 customerPartNumbers,
+                sourceLocations,
                 getPurchaseHistory,
                 getItemPrices,
                 getItemAvailabilities,

@@ -51,7 +51,7 @@ export default function SourceLocationModal(props) {
 
 	const sourceLocOptions = sourceLocations?.map(loc => ({ label: loc.sourceLocId, value: loc.sourceLocId }))
 	
-	const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem.sourceLocId || '')
+	const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem?.sourceLocId)
 	const [alert, setAlert] = useState(null)
 
 	function handleClose(){
@@ -61,15 +61,15 @@ export default function SourceLocationModal(props) {
 
 	const handleSaveSourceLoc = () => {
 		if (selectedSourceLoc === '2100') {
-			setCartItem({ ...data?.cartItem, sourceLocId: null })
+			setCartItem({ ...cartItem, sourceLocId: null })
 		} else {
-			setCartItem({ ...data?.cartItem, sourceLocId: selectedSourceLoc })
+			setCartItem({ ...cartItem, sourceLocId: selectedSourceLoc })
 		}
 		hide()
 	}
 
-	const handleSourceLocChange = (value) => {
-		setSelectedSourceLoc(value)
+	const handleSourceLocChange = (event) => {
+		setSelectedSourceLoc(event.target.value)
 	}
   
 	return(
@@ -80,12 +80,9 @@ export default function SourceLocationModal(props) {
 				
 				<DivItem>
 					<Label>Source Locations: </Label>
-					<AirlineSelect
-						label="Source Location"
-						options={sourceLocOptions}
-						value={cartItem?.sourceLocId}
-						setValue={handleSourceLocChange}
-					/>
+					<select value={selectedSourceLoc} onChange={handleSourceLocChange}>
+						{ sourceLocOptions.map(o => <option value={o.value}>{o.label}</option>)}
+					</select>
 				</DivItem>
 				
 				<DivRow>

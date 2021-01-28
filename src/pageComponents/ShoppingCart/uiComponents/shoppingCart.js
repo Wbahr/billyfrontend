@@ -175,7 +175,20 @@ export default function ShoppingCart({ history }) {
 	)
 }
 
-const CartComponent = ({cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, sourceLocations, cartPricing, history}) => {
+const CartComponent = (props) => {
+
+	const {
+		cart, 
+		updateShoppingCart, 
+		itemDetails, 
+		itemPrices, 
+		itemAvailabilities, 
+		customerPartNumbers, 
+		sourceLocations, 
+		cartPricing, 
+		history
+	} = props
+
 	const [shoppingCart, setShoppingCart] = useState(cart || [])
 	
 	useEffect(() => {
