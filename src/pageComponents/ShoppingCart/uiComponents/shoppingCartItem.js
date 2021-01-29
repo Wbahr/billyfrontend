@@ -362,25 +362,43 @@ export default function ShoppingCartItem(props) {
 							</DivItem>
 							<DivItem>
 								<DivItemPrice>
-									{(userInfo?.isAirlineUser && !!priceInfo) && (
-										<div>
-											<EditPriceDiv>
-												<NumberFormat
-													value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
-													displayType={'text'}
-													thousandSeparator={true}
-													prefix={'$'}
-													decimalScale={2}
-													fixedDecimalScale
-												/>
-												<span>{`/${unitOfMeasure}`}</span>
-												<EditPriceIcon onClick={handleShowEditPriceModal}>
-													<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-												</EditPriceIcon>
-											</EditPriceDiv>
-										</div>
-
-									)}
+									{
+										!!priceInfo && (
+											userInfo?.isAirlineUser ? (
+												<div>
+													<EditPriceDiv>
+														<NumberFormat
+															value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
+															displayType={'text'}
+															thousandSeparator={true}
+															prefix={'$'}
+															decimalScale={2}
+															fixedDecimalScale
+														/>
+														<span>{`/${unitOfMeasure}`}</span>
+														<EditPriceIcon onClick={handleShowEditPriceModal}>
+															<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+														</EditPriceIcon>
+													</EditPriceDiv>
+												</div>
+											) 
+											: (
+												<div>
+													<EditPriceDiv>
+														<NumberFormat
+															value={priceInfo.unitPrice}
+															displayType={'text'}
+															thousandSeparator={true}
+															prefix={'$'}
+															decimalScale={2}
+															fixedDecimalScale
+														/>
+														<span>{`/${unitOfMeasure}`}</span>
+													</EditPriceDiv>
+												</div>
+											)
+										)
+									}
 									{userInfo?.isAirlineUser && (
 										<>
 											<div style={{display: 'flex', fontSize: '0.85rem'}}>
