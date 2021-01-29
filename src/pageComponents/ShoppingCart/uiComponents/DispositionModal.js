@@ -60,7 +60,7 @@ export default function DispositionModal(props) {
 	}
 
 	const handleSaveDisposition = () => {
-		if (selectedDisposition === 'B') {
+		if (!selectedDisposition) {
 			setCartItem({ ...cartItem, disposition: null })
 		} else {
 			setCartItem({ ...cartItem, disposition: selectedDisposition })

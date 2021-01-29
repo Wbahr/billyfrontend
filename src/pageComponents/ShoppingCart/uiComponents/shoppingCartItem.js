@@ -198,11 +198,11 @@ export default function ShoppingCartItem(props) {
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
 	const dispositions = [
+		{ value:'', text: 'Default' },
 		{ value:'B', text: 'Backorder' },
 		{ value:'D', text: 'Direct Ship' },
 		{ value:'H', text: 'Hold' },
-		{ value:'S', text: 'Special Order' },
-		{ value:'P', text: 'Production Order' }
+		{ value:'S', text: 'Special Order' }
 	]
 	
 	useEffect(() => {
@@ -390,7 +390,7 @@ export default function ShoppingCartItem(props) {
 												</EditPriceIcon>
 											</div>
 											<div style={{display: 'flex', fontSize: '0.85rem'}}>
-												<span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || 'Backorder'}</span>
+												<span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || 'Default'}</span>
 												<EditPriceIcon onClick={handleShowDispositionModal}>
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
