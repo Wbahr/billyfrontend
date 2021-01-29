@@ -13,6 +13,7 @@ import SourceLocationModal from './SourceLocationModal'
 import CustomerPartModal from "./editCustomerPartModal";
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import DispositionModal from './DispositionModal'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -195,6 +196,14 @@ export default function ShoppingCartItem(props) {
 		roundType} = priceInfo || {}
 	
 	const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
+
+	const dispositions = [
+		{ value:'B', text: 'Backorder' },
+		{ value:'D', text: 'Direct Ship' },
+		{ value:'H', text: 'Hold' },
+		{ value:'S', text: 'Special Order' },
+		{ value:'P', text: 'Production Order' }
+	]
 	
 	useEffect(() => {
 		setSelectedCustomerPartNumber(cartItem.customerPartNumberId)
@@ -205,6 +214,7 @@ export default function ShoppingCartItem(props) {
 	const [factoryStockModalData, setFactoryStockModalData] = useState(false)
 	const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
 	const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
+	const [showDispositionModal, setShowDispositionModal] = useState(false);
 	const itemId = parseInt(cartItem.frecno,10)
 	
 	const {userInfo} = useContext(Context)
@@ -245,6 +255,10 @@ export default function ShoppingCartItem(props) {
 
 	const handleShowSourceLocModal = () => {
 		setShowSourceLocationModal(true)
+	}
+
+	const handleShowDispositionModal = () => {
+		setShowDispositionModal(true)
 	}
 	
 	const setQuantityHandler = (qty) => {
@@ -375,6 +389,12 @@ export default function ShoppingCartItem(props) {
 													<FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
 												</EditPriceIcon>
 											</div>
+											<div style={{display: 'flex', fontSize: '0.85rem'}}>
+												<span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || 'Backorder'}</span>
+												<EditPriceIcon onClick={handleShowDispositionModal}>
+													<FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
+												</EditPriceIcon>
+											</div>
 										</>
 									)}
 								</DivItemPrice>
@@ -455,6 +475,13 @@ export default function ShoppingCartItem(props) {
 			open={showSourceLocationModal}
 			hide={() => setShowSourceLocationModal(false)}
 			sourceLocations={sourceLocations}
+			{...{cartItem, setCartItem}}
+		/>
+
+		<DispositionModal
+			open={showDispositionModal}
+			hide={() => setShowDispositionModal(false)}
+			dispositions={dispositions}
 			{...{cartItem, setCartItem}}
 		/>
 	</DivContainer>

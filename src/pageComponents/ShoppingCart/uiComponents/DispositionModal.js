@@ -39,19 +39,19 @@ const Container = styled.div`
   }
 `
 
-export default function SourceLocationModal(props) {
+export default function DispositionModal(props) {
 
 	const {
 		open,
 		hide,
-		sourceLocations,
+		dispositions,
 		cartItem,
 		setCartItem,
 	} = props
 
-	const sourceLocOptions = sourceLocations?.map(loc => ({ label: loc.sourceLocId, value: loc.sourceLocId }))
+	const dispositionOptions = dispositions?.map(disposition => ({ label: disposition.text, value: disposition.value }))
 	
-	const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem?.sourceLocId)
+	const [selectedDisposition, setSelectedDisposition] = useState(cartItem?.sourceLocId)
 	const [alert, setAlert] = useState(null)
 
 	function handleClose(){
@@ -59,35 +59,35 @@ export default function SourceLocationModal(props) {
 		hide()
 	}
 
-	const handleSaveSourceLoc = () => {
-		if (selectedSourceLoc === '2100') {
-			setCartItem({ ...cartItem, sourceLocId: null })
+	const handleSaveDisposition = () => {
+		if (selectedDisposition === 'B') {
+			setCartItem({ ...cartItem, disposition: null })
 		} else {
-			setCartItem({ ...cartItem, sourceLocId: selectedSourceLoc })
+			setCartItem({ ...cartItem, disposition: selectedDisposition })
 		}
 		hide()
 	}
 
-	const handleSourceLocChange = (event) => {
-		setSelectedSourceLoc(event.target.value)
+	const handleDispositionChange = (event) => {
+		setSelectedDisposition(event.target.value)
 	}
   
 	return(
 		<Modal open={open} onClose={handleClose} contentStyle={{maxWidth: 350, borderRadius: 3}}>
 			<Container>
-				<h4>Select Source Location</h4>
+				<h4>Select Disposition</h4>
 				{alert && <p>{alert}</p>}
 				
 				<DivItem>
-					<Label>Source Locations: </Label>
-					<select value={selectedSourceLoc} onChange={handleSourceLocChange}>
-						{ sourceLocOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+					<Label>Dispositions: </Label>
+					<select value={selectedDisposition} onChange={handleDispositionChange}>
+						{ dispositionOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
 					</select>
 				</DivItem>
 				
 				<DivRow>
 					<ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-					<ButtonRed onClick={handleSaveSourceLoc}>Save</ButtonRed>
+					<ButtonRed onClick={handleSaveDisposition}>Save</ButtonRed>
 				</DivRow>
 			</Container>
 		</Modal>
