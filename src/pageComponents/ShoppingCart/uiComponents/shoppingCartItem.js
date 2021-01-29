@@ -34,13 +34,22 @@ const DivItem = styled.div`
 	flex-direction: column;
 `
 
+const DivItemQuantity = styled.div`
+	min-width: 94px;
+`
+
+const DivItemPrice = styled.div`
+	min-width: 190px;
+	padding-left: 10px;
+`
+
 const DivCard = styled.div`
 	display: flex;
 	align-items: center;
 	width: 100%;
 `
 
-const DivQuantity = styled.div`
+const DivItemInfo = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -86,7 +95,7 @@ const DivCol2 = styled.div`
 	align-items: flex-start;
 	width: 300px;
 	height: 100%;
-	margin: 0 50px;
+	margin: 0 30px 0 50px;
 	p {
 		font-size: 16px;
 		margin: 0;
@@ -309,35 +318,36 @@ export default function ShoppingCartItem(props) {
 						</DivRow>
 					</DivCol2>
 					<DivCol3>
-						<DivQuantity>
+						<DivItemInfo>
 							<DivItem>
-								<div>
-									<Label>Qty:</Label>
-									{
-										(unitSize > 1) && <AirlineChip style={{
-											marginLeft: '0.5rem', 
-											fontSize: '0.7rem',
-											padding: '0 0.5rem'}}>
-											X {unitSize }
-										</AirlineChip>
-									}
-								</div>
-								
-								<div>
-									<QuantityInput
-										quantity={cartItem.quantity}
-										unitSize={unitSize}
-										unitOfMeasure={unitOfMeasure}
-										roundType={roundType}
-										handleUpdate={setQuantityHandler}
-										min='0'
-										debounce
-									/>
-								</div>
-								
+								<DivItemQuantity>
+									<div>
+										<Label>Qty:</Label>
+										{
+											(unitSize > 1) && <AirlineChip style={{
+												marginLeft: '0.5rem', 
+												fontSize: '0.7rem',
+												padding: '0 0.5rem'}}>
+												X {unitSize }
+											</AirlineChip>
+										}
+									</div>
+									
+									<div>
+										<QuantityInput
+											quantity={cartItem.quantity}
+											unitSize={unitSize}
+											unitOfMeasure={unitOfMeasure}
+											roundType={roundType}
+											handleUpdate={setQuantityHandler}
+											min='0'
+											debounce
+										/>
+									</div>
+								</DivItemQuantity>
 							</DivItem>
 							<DivItem>
-								<div>
+								<DivItemPrice>
 									{(userInfo?.isAirlineUser && !!priceInfo) && (
 										<div>
 											<EditPriceDiv>
@@ -358,14 +368,16 @@ export default function ShoppingCartItem(props) {
 
 									)}
 									{userInfo?.isAirlineUser && (
-										<div style={{display: 'flex', fontSize: '0.85rem'}}>
-											<span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
-											<EditPriceIcon onClick={handleShowSourceLocModal}>
-												<FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
-											</EditPriceIcon>
-										</div>
+										<>
+											<div style={{display: 'flex', fontSize: '0.85rem'}}>
+												<span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
+												<EditPriceIcon onClick={handleShowSourceLocModal}>
+													<FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
+												</EditPriceIcon>
+											</div>
+										</>
 									)}
-								</div>
+								</DivItemPrice>
 								
 							</DivItem>
 							<DivItem>
@@ -396,8 +408,8 @@ export default function ShoppingCartItem(props) {
 									</p>
 								</DivTotalPrice>
 							</DivItem>
-						</DivQuantity>
-						<DivQuantity>
+						</DivItemInfo>
+						<DivItemInfo>
 							<DivItem>
 								<Label>Item Notes:</Label>
 								<DebounceInput
@@ -409,7 +421,7 @@ export default function ShoppingCartItem(props) {
 									value={cartItem.itemNotes || ''}
 								/>
 							</DivItem>
-						</DivQuantity>
+						</DivItemInfo>
 					</DivCol3>
 					<DivRemove onClick={handleRemoveItem} alt='remove-item'>
 						<FontAwesomeIcon icon="times-circle" color="lightgrey"/>
