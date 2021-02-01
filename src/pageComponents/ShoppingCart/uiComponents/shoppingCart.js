@@ -54,16 +54,18 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ history }) {
-    const { cart, 
-        emptyCart, 
-        userInfo, 
-        saveShoppingCart, 
+    const { cart,
+        emptyCart,
+        userInfo,
+        saveShoppingCart,
         itemPrices,
-        itemDetails, 
+        itemDetails,
         customerPartNumbers,
+        sourceLocations,
         getItemPrices,
-        getItemDetails, 
-        getCustomerPartNumbers, 
+        getItemDetails,
+        getCustomerPartNumbers,
+        getSourceLocations,
         updateShoppingCart,
         cartPricing } = useContext(Context)
     const [savedCart, setSavedCart] = useState(false)
@@ -76,31 +78,33 @@ export default function ShoppingCart({ history }) {
             setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
         }
     })
-	
+
     useEffect(() => {
         if (cart) {
             const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
             hasMissingPrices && getItemPrices(cart)
-            getAvailabilitiesWithLeadTimes({ 
-                variables: { 
+            getAvailabilitiesWithLeadTimes({
+                variables: {
                     itemsAndQuantities: cart.map(({ frecno, quantity }) => {
                         return {
                             invMastUid: frecno,
                             quantity: quantity
                         }
-                    }) 
-                } 
+                    })
+                }
             })
         }
     }, [cart])
-	
+
     useEffect(() => {
         if (cart) {
             const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
             hasMissingItemDetails && getItemDetails(cart)
-			
             const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
             hasMissingPartNumbers && getCustomerPartNumbers(cart)
+
+            const hasMissingSourceLocations = !!cart.find(item => !sourceLocations?.find(loc => loc.invMastUid === item.frecno))
+            hasMissingSourceLocations && getSourceLocations(cart)
         }
     }, [cart?.length])
 
@@ -109,7 +113,7 @@ export default function ShoppingCart({ history }) {
             setTimeout(() => setSavedCart(false), 1000)
         }
     }, [savedCart])
-	
+
     const handleSaveAsShoppingList = () => {
         setShowShoppingListModal(true)
     }
@@ -118,7 +122,7 @@ export default function ShoppingCart({ history }) {
         saveShoppingCart()
         setSavedCart(true)
     }
-	
+
     return (
         <>
             <Div>
@@ -145,14 +149,15 @@ export default function ShoppingCart({ history }) {
             </Div>
             <CartComponent
                 {
-                    ...{ 
-                        history, 
-                        itemDetails, 
-                        itemPrices, 
-                        itemAvailabilities, 
-                        customerPartNumbers, 
-                        cart, 
-                        updateShoppingCart, 
+                    ...{
+                        history,
+                        itemDetails,
+                        itemPrices,
+                        itemAvailabilities,
+                        customerPartNumbers,
+                        sourceLocations,
+                        cart,
+                        updateShoppingCart,
                         cartPricing
                     }
                 }
@@ -171,13 +176,26 @@ export default function ShoppingCart({ history }) {
     )
 }
 
-const CartComponent = ({ cart, updateShoppingCart, itemDetails, itemPrices, itemAvailabilities, customerPartNumbers, cartPricing, history }) => {
+const CartComponent = (props) => {
+
+    const {
+        cart,
+        updateShoppingCart,
+        itemDetails,
+        itemPrices,
+        itemAvailabilities,
+        customerPartNumbers,
+        sourceLocations,
+        cartPricing,
+        history
+    } = props
+
     const [shoppingCart, setShoppingCart] = useState(cart || [])
-	
+
     useEffect(() => {
         setShoppingCart(cart)
     }, [cart])
-	
+
     const onDragEnd = ({ destination, source }) => {
         if (destination) {
             const newCart = shoppingCart.slice()
@@ -187,12 +205,12 @@ const CartComponent = ({ cart, updateShoppingCart, itemDetails, itemPrices, item
             updateShoppingCart(newCart)
         }
     }
-	
+
     const setCart = newCart => {
         setShoppingCart(newCart)
         updateShoppingCart(newCart)
     }
-	
+
     const setCartItem = index => newCartItem => {
         const newCart = shoppingCart.slice()
         if (newCartItem) {
@@ -203,19 +221,20 @@ const CartComponent = ({ cart, updateShoppingCart, itemDetails, itemPrices, item
         setShoppingCart(newCart)
         updateShoppingCart(newCart)
     }
-	
+
     const setCartItemField = index => (field, value) => {
         const newCart = shoppingCart.map((cartItem, idx) => idx === index ? { ...cartItem, [field]: value } : cartItem)
         setShoppingCart(newCart)
         updateShoppingCart(newCart)
     }
-	
+
     const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {
         const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
         const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
         const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.frecno)
         const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
-		
+        const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.frecno)
+
         return (
             <Draggable key={index} draggableId={String(index)} index={index}>
                 {(provided) => (
@@ -231,6 +250,7 @@ const CartComponent = ({ cart, updateShoppingCart, itemDetails, itemPrices, item
                                 priceInfo={itemPrice}
                                 availabilityInfo={itemAvailability}
                                 customerPartNumbers={itemCustomerPartNumbers}
+                                sourceLocations={itemSourceLocations}
                                 key={index}
                                 cart={shoppingCart || []}
                                 setCart={setCart}
@@ -239,16 +259,14 @@ const CartComponent = ({ cart, updateShoppingCart, itemDetails, itemPrices, item
                                 cartPricing={cartPricing}
                                 {...{ history, index }}
                             />
-                        )
-                            : <SkeletonItem index={index} />
-                        }
+                        ) : <SkeletonItem index={index} />}
                         {provided.placeholder}
                     </div>
                 )}
             </Draggable>
         )
     })
-	
+
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">

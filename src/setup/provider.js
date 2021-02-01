@@ -11,7 +11,7 @@ import {
     distinct,
     useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
-import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
+import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
 
 export default function Provider(props) {
     const didMountRef = useRef(false)
@@ -37,12 +37,13 @@ export default function Provider(props) {
     const [itemAvailabilities, setItemAvailabilities] = useState([])
     const [itemDetails, setItemDetails] = useState([])
     const [customerPartNumbers, setCustomerPartNumbers] = useState([])
+    const [sourceLocations, setSourceLocations] = useState([])
     const [shoppingLists, setShoppingLists] = useState([])
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
-  
+
     const invoiceBatchSize = 1000
-  
+
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             manageUserInfo('load-context')
@@ -50,18 +51,18 @@ export default function Provider(props) {
         }
         didMountRef.current = true
     })
-  
+
     useEffect(() => {
         userInfo?.isAirlineUser && getPriceReasons()
     }, [userInfo])
-  
+
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setEditPriceReasonCodes(data.priceReasons.map(({ __typename, ...rest }) => rest))
         }
     })
-  
+
     const [startImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
@@ -77,7 +78,7 @@ export default function Provider(props) {
             }
         }
     })
-  
+
     const [cancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ impersonationEnd: requestData }) => {
@@ -90,14 +91,14 @@ export default function Provider(props) {
             }
         }
     })
-  
+
     const [updateTaxesApiCall] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             console.log('got taxes ->', data)
         }
     })
-  
+
     const updateTaxes = (zipcode, shipToId) => {
         updateTaxesApiCall({
             variables: {
@@ -107,14 +108,14 @@ export default function Provider(props) {
             }
         })
     }
-  
+
     const [getOrders, getOrdersState] = useLazyQuery(GET_ORDERS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setOrdersCache(data.accountOrders)
         }
     })
-  
+
     const [handleGetInvoices] = useLazyQuery(GET_INVOICES, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
@@ -126,72 +127,83 @@ export default function Provider(props) {
             }
         }
     })
-  
+
     const [getPurchaseHistory, getPurchaseHistoryState] = useLazyQuery(GET_PURCHASE_HISTORY, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setPurchaseHistory(data.purchaseHistory)
         }
     })
-  
+
     const [handleGetItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemPrices([...data.getItemPrices, ...itemPrices].filter(distinct))
         }
     })
-  
+
     const [handleGetItemAvailabilities] = useLazyQuery(GET_ITEM_AVAILABILITY, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemAvailabilities([...data.itemAvailability, ...itemAvailabilities].filter(distinct))
         }
     })
-  
+
     const [handleGetItemDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemDetails([...data.itemDetailsBatch, ...itemDetails].filter(distinct))
         }
     })
-  
+
     const [handleGetCustomerPartNumbers] = useLazyQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setCustomerPartNumbers([...data.customerPartNumbersBatch, ...customerPartNumbers].filter(distinct))
         }
     })
-  
+
+    const [handleGetSourceLocations] = useLazyQuery(GET_ITEM_SOURCE_LOCATIONS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setSourceLocations([...data.sourceLocations, ...sourceLocations].filter(distinct))
+        }
+    })
+
     function getItemPrices(items) {
         handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno, quantity }) => ({
             invMastUid: invMastUid || frecno,
             quantity: quantity !== null && quantity !== undefined ? quantity : 1
         })) } })
     }
-  
+
     function getItemAvailabilities(items) {
         handleGetItemAvailabilities({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-  
+
     function getItemDetails(items) {
         handleGetItemDetails({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-  
+
     function getCustomerPartNumbers(items) {
         handleGetCustomerPartNumbers({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-  
+
+    function getSourceLocations(items) {
+        handleGetSourceLocations({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+    }
+
     const addCustomerPartNumber = newCustomerPartNumber => {
         setCustomerPartNumbers([...customerPartNumbers, newCustomerPartNumber])
     }
-  
+
     const [getShoppingLists, getShoppingListsState] = useLazyQuery(GET_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingList }) => {
             setShoppingLists(shoppingList.map(getRidOf__typename))
         }
     })
-  
+
     const [handleUpdateShoppingList, upsertShoppingListState] = useMutation(UPDATE_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingListEdit }) => {
@@ -209,21 +221,21 @@ export default function Provider(props) {
             return Promise.resolve()
         }
     })
-  
+
     const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
         const items = shoppingList.items.map(({ itemCode, frecno, invMastUid, quantity, customerPartNumberId }) => (
             { itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }
         ))
         return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
     }
-  
+
     const [getWebUserContacts, getWebUserContactsState] = useLazyQuery(GET_WEB_USER_CONTACTS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setWebUserContacts(data.webUsers)
         }
     })
-  
+
     function manageUserInfo(action, userInfo, impersonationInfo) {
         let currentUserType
         const userInfoStorage = localStorage.getItem('userInfo')
@@ -286,18 +298,18 @@ export default function Provider(props) {
         }
         setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
     }
-  
+
     function removeTopAlert() {
         setTopAlert({
             show: false,
             message: ''
         })
     }
-  
+
     function showTopAlert(message) {
         setTopAlert({ show: true, message })
     }
-  
+
     function loginUser(userInfo, mergeToken) {
         if (shoppingCart?.length > 0) {
             mergeShoppingCart(mergeToken)
@@ -313,7 +325,7 @@ export default function Provider(props) {
         showTopAlert('You have been successfully logged in.')
         window.setTimeout(removeTopAlert, 3000)
     }
-  
+
     function logoutUser() {
         if (window.drift) window.drift.api.widget.show()
         manageUserInfo('logout')
@@ -322,17 +334,17 @@ export default function Provider(props) {
         showTopAlert('You have been logged out.')
         window.setTimeout(removeTopAlert, 3500)
     }
-  
+
     const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes } }) => {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
                 const lastCartItems = lastShoppingCartPayload.current
-        
+
                 const shouldUpdateState = shoppingCart === null || !lastCartItems
           || (cartItems.length === lastCartItems.length
             && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
-        
+
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
                     setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
@@ -342,13 +354,13 @@ export default function Provider(props) {
             setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
     })
-  
+
     const updateShoppingCart = cartItems => {
         setShoppingCart(cartItems)
         lastShoppingCartPayload.current = cartItems
         updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
     }
-  
+
     const updateCartWrapper = cartInfo => {
         const shoppingCartToken = localStorage.getItem('shoppingCartToken')
         setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
@@ -361,28 +373,28 @@ export default function Provider(props) {
             }
         })
     }
-  
+
     const addItem = (item) => {
         updateShoppingCart([...shoppingCart, item])
     }
-  
+
     const addItems = (items) => {
         updateShoppingCart([...shoppingCart, ...items])
     }
-  
+
     function removeItem(itemLocation) {
         const newCart = shoppingCart?.slice() || []
         newCart.splice(itemLocation, 1)
         updateShoppingCart(newCart)
     }
-  
+
     function moveItem(itemLocation, newLocation) {
         const newCart = shoppingCart.slice() || []
         const movedItem = newCart.splice(itemLocation, 1)
         newCart.splice(newLocation, 0, movedItem[0])
         updateShoppingCart(newCart)
     }
-  
+
     function splitItem(index, lineCount, lineQuantity) {
         const splitItems = []
         for (let i = 0; i < lineCount; i++) {
@@ -396,38 +408,38 @@ export default function Provider(props) {
         const backCart = shoppingCart?.slice(index + 1) || [] // returns cart item after split item
         updateShoppingCart([...frontCart, ...splitItems, ...backCart])
     }
-  
+
     const updateCartItem = (index, newItem) => {
         updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
     }
-  
+
     const updateCartItemField = (index, field, value) => {
         updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
-  
+
     const updateOrderNotes = newOrderNotes => {
         setOrderNotes(newOrderNotes)
         updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
     }
-  
+
     const saveShoppingCart = () => {
         updateCartWrapper({ actionString: 'save' })
     }
-  
+
     const retrieveShoppingCart = () => {
         lastShoppingCartPayload.current = null
         updateCartWrapper({ actionString: 'retrieve' })
     }
-  
+
     const mergeShoppingCart = token => {
         lastShoppingCartPayload.current = null
         updateCartWrapper({ actionString: 'retrieve', token })
     }
-  
+
     const emptyCart = () => {
         updateShoppingCart(null)
     }
-  
+
     function getInvoices() {
         if (invoiceBatchNumber === 0) {
             invoicesLoaded.current = false
@@ -440,7 +452,7 @@ export default function Provider(props) {
         })
         setInvoiceBatchNumber(invoiceBatchNumber + 1)
     }
-  
+
     return (
         <Context.Provider
             value={{
@@ -476,12 +488,14 @@ export default function Provider(props) {
                 itemAvailabilities,
                 itemDetails,
                 customerPartNumbers,
+                sourceLocations,
                 getPurchaseHistory,
                 getItemPrices,
                 getItemAvailabilities,
                 getItemDetails,
                 getCustomerPartNumbers,
                 addCustomerPartNumber,
+                getSourceLocations,
                 getShoppingLists,
                 getShoppingListsState,
                 upsertShoppingList,
