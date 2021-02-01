@@ -3,7 +3,8 @@ import { FRAGMENT_ITEM_DETAIL, FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS,
 		FRAGMENT_ITEM_DETAIL_BRANDS, FRAGMENT_ITEM_DETAIL_FEATURES,
 		FRAGMENT_ITEM_DETAIL_ITEM_LINKS, FRAGMENT_ITEM_DETAIL_MEDIA,
 		FRAGMENT_ITEM_DETAIL_TECH_SPECS, FRAGMENT_ITEM_AVAILABILITY,
-		FRAGMENT_ITEM_CUSTOMER_PART_NUMBER } from 'config/gqlFragments/gqlItemFragments'
+		FRAGMENT_ITEM_CUSTOMER_PART_NUMBER, 
+		FRAGMENT_ITEM_SOURCE_LOCATION} from 'config/gqlFragments/gqlItemFragments'
 
 export const GET_ITEM_DETAIL_PAGE_ITEM_INFO = gql`
 	query ItemById($invMastUid: Int) {
@@ -130,4 +131,13 @@ export const GET_ITEM_CUSTOMER_PART_NUMBERS = gql`
 		}
     }
 	${FRAGMENT_ITEM_CUSTOMER_PART_NUMBER}
+`
+
+export const GET_ITEM_SOURCE_LOCATIONS = gql`
+	query GetItemSourceLocations($invMastUids: [Int]){
+		sourceLocations(invMastUids: $invMastUids){
+			...ItemSourceLocation
+		}
+	}
+	${FRAGMENT_ITEM_SOURCE_LOCATION}
 `
