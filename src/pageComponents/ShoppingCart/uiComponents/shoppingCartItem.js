@@ -363,40 +363,27 @@ export default function ShoppingCartItem(props) {
 							<DivItem>
 								<DivItemPrice>
 									{
-										!!priceInfo && (
-											userInfo?.isAirlineUser ? (
-												<div>
-													<EditPriceDiv>
-														<NumberFormat
-															value={cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo.unitPrice}
-															displayType={'text'}
-															thousandSeparator={true}
-															prefix={'$'}
-															decimalScale={2}
-															fixedDecimalScale
-														/>
-														<span>{`/${unitOfMeasure}`}</span>
-														<EditPriceIcon onClick={handleShowEditPriceModal}>
-															<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-														</EditPriceIcon>
-													</EditPriceDiv>
-												</div>
-											) 
-											: (
-												<div>
-													<EditPriceDiv>
-														<NumberFormat
-															value={priceInfo.unitPrice}
-															displayType={'text'}
-															thousandSeparator={true}
-															prefix={'$'}
-															decimalScale={2}
-															fixedDecimalScale
-														/>
-														<span>{`/${unitOfMeasure}`}</span>
-													</EditPriceDiv>
-												</div>
-											)
+										(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && (
+											<div>
+												<EditPriceDiv>
+													<NumberFormat
+														value={cartItem.itemUnitPriceOverride || priceInfo.unitPrice}
+														displayType={'text'}
+														thousandSeparator={true}
+														prefix={'$'}
+														decimalScale={2}
+														fixedDecimalScale
+													/>
+													<span>{`/${unitOfMeasure}`}</span>
+													{
+														userInfo?.isAirlineUser && (
+															<EditPriceIcon onClick={handleShowEditPriceModal}>
+																<FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+															</EditPriceIcon>
+														)
+													}
+												</EditPriceDiv>
+											</div>
 										)
 									}
 									{userInfo?.isAirlineUser && (
