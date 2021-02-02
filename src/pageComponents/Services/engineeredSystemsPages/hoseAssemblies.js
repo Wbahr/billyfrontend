@@ -10,12 +10,12 @@ const Container = styled.div`
     flex-direction: column;
 `
 export default function hoseAssemblies() {
-	return (
-		<>
-			<Header text="Hose-Assemblies" />
-			<Container>
-				<ServiceHome text="Hose Assemblies" />
-			</Container>
-		</>
-	)
+    return (
+        <>
+            <Header text="Hose-Assemblies" />
+            <Container>
+                <ServiceHome text="Hose Assemblies" />
+            </Container>
+        </>
+    )
 }

@@ -11,11 +11,11 @@ const MainScreenContainer = styled.div`
 `
 
 export default function AdminLayout(props) {
-	return(
-		<ThemeProvider theme={airlineRedTheme}>
-			<MainScreenContainer>
-				{props.children}
-			</MainScreenContainer>
-		</ThemeProvider>
-	);
+    return (
+        <ThemeProvider theme={airlineRedTheme}>
+            <MainScreenContainer>
+                {props.children}
+            </MainScreenContainer>
+        </ThemeProvider>
+    )
 }

@@ -23,18 +23,18 @@ const Form = styled.form`
   height: max-content;
 `
 const initValues = {
-	firstName: '',
-	lastName: '',
-	jobTitle: '',
-	company: '',
-	city: '',
-	state: '',
-	zip: '',
-	email: '',
-	phone: '',
-	jobOrder: '',
-	message: '',
-	subMailingList: '0'
+    firstName: '',
+    lastName: '',
+    jobTitle: '',
+    company: '',
+    city: '',
+    state: '',
+    zip: '',
+    email: '',
+    phone: '',
+    jobOrder: '',
+    message: '',
+    subMailingList: '0'
 }
 const P = styled.p`
     text-align: center;
@@ -43,27 +43,27 @@ const P = styled.p`
     letter-spacing: 2px;
 `
 export default function ContactForm(props) {
-	return (
-		<FormContainer>
-			<P>{props.text}</P>
-			<Formik 
-				initialValues={initValues}
-			>
-				{formikProps => (
-					<Form name="contactUsForm" {...formikProps}>
-						<FormikInput label="First Name*" name="firstName" />
-						<FormikInput label="Last Name*" name="lastName" />
-						<FormikInput label="Job Title*" name="jobTitle" />
-						<FormikInput label="Company*" name="company" />
-						<FormikInput label="City*" name="city" />
-						<FormikInput label="State*" name="state" />
-						<FormikInput label="Zip Code*" name="zip" />
-						<FormikInput label="Email*" name="email" />
-						<FormikInput label="Phone Number*" name="phone" />
-						{/* <Button type="submit" color="main" text="Submit"/> */}
-					</Form>
-				)}
-			</Formik>
-		</FormContainer>
-	)
+    return (
+        <FormContainer>
+            <P>{props.text}</P>
+            <Formik 
+                initialValues={initValues}
+            >
+                {formikProps => (
+                    <Form name="contactUsForm" {...formikProps}>
+                        <FormikInput label="First Name*" name="firstName" />
+                        <FormikInput label="Last Name*" name="lastName" />
+                        <FormikInput label="Job Title*" name="jobTitle" />
+                        <FormikInput label="Company*" name="company" />
+                        <FormikInput label="City*" name="city" />
+                        <FormikInput label="State*" name="state" />
+                        <FormikInput label="Zip Code*" name="zip" />
+                        <FormikInput label="Email*" name="email" />
+                        <FormikInput label="Phone Number*" name="phone" />
+                        {/* <Button type="submit" color="main" text="Submit"/> */}
+                    </Form>
+                )}
+            </Formik>
+        </FormContainer>
+    )
 }

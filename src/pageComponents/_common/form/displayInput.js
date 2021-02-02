@@ -28,19 +28,19 @@ const Label = styled.label`
 
 class Input extends React.Component {
 
-	render(){
-		const {
-			value,
-			label,
-		} = this.props
+    render(){
+        const {
+            value,
+            label,
+        } = this.props
 
-		return(
-			<DivContainer>
-				{label && <Label htmlFor={label}>{`${label}:`}</Label>}
-				<P>{value}</P>
-			</DivContainer>
-		)
-	}
+        return (
+            <DivContainer>
+                {label && <Label htmlFor={label}>{`${label}:`}</Label>}
+                <P>{value}</P>
+            </DivContainer>
+        )
+    }
 }
 
 export default Input

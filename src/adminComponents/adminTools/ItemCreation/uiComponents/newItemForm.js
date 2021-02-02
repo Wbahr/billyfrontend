@@ -54,20 +54,20 @@ const DivError = styled.div`
 `
 
 const ItemCreationSchema = Yup.object({
-	itemCreate: Yup.object({
-		itemDescription: Yup.string()
-			.min(2, 'Too Short!')
-			.max(40, 'Too Long!')
-			.required('Required'),
-		listPrice: Yup.string()
-			.required('Required'),
-		unitOfMeasure: Yup.string()
-			.required('Required'),
-		airlinePartCost: Yup.string()
-			.required('Required'),
-		productGroupID: Yup.string()
-			.required('Required'),
-	})
+    itemCreate: Yup.object({
+        itemDescription: Yup.string()
+            .min(2, 'Too Short!')
+            .max(40, 'Too Long!')
+            .required('Required'),
+        listPrice: Yup.string()
+            .required('Required'),
+        unitOfMeasure: Yup.string()
+            .required('Required'),
+        airlinePartCost: Yup.string()
+            .required('Required'),
+        productGroupID: Yup.string()
+            .required('Required'),
+    })
 })
 
 const CREATE_ITEM = gql`
@@ -82,98 +82,100 @@ const CREATE_ITEM = gql`
 `
 
 export default function NewItemForm(props) {
-	const [formIsSubmitting, setFormIsSubmitting] = useState(false)
-	const {
-		searchTerm,
-		supplierList,
-		selectedSupplier,
-		unitsOfMeasureList,
-		productGroupsList,
-		showModal
-	} = props
+    const [formIsSubmitting, setFormIsSubmitting] = useState(false)
+    const {
+        searchTerm,
+        supplierList,
+        selectedSupplier,
+        unitsOfMeasureList,
+        productGroupsList,
+        showModal
+    } = props
 
-	let index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-	let SearchTerm = searchTerm
-	if(index > -1){
-		SearchTerm = supplierList[index].prefix + ' ' + searchTerm
-	}
+    const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
+    let SearchTerm = searchTerm
+    if (index > -1){
+        SearchTerm = supplierList[index].prefix + ' ' + searchTerm
+    }
 
-	const [executeCreateItem] = useMutation(CREATE_ITEM, {
-		onCompleted: data => {
-			setFormIsSubmitting(false)
-			showModal(data.itemCreate)
-		}
-	})
+    const [executeCreateItem] = useMutation(CREATE_ITEM, {
+        onCompleted: data => {
+            setFormIsSubmitting(false)
+            showModal(data.itemCreate)
+        }
+    })
 
-	function formatCurrentFields(values){
-		let mutatedValues = values
-		mutatedValues.listPrice = parseFloat(values.listPrice.substring(1))
-		mutatedValues.airlinePartCost = parseFloat(values.airlinePartCost.substring(1))
-		mutatedValues.tariff = parseFloat(values.tariff.substring(1))
-		return mutatedValues
-	}
-	return <div>
-		<Formik
-			initialValues={{
-				itemCreate: {
-					itemID: SearchTerm.toUpperCase(), 
-					manufacturerPartNumber: searchTerm.toUpperCase(),
-					itemDescription: '', 
-					supplierID: selectedSupplier,
-					unitOfMeasure: '', 
-					listPrice: '',
-					airlinePartCost: '',
-					productGroupID: '',
-					tariff: '0'
-				}
-			}}
-			validationSchema={ItemCreationSchema}
-			onSubmit={(values) => {
-				setFormIsSubmitting(true)
-				let mutatedValues = formatCurrentFields(values.itemCreate)
-				executeCreateItem({ variables: { item: mutatedValues } })
-			}}
-		>
-			{({ values, errors }) => (
-				<Form>
-					<H2>Item Creation Form</H2>
-					<DivFormContainer>
-						<FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
-						<FormikInput type="hidden" name="itemCreate.manufacturerPartNumber" />
-						<FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
-						<Field 
-							name="itemCreate.unitOfMeasure" 
-							component={FormikSelect} 
-							options={unitsOfMeasureList}
-							getOptionLabel={(option) => { return(option.value + ' - ' + option.label)}}
-							placeholder="Select a UOM"
-							label="Unit of Measure*:"
-							width="400px"
-						/> 
-						<FormikInput type="hidden" name="itemCreate.supplierID" />
-						<FormikInput label="List Price*:" type="currency" name="itemCreate.listPrice" />
-						<FormikInput label="Airline Cost*:" type="currency" name="itemCreate.airlinePartCost" />
-						<FormikInput label="Tariff:" type="currency" name="itemCreate.tariff" />
-						<Field 
-							name="itemCreate.productGroupID" 
-							component={FormikSelect} 
-							options={productGroupsList}
-							getOptionLabel={(option) => { return(option.value + ' - ' + option.label)}}
-							placeholder="Select a Product Group"
-							label="Product Group ID*:"
-							width="400px"
-						/> 
-						<DivCenter>
-							{Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
-						</DivCenter>
-						<DivCenter>
-							<Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || Object.keys(errors).length > 0}>
-								{formIsSubmitting ? 'Registering Item..' : 'Register Item'}
-							</Button>
-						</DivCenter>
-					</DivFormContainer>
-				</Form>
-			)}
-		</Formik>
-	</div>
+    function formatCurrentFields(values){
+        const mutatedValues = values
+        mutatedValues.listPrice = parseFloat(values.listPrice.substring(1))
+        mutatedValues.airlinePartCost = parseFloat(values.airlinePartCost.substring(1))
+        mutatedValues.tariff = parseFloat(values.tariff.substring(1))
+        return mutatedValues
+    }
+    return (
+        <div>
+            <Formik
+                initialValues={{
+                    itemCreate: {
+                        itemID: SearchTerm.toUpperCase(), 
+                        manufacturerPartNumber: searchTerm.toUpperCase(),
+                        itemDescription: '', 
+                        supplierID: selectedSupplier,
+                        unitOfMeasure: '', 
+                        listPrice: '',
+                        airlinePartCost: '',
+                        productGroupID: '',
+                        tariff: '0'
+                    }
+                }}
+                validationSchema={ItemCreationSchema}
+                onSubmit={(values) => {
+                    setFormIsSubmitting(true)
+                    const mutatedValues = formatCurrentFields(values.itemCreate)
+                    executeCreateItem({ variables: { item: mutatedValues } })
+                }}
+            >
+                {({ values, errors }) => (
+                    <Form>
+                        <H2>Item Creation Form</H2>
+                        <DivFormContainer>
+                            <FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
+                            <FormikInput type="hidden" name="itemCreate.manufacturerPartNumber" />
+                            <FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
+                            <Field 
+                                name="itemCreate.unitOfMeasure" 
+                                component={FormikSelect} 
+                                options={unitsOfMeasureList}
+                                getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
+                                placeholder="Select a UOM"
+                                label="Unit of Measure*:"
+                                width="400px"
+                            /> 
+                            <FormikInput type="hidden" name="itemCreate.supplierID" />
+                            <FormikInput label="List Price*:" type="currency" name="itemCreate.listPrice" />
+                            <FormikInput label="Airline Cost*:" type="currency" name="itemCreate.airlinePartCost" />
+                            <FormikInput label="Tariff:" type="currency" name="itemCreate.tariff" />
+                            <Field 
+                                name="itemCreate.productGroupID" 
+                                component={FormikSelect} 
+                                options={productGroupsList}
+                                getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
+                                placeholder="Select a Product Group"
+                                label="Product Group ID*:"
+                                width="400px"
+                            /> 
+                            <DivCenter>
+                                {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
+                            </DivCenter>
+                            <DivCenter>
+                                <Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || Object.keys(errors).length > 0}>
+                                    {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
+                                </Button>
+                            </DivCenter>
+                        </DivFormContainer>
+                    </Form>
+                )}
+            </Formik>
+        </div>
+    )
 }

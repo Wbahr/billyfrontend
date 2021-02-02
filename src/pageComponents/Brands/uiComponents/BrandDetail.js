@@ -7,7 +7,7 @@ const DistributorDetails = styled.div`
   font-size: 18px;
 `
 export default function BrandDetail(props) {
-	return (
-		<DistributorDetails>{props.text}</DistributorDetails>
-	)
+    return (
+        <DistributorDetails>{props.text}</DistributorDetails>
+    )
 }

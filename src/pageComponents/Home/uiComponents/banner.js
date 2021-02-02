@@ -77,37 +77,37 @@ const H5 = styled.h5`
 `
 
 export default () =>  (
-	<BannerContainer>
-		<Col>
-			<LgBanner>
-				<LgImg src={Header} />
-			</LgBanner>
+    <BannerContainer>
+        <Col>
+            <LgBanner>
+                <LgImg src={Header} />
+            </LgBanner>
 			
-			<SmBanner>
-				<BannerDiv>
-					<ImgDiv><Img src={otto} /></ImgDiv>
+            <SmBanner>
+                <BannerDiv>
+                    <ImgDiv><Img src={otto} /></ImgDiv>
 					
-					<AboutAirline>
-						<H5>About Airline Hydraulics</H5>
-						We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
-					</AboutAirline>
-				</BannerDiv>
+                    <AboutAirline>
+                        <H5>About Airline Hydraulics</H5>
+                        We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
+                    </AboutAirline>
+                </BannerDiv>
 				
-				<BannerDiv>
-					<ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
+                <BannerDiv>
+                    <ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
 					
-					<AboutAirline>
-						<P> We're 100% Employee Owned and proud of it! </P>
-					</AboutAirline>
-				</BannerDiv>
+                    <AboutAirline>
+                        <P> We're 100% Employee Owned and proud of it! </P>
+                    </AboutAirline>
+                </BannerDiv>
 				
-				<BannerDiv>
-					<ImgDiv><FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
-					<AboutAirline>
-						<P> Expect same-day shipping on most in-stock orders placed before 3:00pm EST & shipped by UPS.</P>
-					</AboutAirline>
-				</BannerDiv>
-			</SmBanner>
-		</Col>
-	</BannerContainer>
+                <BannerDiv>
+                    <ImgDiv><FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
+                    <AboutAirline>
+                        <P> Expect same-day shipping on most in-stock orders placed before 3:00pm EST & shipped by UPS.</P>
+                    </AboutAirline>
+                </BannerDiv>
+            </SmBanner>
+        </Col>
+    </BannerContainer>
 )

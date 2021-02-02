@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import IQCard from './iqCard'
-import {CardElement} from '@stripe/react-stripe-js';
+import { CardElement } from '@stripe/react-stripe-js'
 
 // import styled from 'styled-components'
 // import queryString from 'query-string'
@@ -28,74 +28,67 @@ const DivStripeCard = styled.div`
   border-radius: 2px;
 `
 
-const DivCard = styled.div`
-  cursor: pointer;
-  width: 300px;
-  height: 200px;
-  margin: 15px;
-  border: 1px solid grey;
-`
 function noScroll(){
-  window.scrollTo(0, 0)
+    window.scrollTo(0, 0)
 }
 
 class ProductConfigSearch extends React.Component {
   state = {
-    selectedCard: ''
+      selectedCard: ''
   }
 
-  componentWillMount() {
-    window.removeEventListener('scroll', noScroll)
+  UNSAFE_componentWillMount() {
+      window.removeEventListener('scroll', noScroll)
   }
 
   scrollToQuestions = () => {
-    document.getElementById('product').scrollIntoView({behavior: 'smooth'});
+      document.getElementById('product').scrollIntoView({ behavior: 'smooth' })
   }
 
   scrollToCards = () => {
-    document.getElementById('cards').scrollIntoView({behavior: 'smooth'});
+      document.getElementById('cards').scrollIntoView({ behavior: 'smooth' })
   }
 
   cardClick = (brand) => {
-    this.setState({selectedCard: brand}, this.scrollToQuestions)
+      this.setState({ selectedCard: brand }, this.scrollToQuestions)
   }
 
   backClick = () => {
-    this.setState({selectedCard: ""}, this.scrollToCards)
+      this.setState({ selectedCard: '' }, this.scrollToCards)
   }
 
   render(){
 
-    return (
-      <>
-          <DivCardContainer id='cards'>
-            <DivRow>
-              <IQCard
-                text='Haskell Pump'
-                selectedCard={this.state.selectedCard}
-                cardClick={this.cardClick}
-              />
-              <IQCard
-                text='Haskell Hydraulic'
-                selectedCard={this.state.selectedCard}
-                cardClick={this.cardClick}
-              />
-              <IQCard
-                text='Haskell Pipe'
-                selectedCard={this.state.selectedCard}
-                cardClick={this.cardClick}
-              />
-            </DivRow>
-          </DivCardContainer>
-          <DivCardContainerGrey id='product'>
-            <span onClick={this.backClick}>back to cards</span>
-            <span>{this.state.selectedCard}</span>
-            <DivStripeCard>
-              <CardElement />
-            </DivStripeCard>
-          </DivCardContainerGrey>
-      </>
-    )
+      return (
+          <>
+              <DivCardContainer id='cards'>
+                  <DivRow>
+                      <IQCard
+                          text='Haskell Pump'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                      <IQCard
+                          text='Haskell Hydraulic'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                      <IQCard
+                          text='Haskell Pipe'
+                          selectedCard={this.state.selectedCard}
+                          cardClick={this.cardClick}
+                      />
+                  </DivRow>
+              </DivCardContainer>
+              <DivCardContainerGrey id='product'>
+                  <span onClick={this.backClick}>back to cards</span>
+                  <span>{this.state.selectedCard}</span>
+                  <DivStripeCard>
+                      <CardElement />
+                  </DivStripeCard>
+              </DivCardContainerGrey>
+          </>
+      )
   }
 }
 

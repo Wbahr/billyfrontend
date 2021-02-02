@@ -80,35 +80,35 @@ const DropdownLink = styled.div`
     }
 `
 
-export const NavigationItemContainer = React.forwardRef(({children, to, text}, ref) => (
-	<NavigationItemContainerElement ref={ref}>
-    <Link to={to} className="nav-link">{text}
-      {!!children?.props?.children?.length && (
-        <span style={{position: 'absolute', right: '0.25rem'}}>
-          <FontAwesomeIcon icon='caret-down' color="black" />
-        </span>
-      )}
-    </Link>
-		{children}
-	</NavigationItemContainerElement>
+export const NavigationItemContainer = React.forwardRef(({ children, to, text }, ref) => (
+    <NavigationItemContainerElement ref={ref}>
+        <Link to={to} className="nav-link">{text}
+            {!!children?.props?.children?.length && (
+                <span style={{ position: 'absolute', right: '0.25rem' }}>
+                    <FontAwesomeIcon icon='caret-down' color="black" />
+                </span>
+            )}
+        </Link>
+        {children}
+    </NavigationItemContainerElement>
 ))
 
-export const MyAccountDropdownMenu = ({children, className}) => (
-	<DropdownElement className={'nav-dropdown ' + className} style={{marginLeft: -14}}>
-		{children}
-	</DropdownElement>
+export const MyAccountDropdownMenu = ({ children, className }) => (
+    <DropdownElement className={'nav-dropdown ' + className} style={{ marginLeft: -14 }}>
+        {children}
+    </DropdownElement>
 )
 
-export const CartsDropdownMenu =  ({children, className}) => (
-	<DropdownElement className={'nav-dropdown ' + className}  style={{top: '2rem'}} >
-		{children} 
-	</DropdownElement>
+export const CartsDropdownMenu =  ({ children, className }) => (
+    <DropdownElement className={'nav-dropdown ' + className} style={{ top: '2rem' }} >
+        {children} 
+    </DropdownElement>
 )
 
-export const DropdownMenu = ({children, className}) => (
-  <DropdownElement className={'nav-dropdown ' + className} style={{top: '100%', left: '50%', transform: 'translateX(-50%)'}}>
-    {children}
-  </DropdownElement>
+export const DropdownMenu = ({ children, className }) => (
+    <DropdownElement className={'nav-dropdown ' + className} style={{ top: '100%', left: '50%', transform: 'translateX(-50%)' }}>
+        {children}
+    </DropdownElement>
 )
 
 export const DropDownMenuAction = React.forwardRef(({ linkText, onClick }, ref) => (
@@ -118,7 +118,7 @@ export const DropDownMenuAction = React.forwardRef(({ linkText, onClick }, ref) 
 ))
 
 export const DropdownMenuItem = React.forwardRef(({ children: linkText, to }, ref) => (
-  <DropdownLink ref={ref}>
-    <Link to={to}>{linkText}</Link>
-  </DropdownLink>
+    <DropdownLink ref={ref}>
+        <Link to={to}>{linkText}</Link>
+    </DropdownLink>
 ))

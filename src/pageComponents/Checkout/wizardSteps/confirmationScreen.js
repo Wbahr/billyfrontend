@@ -4,13 +4,13 @@ import ShippingScheduleLineDisplay from '../uiComponents/scheduleLineDisplay'
 import { packingBasis } from '../helpers/checkoutDropdownData'
 import FormikFieldArray from '../../_common/formik/fieldArray'
 import FormikCheckbox from '../../_common/formik/checkBox'
-import Context from '../../../config/context'
-import { ButtonBlack, ButtonRed } from "../../../styles/buttons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useMutation } from "@apollo/client";
-import { SUBMIT_ORDER } from "../../../config/providerGQL";
+import Context from '../../../setup/context'
+import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useMutation } from '@apollo/client'
+import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
-import OrderFailedModal from "../uiComponents/orderFailedModal";
+import OrderFailedModal from '../uiComponents/orderFailedModal'
 
 const SectionRow = styled.div`
 	display: flew;
@@ -103,9 +103,9 @@ export default function ConfirmationScreen(props) {
         validateForm
     } = props
   
-  useEffect(() => {
-      validateForm() // this is the only page we want to validate on mount
-  }, [])
+    useEffect(() => {
+        validateForm() // this is the only page we want to validate on mount
+    }, [])
 
     const { userInfo, emptyCart } = useContext(Context)
     const [submitting, setSubmitting] = useState(false)
@@ -139,7 +139,7 @@ export default function ConfirmationScreen(props) {
     }
 
     const handleCheckoutSubmit = () => {
-        setSubmitting(true);
+        setSubmitting(true)
         submitOrder({
             variables: {
                 order: {
@@ -149,7 +149,7 @@ export default function ConfirmationScreen(props) {
                     paymentMethodId: paymentInfo.paymentMethodId
                 }
             }
-        });
+        })
     }
 
     const CartDates = schedule.cartWithDates.map((item, index) => {
@@ -157,14 +157,16 @@ export default function ConfirmationScreen(props) {
         const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
         const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
 
-        return <ShippingScheduleLineDisplay
-            key={index}
-            item={item}
-            price={price}
-            itemDetails={details}
-            customerPartNumbers={customerPartNumbers}
-            index={index}
-        />
+        return (
+            <ShippingScheduleLineDisplay
+                key={index}
+                item={item}
+                price={price}
+                itemDetails={details}
+                customerPartNumbers={customerPartNumbers}
+                index={index}
+            />
+        )
     })
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
@@ -218,7 +220,7 @@ export default function ConfirmationScreen(props) {
                     <SectionTitle>Bill To</SectionTitle>
                     <SectionFields>
                         <DivAddressSection>
-                            <Pbold>{billing.companyName ? billing.companyName : billing.firstName + " " + billing.lastName}</Pbold>
+                            <Pbold>{billing.companyName ? billing.companyName : billing.firstName + ' ' + billing.lastName}</Pbold>
                             <Pbold>{billing.address1}</Pbold>
                             <Pbold>{billing.address2}</Pbold>
                             <Pbold>{billing.city}, {billing.stateOrProvince} {billing.zip} {shipto.country === 'us' ? 'USA' : 'Canada'}</Pbold>
@@ -230,7 +232,7 @@ export default function ConfirmationScreen(props) {
                         <DivTextRow>
                             <P>Payment Method:</P>
                             <p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
-                            </DivTextRow>
+                        </DivTextRow>
                         {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>}
                     
                         {billing.paymentMethod === 'credit_card' && (
@@ -255,11 +257,12 @@ export default function ConfirmationScreen(props) {
                         <P>Packing Basis:</P>
                         <p>{packingBasisName}</p>
                     </DivTextRow>
-                    {shipto.shippingNotes && 
+                    {shipto.shippingNotes && (
                         <DivTextRow>
                             <P>Shipping Notes:</P>
                             <p>{shipto.shippingNotes}</p>
-                        </DivTextRow>}
+                        </DivTextRow>
+                    )}
                 </SectionFields>
             </SectionContainer>
 

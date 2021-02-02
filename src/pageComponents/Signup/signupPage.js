@@ -33,18 +33,18 @@ const Img = styled.img`
   cursor: pointer;
 `
 
-export default function LoginPage({history}) {
-	return(
-		<SignupPageContainer>
-			<Img src={AirlineLogoCircle} height='75px' onClick={()=> history.push('/')}/>
-			<P>Create an Airline Hydraulics Account</P>
-			<CustomerSelect />
-			<A onClick={()=> history.push('/login')}>Already have an account?</A>
-			<A onClick={()=> history.push('/cart')}>Checkout as a guest</A>
-		</SignupPageContainer>
-	)
+export default function LoginPage({ history }) {
+    return (
+        <SignupPageContainer>
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
+            <P>Create an Airline Hydraulics Account</P>
+            <CustomerSelect />
+            <A onClick={() => history.push('/login')}>Already have an account?</A>
+            <A onClick={() => history.push('/cart')}>Checkout as a guest</A>
+        </SignupPageContainer>
+    )
 }
 
 LoginPage.propTypes = {
-	history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 }

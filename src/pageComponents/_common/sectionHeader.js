@@ -14,20 +14,20 @@ const StyledHeaderDiv = styled.div`
    width: 10%;
 `
 class sectionHeader extends React.Component {
-	render(){
-		const {
-			text
-		} = this.props
+    render(){
+        const {
+            text
+        } = this.props
 
-		return(
-			<Div>
-				<H2>{text}</H2>
-				<StyledHeaderDiv>
-				</StyledHeaderDiv>
+        return (
+            <Div>
+                <H2>{text}</H2>
+                <StyledHeaderDiv>
+                </StyledHeaderDiv>
 
-			</Div>
-		)
-	}
+            </Div>
+        )
+    }
 }
 
 export default sectionHeader

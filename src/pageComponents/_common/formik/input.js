@@ -31,41 +31,41 @@ const DivError = styled.div`
 `
 
 export default function Input({
-	type,
-	disabled,
-	name,
-	label,
-	placeholder,
-	onChange
+    type,
+    disabled,
+    name,
+    label,
+    placeholder,
+    onChange
 }){
-	return(
-		<DivContainer>
-			{label && <Label htmlFor={label}>{`${label}:`}</Label>}        
-			<Field name={name}>
-				{({
-					field,
-					meta,
-				}) => (
-					<>
-						<MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={()=>{eval(onChange)}} />
-						{(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
-					</>
-				)}
-			</Field>
-		</DivContainer>
-	)
+    return (
+        <DivContainer>
+            {label && <Label htmlFor={label}>{`${label}:`}</Label>}        
+            <Field name={name}>
+                {({
+                    field,
+                    meta,
+                }) => (
+                    <>
+                        <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={() => {eval(onChange)}} />
+                        {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
+                    </>
+                )}
+            </Field>
+        </DivContainer>
+    )
 }
 
 Input.propTypes = {
-	name: PropTypes.string.isRequired,
-	type: PropTypes.string,
-	disabled: PropTypes.bool,
-	label: PropTypes.string,
-	placeholder: PropTypes.string,
-	onChange: PropTypes.string
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.string
 }
 
 Input.defaultProps = {
-	type: 'text',
-	placeholder: ''
+    type: 'text',
+    placeholder: ''
 }

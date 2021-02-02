@@ -20,22 +20,22 @@ const DivContainer = styled.div`
 
 class DropzoneComponent extends React.Component {
 
-	render() {
-		return (
-			<Dropzone
-				maxSize={10 * 1000000} // 10MB
-				onDrop={acceptedFiles => console.log(acceptedFiles)}
-			>
-				{({getRootProps, getInputProps}) => (
-					<DivContainer {...getRootProps()}>
-						<input {...getInputProps()} />
-						<p>Upload images here by drag and drop or click.</p>
-						<p>(Max size 10MB per image, 5 image Max)</p>
-					</DivContainer>
-				)}
-			</Dropzone>
-		)
-	}
+    render() {
+        return (
+            <Dropzone
+                maxSize={10 * 1000000} // 10MB
+                onDrop={acceptedFiles => console.log(acceptedFiles)}
+            >
+                {({ getRootProps, getInputProps }) => (
+                    <DivContainer {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <p>Upload images here by drag and drop or click.</p>
+                        <p>(Max size 10MB per image, 5 image Max)</p>
+                    </DivContainer>
+                )}
+            </Dropzone>
+        )
+    }
 }
 
 export default DropzoneComponent

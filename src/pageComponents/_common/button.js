@@ -40,42 +40,42 @@ const SecondaryButton = styled(MainButton)`
 `
 
 class Button extends React.Component {
-	render(){
-		const {
-			type,
-			text,
-			onClick,
-			disabled,
-			color,
-			inFlightText,
-			inFlight
-		} = this.props
+    render(){
+        const {
+            type,
+            text,
+            onClick,
+            disabled,
+            color,
+            inFlightText,
+            inFlight
+        } = this.props
 
 
-		switch(color){
-		case('main'):
-			return(
-				<MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
-					{inFlight ? inFlightText : text}
-				</MainButton>
-			)
-			break
-		case('secondary'):
-			return(
-				<SecondaryButton type={type} onClick={onClick}>
-					{text}
-				</SecondaryButton>
-			)
-			break
-		default:
-			return(
-				<MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
-					{inFlight ? inFlightText : text}
-				</MainButton>
-			)
-		}
+        switch (color){
+        case ('main'):
+            return (
+                <MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
+                    {inFlight ? inFlightText : text}
+                </MainButton>
+            )
+      
+        case ('secondary'):
+            return (
+                <SecondaryButton type={type} onClick={onClick}>
+                    {text}
+                </SecondaryButton>
+            )
+      
+        default:
+            return (
+                <MainButton type={type} onClick={onClick} disabled={disabled || inFlight}>
+                    {inFlight ? inFlightText : text}
+                </MainButton>
+            )
+        }
 
-	}
+    }
 }
 
 export default Button

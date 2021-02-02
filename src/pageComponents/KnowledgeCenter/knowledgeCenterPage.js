@@ -37,36 +37,36 @@ const List = styled.p`
     letter-spacing: 0.5px;
 `
 export default function knowledgeCenterPage() {
-	return (
-		<Container>
-			<Header text="Knowledge Center & FAQ" />
-			<MainDiv>
-				<Div>
-					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/Hydraulic%20Resources%20Icon.png" />
-					</ImgDiv>
-					<List>Hydraulic Resources</List>
-				</Div>
-				<Div>
-					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/pneumatic%20resources.png" />
-					</ImgDiv>
-					<List>Pneumatic Resources</List>
-				</Div>
-				<Div>
-					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/manufacturers%20resources.png" />
-					</ImgDiv>
-					<List>Manufacturer Resources</List>
-				</Div>
-				<Div>
-					<ImgDiv>
-						<Img src="https://www.airlinehyd.com/customer/aihyco/images/other%20resources.png" />
-					</ImgDiv>
-					<List>Other Resources</List>
-				</Div>
-			</MainDiv>
+    return (
+        <Container>
+            <Header text="Knowledge Center & FAQ" />
+            <MainDiv>
+                <Div>
+                    <ImgDiv>
+                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/Hydraulic%20Resources%20Icon.png" />
+                    </ImgDiv>
+                    <List>Hydraulic Resources</List>
+                </Div>
+                <Div>
+                    <ImgDiv>
+                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/pneumatic%20resources.png" />
+                    </ImgDiv>
+                    <List>Pneumatic Resources</List>
+                </Div>
+                <Div>
+                    <ImgDiv>
+                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/manufacturers%20resources.png" />
+                    </ImgDiv>
+                    <List>Manufacturer Resources</List>
+                </Div>
+                <Div>
+                    <ImgDiv>
+                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/other%20resources.png" />
+                    </ImgDiv>
+                    <List>Other Resources</List>
+                </Div>
+            </MainDiv>
 
-		</Container>
-	)
+        </Container>
+    )
 }

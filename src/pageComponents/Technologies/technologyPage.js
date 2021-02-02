@@ -4,21 +4,21 @@ import PropTypes from 'prop-types'
 import FoodBeverage from './technologyTypePages/foodBeveragePage'
 
 export default function TechnologyPage() {
-	const [pageComponent, setPageComponent] = useState()
-	let { page } = useParams()
+    const [pageComponent, setPageComponent] = useState()
+    const { page } = useParams()
   
-	useEffect(() => {
-		if (page === 'food-beverage') {
-			setPageComponent(<FoodBeverage />)
-		}
-	}, [page])
+    useEffect(() => {
+        if (page === 'food-beverage') {
+            setPageComponent(<FoodBeverage />)
+        }
+    }, [page])
 
-	return (
-		<>
-			{pageComponent}
-		</>
-	)
+    return (
+        <>
+            {pageComponent}
+        </>
+    )
 }
 TechnologyPage.propTypes = {
-	history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 }

@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import { Field } from 'formik';
-import SelectField from '../../../_common/formik/select';
-import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects';
-import StripePaymentSection from '../../uiComponents/stripePayment';
-import FormikInput from '../../../_common/formik/input_v2';
-import styled from "styled-components";
-import { defaultBilling } from "../../helpers";
-import FormikCheckbox from "../../../_common/formik/checkBox";
-import Context from '../../../../config/context';
+import React, { useContext } from 'react'
+import { Field } from 'formik'
+import SelectField from '../../../_common/formik/select'
+import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
+import StripePaymentSection from '../../uiComponents/stripePayment'
+import FormikInput from '../../../_common/formik/input_v2'
+import styled from 'styled-components'
+import { defaultBilling } from '../../helpers'
+import FormikCheckbox from '../../../_common/formik/checkBox'
+import Context from '../../../../setup/context'
 
 const StyledCheckbox = styled.input`
 	width: 15px;
@@ -32,37 +32,37 @@ export default function NewCardSection(props) {
     const context = useContext(Context)
 
     const handleSameAsShippingChange = (event) => {
-        if(event.target.checked) {
-            setFieldValue('billing.firstName', values.shipto.firstName);
-            setFieldValue('billing.lastName', values.shipto.lastName);
-            setFieldValue('billing.address1', values.shipto.address1);
-            setFieldValue('billing.address2', values.shipto.address2);
-            setFieldValue('billing.city', values.shipto.city);
-            setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince);
-            setFieldValue('billing.zip', values.shipto.zip);
-            setFieldValue('billing.country', values.shipto.country);
-            setFieldValue('billing.companyName', values.shipto.companyName);
-            setFieldValue('billing.email', values.shipto.email);
-            setFieldValue('billing.phone', values.shipto.phone);
+        if (event.target.checked) {
+            setFieldValue('billing.firstName', values.shipto.firstName)
+            setFieldValue('billing.lastName', values.shipto.lastName)
+            setFieldValue('billing.address1', values.shipto.address1)
+            setFieldValue('billing.address2', values.shipto.address2)
+            setFieldValue('billing.city', values.shipto.city)
+            setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince)
+            setFieldValue('billing.zip', values.shipto.zip)
+            setFieldValue('billing.country', values.shipto.country)
+            setFieldValue('billing.companyName', values.shipto.companyName)
+            setFieldValue('billing.email', values.shipto.email)
+            setFieldValue('billing.phone', values.shipto.phone)
         } else {
-            setFieldValue('billing.firstName', defaultBilling.firstName);
-            setFieldValue('billing.lastName', defaultBilling.lastName);
-            setFieldValue('billing.address1', defaultBilling.address1);
-            setFieldValue('billing.address2', defaultBilling.address2);
-            setFieldValue('billing.city', defaultBilling.city);
-            setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince);
-            setFieldValue('billing.zip', defaultBilling.zip);
-            setFieldValue('billing.country', defaultBilling.country);
-            setFieldValue('billing.companyName', defaultBilling.companyName);
-            setFieldValue('billing.email', defaultBilling.email);
-            setFieldValue('billing.phone', defaultBilling.phone);
+            setFieldValue('billing.firstName', defaultBilling.firstName)
+            setFieldValue('billing.lastName', defaultBilling.lastName)
+            setFieldValue('billing.address1', defaultBilling.address1)
+            setFieldValue('billing.address2', defaultBilling.address2)
+            setFieldValue('billing.city', defaultBilling.city)
+            setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince)
+            setFieldValue('billing.zip', defaultBilling.zip)
+            setFieldValue('billing.country', defaultBilling.country)
+            setFieldValue('billing.companyName', defaultBilling.companyName)
+            setFieldValue('billing.email', defaultBilling.email)
+            setFieldValue('billing.phone', defaultBilling.phone)
         }
 
         //setFieldValue does not trigger validation. This is a workaround.
         //Without this, selecting "same as shipping" would leave the 
         //Continue button disabled.
-        setTimeout(() => setFieldTouched('billing.zip', true));
-    };
+        setTimeout(() => setFieldTouched('billing.zip', true))
+    }
 
     return (
         <div>
@@ -78,7 +78,7 @@ export default function NewCardSection(props) {
             </Row>
 
             <Row>
-                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? "PO Number*" : "PO Number"} name="billing.purchaseOrder" />}
+                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" />
             </Row>
 

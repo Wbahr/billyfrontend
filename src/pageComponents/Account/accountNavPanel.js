@@ -1,7 +1,7 @@
-import React, { useContext} from 'react'
+import React, { useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import Context from '../../config/context'
+import Context from '../../setup/context'
 
 const Container = styled.div`
   display: flex;
@@ -66,41 +66,41 @@ const CustomerId = styled.p`
   line-height: 1.5;
 `
 
-export default function AccountManagementPage({history}) {
-	const context = useContext(Context)
+export default function AccountManagementPage({ history }) {
+    const context = useContext(Context)
 
-	return(
-		<Container>
-			<div>
-				<UserName>{_.get(context,'userInfo.firstName','My Account')}</UserName>
-				<CompanyName>{_.get(context,'userInfo.companyName','')}</CompanyName>
-				<CustomerId> Customer ID: {_.get(context,'userInfo.companyId','')}</CustomerId>
-			</div>
-			<DivNavSection>
-				<h5>Manage Account</h5>
-				<p onClick={()=> history.push('/admin-dashboard')}>Admin Tools</p>
-				<p onClick={()=> history.push('/account/dashboard')}>Account Settings</p>
-				<p onClick={()=> history.push('/account/shopping-lists')}>Shopping Lists</p>
-				<p onClick={()=> history.push('/account/my-ordered-items')}>Item Purchase History</p>
-			</DivNavSection>
-			<DivNavSection>
-				<h5>Order Information</h5>
-				<p onClick={()=> history.push('/account/orders')}>Orders</p>
-				<p onClick={()=> history.push('/account/open-orders-report')}>Open Orders Report</p>
-			</DivNavSection>
-			<DivNavSection>
-				<h5>Quotes</h5>
-				<p onClick={()=> history.push('/account/open-quotes')}>Open Quotes</p>
-				<p onClick={()=> history.push('/contact-us')}>Request a Quote</p>
-			</DivNavSection>
-			<DivNavSection>
-				<h5>Invoices</h5>
-				<p onClick={()=> history.push('/account/invoices')}>Invoices</p>
-			</DivNavSection>      
-			<DivNavSection>
-				<h5>Customer Service</h5>
-				<p onClick={()=> history.push('/contact-us')}>Contact Us</p>
-			</DivNavSection>
-		</Container>
-	)
+    return (
+        <Container>
+            <div>
+                <UserName>{_.get(context, 'userInfo.firstName', 'My Account')}</UserName>
+                <CompanyName>{_.get(context, 'userInfo.companyName', '')}</CompanyName>
+                <CustomerId> Customer ID: {_.get(context, 'userInfo.companyId', '')}</CustomerId>
+            </div>
+            <DivNavSection>
+                <h5>Manage Account</h5>
+                <p onClick={() => history.push('/admin-dashboard')}>Admin Tools</p>
+                <p onClick={() => history.push('/account/dashboard')}>Account Settings</p>
+                <p onClick={() => history.push('/account/shopping-lists')}>Shopping Lists</p>
+                <p onClick={() => history.push('/account/my-ordered-items')}>Item Purchase History</p>
+            </DivNavSection>
+            <DivNavSection>
+                <h5>Order Information</h5>
+                <p onClick={() => history.push('/account/orders')}>Orders</p>
+                <p onClick={() => history.push('/account/open-orders-report')}>Open Orders Report</p>
+            </DivNavSection>
+            <DivNavSection>
+                <h5>Quotes</h5>
+                <p onClick={() => history.push('/account/open-quotes')}>Open Quotes</p>
+                <p onClick={() => history.push('/contact-us')}>Request a Quote</p>
+            </DivNavSection>
+            <DivNavSection>
+                <h5>Invoices</h5>
+                <p onClick={() => history.push('/account/invoices')}>Invoices</p>
+            </DivNavSection>      
+            <DivNavSection>
+                <h5>Customer Service</h5>
+                <p onClick={() => history.push('/contact-us')}>Contact Us</p>
+            </DivNavSection>
+        </Container>
+    )
 }

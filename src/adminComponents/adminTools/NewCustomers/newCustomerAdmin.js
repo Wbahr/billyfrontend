@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { useTable } from 'react-table'
-import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'config/providerGQL'
+import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'setup/providerGQL'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { ButtonRed, ButtonBlack } from 'styles/buttons'
 import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
@@ -75,16 +75,16 @@ function Table({ columns, data }) {
     } = useTable({
         columns,
         data,
-    });
+    })
 
     // Render the UI for your table
     return (
         <table {...getTableProps()}>
             <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                {headerGroups.map((headerGroup, i) => (
+                    <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, i) => (
+                            <th key={i} {...column.getHeaderProps()}>{column.render('Header')}</th>
                         ))}
                     </tr>
                 ))}
@@ -93,9 +93,9 @@ function Table({ columns, data }) {
                 {rows.map((row, i) => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        <tr key={i} {...row.getRowProps()}>
+                            {row.cells.map((cell, i) => {
+                                return <td key={i} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                             })}
                         </tr>
                     )
@@ -107,63 +107,63 @@ function Table({ columns, data }) {
 
 
 export default function NewCustomerAdmin() {
-    const [newCustomers, setNewCustomers] = useState(null);
-    const [alertMessage, setAlertMessage] = useState(null);
-    const [showRejectReasonModal, setShowRejectReasonModal] = useState(false);
-    const [rejectReason, setRejectReason] = useState('');
-    const [rejectId, setRejectId] = useState(null);
-    const [error, setError] = useState(null);
-    let { path, url } = useRouteMatch();
+    const [newCustomers, setNewCustomers] = useState(null)
+    const [alertMessage, setAlertMessage] = useState(null)
+    const [showRejectReasonModal, setShowRejectReasonModal] = useState(false)
+    const [rejectReason, setRejectReason] = useState('')
+    const [rejectId, setRejectId] = useState(null)
+    const [error, setError] = useState(null)
+    const { path } = useRouteMatch()
 
     const handleRejectModalClose = () => {
-        setShowRejectReasonModal(false);
-    };
+        setShowRejectReasonModal(false)
+    }
 
     const rejectRegistrationCall = (id) => {
-        //Stash the ID and show modal, when the modal closes then mutuate on the stashed data.
-        console.log("Stashing reject id ", id);
-        setRejectId(id);
-        setShowRejectReasonModal(true);
-    };
+    //Stash the ID and show modal, when the modal closes then mutuate on the stashed data.
+        console.log('Stashing reject id ', id)
+        setRejectId(id)
+        setShowRejectReasonModal(true)
+    }
 
 
     const [rejectRegistrationMutation, { error: rejectError, loading: rejectLoading }] = useMutation(REJECT_NEW_CUSTOMER, {
-        onCompleted: (data) => {
-            setAlertMessage("Registration rejected.");
-            setRejectReason('');
-            setRejectId(null);
-            loadNewCustomers();
+        onCompleted: () => {
+            setAlertMessage('Registration rejected.')
+            setRejectReason('')
+            setRejectId(null)
+            loadNewCustomers()
         }
-    });
+    })
 
     const [approveRegistrationCall, { error: approveError, loading: approveLoading }] = useMutation(APPROVE_NEW_CUSTOMER, {
-        onCompleted: (data) => {
-            setAlertMessage("Registration approved.");
-            loadNewCustomers();
+        onCompleted: () => {
+            setAlertMessage('Registration approved.')
+            loadNewCustomers()
         }
-    });
+    })
 
     const [loadNewCustomers, { loading, error: getError }] = useLazyQuery(GET_NEW_CUSTOMERS, {
         fetchPolicy: 'no-cache',
         onCompleted: (result) => {
-            setNewCustomers(result?.newCustomers || []);
+            setNewCustomers(result?.newCustomers || [])
         }
-    });
+    })
 
     useEffect(() => {
-        console.log("starting reject call");
-        if(rejectReason && rejectId) {
-            rejectRegistrationMutation({variables: { id: rejectId, reason: rejectReason }});
+        console.log('starting reject call')
+        if (rejectReason && rejectId) {
+            rejectRegistrationMutation({ variables: { id: rejectId, reason: rejectReason } })
         } 
-    }, [rejectReason]);
+    }, [rejectReason])
 
     useEffect(() => {
-        setError(rejectError || approveError || getError);
-    }, [rejectError, approveError, getError]);
+        setError(rejectError || approveError || getError)
+    }, [rejectError, approveError, getError])
 
     useEffect(() => {
-        loadNewCustomers();
-    }, []);
+        loadNewCustomers()
+    }, [])
 
     const columns = React.useMemo(
         () => [
@@ -316,7 +316,7 @@ export default function NewCustomerAdmin() {
             }
         ],
         [approveLoading, rejectLoading]
-    );
+    )
 
     return (
         <Styles>
@@ -327,31 +327,31 @@ export default function NewCustomerAdmin() {
             {newCustomers && <Table columns={columns} data={newCustomers} />}
             <SelectRejectReasonModal visible={showRejectReasonModal} valueCallback={setRejectReason} close={handleRejectModalClose}/>
         </Styles>
-    );
+    )
 }
 
-function SelectRejectReasonModal({valueCallback, visible, close}){
-    const rejectReasons = ['Not enough information', 'Duplicate customer or contact', 'Potential Spam', 'Customer needs to call', 'Other...'];
-    const initialState = { reason: rejectReasons[0], customReason: '' };
-    const [formValues, setFormValues] = useState(initialState);
-    const [showOtherField, setShowOtherField] = useState(false);
+function SelectRejectReasonModal({ valueCallback, visible, close }){
+    const rejectReasons = ['Not enough information', 'Duplicate customer or contact', 'Potential Spam', 'Customer needs to call', 'Other...']
+    const initialState = { reason: rejectReasons[0], customReason: '' }
+    const [formValues, setFormValues] = useState(initialState)
+    const [showOtherField, setShowOtherField] = useState(false)
 
     //Handle custom input box
     useEffect(() => {
-        setShowOtherField(formValues.reason === 'Other...');
-    }, [formValues.reason]);
+        setShowOtherField(formValues.reason === 'Other...')
+    }, [formValues.reason])
 
-    var changeHandler = (event) => setFormValues({
+    const changeHandler = (event) => setFormValues({
         ...formValues,
         [event.target.name]: event.target.value
-    });
+    })
 
     //Reset the form on load
     useEffect(() => {
-        if(visible === true) {
-            setFormValues(initialState);
+        if (visible === true) {
+            setFormValues(initialState)
         }
-    }, [visible]);
+    }, [visible])
     
     return (
         <Modal open={visible} onClose={close}>
@@ -365,10 +365,16 @@ function SelectRejectReasonModal({valueCallback, visible, close}){
                 {showOtherField && <FormikStyleInput label="Custom Reason (this will be sent to the customer)" type="text" name="customReason" value={formValues.customReason} onChange={changeHandler} />}
                 <DivRow>
                     <ButtonBlack onClick={close}>Cancel</ButtonBlack>
-                    <ButtonRed onClick={() => { close(); valueCallback(formValues.customReason || formValues.reason);}}>Reject</ButtonRed>
+                    <ButtonRed onClick={() => {
+                        close()
+                        valueCallback(formValues.customReason || formValues.reason)}
+                    }
+                    >
+                        Reject
+                    </ButtonRed>
                 </DivRow>
             </Container>
         </Modal>
-    );
+    )
 
 }

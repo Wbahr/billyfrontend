@@ -20,14 +20,14 @@ const DivCancel = styled.div`
   margin: auto 20px;
 `
 
-export default function HeaderAlertModal({message,close}) {
+export default function HeaderAlertModal({ message, close }) {
 
-	return(
-		<Container>
-			<span>{message}</span>
-			<DivCancel onClick={close}>
-				<FontAwesomeIcon icon='times' />
-			</DivCancel>
-		</Container>
-	)
+    return (
+        <Container>
+            <span>{message}</span>
+            <DivCancel onClick={close}>
+                <FontAwesomeIcon icon='times' />
+            </DivCancel>
+        </Container>
+    )
 }

@@ -26,16 +26,16 @@ const Container = styled.div`
   }
 `
 
-export default function ShareShoppingListModal({open, hide, handleDelete, text}) {
-	return (
-		<Modal open={open} onClose={hide} contentStyle={{'maxWidth': '350px', 'borderRadius': '3px'}}>
-			<Container>
-				<p>{text}</p>
-				<DivRow>
-					<ButtonBlack onClick={hide}>Cancel</ButtonBlack>
-					<ButtonRed onClick={handleDelete}>DELETE</ButtonRed>
-				</DivRow>
-			</Container>
-		</Modal>
-	)
+export default function DeleteChickenModal({ open, hide, handleDelete, text }) {
+    return (
+        <Modal open={open} onClose={hide} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
+            <Container>
+                <p>{text}</p>
+                <DivRow>
+                    <ButtonBlack onClick={hide}>Cancel</ButtonBlack>
+                    <ButtonRed onClick={handleDelete}>DELETE</ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    )
 }

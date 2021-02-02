@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const StyledText0 = styled.span`
   margin: 0 0 8px 0; 
-  font-family: ${props=>props.theme.headingFont};
+  font-family: ${props => props.theme.headingFont};
   font-size: 12px;
   line-height: 20px;
 `

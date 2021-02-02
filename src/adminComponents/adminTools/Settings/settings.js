@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import Loader from 'pageComponents/_common/loader';
+import Loader from 'pageComponents/_common/loader'
 import styled from 'styled-components'
 import { useQuery, useMutation } from '@apollo/client'
 import { Formik, Form, useFormikContext } from 'formik'
-import { ButtonRed } from 'styles/buttons';
+import { ButtonRed } from 'styles/buttons'
 import FormikFieldArray from '../../../pageComponents/_common/formik/fieldArray'
-import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm';
-import * as Yup from 'yup';
-import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts';
+import { FormikFormGroup, FormikFormContainer } from 'styles/formikForm'
+import * as Yup from 'yup'
+import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts'
 import Modal from 'pageComponents/_common/modal'
-import { GET_ALL_SETTINGS, SAVE_ALL_SETTINGS } from 'config/providerGQL';
-import FormikInput from 'pageComponents/_common/formik/input_v2';
+import { GET_ALL_SETTINGS, SAVE_ALL_SETTINGS } from 'setup/providerGQL'
+import FormikInput from 'pageComponents/_common/formik/input_v2'
 
 const H3 = styled.h3`
   width: 100%;
@@ -28,20 +28,20 @@ const DivCenter = styled.div`
 const systemSettingsSchema = Yup.object().shape({
     contactUsNotificationEmails: Yup.array().of(
         Yup.string()
-            .email("Must be an email"))
-        .min(1, "Must have at least one email"),
+            .email('Must be an email'))
+        .min(1, 'Must have at least one email'),
     newCustomerNotificationEmails: Yup.array().of(
         Yup.string()
-            .email("Must be an email"))
-        .min(1, "Must have at least one email"),
-    emailFrom: Yup.string().email("Must be an email")
-        .required("required"),
+            .email('Must be an email'))
+        .min(1, 'Must have at least one email'),
+    emailFrom: Yup.string().email('Must be an email')
+        .required('required'),
     siteBaseUrl: Yup.string().required(),
     adminDashNewCustomersRelativeUrl: Yup.string().required(),
-});
+})
 
 const FormWrapper = () => {
-    const { isValid, isSubmitting } = useFormikContext();
+    const { isValid, isSubmitting } = useFormikContext()
 
     return (
         <Form>
@@ -59,35 +59,35 @@ const FormWrapper = () => {
             <DivCenter>
                 <ButtonRed type="submit" disabled={isSubmitting}>
                     Save Changes
-				</ButtonRed>
+                </ButtonRed>
             </DivCenter>
         </Form>
     )
 }
 
 export default function Settings() {
-    const [settings, setSettingsData] = useState(null);
-    const [savedShowModal, setSavedShowModal] = useState(false);
+    const [settings, setSettingsData] = useState(null)
+    const [savedShowModal, setSavedShowModal] = useState(false)
 
     useQuery(GET_ALL_SETTINGS, {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
-            setSettingsData(result.appSettings);
-            console.log(result.appSettings);
+            setSettingsData(result.appSettings)
+            console.log(result.appSettings)
         }
-    });
+    })
 
     const [saveSettings] = useMutation(SAVE_ALL_SETTINGS,
         {
             onCompleted() {
-                setSavedShowModal(true);
+                setSavedShowModal(true)
             }
         }
-    );
+    )
 
     const handleModalClose = () => {
-        setSavedShowModal(false);
-    };
+        setSavedShowModal(false)
+    }
 
     const onSubmit = (values, { setSubmitting }) => {
         saveSettings({
@@ -101,9 +101,9 @@ export default function Settings() {
                     adminDashNewCustomersRelativeUrl: values.adminDashNewCustomersRelativeUrl,
                 }
             }
-        });
-        setSubmitting(false);
-    };
+        })
+        setSubmitting(false)
+    }
 
     return settings ? (
         <>
@@ -122,5 +122,5 @@ export default function Settings() {
         </>
     ) : (
         <Loader />
-    );
+    )
 }

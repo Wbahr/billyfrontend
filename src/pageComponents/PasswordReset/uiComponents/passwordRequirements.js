@@ -20,32 +20,32 @@ const P = styled.p`
   margin-left: 4px;
 `
 export default function PasswordRequirements({ password, confirmPassword, isValidPassword }) {
-    const [hasMinLength, setHasMinLength] = useState(false);
-    const [hasCapitals, setHasCapitals] = useState(false);
-    const [hasLowers, setHasLowers] = useState(false);
-    const [hasNumber, setHasNumber] = useState(false);
-    const [containsSymbol, setContainsSymbol] = useState(false);
-    const [specialLength, setSpecialLength] = useState(false);
-    const [reallyLong, setReallyLong] = useState(false);
-    const [validMatch, setValidMatch] = useState(false);
-    const [hasThree, setHasThree] = useState(false);
+    const [hasMinLength, setHasMinLength] = useState(false)
+    const [hasCapitals, setHasCapitals] = useState(false)
+    const [hasLowers, setHasLowers] = useState(false)
+    const [hasNumber, setHasNumber] = useState(false)
+    const [containsSymbol, setContainsSymbol] = useState(false)
+    const [specialLength, setSpecialLength] = useState(false)
+    const [reallyLong, setReallyLong] = useState(false)
+    const [validMatch, setValidMatch] = useState(false)
+    const [hasThree, setHasThree] = useState(false)
 
     useEffect(() => {
-        var sum = 0;
-        var minLengthMet = false;
+        let sum = 0
+        let minLengthMet = false
         // Must be 8 or more characters long
         if (password.length >= 8) {
-            setHasMinLength(true);
-            minLengthMet = true;
-            sum++;
+            setHasMinLength(true)
+            minLengthMet = true
+            sum++
         } else {
-            setHasMinLength(false);
+            setHasMinLength(false)
         }
 
         // Captial letters
         if (/[A-Z]/.test(password)) {
             setHasCapitals(true)
-            sum++;
+            sum++
         } else {
             setHasCapitals(false)
         }
@@ -53,87 +53,87 @@ export default function PasswordRequirements({ password, confirmPassword, isVali
         // Lowercase letters
         if (/[a-z]/.test(password)) {
             setHasLowers(true)
-            sum++;
+            sum++
         } else {
             setHasLowers(false)
         }
 
         if (/[0-9]/.test(password)) {
-            setHasNumber(true);
-            sum++;
+            setHasNumber(true)
+            sum++
         } else {
-            setHasNumber(false);
+            setHasNumber(false)
         }
 
         //Symbols
         if (/[\W]/.test(password)) {
-            setContainsSymbol(true);
-            sum++;
+            setContainsSymbol(true)
+            sum++
         } else {
-            setContainsSymbol(false);
+            setContainsSymbol(false)
         }
 
         //14-length special 
         if (/.{14,}/.test(password)) {
-            setSpecialLength(true);
-            sum++;
+            setSpecialLength(true)
+            sum++
         } else {
-            setSpecialLength(false);
+            setSpecialLength(false)
         }
 
         //21-length special 
         if (/.{21,}/.test(password)) {
-            setReallyLong(true);
-            sum++;
+            setReallyLong(true)
+            sum++
         } else {
-            setReallyLong(false);
+            setReallyLong(false)
         }
 
-        var hasValidMatch = false;
+        let hasValidMatch = false
         // Password and Confirm Password must match
         if (minLengthMet && (password === confirmPassword)) {
-            setValidMatch(true);
-            hasValidMatch = true;
+            setValidMatch(true)
+            hasValidMatch = true
         } else {
-            setValidMatch(false);
+            setValidMatch(false)
         }
 
         if (sum >= 3) {
-            setHasThree(true);
+            setHasThree(true)
         } else {
-            setHasThree(false);
+            setHasThree(false)
         }
 
         if (sum >= 3 && hasValidMatch) {
-            isValidPassword(true);
+            isValidPassword(true)
         } else {
-            isValidPassword(false);
+            isValidPassword(false)
         }
-    }, [password, confirmPassword]);
+    }, [password, confirmPassword])
 
     const colorFunc = (boolVal) => {
         if (boolVal) {
-            return "#007bff";
+            return '#007bff'
         } else {
             if (hasThree) {
-                return "#555";
+                return '#555'
             } else {
-                return "#950f23";
+                return '#950f23'
             }
         }
-    };
+    }
 
     const shapeFunc = (boolVal) => {
         if (boolVal) {
-            return faCheckCircle;
+            return faCheckCircle
         } else {
             if (hasThree) {
-                return faCheckCircle;
+                return faCheckCircle
             } else {
-                return faTimesCircle;
+                return faTimesCircle
             }
         }
-    };
+    }
 
     return (
         <Container>
@@ -147,5 +147,5 @@ export default function PasswordRequirements({ password, confirmPassword, isVali
             <Row><FontAwesomeIcon icon={shapeFunc(specialLength)} color={colorFunc(specialLength)} /><P>14 or more characters</P></Row>
             <Row><FontAwesomeIcon icon={shapeFunc(reallyLong)} color={colorFunc(reallyLong)} /><P>21 or more characters</P></Row>
         </Container>
-    );
+    )
 }

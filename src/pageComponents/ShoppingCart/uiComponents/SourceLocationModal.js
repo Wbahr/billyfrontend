@@ -1,9 +1,7 @@
-import React, { useState, useContext } from 'react'
-import Context from '../../../config/context'
+import React, { useState } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
-import AirlineSelect from 'pageComponents/_common/form/select'
 
 const DivRow = styled.div`
   display: flex;
@@ -23,7 +21,7 @@ const Label = styled.label`
 `
 
 const Container = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px 24px;
@@ -41,55 +39,55 @@ const Container = styled.div`
 
 export default function SourceLocationModal(props) {
 
-	const {
-		open,
-		hide,
-		sourceLocations,
-		cartItem,
-		setCartItem,
-	} = props
+    const {
+        open,
+        hide,
+        sourceLocations,
+        cartItem,
+        setCartItem,
+    } = props
 
-	const sourceLocOptions = sourceLocations?.map(loc => ({ label: loc.sourceLocId, value: loc.sourceLocId }))
-	
-	const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem?.sourceLocId)
-	const [alert, setAlert] = useState(null)
+    const sourceLocOptions = sourceLocations?.map(loc => ({ label: loc.sourceLocId, value: loc.sourceLocId }))
 
-	function handleClose(){
-		setAlert(null)
-		hide()
-	}
+    const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem?.sourceLocId)
+    const [alert, setAlert] = useState(null)
 
-	const handleSaveSourceLoc = () => {
-		if (selectedSourceLoc === '2100') {
-			setCartItem({ ...cartItem, sourceLocId: null })
-		} else {
-			setCartItem({ ...cartItem, sourceLocId: selectedSourceLoc })
-		}
-		hide()
-	}
+    function handleClose(){
+        setAlert(null)
+        hide()
+    }
 
-	const handleSourceLocChange = (event) => {
-		setSelectedSourceLoc(event.target.value)
-	}
-  
-	return(
-		<Modal open={open} onClose={handleClose} contentStyle={{maxWidth: 350, borderRadius: 3}}>
-			<Container>
-				<h4>Select Source Location</h4>
-				{alert && <p>{alert}</p>}
-				
-				<DivItem>
-					<Label>Source Locations: </Label>
-					<select value={selectedSourceLoc} onChange={handleSourceLocChange}>
-						{ sourceLocOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-					</select>
-				</DivItem>
-				
-				<DivRow>
-					<ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-					<ButtonRed onClick={handleSaveSourceLoc}>Save</ButtonRed>
-				</DivRow>
-			</Container>
-		</Modal>
-	)
+    const handleSaveSourceLoc = () => {
+        if (selectedSourceLoc === '2100') {
+            setCartItem({ ...cartItem, sourceLocId: null })
+        } else {
+            setCartItem({ ...cartItem, sourceLocId: selectedSourceLoc })
+        }
+        hide()
+    }
+
+    const handleSourceLocChange = (event) => {
+        setSelectedSourceLoc(event.target.value)
+    }
+
+    return (
+        <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: 350, borderRadius: 3 }}>
+            <Container>
+                <h4>Select Source Location</h4>
+                {alert && <p>{alert}</p>}
+
+                <DivItem>
+                    <Label>Source Locations: </Label>
+                    <select value={selectedSourceLoc} onChange={handleSourceLocChange}>
+                        { sourceLocOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                    </select>
+                </DivItem>
+
+                <DivRow>
+                    <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
+                    <ButtonRed onClick={handleSaveSourceLoc}>Save</ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    )
 }

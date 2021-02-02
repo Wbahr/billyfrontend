@@ -102,88 +102,88 @@ const Img = styled.img`
     width: 100%;
 `
 export default function GovermentSalesPage() {
-	return (
-		<Container>
-			<Header text="Government sales" />
-			<p>Airline provides innovative solutions for our customers who represent many different types of industries. In the government and defense sector, we provide fluid power and automation components, assemblies and systems to major defense contractors as a second- or third-tier supplier and also supply directly to U.S. government agencies as a small business.</p>
-			<MainDiv>
-				<Div_1>
-					<SpecialistDiv>
-						<SubTitle>
-							<SaleImgDiv>
-								<Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/technical%20help.jpg" />
-							</SaleImgDiv>
-							<ContactSale>Contact one of our dedicated Government Sales Specialists.</ContactSale>
-						</SubTitle>
-						<Contact><Span>Airline Hydraulics Corporation Headquarters</Span></Contact>
-						<Contact><Span>Toll Free:</Span> 1-800-999-7378 or 215-638-4700 </Contact>
-						<Contact><Span>Email:</Span> <Email href="mailto:govsales@airlinehyd.com">govsales@airlinehyd.com</Email></Contact>
-						<PDF href="https://www.airlinehyd.com/literature_catalog/Airline/Airline_Capability_Statement.pdf" target= "_blank">Airline Capabillity Statement</PDF>
-					</SpecialistDiv>
-					<InfoDiv>
-						<MoreInfo>
-							<Info>Need more information?</Info>
-						</MoreInfo>
-						<InfoDetail><a href="#">Click here</a> to contact an Airline representative, or call us at (800) 999-7378</InfoDetail>
-					</InfoDiv>
+    return (
+        <Container>
+            <Header text="Government sales" />
+            <p>Airline provides innovative solutions for our customers who represent many different types of industries. In the government and defense sector, we provide fluid power and automation components, assemblies and systems to major defense contractors as a second- or third-tier supplier and also supply directly to U.S. government agencies as a small business.</p>
+            <MainDiv>
+                <Div_1>
+                    <SpecialistDiv>
+                        <SubTitle>
+                            <SaleImgDiv>
+                                <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/technical%20help.jpg" />
+                            </SaleImgDiv>
+                            <ContactSale>Contact one of our dedicated Government Sales Specialists.</ContactSale>
+                        </SubTitle>
+                        <Contact><Span>Airline Hydraulics Corporation Headquarters</Span></Contact>
+                        <Contact><Span>Toll Free:</Span> 1-800-999-7378 or 215-638-4700 </Contact>
+                        <Contact><Span>Email:</Span> <Email href="mailto:govsales@airlinehyd.com">govsales@airlinehyd.com</Email></Contact>
+                        <PDF href="https://www.airlinehyd.com/literature_catalog/Airline/Airline_Capability_Statement.pdf" target= "_blank">Airline Capabillity Statement</PDF>
+                    </SpecialistDiv>
+                    <InfoDiv>
+                        <MoreInfo>
+                            <Info>Need more information?</Info>
+                        </MoreInfo>
+                        <InfoDetail><a href="#">Click here</a> to contact an Airline representative, or call us at (800) 999-7378</InfoDetail>
+                    </InfoDiv>
 
-				</Div_1>
-				<Div_2>
-					<SubTitle>
-						<P>Frequently Asked Questions</P>
-					</SubTitle>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> Is Airline a registered vendor in the CCR database?</Question>
-						<Answer>Yes, our DUNS # is 00-231-9044</Answer>
-					</QuestionDiv>
-					<Border></Border>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> Does Airline have a CAGE Code?</Question>
-						<Answer>Yes, that number is 04962</Answer>
-					</QuestionDiv>
-					<Border></Border>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> What are your supported NAICS codes?</Question>
-						<Answer>Our main NAICS codes include: 331316, 332911, 332912, 333298, 333995, 333996, 333999, 423610, 423830, 423840,423990 and 811310.</Answer>
-					</QuestionDiv>
-					<Border></Border>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> Does Airline accept credit cards?</Question>
-						<Answer>Yes, we accept Visa, MasterCard, American Express and Discover cards.</Answer>
-					</QuestionDiv>
-					<Border></Border>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> What Government agencies has Airline sold to?</Question>
-						<Answer>
-							<ul>
-								<li>U.S. Coast Guard</li>
-								<li>Federal Aviation Administration</li>
-								<li>Department of Defense</li>
-								<li>Sheppard Air Force Base</li>
-							</ul>
-						</Answer>
-					</QuestionDiv>
-					<Border></Border>
-					<QuestionDiv>
-						<Question><FontAwesomeIcon icon='question-circle' size='1x' /> What types of products and services have you sold to government agencies?</Question>
-						<Answer>
-							<ul>
-								<li>Hydraulic components (pumps, cylinders, valves, etc.)</li>
-								<li>Hydraulic systems (engineering and fabrication)</li>
-								<li>Hose assemblies</li>
-								<li>Fluid connectors</li>
-								<li>Winches</li>
-								<li>Pneumatic components</li>
-								<li>Aluminum structural framing</li>
-								<li>Servo valves</li>
-								<li>Proximity sensors</li>
-								<li>Repair services</li>
-							</ul>
-						</Answer>
-					</QuestionDiv>
-					<Border></Border>
-				</Div_2>
-			</MainDiv>
-		</Container>
-	)
+                </Div_1>
+                <Div_2>
+                    <SubTitle>
+                        <P>Frequently Asked Questions</P>
+                    </SubTitle>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> Is Airline a registered vendor in the CCR database?</Question>
+                        <Answer>Yes, our DUNS # is 00-231-9044</Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> Does Airline have a CAGE Code?</Question>
+                        <Answer>Yes, that number is 04962</Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> What are your supported NAICS codes?</Question>
+                        <Answer>Our main NAICS codes include: 331316, 332911, 332912, 333298, 333995, 333996, 333999, 423610, 423830, 423840,423990 and 811310.</Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> Does Airline accept credit cards?</Question>
+                        <Answer>Yes, we accept Visa, MasterCard, American Express and Discover cards.</Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> What Government agencies has Airline sold to?</Question>
+                        <Answer>
+                            <ul>
+                                <li>U.S. Coast Guard</li>
+                                <li>Federal Aviation Administration</li>
+                                <li>Department of Defense</li>
+                                <li>Sheppard Air Force Base</li>
+                            </ul>
+                        </Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                    <QuestionDiv>
+                        <Question><FontAwesomeIcon icon='question-circle' size='1x' /> What types of products and services have you sold to government agencies?</Question>
+                        <Answer>
+                            <ul>
+                                <li>Hydraulic components (pumps, cylinders, valves, etc.)</li>
+                                <li>Hydraulic systems (engineering and fabrication)</li>
+                                <li>Hose assemblies</li>
+                                <li>Fluid connectors</li>
+                                <li>Winches</li>
+                                <li>Pneumatic components</li>
+                                <li>Aluminum structural framing</li>
+                                <li>Servo valves</li>
+                                <li>Proximity sensors</li>
+                                <li>Repair services</li>
+                            </ul>
+                        </Answer>
+                    </QuestionDiv>
+                    <Border></Border>
+                </Div_2>
+            </MainDiv>
+        </Container>
+    )
 }

@@ -28,39 +28,39 @@ const DivPic = styled.div`
 
 class IQCard extends React.Component {
   handleCardClick = () => {
-    this.props.cardClick(this.props.text)
+      this.props.cardClick(this.props.text)
   }
   render(){
-    const {
-      text,
-      selectedCard
-    } = this.props
+      const {
+          text,
+          selectedCard
+      } = this.props
 
-    let imageSource
-    switch(text){
-      case 'haskell':
-        imageSource = './img/ffdosk'
-        break
-      default:
-        imageSource = null
-    }
-    if(selectedCard === "" || selectedCard === text) {
-      return (
-        <DivCard onClick={this.handleCardClick}>
-          {/*<img source={imageSource} />*/}
-          <DivPic />
-          <span>{text}</span>
-        </DivCard>
-      )
-    } else {
-      return (
-        <DivCardDark onClick={this.handleCardClick}>
-          {/*<img source={imageSource} />*/}
-          <DivPic />
-          <span>{text}</span>
-        </DivCardDark>
-      )
-    }
+      // let imageSource
+      // switch (text){
+      // case 'haskell':
+      //   imageSource = './img/ffdosk'
+      //   break
+      // default:
+      //   imageSource = null
+      // }
+      if (selectedCard === '' || selectedCard === text) {
+          return (
+              <DivCard onClick={this.handleCardClick}>
+                  {/*<img source={imageSource} />*/}
+                  <DivPic />
+                  <span>{text}</span>
+              </DivCard>
+          )
+      } else {
+          return (
+              <DivCardDark onClick={this.handleCardClick}>
+                  {/*<img source={imageSource} />*/}
+                  <DivPic />
+                  <span>{text}</span>
+              </DivCardDark>
+          )
+      }
 
   }
 }

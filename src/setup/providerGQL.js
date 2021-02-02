@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { FRAGMENT_ITEM_AVAILABILITY } from 'config/gqlFragments/gqlItemFragments'
+import { FRAGMENT_ITEM_AVAILABILITY } from 'setup/gqlFragments/gqlItemFragments'
 
 export const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){
@@ -367,7 +367,7 @@ export const GET_PURCHASE_HISTORY = gql`
       }
     }
   }
-`;
+`
 
 export const GET_ITEM_PRICE = gql`
   query GetItemPrices($items: [ItemQuantityInput]) {

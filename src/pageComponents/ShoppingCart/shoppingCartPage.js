@@ -27,16 +27,16 @@ const DivOrderTotalCol = styled.div`
 
 export default function ShoppingCartPage(props) {
 	
-	return (
-		<DivContainer>
-			<DivShoppingCartCol>
-				<ShoppingCart history={props.history}/>
-				<SubtotalBox history={props.history}/>
-			</DivShoppingCartCol>
+    return (
+        <DivContainer>
+            <DivShoppingCartCol>
+                <ShoppingCart history={props.history}/>
+                <SubtotalBox history={props.history}/>
+            </DivShoppingCartCol>
 			
-			<DivOrderTotalCol>
-				<OrderSummary history={props.history}/>
-			</DivOrderTotalCol>
-		</DivContainer>
-	)
+            <DivOrderTotalCol>
+                <OrderSummary history={props.history}/>
+            </DivOrderTotalCol>
+        </DivContainer>
+    )
 }

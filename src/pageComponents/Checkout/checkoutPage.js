@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
-import Context from '../../config/context'
+import Context from '../../setup/context'
 import CheckoutOrderSummary from './uiComponents/checkoutOrderSummary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CheckoutProgress from './uiComponents/checkoutProgress'
 import { connect } from 'formik'
-import PropTypes from 'prop-types'
 import { useQuery } from '@apollo/client'
 import { Formik } from 'formik'
 import { ShippingScheduleForm } from './wizardSteps/shippingScheduleForm'
@@ -14,11 +13,10 @@ import { ShipToForm } from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
-import { defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo } from "./helpers";
+import { defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo } from './helpers'
 import { startOfTomorrow } from 'date-fns'
-import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'config/gqlQueries/gqlItemQueries'
-import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'config/providerGQL'
-import { contextType } from 'react-copy-to-clipboard'
+import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/gqlQueries/gqlItemQueries'
+import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
 
@@ -91,21 +89,21 @@ const Pformheader = styled.p`
 const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
 
 function CheckoutPage({ history }) {
-    const context = useContext(Context);
-    const [checkoutDropdownData, setCheckoutDropdownData] = useState([]);
-    const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([]);
-    const [paymentInfo, setPaymentInfo] = useState({});
-    const [taxRateRequestInfo, setTaxRateRequestInfo] = useState({});
+    const context = useContext(Context)
+    const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
+    const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
+    const [paymentInfo, setPaymentInfo] = useState({})
+    const [taxRateRequestInfo, setTaxRateRequestInfo] = useState({})
     const [taxRateLoading, setTaxRateLoading] = useState(false)
-    const [taxRate, setTaxRate] = useState(0);
-    const [currentStep, setCurrentStep] = useState(0);
-    const [validationSchema, setValidationSchema] = useState(null);
+    const [taxRate, setTaxRate] = useState(0)
+    const [currentStep, setCurrentStep] = useState(0)
+    const [validationSchema, setValidationSchema] = useState(null)
 
     const handleMoveStep = nextStepIdx => {
         if (nextStepIdx === 0 || stepValidated[nextStepIdx - 1]) {
             setCurrentStep(nextStepIdx)
         }
-    };
+    }
 
     const [stepValidated, setStepValidated] = useState(
         {
@@ -114,7 +112,7 @@ function CheckoutPage({ history }) {
             2: history.location.pathname === '/create-quote',
             3: false
         }
-    );
+    )
 
     useEffect(() => {
         if (!context.cart?.length) {
@@ -124,7 +122,7 @@ function CheckoutPage({ history }) {
 
     const [getTaxRate] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
-        onCompleted: ({getTaxRate}) => {
+        onCompleted: ({ getTaxRate }) => {
             setTaxRateLoading(false)
             setTaxRate(getTaxRate)
         }
@@ -149,18 +147,18 @@ function CheckoutPage({ history }) {
 
     const getFormStepComponent = currentStep => {
         switch (currentStep) {
-            case 0:
-                return ShippingScheduleForm
-            case 1:
-                return ShipToForm
-            case 2:
-                return BillingInfoForm
-            case 3:
-                return ConfirmationScreen
-            default:
-                return ShippingScheduleForm
+        case 0:
+            return ShippingScheduleForm
+        case 1:
+            return ShipToForm
+        case 2:
+            return BillingInfoForm
+        case 3:
+            return ConfirmationScreen
+        default:
+            return ShippingScheduleForm
         }
-    };
+    }
 
     function yupSchema(requiresPONumber) {
         return {
@@ -168,8 +166,8 @@ function CheckoutPage({ history }) {
             1: shipToSchema,
             2: getBillToSchema(requiresPONumber),
             3: confirmationSchema
-        };
-    };
+        }
+    }
 
     function airlineYupSchema(requiresPONumber) {
         return {
@@ -177,8 +175,8 @@ function CheckoutPage({ history }) {
             1: airlineShipToSchema,
             2: getBillToSchema(requiresPONumber),
             3: confirmationSchema
-        };
-    };
+        }
+    }
 
     const [getCheckoutData] = useLazyQuery(GET_CHECKOUT_DATA, {
         fetchPolicy: 'no-cache',
@@ -186,12 +184,12 @@ function CheckoutPage({ history }) {
             const mutatedCheckoutDropdownData = formatDropdownData(result.getCheckoutDropdownData)
             setCheckoutDropdownData(result.getCheckoutDropdownData)
             setCheckoutDropdownDataLabels(mutatedCheckoutDropdownData)
-            const requiresPONumber = result.getCheckoutDropdownData.billingInfo?.requiresPONumber;
+            const requiresPONumber = result.getCheckoutDropdownData.billingInfo?.requiresPONumber
 
             //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
             setValidationSchema(context.userInfo?.role === 'Impersonator' ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
         }
-    });
+    })
 
     const handleValidateFields = values => {
         validationSchema[currentStep].validate(values)
@@ -200,29 +198,29 @@ function CheckoutPage({ history }) {
         validationSchema[currentStep]
             .isValid(values)
             .then((valid) => setStepValidated({ ...stepValidated, [currentStep]: valid }))
-    };
+    }
 
     const invMastUids = context.cart?.map(item => item.frecno)
     const { data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
         variables: {
-            'invMastUids': invMastUids
+            invMastUids: invMastUids
         }
     })
 
     const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
         variables: {
-            'items': context.cart?.map(cartItem => {
+            items: context.cart?.map(cartItem => {
                 return {
-                    'invMastUid': cartItem.frecno,
-                    'quantity': cartItem.quantity
+                    invMastUid: cartItem.frecno,
+                    quantity: cartItem.quantity
                 }
             })
         }
     })
 
-    const {data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
+    const { data: itemsCustomerPartNumbers } = useQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
         variables: {
-            'invMastUids': invMastUids
+            invMastUids: invMastUids
         }
     })
 
@@ -248,7 +246,7 @@ function CheckoutPage({ history }) {
         },
         billing: {
             ...defaultBilling,
-            paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? "purchase_order" : "credit_card",
+            paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card',
             firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
             lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
             companyName: checkoutDropdownData.billingInfo?.companyName || '',
@@ -260,9 +258,9 @@ function CheckoutPage({ history }) {
             country: checkoutDropdownData.billingInfo?.country.toLowerCase() || '',
         },
         confirmationEmail: defaultConfirmationEmail
-    };
+    }
 
-    const showPoOption = checkoutDropdownData.billingInfo?.isNetTerms;
+    const showPoOption = checkoutDropdownData.billingInfo?.isNetTerms
 
     const FormStepComponent = getFormStepComponent(currentStep)
 
@@ -293,7 +291,8 @@ function CheckoutPage({ history }) {
                                     <FormStepComponent {...{
                                         ...formikProps, ...itemInfo, paymentInfo, setPaymentInfo, isStepValid: stepValidated[currentStep], handleMoveStep,
                                         checkoutDropdownData, checkoutDropdownDataLabels, updateZip: (shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode }), history, showPoOption
-                                    }} />
+                                    }}
+                                    />
                                 </form>
                             )}
                         </Formik>

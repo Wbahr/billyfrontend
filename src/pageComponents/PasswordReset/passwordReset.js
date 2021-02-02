@@ -92,18 +92,18 @@ export default function PasswordResetPage({ history }) {
     const [showResendToken, setShowResendToken] = useState(false)
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
     const [passwordIsValid, setPasswordIsValid] = useState(false)
-    let { passwordToken } = useParams()
+    const { passwordToken } = useParams()
 
 
     const [executePasswordReset, { loading, error }] = useMutation(MUTATION_PASSWORD_RESET, {
         onCompleted: data => {
-            let responseData = data.submitPasswordReset
+            const responseData = data.submitPasswordReset
             if (responseData.success) {
                 setUsername('')
                 setShowResendToken('')
                 setErrorMessage('')
                 setInfoMessage(responseData.message)
-                setTimeout(() => { history.push('/login') }, 1500)
+                setTimeout(() => history.push('/login'), 1500)
             } else {
                 setErrorMessage(responseData.message)
                 setShowResendToken(true)
@@ -120,10 +120,10 @@ export default function PasswordResetPage({ history }) {
             executePasswordReset(
                 {
                     variables: {
-                        'passwordInfo': {
-                            'token': passwordToken,
-                            'username': username,
-                            'newPassword': password
+                        passwordInfo: {
+                            token: passwordToken,
+                            username: username,
+                            newPassword: password
                         }
                     }
                 }

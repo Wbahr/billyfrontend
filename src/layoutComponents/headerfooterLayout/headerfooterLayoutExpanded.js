@@ -20,15 +20,15 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HeaderFooterLayoutExpanded(props) {
-	return(
-		<Div>
-      <ThemeProvider theme={airlineRedTheme}>
-        <Header {...props}/>
-        <ContentScreenContainer {...props}>
-          {props.children}
-        </ContentScreenContainer>
-        <Footer />
-      </ThemeProvider>
-		</Div>
-	)
+    return (
+        <Div>
+            <ThemeProvider theme={airlineRedTheme}>
+                <Header {...props}/>
+                <ContentScreenContainer {...props}>
+                    {props.children}
+                </ContentScreenContainer>
+                <Footer />
+            </ThemeProvider>
+        </Div>
+    )
 }

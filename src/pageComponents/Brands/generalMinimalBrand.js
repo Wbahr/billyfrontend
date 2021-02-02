@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 // import AdaptallPage from './minimalBrandsPages/adaptall'
 // import AdsensPage from './minimalBrandsPages/adsens'
-
-// import _ from 'lodash'
-
 
 
 // class FullBrand extends React.Component {
@@ -32,46 +29,46 @@ import AcmeElectricPage from './minimalBrandsPages/acmeElectric'
 
 // export default FullBrand
 
-export default function GeneralMinimalBrand({history}) {
-	const [pageComponent, setPageComponent] = useState()
-	let { page } = useParams()
+export default function GeneralMinimalBrand() {
+    const [pageComponent, setPageComponent] = useState()
+    const { page } = useParams()
 
-	const MinimalBrandPages = [
-		{
-			'label': 'AcmeElectric',
-			'page': 'acme-electric'
-		},
-		{
-			'label': 'Adaptall',
-			'page': 'adaptall'
-		},
-		{
-			'label': 'Adsens',
-			'page': 'adsens'
-		}
-	]
-	useEffect(() => {
-		if(page === 'acme-electric'){
-			setPageComponent(<AcmeElectricPage/>)
-		} else if (page === 'adaptall'){
-			setPageComponent(<AcmeElectricPage/>) // Swap this when Adaptall page is completed
-			// setPageComponent(<AdaptallPage/>)
-		} else if (page === 'adsens'){
-			setPageComponent(<AcmeElectricPage/>) // Swap this when Adsens page is completed
-			// setPageComponent(<AdsensPage/>)
-		} 
+    // const MinimalBrandPages = [
+    //   {
+    //     'label': 'AcmeElectric',
+    //     'page': 'acme-electric'
+    //   },
+    //   {
+    //     'label': 'Adaptall',
+    //     'page': 'adaptall'
+    //   },
+    //   {
+    //     'label': 'Adsens',
+    //     'page': 'adsens'
+    //   }
+    // ]
+    useEffect(() => {
+        if (page === 'acme-electric'){
+            setPageComponent(<AcmeElectricPage/>)
+        } else if (page === 'adaptall'){
+            setPageComponent(<AcmeElectricPage/>) // Swap this when Adaptall page is completed
+            // setPageComponent(<AdaptallPage/>)
+        } else if (page === 'adsens'){
+            setPageComponent(<AcmeElectricPage/>) // Swap this when Adsens page is completed
+            // setPageComponent(<AdsensPage/>)
+        } 
     
-	}, [page])
+    }, [page])
       
-	return(
-		<> 
-			{pageComponent}      
+    return (
+        <> 
+            {pageComponent}      
   
 
-		</>
-	)
+        </>
+    )
 }
 
 GeneralMinimalBrand.propTypes = {
-	history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 }

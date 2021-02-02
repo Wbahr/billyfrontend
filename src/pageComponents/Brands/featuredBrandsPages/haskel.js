@@ -233,164 +233,170 @@ const ArticlesDiv = styled.div`
   width: 100%;
 `
 export default function Haskel() {
-	const [showText1, setShowText1] = useState(false)
+    const [showText1, setShowText1] = useState(false)
 
-	return (
-		<Container>
-			<FeaturedBrandLogo>
-				<BannerDiv><BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" /></BannerDiv>
-			</FeaturedBrandLogo>
-			<BrandDetailsContainer>
-				<AirlineDistributorH1>Haskel
-				</AirlineDistributorH1>
-				<DistributorDetails>Haskel International, Inc. is the world's leading manufacturer of high-pressure liquid pumps, gas boosters, air pressure amplifiers, and high pressure systems and accessories. For over a half-century, the Company has been recognized as a leader in high-pressure technology. Haskel’s products have a wide range of applications generally focused on the pressurization, transfer, storage or control of liquids and gases under pressure. Typically, the applications include pressure testing, work holding and actuation, transferring and mixing of liquids and gases under pressure and generally ensuring the effectiveness of the customer's production and quality processes. Haskel's products are frequently used in safety devices and the protection of the environment.</DistributorDetails>
-				<Div>
-					<ShopAbbButton>Shop Products </ShopAbbButton>
-				</Div>
+    return (
+        <Container>
+            <FeaturedBrandLogo>
+                <BannerDiv><BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" /></BannerDiv>
+            </FeaturedBrandLogo>
+            <BrandDetailsContainer>
+                <AirlineDistributorH1>Haskel
+                </AirlineDistributorH1>
+                <DistributorDetails>Haskel International, Inc. is the world's leading manufacturer of high-pressure liquid pumps, gas boosters, air pressure amplifiers, and high pressure systems and accessories. For over a half-century, the Company has been recognized as a leader in high-pressure technology. Haskel’s products have a wide range of applications generally focused on the pressurization, transfer, storage or control of liquids and gases under pressure. Typically, the applications include pressure testing, work holding and actuation, transferring and mixing of liquids and gases under pressure and generally ensuring the effectiveness of the customer's production and quality processes. Haskel's products are frequently used in safety devices and the protection of the environment.</DistributorDetails>
+                <Div>
+                    <ShopAbbButton>Shop Products </ShopAbbButton>
+                </Div>
 
-				{/*............................... PRODUCTS................................... */}
+                {/*............................... PRODUCTS................................... */}
 
-				<SectionDiv>
-					<ProductsTitle>Products</ProductsTitle>
-					<BorderBottom></BorderBottom>
-				</SectionDiv>
-				<ProductsDiv>
-					<ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-pressure.png" /></ImgDiv>
-					<ProductsDetails>
-						<ProductsH4 href="#">Air pressure amplifiers</ProductsH4>
-          Haskel air pressure amplifiers offer the most comprehensive operating range in the industry, combining simple principles of operation with rugged construction suitable for the most demanding industrial applications.  Capable of producing pressure outputs up to 5000 psi (345 bar), Haskel air amplifiers are compact, require no electrical or mechanical drive connections, are powered by the same air that they amplify, and can be mounted in any position.
-						<ListItemDiv>
-							<ul>
-								<li>Infinitely variable outlet pressure and flow capability</li>
-								<li>No heat, flame or spark risk</li>
-								<li>No air line lubrication required - eliminates oily exhausts</li>
-								<li>Long seal life with easy maintenance</li>
-								<li>Wide range of models, controls and options</li>
-								<li>Wide range of standard and custom systems</li>
-							</ul>
-						</ListItemDiv>
-						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air pressure amplifiers Products</ShopProducts>
-					</ProductsDetails>
-				</ProductsDiv>
-				<ProductsDiv>
-					<ProductsDetails>
-						<ProductsH4 href="#">Air-driven liquid pumps</ProductsH4>
-            Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water.
-						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air-driven liquid pumps Products</ShopProducts>
-					</ProductsDetails>
-					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-driven.png" /></ImgDiv>
-				</ProductsDiv>
-				<ProductsDiv>
-					<ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-hydraulic.png" /></ImgDiv>
-					<ProductsDetails>
-						<ProductsH4 href="#">Air & hydraulic-driven gas boosters</ProductsH4>
-            Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk.
-						<LongProductDetails> Gas Boosters are ideal for increasing gas pressure, transferring high-pressure gas, charging cylinders and scavenging.
-							<ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </>: <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1> </LongProductDetails>
-						{showText1 && <div>
-							<ListItemDiv>
-								<ul>
-									<li>Air driven - no electricity required</li>
-									<li>No airline lubricator required</li>
-									<li>Hydrocarbon free - separation between air and gas sectionss</li>
-									<li>Pressures to 39,000 psi (2690 bar)</li>
-									<li>Wide range of models</li>
-									<li>Built-in-cooling on most models</li>
-									<li>Easy-to-use automatic controls</li>
-									<li>Standard and custom systems available</li>
-								</ul>
-							</ListItemDiv>
-							<LongProductDetails>Before you think about what you are building next, think about how you will defend it. You need a device with connected and communicating built-in electronics, ability to generate the data to help you optimize your facilities performance, and the ability to mitigate arc ﬂash keeping your employees, customers and end-users safe. With Eaton’s new globally rated Power Defense™ molded case circuit breakers, you can now plan with conﬁdence. Start planning your defense now.</LongProductDetails>
-						</div>}
-						<ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air & hydraulic-driven gas boosters Products</ShopProducts>
-					</ProductsDetails>
-				</ProductsDiv>
+                <SectionDiv>
+                    <ProductsTitle>Products</ProductsTitle>
+                    <BorderBottom></BorderBottom>
+                </SectionDiv>
+                <ProductsDiv>
+                    <ImgDiv> <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-pressure.png" /></ImgDiv>
+                    <ProductsDetails>
+                        <ProductsH4 href="#">Air pressure amplifiers</ProductsH4>
+                        Haskel air pressure amplifiers offer the most comprehensive operating range in the industry, combining simple principles of operation with rugged construction suitable for the most demanding industrial applications.  Capable of producing pressure outputs up to 5000 psi (345 bar), Haskel air amplifiers are compact, require no electrical or mechanical drive connections, are powered by the same air that they amplify, and can be mounted in any position.
+                        <ListItemDiv>
+                            <ul>
+                                <li>Infinitely variable outlet pressure and flow capability</li>
+                                <li>No heat, flame or spark risk</li>
+                                <li>No air line lubrication required - eliminates oily exhausts</li>
+                                <li>Long seal life with easy maintenance</li>
+                                <li>Wide range of models, controls and options</li>
+                                <li>Wide range of standard and custom systems</li>
+                            </ul>
+                        </ListItemDiv>
+                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air pressure amplifiers Products</ShopProducts>
+                    </ProductsDetails>
+                </ProductsDiv>
+                <ProductsDiv>
+                    <ProductsDetails>
+                        <ProductsH4 href="#">Air-driven liquid pumps</ProductsH4>
+                        Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water.
+                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air-driven liquid pumps Products</ShopProducts>
+                    </ProductsDetails>
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-driven.png" /></ImgDiv>
+                </ProductsDiv>
+                <ProductsDiv>
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-hydraulic.png" /></ImgDiv>
+                    <ProductsDetails>
+                        <ProductsH4 href="#">Air & hydraulic-driven gas boosters</ProductsH4>
+                        Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk.
+                        <LongProductDetails> Gas Boosters are ideal for increasing gas pressure, transferring high-pressure gas, charging cylinders and scavenging.
+                            <ShowMoreBtn1 onClick={() => setShowText1(!showText1)}>{showText1 ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </>: <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>} </ShowMoreBtn1> 
+                        </LongProductDetails>
+                        {showText1 && (
+                            <div>
+                                <ListItemDiv>
+                                    <ul>
+                                        <li>Air driven - no electricity required</li>
+                                        <li>No airline lubricator required</li>
+                                        <li>Hydrocarbon free - separation between air and gas sectionss</li>
+                                        <li>Pressures to 39,000 psi (2690 bar)</li>
+                                        <li>Wide range of models</li>
+                                        <li>Built-in-cooling on most models</li>
+                                        <li>Easy-to-use automatic controls</li>
+                                        <li>Standard and custom systems available</li>
+                                    </ul>
+                                </ListItemDiv>
+                                <LongProductDetails>Before you think about what you are building next, think about how you will defend it. You need a device with connected and communicating built-in electronics, ability to generate the data to help you optimize your facilities performance, and the ability to mitigate arc ﬂash keeping your employees, customers and end-users safe. With Eaton’s new globally rated Power Defense™ molded case circuit breakers, you can now plan with conﬁdence. Start planning your defense now.</LongProductDetails>
+                            </div>
+                        )}
+                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Haskel's Air & hydraulic-driven gas boosters Products</ShopProducts>
+                    </ProductsDetails>
+                </ProductsDiv>
 
-				{/*.................................. ARTICLES................................... */}
+                {/*.................................. ARTICLES................................... */}
 
-				<SectionDiv>
-					<ProductsTitle>Articles & Videos</ProductsTitle>
-					<BorderBottom></BorderBottom>
-				</SectionDiv>
-				<ArticlesDiv>
-					<SmallArticlesContent>
-						<ArticlesContentDiv>
-							<ArticlesImgDiv>
-								<ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/IIot_header.jpg?width=628&name=IIot_header.jpg" />
-							</ArticlesImgDiv>
-							<ArticlesTopic>
-                Embracing the Industrial IoT to Advance High-Pressure Manufacturing
-								<ArticlesShortLine></ArticlesShortLine>
-							</ArticlesTopic>
-							<ArticlesContentDetails>The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?). <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
-						</ArticlesContentDiv>
-					</SmallArticlesContent>
-					<SmallArticlesContent>
-						<ArticlesContentDiv>
-							<ArticlesImgDiv>
-								<ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/Images%20Blog/Noise%20Levels_chart%20comparison.jpg?width=371&name=Noise%20Levels_chart%20comparison.jpg" />
-							</ArticlesImgDiv>
-							<ArticlesTopic>
-                A Quiet Change in Compression Technology has Arrived
-								<ArticlesShortLine></ArticlesShortLine>
-							</ArticlesTopic>
-							<ArticlesContentDetails>When it comes to workplace noise levels, how loud is too loud? Ear-damaging workplace noise is a widespread problem that impacts employees in many lines of work. According to the Occupational Safety and Health Organization (OSHA), at least 22 million workers are exposed to potentially damaging noise every year. <a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank" rel="noopener noreferrer"> Read more >> </a>
-							</ArticlesContentDetails>
-						</ArticlesContentDiv>
-					</SmallArticlesContent>
-					<SmallArticlesContent>
-						<ArticlesContentDiv>
-							<ArticlesImgDiv>
-								<ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/Images%20Blog/4%20Steps%20Planning_High%20Pressure%20System_resize.png?width=608&name=4%20Steps%20Planning_High%20Pressure%20System_resize.png" />
-							</ArticlesImgDiv>
-							<ArticlesTopic>
-                4 Steps for Planning Your High-Pressure Gas & Liquid System Purchase
-								<ArticlesShortLine></ArticlesShortLine>
-							</ArticlesTopic>
-							<ArticlesContentDetails>Designing a system for delivering highly pressurized gas and liquids requires engineers to successfully meet the challenge of achieving necessary flow input while mitigating potentially dangerous flow failure situations. The unique needs of the application the system is being used in must be carefully considered prior to the purchase of system equipment. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank" rel="noopener noreferrer"> Read more >> </a>
-							</ArticlesContentDetails>
-						</ArticlesContentDiv>
-					</SmallArticlesContent>
-				</ArticlesDiv>
+                <SectionDiv>
+                    <ProductsTitle>Articles & Videos</ProductsTitle>
+                    <BorderBottom></BorderBottom>
+                </SectionDiv>
+                <ArticlesDiv>
+                    <SmallArticlesContent>
+                        <ArticlesContentDiv>
+                            <ArticlesImgDiv>
+                                <ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/IIot_header.jpg?width=628&name=IIot_header.jpg" />
+                            </ArticlesImgDiv>
+                            <ArticlesTopic>
+                                Embracing the Industrial IoT to Advance High-Pressure Manufacturing
+                                <ArticlesShortLine></ArticlesShortLine>
+                            </ArticlesTopic>
+                            <ArticlesContentDetails>The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?). <a href="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
+                        </ArticlesContentDiv>
+                    </SmallArticlesContent>
+                    <SmallArticlesContent>
+                        <ArticlesContentDiv>
+                            <ArticlesImgDiv>
+                                <ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/Images%20Blog/Noise%20Levels_chart%20comparison.jpg?width=371&name=Noise%20Levels_chart%20comparison.jpg" />
+                            </ArticlesImgDiv>
+                            <ArticlesTopic>
+                                A Quiet Change in Compression Technology has Arrived
+                                <ArticlesShortLine></ArticlesShortLine>
+                            </ArticlesTopic>
+                            <ArticlesContentDetails>When it comes to workplace noise levels, how loud is too loud? Ear-damaging workplace noise is a widespread problem that impacts employees in many lines of work. According to the Occupational Safety and Health Organization (OSHA), at least 22 million workers are exposed to potentially damaging noise every year. <a href="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived" target="_blank" rel="noopener noreferrer"> Read more >> </a>
+                            </ArticlesContentDetails>
+                        </ArticlesContentDiv>
+                    </SmallArticlesContent>
+                    <SmallArticlesContent>
+                        <ArticlesContentDiv>
+                            <ArticlesImgDiv>
+                                <ArticlesPicture src="https://solutions.haskel.com/hs-fs/hubfs/Images%20Blog/4%20Steps%20Planning_High%20Pressure%20System_resize.png?width=608&name=4%20Steps%20Planning_High%20Pressure%20System_resize.png" />
+                            </ArticlesImgDiv>
+                            <ArticlesTopic>
+                                4 Steps for Planning Your High-Pressure Gas & Liquid System Purchase
+                                <ArticlesShortLine></ArticlesShortLine>
+                            </ArticlesTopic>
+                            <ArticlesContentDetails>Designing a system for delivering highly pressurized gas and liquids requires engineers to successfully meet the challenge of achieving necessary flow input while mitigating potentially dangerous flow failure situations. The unique needs of the application the system is being used in must be carefully considered prior to the purchase of system equipment. <a href="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase" target="_blank" rel="noopener noreferrer"> Read more >> </a>
+                            </ArticlesContentDetails>
+                        </ArticlesContentDiv>
+                    </SmallArticlesContent>
+                </ArticlesDiv>
 
-				{/*.............................. RELATED LINK ................................... */}
+                {/*.............................. RELATED LINK ................................... */}
 
-				<RelatedLinkDiv>
-					<SectionDiv>
-						<ProductsTitle>Related Links</ProductsTitle>
-						<BorderBottom></BorderBottom>
-					</SectionDiv>
-					<RelatedContainer>
-						<RelatedLinkCircle>
-							<LinkStyleDiv>
-								<LinkStyle href="http://www.haskel.com/" target="_blank" rel="noopener noreferrer">
-									<FontAwesomeDiv>
-										<FontAwesomeIcon icon='globe-americas' size='4x' />
-									</FontAwesomeDiv>
-                Haskel's US Website</LinkStyle>
-							</LinkStyleDiv>
-						</RelatedLinkCircle>
-						<RelatedLinkCircle>
-							<LinkStyleDiv>
-								<LinkStyle href="#" target="_blank" rel="noopener noreferrer">
-									<FontAwesomeDiv>
-										<FontAwesomeIcon icon='shopping-cart' size='4x' />
-									</FontAwesomeDiv>
-                Shop Haskel products</LinkStyle>
-							</LinkStyleDiv>
-						</RelatedLinkCircle>
-						<RelatedLinkCircle>
-							<LinkStyleDiv>
-								<LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank" rel="noopener noreferrer">
-									<FontAwesomeDiv>
-										<FontAwesomeIcon icon='address-book' size='4x' />
-									</FontAwesomeDiv>
-                Haskel Catalogs</LinkStyle>
-							</LinkStyleDiv>
-						</RelatedLinkCircle>
-					</RelatedContainer>
-				</RelatedLinkDiv>
-			</BrandDetailsContainer>
-		</Container >
-	)
+                <RelatedLinkDiv>
+                    <SectionDiv>
+                        <ProductsTitle>Related Links</ProductsTitle>
+                        <BorderBottom></BorderBottom>
+                    </SectionDiv>
+                    <RelatedContainer>
+                        <RelatedLinkCircle>
+                            <LinkStyleDiv>
+                                <LinkStyle href="http://www.haskel.com/" target="_blank" rel="noopener noreferrer">
+                                    <FontAwesomeDiv>
+                                        <FontAwesomeIcon icon='globe-americas' size='4x' />
+                                    </FontAwesomeDiv>
+                                    Haskel's US Website
+                                </LinkStyle>
+                            </LinkStyleDiv>
+                        </RelatedLinkCircle>
+                        <RelatedLinkCircle>
+                            <LinkStyleDiv>
+                                <LinkStyle href="#" target="_blank" rel="noopener noreferrer">
+                                    <FontAwesomeDiv>
+                                        <FontAwesomeIcon icon='shopping-cart' size='4x' />
+                                    </FontAwesomeDiv>
+                                    Shop Haskel products
+                                </LinkStyle>
+                            </LinkStyleDiv>
+                        </RelatedLinkCircle>
+                        <RelatedLinkCircle>
+                            <LinkStyleDiv>
+                                <LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Eaton" target="_blank" rel="noopener noreferrer">
+                                    <FontAwesomeDiv>
+                                        <FontAwesomeIcon icon='address-book' size='4x' />
+                                    </FontAwesomeDiv>
+                                    Haskel Catalogs
+                                </LinkStyle>
+                            </LinkStyleDiv>
+                        </RelatedLinkCircle>
+                    </RelatedContainer>
+                </RelatedLinkDiv>
+            </BrandDetailsContainer>
+        </Container >
+    )
 }

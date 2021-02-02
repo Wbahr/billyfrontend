@@ -92,13 +92,13 @@ const Button = styled.div`
 
 
 export default () => (
-	<SkeletonDiv>
-		<Image />
-		<QuickLook />
-		<Title />
-		<Detail1 />
-		<Detail2 />
-		<Detail3 />
-		<Button />
-	</SkeletonDiv>
+    <SkeletonDiv>
+        <Image />
+        <QuickLook />
+        <Title />
+        <Detail1 />
+        <Detail2 />
+        <Detail3 />
+        <Button />
+    </SkeletonDiv>
 )

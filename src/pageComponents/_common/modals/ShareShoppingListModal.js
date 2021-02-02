@@ -1,25 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Modal from '../modal'
 import styled from 'styled-components'
-import Context from '../../../config/context'
+import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
-import Select from "react-select";
+import Select from 'react-select'
 
 const DivRow = styled.div`
   display: flex;
   width: 90%;
   justify-content: space-between;
-`
-
-const DivItem = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Label = styled.label`
-  margin: 0;
-  font-size: 12px;
-  font-style: italic;
 `
 
 const Container = styled.div`
@@ -44,57 +33,57 @@ const ErrorSpan = styled.div`
 	text-align: center;
 `
 
-export default function ShareShoppingListModal({open, hide, shoppingList}) {
-	const context = useContext(Context)
-	const [selectedUsers, setSelectedUsers] = useState([])
-	const [error, setError] = useState('')
+export default function ShareShoppingListModal({ open, hide, shoppingList }) {
+    const context = useContext(Context)
+    const [selectedUsers, setSelectedUsers] = useState([])
+    const [error, setError] = useState('')
 	
-	const loading = context.upsertShoppingListState?.loading
+    const loading = context.upsertShoppingListState?.loading
 	
-	const mapUserOptions = ({firstName, lastName, contactId}) => ({label: `${firstName} ${lastName || ''}`, value: contactId})
+    const mapUserOptions = ({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId })
 	
-	const userOptions = context.webUserContacts
-		.filter(user => shoppingList.contactIdOwner !== user.contactId)
-		.map(mapUserOptions)
+    const userOptions = context.webUserContacts
+        .filter(user => shoppingList.contactIdOwner !== user.contactId)
+        .map(mapUserOptions)
 	
-	useEffect(() => {
-		if (shoppingList.editors) setSelectedUsers(shoppingList.editors.map(mapUserOptions))
-	}, [shoppingList])
+    useEffect(() => {
+        if (shoppingList.editors) setSelectedUsers(shoppingList.editors.map(mapUserOptions))
+    }, [shoppingList])
 	
-	const handleClose = () => {
-		setError('')
-		hide()
-	}
+    const handleClose = () => {
+        setError('')
+        hide()
+    }
 	
-	const handleShare = () => {
-		if (!context.userInfo.contactId && !selectedUsers.length) {
-			setError('Please select a user')
-		} else {
-			context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({contactId: u.value})) })
-				.then(() => hide())
-		}
-	}
+    const handleShare = () => {
+        if (!context.userInfo.contactId && !selectedUsers.length) {
+            setError('Please select a user')
+        } else {
+            context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({ contactId: u.value })) })
+                .then(() => hide())
+        }
+    }
 	
-	return (
-		<Modal open={open} onClose={handleClose} contentStyle={{'maxWidth': '350px', 'borderRadius': '3px'}}>
-			<Container>
-				<div>
-					<p>Select users to access list: {shoppingList.name}</p>
-					<Select
-						isMulti
-						value={selectedUsers}
-						onChange={setSelectedUsers}
-						options={userOptions}
-						placeholder='Search user'
-						width={225}
-					/>
-				</div>
-				<ErrorSpan>{error}</ErrorSpan>
-				<DivRow>
-					<ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-					<ButtonRed disabled={loading} onClick={handleShare}>{loading ? 'Sharing...' : 'Share'}</ButtonRed>
-				</DivRow>
-			</Container>
-		</Modal>
-	)
+    return (
+        <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
+            <Container>
+                <div>
+                    <p>Select users to access list: {shoppingList.name}</p>
+                    <Select
+                        isMulti
+                        value={selectedUsers}
+                        onChange={setSelectedUsers}
+                        options={userOptions}
+                        placeholder='Search user'
+                        width={225}
+                    />
+                </div>
+                <ErrorSpan>{error}</ErrorSpan>
+                <DivRow>
+                    <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
+                    <ButtonRed disabled={loading} onClick={handleShare}>{loading ? 'Sharing...' : 'Share'}</ButtonRed>
+                </DivRow>
+            </Container>
+        </Modal>
+    )
 }

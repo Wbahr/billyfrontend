@@ -6,12 +6,12 @@ import {
     GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
 } from './providerGQL'
 import {
-	getRidOf__typename,
-	logout,
-	distinct,
-	useDebounceValue
+    getRidOf__typename,
+    logout,
+    distinct,
+    useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
-import {GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL} from "./gqlQueries/gqlItemQueries";
+import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
 
 export default function Provider(props) {
     const didMountRef = useRef(false)
@@ -25,7 +25,7 @@ export default function Provider(props) {
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
         isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
-    } : null);
+    } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
     const [topAlert, setTopAlert] = useState({ show: false, message: '' })
@@ -41,32 +41,32 @@ export default function Provider(props) {
     const [shoppingLists, setShoppingLists] = useState([])
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
-  
+
     const invoiceBatchSize = 1000
-  
+
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             manageUserInfo('load-context')
             retrieveShoppingCart()
         }
-			  didMountRef.current = true
+        didMountRef.current = true
     })
-  
+
     useEffect(() => {
-			userInfo?.isAirlineUser && getPriceReasons()
+        userInfo?.isAirlineUser && getPriceReasons()
     }, [userInfo])
-  
+
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-          setEditPriceReasonCodes(data.priceReasons.map(({__typename, ...rest}) => rest))
+            setEditPriceReasonCodes(data.priceReasons.map(({ __typename, ...rest }) => rest))
         }
     })
 
     const [startImpersonation] = useLazyQuery(BEGIN_IMPERSONATION, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            let requestData = data.impersonationBegin
+            const requestData = data.impersonationBegin
             if (requestData.success) {
                 const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
@@ -81,7 +81,7 @@ export default function Provider(props) {
 
     const [cancelImpersonation] = useLazyQuery(END_IMPERSONATION, {
         fetchPolicy: 'no-cache',
-        onCompleted: ({impersonationEnd: requestData}) => {
+        onCompleted: ({ impersonationEnd: requestData }) => {
             if (requestData.success) {
                 const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
@@ -98,15 +98,15 @@ export default function Provider(props) {
             console.log('got taxes ->', data)
         }
     })
-  
+
     const updateTaxes = (zipcode, shipToId) => {
-			updateTaxesApiCall({
-        variables: {
-          anonymousCartToken: localStorage.getItem('shoppingCartToken'),
-          shipToId: shipToId,
-          zipcode: zipcode
-        }
-      })
+        updateTaxesApiCall({
+            variables: {
+                anonymousCartToken: localStorage.getItem('shoppingCartToken'),
+                shipToId: shipToId,
+                zipcode: zipcode
+            }
+        })
     }
 
     const [getOrders, getOrdersState] = useLazyQuery(GET_ORDERS, {
@@ -120,7 +120,7 @@ export default function Provider(props) {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setInvoiceCache([...invoiceCache, ... data.accountInvoices])
-            if ( data.accountInvoices.length >= invoiceBatchSize) {
+            if (data.accountInvoices.length >= invoiceBatchSize) {
                 getInvoices()
             } else {
                 invoicesLoaded.current = true
@@ -148,18 +148,18 @@ export default function Provider(props) {
             setItemAvailabilities([...data.itemAvailability, ...itemAvailabilities].filter(distinct))
         }
     })
-	
+
     const [handleGetItemDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
-			  fetchPolicy: 'no-cache',
+        fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemDetails([...data.itemDetailsBatch, ...itemDetails].filter(distinct))
         }
     })
-  
+
     const [handleGetCustomerPartNumbers] = useLazyQuery(GET_ITEM_CUSTOMER_PART_NUMBERS, {
-			  fetchPolicy: 'no-cache',
+        fetchPolicy: 'no-cache',
         onCompleted: data => {
-					setCustomerPartNumbers([...data.customerPartNumbersBatch, ...customerPartNumbers].filter(distinct))
+            setCustomerPartNumbers([...data.customerPartNumbersBatch, ...customerPartNumbers].filter(distinct))
         }
     })
 
@@ -172,27 +172,27 @@ export default function Provider(props) {
 
     function getItemPrices(items) {
         handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno, quantity }) => ({
-                invMastUid: invMastUid || frecno,
-                quantity: quantity !== null && quantity !== undefined ? quantity : 1
-        }))} })
+            invMastUid: invMastUid || frecno,
+            quantity: quantity !== null && quantity !== undefined ? quantity : 1
+        })) } })
     }
 
     function getItemAvailabilities(items) {
         handleGetItemAvailabilities({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-    
+
     function getItemDetails(items) {
-        handleGetItemDetails({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetItemDetails({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-    
+
     function getCustomerPartNumbers(items) {
-		handleGetCustomerPartNumbers({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetCustomerPartNumbers({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
 
     function getSourceLocations(items) {
-        handleGetSourceLocations({variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetSourceLocations({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
     }
-    
+
     const addCustomerPartNumber = newCustomerPartNumber => {
         setCustomerPartNumbers([...customerPartNumbers, newCustomerPartNumber])
     }
@@ -206,7 +206,7 @@ export default function Provider(props) {
 
     const [handleUpdateShoppingList, upsertShoppingListState] = useMutation(UPDATE_SHOPPING_LISTS, {
         fetchPolicy: 'no-cache',
-        onCompleted: ({shoppingListEdit}) => {
+        onCompleted: ({ shoppingListEdit }) => {
             const distinctShoppingLists = (list, idx, self) => self.findIndex(l => l.id === list.id) === idx
             if (shoppingListEdit.deleted) {
                 const foundListIdx = shoppingLists.findIndex(list => list.id === shoppingListEdit.id)
@@ -218,13 +218,13 @@ export default function Provider(props) {
             } else {
                 setShoppingLists([getRidOf__typename(shoppingListEdit), ...shoppingLists].filter(distinctShoppingLists))
             }
-            return Promise.resolve(data)
+            return Promise.resolve()
         }
     })
 
     const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
         const items = shoppingList.items.map(({ itemCode, frecno, invMastUid, quantity, customerPartNumberId }) => (
-          { itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }
+            { itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }
         ))
         return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
     }
@@ -238,63 +238,63 @@ export default function Provider(props) {
 
     function manageUserInfo(action, userInfo, impersonationInfo) {
         let currentUserType
-        let userInfoStorage = localStorage.getItem('userInfo')
-        let imperInfoStorage = localStorage.getItem('imperInfo')
+        const userInfoStorage = localStorage.getItem('userInfo')
+        const imperInfoStorage = localStorage.getItem('imperInfo')
         switch (action) {
-            case 'load-context':
-                handleSetUserInfo(JSON.parse(userInfoStorage))
-                setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
-                if (!userInfoStorage) {
-                    currentUserType = 'Anon'
-                } else {
-                    currentUserType = JSON.parse(userInfoStorage).role
-                }
-                break
-            case 'begin-impersonation':
-                localStorage.setItem('userInfo', JSON.stringify(userInfo))
-                localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
-                localStorage.removeItem('shoppingCartToken')
-                handleSetUserInfo(userInfo)
-                if (userType.current === 'Impersonator') { //User switched companies they are impersonating
-                    props.history.push('/')
-                }
-                setOrdersCache([])
-                setInvoiceCache([])
-                setInvoiceBatchNumber(0)
-                setPurchaseHistory([])
-                setShoppingLists([])
-                setWebUserContacts([])
-                setItemPrices([])
-                setImpersonatedCompanyInfo(impersonationInfo)
-                currentUserType = 'Impersonator'
-                break
-            case 'end-impersonation':
-                localStorage.setItem('userInfo', JSON.stringify(userInfo))
-                localStorage.removeItem('imperInfo')
-                handleSetUserInfo(userInfo)
-                setImpersonatedCompanyInfo(null)
-                currentUserType = 'AirlineEmployee'
-                setInvoiceCache([])
-                setInvoiceBatchNumber(0)
-                setOrdersCache([])
-                setPurchaseHistory([])
-							  setItemPrices([])
-                break
-            case 'login':
-                handleSetUserInfo(userInfo)
-                currentUserType = userInfo.role
-                break
-            case 'logout':
-                logout()
-                handleSetUserInfo(null)
-                setImpersonatedCompanyInfo(null)
+        case 'load-context':
+            handleSetUserInfo(JSON.parse(userInfoStorage))
+            setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
+            if (!userInfoStorage) {
                 currentUserType = 'Anon'
-                setOrdersCache([])
-                setInvoiceCache([])
-                setPurchaseHistory([])
-                setInvoiceBatchNumber(0)
-							  setItemPrices([])
-                break
+            } else {
+                currentUserType = JSON.parse(userInfoStorage).role
+            }
+            break
+        case 'begin-impersonation':
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
+            localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
+            localStorage.removeItem('shoppingCartToken')
+            handleSetUserInfo(userInfo)
+            if (userType.current === 'Impersonator') { //User switched companies they are impersonating
+                props.history.push('/')
+            }
+            setOrdersCache([])
+            setInvoiceCache([])
+            setInvoiceBatchNumber(0)
+            setPurchaseHistory([])
+            setShoppingLists([])
+            setWebUserContacts([])
+            setItemPrices([])
+            setImpersonatedCompanyInfo(impersonationInfo)
+            currentUserType = 'Impersonator'
+            break
+        case 'end-impersonation':
+            localStorage.setItem('userInfo', JSON.stringify(userInfo))
+            localStorage.removeItem('imperInfo')
+            handleSetUserInfo(userInfo)
+            setImpersonatedCompanyInfo(null)
+            currentUserType = 'AirlineEmployee'
+            setInvoiceCache([])
+            setInvoiceBatchNumber(0)
+            setOrdersCache([])
+            setPurchaseHistory([])
+            setItemPrices([])
+            break
+        case 'login':
+            handleSetUserInfo(userInfo)
+            currentUserType = userInfo.role
+            break
+        case 'logout':
+            logout()
+            handleSetUserInfo(null)
+            setImpersonatedCompanyInfo(null)
+            currentUserType = 'Anon'
+            setOrdersCache([])
+            setInvoiceCache([])
+            setPurchaseHistory([])
+            setInvoiceBatchNumber(0)
+            setItemPrices([])
+            break
         }
         setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
     }
@@ -305,7 +305,7 @@ export default function Provider(props) {
             message: ''
         })
     }
-    
+
     function showTopAlert(message) {
         setTopAlert({ show: true, message })
     }
@@ -317,61 +317,61 @@ export default function Provider(props) {
             retrieveShoppingCart('retrieve')
         }
         manageUserInfo('login', userInfo)
-        let drift = drift || null;
+        const drift = window.drift || null
         if (drift && userInfo.role === 'AirlineEmployee') {
-            drift?.api?.widget?.hide();
+            drift?.api?.widget?.hide()
         }
         getOrders()
-			  showTopAlert('You have been successfully logged in.')
+        showTopAlert('You have been successfully logged in.')
         window.setTimeout(removeTopAlert, 3000)
     }
 
     function logoutUser() {
-        if (drift) { drift.api.widget.show(); }
+        if (window.drift) window.drift.api.widget.show()
         manageUserInfo('logout')
         props.history.push('/')
         emptyCart()
         showTopAlert('You have been logged out.')
         window.setTimeout(removeTopAlert, 3500)
     }
-    
+
     const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
         fetchPolicy: 'no-cache',
-        onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes }}) => {
+        onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes } }) => {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
-                const lastCartItems = lastShoppingCartPayload.current;
-                
+                const lastCartItems = lastShoppingCartPayload.current
+
                 const shouldUpdateState = shoppingCart === null || !lastCartItems
-                  || (cartItems.length === lastCartItems.length
-                  && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
-              
+          || (cartItems.length === lastCartItems.length
+            && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
+
                 if (shouldUpdateState) {
-									  localStorage.setItem('shoppingCartToken', token)
-                    setShoppingCart(cartItems.map(({__typename, ...rest}) => rest))
-									  setOrderNotes(orderNotes)
-								}
+                    localStorage.setItem('shoppingCartToken', token)
+                    setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
+                    setOrderNotes(orderNotes)
+                }
             }
             setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
     })
-	
+
     const updateShoppingCart = cartItems => {
-      setShoppingCart(cartItems)
-      lastShoppingCartPayload.current = cartItems
-      updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
+        setShoppingCart(cartItems)
+        lastShoppingCartPayload.current = cartItems
+        updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
     }
-	
+
     const updateCartWrapper = cartInfo => {
-      const shoppingCartToken = localStorage.getItem('shoppingCartToken')
-      setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
-      shoppingCartApiCall({
-        variables: {
-          cartInfo: {
-            token: shoppingCartToken,
-            ...cartInfo
-          }
-        }
-      })
+        const shoppingCartToken = localStorage.getItem('shoppingCartToken')
+        setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
+        shoppingCartApiCall({
+            variables: {
+                cartInfo: {
+                    token: shoppingCartToken,
+                    ...cartInfo
+                }
+            }
+        })
     }
 
     const addItem = (item) => {
@@ -381,7 +381,7 @@ export default function Provider(props) {
     const addItems = (items) => {
         updateShoppingCart([...shoppingCart, ...items])
     }
-  
+
     function removeItem(itemLocation) {
         const newCart = shoppingCart?.slice() || []
         newCart.splice(itemLocation, 1)
@@ -410,36 +410,36 @@ export default function Provider(props) {
     }
 
     const updateCartItem = (index, newItem) => {
-	    updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
+        updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? newItem : item))
     }
-    
+
     const updateCartItemField = (index, field, value) => {
-	    updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
+        updateShoppingCart(shoppingCart?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
     }
-    
+
     const updateOrderNotes = newOrderNotes => {
         setOrderNotes(newOrderNotes)
-	    updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
+        updateCartWrapper({ actionString: 'update', orderNotes: newOrderNotes, cartItems: shoppingCart })
     }
-    
+
     const saveShoppingCart = () => {
         updateCartWrapper({ actionString: 'save' })
-	}
-    
+    }
+
     const retrieveShoppingCart = () => {
         lastShoppingCartPayload.current = null
         updateCartWrapper({ actionString: 'retrieve' })
-	}
-    
+    }
+
     const mergeShoppingCart = token => {
         lastShoppingCartPayload.current = null
         updateCartWrapper({ actionString: 'retrieve', token })
-	}
+    }
 
     const emptyCart = () => {
         updateShoppingCart(null)
-	}
-    
+    }
+
     function getInvoices() {
         if (invoiceBatchNumber === 0) {
             invoicesLoaded.current = false
@@ -505,8 +505,8 @@ export default function Provider(props) {
                 getWebUserContactsState,
                 webUserContacts,
                 editPriceReasonCodes,
-							  updateCartItem,
-							  updateCartItemField,
+                updateCartItem,
+                updateCartItemField,
                 updateShoppingCart
             }}
         >

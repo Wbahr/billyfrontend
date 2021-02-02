@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
-import {Elements} from '@stripe/react-stripe-js'
 import PaymentManagementPage from './accountPages/paymentManagement'
 import AccountManagementPage from './accountPages/accountManagement'
 import ShipToManagementPage from './accountPages/shiptoManagement'
@@ -19,56 +18,56 @@ const AccountInfoContainer = styled.div`
   margin: 0 auto;
 `
 
-export default function AccountDashboard({history}) {
-	const [pageComponent, setPageComponent] = useState()
-	let { page } = useParams()
+export default function AccountDashboard({ history }) {
+    const [pageComponent, setPageComponent] = useState()
+    const { page } = useParams()
 
-	const AccountPages = [
-		{
-			'label': 'Home',
-			'page': 'dashboard'
-		},
-		{
-			'label': 'User Settings',
-			'page': 'user-settings'
-		},
-		{
-			'label': 'Shipping',
-			'page': 'shipping-preferences'
-		},
-		{
-			'label': 'Billing',
-			'page': 'payment-preferences'
-		},
-		{
-			'label': 'Shopping Lists',
-			'page': 'shopping-lists'
-		}
-	]
-	useEffect(() => {
-		if(page === 'dashboard'){
-			setPageComponent(<AccountManagementPage history={history}/>)
-		} else if (page === 'user-settings'){
-			setPageComponent(<UserSettingsPage history={history}/>)
-		} else if (page === 'shipping-preferences'){
-			setPageComponent(<ShipToManagementPage/>)
-		} else if (page === 'payment-preferences'){
-			setPageComponent(<PaymentManagementPage/>)
-		} else if (page === 'shopping-lists'){
-			setPageComponent(<ShoppingListManagementPage/>)
-		}
-	}, [page])
+    const AccountPages = [
+        {
+            label: 'Home',
+            page: 'dashboard'
+        },
+        {
+            label: 'User Settings',
+            page: 'user-settings'
+        },
+        {
+            label: 'Shipping',
+            page: 'shipping-preferences'
+        },
+        {
+            label: 'Billing',
+            page: 'payment-preferences'
+        },
+        {
+            label: 'Shopping Lists',
+            page: 'shopping-lists'
+        }
+    ]
+    useEffect(() => {
+        if (page === 'dashboard'){
+            setPageComponent(<AccountManagementPage history={history}/>)
+        } else if (page === 'user-settings'){
+            setPageComponent(<UserSettingsPage history={history}/>)
+        } else if (page === 'shipping-preferences'){
+            setPageComponent(<ShipToManagementPage/>)
+        } else if (page === 'payment-preferences'){
+            setPageComponent(<PaymentManagementPage/>)
+        } else if (page === 'shopping-lists'){
+            setPageComponent(<ShoppingListManagementPage/>)
+        }
+    }, [page])
 
-	return(
-		<div>
-			<MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
-			<AccountInfoContainer>  
-				{pageComponent}      
-			</AccountInfoContainer>
-		</div>
-	)
+    return (
+        <div>
+            <MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
+            <AccountInfoContainer>  
+                {pageComponent}      
+            </AccountInfoContainer>
+        </div>
+    )
 }
 
 AccountDashboard.propTypes = {
-	history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired
 }

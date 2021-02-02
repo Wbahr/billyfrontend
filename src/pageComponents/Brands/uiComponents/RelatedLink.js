@@ -42,20 +42,21 @@ const FontAwesomeDiv = styled.div`
   }
 `
 export default function RelatedLink(props) {
-	const {
-		href,
-		icon,
-		text,
-	} = props
-	return (
-		<RelatedLinkCircle>
-			<LinkStyleDiv>
-				<LinkStyle href={href} target="_blank" rel="noopener noreferrer">
-					<FontAwesomeDiv>
-						<FontAwesomeIcon icon={icon} size='4x' />
-					</FontAwesomeDiv>
-					{text}</LinkStyle>
-			</LinkStyleDiv>
-		</RelatedLinkCircle>
-	)
+    const {
+        href,
+        icon,
+        text,
+    } = props
+    return (
+        <RelatedLinkCircle>
+            <LinkStyleDiv>
+                <LinkStyle href={href} target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeDiv>
+                        <FontAwesomeIcon icon={icon} size='4x' />
+                    </FontAwesomeDiv>
+                    {text}
+                </LinkStyle>
+            </LinkStyleDiv>
+        </RelatedLinkCircle>
+    )
 }

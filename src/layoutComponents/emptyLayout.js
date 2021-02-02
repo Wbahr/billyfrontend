@@ -9,12 +9,12 @@ const MainScreenContainer = styled.div`
 `
 
 export default function EmptyLayout(props) {
-	return(
-		<ThemeProvider theme={airlineRedTheme}>
-			<MainScreenContainer>
-				{props.children}
-			</MainScreenContainer>
-		</ThemeProvider>
-	)
+    return (
+        <ThemeProvider theme={airlineRedTheme}>
+            <MainScreenContainer>
+                {props.children}
+            </MainScreenContainer>
+        </ThemeProvider>
+    )
 }
 

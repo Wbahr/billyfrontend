@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import { FormikFormGroup, FormikFormContainer, FormikFormContainerColumnMajor, FormikFormFieldContainer } from 'styles/formikForm';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom'
+import { FormikFormGroup } from 'styles/formikForm'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
 const DivContainer = styled.div`
@@ -23,8 +23,9 @@ export default function Summary() {
                 <DivInner>
                     <p>
                         Thank you for registering for an online account at Airline Hydraulics. We have received 
-                        your submission and will be reviewing it shortly. <b>We will notify you via email once your account has 
-                        been approved and you are able to log into your account.</b> You can expect to hear back from us in 
+                        your submission and will be reviewing it shortly.
+                        <b> We will notify you via email once your account has been approved and you are able to log into your account.
+                        </b> You can expect to hear back from us in 
                         regards to your customer registration within 1 business day.
                     </p>
                     <p>
@@ -39,5 +40,5 @@ export default function Summary() {
                 </DivInner>
             </DivContainer>
         </FormikFormGroup>
-    );
+    )
 }

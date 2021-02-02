@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-
 
 const SmallArticlesContent = styled.div`
   display: flex
@@ -46,28 +43,26 @@ const ArticlesContentDetails = styled.p`
 const A = styled.a`
 `
 export default function Articles(props) {
-	const {
-		text,
-		src,
-		detail,
-		Link,
-	} = props
+    const {
+        text,
+        src,
+        detail,
+        Link,
+    } = props
 
-	return (
-
-		<SmallArticlesContent>
-			<ArticlesContentDiv>
-				<ArticlesImgDiv>
-					<ArticlesPicture src={src} />
-				</ArticlesImgDiv>
-				<ArticlesTopic>
-					{text}
-					<ArticlesShortLine></ArticlesShortLine>
-				</ArticlesTopic>
-				<ArticlesContentDetails>{detail}</ArticlesContentDetails>
-				<A href={Link}>Read More >></A>
-			</ArticlesContentDiv>
-		</SmallArticlesContent>
-
-	)
+    return (
+        <SmallArticlesContent>
+            <ArticlesContentDiv>
+                <ArticlesImgDiv>
+                    <ArticlesPicture src={src} />
+                </ArticlesImgDiv>
+                <ArticlesTopic>
+                    {text}
+                    <ArticlesShortLine></ArticlesShortLine>
+                </ArticlesTopic>
+                <ArticlesContentDetails>{detail}</ArticlesContentDetails>
+                <A href={Link}>Read More >></A>
+            </ArticlesContentDiv>
+        </SmallArticlesContent>
+    )
 }

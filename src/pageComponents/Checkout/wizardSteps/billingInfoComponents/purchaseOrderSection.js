@@ -4,16 +4,7 @@ import FormikInput from '../../../_common/formik/input_v2'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import SelectField from '../../../_common/formik/select'
 import styled from 'styled-components'
-import Context from '../../../../config/context';
-import { defaultBilling } from "../../helpers";
-
-const StyledCheckbox = styled.input`
-	width: 15px;
-	height: 15px;
-	cursor: pointer;
-	padding-right: 18px;
-	margin: auto 0;
-`
+import Context from '../../../../setup/context'
 
 const Row = styled.div`
 	display: flex;
@@ -25,29 +16,29 @@ const Label = styled.p`
 `
 
 export default function PurchaseOrderSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props;
-    const context = useContext(Context);
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
+    const context = useContext(Context)
 
     useEffect(() => {
         if (billingInfo) {
             if (values.contact.firstName && !values.billing.firstName) {
-                values.billing.firstName = values.contact.firstName;
+                values.billing.firstName = values.contact.firstName
             }
             if (values.contact.lastName && !values.billing.lastName) {
-                values.billing.lastName = values.contact.lastName;
+                values.billing.lastName = values.contact.lastName
             }
             if (values.contact.email && !values.billing.email) {
-                values.billing.email = values.contact.email;
+                values.billing.email = values.contact.email
             }
             if (values.contact.phone && !values.billing.phone) {
-                values.billing.phone = values.contact.phone;
+                values.billing.phone = values.contact.phone
             }
 
             setFieldValue('billing', {
                 ...values.billing
-            });
+            })
         }
-    }, []);
+    }, [])
     /* Note: we don't show a "same as shipping" on this screen, because the customer has to use
     the accounting-approved address when paying by PO */
     return (

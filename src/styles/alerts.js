@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationTriangle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import React, { useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExclamationTriangle, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import React from 'react'
 
 export const Alert = styled.div`
   border-radius: 2px;
@@ -23,24 +22,24 @@ export const InfoAlert = styled(Alert)`
 `
 
 //A message box area for forms that displays a message, no icon
-export function ShowAlert({message}) {
-  return (
-    <Alert>{message}</Alert>
-  );
+export function ShowAlert({ message }) {
+    return (
+        <Alert>{message}</Alert>
+    )
 }
 
 //A message box area for forms that displays an informational alert
-export function ShowInfoAlert({message}) {
-  return (
-    <InfoAlert><FontAwesomeIcon icon={faInfoCircle} /> {message}</InfoAlert>
-  );
+export function ShowInfoAlert({ message }) {
+    return (
+        <InfoAlert><FontAwesomeIcon icon={faInfoCircle} /> {message}</InfoAlert>
+    )
 }
 
 //A message box area for forms that displays an error alert
-export function ShowErrorAlert({message}) {
-  return (
-    <ErrorAlert><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
-  );
+export function ShowErrorAlert({ message }) {
+    return (
+        <ErrorAlert><FontAwesomeIcon icon={faExclamationTriangle} /> {message}</ErrorAlert>
+    )
 }
 
 
