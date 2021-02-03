@@ -452,6 +452,22 @@ const industriesSubItems = [
 		to: '/pages/industries/life-sciences'
 	},
 	{
+		label: 'Industrial Machinery',
+		to: '/pages/industries/industrial-machinery'
+	},
+	{
+		label: 'Chemical & Water Processing',
+		to: '/pages/industries/chemical-and-water-processing'
+	},
+	{
+		label: 'Pulp & Paper',
+		to: '/pages/industries/pulp-and-paper'
+	},
+	{
+		label: 'Mining & Drilling',
+		to: '/pages/industries/mining-and-drilling'
+	},
+	{
 		label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
 		to: '/power-distribution-products-and-electrical-enclosures'
 	}
