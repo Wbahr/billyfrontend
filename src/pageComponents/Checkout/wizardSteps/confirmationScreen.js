@@ -102,7 +102,7 @@ export default function ConfirmationScreen(props) {
         isStepValid,
         validateForm
     } = props
-
+  
     useEffect(() => {
         validateForm() // this is the only page we want to validate on mount
     }, [])
@@ -171,7 +171,7 @@ export default function ConfirmationScreen(props) {
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
-
+  
     return (
         <div>
             {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
@@ -233,10 +233,8 @@ export default function ConfirmationScreen(props) {
                             <P>Payment Method:</P>
                             <p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
                         </DivTextRow>
-                        {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && (
-                            <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>
-                        )}
-
+                        {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>}
+                    
                         {billing.paymentMethod === 'credit_card' && (
                             <DivTextRow>
                                 <P>Card Type:</P>

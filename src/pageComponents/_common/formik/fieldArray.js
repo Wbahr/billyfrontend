@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { FieldArray, ErrorMessage, useFormikContext } from 'formik'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { FormikFormFieldContainer, FormikFormField, FormikFormFieldError } from 'styles/formikForm'
-import { evaluate } from '../helpers/generalHelperFunctions'
 
 const ButtonContainer = styled.div`
   display flex;
@@ -39,15 +38,14 @@ const DivAddMore = styled.div`
 
 export default function FormikFieldArray({ name, label, addMore }){
     const { values } = useFormikContext()
-    const valueArray = evaluate(values, name)
-    const valueArrLen = valueArray?.length
+    const valueArray = values[name]
     return (
         <FieldArray
             name={name}
             render={arrayHelpers => (
                 <FormikFormFieldContainer>
                     <Label>{label}</Label>
-                    {valueArrLen > 0 ? (
+                    {valueArray && valueArray.length > 0 ? (
                         valueArray.map((elem, index) => (
                             <React.Fragment key={index}>
                                 <ButtonContainer>
@@ -57,8 +55,8 @@ export default function FormikFieldArray({ name, label, addMore }){
                                         <FontAwesomeIcon icon="minus-circle" color="grey"/>
                                     </div>
 
-                                    { ((index + 1) === valueArrLen && index < 4) && (
-                                        <div onClick={() => arrayHelpers.insert(valueArrLen, '')}>
+                                    { ((index + 1) === valueArray.length && index < 4) && (
+                                        <div onClick={() => arrayHelpers.insert(index, '')}>
                                             <FontAwesomeIcon icon="plus-circle" color="#328EFC"/>
                                         </div>
                                     )}
