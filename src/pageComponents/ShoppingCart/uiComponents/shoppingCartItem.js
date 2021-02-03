@@ -359,30 +359,24 @@ export default function ShoppingCartItem(props) {
                                     </DivItem>
                                     <DivItem>
                                         <DivItemPrice>
-                                            {
-                                                (cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && (
-                                                    <div>
-                                                        <EditPriceDiv>
-                                                            <NumberFormat
-                                                                value={cartItem.itemUnitPriceOverride || priceInfo.unitPrice}
-                                                                displayType={'text'}
-                                                                thousandSeparator={true}
-                                                                prefix={'$'}
-                                                                decimalScale={2}
-                                                                fixedDecimalScale
-                                                            />
-                                                            <span>{`/${unitOfMeasure}`}</span>
-                                                            {
-                                                                userInfo?.isAirlineUser && (
-                                                                    <EditPriceIcon onClick={handleShowEditPriceModal}>
-                                                                        <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-                                                                    </EditPriceIcon>
-                                                                )
-                                                            }
-                                                        </EditPriceDiv>
-                                                    </div>
-                                                )
-                                            }
+                                            <div>
+                                                <EditPriceDiv>
+                                                    <NumberFormat
+                                                        value={cartItem.itemUnitPriceOverride || priceInfo?.unitPrice || 0}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                        decimalScale={2}
+                                                        fixedDecimalScale
+                                                    />
+                                                    <span>{`/${unitOfMeasure}`}</span>
+                                                    {!!(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && userInfo?.isAirlineUser && (
+                                                        <EditPriceIcon onClick={handleShowEditPriceModal}>
+                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+                                                        </EditPriceIcon>
+                                                    )}
+                                                </EditPriceDiv>
+                                            </div>
                                             {userInfo?.isAirlineUser && (
                                                 <>
                                                     <div style={{ display: 'flex', fontSize: '0.85rem' }}>
