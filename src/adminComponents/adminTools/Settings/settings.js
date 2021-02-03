@@ -73,7 +73,6 @@ export default function Settings() {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
             setSettingsData(result.appSettings)
-            console.log(result.appSettings)
         }
     })
 

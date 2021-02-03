@@ -57,11 +57,11 @@ export default function QualityPolicy() {
                 <Col>
                     <DetailDiv>
                         <P>Airline Hydraulics Corporation is committed to maintain a high level of customer satisfaction. We will achieve this goal through on-time delivery of high quality products and services, while promoting a continuous improvement environment supported by our Quality Program. We will assure consistent compliance with this policy through frequent communication and performance measurement.</P>
-                        <Certification href="#">Click to view our ISO 9001:2015 Certification</Certification>
+                        <Certification href="https://airlinemedia.airlinehyd.com/Static_pages/about/quality-policy/Airline%27s_ISO%209001-2015_Certification_issue_8.pdf" target="_blank">Click to view our ISO 9001:2015 Certification</Certification>
                     </DetailDiv>
                     <InfoDiv>
                         <Info>Need More Information?</Info>
-                        <MoreInfo><ClickHere href="#">Click Here</ClickHere> to contact an Airline representative, or call us at<Span href="tel:+18009997378"> (800) 999-7378</Span></MoreInfo>
+                        <MoreInfo><ClickHere href="/contact-us">Click Here</ClickHere> to contact an Airline representative, or call us at<Span href="tel:+18009997378"> (800) 999-7378</Span></MoreInfo>
                     </InfoDiv>
                 </Col>
             </MainContainer>

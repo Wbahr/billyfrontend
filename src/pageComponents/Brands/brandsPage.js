@@ -10,7 +10,11 @@ const H1Div = styled.div`
 const H1 = styled.h1`
     display: flex;
     margin: auto;
-    font-size: 45px;
+		font-size: 38px;
+    text-transform: uppercase;
+    color: #333;
+    letter-spacing: 1px;
+    font-family: verdana;
 `
 const H4Div = styled.div`
     display: flex;
@@ -25,7 +29,7 @@ const H4 = styled.h4`
 `
 const BorderLine = styled.div`
     display: flex;
-    border-bottom: 2px solid #ebe7e7;
+    border-bottom: 3px solid #B51F2B;
     width: 10%;
     margin: auto;
     padding: 10px 0;

@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import otto from '../../../imgs/homepage/otto1.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Header from '../../../imgs/homepage/new desktop art-02-03 copy.png'
 
 const BannerContainer = styled.div`
 	display: flex;
@@ -80,27 +78,27 @@ export default () =>  (
     <BannerContainer>
         <Col>
             <LgBanner>
-                <LgImg src={Header} />
+                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/covid-banner.png" />
             </LgBanner>
-			
+
             <SmBanner>
                 <BannerDiv>
-                    <ImgDiv><Img src={otto} /></ImgDiv>
-					
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" /></ImgDiv>
+
                     <AboutAirline>
                         <H5>About Airline Hydraulics</H5>
                         We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
                     </AboutAirline>
                 </BannerDiv>
-				
+
                 <BannerDiv>
-                    <ImgDiv><Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/Esop.png" /></ImgDiv>
-					
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" /></ImgDiv>
+
                     <AboutAirline>
                         <P> We're 100% Employee Owned and proud of it! </P>
                     </AboutAirline>
                 </BannerDiv>
-				
+
                 <BannerDiv>
                     <ImgDiv><FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
                     <AboutAirline>
