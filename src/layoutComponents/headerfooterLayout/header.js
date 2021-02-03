@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
-import Context from '../../setup/context'
+import Context from '../../config/context'
 import ImpersonationSearch from './impersonationSearch'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
-import { GET_ROOT_CATEGORIES_HEADER } from 'setup/providerGQL'
+import { GET_ROOT_CATEGORIES_HEADER } from 'config/providerGQL'
 import { Button, Menu } from '@material-ui/core'
 import queryString from 'query-string'
 
@@ -424,16 +424,48 @@ const industriesSubItems = [
         to: '/pages/industries/covid-medical-structures'
     },
     {
-        label: 'All Brands',
-        to: '/brands'
+        label: 'Primary Metals',
+        to: '/pages/industries/primary-metals'
     },
     {
-        label: 'ABB',
-        to: '/brands/featured/abb'
+        label: 'Power Generation',
+        to: '/pages/industries/power-generation'
     },
     {
-        label: 'Aventics',
-        to: '/brands/featured/aventics'
+        label: 'Marine',
+        to: '/pages/industries/marine'
+    },
+    {
+        label: 'Food Beverage & Packaging',
+        to: '/pages/industries/food-beverage-and-packaging'
+    },
+    {
+        label: 'Plastics & Rubber',
+        to: '/pages/industries/plastics-and-rubber'
+    },
+    {
+        label: 'Construction and Off Road',
+        to: '/pages/industries/construction-and-off-road'
+    },
+    {
+        label: 'Life Sciences',
+        to: '/pages/industries/life-sciences'
+    },
+    {
+        label: 'Industrial Machinery',
+        to: '/pages/industries/industrial-machinery'
+    },
+    {
+        label: 'Chemical & Water Processing',
+        to: '/pages/industries/chemical-and-water-processing'
+    },
+    {
+        label: 'Pulp & Paper',
+        to: '/pages/industries/pulp-and-paper'
+    },
+    {
+        label: 'Mining & Drilling',
+        to: '/pages/industries/mining-and-drilling'
     },
     {
         label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
@@ -562,7 +594,7 @@ const aboutSubItems = [
     },
     {
         label: 'Careers',
-        to: '/about/careers',
+        to: '/pages/about/careers',
     },
     {
         label: 'Quality Policy',
@@ -612,7 +644,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Industries',
-        to: '/industries',
+        to: '/pages/industries',
         subItems: industriesSubItems
     },
     {
@@ -622,12 +654,12 @@ const headerTabs = categories => [
     },
     {
         label: 'Resources',
-        to: '/resources',
+        to: '/pages/resources',
         subItems: resourcesSubItems
     },
     {
         label: 'About',
-        to: '/about',
+        to: '/pages/about',
         subItems: aboutSubItems
     },
     {

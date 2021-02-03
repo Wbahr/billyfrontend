@@ -71,6 +71,7 @@ export default function ProductItems(props) {
         additionalText,
         title,
         reverse,
+        learnMoreLink,
     } = props
 	
 
@@ -78,13 +79,13 @@ export default function ProductItems(props) {
         <ProductsDiv reverse={reverse}>
             <ImgDiv><Img src={src} /></ImgDiv>
             <ProductsDetails>
-                <ProductsH4 href="#">{title}</ProductsH4>
+                <ProductsH4 href={learnMoreLink}>{title}</ProductsH4>
                 {text}
                 {!_.isNil(additionalText) &&
                     <ShowMoreBtn onClick={() => setShowText(!showText)}>{showText ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>}</ShowMoreBtn>
                 }
                 {showText && additionalText}
-                <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop for {title}</ShopProducts>
+                <ShopProducts href={learnMoreLink}><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Learn more and Shop for {title}</ShopProducts>
             </ProductsDetails>
         </ProductsDiv>
 

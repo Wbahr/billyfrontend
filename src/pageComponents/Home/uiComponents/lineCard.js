@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import SectionHeader from '../../_common/sectionHeader.js'
-import LineCard from '../../../imgs/homepage/LineCard.png'
-import Hydraulic from '../../../imgs/homepage/HydraulicCatalog.png'
-import Automation from '../../../imgs/homepage/AutomationCatalog.png'
 
 const LineCardWrapper = styled.div`
 		display: flex;
@@ -26,7 +23,7 @@ const NameDiv = styled.div`
 		text-align: center;
 		margin: 20px 0;
 		color: #5a5a5a;
-		&:hover{ 
+		&:hover{
 				color: #246696;
 		}
 `
@@ -48,19 +45,19 @@ export default function LineCards() {
             <LineCardWrapper>
                 <LineCardDiv>
                     <a href="/linecards">
-                        <ImgDiv><Img src={LineCard} /></ImgDiv>
+                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/line-card.png" /></ImgDiv>
                         <NameDiv><P>View all line cards</P></NameDiv>
                     </a>
                 </LineCardDiv>
                 <LineCardDiv>
                     <a href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulic_Preferred_Products_Catalog.pdf">
-                        <ImgDiv><Img src={Hydraulic} /></ImgDiv>
+                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/hydraulic-catalog.png" /></ImgDiv>
                         <NameDiv><P>Hydraulic Catalog</P></NameDiv>
                     </a>
                 </LineCardDiv>
                 <LineCardDiv>
                     <a href="//airlinemedia.airlinehyd.com/Literature/Airline_Preferred_Stock_Catalog.pdf">
-                        <ImgDiv><Img src={Automation} /></ImgDiv>
+                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/automation-catalog.png" /></ImgDiv>
                         <NameDiv><P>Automation Catalog</P></NameDiv>
                     </a>
                 </LineCardDiv>
