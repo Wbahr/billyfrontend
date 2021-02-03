@@ -22,11 +22,12 @@ const DivRow = styled.div`
   display: flex;
 //   width: 90%;
   justify-content: left;
+  margin: 0 auto;
 `
 
 const DivRowHeader = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   text-transform: uppercase;
   font-size: 32px;
   letter-spacing : 2px;
@@ -34,21 +35,28 @@ const DivRowHeader = styled.div`
   color: #333;
   margin-top: 40px;
 `
+const PageName = styled.h1`
+    text-align: center;
+`
 const DivBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
     margin: 0 auto;
-  flex-direction: column;
-  align-items: center;
+    flex-direction: column;
+    align-items: center;
 `
 const CrumbLink = styled(Link)`
-    
+    padding: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555555;
+    font-weight: bold;
 `
 
 const ShortBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
-    margin: 0 auto;
+    margin: 15px auto;
     padding: 5px
 `
 
@@ -56,6 +64,7 @@ const CrumbContainer = styled.div`
     font-size: 1rem;
     text-transform: none;
     letter-spacing : normal;
+    justify-content: flex-start;
 `
 
 const GET_STATIC_PAGE = gql`
@@ -116,9 +125,11 @@ function Crumbs({ currentPageName, primary, secondary, tertiary, baseUrl }) {
         tertiaryCrumb = <Crumb baseUrl={baseUrl} ancestor={tertiary}></Crumb>;
     }
     return (<>
-        <h1>{currentPageName}</h1>
+        <PageName>{currentPageName}
+        <ShortBorder />
+        </PageName>
         <CrumbContainer>
-            {primaryCrumb && <>&nbsp;&#8627;&nbsp;</> }
+            {primaryCrumb && <> &#9751;</> }
             {primaryCrumb}
             {secondaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
             {secondaryCrumb}
@@ -169,12 +180,11 @@ export default function StaticPage({ match }) {
     return (
         <Container>
             <DivRowHeader>
-                <Crumbs currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pageSecondaryAncestor} tertiary={pageTeritaryAncestor} baseUrl={match.path.split('/:')[0]} />
+                <Crumbs   currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pageSecondaryAncestor} tertiary={pageTeritaryAncestor} baseUrl={match.path.split('/:')[0]} />
             </DivRowHeader>
-            <ShortBorder />
             <DivRow>
                 {pageHtml}
-            </DivRow>
+            </DivRow>           
         </Container>
     )
 }
