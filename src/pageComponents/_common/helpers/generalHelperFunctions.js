@@ -96,7 +96,7 @@ export const logout = () => {
 
 export const useDidUpdateEffect = (create, deps) => { //Does not trigger on mount, only on successive re-renders
     const didMountRef = useRef(false)
-	
+
     useEffect(() => {
         if (didMountRef.current)
             create()
@@ -113,7 +113,7 @@ export function onWindowResize(callback) {
 export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => {
     return quantity > (availability || 0)
         ? (
-            (leadTimeDays || 0) 
+            (leadTimeDays || 0)
                 ? `Lead time ${availability?.leadTimeDays || 25} days`
                 : 'Call Airline Hydraulics Co. for lead time'
         )
@@ -122,12 +122,12 @@ export const getAvailabilityMessage = (quantity, availability, leadTimeDays) => 
 
 export const useDebounceValue = (value, time = 500) => {
     const [debouncedValue, setDebouncedValue] = useState(value)
-	
+
     useEffect(() => {
         const timeout = setTimeout(() => setDebouncedValue(value), time)
         return () => clearTimeout(timeout)
     }, [value, time])
-	
+
     return debouncedValue
 }
 
@@ -141,11 +141,13 @@ export const cleanSearchState = ({ searchState: { brands, attributes, parentCate
     }
 }
 
+export const evaluate = (object, key) => key.split('.').reduce((accum, curVal) => accum && accum[curVal], object)
+
 export function scrollHorizontal(element, change, duration) {
     const start = element.scrollLeft
     let currentTime = 0
     const increment = 20
-	
+
     const animateScroll = () => {
         currentTime += increment
         element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration)
