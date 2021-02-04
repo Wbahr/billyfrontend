@@ -13,7 +13,7 @@ import {
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
 
-export default function Provider(props) {
+export default function Provider({ history, children }) {
     const didMountRef = useRef(false)
     const invoicesLoaded = useRef(false)
     const lastShoppingCartPayload = useRef(null)
@@ -43,6 +43,11 @@ export default function Provider(props) {
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
 
     const invoiceBatchSize = 1000
+
+    const navAwayRoutes = ['/cart', '/checkout', '/create-quote']
+    const partialNavAwayRoutes = ['/account']
+    const currentPath = history.location.pathname
+    const resetOnImpersonate = navAwayRoutes.includes(currentPath) || partialNavAwayRoutes.some(route => currentPath.includes(route))
 
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -87,7 +92,7 @@ export default function Provider(props) {
                 localStorage.setItem('apiToken', token)
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
                 retrieveShoppingCart('retrieve')
-                props.history.push('/')
+                if (resetOnImpersonate) history.push('/')
             }
         }
     })
@@ -255,9 +260,7 @@ export default function Provider(props) {
             localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
             localStorage.removeItem('shoppingCartToken')
             handleSetUserInfo(userInfo)
-            if (userType.current === 'Impersonator') { //User switched companies they are impersonating
-                props.history.push('/')
-            }
+            if (resetOnImpersonate) history.push('/')
             setOrdersCache([])
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
@@ -327,9 +330,9 @@ export default function Provider(props) {
     }
 
     function logoutUser() {
-        if (window.drift) window.drift.api.widget.show()
+        if (window.drift?.api) window.drift.api.widget.show()
         manageUserInfo('logout')
-        props.history.push('/')
+        history.push('/')
         emptyCart()
         showTopAlert('You have been logged out.')
         window.setTimeout(removeTopAlert, 3500)
@@ -341,9 +344,10 @@ export default function Provider(props) {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
                 const lastCartItems = lastShoppingCartPayload.current
 
-                const shouldUpdateState = shoppingCart === null || !lastCartItems
-          || (cartItems.length === lastCartItems.length
-            && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
+                const cartsMatch = lastCartItems && cartItems.length === lastCartItems.length
+                    && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]?.frecno)
+
+                const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
@@ -355,10 +359,11 @@ export default function Provider(props) {
         }
     })
 
-    const updateShoppingCart = cartItems => {
+    const updateShoppingCart = (cartItems, notes=orderNotes) => {
         setShoppingCart(cartItems)
+        setOrderNotes(notes)
         lastShoppingCartPayload.current = cartItems
-        updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
+        updateCartWrapper({ actionString: 'update', orderNotes: notes, cartItems })
     }
 
     const updateCartWrapper = cartInfo => {
@@ -437,7 +442,7 @@ export default function Provider(props) {
     }
 
     const emptyCart = () => {
-        updateShoppingCart(null)
+        updateShoppingCart(null, null)
     }
 
     function getInvoices() {
@@ -510,7 +515,7 @@ export default function Provider(props) {
                 updateShoppingCart
             }}
         >
-            {props.children}
+            {children}
         </Context.Provider>
     )
 }
