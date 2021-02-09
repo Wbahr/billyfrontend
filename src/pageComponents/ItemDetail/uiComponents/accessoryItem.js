@@ -2,6 +2,9 @@ import React, { useState, useContext } from 'react'
 import Context from 'setup/context'
 import styled from 'styled-components'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import QuantityInput from 'pageComponents/_common/form/quantityInput'
+import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import { Detail1 as SkeletonDetail } from 'pageComponents/SearchResults/uiComponents/skeletonItem'
 
 const DivItemResultContainer = styled.div`
   display: flex;
@@ -155,10 +158,14 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
   
     const context = useContext(Context)
 
-    function handleSetQuantity({ target: { value } }){
-        if (/^\+?(0|[1-9]\d*)$/.test(value) || value === ''){
-            setQuantity(value)
-        }
+    const {
+        unitPrice,
+        unitOfMeasure,
+        unitSize,
+        roundType } = price || {}
+
+    const setQuantityHandler = (qty) => {
+        setQuantity(qty)
     }
 
     function handleAddToCart() {
@@ -214,13 +221,35 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                 <DivPartNumberRowSpread>
                     <Div>
                         Quantity:
-                        <InputQuantity value={quantity} onChange={handleSetQuantity}/>
+                        <QuantityInput 
+                            quantity={quantity}
+                            unitSize={unitSize}
+                            unitOfMeasure={unitOfMeasure}
+                            roundType={roundType}
+                            handleUpdate={setQuantityHandler}
+                            min='0'
+                            debounce
+                        />
+                        {
+                            (unitSize > 1) && (
+                                <AirlineChip style={{ marginLeft: '0.5rem' }}>
+                                    X {unitSize}
+                                </AirlineChip>
+                            )
+                        }
                     </Div>
-                    {
-                        price
-                            ? <Div><Pprice>${price?.unitPrice.toFixed(2)}</Pprice><P>/EA</P></Div> 
-                            : <ACall href="tel:+18009997378">Call for Price</ACall>
-                    }
+                    {unitPrice ? (
+                        <Div>
+                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                            <P>/{unitOfMeasure}</P>
+                        </Div>
+                    ) : !price ? (
+                        <Div>
+                            <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
+                        </Div>
+                    ) : (
+                        <ACall href="tel:+18009997378">Call for Price</ACall>
+                    )}
                 </DivPartNumberRowSpread>
 				
                 <DivSpace>
