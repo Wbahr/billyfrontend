@@ -135,5 +135,6 @@ export const FRAGMENT_ITEM_SOURCE_LOCATION = gql`
     fragment ItemSourceLocation on SourceLocation {
         invMastUid
         sourceLocId
+        sourceLocName
     }
 `
