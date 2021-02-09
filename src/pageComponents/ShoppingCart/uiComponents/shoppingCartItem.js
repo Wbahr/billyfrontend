@@ -391,7 +391,7 @@ export default function ShoppingCartItem(props) {
                                             {userInfo?.isAirlineUser && (
                                                 <>
                                                     <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                        <span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
+                                                        <span>Source Loc: {cartItem.sourceLocId || 'Any'}</span>
                                                         <EditPriceIcon onClick={handleShowSourceLocModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>

@@ -73,7 +73,6 @@ export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice
         variables: { invMastUid },
         fetchPolicy: 'no-cache',
         onCompleted: ({ airlineStock, factoryStock }) => {
-            console.log('onComplete', { airlineStock, factoryStock, stockAvailabilities })
             const stockAvailability = {
                 invMastUid: stockVariables.invMastUid,
                 airlineStock: airlineStock || [],

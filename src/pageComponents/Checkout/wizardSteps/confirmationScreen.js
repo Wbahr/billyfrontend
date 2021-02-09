@@ -204,10 +204,10 @@ export default function ConfirmationScreen(props) {
 
                         <DivTextRow>
                             <P>Is Collect?</P>
-                            <p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p>
+                            <p>{!shipto.isCollect ? 'No' : 'Yes'}</p>
                         </DivTextRow>
 
-                        {shipto.isCollect === 1 && (
+                        {shipto.isCollect && (
                             <DivTextRow>
                                 <P>Collect Number:</P>
                                 <p>{shipto.collectNumber}</p>

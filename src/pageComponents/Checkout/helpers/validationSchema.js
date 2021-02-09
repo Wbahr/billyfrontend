@@ -61,7 +61,7 @@ export const shipToSchema = object({
             .required('Shipping Carrier must be selected'),
         collectNumber: string()
             .when('isCollect', {
-                is: 1,
+                is: true,
                 then: string().min(1).required('Collect Number is required'),
                 otherwise: string()
             })
