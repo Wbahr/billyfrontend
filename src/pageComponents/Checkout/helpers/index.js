@@ -44,7 +44,7 @@ export const defaultShipTo = {
     email: '',
     shippingNotes: '',
     carrierId: '',
-    isCollect: 0,
+    isCollect: false,
     collectNumber: '',
     companyName: '',
 }
