@@ -90,7 +90,7 @@ export function ShipToForm(props) {
             stateOrProvince: shipToAddress?.physState || '',
             zip: shipToAddress?.physPostalCode || '',
             saveShipTo: 0,
-            isCollect: shipToAddress?.collectNumberUps ? 1 : 0,
+            isCollect: !!shipToAddress?.collectNumberUps,
             collectNumber: shipToAddress?.collectNumberUps || '',
             carrierId: shipToAddress?.carrierId || '',
             shippingNotes: shipToAddress?.shippingNote || ''
