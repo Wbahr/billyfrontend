@@ -58,7 +58,7 @@ export default function SourceLocationModal(props) {
     }
 
     const handleSaveSourceLoc = () => {
-        if (selectedSourceLoc === '2100') {
+        if (!selectedSourceLoc) {
             setCartItem({ ...cartItem, sourceLocId: null })
         } else {
             setCartItem({ ...cartItem, sourceLocId: selectedSourceLoc })
@@ -79,6 +79,7 @@ export default function SourceLocationModal(props) {
                 <DivItem>
                     <Label>Source Locations: </Label>
                     <select value={selectedSourceLoc} onChange={handleSourceLocChange}>
+                        <option value="">----</option>
                         { sourceLocOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                     </select>
                 </DivItem>
