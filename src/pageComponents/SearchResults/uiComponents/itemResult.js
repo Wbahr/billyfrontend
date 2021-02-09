@@ -5,6 +5,10 @@ import { getLargeImagePath } from '../../_common/helpers/generalHelperFunctions'
 import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonItem'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import AddedModal from './addedModal'
+import LocationsModal from '../../_common/modals/LocationsModal'
+import { useLazyQuery } from '@apollo/client'
+import { QUERY_STOCK_AVAILABILITY } from '../../../setup/providerGQL'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -151,18 +155,18 @@ const Option = ({ partNumber, partId }) => <option key={partNumber} value={partI
 
 const getCustomerPartOptions = ({ customerPartNumbers=[] }) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
-export default function ItemResult({ result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart }) {
+export default function ItemResult({ result, details, history, toggleDetailsModal, addedToCart }) {
     const { itemAvailabilities, itemPrices, addItem, userInfo } = useContext(Context)
 
     const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
-    const { availability, leadTimeDays } = foundAvailability || {}
 
     const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
     const {
         unitPrice,
         unitOfMeasure,
         unitSize,
-        roundType } = foundPrice || {}
+        roundType
+    } = foundPrice || {}
 
     const [quantity, setQuantity] = useState(1)
 
@@ -201,8 +205,6 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
     }
 
     const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
-
-    const handleAvailabilityClick = () => toggleLocationsModal(result.invMastUid)
 
     const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
 
@@ -243,21 +245,12 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                     </DivPartNumberRow>
                 )}
 
-                <DivPartNumberRow>
-                    <PpartAvailability>Availability:</PpartAvailability>
 
-                    {!unitPrice || !availability ? (
-                        <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : 'Call for availability'}</PBlue>
-                    )	: !foundAvailability ? (
-                        <SkeletonDetail style={{ margin: 'auto 0' }}/>
-                    ) : (
-                        <DivRow>
-                            <PBlue onClick={handleAvailabilityClick}>
-                                {availability} (Show Locations)
-                            </PBlue>
-                        </DivRow>
-                    )}
-                </DivPartNumberRow>
+                <LocationsModal
+                    invMastUid={result.invMastUid}
+                    availabilityInfo={foundAvailability}
+                    unitPrice={unitPrice}
+                />
 
                 <DivPartNumberRowSpread>
                     <Div>

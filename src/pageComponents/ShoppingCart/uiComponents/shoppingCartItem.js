@@ -14,6 +14,8 @@ import CustomerPartModal from './editCustomerPartModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
+import LocationsModal from '../../_common/modals/LocationsModal'
+import Locations from '../../About/aboutSubPages/locationsPage'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -319,14 +321,13 @@ export default function ShoppingCartItem(props) {
                                         )}
                                     </TextRow>
                                 )}
-                                <DivRow>
-                                    <P3>
-                                        Availability: {availabilityInfo?.availability}
-                                        {
-                                            (availabilityInfo?.leadTimeDays) &&  (' | ' + availabilityInfo.leadTimeMessage)
-                                        }
-                                    </P3>
-                                </DivRow>
+
+                                <LocationsModal
+                                    invMastUid={itemDetails.invMastUid}
+                                    availabilityInfo={availabilityInfo}
+                                    unitPrice={priceInfo?.unitPrice}
+                                />
+
                                 <DivRow>
                                     <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
                                     <DivSplitLine>|</DivSplitLine>
