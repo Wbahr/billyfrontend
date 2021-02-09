@@ -180,7 +180,9 @@ export default function ShoppingCartItem(props) {
         availabilityInfo,
         customerPartNumbers,
         sourceLocations,
-        history } = props
+        history,
+        setIsDragDisabled
+    } = props
 
     const {
         unitOfMeasure,
@@ -208,6 +210,14 @@ export default function ShoppingCartItem(props) {
     const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.frecno, 10)
+
+    useEffect(() => {
+        if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal) {
+            setIsDragDisabled(true)
+        } else {
+            setIsDragDisabled(false)
+        }
+    }, [showSplitLineModal, factoryStockModalData, showCustomerPartModal, showSourceLocationModal, showDispositionModal])
 
     const { userInfo } = useContext(Context)
 
@@ -369,7 +379,7 @@ export default function ShoppingCartItem(props) {
                                                         decimalScale={2}
                                                         fixedDecimalScale
                                                     />
-                                                    <span>{`/${unitOfMeasure}`}</span>
+                                                    <span>{`/${unitOfMeasure || ''}`}</span>
                                                     {!!(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && userInfo?.isAirlineUser && (
                                                         <EditPriceIcon onClick={handleShowEditPriceModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
@@ -454,7 +464,7 @@ export default function ShoppingCartItem(props) {
             <SplitLineModal
                 open={showSplitLineModal}
                 hideSplitLineModal={() => setShowSplitLineModal(false)}
-                {...{ cart, setCart, index }}
+                {...{ cart, setCart, index, itemDetails, priceInfo }}
             />
             <FactoryStockModal
                 open={!!factoryStockModalData}
