@@ -47,7 +47,7 @@ export default function SourceLocationModal(props) {
         setCartItem,
     } = props
 
-    const sourceLocOptions = sourceLocations?.map(loc => ({ label: loc.sourceLocId, value: loc.sourceLocId }))
+    const sourceLocOptions = sourceLocations?.map(loc => ({ label: `${loc.sourceLocId} - ${loc.sourceLocName || 'Not Defined'}`, value: loc.sourceLocId }))
 
     const [selectedSourceLoc, setSelectedSourceLoc] = useState(cartItem?.sourceLocId)
     const [alert, setAlert] = useState(null)
