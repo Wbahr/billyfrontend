@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { ButtonBlack } from '../../../styles/buttons'
-
-const DivItem = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Label = styled.label`
-  margin: 0;
-  font-size: 12px;
-  font-style: italic;
-`
+import { Grid, Card, IconButton } from '@material-ui/core'
+import { Add as AddIcon, Close as CloseIcon } from '@material-ui/icons'
+import { getThumbnailImagePath } from '../../_common/helpers/generalHelperFunctions'
+import QuantityInput from '../../_common/form/quantityInput'
 
 const Container = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
   h4 {
@@ -30,47 +23,110 @@ const Container = styled.div`
   }
 `
 
-export default function SplitLineModal({ open, index, hideSplitLineModal, cart, setCart }) {
-    const [lineCount, setLineCount] = useState(1)
-    const [lineQuantity, setLineQuantity] = useState(1)
-
-    function handleClose(){
-        hideSplitLineModal()
-        setLineCount(1)
-        setLineQuantity(1)
+const ItemCard = styled(Card)`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+    height: 150px;
+    margin: 5px;
+    &:hover {
+        transition: all 100ms ease;
+        transform: scale(1.05);
     }
-	
+`
+
+const Thumbnail = styled.img`
+    width: 100px;
+    height: 100px;
+`
+
+export default function SplitLineModal({ open, index, hideSplitLineModal, cart, setCart, itemDetails, priceInfo }) {
+    const splitQty = Math.ceil(cart[index].quantity / 2)
+    const initialLines = [
+        { ...cart[index], quantity: splitQty },
+        { ...cart[index], quantity: cart[index].quantity - splitQty || 1 },
+    ]
+
+    const [lines, setLines] = useState(initialLines)
+
+    useEffect(() => {
+        setLines(initialLines)
+    }, [open])
+
     function splitItem() {
-        const splitItems = []
-        for (let i = 0; i < lineCount; i++) {
-            splitItems.push({
-                frecno: cart[index].frecno,
-                quantity: parseInt(lineQuantity),
-                itemNotes: cart[index].itemNotes,
-            })
-        }
         const frontCart = cart?.slice(0, index) || []// returns cart item before split item
         const backCart = cart?.slice(index + 1) || [] // returns cart item after split item
-        setCart([...frontCart, ...splitItems, ...backCart])
+        setCart([...frontCart, ...lines, ...backCart])
     }
-	
+
     const handleSplitClick = () => {
         splitItem()
-        handleClose()
+        hideSplitLineModal()
     }
-  
+
+    const handleQtyUpdate = idx => quantity => {
+        setLines(lines.map((l, i) => i === idx ? { ...l, quantity } : l))
+    }
+
+    const handleAddLine = () => {
+        setLines([ ...lines, { ...cart[index], quantity: 1 } ])
+    }
+
+    const handleRemoveLine = idx => () => {
+        const linesCopy = [...lines]
+        linesCopy.splice(idx, 1)
+        setLines(linesCopy)
+    }
+
     return (
-        <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: 350, borderRadius: 5 }}>
+        <Modal open={open} onClose={hideSplitLineModal} contentStyle={{ maxWidth: 555, borderRadius: 5 }}>
             <Container>
                 <h4>Split Line</h4>
-                <DivItem>
-                    <Label>Line Count: </Label><input value={lineCount} style={{ width: 100 }} onChange={(e) => setLineCount(e.target.value)}/>
-                </DivItem>
-                <DivItem>
-                    <Label>Quantity per Line: </Label><input value={lineQuantity} style={{ width: 100 }} onChange={(e) => setLineQuantity(e.target.value)}/>
-                </DivItem>
+
+                <Grid container>
+                    {lines.map((cartItem, i) => (
+                        <MiniSearchResultItem
+                            key={i}
+                            handleRemoveLine={handleRemoveLine(i)}
+                            handleQtyUpdate={handleQtyUpdate(i)}
+                            {...{ cartItem, itemDetails, priceInfo }}
+                        />
+                    ))}
+
+                    <ItemCard style={{ cursor: 'pointer' }} onClick={handleAddLine}>
+                        <AddIcon style={{ fontSize: 65 }} />
+                    </ItemCard>
+                </Grid>
                 <ButtonBlack onClick={handleSplitClick}>Split</ButtonBlack>
             </Container>
         </Modal>
+    )
+}
+
+const MiniSearchResultItem = ({ cartItem: { quantity }, itemDetails, priceInfo, handleQtyUpdate, handleRemoveLine }) => {
+    const { unitSize, unitOfMeasure, roundType } = priceInfo || {}
+
+    return (
+        <ItemCard>
+            <IconButton style={{ margin: 0, position: 'absolute', top: '-1px', left: '94px', padding: '4px' }} onClick={handleRemoveLine}>
+                <CloseIcon/>
+            </IconButton>
+
+            <Thumbnail src={getThumbnailImagePath(itemDetails)}/>
+
+            <div>
+                <QuantityInput
+                    quantity={quantity}
+                    unitSize={unitSize}
+                    unitOfMeasure={unitOfMeasure}
+                    roundType={roundType}
+                    handleUpdate={handleQtyUpdate}
+                    min='0'
+                />
+            </div>
+        </ItemCard>
     )
 }

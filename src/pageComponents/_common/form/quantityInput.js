@@ -25,16 +25,18 @@ const QuantityInput = (props) => {
         handleUpdate,
         min,
         max,
-        fontSize,
-        width,
         debounce
     } = props
     const unitSizeVal = unitSize || 1
-  
+
     const [increment, setIncrement] = useState(0)
     const [debounceIncrement] = useDebounce(increment, 500)
     const [displayQuantity, setDisplayQuantity] = useState(quantity + increment)
-  
+
+    useEffect(() => {
+        setDisplayQuantity(quantity)
+    }, [quantity])
+
     /*
     * Monitors the increment value (which changes with the + - buttons)
     * Updates the display quantity, but does not emit the new quantity to
@@ -42,12 +44,12 @@ const QuantityInput = (props) => {
     */
     useEffect(() => {
         const newDisplayValue = quantity + increment
-    
+
         if (isValueValid(newDisplayValue)){
             setDisplayQuantity(quantity + increment)
         }
     }, [increment])
-  
+
     /*
     * Watches the increment value. Waits until the value is finished
     * changing before calculating the new quantity and emitting the
@@ -55,35 +57,35 @@ const QuantityInput = (props) => {
     */
     useEffect(() => {
         if (debounceIncrement){
-      
+
             const newQuantity = quantity + debounceIncrement
-      
+
             if (isValueValid(newQuantity)){
                 handleUpdate(newQuantity)
             }
-      
+
             setIncrement(0)
         }
     }, [debounceIncrement])
-  
+
     /*
     * Ensure the provided quantity is a multiple of the unit increment.
-    * If it is not, calculate the rounded value and emit it to the 
+    * If it is not, calculate the rounded value and emit it to the
     * provided callback 'handleUpdate'
     */
     useEffect(() => {
-    
+
         //If there is no unit increment, allow free-form typing input
         if (unitSizeVal === 1 || roundType === 'N'){
             return
         }
-    
+
         let newQuantity = quantity //TODO: put switch case in function <-- Saige :)
-    
+
         //If the quantity is not a multiple of its increment, round the quantity and emit it to the callback
         if (Number.isInteger(newQuantity)) {
             if (newQuantity % unitSizeVal !== 0){
-        
+
                 switch (roundType) {
                 case 'U':
                     newQuantity = newQuantity - (newQuantity % unitSizeVal) + unitSizeVal
@@ -99,19 +101,19 @@ const QuantityInput = (props) => {
                 default:
                     break
                 }
-        
+
                 handleUpdate(newQuantity)
             }
         }
     })
-  
+
     //The handler for the + and - buttons
     const incrementDecrementHandler = (amount) => {
         const enterAmount = Number(amount)
-    
+
         if (debounce){
             const newQuantity = quantity + increment + enterAmount
-      
+
             //Change the increment amount on every click unless the new quantity would become invalid.
             //The actual quantity update is debounced.
             if (isValueValid(newQuantity)){
@@ -119,20 +121,20 @@ const QuantityInput = (props) => {
             }
         } else {
             const newQuantity = quantity + enterAmount
-      
+
             //Update the quantity immediately if the value is valid
             if (isValueValid(newQuantity)){
                 handleUpdate(newQuantity)
             }
         }
     }
-  
+
     //The handler for manually entered values
     const textBoxChangeHandler = (event) => {
         const { target: { value } } = event
         handleUpdate(Number(value))
     }
-  
+
     //Ensures the min/max constraints are met
     const isValueValid = (valueCandidate) => {
         if (!isNaN(min) && Number.isInteger(Number(min))
@@ -141,23 +143,19 @@ const QuantityInput = (props) => {
         if (!isNaN(max) && Number.isInteger(Number(max))
       && valueCandidate > Number(max))
             return false
-    
+
         return true
     }
-  
-    const stylesToApply = {
-        fontSize: fontSize || '1rem',
-        width: width || '60px'
-    }
-  
+
+    const fontSize = props.fontSize || '1rem'
+    const width = props.width || '60px'
+
     return (
         <span>
 
             <IncrementDecrementButton
                 onClick={() => { incrementDecrementHandler(-unitSizeVal)}}
-                style={{
-                    fontSize: stylesToApply.fontSize
-                }}
+                style={{ fontSize }}
             >
                 -
             </IncrementDecrementButton>
@@ -171,10 +169,7 @@ const QuantityInput = (props) => {
                         })}
                         value={displayQuantity}
                         step={unitSizeVal || 1}
-                        style={{
-                            fontSize: stylesToApply.fontSize,
-                            width: stylesToApply.width
-                        }}
+                        style={{ fontSize, width }}
                     />
                 ) : (
                     <input
@@ -184,19 +179,14 @@ const QuantityInput = (props) => {
                         })}
                         value={quantity}
                         step={unitSizeVal || 1}
-                        style={{
-                            fontSize: stylesToApply.fontSize,
-                            width: stylesToApply.width
-                        }}
+                        style={{ fontSize, width }}
                     />
                 )
             }
-      
+
             <IncrementDecrementButton
                 onClick={() => { incrementDecrementHandler(unitSizeVal)}}
-                style={{
-                    fontSize: stylesToApply.fontSize
-                }}
+                style={{ fontSize }}
             >
                 +
             </IncrementDecrementButton>

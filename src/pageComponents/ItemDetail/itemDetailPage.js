@@ -10,7 +10,7 @@ import AddToShoppingListModal from '../_common/modals/AddToShoppingListModal'
 import { GET_ITEM_PRICE } from 'setup/providerGQL'
 import { getOriginalImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'setup/gqlQueries/gqlItemQueries'
-import LocationsModal from '../SearchResults/uiComponents/locationsModal'
+import LocationsModal from '../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 
@@ -29,8 +29,8 @@ const DivPhoto = styled.div`
 `
 
 const Img = styled.img`
-	max-height:100%; 
-	max-width:100%;    
+	max-height:100%;
+	max-width:100%;
 `
 
 const DivDetails = styled.div`
@@ -203,9 +203,10 @@ export default function ItemDetailPage({ history }) {
 
     const [priceInfo, setPriceInfo] = useState(null)
     const {
-        unitOfMeasure, 
-        unitSize, 
-        roundType } = priceInfo || {}
+        unitOfMeasure,
+        unitSize,
+        roundType
+    } = priceInfo || {}
 
     const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '')
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
@@ -286,7 +287,7 @@ export default function ItemDetailPage({ history }) {
             setAccessoryItemsInfo({ itemAvailability, itemDetailsBatch })
         }
     })
-	
+
     const handleAddToCart = () => {
         context.addItem({
             frecno: invMastUid,
@@ -298,15 +299,15 @@ export default function ItemDetailPage({ history }) {
         setShowAddedToCartModal(true)
         setQuantity(1)
     }
-	
+
     const setQuantityHandler = (qty) => {
         setQuantity(qty)
     }
-	
+
     const handleShowLocationsModal = () => {
         setLocationModalInvMastUid(invMastUid)
     }
-	
+
     const handleHideLocationsModal = () => {
         setLocationModalInvMastUid(null)
     }
@@ -338,7 +339,6 @@ export default function ItemDetailPage({ history }) {
                     availability={availability}
                     price={price}
                     history={history}
-                    showLocationsModal={() => setLocationModalInvMastUid(details.invMastUid)}
                     setShowAddedToCartModal={setShowAddedToCartModal}
                 />
             )
@@ -347,38 +347,31 @@ export default function ItemDetailPage({ history }) {
         const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
             <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
         ))
-		
-        const Availability = () => (
-            <Pbold onClick={handleShowLocationsModal}>
-                {itemAvailability.availability ? (
-                    `Available: ${itemAvailability.availability}`
-                ) : itemAvailability.leadTimeDays ? (
-                    `Lead time ${itemAvailability.leadTimeDays} days`
-                ) : (
-                    'Call for lead time'
-                )}
-            </Pbold>
-        )
+
 
         return (
             <ItemDetailPageContainer>
                 <DivTitle>
                     <H2ItemTitle>{itemDetails.itemDesc}</H2ItemTitle>
                 </DivTitle>
-				
+
                 <DivLeftCol>
                     <DivPhoto>
                         <Img src={getOriginalImagePath(itemDetails)} alt={itemDetails.invMastUid} />
                     </DivPhoto>
-					
+
                     <DivPurchaseInfo>
                         <Row>
                             <Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
                             <P> /{unitOfMeasure}</P>
                         </Row>
-						
-                        <Availability/>
-						
+
+                        <LocationsModal
+                            invMastUid={itemDetails?.invMastUid}
+                            availabilityInfo={itemAvailability}
+                            unitPrice={priceInfo?.unitPrice}
+                        />
+
                         <DivPurchaseInfoButtons>
                             <RowCentered>
                                 <span>Qty:</span>
@@ -398,34 +391,38 @@ export default function ItemDetailPage({ history }) {
                                     )
                                 }
                             </RowCentered>
-							
+
                             <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
-							
+
                             <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
                         </DivPurchaseInfoButtons>
-						
+
                         {itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
                         {itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
                         {accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
                     </DivPurchaseInfo>
                 </DivLeftCol>
-				
+
                 <DivDetails>
                     <PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
-					
+
                     <Row>
                         <Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
-						
-                        <Availability/>
+
+                        <LocationsModal
+                            invMastUid={itemDetails?.invMastUid}
+                            availabilityInfo={itemAvailability}
+                            unitPrice={priceInfo?.unitPrice}
+                        />
                     </Row>
-					
+
                     <TABLE>
                         <tbody>
                             <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand.logoLink} /></TDWhite></TR2>
                             <TR2><TDGrey>Item ID</TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
                             <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
                             <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
-							
+
                             {!!CustomerPartOptions.length && (
                                 <TR2>
                                     <TDGrey>Customer Part #</TDGrey>
@@ -437,43 +434,43 @@ export default function ItemDetailPage({ history }) {
                                     </TDWhite>
                                 </TR2>
                             )}
-							
+
                             <TR2>
                                 <TDGrey>Unit Size</TDGrey>
                                 <TDWhite>{itemDetails.unitSizeMultiple}</TDWhite>
                             </TR2>
                         </tbody>
                     </TABLE>
-					
+
                     <hr />
-					
+
                     <H4 id='feature'>Features</H4>
                     <ul>{FeatureItems}</ul>
-					
+
                     <H4 id='techspec'>Tech Specifications</H4>
                     <Table>
                         <tbody>
                             {TechSpecItems}
                         </tbody>
                     </Table>
-					
+
                     {itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
                     <DivSection>{ItemLinks}</DivSection>
-					
+
                     {accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
-					
+
                     <DivAccessoryItems>
                         {AccessoryItems}
                     </DivAccessoryItems>
                 </DivDetails>
-				
+
                 <AddedModal
                     open={showShowAddedToCartModal}
                     text="Added to Cart!"
                     onClose={handleAddedToCart}
                     timeout={900}
                 />
-				
+
                 <LocationsModal
                     open={!!locationsModalInvMastUid}
                     hideLocationsModal={handleHideLocationsModal}

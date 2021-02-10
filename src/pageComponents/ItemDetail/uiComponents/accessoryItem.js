@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import Context from 'setup/context'
 import styled from 'styled-components'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import LocationsModal from '../../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import { Detail1 as SkeletonDetail } from 'pageComponents/SearchResults/uiComponents/skeletonItem'
@@ -24,19 +25,6 @@ const DivPartNumberRow = styled.div`
   padding: 0 5px;
   font-size: 12px;
   font-family: Arial, sans-serif;
-`
-
-const DivAvailabilityRow = styled.div`
-	cursor: pointer;
-  width: 100%;
-  display: flex;
-  color: #000;
-  padding: 0 5px;
-  font-size: 12px;
-  font-family: Arial, sans-serif;
-  & :hover {
-  	text-decoration: underline;
-  }
 `
 
 const DivPartNumberRowSpread = styled(DivPartNumberRow)`
@@ -139,30 +127,23 @@ const ACall = styled.a`
   padding: 0 4px;
 `
 
-const PBlue = styled.p`
-  cursor: pointer;
-  color: #328EFC;
-  margin: 0;
-  font-size: 13px;
-  padding: 0 4px;
-`
-
 const Img = styled.img`
   margin: auto;
   max-height: 100%;
   max-width: 100%;
 `
 
-export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal, showLocationsModal }) {
+export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
     const [quantity, setQuantity] = useState(1)
-  
+
     const context = useContext(Context)
 
     const {
         unitPrice,
         unitOfMeasure,
         unitSize,
-        roundType } = price || {}
+        roundType
+    } = price || {}
 
     const setQuantityHandler = (qty) => {
         setQuantity(qty)
@@ -182,11 +163,11 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
     }
 
     if (!itemDetails) return <></>
-    
+
     const imagePath = getThumbnailImagePath(itemDetails)
 
     const itemLink = `/product/${itemDetails?.itemCodeUrlSanitized}/${itemDetails?.invMastUid}`
-  
+
     return (
         <DivItemResultContainer>
             <DivPartDetailsRow>
@@ -195,33 +176,25 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                         <Img src={imagePath} alt={itemDetails.itemCode}/>
                     </a>
                 </DivPartImg>
-				
+
                 <DivPartDetails>
                     <PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
                 </DivPartDetails>
-				
+
                 <DivPartNumberRow>
                     <PpartAvailability>Airline #: AHC{itemDetails?.invMastUid}</PpartAvailability>
                 </DivPartNumberRow>
-				
-                <DivAvailabilityRow onClick={showLocationsModal}>
-                    <PpartAvailability>Availability:</PpartAvailability>
-                    {availability 
-                        ? (
-                            <PBlue>{availability.availability 
-                                ? availability.availability 
-                                : availability.leadTimeDays
-                                    ? 'Lead Time ' + availability.leadTimeDays + ' days'
-                                    : 'Call airline for lead time' }
-                            </PBlue>
-                        ) 
-                        : <PBlue>Call Airline for Price</PBlue>}
-                </DivAvailabilityRow>
-				
+
+                <LocationsModal
+                    invMastUid={itemDetails?.invMastUid}
+                    availabilityInfo={availability}
+                    unitPrice={price?.unitPrice}
+                />
+
                 <DivPartNumberRowSpread>
                     <Div>
                         Quantity:
-                        <QuantityInput 
+                        <QuantityInput
                             quantity={quantity}
                             unitSize={unitSize}
                             unitOfMeasure={unitOfMeasure}
@@ -238,6 +211,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                             )
                         }
                     </Div>
+
                     {unitPrice ? (
                         <Div>
                             <Pprice>${unitPrice.toFixed(2)}</Pprice>
@@ -251,7 +225,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                         <ACall href="tel:+18009997378">Call for Price</ACall>
                     )}
                 </DivPartNumberRowSpread>
-				
+
                 <DivSpace>
                     { (context.userInfo?.isAirlineUser || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
                 </DivSpace>

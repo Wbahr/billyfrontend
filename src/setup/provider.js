@@ -2,8 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import {
-    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAX_RATE, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
-    GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
+    UPDATE_CART,
+    BEGIN_IMPERSONATION,
+    END_IMPERSONATION,
+    GET_TAX_RATE,
+    GET_ORDERS,
+    GET_WEB_USER_CONTACTS,
+    GET_INVOICES,
+    GET_PURCHASE_HISTORY,
+    GET_ITEM_PRICE,
+    GET_ITEM_AVAILABILITY,
+    GET_SHOPPING_LISTS,
+    UPDATE_SHOPPING_LISTS,
+    GET_PRICE_REASONS,
+    QUERY_STOCK_AVAILABILITY
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -35,6 +47,7 @@ export default function Provider({ history, children }) {
     const [purchaseHistory, setPurchaseHistory] = useState([])
     const [itemPrices, setItemPrices] = useState([])
     const [itemAvailabilities, setItemAvailabilities] = useState([])
+    const [stockAvailabilities, setStockAvailabilities] = useState([])
     const [itemDetails, setItemDetails] = useState([])
     const [customerPartNumbers, setCustomerPartNumbers] = useState([])
     const [sourceLocations, setSourceLocations] = useState([])
@@ -491,6 +504,8 @@ export default function Provider({ history, children }) {
                 getPurchaseHistoryState,
                 itemPrices,
                 itemAvailabilities,
+                stockAvailabilities,
+                setStockAvailabilities,
                 itemDetails,
                 customerPartNumbers,
                 sourceLocations,

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import AddedModal from './addedModal'
-import LocationsModal from './locationsModal'
+import LocationsModal from '../../_common/modals/LocationsModal'
 import DetailsModal from './detailsModal'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
@@ -56,25 +56,24 @@ const clonePluginAndInjectProps = (children, type, props) => {
 export default (props) => {
     const { searchState, resultSize=DEFAULT_RESULT_SIZE, history, children } = props
     const { results, totalResults, isSearching } = searchState
-	
+
     const [showAddedToCartModal, setShowAddedToCartModal] = useState(false)
-    const [locationsModalItem, setLocationsModalItem] = useState(null)
     const [detailsModalInvMastUid, setDetailsModalItem] = useState(0)
     const [ottoFindPart, setOttoFindPart] = useState(false)
     const [itemDetails, setItemDetails] = useState([])
     const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
-	
+
     const { getItemAvailabilities, itemAvailabilities, getItemPrices, impersonatedCompanyInfo } = useContext(Context)
-	
+
     const childrenArray = React.Children.toArray(children)
-	
+
     const AppBar = clonePluginAndInjectProps(childrenArray, PLUGINS.APP_BAR, { drawerOpen, setDrawerOpen })
     const Drawer = clonePluginAndInjectProps(childrenArray, PLUGINS.DRAWER, { drawerOpen, setDrawerOpen, isSearching })
     const Pagination = clonePluginAndInjectProps(childrenArray, PLUGINS.PAGINATION, { resultSize })
     const ResultSummary = clonePluginAndInjectProps(childrenArray, PLUGINS.RESULT_SUMMARY, { totalResults, isSearching })
     const Sort = clonePluginAndInjectProps(childrenArray, PLUGINS.SORT)
     const SearchTerms = clonePluginAndInjectProps(childrenArray, PLUGINS.SEARCH_TERMS)
-	
+
     useDidUpdateEffect(() => {
         if (ottoFindPart) {
             window.drift.api?.startInteraction({ interactionId: 126679 })
@@ -82,24 +81,24 @@ export default (props) => {
             window.drift.api?.hideChat()
         }
     }, [ottoFindPart])
-	
+
     useEffect(() => {
         results.length && getItemPrices(results)
     }, [results, impersonatedCompanyInfo])
-	
+
     useEffect(() => {
         if (results.length >= resultSize * 2) setOttoFindPart(true)
-		
+
         const itemsWithoutDetails = (accum, result) => {
             return !itemDetails.some(details => details.invMastUid === result.invMastUid) ? [...accum, result.invMastUid] : accum
         }
         const invMastUids = results.reduce(itemsWithoutDetails, [])
         getItemDetails({ variables: { invMastUids } })
-		
+
         const itemsWithoutAvailabilities = result => !itemAvailabilities.some(avail => avail.invMastUid === result.invMastUid)
         getItemAvailabilities(results.filter(itemsWithoutAvailabilities))
     }, [results])
-	
+
     const [getItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ itemDetailsBatch, customerPartNumbersBatch }) => {
@@ -112,19 +111,15 @@ export default (props) => {
             setItemDetails([...itemDetails, ...mergedDetails])
         }
     })
-	
-    const handleShowLocationsModal = (invMastUid) => setLocationsModalItem(invMastUid)
-	
-    const handleHideLocationsModal = () => setLocationsModalItem(null)
-	
+
     const handleShowDetailsModal = (invMastUid) => setDetailsModalItem(invMastUid)
-	
+
     const handleHideDetailsModal = () => setDetailsModalItem(0)
-	
+
     const handleAddedToCart = () => setShowAddedToCartModal(true)
-	
+
     const handleAddedToCartModal = () => setShowAddedToCartModal(false)
-	
+
     const itemSearchResults = useMemo(() => results.map(result => (
         <ItemResult
             key={result.invMastUid}
@@ -132,51 +127,44 @@ export default (props) => {
             details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
             history={history}
             toggleDetailsModal={handleShowDetailsModal}
-            toggleLocationsModal={handleShowLocationsModal}
             addedToCart={handleAddedToCart}
         />
     )), [results, itemDetails])
-	
+
     return (
         <div style={{ width: '100%' }}>
             {AppBar}
-			
+
             <Flex>
                 {Drawer}
-				
+
                 <Content>
                     <FlexCol>
                         {ResultSummary}
-						
+
                         {SearchTerms}
-						
+
                         {Sort}
-						
+
                         {Pagination}
                     </FlexCol>
-					
+
                     <FlexWrap>
                         {isSearching && <LoadingItems/>}
                         {!isSearching && itemSearchResults}
                     </FlexWrap>
-					
+
                     {Pagination}
                 </Content>
             </Flex>
-			
+
             <AddedModal
                 open={showAddedToCartModal}
                 text="Added to Cart!"
                 onClose={handleAddedToCartModal}
                 timeout={900}
             />
-			
-            <LocationsModal
-                open={!!locationsModalItem}
-                hideLocationsModal={handleHideLocationsModal}
-                invMastUid={locationsModalItem}
-            />
-			
+
             <DetailsModal
                 hideDetailsModal={handleHideDetailsModal}
                 invMastUid={detailsModalInvMastUid}

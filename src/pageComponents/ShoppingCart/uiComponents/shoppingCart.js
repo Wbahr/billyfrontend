@@ -191,6 +191,7 @@ const CartComponent = (props) => {
     } = props
 
     const [shoppingCart, setShoppingCart] = useState(cart || [])
+    const [isDragDisabled, setIsDragDisabled] = useState(false)
 
     useEffect(() => {
         setShoppingCart(cart)
@@ -236,7 +237,12 @@ const CartComponent = (props) => {
         const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.frecno)
 
         return (
-            <Draggable key={index} draggableId={String(index)} index={index}>
+            <Draggable
+                key={index}
+                draggableId={String(index)}
+                index={index}
+                isDragDisabled={isDragDisabled}
+            >
                 {(provided) => (
                     <div
                         ref={provided.innerRef}
@@ -245,19 +251,16 @@ const CartComponent = (props) => {
                     >
                         {details ? (
                             <ShoppingCartItem
-                                cartItem={cartItem}
+                                key={index}
                                 itemDetails={details}
                                 priceInfo={itemPrice}
                                 availabilityInfo={itemAvailability}
                                 customerPartNumbers={itemCustomerPartNumbers}
                                 sourceLocations={itemSourceLocations}
-                                key={index}
                                 cart={shoppingCart || []}
-                                setCart={setCart}
                                 setCartItem={setCartItem(index)}
                                 setCartItemField={setCartItemField(index)}
-                                cartPricing={cartPricing}
-                                {...{ history, index }}
+                                {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing }}
                             />
                         ) : <SkeletonItem index={index} />}
                         {provided.placeholder}
