@@ -54,7 +54,8 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ history }) {
-    const { cart,
+    const {
+        cart,
         emptyCart,
         userInfo,
         saveShoppingCart,
@@ -67,7 +68,8 @@ export default function ShoppingCart({ history }) {
         getCustomerPartNumbers,
         getSourceLocations,
         updateShoppingCart,
-        cartPricing } = useContext(Context)
+        cartPricing
+    } = useContext(Context)
     const [savedCart, setSavedCart] = useState(false)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
@@ -98,13 +100,14 @@ export default function ShoppingCart({ history }) {
 
     useEffect(() => {
         if (cart) {
-            const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
-            hasMissingItemDetails && getItemDetails(cart)
-            const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
-            hasMissingPartNumbers && getCustomerPartNumbers(cart)
+            const itemsWithoutDetails = cart.filter(item => !itemDetails?.some(detail => detail.invMastUid === item.frecno))
+            if (itemsWithoutDetails.length) {
+                getItemDetails(itemsWithoutDetails)
+                getCustomerPartNumbers(itemsWithoutDetails)
+            }
 
-            const hasMissingSourceLocations = !!cart.find(item => !sourceLocations?.find(loc => loc.invMastUid === item.frecno))
-            hasMissingSourceLocations && getSourceLocations(cart)
+            const itemsWithoutSourceLocations = !!cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.frecno))
+            itemsWithoutSourceLocations.length && getSourceLocations(itemsWithoutSourceLocations)
         }
     }, [cart?.length])
 

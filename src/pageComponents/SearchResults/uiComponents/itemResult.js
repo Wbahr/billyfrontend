@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
+import { Link } from 'react-router-dom'
 import { getLargeImagePath } from '../../_common/helpers/generalHelperFunctions'
 import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonItem'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
-import AddedModal from './addedModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
-import { useLazyQuery } from '@apollo/client'
-import { QUERY_STOCK_AVAILABILITY } from '../../../setup/providerGQL'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -19,10 +17,6 @@ const DivItemResultContainer = styled.div`
 	margin: 0 8px 20px 8px;
 	padding: 8px 0;
 	border-bottom: 1px grey solid;
-`
-
-const DivRow = styled.div`
-	display: flex;
 `
 
 const DivPartNumberRow = styled.div`
@@ -66,7 +60,7 @@ const DivPartDetails = styled.div`
 	padding: 4px;
 `
 
-const PpartTitle = styled.p`
+const PartTitleLink = styled(Link)`
 	margin: 0;
 	font-weight: 700;
 	font-size: 15px;
@@ -100,7 +94,7 @@ const ButtonRed = styled.button`
 		box-shadow: 0px 0px 1px #000;
 	}
 `
-const ButtonBlack = styled.button`
+const MoreDetailsLink = styled(Link)`
 	width: max-content;
 	background-color: white;
 	color: #328EFC;
@@ -137,26 +131,18 @@ const ACall = styled.a`
 	padding: 0 4px;
 `
 
-const PBlue = styled.p`
-	cursor: pointer;
-	color: #328EFC;
-	margin: 0;
-	font-size: 13px;
-	padding: 0 4px;
-`
-
 const Img = styled.img`
 	margin: auto;
 	max-height: 100%;
 	max-width: 100%;
 `
 
-const Option = ({ partNumber, partId }) => <option key={partNumber} value={partId}>{partNumber}</option>
+const Option = ({ customerPartNumber, id }) => <option key={customerPartNumber} value={id}>{customerPartNumber}</option>
 
-const getCustomerPartOptions = ({ customerPartNumbers=[] }) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
+const getCustomerPartOptions = customerPartNumbers => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
-export default function ItemResult({ result, details, history, toggleDetailsModal, addedToCart }) {
-    const { itemAvailabilities, itemPrices, addItem, userInfo } = useContext(Context)
+export default function ItemResult({ result, details, addedToCart }) {
+    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
 
     const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 
@@ -171,26 +157,17 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
     const [quantity, setQuantity] = useState(1)
 
     const [customerPartNumber, setCustomerPartNumber] = useState(0)
-    const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
+    const [customerPartOptions, setCustomerPartOptions] = useState([])
 
     useEffect(() => {
-        setCustomerPartOptions(getCustomerPartOptions(details))
-        if (details.customerPartNumbers?.length === 1) {
-            setCustomerPartNumber(details.customerPartNumbers[0].partId)
+        const filteredCustomerPartNumbers = customerPartNumbers.filter(c => c.invMastUid === result.invMastUid)
+        setCustomerPartOptions(getCustomerPartOptions(filteredCustomerPartNumbers))
+        if (filteredCustomerPartNumbers?.length === 1) {
+            setCustomerPartNumber(filteredCustomerPartNumbers[0].partId)
         }
-    }, [details.customerPartNumbers])
+    }, [customerPartNumbers])
 
-    const setQuantityHandler = (qty) => {
-        setQuantity(qty)
-    }
-
-    const handlePartClick = () => {
-        if (customerPartNumber) {
-            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}/${customerPartNumber}`)
-        } else {
-            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}`)
-        }
-    }
+    const itemDetailsLink = `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
 
     const handleAddToCart = () => {
         addItem({
@@ -206,23 +183,23 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
 
     const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
 
-    const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
-
     return (
         <DivItemResultContainer>
             <DivPartDetailsRow>
-                <DivPartImg onClick={handlePartClick} style={{ cursor: 'pointer' }}>
-                    {!details.itemMedia ? (
-                        <SkeletonImage/>
-                    ) : (
-                        <Img src={getLargeImagePath(details)}/>
-                    )}
-                </DivPartImg>
+                <Link to={itemDetailsLink}>
+                    <DivPartImg>
+                        {!details.itemMedia ? (
+                            <SkeletonImage/>
+                        ) : (
+                            <Img src={getLargeImagePath(details)}/>
+                        )}
+                    </DivPartImg>
+                </Link>
 
-                <ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
+                <MoreDetailsLink to={itemDetailsLink}>More Details</MoreDetailsLink>
 
                 <DivPartDetails>
-                    <PpartTitle onClick={handlePartClick}>{result.itemDescription}</PpartTitle>
+                    <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
                 </DivPartDetails>
 
                 <DivPartNumberRow>
@@ -245,7 +222,6 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                     </DivPartNumberRow>
                 )}
 
-
                 <LocationsModal
                     invMastUid={result.invMastUid}
                     availabilityInfo={foundAvailability}
@@ -260,7 +236,7 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                             unitSize={unitSize}
                             unitOfMeasure={unitOfMeasure}
                             roundType={roundType}
-                            handleUpdate={setQuantityHandler}
+                            handleUpdate={setQuantity}
                             min='0'
                         />
                         {

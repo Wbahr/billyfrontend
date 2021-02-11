@@ -113,6 +113,7 @@ export const GET_ITEMS_BY_ID = gql`
       itemCode
       itemCodeUrlSanitized
       itemDesc
+      extendedDesc
       mfgPartNo
       modelCode
       tariff
@@ -124,11 +125,6 @@ export const GET_ITEMS_BY_ID = gql`
         mediaType
         itemMediaType
       }
-    }
-    customerPartNumbersBatch(invMastUids: $invMastUids){
-      id
-      invMastUid
-      customerPartNumber
     }
   }
 `
