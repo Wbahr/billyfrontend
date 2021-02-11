@@ -154,14 +154,14 @@ export default function ShoppingListManagementPage() {
     const loading = context.upsertShoppingListState?.loading
   
     useEffect(() => {
-        if (!context.userInfo?.contactId) context.getWebUserContacts()
+        if (!context.userInfo?.webUserId) context.getWebUserContacts()
         context.getShoppingLists()
     }, [context.userInfo])
   
     const mapShoppingListOptions = list => ({ label: list.name, value: list.id, ...list })
   
     useEffect(() => {
-        if (context.userInfo.contactId) {
+        if (context.userInfo.webUserId) {
             setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
         } else {
             selectedUser && setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
@@ -410,7 +410,7 @@ export default function ShoppingListManagementPage() {
     }, [pageIndex, pageSize, sortBy, data])
   
     const Owner = () => {
-        const owner = selectedSharedList && context.webUserContacts.find(user => user.contactId === selectedSharedList.contactIdOwner)
+        const owner = selectedSharedList && context.webUserContacts.find(user => user.webUserId === selectedSharedList.contactIdOwner)
         return selectedSharedList && <p>Owned By: {owner?.firstName} {owner?.lastName}</p>
     }
   
@@ -476,7 +476,7 @@ export default function ShoppingListManagementPage() {
             <h4>Shopping Lists</h4>
       
             <DivRow>
-                { !context.userInfo.contactId && (
+                { !context.userInfo.webUserId && (
                     <div>
                         <p>Select User</p>
                         <Select
@@ -494,7 +494,7 @@ export default function ShoppingListManagementPage() {
                     <Select
                         value={selectedSavedList && shoppingListOptions.find(list => list.value === selectedSavedList.id)}
                         setValue={handleSavedListChange}
-                        options={shoppingListOptions.filter(list => list.contactIdOwner === (context.userInfo.contactId || selectedUser?.value))}
+                        options={shoppingListOptions.filter(list => list.contactIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
                         placeholder='Search lists by Name, Item'
                         width={275}
                     />
@@ -505,7 +505,7 @@ export default function ShoppingListManagementPage() {
                     <Select
                         value={selectedSharedList && shoppingListOptions.find(list => list.value === selectedSharedList.id)}
                         setValue={handleSharedListChange}
-                        options={shoppingListOptions.filter(list => list.editors.find(e => e.contactId === (context.userInfo.contactId || selectedUser?.value)))}
+                        options={shoppingListOptions.filter(list => list.editors.find(e => e.contactId === (context.userInfo.webUserId || selectedUser?.value)))}
                         placeholder='Search lists by Name, Item'
                         width={275}
                     />

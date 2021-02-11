@@ -58,14 +58,14 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
     const loading = context.upsertShoppingListState?.loading
 	
     useEffect(() => {
-        if (!context.userInfo?.contactId) context.getWebUserContacts()
+        if (!context.userInfo?.webUserId) context.getWebUserContacts()
         context.getShoppingLists()
     }, [context.userInfo])
 	
     const mapListOptions = ({ name, id }) => ({ label: name, value: id })
 	
     const listOptions = context.shoppingLists
-        .filter(list => (context.userInfo.contactId || selectedUser?.value) === list.contactIdOwner)
+        .filter(list => (context.userInfo.webUserId || selectedUser?.value) === list.contactIdOwner)
         .map(mapListOptions)
 	
     const handleListNameChange = ({ target: { value } }) => setListName(value)
@@ -84,14 +84,14 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
     }
 	
     const handleAdd = () => {
-        if (!context.userInfo.contactId && !selectedUser) {
+        if (!context.userInfo.webUserId && !selectedUser) {
             setError('Please select a user')
         } else if ((!selectedLists || !selectedLists.length) && (!listName || !listName.length)) {
             setError('Please select a list or enter a name')
         } else if (listName && listName.length) {
             setError('')
             context.upsertShoppingList({
-                contactIdOwner: context.userInfo.contactId || selectedUser.value,
+                contactIdOwner: context.userInfo.webUserId || selectedUser.value,
                 name: listName,
                 notes: listNotes,
                 items: [{ ...item, customerPartNumberId }],
@@ -131,7 +131,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
     return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px', marginTop: 115 }}>
             <Container>
-                { !context.userInfo?.contactId && (
+                { !context.userInfo?.webUserId && (
                     <DivItem style={{ width: 200 }}>
                         <Label>Select User</Label>
                         <Select

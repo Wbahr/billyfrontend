@@ -179,6 +179,7 @@ export const QUERY_LOGIN = gql`
           companyName
           companyId
           role
+          webUserId
           permissions
           limits {
             limitType

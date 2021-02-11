@@ -63,7 +63,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     }, [preSelectedUser, open])
 	
     useEffect(() => {
-        if (!context.userInfo?.contactId) context.getWebUserContacts()
+        if (!context.userInfo?.webUserId) context.getWebUserContacts()
         context.getShoppingLists()
     }, [context.userInfo])
 	
@@ -96,7 +96,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     }
 	
     const handleSaveList = () => {
-        if (!context.userInfo.contactId && !selectedUser) {
+        if (!context.userInfo.webUserId && !selectedUser) {
             setError('Please select a user to save this list for')
         } else if ((listName && listName.length) || selectedShoppingList) {
             setError('')
@@ -112,7 +112,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                     })
             } else {
                 context.upsertShoppingList({
-                    contactIdOwner: context.userInfo.contactId || selectedUser.value,
+                    contactIdOwner: context.userInfo.webUserId || selectedUser.value,
                     name: listName,
                     notes: listNotes,
                     items,
@@ -131,7 +131,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     const mapShoppingListOptions = list => ({ label: list.name, value: list.id, ...list })
 	
     useEffect(() => {
-        if (context.userInfo?.contactId) {
+        if (context.userInfo?.webUserId) {
             setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
         } else {
             selectedUser && setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
@@ -145,10 +145,10 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
             <Container>
                 <h4>Save Shopping List</h4>
 				
-                { !context.userInfo?.contactId && context.getWebUserContactsState?.loading
+                { !context.userInfo?.webUserId && context.getWebUserContactsState?.loading
                     ? (
                         <CircularProgress/>
-                    ) : !context.userInfo?.contactId && (
+                    ) : !context.userInfo?.webUserId && (
                         <DivItem>
                             <Label>Select User</Label>
                             <Select
@@ -169,7 +169,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                                 <Select
                                     value={selectedShoppingList}
                                     setValue={handleListChange}
-                                    options={shoppingListOptions.filter(list => list.contactIdOwner === (context.userInfo.contactId || selectedUser?.value))}
+                                    options={shoppingListOptions.filter(list => list.contactIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
                                     placeholder='Search lists by Name, Item ID'
                                 />
                             </DivItem>
