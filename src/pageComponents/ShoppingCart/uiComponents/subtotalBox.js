@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DebounceInput } from 'react-debounce-input'
 import Context from '../../../setup/context'
 import NumberFormat from 'react-number-format'
-import { AIRLINE_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import { AIRLINE_ENGINEER_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const Container = styled.div`
 	display: flex;
@@ -80,7 +80,7 @@ export default function SubtotalBox({ history }) {
 				
                 { cart?.length > 0 && (
                     <>
-                        {userInfo?.role !== AIRLINE_USER && (
+                        {userInfo?.role !== AIRLINE_ENGINEER_USER && (
                             <DivCheckoutButton onClick={() => history.push('/checkout')}>
                                 <FontAwesomeIcon icon="lock" color="white"/>
                                 <p>Start Secure Checkout</p>

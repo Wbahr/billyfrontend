@@ -45,7 +45,7 @@ import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundry from './errorBoundry'
 import CategoriesPage from 'pageComponents/ProductCategories/categoriesPage'
-import { AIRLINE_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 
 function WrapperRoute({ auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -128,7 +128,7 @@ class App extends React.Component {
                 <WrapperRoute exact path='/pages/:pageId1/:pageId2?/:pageId3?/:pageId4?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
 
                 {/* ADMIN INTERNAL TOOLS (MANAGES ITS OWN SUB ROUTES)*/}
-                <WrapperRoute path='/admin-dashboard' auth roles={[AIRLINE_USER, IMPERSONATOR_USER]} component={AdminHome} layout={AdminLayout}/>
+                <WrapperRoute path='/admin-dashboard' auth roles={[AIRLINE_ENGINEER_USER, IMPERSONATOR_USER]} component={AdminHome} layout={AdminLayout}/>
 
                 {/* Error Screens */}
                 <WrapperRoute exact path='/permission-denied' component={PermissionDenied} layout={HeaderFooterLayoutExpanded}/>

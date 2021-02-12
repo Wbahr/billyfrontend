@@ -4,7 +4,7 @@ import _ from 'lodash'
 import Context from '../../../setup/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NumberFormat from 'react-number-format'
-import { AIRLINE_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const Div = styled.div`
 	display: flex;
@@ -147,7 +147,7 @@ export default function OrderSummary({ history }) {
                 {cart?.length > 0 && (
                     <DivButtonContainer>
                         {
-                            (!userInfo || (!!userInfo && userInfo.role !== AIRLINE_USER)) && (
+                            (!userInfo || (!!userInfo && userInfo.role !== AIRLINE_ENGINEER_USER)) && (
                                 <DivCheckoutButton onClick={() => history.push('/checkout')}>
                                     <FontAwesomeIcon icon="lock" color="white"/>
                                     <p>Start Secure Checkout</p>
@@ -155,7 +155,7 @@ export default function OrderSummary({ history }) {
                             )
                         }
                         {
-                            (!!userInfo && (userInfo.role === AIRLINE_USER || userInfo.role === IMPERSONATOR_USER)) && (
+                            (!!userInfo && (userInfo.role === AIRLINE_ENGINEER_USER || userInfo.role === IMPERSONATOR_USER)) && (
                                 <DivQuoteButton onClick={() => history.push('/create-quote')}>
                                     <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
                                     <p>Create a Quote</p>

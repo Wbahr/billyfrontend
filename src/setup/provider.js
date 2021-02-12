@@ -23,7 +23,7 @@ import {
     useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
-import { AIRLINE_USER, GUEST, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 export default function Provider({ history, children }) {
     const didMountRef = useRef(false)
@@ -36,7 +36,7 @@ export default function Provider({ history, children }) {
     const [userInfo, setUserInfo] = useState(null)
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
-        isEmployee: newUserInfo?.role === AIRLINE_USER || newUserInfo?.role === IMPERSONATOR_USER
+        isEmployee: newUserInfo?.role === AIRLINE_ENGINEER_USER || newUserInfo?.role === IMPERSONATOR_USER
     } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
@@ -289,7 +289,7 @@ export default function Provider({ history, children }) {
             localStorage.removeItem('imperInfo')
             handleSetUserInfo(userInfo)
             setImpersonatedCompanyInfo(null)
-            currentUserType = AIRLINE_USER
+            currentUserType = AIRLINE_ENGINEER_USER
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
             setOrdersCache([])
@@ -334,7 +334,7 @@ export default function Provider({ history, children }) {
         }
         manageUserInfo('login', userInfo)
         const drift = window.drift || null
-        if (drift && userInfo.role === AIRLINE_USER) {
+        if (drift && userInfo.role === AIRLINE_ENGINEER_USER) {
             drift?.api?.widget?.hide()
         }
         getOrders()
