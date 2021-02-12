@@ -3,10 +3,10 @@ import _ from 'lodash'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useLazyQuery } from '@apollo/client'
-import gql from 'graphql-tag'
 import Context from '../../setup/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
 import { ErrorAlert, InfoAlert } from '../../styles/alerts'
+import { QUERY_LOGIN } from 'setup/providerGQL'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -68,32 +68,6 @@ const Button = styled.button`
   &:hover{
     background-color: #DB1633;
     transition: background-color 300ms;
-  }
-`
-
-const QUERY_LOGIN = gql`
-  query SubmitLogin($loginInfo: LoginInputGraphType){
-    submitLogin(login: $loginInfo){
-      success
-      message
-      isPasswordReset
-      authorizationInfo{
-        token
-        userInfo {
-          firstName
-          lastName
-          companyName
-          companyId
-          role
-          permissions
-          contactId
-          limits {
-            limitType
-            limitValue
-          }
-        }
-      }
-    }
   }
 `
 

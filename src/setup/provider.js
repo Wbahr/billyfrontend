@@ -14,8 +14,7 @@ import {
     GET_ITEM_AVAILABILITY,
     GET_SHOPPING_LISTS,
     UPDATE_SHOPPING_LISTS,
-    GET_PRICE_REASONS,
-    QUERY_STOCK_AVAILABILITY
+    GET_PRICE_REASONS
 } from './providerGQL'
 import {
     getRidOf__typename,
