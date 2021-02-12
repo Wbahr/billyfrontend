@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
+import { AIRLINE_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const SectionRow = styled.div`
 	display: flew;
@@ -174,7 +175,7 @@ export default function ConfirmationScreen(props) {
 
     return (
         <div>
-            {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
+            {(userInfo?.role === IMPERSONATOR_USER || userInfo?.role === AIRLINE_USER) && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
                     <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />

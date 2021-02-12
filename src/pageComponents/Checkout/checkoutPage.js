@@ -19,6 +19,7 @@ import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/
 import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
+import { IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const DivContainer = styled.div`
   display: flex;
@@ -187,7 +188,7 @@ function CheckoutPage({ history }) {
             const requiresPONumber = result.getCheckoutDropdownData.billingInfo?.requiresPONumber
 
             //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
-            setValidationSchema(context.userInfo?.role === 'Impersonator' ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
+            setValidationSchema(context.userInfo?.role === IMPERSONATOR_USER ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
         }
     })
 
@@ -241,14 +242,14 @@ function CheckoutPage({ history }) {
         shipto: {
             ...defaultShipTo,
             selectedShipTo: !context.userInfo ? null : -1,
-            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.role === IMPERSONATOR_USER ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.role === IMPERSONATOR_USER  ? '' : context.userInfo?.lastName || '',
         },
         billing: {
             ...defaultBilling,
             paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card',
-            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.role === IMPERSONATOR_USER  ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.role === IMPERSONATOR_USER  ? '' : context.userInfo?.lastName || '',
             companyName: checkoutDropdownData.billingInfo?.companyName || '',
             address1: checkoutDropdownData.billingInfo?.address1 || '',
             address2: checkoutDropdownData.billingInfo?.address2 || '',

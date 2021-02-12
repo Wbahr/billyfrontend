@@ -7,6 +7,7 @@ import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 import { CHANGE_PASSWORD } from 'setup/providerGQL'
 import styled from 'styled-components'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
+import { AIRLINE_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const DivRow = styled.div`
     margin: 1rem
@@ -85,7 +86,7 @@ export default function UserSettingsPage() {
     })
 
     useEffect(() => {
-        if (context.userInfo.role === 'AirlineEmployee' || context.userInfo.role === 'Impersonator') {
+        if (context.userInfo.role === AIRLINE_USER || context.userInfo.role === IMPERSONATOR_USER) {
             setAlertMessage('This screen is intended for web customer users only.')
             setChangePasswordDisabled(true)
         }

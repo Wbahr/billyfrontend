@@ -7,6 +7,7 @@ import SelectField from '../../_common/formik/select'
 import Context from '../../../setup/context'
 import FormikCheckbox from '../../_common/formik/checkBox'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
+import { IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -134,7 +135,7 @@ export function ShipToForm(props) {
 	
     return (
         <WrapForm>
-            {context.userInfo?.role === 'Impersonator' && (
+            {context.userInfo?.role === IMPERSONATOR_USER  && (
                 <ContactSection>
                     <Field
                         name="contact.savedContact"

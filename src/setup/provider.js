@@ -23,6 +23,7 @@ import {
     useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
+import { AIRLINE_USER, GUEST, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 export default function Provider({ history, children }) {
     const didMountRef = useRef(false)
@@ -35,7 +36,7 @@ export default function Provider({ history, children }) {
     const [userInfo, setUserInfo] = useState(null)
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
-        isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
+        isAirlineUser: newUserInfo?.role === AIRLINE_USER || newUserInfo?.role === IMPERSONATOR_USER
     } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
@@ -262,7 +263,7 @@ export default function Provider({ history, children }) {
             handleSetUserInfo(JSON.parse(userInfoStorage))
             setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
             if (!userInfoStorage) {
-                currentUserType = 'Anon'
+                currentUserType = GUEST
             } else {
                 currentUserType = JSON.parse(userInfoStorage).role
             }
@@ -281,14 +282,14 @@ export default function Provider({ history, children }) {
             setWebUserContacts([])
             setItemPrices([])
             setImpersonatedCompanyInfo(impersonationInfo)
-            currentUserType = 'Impersonator'
+            currentUserType = IMPERSONATOR_USER
             break
         case 'end-impersonation':
             localStorage.setItem('userInfo', JSON.stringify(userInfo))
             localStorage.removeItem('imperInfo')
             handleSetUserInfo(userInfo)
             setImpersonatedCompanyInfo(null)
-            currentUserType = 'AirlineEmployee'
+            currentUserType = AIRLINE_USER
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
             setOrdersCache([])
@@ -303,7 +304,7 @@ export default function Provider({ history, children }) {
             logout()
             handleSetUserInfo(null)
             setImpersonatedCompanyInfo(null)
-            currentUserType = 'Anon'
+            currentUserType = GUEST
             setOrdersCache([])
             setInvoiceCache([])
             setPurchaseHistory([])
@@ -311,7 +312,7 @@ export default function Provider({ history, children }) {
             setItemPrices([])
             break
         }
-        setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
+        setUserType({ current: currentUserType, previous: !userType.current ? GUEST : userType.current })
     }
 
     function removeTopAlert() {
@@ -333,7 +334,7 @@ export default function Provider({ history, children }) {
         }
         manageUserInfo('login', userInfo)
         const drift = window.drift || null
-        if (drift && userInfo.role === 'AirlineEmployee') {
+        if (drift && userInfo.role === AIRLINE_USER) {
             drift?.api?.widget?.hide()
         }
         getOrders()
