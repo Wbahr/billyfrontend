@@ -134,7 +134,7 @@ export function ShipToForm(props) {
 	
     return (
         <WrapForm>
-            {context.userInfo?.role === 'Impersonator' && (
+            {context.userInfo?.isImpersonatorUser  && (
                 <ContactSection>
                     <Field
                         name="contact.savedContact"

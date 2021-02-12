@@ -187,7 +187,7 @@ function CheckoutPage({ history }) {
             const requiresPONumber = result.getCheckoutDropdownData.billingInfo?.requiresPONumber
 
             //Only Anon and Impersonating Users can Checkout - if Airline Impersonator use the airlineYupSchema
-            setValidationSchema(context.userInfo?.role === 'Impersonator' ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
+            setValidationSchema(context.userInfo?.isImpersonatorUser ? airlineYupSchema(requiresPONumber) : yupSchema(requiresPONumber))
         }
     })
 
@@ -241,14 +241,14 @@ function CheckoutPage({ history }) {
         shipto: {
             ...defaultShipTo,
             selectedShipTo: !context.userInfo ? null : -1,
-            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.isImpersonatorUser ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.lastName || '',
         },
         billing: {
             ...defaultBilling,
             paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card',
-            firstName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.role === 'Impersonator' ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.lastName || '',
             companyName: checkoutDropdownData.billingInfo?.companyName || '',
             address1: checkoutDropdownData.billingInfo?.address1 || '',
             address2: checkoutDropdownData.billingInfo?.address2 || '',
