@@ -12,7 +12,6 @@ import { useQuery } from '@apollo/client'
 import { GET_ROOT_CATEGORIES_HEADER } from 'setup/providerGQL'
 import { Button, Menu } from '@material-ui/core'
 import queryString from 'query-string'
-import { AIRLINE_ENGINEER_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const Nav = styled.div`
 	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
@@ -368,7 +367,7 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
                 <Puser>
                     Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
                 </Puser>
-                {userInfo.role === AIRLINE_ENGINEER_USER && <ImpersonationSearch/>}
+                {userInfo.isAirlineEngineerUser && <ImpersonationSearch/>}
             </UserNameRow>
         )
     } else if (userInfo && impersonatedCompanyInfo) {
