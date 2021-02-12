@@ -263,7 +263,7 @@ export default function ItemResult({ result, details, addedToCart }) {
                 </DivPartNumberRowSpread>
 
                 <DivSpace>
-                    {(!!unitPrice || userInfo?.isEmployee) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                    {(!!unitPrice || userInfo?.isAirlineEmployee) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>

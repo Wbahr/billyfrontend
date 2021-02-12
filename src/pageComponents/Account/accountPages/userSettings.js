@@ -85,7 +85,7 @@ export default function UserSettingsPage() {
     })
 
     useEffect(() => {
-        if (context.userInfo?.isEmployee) {
+        if (context.userInfo?.isAirlineEmployee) {
             setAlertMessage('This screen is intended for web customer users only.')
             setChangePasswordDisabled(true)
         }

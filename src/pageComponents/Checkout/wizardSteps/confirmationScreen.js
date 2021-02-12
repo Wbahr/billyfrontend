@@ -174,7 +174,7 @@ export default function ConfirmationScreen(props) {
 
     return (
         <div>
-            {(userInfo?.isEmployee) && (
+            {(userInfo?.isAirlineEmployee) && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
                     <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />

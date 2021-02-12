@@ -376,14 +376,14 @@ export default function ShoppingCartItem(props) {
                                                         fixedDecimalScale
                                                     />
                                                     <span>{`/${unitOfMeasure || ''}`}</span>
-                                                    {!!(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && userInfo?.isEmployee && (
+                                                    {!!(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && userInfo?.isAirlineEmployee && (
                                                         <EditPriceIcon onClick={handleShowEditPriceModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>
                                                     )}
                                                 </EditPriceDiv>
                                             </div>
-                                            {userInfo?.isEmployee && (
+                                            {userInfo?.isAirlineEmployee && (
                                                 <>
                                                     <div style={{ display: 'flex', fontSize: '0.85rem' }}>
                                                         <span>Source Loc: {cartItem.sourceLocId || 'Any'}</span>
