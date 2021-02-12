@@ -1,12 +1,8 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import AddedModal from './addedModal'
-import LocationsModal from '../../_common/modals/LocationsModal'
-import DetailsModal from './detailsModal'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
-import { useLazyQuery } from '@apollo/client'
-import { GET_ITEMS_BY_ID } from '../../../setup/providerGQL'
 import ItemResult from './itemResult'
 import SkeletonItem from './skeletonItem'
 import AppBarPlugin from '../plugins/AppBarPlugin'
@@ -44,8 +40,8 @@ const FlexWrap = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 `
-const DEFAULT_RESULT_SIZE = 24
 
+const DEFAULT_RESULT_SIZE = 24
 
 const clonePluginAndInjectProps = (children, type, props) => {
     const findPluginType = pluginType => child => child.type === pluginType
@@ -54,16 +50,14 @@ const clonePluginAndInjectProps = (children, type, props) => {
 }
 
 export default (props) => {
-    const { searchState, resultSize=DEFAULT_RESULT_SIZE, history, children } = props
+    const { searchState, resultSize=DEFAULT_RESULT_SIZE, children } = props
     const { results, totalResults, isSearching } = searchState
 
     const [showAddedToCartModal, setShowAddedToCartModal] = useState(false)
-    const [detailsModalInvMastUid, setDetailsModalItem] = useState(0)
     const [ottoFindPart, setOttoFindPart] = useState(false)
-    const [itemDetails, setItemDetails] = useState([])
     const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
 
-    const { getItemAvailabilities, itemAvailabilities, getItemPrices, impersonatedCompanyInfo } = useContext(Context)
+    const { userInfo, itemDetails, getItemDetails, getItemAvailabilities, itemAvailabilities, getItemPrices, impersonatedCompanyInfo, getCustomerPartNumbers } = useContext(Context)
 
     const childrenArray = React.Children.toArray(children)
 
@@ -89,32 +83,19 @@ export default (props) => {
     useEffect(() => {
         if (results.length >= resultSize * 2) setOttoFindPart(true)
 
-        const itemsWithoutDetails = (accum, result) => {
-            return !itemDetails.some(details => details.invMastUid === result.invMastUid) ? [...accum, result.invMastUid] : accum
+        const itemsWithoutDetails = results.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUid))
+        if (itemsWithoutDetails.length) {
+            getItemDetails(itemsWithoutDetails)
+            getCustomerPartNumbers(itemsWithoutDetails)
         }
-        const invMastUids = results.reduce(itemsWithoutDetails, [])
-        getItemDetails({ variables: { invMastUids } })
 
         const itemsWithoutAvailabilities = result => !itemAvailabilities.some(avail => avail.invMastUid === result.invMastUid)
         getItemAvailabilities(results.filter(itemsWithoutAvailabilities))
     }, [results])
 
-    const [getItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
-        fetchPolicy: 'no-cache',
-        onCompleted: ({ itemDetailsBatch, customerPartNumbersBatch }) => {
-            const mergedDetails = itemDetailsBatch.map(details => ({
-                ...details,
-                customerPartNumbers: customerPartNumbersBatch
-                    .filter(({ invMastUid }) => details.invMastUid === invMastUid)
-                    .map(part => ({ partNumber: part.customerPartNumber, partId: part.id }))
-            }))
-            setItemDetails([...itemDetails, ...mergedDetails])
-        }
-    })
-
-    const handleShowDetailsModal = (invMastUid) => setDetailsModalItem(invMastUid)
-
-    const handleHideDetailsModal = () => setDetailsModalItem(0)
+    useDidUpdateEffect(() => {
+        getCustomerPartNumbers(results)
+    }, [userInfo])
 
     const handleAddedToCart = () => setShowAddedToCartModal(true)
 
@@ -125,8 +106,6 @@ export default (props) => {
             key={result.invMastUid}
             result={result}
             details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
-            history={history}
-            toggleDetailsModal={handleShowDetailsModal}
             addedToCart={handleAddedToCart}
         />
     )), [results, itemDetails])
@@ -163,12 +142,6 @@ export default (props) => {
                 text="Added to Cart!"
                 onClose={handleAddedToCartModal}
                 timeout={900}
-            />
-
-            <DetailsModal
-                hideDetailsModal={handleHideDetailsModal}
-                invMastUid={detailsModalInvMastUid}
-                history={history}
             />
         </div>
     )

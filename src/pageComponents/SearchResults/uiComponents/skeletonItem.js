@@ -45,7 +45,7 @@ const QuickLook = styled.div`
   margin: 5px 0;
 `
 
-const Title = styled.div`
+export const Title = styled.div`
   width: 250px;
   height: 25px;
   background: linear-gradient(-90deg, whitesmoke, #dedede, whitesmoke, #dedede);
