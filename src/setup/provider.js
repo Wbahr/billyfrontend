@@ -36,7 +36,7 @@ export default function Provider({ history, children }) {
     const [userInfo, setUserInfo] = useState(null)
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
-        isAirlineUser: newUserInfo?.role === AIRLINE_USER || newUserInfo?.role === IMPERSONATOR_USER
+        isEmployee: newUserInfo?.role === AIRLINE_USER || newUserInfo?.role === IMPERSONATOR_USER
     } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
@@ -71,7 +71,7 @@ export default function Provider({ history, children }) {
     })
 
     useEffect(() => {
-        userInfo?.isAirlineUser && getPriceReasons()
+        userInfo?.isEmployee && getPriceReasons()
     }, [userInfo])
 
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {

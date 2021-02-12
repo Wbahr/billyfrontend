@@ -293,7 +293,7 @@ export default function HeaderComponent({ history }) {
 	
     const SearchBar = (
         <SearchBarRow>
-            {context.userInfo?.isAirlineUser && (
+            {context.userInfo?.isEmployee && (
                 <ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
                     { searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
                 </ButtonSearchType>

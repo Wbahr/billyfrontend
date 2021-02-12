@@ -86,7 +86,7 @@ export default function SubtotalBox({ history }) {
                                 <p>Start Secure Checkout</p>
                             </DivCheckoutButton>
                         )}
-                        {userInfo?.isAirlineUser && (
+                        {userInfo?.isEmployee && (
                             <DivQuoteButton onClick={() => history.push('/create-quote')}>
                                 <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
                                 <p>Create a Quote</p>
