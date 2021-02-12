@@ -42,13 +42,37 @@ const CheckoutButtons = ({ history }) => {
 
     const {
         userInfo,
-        cart
+        cart,
+        cartPricing,
+        itemPrices
     } = useContext(Context)
+
+    const pricesLoading = !itemPrices?.length || cartPricing?.state === 'loading'
+    const hasZeroPriceItem = cart?.length && itemPrices?.length >= 0 && (cart || []).some(cartItem => {
+        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
+
+        return itemPrice?.unitPrice === 0
+    })
+
+    const moveToCheckoutHandler = () => {
+        if (!hasZeroPriceItem){
+            history.push('/checkout')
+        }
+    }
+
+    const moveToCreateQuoteHandler = () => {
+        if (!hasZeroPriceItem){
+            history.push('/create-quote')
+        }
+    }
 
     return (
         <>
             {cart?.length > 0 && (
                 <DivButtonContainer>
+                    {
+                        hasZeroPriceItem && <p>Zero Price items present</p>
+                    }
                     {
                         (userInfo?.isAirlineEngineerUser) 
                             ? (
@@ -58,7 +82,7 @@ const CheckoutButtons = ({ history }) => {
                                 </DivCheckoutButton>
                             )
                             : (
-                                <DivCheckoutButton onClick={() => history.push('/checkout')}>
+                                <DivCheckoutButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCheckoutHandler}>
                                     <FontAwesomeIcon icon="lock" color="white"/>
                                     <p>Start Secure Checkout</p>
                                 </DivCheckoutButton>
@@ -66,7 +90,7 @@ const CheckoutButtons = ({ history }) => {
                     }
                     {
                         (userInfo?.isImpersonatorUser) && (
-                            <DivQuoteButton onClick={() => history.push('/create-quote')}>
+                            <DivQuoteButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCreateQuoteHandler}>
                                 <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
                                 <p>Create a Quote</p>
                             </DivQuoteButton>
