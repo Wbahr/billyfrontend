@@ -105,9 +105,6 @@ export const GET_ORDER_DETAIL_ITEM_DETAIL = gql`
 
 export const GET_QUICK_LOOK_ITEM_DETAIL = gql`
     query GetQuickLookItemsDetails($invMastUid: Int){
-		customerPartNumbers(frecno: $invMastUid){
-			...ItemCustomerPartNumber
-		}
 		itemAvailabilitySingular(invMastUid: $invMastUid){
 			...ItemAvailability
 		}
@@ -120,7 +117,6 @@ export const GET_QUICK_LOOK_ITEM_DETAIL = gql`
     ${FRAGMENT_ITEM_DETAIL}
 	${FRAGMENT_ITEM_DETAIL_BRANDS}
 	${FRAGMENT_ITEM_DETAIL_MEDIA}
-	${FRAGMENT_ITEM_CUSTOMER_PART_NUMBER}
 	${FRAGMENT_ITEM_AVAILABILITY}
 `
 

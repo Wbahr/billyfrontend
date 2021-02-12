@@ -14,7 +14,8 @@ import {
     GET_ITEM_AVAILABILITY,
     GET_SHOPPING_LISTS,
     UPDATE_SHOPPING_LISTS,
-    GET_PRICE_REASONS
+    GET_PRICE_REASONS,
+    GET_ITEMS_BY_ID,
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -22,7 +23,7 @@ import {
     distinct,
     useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
-import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
+import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS } from './gqlQueries/gqlItemQueries'
 import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER, WEB_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 export default function Provider({ history, children }) {
@@ -170,7 +171,7 @@ export default function Provider({ history, children }) {
         }
     })
 
-    const [handleGetItemDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+    const [handleGetItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemDetails([...data.itemDetailsBatch, ...itemDetails].filter(distinct))
@@ -284,6 +285,7 @@ export default function Provider({ history, children }) {
             setShoppingLists([])
             setWebUserContacts([])
             setItemPrices([])
+            setCustomerPartNumbers([])
             setImpersonatedCompanyInfo(impersonationInfo)
             currentUserType = IMPERSONATOR_USER
             break
@@ -297,6 +299,7 @@ export default function Provider({ history, children }) {
             setInvoiceBatchNumber(0)
             setOrdersCache([])
             setPurchaseHistory([])
+            setCustomerPartNumbers([])
             setItemPrices([])
             break
         case 'login':
@@ -313,6 +316,7 @@ export default function Provider({ history, children }) {
             setPurchaseHistory([])
             setInvoiceBatchNumber(0)
             setItemPrices([])
+            setCustomerPartNumbers([])
             break
         }
         setUserType({ current: currentUserType, previous: !userType.current ? GUEST : userType.current })

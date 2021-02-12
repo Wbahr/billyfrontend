@@ -15,7 +15,6 @@ import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
-import Locations from '../../About/aboutSubPages/locationsPage'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -163,11 +162,6 @@ const P2 = styled.p`
 	padding: 0 2px;
 `
 
-const P3 = styled.p`
-	color: black;
-	font-size: 12px !important;
-`
-
 export default function ShoppingCartItem(props) {
 
     const {
@@ -189,7 +183,8 @@ export default function ShoppingCartItem(props) {
     const {
         unitOfMeasure,
         unitSize,
-        roundType } = priceInfo || {}
+        roundType
+    } = priceInfo || {}
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
@@ -224,7 +219,7 @@ export default function ShoppingCartItem(props) {
     const { userInfo } = useContext(Context)
 
     function selectCustomerPartNumber(value){
-        if (value === -1) {
+        if (value === '-1') {
             setSelectedCustomerPartNumber(0) // Reset Dropdown
             setCartItemField('customerPartNumberId', 0)
             setShowCustomerPartModal(true)

@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
@@ -13,6 +13,7 @@ import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'setup/
 import LocationsModal from '../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import { Detail1 as SkeletonLine, Title as SkeletonTitle } from '../SearchResults/uiComponents/skeletonItem'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -81,17 +82,6 @@ const RowCentered = styled.div`
 
 const P = styled.p`
 	margin: 0;
-`
-
-const Pbold = styled(P)`
-	cursor: pointer;
-	color: #328EFC;
-	font-weight: bold;
-	line-height: 26px;
-	margin-left: 10px;
-	& :hover {
-		text-decoration: underline;
-	}
 `
 
 const H4 = styled.h5`
@@ -193,7 +183,7 @@ const IMG = styled.img`
 `
 
 export default function ItemDetailPage({ history }) {
-    const context = useContext(Context)
+    const { userInfo, addItem, itemDetails: cachedDetails, itemPrices: cachedPrices, getItemPrices, itemAvailabilities: cachedAvailabilities, customerPartNumbers: cachedCustomerPartNumbers } = useContext(Context)
     const { itemId, customerPartNumber } = useParams()
     const invMastUid = parseInt(itemId)
     const [accessoryItems, setAccessoryItems] = useState([])
@@ -201,35 +191,35 @@ export default function ItemDetailPage({ history }) {
     const [accessoryItemsInfo, setAccessoryItemsInfo] = useState({})
     const [quantity, setQuantity] = useState(1)
 
-    const [priceInfo, setPriceInfo] = useState(null)
+    const cachedItemPrice = cachedPrices.find(price => price.invMastUid === invMastUid)
     const {
         unitOfMeasure,
         unitSize,
-        roundType
-    } = priceInfo || {}
+        roundType,
+        unitPrice
+    } = cachedItemPrice || { unitPrice: 0 }
 
     const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '')
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const [showAddListModal, setShowAddListModal] = useState(false)
-    const [locationsModalInvMastUid, setLocationModalInvMastUid] = useState(null)
 
     function handleAddedToCart() {
         setShowAddedToCartModal(false)
     }
 
-    const { data: itemInfo } = useQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
-        variables: { invMastUid: invMastUid },
+    useEffect(() => {
+        selectCustomerPartNumber(customerPartNumber || '')
+        getItemInfo()
+    }, [userInfo])
+
+    const cachedItemDetails = cachedDetails.find(detail => detail.invMastUid === invMastUid)
+
+    const [ getItemInfo, { data: itemInfo }] = useLazyQuery(GET_ITEM_DETAIL_PAGE_ITEM_INFO, {
+        variables: { invMastUid },
         fetchPolicy: 'no-cache',
         onCompleted: result => {
             const details = result.itemDetails
-            queryItemPrice({
-                variables: {
-                    items: [{
-                        invMastUid: details.invMastUid,
-                        quantity: 1
-                    }]
-                }
-            })
+            if (!cachedItemPrice) getItemPrices([details])
 
             //If there are accessory items attached to this item, query for their details
             if (details.associatedItems.length){
@@ -260,21 +250,11 @@ export default function ItemDetailPage({ history }) {
         }
     })
 
-    const itemDetails = itemInfo?.itemDetails
-    const customerPartNumbers = itemInfo?.customerPartNumbers
-    const itemAvailability = itemInfo?.itemAvailabilitySingular
-
-    const [queryItemPrice] = useLazyQuery(GET_ITEM_PRICE, {
-        onCompleted: data => {
-            if (data.getItemPrices.length){
-                setPriceInfo(data.getItemPrices[0])
-            } else {
-                setPriceInfo({
-                    unitPrice: 0
-                })
-            }
-        }
-    })
+    const itemDetails = itemInfo?.itemDetails || cachedItemDetails
+    const cachedItemCustomerPartNumbers = cachedCustomerPartNumbers.filter(part => part.invMastUid === invMastUid)
+    const customerPartNumbers = itemInfo?.customerPartNumbers || cachedItemCustomerPartNumbers
+    const cachedItemAvailability = cachedAvailabilities.find(avail => avail.invMastUid === invMastUid)
+    const itemAvailability = itemInfo?.itemAvailabilitySingular || cachedItemAvailability
 
     const [queryAccessoryItemPrices] = useLazyQuery(GET_ITEM_PRICE, {
         onCompleted: data => {
@@ -289,7 +269,7 @@ export default function ItemDetailPage({ history }) {
     })
 
     const handleAddToCart = () => {
-        context.addItem({
+        addItem({
             frecno: invMastUid,
             quantity: parseInt(quantity, 10),
             itemNotes: null,
@@ -300,33 +280,21 @@ export default function ItemDetailPage({ history }) {
         setQuantity(1)
     }
 
-    const setQuantityHandler = (qty) => {
-        setQuantity(qty)
-    }
-
-    const handleShowLocationsModal = () => {
-        setLocationModalInvMastUid(invMastUid)
-    }
-
-    const handleHideLocationsModal = () => {
-        setLocationModalInvMastUid(null)
-    }
-
     if (!itemDetails) {
         return (<Loader />)
-    } else if (!itemDetails.invMastUid) {
+    } else if (!itemDetails?.invMastUid) {
         return (<p>No item found</p>)
     } else {
-        const FeatureItems = itemDetails.itemFeatures.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-        const TechSpecItems = itemDetails.itemTechSpecs.map((elem, idx) => (
+        const FeatureItems = itemDetails.itemFeatures?.map((elem, idx) => <li key={idx}>{elem.text}</li>)
+        const TechSpecItems = itemDetails.itemTechSpecs?.map((elem, idx) => (
             <TR key={idx}>
                 <TD>{elem.name}</TD>
                 <TD>{elem.value}</TD>
             </TR>
         ))
 
-        const ItemLinks = itemDetails.itemLinks.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-        const AccessoryItems = accessoryItems.map((ai, idx) => {
+        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+        const AccessoryItems = accessoryItems?.map((ai, idx) => {
 
             const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
             const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
@@ -344,7 +312,7 @@ export default function ItemDetailPage({ history }) {
             )
         })
 
-        const CustomerPartOptions = customerPartNumbers.map((elem, idx) => (
+        const CustomerPartOptions = customerPartNumbers?.map((elem, idx) => (
             <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
         ))
 
@@ -362,14 +330,14 @@ export default function ItemDetailPage({ history }) {
 
                     <DivPurchaseInfo>
                         <Row>
-                            <Pprice>{!priceInfo?.unitPrice ? '--' : `$${priceInfo.unitPrice.toFixed(2)}`}</Pprice>
+                            <Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
                             <P> /{unitOfMeasure}</P>
                         </Row>
 
                         <LocationsModal
                             invMastUid={itemDetails?.invMastUid}
                             availabilityInfo={itemAvailability}
-                            unitPrice={priceInfo?.unitPrice}
+                            unitPrice={unitPrice}
                         />
 
                         <DivPurchaseInfoButtons>
@@ -380,7 +348,7 @@ export default function ItemDetailPage({ history }) {
                                     unitSize={unitSize}
                                     unitOfMeasure={unitOfMeasure}
                                     roundType={roundType}
-                                    handleUpdate={setQuantityHandler}
+                                    handleUpdate={setQuantity}
                                     min='0'
                                 />
                                 {
@@ -397,9 +365,9 @@ export default function ItemDetailPage({ history }) {
                             <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
                         </DivPurchaseInfoButtons>
 
-                        {itemDetails.itemFeatures.length > 0 && <a href='#feature'>Features</a>}
-                        {itemDetails.itemTechSpecs.length > 0 && <a href='#techspec'>Tech Specs</a>}
-                        {accessoryItems.length > 0 && <a href='#accessory'>Accessory</a>}
+                        {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
+                        {!!itemDetails.itemTechSpecs?.length && <a href='#techspec'>Tech Specs</a>}
+                        {accessoryItems?.length > 0 && <a href='#accessory'>Accessory</a>}
                     </DivPurchaseInfo>
                 </DivLeftCol>
 
@@ -407,23 +375,23 @@ export default function ItemDetailPage({ history }) {
                     <PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 
                     <Row>
-                        <Pprice>{!priceInfo?.unitPrice ? '--' : `Price: $${priceInfo.unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
+                        <Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 
                         <LocationsModal
                             invMastUid={itemDetails?.invMastUid}
                             availabilityInfo={itemAvailability}
-                            unitPrice={priceInfo?.unitPrice}
+                            unitPrice={unitPrice}
                         />
                     </Row>
 
                     <TABLE>
                         <tbody>
-                            <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand.logoLink} /></TDWhite></TR2>
+                            <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand?.logoLink} /></TDWhite></TR2>
                             <TR2><TDGrey>Item ID</TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
                             <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
                             <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
 
-                            {!!CustomerPartOptions.length && (
+                            {!!CustomerPartOptions?.length && (
                                 <TR2>
                                     <TDGrey>Customer Part #</TDGrey>
                                     <TDWhite>
@@ -444,24 +412,32 @@ export default function ItemDetailPage({ history }) {
 
                     <hr />
 
-                    <H4 id='feature'>Features</H4>
-                    <ul>{FeatureItems}</ul>
+                    {!!FeatureItems?.length && (
+                        <>
+                            <H4 id='feature'>Features</H4>
+                            <ul>{FeatureItems}</ul>
+                        </>
+                    )}
 
-                    <H4 id='techspec'>Tech Specifications</H4>
-                    <Table>
-                        <tbody>
-                            {TechSpecItems}
-                        </tbody>
-                    </Table>
+                    {!!TechSpecItems?.length && (
+                        <>
+                            <H4 id='techspec'>Tech Specifications</H4>
+                            <Table>
+                                <tbody>{TechSpecItems}</tbody>
+                            </Table>
+                        </>
+                    )}
 
-                    {itemDetails.itemLinks.length > 0 && <H4>Links</H4>}
+                    {itemDetails.itemLinks?.length > 0 && <H4>Links</H4>}
                     <DivSection>{ItemLinks}</DivSection>
 
-                    {accessoryItems.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
+                    {accessoryItems?.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
 
                     <DivAccessoryItems>
                         {AccessoryItems}
                     </DivAccessoryItems>
+
+                    {!itemInfo && SkeletonLoader}
                 </DivDetails>
 
                 <AddedModal
@@ -471,13 +447,7 @@ export default function ItemDetailPage({ history }) {
                     timeout={900}
                 />
 
-                <LocationsModal
-                    open={!!locationsModalInvMastUid}
-                    hideLocationsModal={handleHideLocationsModal}
-                    invMastUid={locationsModalInvMastUid}
-                />
-
-                {context.userInfo && (
+                {userInfo && (
                     <AddToShoppingListModal
                         open={showAddListModal}
                         hide={() => setShowAddListModal(false)}
@@ -489,3 +459,79 @@ export default function ItemDetailPage({ history }) {
         )
     }
 }
+
+const SkeletonList = () => (
+    <ul>
+        <li>
+            <SkeletonLine style={{ width: '50%' }}/>
+        </li>
+        <li>
+            <SkeletonLine style={{ width: '70%' }}/>
+        </li>
+        <li>
+            <SkeletonLine style={{ width: '40%' }}/>
+        </li>
+        <li>
+            <SkeletonLine style={{ width: '75%' }}/>
+        </li>
+        <li>
+            <SkeletonLine style={{ width: '60%' }}/>
+        </li>
+    </ul>
+)
+
+const SkeletonTbody = () => (
+    <tbody>
+        <TR>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+        </TR>
+        <TR>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+            <TD>
+                <SkeletonLine style={{ width: '50%' }}/>
+            </TD>
+        </TR>
+    </tbody>
+)
+
+const SkeletonLoader = (
+    <>
+        <SkeletonTitle/>
+        <SkeletonList/>
+        <SkeletonTitle/>
+        <Table>
+            <SkeletonTbody/>
+        </Table>
+    </>
+)
