@@ -50,6 +50,11 @@ const DivCheckoutButton = styled.div`
 		font-size: 18px;
 		font-weight: 500;
 	}
+
+    &[disabled] {
+        cursor: default;
+        background-image: linear-gradient(to top left, grey, darkgrey);
+    }
 `
 
 const DivLineItem = styled.div`
@@ -147,15 +152,22 @@ export default function OrderSummary({ history }) {
                 {cart?.length > 0 && (
                     <DivButtonContainer>
                         {
-                            (!userInfo || (!!userInfo && userInfo.role !== AIRLINE_ENGINEER_USER)) && (
-                                <DivCheckoutButton onClick={() => history.push('/checkout')}>
-                                    <FontAwesomeIcon icon="lock" color="white"/>
-                                    <p>Start Secure Checkout</p>
-                                </DivCheckoutButton>
-                            )
+                            (userInfo?.isAirlineEngineerUser) 
+                                ? (
+                                    <DivCheckoutButton disabled>
+                                        <FontAwesomeIcon icon="lock" color="white"/>
+                                        <p>Engineer User</p>
+                                    </DivCheckoutButton>
+                                )
+                                : (
+                                    <DivCheckoutButton onClick={() => history.push('/checkout')}>
+                                        <FontAwesomeIcon icon="lock" color="white"/>
+                                        <p>Start Secure Checkout</p>
+                                    </DivCheckoutButton>
+                                )
                         }
                         {
-                            (!!userInfo && (userInfo.role === AIRLINE_ENGINEER_USER || userInfo.role === IMPERSONATOR_USER)) && (
+                            (userInfo?.isImpersonatorUser) && (
                                 <DivQuoteButton onClick={() => history.push('/create-quote')}>
                                     <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
                                     <p>Create a Quote</p>
