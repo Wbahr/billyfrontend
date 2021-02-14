@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
 
 const DivRow = styled.div`
-    margin: 1rem
+    margin: 1rem;
 `
 
 const DivContainer = styled.div`
@@ -85,7 +85,7 @@ export default function UserSettingsPage() {
     })
 
     useEffect(() => {
-        if (context.userInfo.role === 'AirlineEmployee' || context.userInfo.role === 'Impersonator') {
+        if (context.userInfo?.isAirlineEmployee) {
             setAlertMessage('This screen is intended for web customer users only.')
             setChangePasswordDisabled(true)
         }

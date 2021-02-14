@@ -292,7 +292,7 @@ export default function HeaderComponent({ history }) {
 	
     const SearchBar = (
         <SearchBarRow>
-            {context.userInfo?.isAirlineUser && (
+            {context.userInfo?.isAirlineEmployee && (
                 <ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
                     { searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
                 </ButtonSearchType>
@@ -367,7 +367,7 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
                 <Puser>
                     Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
                 </Puser>
-                {userInfo.role === 'AirlineEmployee' && <ImpersonationSearch/>}
+                {userInfo.isAirlineEngineerUser && <ImpersonationSearch/>}
             </UserNameRow>
         )
     } else if (userInfo && impersonatedCompanyInfo) {
