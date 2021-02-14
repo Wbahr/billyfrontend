@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Context from '../../../setup/context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NumberFormat from 'react-number-format'
@@ -42,7 +41,7 @@ const DivCheckoutButton = styled.div`
 	width: 250px;
 	margin: 8px 0;
 	box-shadow: 1px 1px 2px #000;
-	
+
 	p {
 		margin: 0;
 		margin-left: 8px;
@@ -83,22 +82,22 @@ export default function OrderSummary({ history }) {
         cart,
         cartPricing
     } = useContext(Context)
-  
+
     return (
         <>
             <Div>
                 <H4>Order Summary</H4>
                 <DivLineItem>
                     <p>Subtotal</p>
-                    <p>{cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={cartPricing.subTotal} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={cartPricing.subTotal}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
@@ -106,15 +105,15 @@ export default function OrderSummary({ history }) {
                 </DivLineItem>
                 <DivLineItem>
                     <p>Tariff</p>
-                    <p>{cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={cartPricing.tariff} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={cartPricing.tariff}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
@@ -129,15 +128,15 @@ export default function OrderSummary({ history }) {
                     <p>(TBD)</p>
                 </DivLineItem>
                 <DivLineItemTotal>
-                    <p>Total (without tax) {cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>Total (without tax) {cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={Number(cartPricing.subTotal) + Number(cartPricing.tariff)} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={Number(cartPricing.subTotal) + Number(cartPricing.tariff)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
