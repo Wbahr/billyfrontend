@@ -158,6 +158,18 @@ export function scrollHorizontal(element, change, duration) {
     animateScroll()
 }
 
+export const cartHasZeroPricedItem = (cart, itemPrices) => {
+    if (cart?.length || !itemPrices?.length){
+        return false
+    }
+
+    return (cart || []).some(cartItem => {
+        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
+
+        return itemPrice?.unitPrice === 0
+    })
+}
+
 //t = current time
 //s = start value
 //c = change in value
