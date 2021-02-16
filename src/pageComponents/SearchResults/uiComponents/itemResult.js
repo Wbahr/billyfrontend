@@ -163,7 +163,7 @@ export default function ItemResult({ result, details, addedToCart }) {
         const filteredCustomerPartNumbers = customerPartNumbers.filter(c => c.invMastUid === result.invMastUid)
         setCustomerPartOptions(getCustomerPartOptions(filteredCustomerPartNumbers))
         if (filteredCustomerPartNumbers?.length === 1) {
-            setCustomerPartNumber(filteredCustomerPartNumbers[0].partId)
+            setCustomerPartNumber(filteredCustomerPartNumbers[0].id)
         }
     }, [customerPartNumbers])
 
@@ -181,7 +181,7 @@ export default function ItemResult({ result, details, addedToCart }) {
         setQuantity(1)
     }
 
-    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
+    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value || null)
 
     return (
         <DivItemResultContainer>
@@ -215,7 +215,7 @@ export default function ItemResult({ result, details, addedToCart }) {
                         <PpartAvailability>
                             Customer Part #:
                             <select value={customerPartNumber} onChange={handlePartNumberChange}>
-                                <option>Select a Part No.</option>
+                                <option value="">Select a Part No.</option>
                                 {customerPartOptions}
                             </select>
                         </PpartAvailability>
