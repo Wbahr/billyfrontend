@@ -177,7 +177,8 @@ export default function ShoppingCartItem(props) {
         customerPartNumbers,
         sourceLocations,
         history,
-        setIsDragDisabled
+        setIsDragDisabled,
+        provided
     } = props
 
     const {
@@ -276,7 +277,9 @@ export default function ShoppingCartItem(props) {
                     ? <p>{cartItem.frecno}</p>
                     : (
                         <DivCard>
-                            <DivMove>
+                            <DivMove
+                                {...provided.dragHandleProps}
+                            >
                                 <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
                             </DivMove>
                             <DivCol1>
