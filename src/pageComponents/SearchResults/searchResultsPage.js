@@ -70,19 +70,11 @@ export default function SearchResultsPage({ history }) {
         } else {
             setQueryParam('resultPage', 1)
         }
-    }, [searchTerms, sortType, nonweb])
+    }, [searchTerm, searchTerms, sortType, nonweb])
 
     useEffect(() => {
         performItemSearch()
     }, [resultPage])
-
-    useEffect(() => {
-        if (resultPage === '1') {
-            performItemSearch()
-        } else {
-            setQueryParam('resultPage', 1)
-        }
-    }, [searchTerm])
 
     useDidUpdateEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
         if (!searchQueryParams.parentCategories.length
@@ -112,6 +104,7 @@ export default function SearchResultsPage({ history }) {
                 }
             }
         }
+        console.log('perform search', payload)
         setLastSearchPayload(payload)
         search({ variables: payload })
     }
