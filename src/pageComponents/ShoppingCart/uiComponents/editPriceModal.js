@@ -46,9 +46,9 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
     const { editPriceReasonCodes } = useContext(Context)
-  
+
     const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
-  
+
     useEffect(() => {
         if (data) {
             setItemPrice(data.itemPrice)
@@ -56,18 +56,18 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
         }
     }, [data])
-  
+
     function handleReset() {
         setItemPrice(data.originalItemPrice)
         setMargin(calculateMargin(data.originalItemPrice))
         setSelectedReason(null)
     }
-  
+
     function calculateMargin(price) {
-        const newMargin = margin < 0 ? 0 : (price - data.airlineCost) / price
+        const newMargin = (price - data.airlineCost) / price
         return (newMargin * 100).toFixed(1)
     }
-  
+
     const handleChangePrice = type => (e, maskValue, floatValue) => {
         if (type === 'price') {
             setItemPrice(floatValue)
@@ -77,12 +77,12 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
         }
     }
-  
+
     const handleCancel = () => {
         handleReset()
         hideEditPriceModal()
     }
-  
+
     const handleSave = () => {
         if (itemPrice === data.originalItemPrice) {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
@@ -91,11 +91,11 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         }
         hideEditPriceModal()
     }
-  
+
     const handleReasonCodeChange = value => {
         setSelectedReason(reasonCodeOptions.find(code => code.value === value))
     }
-  
+
     return (
         <Modal
             open={open}
@@ -114,7 +114,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                             onChange={handleChangePrice('price')}
                         />
                     </DivItem>
-          
+
                     <DivItem>
                         <Label>Margin: {data?.spaType && `(SPA: ${data.spaType})`}</Label>
                         <AirlineInput
@@ -124,7 +124,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                             onChange={handleChangePrice('margin')}
                         />
                     </DivItem>
-          
+
                     <DivItem>
                         <Label>Airline Cost: </Label>
                         <AirlineInput
@@ -135,7 +135,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         />
                     </DivItem>
                 </DivRow>
-        
+
                 {itemPrice !== data?.originalItemPrice && (
                     <AirlineSelect
                         label="Reason"
@@ -144,13 +144,13 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         setValue={handleReasonCodeChange}
                     />
                 )}
-        
+
                 <DivRow>
                     <ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
                     <ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
                     <ButtonRed
                         onClick={handleSave}
-                        disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason.value === data?.cartItem?.priceReasonId)
+                        disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
             || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)}
                     >
                         Save

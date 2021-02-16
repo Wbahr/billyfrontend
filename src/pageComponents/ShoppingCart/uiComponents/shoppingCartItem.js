@@ -200,7 +200,7 @@ export default function ShoppingCartItem(props) {
         setSelectedCustomerPartNumber(cartItem.customerPartNumberId)
     }, [cartItem])
 
-    const [editPriceModalData, setEditPriceModalData] = useState(null)
+    const [showEditPriceModal, setShowEditPriceModal] = useState(null)
     const [showSplitLineModal, setShowSplitLineModal] = useState(false)
     const [factoryStockModalData, setFactoryStockModalData] = useState(false)
     const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
@@ -209,12 +209,12 @@ export default function ShoppingCartItem(props) {
     const itemId = parseInt(cartItem.frecno, 10)
 
     useEffect(() => {
-        if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal) {
+        if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
             setIsDragDisabled(true)
         } else {
             setIsDragDisabled(false)
         }
-    }, [showSplitLineModal, factoryStockModalData, showCustomerPartModal, showSourceLocationModal, showDispositionModal])
+    }, [showSplitLineModal, factoryStockModalData, showCustomerPartModal, showSourceLocationModal, showDispositionModal, showEditPriceModal])
 
     const { userInfo } = useContext(Context)
 
@@ -242,14 +242,7 @@ export default function ShoppingCartItem(props) {
     }
 
     const handleShowEditPriceModal = () => {
-        setEditPriceModalData({
-            originalItemPrice: priceInfo?.unitPrice,
-            itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-            spaType: priceInfo?.spaType,
-            airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
-            priceReasonId: cartItem.priceReasonId,
-            cartItem
-        })
+        setShowEditPriceModal(true)
     }
 
     const handleShowSourceLocModal = () => {
@@ -376,7 +369,7 @@ export default function ShoppingCartItem(props) {
                                                         fixedDecimalScale
                                                     />
                                                     <span>{`/${unitOfMeasure || ''}`}</span>
-                                                    {!!(cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && userInfo?.isAirlineEmployee && (
+                                                    {userInfo?.isAirlineEmployee && (
                                                         <EditPriceIcon onClick={handleShowEditPriceModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>
@@ -452,9 +445,16 @@ export default function ShoppingCartItem(props) {
             }
 
             <EditPriceModal
-                open={!!editPriceModalData}
-                hideEditPriceModal={() => setEditPriceModalData(null)}
-                data={editPriceModalData}
+                open={!!showEditPriceModal}
+                hideEditPriceModal={() => setShowEditPriceModal(null)}
+                data={{
+                    originalItemPrice: priceInfo?.unitPrice,
+                    itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
+                    spaType: priceInfo?.spaType,
+                    airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
+                    priceReasonId: cartItem.priceReasonId,
+                    cartItem
+                }}
                 setCartItem={setCartItem}
             />
             <SplitLineModal

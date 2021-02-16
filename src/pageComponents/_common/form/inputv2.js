@@ -25,9 +25,9 @@ const MainInput = styled.input`
   color: #303030;
   font-size: 16px;
   border-radius: 1px;
-  border: 1px solid #e1e1e1;  
+  border: 1px solid #e1e1e1;
   :focus{
-    border: 1px solid #007bff;  
+    border: 1px solid #007bff;
     outline: none;
   }
   ::placeholder {
@@ -42,9 +42,9 @@ const MainCurrencyInput = styled(CurrencyInput)`
   color: #303030;
   font-size: 16px;
   border-radius: 1px;
-  border: 1px solid #e1e1e1;  
+  border: 1px solid #e1e1e1;
   :focus{
-    border: 1px solid #007bff;  
+    border: 1px solid #007bff;
     outline: none;
   }
   ::placeholder {
@@ -71,9 +71,9 @@ function InputV2(props) {
             <DivContainer>
                 {label && <Label htmlFor={label}>{label}</Label>}
                 <MainCurrencyInput
-                    value={value} 
-                    prefix='$' 
-                    style={{ width: width || '400px' }} 
+                    value={value}
+                    prefix='$'
+                    style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
                     disabled={disabled}
                 />
@@ -82,14 +82,15 @@ function InputV2(props) {
     } else if (type === 'percent'){
         return (
             <DivContainer>
-                {label && <Label htmlFor={label}>{`${label}`}</Label>}        
+                {label && <Label htmlFor={label}>{`${label}`}</Label>}
                 <MainCurrencyInput
-                    value={value} 
-                    suffix='%' 
-                    style={{ width: width || '400px' }} 
+                    value={value}
+                    suffix='%'
+                    style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
                     precision="0"
                     disabled={disabled}
+                    allowNegative={true}
                 />
             </DivContainer>
         )
