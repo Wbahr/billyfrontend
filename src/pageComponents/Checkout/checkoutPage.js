@@ -13,13 +13,21 @@ import { ShipToForm } from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
 import formatDropdownData from './helpers/formatCheckoutDropdownData'
-import { defaultBilling, defaultConfirmationEmail, defaultContact, defaultQuote, defaultShipTo } from './helpers'
+import {
+    defaultBilling,
+    defaultConfirmationEmail,
+    defaultContact,
+    defaultQuote,
+    defaultShipTo,
+    transformForPaymentInfo
+} from './helpers'
 import { startOfTomorrow } from 'date-fns'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/gqlQueries/gqlItemQueries'
-import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA } from 'setup/providerGQL'
+import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA, GET_PAYMENT_METHOD_INFO } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 const DivContainer = styled.div`
   display: flex;
@@ -87,24 +95,15 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
-
 function CheckoutPage({ history }) {
     const context = useContext(Context)
     const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
     const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
-    const [paymentInfo, setPaymentInfo] = useState({})
     const [taxRateRequestInfo, setTaxRateRequestInfo] = useState({})
     const [taxRateLoading, setTaxRateLoading] = useState(false)
     const [taxRate, setTaxRate] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
     const [validationSchema, setValidationSchema] = useState(null)
-
-    const handleMoveStep = nextStepIdx => {
-        if (nextStepIdx === 0 || stepValidated[nextStepIdx - 1]) {
-            setCurrentStep(nextStepIdx)
-        }
-    }
 
     const [stepValidated, setStepValidated] = useState(
         {
@@ -162,25 +161,10 @@ function CheckoutPage({ history }) {
             })
         }
     }, [taxRateRequestInfo])
-  
+
     useEffect(() => {
         getCheckoutData()
     }, [context.impersonatedCompanyInfo])
-
-    const getFormStepComponent = currentStep => {
-        switch (currentStep) {
-        case 0:
-            return ShippingScheduleForm
-        case 1:
-            return ShipToForm
-        case 2:
-            return BillingInfoForm
-        case 3:
-            return ConfirmationScreen
-        default:
-            return ShippingScheduleForm
-        }
-    }
 
     function yupSchema(requiresPONumber) {
         return {
@@ -240,7 +224,7 @@ function CheckoutPage({ history }) {
         itemsPrices: itemsPrices?.getItemPrices,
         itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
     }
-    
+
     const initValues = {
         contact: { ...defaultContact },
         schedule: {
@@ -273,43 +257,29 @@ function CheckoutPage({ history }) {
 
     const showPoOption = checkoutDropdownData.billingInfo?.isNetTerms
 
-    const FormStepComponent = getFormStepComponent(currentStep)
-
     return (
         <DivContainer>
             <DivCheckoutCol>
-                <Div>
-                    <DivRow>
-                        <FontAwesomeIcon icon="lock" />
-                        <H3>Checkout</H3>
-                        <CheckoutProgress {...{ stepLabels, currentStep, stepValidated, handleMoveStep }} />
-                    </DivRow>
-                </Div>
-
-                <Container>
-                    <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                    {validationSchema && (
-                        <Formik
-                            initialValues={initValues}
-                            enableReinitialize={false}
-                            validationSchema={validationSchema[currentStep]}
-                            validate={handleValidateFields}
-                            validateOnBlur={true}
-                            validateOnChange={true}
-                        >
-                            {formikProps => (
-                                <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
-                                    <FormStepComponent {...{
-                                        ...formikProps, ...itemInfo, paymentInfo, setPaymentInfo, isStepValid: stepValidated[currentStep], handleMoveStep,
-                                        checkoutDropdownData, checkoutDropdownDataLabels, updateZip: (shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode }), history, showPoOption
-                                    }}
-                                    />
-                                </form>
-                            )}
-                        </Formik>
-                    )}
-                    {!validationSchema && <Loader />}
-                </Container>
+                {validationSchema && (
+                    <Formik
+                        initialValues={initValues}
+                        enableReinitialize={false}
+                        validationSchema={validationSchema[currentStep]}
+                        validate={handleValidateFields}
+                        validateOnBlur={true}
+                        validateOnChange={true}
+                    >
+                        {formikProps => (
+                            <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
+                                <FormContainer
+                                    isStepValid={stepValidated[currentStep]}
+                                    updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
+                                    {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                />
+                            </form>
+                        )}
+                    </Formik>
+                )}
             </DivCheckoutCol>
 
             <DivOrderTotalCol>
@@ -321,6 +291,94 @@ function CheckoutPage({ history }) {
                 />
             </DivOrderTotalCol>
         </DivContainer>
+    )
+}
+
+const getFormStepComponent = currentStep => {
+    switch (currentStep) {
+    case 0:
+        return ShippingScheduleForm
+    case 1:
+        return ShipToForm
+    case 2:
+        return BillingInfoForm
+    case 3:
+        return ConfirmationScreen
+    default:
+        return ShippingScheduleForm
+    }
+}
+
+const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
+
+const FormContainer = props => {
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } } } = props
+    const stripe = useStripe()
+    const elements = useElements()
+    const [paymentInfo, setPaymentInfo] = useState({})
+    const [selectedCard, setSelectedCard] = useState('new_card')
+    const [creditCardLoading, setCreditCardLoading] = useState(false)
+    const { userInfo } = useContext(Context)
+
+    const confirmCardSetup = () => {
+        if (cardType === 'new_card' && !creditCardLoading) {
+            setCreditCardLoading(true)
+            const cardElement = elements.getElement(CardElement)
+            stripe
+                .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
+                .then(data => {
+                    setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
+                    setSelectedCard(data.setupIntent.payment_method)
+                    setCurrentStep(3)
+                    setCreditCardLoading(false)
+                })
+        } else {
+            setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
+            setCurrentStep(3)
+        }
+    }
+
+    const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ paymentMethodInfo }) => {
+            setPaymentInfo({ ...paymentInfo, ...paymentMethodInfo })
+        }
+    })
+
+    const handleMoveStep = nextStepIdx => {
+        const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)
+        if (prevStepKeys.every(i => stepValidated[i]) && nextStepIdx !== currentStep) {
+            if (nextStepIdx === 3 && paymentMethod !== 'purchase_order') {
+                if (userInfo) {
+                    confirmCardSetup()
+                } else {
+                    getPaymentInfo(transformForPaymentInfo(props.values))
+                    setCurrentStep(nextStepIdx)
+                }
+            } else {
+                setCurrentStep(nextStepIdx)
+            }
+        }
+    }
+
+    const FormStepComponent = getFormStepComponent(currentStep)
+
+    return (
+        <>
+            <Div>
+                <DivRow>
+                    <FontAwesomeIcon icon="lock" />
+                    <H3>Checkout</H3>
+                    <CheckoutProgress {...{ stepLabels, currentStep, stepValidated, handleMoveStep }} />
+                </DivRow>
+            </Div>
+
+            <Container>
+                <Pformheader>{stepLabels[currentStep]}</Pformheader>
+                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, getPaymentInfo, handleMoveStep }}/>
+                {!validationSchema && <Loader />}
+            </Container>
+        </>
     )
 }
 

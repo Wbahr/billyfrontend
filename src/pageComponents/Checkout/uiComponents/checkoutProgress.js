@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const UlProgressBar = styled.ul`
@@ -12,7 +12,7 @@ li {
 	position: relative;
 	text-align: center;
 	text-transform: uppercase;
-	color: #535353; 
+	color: #535353;
 }
 
 li:before {
@@ -41,7 +41,7 @@ li:after {
 li:first-child:after {
 	content: none;
 }
-` 
+`
 
 const LI = styled.li`
 	:before {
@@ -50,7 +50,7 @@ const LI = styled.li`
 `
 
 const LiSelected = styled.li`
-	color: #535353 !important; 
+	color: #535353 !important;
 	font-weight: 500;
 	:before {
 		border-color: #007bff !important;
@@ -80,17 +80,11 @@ export default function CheckoutProgress({ stepLabels, currentStep, handleMoveSt
                 {stepName}
             </LI>
         )
-	
-    const [steps, setSteps] = useState(stepLabels.map(mapStepLabels))
-	
-    useEffect(() => {
-        setSteps(stepLabels.map(mapStepLabels))
-    }, [stepLabels, currentStep, stepValidated])
-	
+
     return (
         <div>
             <UlProgressBar>
-                {steps}
+                {stepLabels.map(mapStepLabels)}
             </UlProgressBar>
         </div>
     )
