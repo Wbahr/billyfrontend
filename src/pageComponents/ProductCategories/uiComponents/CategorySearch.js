@@ -62,23 +62,23 @@ const ShortBorder = styled.div`
 const RESULT_SIZE = 24
 
 export default function CategorySearch({ match, history }) {
-  
+
     const [categorySearch, setCategorySearch] = useState(null)
     const [resultPage, setResultPage] = useState(1)
     const [lastSearchPayload, setLastSearchPayload] = useState({})
-  
+
     const [searchState, setSearchState, { setBrands, setAttributes, setSortType, setSearchTerms }] = useSearchState()
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
     const { results, totalResults, searchTerms, sortType, brands, attributes, isSynced } = searchState
-  
+
     const categoryUrlSlug = match.params.categoryUrlSlug
     const categoryName = categorySearch?.category?.name
     const seoHtml = categorySearch?.category?.seoHtml
-  
+
     useEffect(() => {
         performCategorySearch()
     }, [resultPage])
-  
+
     useDidUpdateEffect(() => {
         if (resultPage !== 1) {
             setResultPage(1)
@@ -86,7 +86,7 @@ export default function CategorySearch({ match, history }) {
             performCategorySearch()
         }
     }, [categoryUrlSlug, sortType, searchTerms])
-  
+
     useDidUpdateEffect(() => {
         if (!isSynced) {
             if (resultPage !== 1) {
@@ -96,7 +96,7 @@ export default function CategorySearch({ match, history }) {
             }
         }
     }, [brands, attributes])
-  
+
     const performCategorySearch = () => {
         handleSetSearchState({ isSearching: true })
         const payload = {
@@ -114,7 +114,7 @@ export default function CategorySearch({ match, history }) {
         setLastSearchPayload(payload)
         return categorySearchApiCall({ variables: payload })
     }
-  
+
     const [categorySearchApiCall, { variables }] = useLazyQuery(CATEGORY_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ categorySearch }) => {
@@ -126,7 +126,7 @@ export default function CategorySearch({ match, history }) {
             }
         }
     })
-  
+
     const categoryList = (categorySearch?.category?.children || []).map(({ urlSlug, name, imageUrl }) => (
         <Category
             key={urlSlug}
@@ -136,21 +136,21 @@ export default function CategorySearch({ match, history }) {
             Image={<img src={imageUrl} alt={name} title={name}/>}
         />
     ))
-  
+
     return !categorySearch ? (
         <Loader/>
     ) : (
         <DivCol>
             <BreadCrumbs breadCrumbTrail={categorySearch?.category?.breadCrumbs?.breadcrumbTrail}/>
-      
+
             <BorderContainer>
                 <H1>{categoryName}</H1>
                 <ShortBorder/>
             </BorderContainer>
-      
+
             {seoHtml && <div style={{ padding: '20px 10px' }} dangerouslySetInnerHTML={{ __html: seoHtml }}/>}
-      
-            {results ? (
+
+            {results && categoryList.length ? (
                 <Carousel>
                     <Category size='small' text="More Categories" Image={<ArrowForward style={{ marginTop: 50 }}/>} />
                     {categoryList}
@@ -160,7 +160,7 @@ export default function CategorySearch({ match, history }) {
                     {categoryList}
                 </DivRow>
             )}
-      
+
             {results && (
                 <SearchContainer
                     searchState={searchState}
@@ -197,7 +197,7 @@ export default function CategorySearch({ match, history }) {
                     />
                 </SearchContainer>
             )}
-      
+
             {!results && !categorySearch?.category?.children.length && (
                 <EmptyCategory/>
             )}

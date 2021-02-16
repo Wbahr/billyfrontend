@@ -244,13 +244,12 @@ const CartComponent = (props) => {
                 key={index}
                 draggableId={String(index)}
                 index={index}
-                isDragDisabled={isDragDisabled}
+                isDragDisabled={!details || isDragDisabled}
             >
                 {(provided) => (
                     <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                     >
                         {details ? (
                             <ShoppingCartItem
@@ -263,7 +262,7 @@ const CartComponent = (props) => {
                                 cart={shoppingCart || []}
                                 setCartItem={setCartItem(index)}
                                 setCartItemField={setCartItemField(index)}
-                                {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing }}
+                                {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
                             />
                         ) : <SkeletonItem index={index} />}
                         {provided.placeholder}

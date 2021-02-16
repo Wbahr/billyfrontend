@@ -235,7 +235,7 @@ function CheckoutPage({ history }) {
         },
         shipto: {
             ...defaultShipTo,
-            selectedShipTo: !context.userInfo ? null : -1,
+            selectedShipTo: null,
             firstName: context.userInfo?.isImpersonatorUser ? '' : context.userInfo?.firstName || '',
             lastName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.lastName || '',
         },
