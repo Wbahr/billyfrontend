@@ -220,7 +220,7 @@ export default function HeaderComponent({ history }) {
         </NavigationItemContainer>
     )
 
-    const toMenuItem = ({ label, to }) => <DropdownMenuItem key={label} to={to}>{label}</DropdownMenuItem>
+    const toMenuItem = ({ label, to }, idx) => <DropdownMenuItem key={idx} to={to}>{label}</DropdownMenuItem>
 
     const tabComponents = tabDeclaration.map(toMenu)
 

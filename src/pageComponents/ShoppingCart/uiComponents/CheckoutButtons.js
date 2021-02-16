@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../setup/context'
+import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivButtonContainer = styled.div `
 	margin: auto auto 0 auto;
@@ -48,11 +49,7 @@ const CheckoutButtons = ({ history }) => {
     } = useContext(Context)
 
     const pricesLoading = !itemPrices?.length || cartPricing?.state === 'loading'
-    const hasZeroPriceItem = cart?.length && itemPrices?.length >= 0 && (cart || []).some(cartItem => {
-        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
-
-        return itemPrice?.unitPrice === 0
-    })
+    const hasZeroPriceItem = cartHasZeroPricedItem(cart, itemPrices)
 
     const moveToCheckoutHandler = () => {
         if (!hasZeroPriceItem){

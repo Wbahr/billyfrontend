@@ -26,6 +26,7 @@ import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/
 import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA, GET_PAYMENT_METHOD_INFO } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
+import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 
 const DivContainer = styled.div`
@@ -113,11 +114,32 @@ function CheckoutPage({ history }) {
         }
     )
 
+    const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
+        variables: {
+            items: context.cart?.map(cartItem => {
+                return {
+                    invMastUid: cartItem.frecno,
+                    quantity: cartItem.quantity
+                }
+            })
+        }
+    })
+
     useEffect(() => {
         if (!context.cart?.length) {
             history.replace('/cart')
         }
+
+        if (context.userInfo?.isAirlineEngineerUser){
+            history.replace('/cart')
+        }
     }, [])
+
+    useEffect(() => {
+        if (cartHasZeroPricedItem(context.cart, itemsPrices)){
+            history.replace('/cart')
+        }
+    }, [itemsPrices])
 
     const [getTaxRate] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
@@ -188,17 +210,6 @@ function CheckoutPage({ history }) {
     const { data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
         variables: {
             invMastUids: invMastUids
-        }
-    })
-
-    const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
-        variables: {
-            items: context.cart?.map(cartItem => {
-                return {
-                    invMastUid: cartItem.frecno,
-                    quantity: cartItem.quantity
-                }
-            })
         }
     })
 
