@@ -36,13 +36,13 @@ export default function SubtotalBox({ history }) {
                 fixedDecimalScale
             />
         )
-	
+
     return (
         <Container>
             <DebounceInput
                 element="textarea"
                 minLength={2}
-                debounceTimeout={300}
+                debounceTimeout={900}
                 onChange={e => updateOrderNotes(e.target.value)}
                 placeholder='Type Order Notes here'
                 style={{ width: 600 }}
@@ -51,7 +51,7 @@ export default function SubtotalBox({ history }) {
 
             <Div>
                 <h5>Subtotal: {subtotal}</h5>
-				
+
                 <CheckoutButtons history={history} />
             </Div>
         </Container>
