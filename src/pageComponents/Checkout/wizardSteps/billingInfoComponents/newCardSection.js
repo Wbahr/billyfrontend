@@ -28,7 +28,7 @@ const Label = styled.label`
 `
 
 export default function NewCardSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { billingInfo }, setFieldTouched } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo }, setFieldTouched, isNewPaymentMethod } = props
     const context = useContext(Context)
 
     const handleSameAsShippingChange = (event) => {
@@ -59,19 +59,21 @@ export default function NewCardSection(props) {
         }
 
         //setFieldValue does not trigger validation. This is a workaround.
-        //Without this, selecting "same as shipping" would leave the 
+        //Without this, selecting "same as shipping" would leave the
         //Continue button disabled.
         setTimeout(() => setFieldTouched('billing.zip', true))
     }
 
     return (
         <div>
-            <Row style={{ padding: '8px 10px' }}>
-                <StripePaymentSection {...props} />
-                {!!context.userInfo && (
-                    <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" style={{ margin: 'auto 10px auto 0px' }} />
-                )}
-            </Row>
+            {!isNewPaymentMethod && (
+                <Row style={{ padding: '8px 10px' }}>
+                    <StripePaymentSection {...props} />
+                    {!!context.userInfo &&  (
+                        <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" style={{ margin: 'auto 10px auto 0px' }} />
+                    )}
+                </Row>
+            )}
             <Row style={{ padding: '8px 10px' }}>
                 <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
                 <Label htmlFor="billing.sameAsShipping">Billing same as shipping</Label>

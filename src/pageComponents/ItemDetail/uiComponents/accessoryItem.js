@@ -107,12 +107,6 @@ const DivSpace = styled(Div)`
   flex-grow: 99;
 `
 
-const InputQuantity = styled.input`
-  width: 50px;
-  height: 25px;
-  margin-left: 4px;
-`
-
 const Pprice = styled.p`
   color: #328EFC;
   font-size: 18px;

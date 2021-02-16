@@ -84,6 +84,7 @@ export default function ConfirmationScreen(props) {
             schedule,
             shipto,
             billing: {
+                cardIsValid,
                 sameAsShipping,
                 ...billing
             },

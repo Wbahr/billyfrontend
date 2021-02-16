@@ -45,12 +45,12 @@ const cardStyle = {
 
 export default function StripePaymentSection({ setCardIsValid }) {
     const [error, setError] = useState(null)
-	
+
     const handleChange = async (event) => {
         setCardIsValid(event.complete && !event.error)
         setError(event.error ? event.error.message : '')
     }
-	
+
     return (
         <Container>
             <Label>Credit Card</Label>

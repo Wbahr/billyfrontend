@@ -5,12 +5,11 @@ import NewCardSection from './billingInfoComponents/newCardSection'
 import PurchaseOrderSection from './billingInfoComponents/purchaseOrderSection'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import Context from '../../../setup/context'
-import { useLazyQuery } from '@apollo/client'
-import { GET_PAYMENT_METHOD_INFO } from '../../../setup/providerGQL'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { transformForPaymentInfo } from '../helpers'
 import Select from '../../_common/form/select'
 import FormikInput from '../../_common/formik/input_v2'
+import Loader from '../../_common/loader'
+import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -37,81 +36,46 @@ const DivNavigation = styled.div`
 `
 
 function BillingInfoForm(props) {
-    const { setValues, setFieldValue, values: { contact, billing: { paymentMethod, cardType } }, checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, setPaymentInfo, showPoOption } = props
-    const stripe = useStripe()
-    const elements = useElements()
+    const { setValues, setFieldValue, selectedCard, setSelectedCard, values: { contact, billing: { paymentMethod, cardType } },
+        checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption, creditCardLoading } = props
     const context = useContext(Context)
-    const [selectedCard, setSelectedCard] = useState('new_card')
     const [cardIsValid, setCardIsValid] = useState(false)
-  
+
+    useDidUpdateEffect(() => {
+        setFieldValue('billing.cardIsValid', cardIsValid)
+    }, [cardIsValid])
+
     useEffect(() => {
         if (context.userInfo) {
             getPaymentInfo(transformForPaymentInfo(props.values))
         }
     }, [context.userInfo])
-  
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
         if (!paymentMethod) {
-      
             setFieldValue('billing.paymentMethod', context.userInfo && billingInfo.isNetTerms ? 'purchase_order' : 'credit_card')
         }
     }, [])
-  
-    const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
-        fetchPolicy: 'no-cache',
-        onCompleted: ({ paymentMethodInfo }) => {
-            setPaymentInfo(paymentMethodInfo)
-        }
-    })
-  
-    const confirmCardSetup = () => {
-        if (cardType === 'new_card') {
-            const cardElement = elements.getElement(CardElement)
-            stripe
-                .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
-                .then(data => {
-                    setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
-                    handleMoveStep(3)
-                })
-        } else {
-            setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
-            handleMoveStep(3)
-        }
-    }
-  
-    const handleContinueClick = () => {
-        if (paymentMethod !== 'purchase_order') {
-            if (context.userInfo) {
-                confirmCardSetup()
-            } else {
-                getPaymentInfo(transformForPaymentInfo(props.values))
-                handleMoveStep(3)
-            }
-        } else {
-            handleMoveStep(3)
-        }
-    }
-  
-    const mapPaymentMethods = ({ paymentMethodId, card }) => ({
-        value: paymentMethodId,
-        label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
-    })
-  
-    const newOrSavedCardOptions = [
-        { label: 'New Card', value: 'new_card' },
-        ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
-    ]
-  
+
+    const handleContinueClick = () => handleMoveStep(3)
+
     const handleCardChange = value => {
-        setValues({ ...props.values, billing: { ...props.values.billing, cardType: value === 'new_card' ? value : 'saved_card' } })
+        setValues({
+            ...props.values,
+            billing: {
+                ...props.values.billing,
+                cardType: value === 'new_card' ? value : 'saved_card',
+                cardIsValid: value === 'new_card' ? cardIsValid : true
+            }
+        })
         setSelectedCard(value)
     }
-  
+
     const handleRadioButtonClick = ({ target: { value } }) => {
         const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
-    
-        //If the customer requires a PO, we need to reload the canned data 
+
+        //If the customer requires a PO, we need to reload the canned data
         // and not persist changes made in Credit Card mode.
         if (billingInfo?.isNetTerms)
         {
@@ -130,7 +94,7 @@ function BillingInfoForm(props) {
                 lastName: contact?.lastName || '',
                 email: contact?.email || '',
                 phone: contact?.phone || '',
-        
+
             })
         } else {
             setFieldValue('billing', {
@@ -140,11 +104,7 @@ function BillingInfoForm(props) {
             })
         }
     }
-  
-    const disabled = paymentMethod === 'credit_card' && cardType === 'new_card'
-        ? !isStepValid || !cardIsValid
-        : !isStepValid
-  
+
     const RadioButtons = ({ field }) => (
         <>
             <div>
@@ -157,7 +117,7 @@ function BillingInfoForm(props) {
                 />
                 <label>Purchase Order</label>
             </div>
-      
+
             <div>
                 <input
                     value="credit_card"
@@ -169,7 +129,20 @@ function BillingInfoForm(props) {
             </div>
         </>
     )
-  
+
+    const mapPaymentMethods = ({ paymentMethodId, card }) => ({
+        value: paymentMethodId,
+        label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
+    })
+
+    const isNewPaymentMethod = selectedCard !== 'new_card' && !(paymentInfo.paymentMethods || [])
+        .some(method => method.paymentMethodId === selectedCard)
+
+    const newOrSavedCardOptions = [
+        { label: 'New Card', value: 'new_card' },
+        ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
+    ].concat(isNewPaymentMethod ? { value: paymentInfo.paymentMethodId, label: 'xxxx xxxx xxxx xxxx - xx/xx' } : [])
+
     return (
         <WrapForm>
             {showPoOption && (
@@ -185,7 +158,7 @@ function BillingInfoForm(props) {
                     />
                 </FormRow>
             )}
-      
+
             {paymentMethod === 'credit_card' && (
                 <FormRow>
                     <label htmlFor="billing.cardType">New or Saved Card?*</label>
@@ -198,18 +171,24 @@ function BillingInfoForm(props) {
                     />
                 </FormRow>
             )}
-      
+
             {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
             {paymentMethod === 'credit_card' && cardType === 'new_card' && (
-                <NewCardSection {...props} setCardIsValid={setCardIsValid}/>
+                <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod}/>
             )}
             {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
                 <FormikInput label={billingInfo.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
             )}
-      
+
             <DivNavigation>
                 <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
-                <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
+                {creditCardLoading ? (
+                    <div style={{ width: 250 }}>
+                        <Loader/>
+                    </div>
+                ) : (
+                    <ButtonRed disabled={!isStepValid} onClick={handleContinueClick}>Continue</ButtonRed>
+                )}
             </DivNavigation>
         </WrapForm>
     )

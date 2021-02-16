@@ -50,22 +50,22 @@ export default function OrderSummary({ history }) {
     const {
         cartPricing
     } = useContext(Context)
-  
+
     return (
         <>
             <Div>
                 <H4>Order Summary</H4>
                 <DivLineItem>
                     <p>Subtotal</p>
-                    <p>{cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={cartPricing.subTotal} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={cartPricing.subTotal}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
@@ -73,15 +73,15 @@ export default function OrderSummary({ history }) {
                 </DivLineItem>
                 <DivLineItem>
                     <p>Tariff</p>
-                    <p>{cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={cartPricing.tariff} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={cartPricing.tariff}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
@@ -96,15 +96,15 @@ export default function OrderSummary({ history }) {
                     <p>(TBD)</p>
                 </DivLineItem>
                 <DivLineItemTotal>
-                    <p>Total (without tax) {cartPricing.state === 'loading' 
-                        ? 'Calculating...' 
+                    <p>Total (without tax) {cartPricing.state === 'loading'
+                        ? 'Calculating...'
                         : (
-                            <NumberFormat 
-                                value={Number(cartPricing.subTotal) + Number(cartPricing.tariff)} 
-                                displayType={'text'} 
-                                thousandSeparator={true} 
-                                prefix={'$'} 
-                                decimalScale={2} 
+                            <NumberFormat
+                                value={Number(cartPricing.subTotal) + Number(cartPricing.tariff)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
                                 fixedDecimalScale
                             />
                         )}
