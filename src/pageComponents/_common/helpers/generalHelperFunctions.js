@@ -166,7 +166,7 @@ export const cartHasZeroPricedItem = (cart, itemPrices) => {
     return (cart || []).some(cartItem => {
         const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
 
-        return itemPrice?.unitPrice === 0
+        return itemPrice?.unitPrice === 0 && !cartItem.itemUnitPriceOverride
     })
 }
 
