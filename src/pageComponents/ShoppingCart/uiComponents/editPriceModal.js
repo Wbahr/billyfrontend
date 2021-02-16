@@ -96,6 +96,10 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         setSelectedReason(reasonCodeOptions.find(code => code.value === value))
     }
 
+    const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
+        || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)
+        || (itemPrice !== data?.originalItemPrice && !selectedReason?.value)
+
     return (
         <Modal
             open={open}
@@ -150,8 +154,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                     <ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
                     <ButtonRed
                         onClick={handleSave}
-                        disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
-            || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)}
+                        disabled={saveDisabled}
                     >
                         Save
                     </ButtonRed>
