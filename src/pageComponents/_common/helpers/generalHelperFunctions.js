@@ -159,7 +159,7 @@ export function scrollHorizontal(element, change, duration) {
 }
 
 export const cartHasZeroPricedItem = (cart, itemPrices) => {
-    if (cart?.length || !itemPrices?.length){
+    if (!cart?.length || !itemPrices?.length){
         return false
     }
 
