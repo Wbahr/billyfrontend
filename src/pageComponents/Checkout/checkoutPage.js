@@ -137,7 +137,6 @@ function CheckoutPage({ history }) {
     }, [])
 
     useEffect(() => {
-        //Check for zero-priced items in the cart.
         if (cartHasZeroPricedItem(context.cart, itemsPrices)){
             history.replace('/cart')
         }
