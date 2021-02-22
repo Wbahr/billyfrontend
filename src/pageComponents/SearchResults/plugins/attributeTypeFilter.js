@@ -53,22 +53,27 @@ const InputSearch = styled.input`
 	width: 210px;
 `
 
+const Row = styled.div`
+    display: flex;
+    flex: 1
+`
+
 export default function AttributeTypeFilter({ open, attribute, updateAttribute }) {
     const [isOpen, setIsOpen] = useState(open)
     const toggleOpen = () => setIsOpen(!isOpen)
     const [filter, setFilter] = useState('')
-	
+
     const handleFeatureClick = idx => () => {
         const features = attribute.features.slice()
         features[idx].selected = !features[idx].selected
         updateAttribute({ ...attribute, features })
     }
-	
+
     const searchFilter = f => f.featureName !== 'null' && (!filter.length || f.featureNameDisplay.toLowerCase().startsWith(filter))
-	
-    const hasSelectedFeature = attribute.features.find(f => f.selected)
+
+    const hasSelectedFeature = attribute.features.some(f => f.selected)
     const shouldShowFeatureCount = selected => selected || !hasSelectedFeature
-	
+
     const toOption = ({ selected, featureName, featureNameDisplay, featureCount }, idx) => (
         <DivOptionRow key={idx} onClick={handleFeatureClick(idx)}>
             <input
@@ -84,7 +89,7 @@ export default function AttributeTypeFilter({ open, attribute, updateAttribute }
             }
         </DivOptionRow>
     )
-	
+
     const searchSortAndMapToOption = (accum, curVal, idx) => {
         if (searchFilter(curVal)) {
             if (curVal.selected) {
@@ -95,19 +100,22 @@ export default function AttributeTypeFilter({ open, attribute, updateAttribute }
         }
         return accum
     }
-	
+
     const AttributeOptions = () => (
         <DivOptions>
             {attribute.features.reduce(searchSortAndMapToOption, [])}
         </DivOptions>
     )
-	
+
     const handleSearchChange = e => setFilter(e.target.value.toLowerCase())
-	
+
     return (
         <div>
             <DivTitle onClick={toggleOpen}>
-                <P>{attribute.attributeNameDisplay}</P>
+                <Row>
+                    <P>{attribute.attributeNameDisplay}</P>
+                    {hasSelectedFeature && <FontAwesomeIcon icon="check" color="gray" style={{ margin: 'auto 5px' }}/>}
+                </Row>
                 <FontAwesomeIcon icon={isOpen ? 'caret-up' : 'caret-down'} color="black"/>
             </DivTitle>
             {isOpen && (

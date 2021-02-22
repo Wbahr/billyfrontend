@@ -184,7 +184,7 @@ const IMG = styled.img`
 
 export default function ItemDetailPage({ history }) {
     const { userInfo, addItem, itemDetails: cachedDetails, itemPrices: cachedPrices, getItemPrices, itemAvailabilities: cachedAvailabilities, customerPartNumbers: cachedCustomerPartNumbers } = useContext(Context)
-    const { itemId, customerPartNumber } = useParams()
+    const { itemId, customerPartNumber, item } = useParams()
     const invMastUid = parseInt(itemId)
     const [accessoryItems, setAccessoryItems] = useState([])
     const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
@@ -251,6 +251,11 @@ export default function ItemDetailPage({ history }) {
     })
 
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
+
+    useEffect(() => {
+        document.title = `${itemDetails?.itemDesc || item} at Airline Hydraulics`
+    }, [itemDetails])
+
     const cachedItemCustomerPartNumbers = cachedCustomerPartNumbers.filter(part => part.invMastUid === invMastUid)
     const customerPartNumbers = itemInfo?.customerPartNumbers || cachedItemCustomerPartNumbers
     const cachedItemAvailability = cachedAvailabilities.find(avail => avail.invMastUid === invMastUid)

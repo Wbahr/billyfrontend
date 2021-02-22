@@ -104,7 +104,6 @@ export default function SearchResultsPage({ history }) {
                 }
             }
         }
-        console.log('perform search', payload)
         setLastSearchPayload(payload)
         search({ variables: payload })
     }

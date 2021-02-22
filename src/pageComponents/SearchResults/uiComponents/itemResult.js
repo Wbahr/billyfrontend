@@ -27,6 +27,24 @@ const DivPartNumberRow = styled.div`
 	font-size: 12px;
 	font-family: Arial, sans-serif;
 `
+const ExtendedDescSpan = styled.span`
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    height: 36px; /* Fallback for non-webkit */
+    margin: 0 auto;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+`
 
 const DivPartNumberRowSpread = styled(DivPartNumberRow)`
 	justify-content: space-between;
@@ -65,7 +83,8 @@ const PartTitleLink = styled(Link)`
 	font-weight: 700;
 	font-size: 15px;
 	color: #000000 !important;
-	height: 45px;
+	height: 36px;
+    line-height: 1.25;
 	overflow: hidden;
 	&:hover{
 		cursor: pointer;
@@ -201,6 +220,17 @@ export default function ItemResult({ result, details, addedToCart }) {
                 <DivPartDetails>
                     <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
                 </DivPartDetails>
+
+                {details.extendedDesc ? (
+                    <ExtendedDescSpan>
+                        {details.extendedDesc}
+                    </ExtendedDescSpan>
+                ) : (
+                    <div style={{ width: '100%' }}>
+                        <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
+                        <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
+                    </div>
+                )}
 
                 <DivPartNumberRow>
                     <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>

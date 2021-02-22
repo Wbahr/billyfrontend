@@ -331,7 +331,6 @@ export default function HeaderComponent({ history }) {
                             <img src={AirlineLogo} width="135px" />
                         </Link>
 
-
                         <LinkContainer>
                             {tabComponents.slice(0, visibleTabCount)}
 

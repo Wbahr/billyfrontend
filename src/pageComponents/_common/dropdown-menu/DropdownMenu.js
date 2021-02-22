@@ -99,9 +99,9 @@ export const MyAccountDropdownMenu = ({ children, className }) => (
     </DropdownElement>
 )
 
-export const CartsDropdownMenu =  ({ children, className }) => (
-    <DropdownElement className={'nav-dropdown ' + className} style={{ top: '2rem' }} >
-        {children} 
+export const CartsDropdownMenu =  ({ children, className, style }) => (
+    <DropdownElement className={'nav-dropdown ' + className} style={{ top: '2rem', ...style }} >
+        {children}
     </DropdownElement>
 )
 
