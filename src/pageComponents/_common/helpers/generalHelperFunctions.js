@@ -159,14 +159,14 @@ export function scrollHorizontal(element, change, duration) {
 }
 
 export const cartHasZeroPricedItem = (cart, itemPrices) => {
-    if (cart?.length || !itemPrices?.length){
+    if (!cart?.length || !itemPrices?.length){
         return false
     }
 
     return (cart || []).some(cartItem => {
         const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
 
-        return itemPrice?.unitPrice === 0
+        return itemPrice?.unitPrice === 0 && !cartItem.itemUnitPriceOverride
     })
 }
 
