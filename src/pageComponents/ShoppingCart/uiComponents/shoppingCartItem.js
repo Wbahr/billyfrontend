@@ -182,9 +182,11 @@ export default function ShoppingCartItem(props) {
     } = props
 
     const {
+        unitPrice,
         unitOfMeasure,
         unitSize,
-        roundType
+        roundType,
+        spaType
     } = priceInfo || {}
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
@@ -320,7 +322,7 @@ export default function ShoppingCartItem(props) {
                                 <LocationsModal
                                     invMastUid={itemDetails.invMastUid}
                                     availabilityInfo={availabilityInfo}
-                                    unitPrice={priceInfo?.unitPrice}
+                                    unitPrice={unitPrice}
                                 />
 
                                 <DivRow>
@@ -368,7 +370,7 @@ export default function ShoppingCartItem(props) {
                                             <div>
                                                 <EditPriceDiv>
                                                     <NumberFormat
-                                                        value={cartItem.itemUnitPriceOverride || priceInfo?.unitPrice || 0}
+                                                        value={cartItem.itemUnitPriceOverride || unitPrice || 0}
                                                         displayType={'text'}
                                                         thousandSeparator={true}
                                                         prefix={'$'}
@@ -408,7 +410,7 @@ export default function ShoppingCartItem(props) {
                                                 {
                                                     !cartItem.itemUnitPriceOverride ? (
                                                         <NumberFormat
-                                                            value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity}
+                                                            value={(unitPrice ? unitPrice : 0.0).toFixed(2) * cartItem.quantity}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
@@ -455,9 +457,9 @@ export default function ShoppingCartItem(props) {
                 open={!!showEditPriceModal}
                 hideEditPriceModal={() => setShowEditPriceModal(null)}
                 data={{
-                    originalItemPrice: priceInfo?.unitPrice,
-                    itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-                    spaType: priceInfo?.spaType,
+                    originalItemPrice: unitPrice,
+                    itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : unitPrice,
+                    spaType: spaType,
                     airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
                     priceReasonId: cartItem.priceReasonId,
                     cartItem
