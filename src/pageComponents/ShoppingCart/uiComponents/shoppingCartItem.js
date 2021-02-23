@@ -186,9 +186,11 @@ export default function ShoppingCartItem(props) {
         unitOfMeasure,
         unitSize,
         roundType,
-        spaType
+        spaType,
+        spaNumber,
+        spaMargin,
+        spaCost
     } = priceInfo || {}
-
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
     const dispositions = [
@@ -460,6 +462,9 @@ export default function ShoppingCartItem(props) {
                     originalItemPrice: unitPrice,
                     itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : unitPrice,
                     spaType: spaType,
+                    spaNumber: spaNumber,
+                    spaCost: spaCost,
+                    spaMargin: spaMargin,
                     airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
                     priceReasonId: cartItem.priceReasonId,
                     cartItem
