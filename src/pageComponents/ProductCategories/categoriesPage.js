@@ -7,7 +7,8 @@ import RootCategories from './uiComponents/RootCategories'
 export const CategoryContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+    justify-content: center;
+    margin-bottom: 50px;
 `
 
 export default function CategoriesPage() {

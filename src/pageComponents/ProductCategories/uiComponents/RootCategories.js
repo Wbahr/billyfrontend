@@ -7,7 +7,13 @@ import Loader from '../../_common/loader'
 
 const DivRow = styled.div`
 	display: flex;
-	width: 100%;
+    width: 100%;
+    justify-content: center;
+`
+const AllCategoriesTitle = styled.p`
+    margin-top: 20px;
+    font-size: 1.5rem;
+    text-transform: uppercase;
 `
 
 export default () => {
@@ -21,7 +27,7 @@ export default () => {
         <Loader />
     ) : (
         <>
-            <DivRow><p>All Categories</p></DivRow>
+            <DivRow><AllCategoriesTitle>All Categories</AllCategoriesTitle></DivRow>
             {(categories || []).map(({ urlSlug, name, imageUrl }) => (
                 <Category key={urlSlug} text={name} linkTo={`/categories/${urlSlug}`} Image={<img src={imageUrl} alt={name} title={name}/>}/>
             ))}

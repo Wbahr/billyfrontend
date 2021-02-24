@@ -29,9 +29,10 @@ export const airlineRedTheme = {
     sectionBackgroundImageUrl: 'https://www.airlinehyd.com/customer/aihyco/images/Headers/Basic_Background.png',
     fancyFontName: 'Proxima',
     fancyFontNameBold: 'ProximaBold',
+    GeneralFontName: 'Verdana',
     headingFont: 'Verdana',
     textFont: '',
-    backgroundColor: '#535353',
+    backgroundColor: '#f2f3f4',
     accents: {
         primary: PALETTE.primary.main
     },

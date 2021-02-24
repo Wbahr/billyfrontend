@@ -42,7 +42,8 @@ const FlexCol = styled.div`
 
 const FlexWrap = styled.div`
 	display: flex;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: center;
 `
 const DEFAULT_RESULT_SIZE = 24
 

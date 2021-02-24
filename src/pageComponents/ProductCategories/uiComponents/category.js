@@ -15,15 +15,15 @@ const CategoryBlock = styled.div`
       border: ${props => props.size === 'small' ? '' : `3px solid ${props.theme.mainColor}`};
   }
   padding: 3px;
-  margin: 3px;
-  font-family: ${props => props.theme.fancyFontNameBold};
-  font-size: 20px;
+  margin: 7px;
+  font-family: ${props => props.theme.GeneralFontName};
+  font-size: 16px;
   color: black;
-  border-radius: 8px;
+  border-radius: 5px;
   img {
-      margin-right: 5px;
-      height: ${props => props.size === 'small' ? '100px' : '150px'};
-      width: ${props => props.size === 'small' ? '100px' : '150px'};
+      margin: 0 8px;
+      max-height: ${props => props.size === 'small' ? '100px' : '150px'};
+      max-width: ${props => props.size === 'small' ? '100%' : '100%'};
   }
   section {
       display: block;
