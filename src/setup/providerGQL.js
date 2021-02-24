@@ -374,6 +374,9 @@ export const GET_ITEM_PRICE = gql`
       totalPrice
       unitPrice
       unitOfMeasure
+      spaNumber
+      spaCost
+      spaMargin
       roundType
       unitSize
       spaType
