@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Context from '../../../setup/context'
 
 const Div = styled.div`
   justify-content: center;
@@ -35,16 +36,23 @@ const P = styled.p`
   margin-top: 25px;
 `
 
+const PBold = styled(P)`
+  font-weight: bold;
+`
+
 export default function Modal({ open, text, onClose, timeout }) {
+    const context = useContext(Context)
+
     useEffect(() => {
         if (open) setTimeout(onClose, timeout)
     }, [open])
-	
+
     return open && (
         <Div onClick={onClose}>
             <Container>
                 <FontAwesomeIcon icon="shopping-cart" size="5x" color="#328EFC" />
                 <P>{text}</P>
+                {context.userInfo?.isAirlineEngineerUser && <PBold>Airline Engineer User</PBold>}
             </Container>
         </Div>
     )

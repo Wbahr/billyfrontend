@@ -808,6 +808,17 @@ export const GET_ALL_USER_CARTS = gql`
     }
 `
 
+export const MERGE_CART_TO_CUSTOMER = gql`
+  mutation copyShoppingCartToCustomer($customerId: Int){
+    copyShoppingCartToCustomer(customerId: $customerId) {
+        customerId
+        cartItems{
+          frecno
+        }
+    }
+  }
+`
+
 export const GET_PRICE_REASONS = gql`
   query GetPriceReasons {
     priceReasons {

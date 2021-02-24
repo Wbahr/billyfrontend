@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
-import { GET_ALL_USER_CARTS, GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
-import { useLazyQuery } from '@apollo/client'
+import { GET_ALL_USER_CARTS, GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, MERGE_CART_TO_CUSTOMER } from 'setup/providerGQL'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import { CartsDropdownMenu, DropDownMenuAction } from '../../_common/dropdown-menu/DropdownMenu'
 import Loader from '../../_common/loader'
 
@@ -91,6 +91,13 @@ export default function ShoppingCart({ history }) {
         }
     })
 
+    const [mergeCart, { loading: mergeCartLoading }] = useMutation(MERGE_CART_TO_CUSTOMER, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            startImpersonation(data.copyShoppingCartToCustomer.customerId)
+        }
+    })
+
     useEffect(() => {
         if (cart) {
             const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
@@ -158,12 +165,12 @@ export default function ShoppingCart({ history }) {
                                 key={itm.customerName}
                                 linkText={`${itm.customerName} - ${itm.shoppingCartItemCount}`}
                                 onClick={() => {
-                                    startImpersonation(itm.customerId) //TODO: change to merge this cart with the current cart
+                                    mergeCart({ variables: { customerId: itm.customerId } })
                                     setShowMergeDropdown(false)
                                 }}
                             />
                         ))}
-                        {userCartsDataLoading && <Loader />}
+                        {userCartsDataLoading || mergeCartLoading && <Loader />}
                     </CartsDropdownMenu>
                     <DivShare>
                         <Ashare>Email Cart</Ashare>
