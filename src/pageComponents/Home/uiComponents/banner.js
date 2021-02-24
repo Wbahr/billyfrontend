@@ -78,7 +78,7 @@ export default () =>  (
     <BannerContainer>
         <Col>
             <LgBanner>
-                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/covid-banner.png" />
+                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/inch%20framing%20main_header.png" />
             </LgBanner>
 
             <SmBanner>
