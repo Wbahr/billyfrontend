@@ -54,7 +54,8 @@ const DivSave = styled(DivShare)`
 `
 
 export default function ShoppingCart({ history }) {
-    const { cart,
+    const {
+        cart,
         emptyCart,
         userInfo,
         saveShoppingCart,
@@ -67,7 +68,8 @@ export default function ShoppingCart({ history }) {
         getCustomerPartNumbers,
         getSourceLocations,
         updateShoppingCart,
-        cartPricing } = useContext(Context)
+        cartPricing
+    } = useContext(Context)
     const [savedCart, setSavedCart] = useState(false)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
@@ -98,13 +100,14 @@ export default function ShoppingCart({ history }) {
 
     useEffect(() => {
         if (cart) {
-            const hasMissingItemDetails = !!cart.find(item => !itemDetails?.find(detail => detail.invMastUid === item.frecno))
-            hasMissingItemDetails && getItemDetails(cart)
-            const hasMissingPartNumbers = !!cart.find(item => !customerPartNumbers?.find(partNo => partNo.invMastUid === item.frecno))
-            hasMissingPartNumbers && getCustomerPartNumbers(cart)
+            const itemsWithoutDetails = cart.filter(item => !itemDetails?.some(detail => detail.invMastUid === item.frecno))
+            if (itemsWithoutDetails.length) {
+                getItemDetails(itemsWithoutDetails)
+                getCustomerPartNumbers(itemsWithoutDetails)
+            }
 
-            const hasMissingSourceLocations = !!cart.find(item => !sourceLocations?.find(loc => loc.invMastUid === item.frecno))
-            hasMissingSourceLocations && getSourceLocations(cart)
+            const itemsWithoutSourceLocations = cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.frecno))
+            itemsWithoutSourceLocations.length && getSourceLocations(itemsWithoutSourceLocations)
         }
     }, [cart?.length])
 
@@ -191,6 +194,7 @@ const CartComponent = (props) => {
     } = props
 
     const [shoppingCart, setShoppingCart] = useState(cart || [])
+    const [isDragDisabled, setIsDragDisabled] = useState(false)
 
     useEffect(() => {
         setShoppingCart(cart)
@@ -236,28 +240,29 @@ const CartComponent = (props) => {
         const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.frecno)
 
         return (
-            <Draggable key={index} draggableId={String(index)} index={index}>
+            <Draggable
+                key={index}
+                draggableId={String(index)}
+                index={index}
+                isDragDisabled={!details || isDragDisabled}
+            >
                 {(provided) => (
                     <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                     >
                         {details ? (
                             <ShoppingCartItem
-                                cartItem={cartItem}
+                                key={index}
                                 itemDetails={details}
                                 priceInfo={itemPrice}
                                 availabilityInfo={itemAvailability}
                                 customerPartNumbers={itemCustomerPartNumbers}
                                 sourceLocations={itemSourceLocations}
-                                key={index}
                                 cart={shoppingCart || []}
-                                setCart={setCart}
                                 setCartItem={setCartItem(index)}
                                 setCartItemField={setCartItemField(index)}
-                                cartPricing={cartPricing}
-                                {...{ history, index }}
+                                {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
                             />
                         ) : <SkeletonItem index={index} />}
                         {provided.placeholder}

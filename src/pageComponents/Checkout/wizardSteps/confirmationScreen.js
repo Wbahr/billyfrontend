@@ -84,6 +84,7 @@ export default function ConfirmationScreen(props) {
             schedule,
             shipto,
             billing: {
+                cardIsValid,
                 sameAsShipping,
                 ...billing
             },
@@ -102,7 +103,7 @@ export default function ConfirmationScreen(props) {
         isStepValid,
         validateForm
     } = props
-  
+
     useEffect(() => {
         validateForm() // this is the only page we want to validate on mount
     }, [])
@@ -171,10 +172,10 @@ export default function ConfirmationScreen(props) {
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
-  
+
     return (
         <div>
-            {(userInfo?.role === 'Impersonator' || userInfo?.role === 'AirlineEmployee') && (
+            {(userInfo?.isAirlineEmployee) && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
                     <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
@@ -204,10 +205,10 @@ export default function ConfirmationScreen(props) {
 
                         <DivTextRow>
                             <P>Is Collect?</P>
-                            <p>{shipto.isCollect === 0 ? 'No' : 'Yes'}</p>
+                            <p>{!shipto.isCollect ? 'No' : 'Yes'}</p>
                         </DivTextRow>
 
-                        {shipto.isCollect === 1 && (
+                        {shipto.isCollect && (
                             <DivTextRow>
                                 <P>Collect Number:</P>
                                 <p>{shipto.collectNumber}</p>
@@ -233,8 +234,10 @@ export default function ConfirmationScreen(props) {
                             <P>Payment Method:</P>
                             <p>{billing.paymentMethod === 'purchase_order' ? 'Purchase Order' : 'Credit Card'}</p>
                         </DivTextRow>
-                        {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>}
-                    
+                        {billing.paymentMethod === 'purchase_order' && checkoutDropdownData?.billingInfo.terms && (
+                            <DivTextRow><P>Terms:</P><p>{checkoutDropdownData.billingInfo.terms}</p></DivTextRow>
+                        )}
+
                         {billing.paymentMethod === 'credit_card' && (
                             <DivTextRow>
                                 <P>Card Type:</P>

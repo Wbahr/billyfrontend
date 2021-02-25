@@ -7,38 +7,60 @@ import AirlineInput from '../../_common/form/inputv2'
 import AirlineSelect from '../../_common/form/select'
 
 const DivRow = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
 `
 
 const DivItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 4px;
+    margin: 0 4px;
+`
+
+const PriceInfoRow = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+`
+
+const PriceInfoItem = styled.div`
+    width: 33.33%;
+    padding-left: 5px;
+`
+
+const LabelInline = styled.label`
+    padding: 0 8px;
+    color: #303030;
+    font-size: 16px;
+    border-radius: 1px;
+    border: 1px solid #e1e1e1;
+    margin-left: 5px;
+    width: 100px;
+    background-color: #e3e3e3;
 `
 
 const Label = styled.label`
-  margin: 0;
-  font-size: 12px;
-  font-style: italic;
+    margin: 0;
+    font-size: 12px;
+    font-style: italic;
 `
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 24px;
-  h4 {
-    font-family: ProximaBold;
-  }
-  p {
-    font-family: Proxima;
-    text-align: center;
-  }
-  button {
-    margin-top: 8px;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 24px;
+    h4 {
+        font-family: ProximaBold;
+    }
+    p {
+        font-family: Proxima;
+        text-align: center;
+    }
+    button {
+        margin-top: 8px;
+    }
 `
 
 export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data }) {
@@ -46,9 +68,16 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
     const { editPriceReasonCodes } = useContext(Context)
-  
+
+    const {
+        spaType,
+        spaNumber,
+        spaCost,
+        spaMargin
+    } = data || {}
+
     const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
-  
+
     useEffect(() => {
         if (data) {
             setItemPrice(data.itemPrice)
@@ -56,18 +85,18 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
         }
     }, [data])
-  
+
     function handleReset() {
         setItemPrice(data.originalItemPrice)
         setMargin(calculateMargin(data.originalItemPrice))
         setSelectedReason(null)
     }
-  
+
     function calculateMargin(price) {
-        const newMargin = margin < 0 ? 0 : (price - data.airlineCost) / price
+        const newMargin = (price - data.airlineCost) / price
         return (newMargin * 100).toFixed(1)
     }
-  
+
     const handleChangePrice = type => (e, maskValue, floatValue) => {
         if (type === 'price') {
             setItemPrice(floatValue)
@@ -77,12 +106,12 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
         }
     }
-  
+
     const handleCancel = () => {
         handleReset()
         hideEditPriceModal()
     }
-  
+
     const handleSave = () => {
         if (itemPrice === data.originalItemPrice) {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
@@ -91,11 +120,15 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         }
         hideEditPriceModal()
     }
-  
+
     const handleReasonCodeChange = value => {
         setSelectedReason(reasonCodeOptions.find(code => code.value === value))
     }
-  
+
+    const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
+        || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)
+        || (itemPrice !== data?.originalItemPrice && !selectedReason?.value)
+
     return (
         <Modal
             open={open}
@@ -104,8 +137,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         >
             <Container>
                 <h4>Edit Item Price</h4>
-                <DivRow>
-                    <DivItem>
+                <PriceInfoRow>
+                    <PriceInfoItem>
                         <Label>Item Price: </Label>
                         <AirlineInput
                             type="currency"
@@ -113,19 +146,19 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                             width='100px'
                             onChange={handleChangePrice('price')}
                         />
-                    </DivItem>
-          
-                    <DivItem>
-                        <Label>Margin: {data?.spaType && `(SPA: ${data.spaType})`}</Label>
+                    </PriceInfoItem>
+
+                    <PriceInfoItem>
+                        <Label>Margin: </Label>
                         <AirlineInput
                             type="percent"
                             value={margin}
                             width='100px'
                             onChange={handleChangePrice('margin')}
                         />
-                    </DivItem>
-          
-                    <DivItem>
+                    </PriceInfoItem>
+
+                    <PriceInfoItem>
                         <Label>Airline Cost: </Label>
                         <AirlineInput
                             type="currency"
@@ -133,9 +166,25 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                             value={data?.airlineCost}
                             width='100px'
                         />
+                    </PriceInfoItem>
+                    <PriceInfoItem>
+                        <Label>SPA Type: </Label>
+                        <LabelInline>{spaType || 'N/A'}</LabelInline>
+                    </PriceInfoItem>
+                    <PriceInfoItem>
+                        <Label>SPA Margin: </Label>
+                        <LabelInline>{spaMargin ? `${spaMargin * 100}%` : 'N/A'}</LabelInline>
+                    </PriceInfoItem>
+                    <PriceInfoItem>
+                        <Label>SPA Cost: </Label>
+                        <LabelInline>{spaCost ? `$${spaCost.toFixed(2)}` : 'N/A'}</LabelInline>
+                    </PriceInfoItem>
+                    <DivItem>
+                        <Label>SPA Number: </Label>
+                        <LabelInline>{spaNumber || 'N/A'}</LabelInline>
                     </DivItem>
-                </DivRow>
-        
+                </PriceInfoRow>
+                
                 {itemPrice !== data?.originalItemPrice && (
                     <AirlineSelect
                         label="Reason"
@@ -144,14 +193,13 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         setValue={handleReasonCodeChange}
                     />
                 )}
-        
+
                 <DivRow>
                     <ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>
                     <ButtonBlack onClick={handleReset}>Reset</ButtonBlack>
                     <ButtonRed
                         onClick={handleSave}
-                        disabled={(itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason.value === data?.cartItem?.priceReasonId)
-            || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)}
+                        disabled={saveDisabled}
                     >
                         Save
                     </ButtonRed>

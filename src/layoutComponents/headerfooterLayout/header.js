@@ -173,23 +173,23 @@ const AccountSectionRow = styled.div`
 export default function HeaderComponent({ history }) {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
-	
+
     const [categories, setCategories] = useState([])
     const tabDeclaration = headerTabs(categories)
     const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
     const [overflowMenu, setOverflowMenu] = useState(null)
-	
+
     const [searchTerm, setSearchTerm] = useState('')
     const [searchAsCustomer, setSearchAsCustomer] = useState(false)
     const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
     const context = useContext(Context)
-	
+
     useQuery(GET_ROOT_CATEGORIES_HEADER, {
         onCompleted: data => {
             setCategories(data.getAllRootCategories)
         }
     })
-	
+
     const calculateTabs = () => {
         const containerRight = tabContainerRef.current && tabContainerRef.current.getBoundingClientRect().right
         const widthOfTheComponentsToTheRightOfTheTabs = containerRight < 745 ? 70 : 395 //SearchBar wraps at < 745
@@ -201,12 +201,12 @@ export default function HeaderComponent({ history }) {
         }, 0)
         setVisibleTabCount(count)
     }
-	
+
     useEffect(() => {
         calculateTabs()
         onWindowResize(calculateTabs)
     }, [tabRefs.current])
-	
+
     const setTabRef = idx => ref => {
         const right = ref && ref.getBoundingClientRect().right
         if (right) tabRefs.current[idx] = right
@@ -223,16 +223,18 @@ export default function HeaderComponent({ history }) {
     const toMenuItem = ({ label, to, isExternalLink }) => <DropdownMenuItem key={label} to={to} isExternalLink={isExternalLink}>{label}</DropdownMenuItem>
 	
     const tabComponents = tabDeclaration.map(toMenu)
-	
+
     const handleSearch = () => {
-        const search = searchTerm?.length ? searchTerm : queryString.parse(history.location.search).searchTerm
-        if (search?.length) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
+        const parsedQueryString = queryString.parse(history.location.search)
+        const search = searchTerm?.length ? searchTerm : parsedQueryString.searchTerm
+        const hasNonWebChanged = searchAsCustomer !== !!parsedQueryString.nonweb
+        if (search?.length || hasNonWebChanged) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
     }
-	
+
     const handleKeyPress = e => e.key === 'Enter' && handleSearch()
-	
+
     const searchPlaceholder = searchAsCustomer ? '[Non-web Included] Search by Part # or Keyword' : 'Search by Part # or Keyword'
-	
+
     const MyAccountDropdown = () => (
         <div
             id="myAccount"
@@ -242,7 +244,7 @@ export default function HeaderComponent({ history }) {
             <Link to="/account/dashboard" style={{ textDecoration: 'none' }}>
                 <P id="myAccount">My Account</P>
             </Link>
-			
+
             <MyAccountDropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
                 <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
                 <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
@@ -258,29 +260,29 @@ export default function HeaderComponent({ history }) {
             </MyAccountDropdownMenu>
         </div>
     )
-	
+
     const AccountSection = () => (
         <AccountSectionRow>
             <Row style={{ justifyContent: 'center' }}>
                 <FontAwesomeIcon icon="phone-alt" color="white" />
                 <Aphone href="tel:+18009997378">800-999-7378</Aphone>
             </Row>
-			
+
             <Row style={{ justifyContent: 'center' }}>
                 {context.userInfo
                     ? <P onClick={context.logoutUser}>Sign Out</P>
                     : <P onClick={() => history.push('/login')}>Sign In</P>
                 }
-				
+
                 <P>|</P>
-				
+
                 {context.userInfo
                     ? <MyAccountDropdown/>
                     : <A href="/signup">Create Account</A>
                 }
-				
+
                 <P>|</P>
-				
+
                 {context.cart && (
                     <Link to='/cart' style={{ textDecoration: 'none' }}>
                         <P>Cart({context.cart.length})</P>
@@ -289,56 +291,56 @@ export default function HeaderComponent({ history }) {
             </Row>
         </AccountSectionRow>
     )
-	
+
     const SearchBar = (
         <SearchBarRow>
-            {context.userInfo?.isAirlineUser && (
+            {context.userInfo?.isAirlineEmployee && (
                 <ButtonSearchType onClick={() => setSearchAsCustomer(!searchAsCustomer)}>
                     { searchAsCustomer ? <GreenDiv>NW</GreenDiv> : <GrayDiv>NW</GrayDiv> }
                 </ButtonSearchType>
             )}
-			
+
             <InputSearch
                 value={searchTerm}
                 placeholder={searchPlaceholder}
                 onChange={e => setSearchTerm(e.target.value)}
                 onKeyPress={handleKeyPress}
             />
-			
+
             <ButtonSearch onClick={handleSearch}>
                 <FontAwesomeIcon icon="search" color="#f6f6f6" size="lg" />
             </ButtonSearch>
         </SearchBarRow>
     )
-	
+
     return (
         <Nav history={history}>
             {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
             <NavTop>
                 <ReverseNavContainer>
                     <AccountSection/>
-					
+
                     <UserNameSection {...context}/>
                 </ReverseNavContainer>
             </NavTop>
-			
+
             <NavBottom>
                 <NavContainer ref={tabContainerRef}>
                     <Row>
                         <Link to="/">
                             <img src={AirlineLogo} width="135px" />
                         </Link>
-						
-						
+
+
                         <LinkContainer>
                             {tabComponents.slice(0, visibleTabCount)}
-							
+
                             {visibleTabCount < tabDeclaration.length && (
                                 <Button onClick={e => setOverflowMenu(e.currentTarget)} color="inherit">
                                     <FontAwesomeIcon icon="ellipsis-h"/>
                                 </Button>
                             )}
-							
+
                             <Menu
                                 MenuListProps={{ style: { backgroundColor: '#535353' } }}
                                 anchorEl={overflowMenu}
@@ -352,7 +354,7 @@ export default function HeaderComponent({ history }) {
                             </Menu>
                         </LinkContainer>
                     </Row>
-					
+
                     {SearchBar}
                 </NavContainer>
             </NavBottom>
@@ -367,7 +369,7 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
                 <Puser>
                     Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
                 </Puser>
-                {userInfo.role === 'AirlineEmployee' && <ImpersonationSearch/>}
+                {userInfo.isAirlineEngineerUser && <ImpersonationSearch/>}
             </UserNameRow>
         )
     } else if (userInfo && impersonatedCompanyInfo) {

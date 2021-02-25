@@ -19,24 +19,24 @@ const RESULT_SIZE = 24
 export default function SearchResultsPage({ history }) {
     const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
     const { sortType, searchTerm, searchTerms, resultPage, nonweb } = searchQueryParams
-	
+
     const setSearchTerms = newInnerSearchTerms => {
         setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
         handleSetSearchState({ searchTerms: newInnerSearchTerms })
     }
-	
+
     const setSortType = newSortType => {
         setQueryParam('sortType', newSortType)
         handleSetSearchState({ sortType: newSortType })
     }
-	
+
     const queryParamSearchState = { ...searchQueryParams, isSynced: false, results: [], totalResults: '--', isSearching: false }
     const [searchState, setSearchState, { setBrands, setAttributes, setParentCategory, setChildCategory }] = useSearchState(queryParamSearchState)
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
     const { totalResults, isSynced, brands, attributes, parentCategories, childCategories } = searchState
-	
+
     const [lastSearchPayload, setLastSearchPayload] = useState({})
-	
+
     useDidUpdateEffect(() => {
         if (!isSynced) {
             const parentCategory = parentCategories.find(cat => cat.selected)?.parentCategoryName
@@ -47,7 +47,7 @@ export default function SearchResultsPage({ history }) {
                 if (selectedFeatures.length) accum[attributeName] = selectedFeatures.join(',')
                 return accum
             }, {})
-			
+
             history.replace(buildSearchString({
                 searchTerm,
                 innerSearchTerms: searchTerms,
@@ -59,31 +59,23 @@ export default function SearchResultsPage({ history }) {
                 brands: selectedBrands,
                 ...selectedAttributes
             }))
-			
+
             if (resultPage === '1') performItemSearch()
         }
     }, [searchState.brands, searchState.attributes, searchState.childCategories, searchState.parentCategories])
-	
+
     useDidUpdateEffect(() => {
         if (resultPage === '1') {
             performItemSearch()
         } else {
             setQueryParam('resultPage', 1)
         }
-    }, [searchTerms, sortType])
-	
+    }, [searchTerm, searchTerms, sortType, nonweb])
+
     useEffect(() => {
         performItemSearch()
     }, [resultPage])
-	
-    useEffect(() => {
-        if (resultPage === '1') {
-            performItemSearch()
-        } else {
-            setQueryParam('resultPage', 1)
-        }
-    }, [searchTerm])
-	
+
     useDidUpdateEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
         if (!searchQueryParams.parentCategories.length
 			&& !searchQueryParams.childCategories.length
@@ -93,7 +85,7 @@ export default function SearchResultsPage({ history }) {
             setSearchState(queryParamSearchState)
         }
     }, [searchQueryParams.parentCategories.length, searchQueryParams.childCategories.length, searchQueryParams.brands.length, searchQueryParams.attributes.length])
-	
+
     const performItemSearch = () => {
         handleSetSearchState({ isSearching: true })
         const payload = {
@@ -112,10 +104,11 @@ export default function SearchResultsPage({ history }) {
                 }
             }
         }
+        console.log('perform search', payload)
         setLastSearchPayload(payload)
         search({ variables: payload })
     }
-	
+
     const [search, { variables }] = useLazyQuery(QUERY_ITEM_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ itemSearch }) => {
@@ -128,9 +121,9 @@ export default function SearchResultsPage({ history }) {
             throw 'Search Failed: show error boundary'
         }
     })
-	
+
     const handlePageChange = page => setQueryParam('resultPage', page)
-	
+
     return (
         <SearchContainer
             searchTerm={searchTerm}

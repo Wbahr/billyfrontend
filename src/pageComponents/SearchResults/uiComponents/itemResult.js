@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
+import { Link } from 'react-router-dom'
 import { getLargeImagePath } from '../../_common/helpers/generalHelperFunctions'
 import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonItem'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import LocationsModal from '../../_common/modals/LocationsModal'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -15,10 +17,6 @@ const DivItemResultContainer = styled.div`
 	margin: 0 8px 20px 8px;
 	padding: 8px 0;
 	border-bottom: 1px grey solid;
-`
-
-const DivRow = styled.div`
-	display: flex;
 `
 
 const DivPartNumberRow = styled.div`
@@ -62,7 +60,7 @@ const DivPartDetails = styled.div`
 	padding: 4px;
 `
 
-const PpartTitle = styled.p`
+const PartTitleLink = styled(Link)`
 	margin: 0;
 	font-weight: 700;
 	font-size: 15px;
@@ -96,7 +94,7 @@ const ButtonRed = styled.button`
 		box-shadow: 0px 0px 1px #000;
 	}
 `
-const ButtonBlack = styled.button`
+const MoreDetailsLink = styled(Link)`
 	width: max-content;
 	background-color: white;
 	color: #328EFC;
@@ -133,61 +131,44 @@ const ACall = styled.a`
 	padding: 0 4px;
 `
 
-const PBlue = styled.p`
-	cursor: pointer;
-	color: #328EFC;
-	margin: 0;
-	font-size: 13px;
-	padding: 0 4px;
-`
-
 const Img = styled.img`
 	margin: auto;
 	max-height: 100%;
 	max-width: 100%;
 `
 
-const Option = ({ partNumber, partId }) => <option key={partNumber} value={partId}>{partNumber}</option>
+const Option = ({ customerPartNumber, id }) => <option key={customerPartNumber} value={id}>{customerPartNumber}</option>
 
-const getCustomerPartOptions = ({ customerPartNumbers=[] }) => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
+const getCustomerPartOptions = customerPartNumbers => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
 
-export default function ItemResult({ result, details, history, toggleDetailsModal, toggleLocationsModal, addedToCart }) {
-    const { itemAvailabilities, itemPrices, addItem } = useContext(Context)
-  
+export default function ItemResult({ result, details, addedToCart }) {
+    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
+
     const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
-    const { availability, leadTimeDays } = foundAvailability || {}
-  
+
     const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
     const {
         unitPrice,
         unitOfMeasure,
         unitSize,
-        roundType } = foundPrice || {}
-  
+        roundType
+    } = foundPrice || {}
+
     const [quantity, setQuantity] = useState(1)
-  
+
     const [customerPartNumber, setCustomerPartNumber] = useState(0)
-    const [customerPartOptions, setCustomerPartOptions] = useState(getCustomerPartOptions(result))
-  
+    const [customerPartOptions, setCustomerPartOptions] = useState([])
+
     useEffect(() => {
-        setCustomerPartOptions(getCustomerPartOptions(details))
-        if (details.customerPartNumbers?.length === 1) {
-            setCustomerPartNumber(details.customerPartNumbers[0].partId)
+        const filteredCustomerPartNumbers = customerPartNumbers.filter(c => c.invMastUid === result.invMastUid)
+        setCustomerPartOptions(getCustomerPartOptions(filteredCustomerPartNumbers))
+        if (filteredCustomerPartNumbers?.length === 1) {
+            setCustomerPartNumber(filteredCustomerPartNumbers[0].id)
         }
-    }, [details.customerPartNumbers])
-  
-    const setQuantityHandler = (qty) => {
-        setQuantity(qty)
-    }
-  
-    const handlePartClick = () => {
-        if (customerPartNumber) {
-            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}/${customerPartNumber}`)
-        } else {
-            history.push(`/product/${details.itemCodeUrlSanitized}/${result.invMastUid}`)
-        }
-    }
-  
+    }, [customerPartNumbers])
+
+    const itemDetailsLink = `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
+
     const handleAddToCart = () => {
         addItem({
             frecno: result.invMastUid,
@@ -199,66 +180,54 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
         addedToCart()
         setQuantity(1)
     }
-  
-    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value)
-  
-    const handleAvailabilityClick = () => toggleLocationsModal(result.invMastUid)
-  
-    const handleQuickLookClick = () => toggleDetailsModal(result.invMastUid, result.itemCode)
-  
+
+    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value || null)
+
     return (
         <DivItemResultContainer>
             <DivPartDetailsRow>
-                <DivPartImg onClick={handlePartClick} style={{ cursor: 'pointer' }}>
-                    {!details.itemMedia ? (
-                        <SkeletonImage/>
-                    ) : (
-                        <Img src={getLargeImagePath(details)}/>
-                    )}
-                </DivPartImg>
-        
-                <ButtonBlack onClick={handleQuickLookClick}>Quick Look</ButtonBlack>
-        
+                <Link to={itemDetailsLink}>
+                    <DivPartImg>
+                        {!details.itemMedia ? (
+                            <SkeletonImage/>
+                        ) : (
+                            <Img src={getLargeImagePath(details)}/>
+                        )}
+                    </DivPartImg>
+                </Link>
+
+                <MoreDetailsLink to={itemDetailsLink}>More Details</MoreDetailsLink>
+
                 <DivPartDetails>
-                    <PpartTitle onClick={handlePartClick}>{result.itemDescription}</PpartTitle>
+                    <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
                 </DivPartDetails>
-        
+
                 <DivPartNumberRow>
                     <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
                 </DivPartNumberRow>
-        
+
                 <DivPartNumberRow>
                     <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
                 </DivPartNumberRow>
-        
+
                 {!!customerPartOptions.length && (
                     <DivPartNumberRow>
                         <PpartAvailability>
                             Customer Part #:
                             <select value={customerPartNumber} onChange={handlePartNumberChange}>
-                                <option>Select a Part No.</option>
+                                <option value="">Select a Part No.</option>
                                 {customerPartOptions}
                             </select>
                         </PpartAvailability>
                     </DivPartNumberRow>
                 )}
-        
-                <DivPartNumberRow>
-                    <PpartAvailability>Availability:</PpartAvailability>
-          
-                    {!unitPrice || !availability ? (
-                        <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} days` : 'Call for availability'}</PBlue>
-                    )	: !foundAvailability ? (
-                        <SkeletonDetail style={{ margin: 'auto 0' }}/>
-                    ) : (
-                        <DivRow>
-                            <PBlue onClick={handleAvailabilityClick}>
-                                {availability} (Show Locations)
-                            </PBlue>
-                        </DivRow>
-                    )}
-                </DivPartNumberRow>
-        
+
+                <LocationsModal
+                    invMastUid={result.invMastUid}
+                    availabilityInfo={foundAvailability}
+                    unitPrice={unitPrice}
+                />
+
                 <DivPartNumberRowSpread>
                     <Div>
                         <span>Quantity:</span>
@@ -267,7 +236,7 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                             unitSize={unitSize}
                             unitOfMeasure={unitOfMeasure}
                             roundType={roundType}
-                            handleUpdate={setQuantityHandler}
+                            handleUpdate={setQuantity}
                             min='0'
                         />
                         {
@@ -278,7 +247,7 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                             )
                         }
                     </Div>
-          
+
                     {unitPrice ? (
                         <Div>
                             <Pprice>${unitPrice.toFixed(2)}</Pprice>
@@ -292,9 +261,9 @@ export default function ItemResult({ result, details, history, toggleDetailsModa
                         <ACall href="tel:+18009997378">Call for Price</ACall>
                     )}
                 </DivPartNumberRowSpread>
-        
+
                 <DivSpace>
-                    {!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                    {(!!unitPrice || userInfo?.isAirlineEmployee) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>

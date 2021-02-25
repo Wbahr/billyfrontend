@@ -1,9 +1,8 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import Context from '../../../setup/context'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NumberFormat from 'react-number-format'
+import CheckoutButtons from './CheckoutButtons'
 
 const Div = styled.div`
 	display: flex;
@@ -24,31 +23,6 @@ const H4 = styled.h4`
 	font-family: ProximaBold;
 	text-transform: uppercase;
 	padding-left: 4px;
-`
-
-const DivButtonContainer = styled.div `
-	margin: auto auto 0 auto;
-`
-
-const DivCheckoutButton = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: #db1633;
-	background-image: linear-gradient(to top left, #950f23, #DB1633);
-	color: white;
-	padding: 8px 16px;
-	cursor: pointer;
-	width: 250px;
-	margin: 8px 0;
-	box-shadow: 1px 1px 2px #000;
-	
-	p {
-		margin: 0;
-		margin-left: 8px;
-		font-size: 18px;
-		font-weight: 500;
-	}
 `
 
 const DivLineItem = styled.div`
@@ -72,26 +46,46 @@ const DivLineItemTotal = styled(DivLineItem)`
 	}
 `
 
-const DivQuoteButton = styled(DivCheckoutButton)`
-	background-image: none;
-	background-color: #535353;
-`
-
 export default function OrderSummary({ history }) {
-    const context = useContext(Context)
-  
+    const {
+        cartPricing
+    } = useContext(Context)
+
     return (
         <>
             <Div>
                 <H4>Order Summary</H4>
                 <DivLineItem>
                     <p>Subtotal</p>
-                    <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
+                        : (
+                            <NumberFormat
+                                value={cartPricing.subTotal}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
+                                fixedDecimalScale
+                            />
+                        )}
                     </p>
                 </DivLineItem>
                 <DivLineItem>
                     <p>Tariff</p>
-                    <p>{context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={context.cartPricing.tariff} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+                    <p>{cartPricing.state === 'loading'
+                        ? 'Calculating...'
+                        : (
+                            <NumberFormat
+                                value={cartPricing.tariff}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
+                                fixedDecimalScale
+                            />
+                        )}
+                    </p>
                 </DivLineItem>
                 <DivLineItem>
                     <p>Tax</p>
@@ -102,36 +96,21 @@ export default function OrderSummary({ history }) {
                     <p>(TBD)</p>
                 </DivLineItem>
                 <DivLineItemTotal>
-                    <p>Total (without tax) {context.cartPricing.state === 'loading' ? 'Calculating...' : <NumberFormat value={Number(context.cartPricing.subTotal) + Number(context.cartPricing.tariff)} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>}</p>
+                    <p>Total (without tax) {cartPricing.state === 'loading'
+                        ? 'Calculating...'
+                        : (
+                            <NumberFormat
+                                value={Number(cartPricing.subTotal) + Number(cartPricing.tariff)}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
+                                fixedDecimalScale
+                            />
+                        )}
+                    </p>
                 </DivLineItemTotal>
-                {context.cart?.length > 0 && (
-                    <DivButtonContainer>
-                        <Context.Consumer>
-                            {({ userInfo }) => {
-                                if (_.isNil(userInfo) || (!_.isNil(userInfo) && userInfo.role !== 'AirlineEmployee')){
-                                    return (
-                                        <DivCheckoutButton onClick={() => history.push('/checkout')}>
-                                            <FontAwesomeIcon icon="lock" color="white"/>
-                                            <p>Start Secure Checkout</p>
-                                        </DivCheckoutButton>
-                                    )
-                                }
-                            }}
-                        </Context.Consumer>
-                        <Context.Consumer>
-                            {({ userInfo }) => {
-                                if (!_.isNil(userInfo) && (userInfo.role === 'AirlineEmployee' || userInfo.role === 'Impersonator')){
-                                    return (
-                                        <DivQuoteButton onClick={() => history.push('/create-quote')}>
-                                            <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
-                                            <p>Create a Quote</p>
-                                        </DivQuoteButton>
-                                    )
-                                }
-                            }}
-                        </Context.Consumer>
-                    </DivButtonContainer>
-                )}
+                <CheckoutButtons history={history} />
             </Div>
         </>
     )

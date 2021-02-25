@@ -50,7 +50,7 @@ export const shipToSchema = object({
         zip: string()
             .min(5, 'Zip/Postal Code must be at least 5 characters long (6 in Canada)')
             .max(10)
-            .required('Zip/Postal Code is required'), 
+            .required('Zip/Postal Code is required'),
         phone: string()
             .min(10, 'Phone Number must be at least 10 characters long')
             .required('Phone Number is required'),
@@ -61,7 +61,7 @@ export const shipToSchema = object({
             .required('Shipping Carrier must be selected'),
         collectNumber: string()
             .when('isCollect', {
-                is: 1,
+                is: true,
                 then: string().min(1).required('Collect Number is required'),
                 otherwise: string()
             })
@@ -74,9 +74,15 @@ export const airlineShipToSchema = shipToSchema.concat(contactSchema)
 export function getBillToSchema(requirePoNumber) {
     return object({
         billing: object({
+            cardIsValid: boolean()
+                .when('paymentMethod', (paymentMethod, schema) => {
+                    return requirePoNumber || paymentMethod === 'purchase_order'
+                        ? schema.oneOf([true], 'Must be valid credit card')
+                        : true
+                }),
             purchaseOrder: string()
                 .when('paymentMethod', (paymentMethod, schema) => {
-                    return requirePoNumber || paymentMethod === 'purchase_order' 
+                    return requirePoNumber || paymentMethod === 'purchase_order'
                         ? schema
                             .min(1, 'Purchase Order must be at least 1 character long')
                             .max(20, 'Purchase Order can not exceed 20 characters')

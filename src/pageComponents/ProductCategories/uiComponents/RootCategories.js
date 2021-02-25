@@ -1,6 +1,5 @@
 import Category from './category'
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { GET_ROOT_CATEGORIES_PAGE } from '../../../setup/providerGQL'
 import Loader from '../../_common/loader'
@@ -15,14 +14,13 @@ const AllCategoriesTitle = styled.p`
     font-size: 1.5rem;
     text-transform: uppercase;
 `
-
 export default () => {
     const [categories, setCategories] = useState(null)
-	
+
     const { loading } = useQuery(GET_ROOT_CATEGORIES_PAGE, {
         onCompleted: data => setCategories(data.getAllRootCategories)
     })
-	
+
     return loading || !categories ? (
         <Loader />
     ) : (

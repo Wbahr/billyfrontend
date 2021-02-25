@@ -113,6 +113,7 @@ export const GET_ITEMS_BY_ID = gql`
       itemCode
       itemCodeUrlSanitized
       itemDesc
+      extendedDesc
       mfgPartNo
       modelCode
       tariff
@@ -124,11 +125,6 @@ export const GET_ITEMS_BY_ID = gql`
         mediaType
         itemMediaType
       }
-    }
-    customerPartNumbersBatch(invMastUids: $invMastUids){
-      id
-      invMastUid
-      customerPartNumber
     }
   }
 `
@@ -179,6 +175,7 @@ export const QUERY_LOGIN = gql`
           companyName
           companyId
           role
+          webUserId
           permissions
           limits {
             limitType
@@ -377,6 +374,9 @@ export const GET_ITEM_PRICE = gql`
       totalPrice
       unitPrice
       unitOfMeasure
+      spaNumber
+      spaCost
+      spaMargin
       roundType
       unitSize
       spaType
@@ -629,7 +629,7 @@ export const GET_NEW_CUSTOMERS = gql`
             shippingLine2
             shippingState
             shippingZip
-        } 
+        }
     }
 `
 
@@ -663,7 +663,7 @@ export const GET_NEW_CUSTOMER = gql`
     }
 `
 
-//Pass a registrationCustomerID (from GET_NEW_CUSTOMERS) to reject the account request. It will 
+//Pass a registrationCustomerID (from GET_NEW_CUSTOMERS) to reject the account request. It will
 // not be available in subsequent GET_NEW_CUSTOMERS requests.
 //Variables: { "id": 19 }
 export const REJECT_NEW_CUSTOMER = gql`
@@ -671,7 +671,7 @@ export const REJECT_NEW_CUSTOMER = gql`
         rejectRegistration(id: $id, reason: $reason)
     }
 `
-//Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and 
+//Pass a registrationCustomerID to import the account into (or associate an existing account in) P21 and
 // create a login record from the associated contact
 //Variables: { "id": 18 }
 export const APPROVE_NEW_CUSTOMER = gql`
@@ -685,7 +685,7 @@ export const GET_ALL_SETTINGS = gql`
         appSettings {
             newCustomerNotificationEmails
             contactUsNotificationEmails
-            emailFrom 
+            emailFrom
             siteBaseUrl
             adminDashNewCustomersRelativeUrl
         }

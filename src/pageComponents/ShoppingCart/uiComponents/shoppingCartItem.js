@@ -14,6 +14,7 @@ import CustomerPartModal from './editCustomerPartModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
+import LocationsModal from '../../_common/modals/LocationsModal'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -161,11 +162,6 @@ const P2 = styled.p`
 	padding: 0 2px;
 `
 
-const P3 = styled.p`
-	color: black;
-	font-size: 12px !important;
-`
-
 export default function ShoppingCartItem(props) {
 
     const {
@@ -180,28 +176,40 @@ export default function ShoppingCartItem(props) {
         availabilityInfo,
         customerPartNumbers,
         sourceLocations,
-        history } = props
+        history,
+        setIsDragDisabled,
+        provided
+    } = props
 
     const {
+        unitPrice,
         unitOfMeasure,
         unitSize,
-        roundType } = priceInfo || {}
-
+        roundType,
+        spaType,
+        spaNumber,
+        spaMargin,
+        spaCost
+    } = priceInfo || {}
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
     const dispositions = [
-        { value: '', text: 'Default' },
+        { value: '', text: 'Stock' },
         { value: 'B', text: 'Backorder' },
         { value: 'D', text: 'Direct Ship' },
         { value: 'H', text: 'Hold' },
         { value: 'S', text: 'Special Order' }
     ]
 
+    const getDefaultDisposition = () => {
+        return availabilityInfo?.totalQuantity > availabilityInfo?.availability ? 'Backorder' : 'Stock'
+    }
+
     useEffect(() => {
         setSelectedCustomerPartNumber(cartItem.customerPartNumberId)
     }, [cartItem])
 
-    const [editPriceModalData, setEditPriceModalData] = useState(null)
+    const [showEditPriceModal, setShowEditPriceModal] = useState(null)
     const [showSplitLineModal, setShowSplitLineModal] = useState(false)
     const [factoryStockModalData, setFactoryStockModalData] = useState(false)
     const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
@@ -209,10 +217,18 @@ export default function ShoppingCartItem(props) {
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.frecno, 10)
 
+    useEffect(() => {
+        if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
+            setIsDragDisabled(true)
+        } else {
+            setIsDragDisabled(false)
+        }
+    }, [showSplitLineModal, factoryStockModalData, showCustomerPartModal, showSourceLocationModal, showDispositionModal, showEditPriceModal])
+
     const { userInfo } = useContext(Context)
 
     function selectCustomerPartNumber(value){
-        if (value === -1) {
+        if (value === '-1') {
             setSelectedCustomerPartNumber(0) // Reset Dropdown
             setCartItemField('customerPartNumberId', 0)
             setShowCustomerPartModal(true)
@@ -235,14 +251,7 @@ export default function ShoppingCartItem(props) {
     }
 
     const handleShowEditPriceModal = () => {
-        setEditPriceModalData({
-            originalItemPrice: priceInfo?.unitPrice,
-            itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : priceInfo?.unitPrice,
-            spaType: priceInfo?.spaType,
-            airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
-            priceReasonId: cartItem.priceReasonId,
-            cartItem
-        })
+        setShowEditPriceModal(true)
     }
 
     const handleShowSourceLocModal = () => {
@@ -272,7 +281,9 @@ export default function ShoppingCartItem(props) {
                     ? <p>{cartItem.frecno}</p>
                     : (
                         <DivCard>
-                            <DivMove>
+                            <DivMove
+                                {...provided.dragHandleProps}
+                            >
                                 <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
                             </DivMove>
                             <DivCol1>
@@ -309,14 +320,13 @@ export default function ShoppingCartItem(props) {
                                         )}
                                     </TextRow>
                                 )}
-                                <DivRow>
-                                    <P3>
-                                        Availability: {availabilityInfo?.availability}
-                                        {
-                                            (availabilityInfo?.leadTimeDays) &&  (' | ' + availabilityInfo.leadTimeMessage)
-                                        }
-                                    </P3>
-                                </DivRow>
+
+                                <LocationsModal
+                                    invMastUid={itemDetails.invMastUid}
+                                    availabilityInfo={availabilityInfo}
+                                    unitPrice={unitPrice}
+                                />
+
                                 <DivRow>
                                     <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
                                     <DivSplitLine>|</DivSplitLine>
@@ -359,40 +369,34 @@ export default function ShoppingCartItem(props) {
                                     </DivItem>
                                     <DivItem>
                                         <DivItemPrice>
-                                            {
-                                                (cartItem.itemUnitPriceOverride || priceInfo?.unitPrice) && (
-                                                    <div>
-                                                        <EditPriceDiv>
-                                                            <NumberFormat
-                                                                value={cartItem.itemUnitPriceOverride || priceInfo.unitPrice}
-                                                                displayType={'text'}
-                                                                thousandSeparator={true}
-                                                                prefix={'$'}
-                                                                decimalScale={2}
-                                                                fixedDecimalScale
-                                                            />
-                                                            <span>{`/${unitOfMeasure}`}</span>
-                                                            {
-                                                                userInfo?.isAirlineUser && (
-                                                                    <EditPriceIcon onClick={handleShowEditPriceModal}>
-                                                                        <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
-                                                                    </EditPriceIcon>
-                                                                )
-                                                            }
-                                                        </EditPriceDiv>
-                                                    </div>
-                                                )
-                                            }
-                                            {userInfo?.isAirlineUser && (
+                                            <div>
+                                                <EditPriceDiv>
+                                                    <NumberFormat
+                                                        value={cartItem.itemUnitPriceOverride || unitPrice || 0}
+                                                        displayType={'text'}
+                                                        thousandSeparator={true}
+                                                        prefix={'$'}
+                                                        decimalScale={2}
+                                                        fixedDecimalScale
+                                                    />
+                                                    <span>{`/${unitOfMeasure || ''}`}</span>
+                                                    {userInfo?.isAirlineEmployee && (
+                                                        <EditPriceIcon onClick={handleShowEditPriceModal}>
+                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+                                                        </EditPriceIcon>
+                                                    )}
+                                                </EditPriceDiv>
+                                            </div>
+                                            {userInfo?.isAirlineEmployee && (
                                                 <>
                                                     <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                        <span>Source Loc: {cartItem.sourceLocId || '2100'}</span>
+                                                        <span>Source Loc: {cartItem.sourceLocId || 'Any'}</span>
                                                         <EditPriceIcon onClick={handleShowSourceLocModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>
                                                     </div>
                                                     <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                        <span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || 'Default'}</span>
+                                                        <span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || getDefaultDisposition()}</span>
                                                         <EditPriceIcon onClick={handleShowDispositionModal}>
                                                             <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>
@@ -408,7 +412,7 @@ export default function ShoppingCartItem(props) {
                                                 {
                                                     !cartItem.itemUnitPriceOverride ? (
                                                         <NumberFormat
-                                                            value={(priceInfo?.unitPrice ? priceInfo.unitPrice : 0.0).toFixed(2) * cartItem.quantity}
+                                                            value={(unitPrice ? unitPrice : 0.0).toFixed(2) * cartItem.quantity}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
@@ -452,15 +456,25 @@ export default function ShoppingCartItem(props) {
             }
 
             <EditPriceModal
-                open={!!editPriceModalData}
-                hideEditPriceModal={() => setEditPriceModalData(null)}
-                data={editPriceModalData}
+                open={!!showEditPriceModal}
+                hideEditPriceModal={() => setShowEditPriceModal(null)}
+                data={{
+                    originalItemPrice: unitPrice,
+                    itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : unitPrice,
+                    spaType: spaType,
+                    spaNumber: spaNumber,
+                    spaCost: spaCost,
+                    spaMargin: spaMargin,
+                    airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
+                    priceReasonId: cartItem.priceReasonId,
+                    cartItem
+                }}
                 setCartItem={setCartItem}
             />
             <SplitLineModal
                 open={showSplitLineModal}
                 hideSplitLineModal={() => setShowSplitLineModal(false)}
-                {...{ cart, setCart, index }}
+                {...{ cart, setCart, index, itemDetails, priceInfo }}
             />
             <FactoryStockModal
                 open={!!factoryStockModalData}

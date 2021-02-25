@@ -2,8 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import {
-    UPDATE_CART, BEGIN_IMPERSONATION, END_IMPERSONATION, GET_TAX_RATE, GET_ORDERS, GET_WEB_USER_CONTACTS, GET_INVOICES,
-    GET_PURCHASE_HISTORY, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY, GET_SHOPPING_LISTS, UPDATE_SHOPPING_LISTS, GET_PRICE_REASONS
+    UPDATE_CART,
+    BEGIN_IMPERSONATION,
+    END_IMPERSONATION,
+    GET_TAX_RATE,
+    GET_ORDERS,
+    GET_WEB_USER_CONTACTS,
+    GET_INVOICES,
+    GET_PURCHASE_HISTORY,
+    GET_ITEM_PRICE,
+    GET_ITEM_AVAILABILITY,
+    GET_SHOPPING_LISTS,
+    UPDATE_SHOPPING_LISTS,
+    GET_PRICE_REASONS,
+    GET_ITEMS_BY_ID,
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -11,9 +23,10 @@ import {
     distinct,
     useDebounceValue
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
-import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS, GET_SHOPPING_CART_ITEM_DETAIL } from './gqlQueries/gqlItemQueries'
+import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS } from './gqlQueries/gqlItemQueries'
+import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER, WEB_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
-export default function Provider(props) {
+export default function Provider({ history, children }) {
     const didMountRef = useRef(false)
     const invoicesLoaded = useRef(false)
     const lastShoppingCartPayload = useRef(null)
@@ -24,7 +37,10 @@ export default function Provider(props) {
     const [userInfo, setUserInfo] = useState(null)
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
-        isAirlineUser: newUserInfo?.role === 'AirlineEmployee' || newUserInfo?.role === 'Impersonator'
+        isAirlineEmployee: newUserInfo?.role === AIRLINE_ENGINEER_USER || newUserInfo?.role === IMPERSONATOR_USER,
+        isAirlineEngineerUser: newUserInfo?.role === AIRLINE_ENGINEER_USER,
+        isImpersonatorUser: newUserInfo?.role === IMPERSONATOR_USER,
+        isWebUser: newUserInfo?.role === WEB_USER
     } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
@@ -35,6 +51,7 @@ export default function Provider(props) {
     const [purchaseHistory, setPurchaseHistory] = useState([])
     const [itemPrices, setItemPrices] = useState([])
     const [itemAvailabilities, setItemAvailabilities] = useState([])
+    const [stockAvailabilities, setStockAvailabilities] = useState([])
     const [itemDetails, setItemDetails] = useState([])
     const [customerPartNumbers, setCustomerPartNumbers] = useState([])
     const [sourceLocations, setSourceLocations] = useState([])
@@ -43,6 +60,11 @@ export default function Provider(props) {
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
 
     const invoiceBatchSize = 1000
+
+    const navAwayRoutes = ['/cart', '/checkout', '/create-quote']
+    const partialNavAwayRoutes = ['/account']
+    const currentPath = history.location.pathname
+    const resetOnImpersonate = navAwayRoutes.includes(currentPath) || partialNavAwayRoutes.some(route => currentPath.includes(route))
 
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
@@ -53,7 +75,7 @@ export default function Provider(props) {
     })
 
     useEffect(() => {
-        userInfo?.isAirlineUser && getPriceReasons()
+        userInfo?.isAirlineEmployee && getPriceReasons()
     }, [userInfo])
 
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
@@ -87,7 +109,7 @@ export default function Provider(props) {
                 localStorage.setItem('apiToken', token)
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
                 retrieveShoppingCart('retrieve')
-                props.history.push('/')
+                if (resetOnImpersonate) history.push('/')
             }
         }
     })
@@ -149,7 +171,7 @@ export default function Provider(props) {
         }
     })
 
-    const [handleGetItemDetails] = useLazyQuery(GET_SHOPPING_CART_ITEM_DETAIL, {
+    const [handleGetItemDetails] = useLazyQuery(GET_ITEMS_BY_ID, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemDetails([...data.itemDetailsBatch, ...itemDetails].filter(distinct))
@@ -245,7 +267,7 @@ export default function Provider(props) {
             handleSetUserInfo(JSON.parse(userInfoStorage))
             setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
             if (!userInfoStorage) {
-                currentUserType = 'Anon'
+                currentUserType = GUEST
             } else {
                 currentUserType = JSON.parse(userInfoStorage).role
             }
@@ -255,9 +277,7 @@ export default function Provider(props) {
             localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
             localStorage.removeItem('shoppingCartToken')
             handleSetUserInfo(userInfo)
-            if (userType.current === 'Impersonator') { //User switched companies they are impersonating
-                props.history.push('/')
-            }
+            if (resetOnImpersonate) history.push('/')
             setOrdersCache([])
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
@@ -265,19 +285,21 @@ export default function Provider(props) {
             setShoppingLists([])
             setWebUserContacts([])
             setItemPrices([])
+            setCustomerPartNumbers([])
             setImpersonatedCompanyInfo(impersonationInfo)
-            currentUserType = 'Impersonator'
+            currentUserType = IMPERSONATOR_USER
             break
         case 'end-impersonation':
             localStorage.setItem('userInfo', JSON.stringify(userInfo))
             localStorage.removeItem('imperInfo')
             handleSetUserInfo(userInfo)
             setImpersonatedCompanyInfo(null)
-            currentUserType = 'AirlineEmployee'
+            currentUserType = AIRLINE_ENGINEER_USER
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
             setOrdersCache([])
             setPurchaseHistory([])
+            setCustomerPartNumbers([])
             setItemPrices([])
             break
         case 'login':
@@ -288,15 +310,16 @@ export default function Provider(props) {
             logout()
             handleSetUserInfo(null)
             setImpersonatedCompanyInfo(null)
-            currentUserType = 'Anon'
+            currentUserType = GUEST
             setOrdersCache([])
             setInvoiceCache([])
             setPurchaseHistory([])
             setInvoiceBatchNumber(0)
             setItemPrices([])
+            setCustomerPartNumbers([])
             break
         }
-        setUserType({ current: currentUserType, previous: !userType.current ? 'Anon' : userType.current })
+        setUserType({ current: currentUserType, previous: !userType.current ? GUEST : userType.current })
     }
 
     function removeTopAlert() {
@@ -318,7 +341,7 @@ export default function Provider(props) {
         }
         manageUserInfo('login', userInfo)
         const drift = window.drift || null
-        if (drift && userInfo.role === 'AirlineEmployee') {
+        if (drift && userInfo.role === AIRLINE_ENGINEER_USER) {
             drift?.api?.widget?.hide()
         }
         getOrders()
@@ -327,9 +350,9 @@ export default function Provider(props) {
     }
 
     function logoutUser() {
-        if (window.drift) window.drift.api.widget.show()
+        if (window.drift?.api) window.drift.api.widget.show()
         manageUserInfo('logout')
-        props.history.push('/')
+        history.push('/')
         emptyCart()
         showTopAlert('You have been logged out.')
         window.setTimeout(removeTopAlert, 3500)
@@ -341,9 +364,10 @@ export default function Provider(props) {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
                 const lastCartItems = lastShoppingCartPayload.current
 
-                const shouldUpdateState = shoppingCart === null || !lastCartItems
-          || (cartItems.length === lastCartItems.length
-            && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]))
+                const cartsMatch = lastCartItems && cartItems.length === lastCartItems.length
+                    && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]?.frecno)
+
+                const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
@@ -355,10 +379,11 @@ export default function Provider(props) {
         }
     })
 
-    const updateShoppingCart = cartItems => {
+    const updateShoppingCart = (cartItems, notes=orderNotes) => {
         setShoppingCart(cartItems)
+        setOrderNotes(notes)
         lastShoppingCartPayload.current = cartItems
-        updateCartWrapper({ actionString: 'update', orderNotes, cartItems })
+        updateCartWrapper({ actionString: 'update', orderNotes: notes, cartItems })
     }
 
     const updateCartWrapper = cartInfo => {
@@ -437,7 +462,7 @@ export default function Provider(props) {
     }
 
     const emptyCart = () => {
-        updateShoppingCart(null)
+        updateShoppingCart(null, null)
     }
 
     function getInvoices() {
@@ -486,6 +511,8 @@ export default function Provider(props) {
                 getPurchaseHistoryState,
                 itemPrices,
                 itemAvailabilities,
+                stockAvailabilities,
+                setStockAvailabilities,
                 itemDetails,
                 customerPartNumbers,
                 sourceLocations,
@@ -510,7 +537,7 @@ export default function Provider(props) {
                 updateShoppingCart
             }}
         >
-            {props.children}
+            {children}
         </Context.Provider>
     )
 }
