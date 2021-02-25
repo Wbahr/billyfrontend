@@ -1,5 +1,6 @@
 import Category from './category'
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import { GET_ROOT_CATEGORIES_PAGE } from '../../../setup/providerGQL'
 import Loader from '../../_common/loader'
