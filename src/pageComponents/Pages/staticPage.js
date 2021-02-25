@@ -31,16 +31,15 @@ const DivRowHeader = styled.div`
   letter-spacing : 2px;
   font-family: verdana;
   color: #333;
-  margin-top: 40px;
 `
 const PageName = styled.h1`
     text-align: center;
 `
 const CrumbLink = styled(Link)`
     padding: 0 10px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     letter-spacing: 1px;
-    color: #555555;
+    color:  #246696;
     font-weight: bold;
 `
 
@@ -54,7 +53,6 @@ const ShortBorder = styled.div`
 const CrumbContainer = styled.div`
     font-size: 1rem;
     text-transform: none;
-    letter-spacing : normal;
     justify-content: flex-start;
 `
 

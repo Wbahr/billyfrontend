@@ -99,9 +99,9 @@ export const MyAccountDropdownMenu = ({ children, className }) => (
     </DropdownElement>
 )
 
-export const CartsDropdownMenu =  ({ children, className }) => (
+export const CartsDropdownMenu = ({ children, className }) => (
     <DropdownElement className={'nav-dropdown ' + className} style={{ top: '2rem' }} >
-        {children} 
+        {children}
     </DropdownElement>
 )
 
@@ -117,8 +117,12 @@ export const DropDownMenuAction = React.forwardRef(({ linkText, onClick }, ref) 
     </DropdownLink>
 ))
 
-export const DropdownMenuItem = React.forwardRef(({ children: linkText, to }, ref) => (
+export const DropdownMenuItem = React.forwardRef(({ children: linkText, to, isExternalLink }, ref) => (
     <DropdownLink ref={ref}>
-        <Link to={to}>{linkText}</Link>
+        {
+            (isExternalLink)
+                ? <a href={to} target='_blank' rel='noreferrer'>{linkText}</a>  
+                : <Link to={to}>{linkText}</Link>               
+        } 
     </DropdownLink>
 ))
