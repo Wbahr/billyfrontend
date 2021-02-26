@@ -22,18 +22,18 @@ import Carousel from '../../_common/Carousel'
 const DivRow = styled.div`
 	display: flex;
 	flex-wrap: wrap;
-	width: 100%;
+    width: 100%;
+    margin-top: 20px;
 `
 
 const DivCol = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	width: 100%;
+    width: 100%;
 `
-
 const BorderContainer = styled.div`
-	margin: 15px 10px;
+  margin: 20px auto 40px;
   display: flex;
   flex-direction: column;
   width: ${props => {
@@ -54,9 +54,9 @@ const H1 = styled.h1`
 `
 
 const ShortBorder = styled.div`
-	margin: 0 auto;
+  margin: 0 auto;
   border-bottom: 3px solid #B51F2B;
-  width: 90%;
+  width: 75%;
 `
 
 const RESULT_SIZE = 24
@@ -206,12 +206,12 @@ export default function CategorySearch({ match, history }) {
 }
 
 const BreadCrumbs = ({ breadCrumbTrail }) => (
-    <DivRow style={{ paddingLeft: 10 }}>
-        <Link to="/categories">All Categories</Link>
+    <DivRow style={{ paddingLeft: 15 }}>
+        <Link style={{ fontWeight: '600' }} to="/categories">All Categories</Link>
         {(breadCrumbTrail || []).map(({ urlSlug, name }) => (
             <React.Fragment key={urlSlug}>
                 <span style={{ margin: '0 3px' }}>&nbsp;&raquo;</span>
-                <Link to={`/categories/${urlSlug}`}> {name}</Link>
+                <Link style={{ fontWeight: '600' }} to={`/categories/${urlSlug}`}> {name}</Link>
             </React.Fragment>
         ))}
     </DivRow>

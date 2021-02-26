@@ -12,7 +12,7 @@ const ContentScreenContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	margin: 28px auto;
+	margin: 0 auto;
 	justify-content: space-between;
 	flex-grow: 99;
 `
@@ -30,7 +30,7 @@ export default function HomePage() {
                 </CategoryContainer>
             </div>
 			
-            <TechnicallySpeaking />
+            {/* <TechnicallySpeaking /> */}
             <FeaturedManufacturers />
             <LineCards />
         </ContentScreenContainer>

@@ -7,7 +7,7 @@ const LineCardWrapper = styled.div`
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: space-evenly;
-		margin-bottom: 50px;
+		margin: 25px 0 40px;
 `
 const LineCardDiv = styled.div`
 		display: flex;

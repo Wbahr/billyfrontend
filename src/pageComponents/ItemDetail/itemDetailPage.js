@@ -108,7 +108,7 @@ const DivAccessoryItems = styled.div`
 	justify-content: space-around;
 `
 
-const H2ItemTitle = styled.h2`
+const H1ItemTitle = styled.h1`
 	font-size: 25px;
 	font-weight: 600;
 `
@@ -175,7 +175,7 @@ const TDGrey = styled.td`
 `
 
 const TDWhite = styled.td`
-padding: 4px 24px 4px 8px;
+    padding: 4px 24px 4px 8px;
 `
 
 const IMG = styled.img`
@@ -325,7 +325,7 @@ export default function ItemDetailPage({ history }) {
         return (
             <ItemDetailPageContainer>
                 <DivTitle>
-                    <H2ItemTitle>{itemDetails.itemDesc}</H2ItemTitle>
+                    <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
                 </DivTitle>
 
                 <DivLeftCol>

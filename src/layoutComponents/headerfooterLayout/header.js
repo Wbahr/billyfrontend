@@ -211,17 +211,17 @@ export default function HeaderComponent({ history }) {
         const right = ref && ref.getBoundingClientRect().right
         if (right) tabRefs.current[idx] = right
     }
-
-    const toMenu = ({ label, to, subItems }, idx) => (
-        <NavigationItemContainer to={to} text={label} key={label} ref={setTabRef(idx)}>
+	
+    const toMenu = ({ label, to, subItems, isExternalLink }, idx) => (
+        <NavigationItemContainer to={to} isExternalLink={isExternalLink} text={label} key={label} ref={setTabRef(idx)}>
             <DropdownMenu>
                 {subItems.map(toMenuItem)}
             </DropdownMenu>
         </NavigationItemContainer>
     )
-
-    const toMenuItem = ({ label, to }, idx) => <DropdownMenuItem key={idx} to={to}>{label}</DropdownMenuItem>
-
+	
+    const toMenuItem = ({ label, to, isExternalLink }) => <DropdownMenuItem key={label} to={to} isExternalLink={isExternalLink}>{label}</DropdownMenuItem>
+	
     const tabComponents = tabDeclaration.map(toMenu)
 
     const handleSearch = () => {
@@ -556,15 +556,17 @@ const brandsSubItems = [
 const resourcesSubItems = [
     {
         label: 'Blog - Technically Speaking',
-        to: '/blog'
+        to: 'http://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog',
+        isExternalLink: true
     },
     {
         label: 'Youtube Channel',
-        to: 'https://www.youtube.com/channel/UCdZYpFsi2IES53d5BZr03fw/'
+        to: 'https://www.youtube.com/channel/UCdZYpFsi2IES53d5BZr03fw/',
+        isExternalLink: true
     },
     {
         label: 'Knowledge Center & FAQ',
-        to: '/knowledge-center-and-faq'
+        to: '/pages/resources/knowledge-center-and-faq'
     },
     {
         label: 'Line Cards & Brochures',
@@ -573,6 +575,14 @@ const resourcesSubItems = [
     {
         label: 'Apps',
         to: '/apps'
+    },
+    {
+        label: 'Manufacturer Catalogs',
+        to: '/catalogrequest'
+    },
+    {
+        label: 'Social Distancing Barrier Linecards',
+        to: '/pages/resources/social-distancing-barrier-linecards'
     }
 ]
 

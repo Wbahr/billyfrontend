@@ -6,7 +6,7 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 40px 0;
+  margin: 30px 0;
   align-items: center;
 `
 const StyledHeaderDiv = styled.div`

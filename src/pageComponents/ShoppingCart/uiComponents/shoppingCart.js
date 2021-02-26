@@ -100,7 +100,7 @@ export default function ShoppingCart({ history }) {
                 getCustomerPartNumbers(itemsWithoutDetails)
             }
 
-            const itemsWithoutSourceLocations = !!cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.frecno))
+            const itemsWithoutSourceLocations = cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.frecno))
             itemsWithoutSourceLocations.length && getSourceLocations(itemsWithoutSourceLocations)
         }
     }, [cart?.length])
