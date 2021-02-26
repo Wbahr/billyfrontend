@@ -48,7 +48,7 @@ const DivError = styled.div`
   border-radius: 2px;
   background-color: cornsilk;
   color: darkorange;
-  padding 4px;
+  padding: 4px;
   margin: 0 auto;
   margin-bottom: 4px;
 `

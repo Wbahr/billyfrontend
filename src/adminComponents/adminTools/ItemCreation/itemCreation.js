@@ -29,10 +29,10 @@ const QUERY_ITEM_CREATION_DATA = gql`
 `
 
 const QUERY_ITEM_SEARCH = gql`
-	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+	query ItemSearch($searchParams: SearchRequestInput!){
 		itemSearch(searchParams: $searchParams){
 			result
-			count
+			searchTotalCount
 		}
 	}
 `
@@ -153,14 +153,7 @@ export default function ItemCreationPage() {
                 searchParams: {
                     searchTerm: SearchTerm,
                     resultSize: 10,
-                    resultPage: currentPage,
                     sortType: 'relevancy',
-                    brandFilters: [],
-                    categoryFilter: {
-                        parentCategory: '',
-                        childCategory: ''
-                    },
-                    attributeFilters: []
                 }
             }
         })
@@ -251,7 +244,7 @@ export default function ItemCreationPage() {
                     <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
                         Clear Item
                     </Button>
-                    <Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => { searchItems() }}>
+                    <Button variant="contained" color="primary" disabled={!searchEnabled || isSearching} onClick={() => { searchItems() }}>
                         {isSearching ? 'Searching Items..' : 'Search for Item'}
                     </Button>
                 </ButtonContainer>
