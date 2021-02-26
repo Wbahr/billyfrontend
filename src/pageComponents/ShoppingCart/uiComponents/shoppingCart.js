@@ -6,10 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
-import { GET_ALL_USER_CARTS, GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, MERGE_CART_TO_CUSTOMER } from 'setup/providerGQL'
-import { useLazyQuery, useMutation } from '@apollo/client'
-import { CartsDropdownMenu, DropDownMenuAction } from '../../_common/dropdown-menu/DropdownMenu'
-import Loader from '../../_common/loader'
+import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
+import { useLazyQuery } from '@apollo/client'
+import MergeCartModal from './MergeCartModal'
 
 const Div = styled.div`
 	display: flex;
@@ -40,11 +39,6 @@ const Ashare = styled.a`
 	margin-right: 4px;
 `
 
-const AshareBlue = styled(Ashare)`
-	color: #328EFC !important;
-	font-weight: 500;
-`
-
 const DivShare = styled.div`
 	cursor: pointer;
 	margin-right: 4px;
@@ -69,32 +63,15 @@ export default function ShoppingCart({ history }) {
         getCustomerPartNumbers,
         getSourceLocations,
         updateShoppingCart,
-        cartPricing,
-        startImpersonation
+        cartPricing
     } = useContext(Context)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
-    const [userCartsData, setUserCartsData] = useState([])
-    const [showMergeDropdown, setShowMergeDropdown] = useState(false)
 
     const [getAvailabilitiesWithLeadTimes] = useLazyQuery(GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
-        }
-    })
-
-    const [getUserCarts, { loading: userCartsDataLoading }] = useLazyQuery(GET_ALL_USER_CARTS, {
-        fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            setUserCartsData(data.employeeCarts)
-        }
-    })
-
-    const [mergeCart, { loading: mergeCartLoading }] = useMutation(MERGE_CART_TO_CUSTOMER, {
-        fetchPolicy: 'no-cache',
-        onCompleted: data => {
-            startImpersonation(data.copyShoppingCartToCustomer.customerId)
         }
     })
 
@@ -132,13 +109,6 @@ export default function ShoppingCart({ history }) {
         setShowShoppingListModal(true)
     }
 
-    const handleMergeCart = () => {
-        if (!userCartsData.length) {
-            getUserCarts()
-        }
-        setShowMergeDropdown(true)
-    }
-
     return (
         <>
             <Div>
@@ -153,25 +123,9 @@ export default function ShoppingCart({ history }) {
                             <FontAwesomeIcon icon="list" color="grey" />
                         </DivSave>
                     ) : <Ashare/>}
-                    {userInfo?.isAirlineEngineerUser && (
-                        <DivSave onClick={handleMergeCart}>
-                            <Ashare>Merge Cart</Ashare>
-                            <FontAwesomeIcon icon="code-branch" color="grey" />
-                        </DivSave>
-                    )}
-                    <CartsDropdownMenu className={showMergeDropdown ? 'visible' : ''} style={{ top: 150, marginLeft: 100 }}>
-                        {userCartsData.map((itm) => (
-                            <DropDownMenuAction
-                                key={itm.customerName}
-                                linkText={`${itm.customerName} - ${itm.shoppingCartItemCount}`}
-                                onClick={() => {
-                                    mergeCart({ variables: { customerId: itm.customerId } })
-                                    setShowMergeDropdown(false)
-                                }}
-                            />
-                        ))}
-                        {userCartsDataLoading || mergeCartLoading && <Loader />}
-                    </CartsDropdownMenu>
+
+                    {userInfo?.isAirlineEngineerUser && <MergeCartModal/>}
+
                     <DivShare>
                         <Ashare>Email Cart</Ashare>
                         <FontAwesomeIcon icon="share" color="grey" />
