@@ -121,7 +121,7 @@ const QuantityInput = (props) => {
                 debounce ? (
                     <input
                         readOnly={readOnly}
-                        onChange={!readOnly && handleQuantityUpdate}
+                        onChange={!readOnly ? handleQuantityUpdate : undefined}
                         value={displayQuantity}
                         step={unitSizeVal || 1}
                         style={{ fontSize, width }}
@@ -129,7 +129,7 @@ const QuantityInput = (props) => {
                 ) : (
                     <input
                         readOnly={readOnly}
-                        onChange={!readOnly && handleQuantityUpdate}
+                        onChange={!readOnly ? handleQuantityUpdate : undefined}
                         value={quantity}
                         step={unitSizeVal || 1}
                         style={{ fontSize, width }}

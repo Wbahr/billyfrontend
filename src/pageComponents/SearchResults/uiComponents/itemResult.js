@@ -7,6 +7,7 @@ import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonIte
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import LocationsModal from '../../_common/modals/LocationsModal'
+import CustomerPartModal from '../../_common/modals/CustomerPartModal'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -93,7 +94,7 @@ const PartTitleLink = styled(Link)`
 `
 
 const PpartAvailability = styled.p`
-	margin: 0;
+	margin: 0 5px 0 0;
 	font-size: 13px;
 `
 
@@ -156,10 +157,6 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-const Option = ({ customerPartNumber, id }) => <option key={customerPartNumber} value={id}>{customerPartNumber}</option>
-
-const getCustomerPartOptions = customerPartNumbers => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
-
 export default function ItemResult({ result, details, addedToCart }) {
     const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
 
@@ -175,12 +172,12 @@ export default function ItemResult({ result, details, addedToCart }) {
 
     const [quantity, setQuantity] = useState(1)
 
-    const [customerPartNumber, setCustomerPartNumber] = useState(0)
+    const [customerPartNumber, setCustomerPartNumber] = useState('')
     const [customerPartOptions, setCustomerPartOptions] = useState([])
 
     useEffect(() => {
         const filteredCustomerPartNumbers = customerPartNumbers.filter(c => c.invMastUid === result.invMastUid)
-        setCustomerPartOptions(getCustomerPartOptions(filteredCustomerPartNumbers))
+        setCustomerPartOptions(filteredCustomerPartNumbers)
         if (filteredCustomerPartNumbers?.length === 1) {
             setCustomerPartNumber(filteredCustomerPartNumbers[0].id)
         }
@@ -200,7 +197,7 @@ export default function ItemResult({ result, details, addedToCart }) {
         setQuantity(1)
     }
 
-    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value || null)
+    const handlePartNumberChange = partNumber => setCustomerPartNumber(partNumber || null)
 
     return (
         <DivItemResultContainer>
@@ -244,11 +241,14 @@ export default function ItemResult({ result, details, addedToCart }) {
                     <DivPartNumberRow>
                         <PpartAvailability>
                             Customer Part #:
-                            <select value={customerPartNumber} onChange={handlePartNumberChange}>
-                                <option value="">Select a Part No.</option>
-                                {customerPartOptions}
-                            </select>
                         </PpartAvailability>
+                        <CustomerPartModal
+                            invMastUid={result.invMastUid}
+                            selectedCustomerPartNumber={customerPartNumber}
+                            selectCustomerPartNumber={handlePartNumberChange}
+                            clearCustomerPartNumber={handlePartNumberChange}
+                            customerPartNumbers={customerPartOptions}
+                        />
                     </DivPartNumberRow>
                 )}
 
