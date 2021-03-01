@@ -120,19 +120,11 @@ export default function ItemCreationPage() {
     useQuery(QUERY_ITEM_CREATION_DATA, {
         onCompleted: data => {
             setSupplierList(data.suppliers)
-            setUnitsOfMeasure(unit(data.unitsOfMeasure))
+            setUnitsOfMeasure(data.unitsOfMeasure)
             setProductGroups(data.productGroups)
         }
     })
-    function unit(units) {
-        const newUnits = []
-        for (let i = 0; i < units.length; i++) {
-            if (units[i].value !== 'EACH') {
-                newUnits.push(units[i])
-            }
-        }
-        return newUnits
-    }
+
     const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
@@ -143,11 +135,10 @@ export default function ItemCreationPage() {
         }
     })
   
-  
     function searchItems() {
         setIsSearching(true)
         const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-        const SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
+        const SearchTerm = supplierList[index]?.prefix ? supplierList[index].prefix + ' ' + searchTerm : searchTerm 
         performItemSearch({
             variables: {
                 searchParams: {
@@ -163,8 +154,8 @@ export default function ItemCreationPage() {
         searchItems()
     }
   
-    function handleChange(newSelection) {
-        setSelectedSupplier(newSelection)
+    function handleChange(event, name, selection) {
+        setSelectedSupplier(selection)
     }
   
     function resetItem() {
@@ -188,25 +179,35 @@ export default function ItemCreationPage() {
         }
     }
   
-  
-    const searchResultItems = []
-    itemSearchResult.map((element, index) => {
+    const searchResultItems = itemSearchResult.map((element, index) => {
         const resultImage = getImagePath(element.thumbnail_image_path)
     
         const mutatedItemId = mutateItemId(element.itemCode)
-        searchResultItems.push(
+        return (
             <DivSearchItemContainer key={index}>
                 <img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.itemCode} ></img>
                 <h6>{element.itemCode}</h6>
                 <p>{element.itemDescription}</p>
-                <a href={`/product/${mutatedItemId}/${element.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
+                <a href={`/product/${mutatedItemId}/${element.invMastUid}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                >
+                    View Details
+                </a>
             </DivSearchItemContainer>
         )
     })
   
     return (
         <>
-            {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={() => setSubmitResponse(null)} />}
+            {
+                !!submitResponse && (
+                    <ItemCreationModal 
+                        submitResponse={submitResponse} 
+                        handleCloseModal={() => setSubmitResponse(null)}
+                    />
+                )
+            }
             <ContentScreenContainer>
                 <DivSearchInputWrapper>
                     <DivSpacer>

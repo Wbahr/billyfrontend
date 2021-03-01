@@ -63,7 +63,8 @@ function InputV2(props) {
         label,
         error,
         width,
-        onChange
+        onChange,
+        name
     } = props
 
     if (type === 'currency'){
@@ -104,7 +105,7 @@ function InputV2(props) {
                     value={value}
                     placeholder={placeholder}
                     onChange={(e) => onChange(e)}
-                    name={label}
+                    name={name}
                     style={{ width: width || '400px' }}
                 />
                 {error && <span>{error}</span>}

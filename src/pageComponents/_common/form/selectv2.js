@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Select from 'react-select'
-import _ from 'lodash'
 
 const LabelStyle = {
     color: '#606060',
@@ -42,14 +41,14 @@ function AirlineSelect(props){
             {label && <label style={LabelStyle} htmlFor={name}>{label}</label>}
             <Select
                 options={options}
-                value={(options ? options.find(option => option.id === value) : '')}
-                onChange={option => {changeFunction(option.id)}}
+                value={value}
+                onChange={option => {changeFunction(null, name, option, getOptionValue)}}
                 width='400px'
                 styles={SelectStyle}
                 getOptionLabel={getOptionLabel}
                 getOptionValue={getOptionValue}
-                isSearchable={_.isNil(isSearchable) ? true : isSearchable}
-                placeholder={_.isNil(placeholder) ? 'Select..' : placeholder}
+                isSearchable={isSearchable}
+                placeholder={placeholder ? placeholder : 'Select..'}
             />
             {/* {touched[field.name] && errors[field.name] && (
         <ErrorMessage>{errors[field.name]}</ErrorMessage>
