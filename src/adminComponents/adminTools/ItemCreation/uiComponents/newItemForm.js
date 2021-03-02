@@ -10,6 +10,7 @@ import * as Yup from 'yup'
 import { useMutation } from '@apollo/client'
 import AirlineInput from 'pageComponents/_common/form/inputv2'
 import AirlineSelect from 'pageComponents/_common/form/selectv2'
+import PropTypes from 'prop-types'
 
 const Form = styled(FormikForm)`
   margin: 32px 64px;
@@ -97,6 +98,29 @@ const CREATE_ITEM = gql`
   }
 `
 
+const ErrorBlock = ({ errors, fieldName }) => {
+
+    const fieldErrors = errors.filter(e => e.path === fieldName)
+    
+    if (fieldErrors.length){
+        return (
+            <div>
+                <ul>
+                    {
+                        fieldErrors.map(e => <li key={`${e.path}-${e.type}`}>{e.message}</li>)
+                    }
+                </ul>
+            </div>
+        )
+    } else {
+        return <></>
+    }
+}
+ErrorBlock.propTypes = {
+    errors: PropTypes.array,
+    fieldName: PropTypes.string
+}
+
 export default function NewItemForm(props) {
     const [formIsSubmitting, setFormIsSubmitting] = useState(false)
     const {
@@ -119,19 +143,22 @@ export default function NewItemForm(props) {
         unitOfMeasure: ''
     })
     const [isValid, setIsValid] = useState(false)
+    const [errors, setErrors] = useState([])
 
     useEffect(() => {
 
-        ItemCreationSchema.validate(itemFormData, {})
+        ItemCreationSchema.validate(itemFormData, { abortEarly: false })
             .then(data => {
                 console.log('Valid')
                 console.log(data)
                 setIsValid(true)
+                setErrors([])
             })
             .catch(err => {
                 console.log('Invalid')
                 console.log(err)
                 setIsValid(false)
+                setErrors(err.inner)
             })
 
     }, [itemFormData])
@@ -171,119 +198,108 @@ export default function NewItemForm(props) {
     return (
         <>
             <form>
-                <AirlineInput
-                    type="text"
-                    name="itemId"
-                    value={itemFormData.itemId}
-                    disabled={true}
-                    label="Item ID"
-                    onChange={handleInput}
-                />
-                <AirlineInput 
-                    type="text"
-                    name="shortDescription"
-                    value={itemFormData.shortDescription}
-                    label="Short Description"
-                    onChange={handleInput}
-                />
-                <AirlineInput 
-                    type="text"
-                    name="longDescription"
-                    value={itemFormData.longDescription}
-                    label="Long Description"
-                    onChange={handleInput}
-                />
-                <AirlineSelect
-                    name="unitOfMeasure"
-                    label="Unit of Measure"
-                    value={itemFormData.unitOfMeasure} 
-                    options={unitsOfMeasureList}
-                    getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-                    getOptionValue={option => option.value}
-                    changeFunction={handleInput}
-                    isSearchable={true}
-                    placeholder="Unit of Measure"
-                />
-                <AirlineInput 
-                    type="text"
-                    name="listPrice"
-                    value={itemFormData.listPrice}
-                    label="List Price"
-                    onChange={handleInput}
-                />
-                <AirlineInput 
-                    type="text"
-                    name="airlineCost"
-                    value={itemFormData.airlineCost}
-                    label="Airline Cost"
-                    onChange={handleInput}
-                />
-                <AirlineInput 
-                    type="text"
-                    name="tariff"
-                    value={itemFormData.tariff}
-                    label="Tariff"
-                    onChange={handleInput}
-                />
-                <AirlineSelect
-                    name="productGroupId"
-                    label="Product Group"
-                    value={itemFormData.productGroupId} 
-                    options={productGroupsList}
-                    getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-                    getOptionValue={option => option.value}
-                    changeFunction={handleInput}
-                    isSearchable={true}
-                    placeholder="Product Group"
-                />
+                <div>
+                    <AirlineInput
+                        type="text"
+                        name="itemId"
+                        value={itemFormData.itemId}
+                        disabled={true}
+                        label="Item ID"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='itemId' />
+                </div>
+
+                <div>
+                    <AirlineInput 
+                        type="text"
+                        name="shortDescription"
+                        value={itemFormData.shortDescription}
+                        label="Short Description"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='shortDescription' />
+                </div>
+                <div>
+                    <AirlineInput 
+                        type="text"
+                        name="longDescription"
+                        value={itemFormData.longDescription}
+                        label="Long Description"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='longDescription' />
+                </div>
+                
+                <div>
+                    <AirlineSelect
+                        name="unitOfMeasure"
+                        label="Unit of Measure"
+                        value={itemFormData.unitOfMeasure} 
+                        options={unitsOfMeasureList}
+                        getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
+                        getOptionValue={option => option.value}
+                        changeFunction={handleInput}
+                        isSearchable={true}
+                        placeholder="Unit of Measure"
+                    />
+                    <ErrorBlock errors={errors} fieldName='unitOfMeasure' />
+                </div>
+                
+                <div>
+                    <AirlineInput 
+                        type="text"
+                        name="listPrice"
+                        value={itemFormData.listPrice}
+                        label="List Price"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='listPrice' />
+                </div>
+                
+                <div>
+                    <AirlineInput 
+                        type="text"
+                        name="airlineCost"
+                        value={itemFormData.airlineCost}
+                        label="Airline Cost"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='airlineCost' />
+                </div>
+                
+                <div>
+                    <AirlineInput 
+                        type="text"
+                        name="tariff"
+                        value={itemFormData.tariff}
+                        label="Tariff"
+                        onChange={handleInput}
+                    />
+                    <ErrorBlock errors={errors} fieldName='tariff' />
+                </div>
+                
+                <div>
+                    <AirlineSelect
+                        name="productGroupId"
+                        label="Product Group"
+                        value={itemFormData.productGroupId} 
+                        options={productGroupsList}
+                        getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
+                        getOptionValue={option => option.value}
+                        changeFunction={handleInput}
+                        isSearchable={true}
+                        placeholder="Product Group"
+                    />
+                    <ErrorBlock errors={errors} fieldName='productGroupId' />
+                </div>
+                
             </form>
+            <DivCenter>
+                <Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || errors.length}>
+                    {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
+                </Button>
+            </DivCenter>
         </>
     )
-
-    // return (
-    //     <div>
-    //         <Formik >
-    //             {({ values, errors }) => (
-    //                 <Form>
-    //                     <H2>Item Creation Form</H2>
-    //                     <DivFormContainer>
-    //                         <FormikInput label="Item ID*:" type="text" name="itemCreate.itemID" disabled={true} />
-    //                         <FormikInput type="hidden" name="itemCreate.manufacturerPartNumber" />
-    //                         <FormikInput label={`Item Description (${values.itemCreate.itemDescription.length}/40 char)*:`} type="text" name="itemCreate.itemDescription" maxlength="40"/>
-    //                         <Field 
-    //                             name="itemCreate.unitOfMeasure" 
-    //                             component={FormikSelect} 
-    //                             options={unitsOfMeasureList}
-    //                             getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-    //                             placeholder="Select a UOM"
-    //                             label="Unit of Measure*:"
-    //                             width="400px"
-    //                         /> 
-    //                         <FormikInput type="hidden" name="itemCreate.supplierID" />
-    //                         <FormikInput label="List Price*:" type="currency" name="itemCreate.listPrice" />
-    //                         <FormikInput label="Airline Cost*:" type="currency" name="itemCreate.airlinePartCost" />
-    //                         <FormikInput label="Tariff:" type="currency" name="itemCreate.tariff" />
-    //                         <Field 
-    //                             name="itemCreate.productGroupID" 
-    //                             component={FormikSelect} 
-    //                             options={productGroupsList}
-    //                             getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-    //                             placeholder="Select a Product Group"
-    //                             label="Product Group ID*:"
-    //                             width="400px"
-    //                         /> 
-    //                         <DivCenter>
-    //                             {Object.keys(errors).length > 0 && <DivCenter><DivError>Please fill out all fields</DivError></DivCenter>}
-    //                         </DivCenter>
-    //                         <DivCenter>
-    //                             <Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || Object.keys(errors).length > 0}>
-    //                                 {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
-    //                             </Button>
-    //                         </DivCenter>
-    //                     </DivFormContainer>
-    //                 </Form>
-    //             )}
-    //         </Formik>
-    //     </div>
-    // )
 }
