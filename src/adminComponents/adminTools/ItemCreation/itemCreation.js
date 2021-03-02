@@ -107,8 +107,6 @@ export default function ItemCreationPage() {
     const [submitResponse, setSubmitResponse] = useState(null)
   
     useEffect(() => {
-        console.log(searchTerm)
-        console.log(selectedSupplierId)
         if (searchTerm && selectedSupplierId) {
             setSearchEnabled(true)
         } else {
@@ -157,7 +155,6 @@ export default function ItemCreationPage() {
     }
   
     function handleChange(event, name, value) {
-        console.log(value)
         setSelectedSupplierId(value)
     }
   

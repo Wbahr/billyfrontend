@@ -1,6 +1,5 @@
 // Render Prop
 import React, { useEffect, useState } from 'react'
-import { Formik, Form as FormikForm, Field } from 'formik'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { Button } from '@material-ui/core'
@@ -10,48 +9,10 @@ import AirlineInput from 'pageComponents/_common/form/inputv3'
 import AirlineSelect from 'pageComponents/_common/form/selectv3'
 import PropTypes from 'prop-types'
 
-const Form = styled(FormikForm)`
-  margin: 32px 64px;
-`
-
 const DivCenter = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-`
-
-const H2 = styled.h2`
-  font-family: ProximaBold;
-  width: 100%;
-  text-align: center;
-  font-size: 26px;
-  margin: 0;
-  background-color: white;
-  color: black;
-  padding: 6px;
-  border-bottom: 1px solid;
-  text-transform: uppercase;
-`
-
-const DivFormContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  background-color: white;
-  padding: 16px 32px;
-  width: 100%;
-  margin-bottom: 8px; 
-`
-
-const DivError = styled.div`
-  height: auto;
-  width: max-content;
-  border: 1px solid orange;
-  border-radius: 2px;
-  background-color: cornsilk;
-  color: darkorange;
-  padding: 4px;
-  margin: 0 auto;
-  margin-bottom: 4px;
 `
 
 const ItemCreationSchema = Yup.object().shape({
@@ -153,14 +114,10 @@ export default function NewItemForm(props) {
 
         ItemCreationSchema.validate(itemFormData, { abortEarly: false })
             .then(data => {
-                console.log('Valid')
-                console.log(data)
                 setIsValid(true)
                 setErrors([])
             })
             .catch(err => {
-                console.log('Invalid')
-                console.log(err)
                 setIsValid(false)
                 setErrors(err.inner)
             })
@@ -172,10 +129,6 @@ export default function NewItemForm(props) {
             ...itemFormData,
             [event?.target?.name || name]: event?.target?.value || value
         }
-
-        console.log(selection)
-        console.log(value)
-        console.log(formData)
 
         setItemFormData(formData)
     }
@@ -192,14 +145,6 @@ export default function NewItemForm(props) {
         executeCreateItem({
             variables: itemFormData
         })
-    }
-
-    function formatCurrentFields(values){
-        const mutatedValues = values
-        mutatedValues.listPrice = parseFloat(values.listPrice.substring(1))
-        mutatedValues.airlinePartCost = parseFloat(values.airlinePartCost.substring(1))
-        mutatedValues.tariff = parseFloat(values.tariff.substring(1))
-        return mutatedValues
     }
 
     return (
