@@ -2,14 +2,12 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form as FormikForm, Field } from 'formik'
 import styled from 'styled-components'
-import FormikInput from '../../../../pageComponents/_common/formik/input_v2'
-import FormikSelect from '../../../../pageComponents/_common/formik/select'
 import gql from 'graphql-tag'
 import { Button } from '@material-ui/core'
 import * as Yup from 'yup'
 import { useMutation } from '@apollo/client'
-import AirlineInput from 'pageComponents/_common/form/inputv2'
-import AirlineSelect from 'pageComponents/_common/form/selectv2'
+import AirlineInput from 'pageComponents/_common/form/inputv3'
+import AirlineSelect from 'pageComponents/_common/form/selectv3'
 import PropTypes from 'prop-types'
 
 const Form = styled(FormikForm)`

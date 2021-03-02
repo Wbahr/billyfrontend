@@ -63,7 +63,8 @@ function InputV2(props) {
         label,
         error,
         width,
-        onChange
+        onChange,
+        name
     } = props
 
     if (type === 'currency'){
@@ -72,6 +73,7 @@ function InputV2(props) {
                 {label && <Label htmlFor={label}>{label}</Label>}
                 <MainCurrencyInput
                     value={value}
+                    name={name}
                     prefix='$'
                     style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
@@ -85,6 +87,7 @@ function InputV2(props) {
                 {label && <Label htmlFor={label}>{`${label}`}</Label>}
                 <MainCurrencyInput
                     value={value}
+                    name={name}
                     suffix='%'
                     style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
@@ -104,7 +107,7 @@ function InputV2(props) {
                     value={value}
                     placeholder={placeholder}
                     onChange={(e) => onChange(e)}
-                    name={label}
+                    name={name}
                     style={{ width: width || '400px' }}
                 />
                 {error && <span>{error}</span>}
