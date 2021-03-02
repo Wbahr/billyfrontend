@@ -94,7 +94,7 @@ const ButtonContainer = styled.div`
 
 export default function ItemCreationPage() {
     const [searchTerm, setSearchTerm] = useState('') //Search term initial value
-    const [selectedSupplier, setSelectedSupplier] = useState(null)
+    const [selectedSupplierId, setSelectedSupplierId] = useState(0)
     const [searchEnabled, setSearchEnabled] = useState(false)
     const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
     const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
@@ -107,14 +107,14 @@ export default function ItemCreationPage() {
     const [submitResponse, setSubmitResponse] = useState(null)
   
     useEffect(() => {
-        if (searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)) {
+        if (searchTerm !== '' && selectedSupplierId) {
             setSearchEnabled(true)
         } else {
             if (searchEnabled) {
                 setSearchEnabled(false)
             }
         }
-    }, [searchTerm, selectedSupplier])
+    }, [searchTerm, selectedSupplierId])
   
     const maxPage = 3
     useQuery(QUERY_ITEM_CREATION_DATA, {
@@ -137,8 +137,8 @@ export default function ItemCreationPage() {
   
     function searchItems() {
         setIsSearching(true)
-        const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-        const SearchTerm = supplierList[index]?.prefix ? supplierList[index].prefix + ' ' + searchTerm : searchTerm 
+        const selectedSupplier = supplierList?.find(s => s.id === selectedSupplierId)
+        const SearchTerm = selectedSupplier?.prefix ? selectedSupplier.prefix + ' ' + searchTerm : searchTerm 
         performItemSearch({
             variables: {
                 searchParams: {
@@ -155,12 +155,12 @@ export default function ItemCreationPage() {
     }
   
     function handleChange(event, name, value) {
-        setSelectedSupplier(value)
+        setSelectedSupplierId(value)
     }
   
     function resetItem() {
         setSearchTerm('')
-        setSelectedSupplier(null)
+        setSelectedSupplierId(0)
         setItemSearchResult([])
         setCurrentPage(1)
         setShowNewItemForm(false)
@@ -225,17 +225,11 @@ export default function ItemCreationPage() {
                             label="Supplier Name:"
                             name="supplierNameSearch"
                             placeholder='Select a Supplier'
-                            value={selectedSupplier}
-                            options={[{ id: null, name: null, prefix: null }, ...supplierList]}
+                            value={selectedSupplierId}
+                            options={[{ id: 0, name: null, prefix: null }, ...supplierList]}
                             changeFunction={handleChange}
-                            getOptionLabel={(option) => {
-                                if (option.name === null) {
-                                    return ('Select a Supplier')
-                                } else {
-                                    return (option.id + ' - ' + option.name)
-                                }
-                            }}
-                            getOptionValue={(option) => option.name}
+                            getOptionLabel={option => ((option?.id || '-') + ' - ' + (option?.name || '-'))}
+                            getOptionValue={option => option.id}
                             isClearable={true}
                             isLoading={supplierList.length === 0}
                         />
@@ -271,7 +265,7 @@ export default function ItemCreationPage() {
                 {showNewItemForm && (
                     <NewItemForm
                         searchTerm={searchTerm}
-                        selectedSupplier={selectedSupplier}
+                        selectedSupplierId={selectedSupplierId}
                         supplierList={supplierList}
                         unitsOfMeasureList={unitsOfMeasureList}
                         productGroupsList={productGroupsList}

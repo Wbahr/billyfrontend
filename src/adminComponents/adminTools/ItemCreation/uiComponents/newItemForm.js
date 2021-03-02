@@ -126,7 +126,7 @@ export default function NewItemForm(props) {
     const {
         searchTerm,
         supplierList,
-        selectedSupplier,
+        selectedSupplierId,
         unitsOfMeasureList,
         productGroupsList,
         showModal
