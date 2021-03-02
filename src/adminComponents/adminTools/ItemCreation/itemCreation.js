@@ -5,8 +5,8 @@ import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Button } from '@material-ui/core'
-import AirlineInput from '../../../pageComponents/_common/form/inputv2'
-import AirlineSelect from '../../../pageComponents/_common/form/selectv2'
+import AirlineInput from '../../../pageComponents/_common/form/inputv3'
+import AirlineSelect from '../../../pageComponents/_common/form/selectv3'
 import ItemCreationModal from './uiComponents/itemCreationModal'
 import { getImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
@@ -107,7 +107,9 @@ export default function ItemCreationPage() {
     const [submitResponse, setSubmitResponse] = useState(null)
   
     useEffect(() => {
-        if (searchTerm !== '' && selectedSupplierId) {
+        console.log(searchTerm)
+        console.log(selectedSupplierId)
+        if (searchTerm && selectedSupplierId) {
             setSearchEnabled(true)
         } else {
             if (searchEnabled) {
@@ -155,6 +157,7 @@ export default function ItemCreationPage() {
     }
   
     function handleChange(event, name, value) {
+        console.log(value)
         setSelectedSupplierId(value)
     }
   

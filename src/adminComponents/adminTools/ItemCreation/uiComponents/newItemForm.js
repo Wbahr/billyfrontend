@@ -69,7 +69,7 @@ const ItemCreationSchema = Yup.object().shape({
         .required(),
     longDescription: Yup.string()
         .max(3000),
-    airlineCost: Yup.number()
+    airlinePartCost: Yup.number()
         .min(0.01)
         .max(9999999)
         .required(),
@@ -82,6 +82,8 @@ const ItemCreationSchema = Yup.object().shape({
         .max(9999999),
     productGroupId: Yup.string().required(),
     unitOfMeasure: Yup.string()
+        .required(),
+    supplierId: Yup.number()
         .required()
 })
 
@@ -130,15 +132,19 @@ export default function NewItemForm(props) {
         showModal
     } = props
 
+    const selectedSupplier = supplierList.find(s => s.id === selectedSupplierId)
+    const initialItemId = selectedSupplier?.prefix ? `${selectedSupplier.prefix} ${searchTerm}` : searchTerm
+
     const [itemFormData, setItemFormData] = useState({
-        itemId: '',
+        itemId: initialItemId,
         shortDescription: '',
         longDescription: '',
-        airlineCost: 0.0,
+        airlinePartCost: 0.0,
         listPrice: 0.0,
         tariff: 0.0,
         productGroupId: 0,
-        unitOfMeasure: ''
+        unitOfMeasure: '',
+        supplierId: selectedSupplierId
     })
     const [isValid, setIsValid] = useState(false)
     const [errors, setErrors] = useState([])
@@ -174,16 +180,19 @@ export default function NewItemForm(props) {
         setItemFormData(formData)
     }
 
-    const submitNewItem = () => {
-
-    }
-
     const [executeCreateItem] = useMutation(CREATE_ITEM, {
         onCompleted: data => {
             setFormIsSubmitting(false)
             showModal(data.itemCreate)
         }
     })
+
+    const submitNewItem = () => {
+        setFormIsSubmitting(true)
+        executeCreateItem({
+            variables: itemFormData
+        })
+    }
 
     function formatCurrentFields(values){
         const mutatedValues = values
@@ -258,12 +267,12 @@ export default function NewItemForm(props) {
                 <div>
                     <AirlineInput 
                         type="text"
-                        name="airlineCost"
+                        name="airlinePartCost"
                         value={itemFormData.airlineCost}
                         label="Airline Cost"
                         onChange={handleInput}
                     />
-                    <ErrorBlock errors={errors} fieldName='airlineCost' />
+                    <ErrorBlock errors={errors} fieldName='airlinePartCost' />
                 </div>
                 
                 <div>
@@ -294,7 +303,7 @@ export default function NewItemForm(props) {
                 
             </form>
             <DivCenter>
-                <Button variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || errors.length}>
+                <Button onClick={submitNewItem} variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || errors.length > 0}>
                     {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
                 </Button>
             </DivCenter>
