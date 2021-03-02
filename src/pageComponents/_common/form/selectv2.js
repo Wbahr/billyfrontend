@@ -42,7 +42,7 @@ function AirlineSelect(props){
             <Select
                 options={options}
                 value={value}
-                onChange={option => {changeFunction(null, name, option, getOptionValue)}}
+                onChange={option => {changeFunction(null, name, getOptionValue(option), option)}}
                 width='400px'
                 styles={SelectStyle}
                 getOptionLabel={getOptionLabel}

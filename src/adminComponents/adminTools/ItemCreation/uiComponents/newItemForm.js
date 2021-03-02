@@ -108,12 +108,21 @@ export default function NewItemForm(props) {
         showModal
     } = props
 
-    const [itemFormData, setItemFormData] = useState({})
+    const [itemFormData, setItemFormData] = useState({
+        itemId: '',
+        shortDescription: '',
+        longDescription: '',
+        airlineCost: 0.0,
+        listPrice: 0.0,
+        tariff: 0.0,
+        productGroupId: 0,
+        unitOfMeasure: ''
+    })
     const [isValid, setIsValid] = useState(false)
 
     useEffect(() => {
 
-        ItemCreationSchema.validate(itemFormData)
+        ItemCreationSchema.validate(itemFormData, {})
             .then(data => {
                 console.log('Valid')
                 console.log(data)
@@ -127,11 +136,17 @@ export default function NewItemForm(props) {
 
     }, [itemFormData])
 
-    const handleInput = (event, name, selection, selectionValueField) => {
-        setItemFormData({
+    const handleInput = (event, name, value, selection) => {
+        const formData = {
             ...itemFormData,
-            [eval(event?.target?.name || name)]: event?.target?.value || selection[selectionValueField]
-        })
+            [event?.target?.name || name]: event?.target?.value || value
+        }
+
+        console.log(selection)
+        console.log(value)
+        console.log(formData)
+
+        setItemFormData(formData)
     }
 
     const submitNewItem = () => {
@@ -190,21 +205,21 @@ export default function NewItemForm(props) {
                     placeholder="Unit of Measure"
                 />
                 <AirlineInput 
-                    type="currency"
+                    type="text"
                     name="listPrice"
                     value={itemFormData.listPrice}
                     label="List Price"
                     onChange={handleInput}
                 />
                 <AirlineInput 
-                    type="currency"
+                    type="text"
                     name="airlineCost"
                     value={itemFormData.airlineCost}
                     label="Airline Cost"
                     onChange={handleInput}
                 />
                 <AirlineInput 
-                    type="currency"
+                    type="text"
                     name="tariff"
                     value={itemFormData.tariff}
                     label="Tariff"

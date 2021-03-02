@@ -154,8 +154,8 @@ export default function ItemCreationPage() {
         searchItems()
     }
   
-    function handleChange(event, name, selection) {
-        setSelectedSupplier(selection)
+    function handleChange(event, name, value) {
+        setSelectedSupplier(value)
     }
   
     function resetItem() {

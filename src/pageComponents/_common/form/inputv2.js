@@ -73,6 +73,7 @@ function InputV2(props) {
                 {label && <Label htmlFor={label}>{label}</Label>}
                 <MainCurrencyInput
                     value={value}
+                    name={name}
                     prefix='$'
                     style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
@@ -86,6 +87,7 @@ function InputV2(props) {
                 {label && <Label htmlFor={label}>{`${label}`}</Label>}
                 <MainCurrencyInput
                     value={value}
+                    name={name}
                     suffix='%'
                     style={{ width: width || '400px' }}
                     onChangeEvent={onChange}
