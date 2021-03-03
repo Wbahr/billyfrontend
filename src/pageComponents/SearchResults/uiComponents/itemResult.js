@@ -7,6 +7,7 @@ import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonIte
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import LocationsModal from '../../_common/modals/LocationsModal'
+import CustomerPartModal from '../../_common/modals/CustomerPartModal'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -26,6 +27,24 @@ const DivPartNumberRow = styled.div`
 	padding: 0 5px;
 	font-size: 12px;
 	font-family: Arial, sans-serif;
+`
+const ExtendedDescSpan = styled.span`
+    padding: 0 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #555;
+    font-family: Arial, sans-serif;
+    width: 100%;
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    height: 36px; /* Fallback for non-webkit */
+    margin: 0 auto;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 `
 
 const DivPartNumberRowSpread = styled(DivPartNumberRow)`
@@ -65,7 +84,8 @@ const PartTitleLink = styled(Link)`
 	font-weight: 700;
 	font-size: 15px;
 	color: #000000 !important;
-	height: 45px;
+	height: 36px;
+    line-height: 1.25;
 	overflow: hidden;
 	&:hover{
 		cursor: pointer;
@@ -74,7 +94,7 @@ const PartTitleLink = styled(Link)`
 `
 
 const PpartAvailability = styled.p`
-	margin: 0;
+	margin: 0 5px 0 0;
 	font-size: 13px;
 `
 
@@ -137,10 +157,6 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-const Option = ({ customerPartNumber, id }) => <option key={customerPartNumber} value={id}>{customerPartNumber}</option>
-
-const getCustomerPartOptions = customerPartNumbers => customerPartNumbers.map((part, idx) => <Option key={idx} {...part}/>)
-
 export default function ItemResult({ result, details, addedToCart }) {
     const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
 
@@ -156,12 +172,12 @@ export default function ItemResult({ result, details, addedToCart }) {
 
     const [quantity, setQuantity] = useState(1)
 
-    const [customerPartNumber, setCustomerPartNumber] = useState(0)
+    const [customerPartNumber, setCustomerPartNumber] = useState('')
     const [customerPartOptions, setCustomerPartOptions] = useState([])
 
     useEffect(() => {
         const filteredCustomerPartNumbers = customerPartNumbers.filter(c => c.invMastUid === result.invMastUid)
-        setCustomerPartOptions(getCustomerPartOptions(filteredCustomerPartNumbers))
+        setCustomerPartOptions(filteredCustomerPartNumbers)
         if (filteredCustomerPartNumbers?.length === 1) {
             setCustomerPartNumber(filteredCustomerPartNumbers[0].id)
         }
@@ -175,13 +191,13 @@ export default function ItemResult({ result, details, addedToCart }) {
             quantity: parseInt(quantity),
             itemNotes: '',
             itemUnitPriceOverride: null,
-            customerPartNumberId: customerPartNumber
+            customerPartNumberId: customerPartNumber ? customerPartNumber : null
         })
         addedToCart()
         setQuantity(1)
     }
 
-    const handlePartNumberChange = ({ target }) => setCustomerPartNumber(target.value || null)
+    const handlePartNumberChange = partNumber => setCustomerPartNumber(partNumber || null)
 
     return (
         <DivItemResultContainer>
@@ -202,6 +218,17 @@ export default function ItemResult({ result, details, addedToCart }) {
                     <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
                 </DivPartDetails>
 
+                {details.extendedDesc ? (
+                    <ExtendedDescSpan>
+                        {details.extendedDesc}
+                    </ExtendedDescSpan>
+                ) : (
+                    <div style={{ width: '100%' }}>
+                        <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
+                        <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
+                    </div>
+                )}
+
                 <DivPartNumberRow>
                     <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
                 </DivPartNumberRow>
@@ -214,11 +241,14 @@ export default function ItemResult({ result, details, addedToCart }) {
                     <DivPartNumberRow>
                         <PpartAvailability>
                             Customer Part #:
-                            <select value={customerPartNumber} onChange={handlePartNumberChange}>
-                                <option value="">Select a Part No.</option>
-                                {customerPartOptions}
-                            </select>
                         </PpartAvailability>
+                        <CustomerPartModal
+                            invMastUid={result.invMastUid}
+                            selectedCustomerPartNumber={customerPartNumber}
+                            selectCustomerPartNumber={handlePartNumberChange}
+                            clearCustomerPartNumber={handlePartNumberChange}
+                            customerPartNumbers={customerPartOptions}
+                        />
                     </DivPartNumberRow>
                 )}
 

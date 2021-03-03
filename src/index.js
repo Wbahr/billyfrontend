@@ -10,7 +10,8 @@ import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faC
     faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faMapPin, faFax, faSearch, faUserCircle, faTimes,
     faUser, faUserPlus, faGlobeAmericas, faAddressBook, faArrowCircleRight, faPlus, faFileInvoiceDollar, faPlusCircle,
     faMinusCircle, faTools, faPencilAlt, faShippingFast, faEnvelope, faMapMarkerAlt, faPrint, faQuestionCircle, faTruckLoading,
-    faUserEdit, faDesktop, faBoxOpen, faDatabase, faHome, faFilePdf, faFileCsv, faFileExcel, faCopy, faList, faEllipsisH
+    faUserEdit, faDesktop, faBoxOpen, faDatabase, faHome, faFilePdf, faFileCsv, faFileExcel, faCopy, faList, faEllipsisH,
+    faCodeBranch, faCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { ApolloProvider } from '@apollo/client'
@@ -26,7 +27,7 @@ library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRi
     faYoutube, faMapPin, faFax, faSearch, faUserCircle, faTimes, faUser, faUserPlus, faGlobeAmericas, faAddressBook,
     faArrowCircleRight, faPlus, faFileInvoiceDollar, faPlusCircle, faMinusCircle, faTools, faPencilAlt, faShippingFast,
     faEnvelope, faMapMarkerAlt, faPrint, faQuestionCircle, faTruckLoading, faUserEdit, faDesktop, faBoxOpen, faDatabase,
-    faHome, faFilePdf, faFileCsv, faFileExcel, faCopy, faList, faEllipsisH)
+    faHome, faFilePdf, faFileCsv, faFileExcel, faCopy, faList, faEllipsisH, faCodeBranch, faCheck)
 
 const customHistory = createBrowserHistory()
 
