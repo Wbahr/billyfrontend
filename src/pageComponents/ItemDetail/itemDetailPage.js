@@ -14,6 +14,7 @@ import LocationsModal from '../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import { Detail1 as SkeletonLine, Title as SkeletonTitle } from '../SearchResults/uiComponents/skeletonItem'
+import CustomerPartModal from '../_common/modals/CustomerPartModal'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -184,7 +185,7 @@ const IMG = styled.img`
 
 export default function ItemDetailPage({ history }) {
     const { userInfo, addItem, itemDetails: cachedDetails, itemPrices: cachedPrices, getItemPrices, itemAvailabilities: cachedAvailabilities, customerPartNumbers: cachedCustomerPartNumbers } = useContext(Context)
-    const { itemId, customerPartNumber } = useParams()
+    const { itemId, customerPartNumber, item } = useParams()
     const invMastUid = parseInt(itemId)
     const [accessoryItems, setAccessoryItems] = useState([])
     const [accessoryItemPrices, setAccessoryItemPrices] = useState([])
@@ -251,8 +252,14 @@ export default function ItemDetailPage({ history }) {
     })
 
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
+
+    useEffect(() => {
+        document.title = `${itemDetails?.itemDesc || item} at Airline Hydraulics`
+    }, [itemDetails])
+
     const cachedItemCustomerPartNumbers = cachedCustomerPartNumbers.filter(part => part.invMastUid === invMastUid)
-    const customerPartNumbers = itemInfo?.customerPartNumbers || cachedItemCustomerPartNumbers
+    const distinctPart = (part, i, self) => self.findIndex(s => s.customerPartNumber === part.customerPartNumber)
+    const customerPartNumbers = (itemInfo?.customerPartNumbers || []).concat(cachedItemCustomerPartNumbers || []).filter(distinctPart)
     const cachedItemAvailability = cachedAvailabilities.find(avail => avail.invMastUid === invMastUid)
     const itemAvailability = itemInfo?.itemAvailabilitySingular || cachedItemAvailability
 
@@ -395,10 +402,13 @@ export default function ItemDetailPage({ history }) {
                                 <TR2>
                                     <TDGrey>Customer Part #</TDGrey>
                                     <TDWhite>
-                                        <select value={selectedCustomerPartNumber} onChange={(e) => selectCustomerPartNumber(e.target.value)} >
-                                            <option>Select a Part No.</option>
-                                            {CustomerPartOptions}
-                                        </select>
+                                        <CustomerPartModal
+                                            invMastUid={invMastUid}
+                                            selectedCustomerPartNumber={selectedCustomerPartNumber}
+                                            selectCustomerPartNumber={selectCustomerPartNumber}
+                                            clearCustomerPartNumber={selectCustomerPartNumber}
+                                            customerPartNumbers={customerPartNumbers}
+                                        />
                                     </TDWhite>
                                 </TR2>
                             )}

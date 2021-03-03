@@ -10,7 +10,7 @@ import FactoryStockModal from './factoryStockModal'
 import EditPriceModal from './editPriceModal'
 import SplitLineModal from './splitLineModal'
 import SourceLocationModal from './SourceLocationModal'
-import CustomerPartModal from './editCustomerPartModal'
+import CustomerPartModal from '../../_common/modals/CustomerPartModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
@@ -231,7 +231,6 @@ export default function ShoppingCartItem(props) {
         if (value === '-1') {
             setSelectedCustomerPartNumber(0) // Reset Dropdown
             setCartItemField('customerPartNumberId', 0)
-            setShowCustomerPartModal(true)
         } else {
             setSelectedCustomerPartNumber(value)
             setCartItemField('customerPartNumberId', Number(value))
@@ -302,23 +301,13 @@ export default function ShoppingCartItem(props) {
                                         <P2>AHC{itemDetails.invMastUid}</P2>
                                     </CopyToClipboard>
                                 </TextRow>
-                                {userInfo && (
-                                    <TextRow>
-                                        <select value={selectedCustomerPartNumber || 0} onChange={e => selectCustomerPartNumber(e.target.value)} >
-                                            <option value="0">Customer Part#</option>
-                                            {
-                                                customerPartNumbers?.map(elem =>
-                                                    <option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
-                                                )
-                                            }
-                                            <option value="-1">Create Part#</option>
-                                        </select>
-                                        { selectedCustomerPartNumber !== 0 && (
-                                            <div style={{ marginLeft: '8px', cursor: 'pointer' }} onClick={clearCustomerPartNumber}>
-                                                <FontAwesomeIcon icon="times" color="grey" />
-                                            </div>
-                                        )}
-                                    </TextRow>
+                                {userInfo && !userInfo.isAirlineEngineerUser && (
+                                    <CustomerPartModal
+                                        open={showCustomerPartModal}
+                                        setOpen={() => setShowCustomerPartModal(false)}
+                                        invMastUid={cart?.[index].frecno}
+                                        {...{ customerPartNumbers, selectedCustomerPartNumber, selectCustomerPartNumber, clearCustomerPartNumber }}
+                                    />
                                 )}
 
                                 <LocationsModal
@@ -331,8 +320,12 @@ export default function ShoppingCartItem(props) {
                                     <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
                                     <DivSplitLine>|</DivSplitLine>
                                     <DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
-                                    <DivSplitLine>|</DivSplitLine>
-                                    <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
+                                    {userInfo && !userInfo.isAirlineEngineerUser && (
+                                        <>
+                                            <DivSplitLine>|</DivSplitLine>
+                                            <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
+                                        </>
+                                    )}
                                 </DivRow>
                             </DivCol2>
                             <DivCol3>
@@ -480,12 +473,6 @@ export default function ShoppingCartItem(props) {
                 open={!!factoryStockModalData}
                 hideFactoryStockModal={() => setFactoryStockModalData(null)}
                 product={factoryStockModalData}
-            />
-            <CustomerPartModal
-                open={showCustomerPartModal}
-                hideCustomerPartModal={() => setShowCustomerPartModal(false)}
-                invMastUid={cart?.[index].frecno}
-                {...{ index, cartItem, setCartItem, selectCustomerPartNumber }}
             />
             <SourceLocationModal
                 open={showSourceLocationModal}

@@ -278,6 +278,7 @@ export default function Provider({ history, children }) {
             localStorage.removeItem('shoppingCartToken')
             handleSetUserInfo(userInfo)
             if (resetOnImpersonate) history.push('/')
+            setShoppingCart(null)
             setOrdersCache([])
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
@@ -294,6 +295,7 @@ export default function Provider({ history, children }) {
             localStorage.removeItem('imperInfo')
             handleSetUserInfo(userInfo)
             setImpersonatedCompanyInfo(null)
+            setShoppingCart(null)
             currentUserType = AIRLINE_ENGINEER_USER
             setInvoiceCache([])
             setInvoiceBatchNumber(0)
@@ -310,6 +312,7 @@ export default function Provider({ history, children }) {
             logout()
             handleSetUserInfo(null)
             setImpersonatedCompanyInfo(null)
+            setShoppingCart(null)
             currentUserType = GUEST
             setOrdersCache([])
             setInvoiceCache([])
@@ -371,7 +374,8 @@ export default function Provider({ history, children }) {
 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
-                    setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
+                    const newCart = cartItems.map(({ __typename, ...rest }) => rest)
+                    setShoppingCart(action === 'merge' ? [...newCart, ...shoppingCart] : newCart)
                     setOrderNotes(orderNotes)
                 }
             }
@@ -458,7 +462,7 @@ export default function Provider({ history, children }) {
 
     const mergeShoppingCart = token => {
         lastShoppingCartPayload.current = null
-        updateCartWrapper({ actionString: 'retrieve', token })
+        updateCartWrapper({ actionString: 'merge', token })
     }
 
     const emptyCart = () => {

@@ -8,6 +8,7 @@ import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
 import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
 import { useLazyQuery } from '@apollo/client'
+import MergeCartModal from './MergeCartModal'
 
 const Div = styled.div`
 	display: flex;
@@ -38,11 +39,6 @@ const Ashare = styled.a`
 	margin-right: 4px;
 `
 
-const AshareBlue = styled(Ashare)`
-	color: #328EFC !important;
-	font-weight: 500;
-`
-
 const DivShare = styled.div`
 	cursor: pointer;
 	margin-right: 4px;
@@ -58,7 +54,6 @@ export default function ShoppingCart({ history }) {
         cart,
         emptyCart,
         userInfo,
-        saveShoppingCart,
         itemPrices,
         itemDetails,
         customerPartNumbers,
@@ -70,7 +65,6 @@ export default function ShoppingCart({ history }) {
         updateShoppingCart,
         cartPricing
     } = useContext(Context)
-    const [savedCart, setSavedCart] = useState(false)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
 
@@ -111,19 +105,8 @@ export default function ShoppingCart({ history }) {
         }
     }, [cart?.length])
 
-    useEffect(() => {
-        if (savedCart) {
-            setTimeout(() => setSavedCart(false), 1000)
-        }
-    }, [savedCart])
-
     const handleSaveAsShoppingList = () => {
         setShowShoppingListModal(true)
-    }
-
-    const handleSaveCart = () => {
-        saveShoppingCart()
-        setSavedCart(true)
     }
 
     return (
@@ -140,10 +123,9 @@ export default function ShoppingCart({ history }) {
                             <FontAwesomeIcon icon="list" color="grey" />
                         </DivSave>
                     ) : <Ashare/>}
-                    <DivSave onClick={handleSaveCart}>
-                        {savedCart ? <AshareBlue>Cart Saved</AshareBlue> : <Ashare>Save Cart</Ashare>}
-                        {savedCart ? <FontAwesomeIcon icon="save" color="#328EFC" /> : <FontAwesomeIcon icon="save" color="grey" />}
-                    </DivSave>
+
+                    {userInfo?.isAirlineEngineerUser && <MergeCartModal/>}
+
                     <DivShare>
                         <Ashare>Email Cart</Ashare>
                         <FontAwesomeIcon icon="share" color="grey" />
