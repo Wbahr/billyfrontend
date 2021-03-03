@@ -47,29 +47,31 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-export default function CheckoutOrderSummary({ currentStep, zipcode, taxRate, taxRateLoading }) {
+export default function CheckoutOrderSummary({ history, currentStep, zipcode, taxRate, taxRateLoading }) {
     const { cartPricing: { subTotal, tariff } } = useContext(Context)
     const taxAmount = subTotal * taxRate
 
+    const title = history.location.pathname === '/create-quote' ? 'Quote' : 'Order'
+
     return (
         <Div>
-            <H4>Order Summary</H4>
-			
+            <H4>{title} Summary</H4>
+
             <DivLineItem>
                 <p>Subtotal</p>
                 <p><NumberFormat value={subTotal} displayType="text" thousandSeparator={true} prefix="$" decimalScale={2} fixedDecimalScale/></p>
             </DivLineItem>
-			
+
             <DivLineItem>
                 <p>Tariff</p>
                 <p><NumberFormat value={tariff} displayType="text" thousandSeparator={true} prefix="$" decimalScale={2} fixedDecimalScale/></p>
             </DivLineItem>
-			
+
             <DivLineItem>
                 <p>Tax</p>
                 {/* If past step 1 (ship to), show tax */}
                 {
-                    taxRateLoading 
+                    taxRateLoading
                         ? <p>Loading...</p>
                         : (currentStep >= 1 && zipcode) ? (
                             <p>
@@ -83,15 +85,15 @@ export default function CheckoutOrderSummary({ currentStep, zipcode, taxRate, ta
                                 />
                             </p>
                         ) : <p>(TBD)</p>
-					
+
                 }
             </DivLineItem>
-			
+
             <DivLineItem>
                 <p>Shipping</p>
                 <p>(TBD)</p>
             </DivLineItem>
-			
+
             <DivLineItemTotal>
                 <p>
                     Total <NumberFormat

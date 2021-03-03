@@ -274,7 +274,8 @@ function CheckoutPage({ history }) {
                                 <FormContainer
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
-                                    {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                    {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
+                                        history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
                                 />
                             </form>
                         )}
@@ -284,6 +285,7 @@ function CheckoutPage({ history }) {
 
             <DivOrderTotalCol>
                 <CheckoutOrderSummary
+                    history={history}
                     currentStep={currentStep}
                     zipcode={taxRateRequestInfo?.zipcode || ''}
                     taxRate={taxRate}
@@ -309,10 +311,9 @@ const getFormStepComponent = currentStep => {
     }
 }
 
-const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', 'Order Review']
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } } } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, history } = props
     const stripe = useStripe()
     const elements = useElements()
     const [paymentInfo, setPaymentInfo] = useState({})
@@ -362,6 +363,8 @@ const FormContainer = props => {
     }
 
     const FormStepComponent = getFormStepComponent(currentStep)
+
+    const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', history.location.pathname === '/create-quote' ? 'Quote Review' : 'Order Review']
 
     return (
         <>
