@@ -191,7 +191,7 @@ export default function ItemResult({ result, details, addedToCart }) {
             quantity: parseInt(quantity),
             itemNotes: '',
             itemUnitPriceOverride: null,
-            customerPartNumberId: customerPartNumber
+            customerPartNumberId: customerPartNumber ? customerPartNumber : null
         })
         addedToCart()
         setQuantity(1)
