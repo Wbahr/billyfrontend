@@ -124,7 +124,7 @@ export default function ShoppingCart({ history }) {
                         </DivSave>
                     ) : <Ashare/>}
 
-                    {userInfo?.isAirlineEngineerUser && <MergeCartModal/>}
+                    {userInfo && <MergeCartModal/>}
 
                     <DivShare>
                         <Ashare>Email Cart</Ashare>

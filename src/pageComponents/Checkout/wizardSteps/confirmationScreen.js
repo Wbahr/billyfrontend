@@ -278,7 +278,10 @@ export default function ConfirmationScreen(props) {
 
             <DivNavigation>
                 <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
-                <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}><FontAwesomeIcon icon='lock' size="sm" color="white" />Submit</ButtonRed>
+                <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}>
+                    <FontAwesomeIcon icon='lock' size="sm" color="white" />
+                    Submit {history.location.pathname === '/create-quote' ? 'Quote' : 'Order'}
+                </ButtonRed>
             </DivNavigation>
 
             {submitting && <ProcessingOrderModal />}
