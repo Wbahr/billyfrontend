@@ -83,6 +83,9 @@
         "max": 1
       }
     ],
+    "no-case-declarations": [
+      "warn"
+    ],
     "no-sequences": [
       "error"
     ],

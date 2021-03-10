@@ -1,5 +1,9 @@
 import { useRef, useEffect, useState } from 'react'
 
+export const searchObjectArrayForString = (options, searchString) => { //Searches all key values for substring match
+    return options.filter(o => Object.keys(o).some(key => o[key].toString().toLowerCase().includes(searchString.toLowerCase())))
+}
+
 export const getRidOf__typename = ({ __typename, editors, items, ...rest }) => (
     { ...rest, editors: editors.map(({ __typename, ...rest1 }) => rest1), items: items.map(({ __typename, ...rest2 }) => rest2) }
 )
@@ -62,6 +66,7 @@ const getTypeImage = (itemDetails, type) => {
 
 //TODO: Change this back to ImageTypes.Thumbnail once the thumbnail images are loaded properly
 //John changed this to ImageTypes.Large because the thumbnail images weren't loading.
+//Dammit John!
 export const getThumbnailImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path)
 
 export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Large)?.path)

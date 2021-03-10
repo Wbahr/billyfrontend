@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import { Button } from '@material-ui/core'
-import AirlineInput from '../../../pageComponents/_common/form/inputv2'
-import AirlineSelect from '../../../pageComponents/_common/form/selectv2'
+import { Button, CircularProgress, Grid } from '@material-ui/core'
 import ItemCreationModal from './uiComponents/itemCreationModal'
 import { getImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { InputType } from 'pageComponents/_common/form/FormField'
 
 const QUERY_ITEM_CREATION_DATA = gql`
 	query GetItemCreationData{
@@ -29,28 +27,19 @@ const QUERY_ITEM_CREATION_DATA = gql`
 `
 
 const QUERY_ITEM_SEARCH = gql`
-	query ItemSearch($searchParams: ElasticSearchItemRequest!){
+	query ItemSearch($searchParams: SearchRequestInput!){
 		itemSearch(searchParams: $searchParams){
 			result
-			count
+			searchTotalCount
 		}
 	}
 `
 
 const ContentScreenContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	height: 100%;
-	max-width: 1600px;
-	margin: 28px auto;
-	flex-grow: 99;
-	align-items: center;
-`
-
-const DivSpacer = styled.div`
-	margin: 5px 0px;
-	display: flex;
-	flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+	margin: 28px 0;
 `
 
 const DivSearchItemContainer = styled.div`
@@ -74,40 +63,37 @@ const SearchResultsContainer = styled.div`
 	flex-wrap: wrap;
 	padding: 5px;
 	align-self: center;
-	margin: 28px auto;
+	margin: 16px auto;
 	height: auto;
 	justify-content: center;
-`
-const DivSearchInputWrapper = styled.div`
-	max-width: 500px;
 `
 
 const ButtonContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 12px auto;
+	margin: 16px 0;
+    flex-wrap: wrap;
 	button {
-		margin: 0 16px;
+		margin: 0 5px;
 	}
 `
 
-export default function ItemCreationPage() {
-    const [searchTerm, setSearchTerm] = useState('') //Search term initial value
-    const [selectedSupplier, setSelectedSupplier] = useState(null)
+export default function ItemCreationPage({ history }) {
+    const [searchTerm, setSearchTerm] = useState('')
+    const [selectedSupplier, setSelectedSupplier] = useState(0)
     const [searchEnabled, setSearchEnabled] = useState(false)
-    const [supplierList, setSupplierList] = useState([]) //Array to populate Supplier List
+    const [supplierList, setSupplierList] = useState([])
     const [unitsOfMeasureList, setUnitsOfMeasure] = useState([])
     const [productGroupsList, setProductGroups] = useState([])
-    const [itemSearchResult, setItemSearchResult] = useState([]) //array to hold searched items
+    const [itemSearchResult, setItemSearchResult] = useState([])
     const [showNewItemForm, setShowNewItemForm] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [isSearching, setIsSearching] = useState(false)
     const [searched, setSearched] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
     const [submitResponse, setSubmitResponse] = useState(null)
-  
+    
     useEffect(() => {
-        if (searchTerm !== '' && (selectedSupplier !== '' && selectedSupplier !== null)) {
+        if (searchTerm && selectedSupplier) {
             setSearchEnabled(true)
         } else {
             if (searchEnabled) {
@@ -119,74 +105,45 @@ export default function ItemCreationPage() {
     const maxPage = 3
     useQuery(QUERY_ITEM_CREATION_DATA, {
         onCompleted: data => {
-            setSupplierList(data.suppliers)
-            setUnitsOfMeasure(unit(data.unitsOfMeasure))
-            setProductGroups(data.productGroups)
+            setSupplierList(data.suppliers.map(({ __typename, ...o }) => ({ ...o, value: o.id, label: o.name })))
+            setUnitsOfMeasure(data.unitsOfMeasure.map(({ __typename, ...rest }) => rest))
+            setProductGroups(data.productGroups.map(({ __typename, ...rest }) => rest))
         }
     })
-    function unit(units) {
-        const newUnits = []
-        for (let i = 0; i < units.length; i++) {
-            if (units[i].value !== 'EACH') {
-                newUnits.push(units[i])
-            }
-        }
-        return newUnits
-    }
-    const [performItemSearch] = useLazyQuery(QUERY_ITEM_SEARCH, {
+
+    const [performItemSearch, { loading }] = useLazyQuery(QUERY_ITEM_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            setCurrentPage(currentPage + 1)
-            setIsSearching(false)
             setSearched(true)
+            setCurrentPage(currentPage + 1)
             setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
         }
     })
   
-  
     function searchItems() {
-        setIsSearching(true)
-        const index = supplierList.findIndex(elem => elem.id === selectedSupplier)
-        const SearchTerm = _.isNil(supplierList[index].prefix) ? searchTerm : supplierList[index].prefix + ' ' + searchTerm
         performItemSearch({
             variables: {
                 searchParams: {
-                    searchTerm: SearchTerm,
+                    searchTerm: `${selectedSupplier.prefix || ''} ${searchTerm}`.trim(),
                     resultSize: 10,
-                    resultPage: currentPage,
                     sortType: 'relevancy',
-                    brandFilters: [],
-                    categoryFilter: {
-                        parentCategory: '',
-                        childCategory: ''
-                    },
-                    attributeFilters: []
                 }
             }
         })
     }
   
-    function loadMoreItems() {
-        searchItems()
-    }
-  
-    function handleChange(newSelection) {
-        setSelectedSupplier(newSelection)
-    }
+    const handleChange = (e, value) => setSelectedSupplier(value)
   
     function resetItem() {
+        setSearched(false)
         setSearchTerm('')
         setSelectedSupplier(null)
         setItemSearchResult([])
         setCurrentPage(1)
         setShowNewItemForm(false)
-        setSearched(false)
     }
   
-    function mutateItemId(itemId) {
-        const mutatedItemId = itemId.replace(/\s/g, '-')
-        return (mutatedItemId)
-    }
+    const mutateItemId = (itemId) => itemId.replace(/\s/g, '-')
   
     function showModal(response) {
         setSubmitResponse(response)
@@ -195,85 +152,113 @@ export default function ItemCreationPage() {
         }
     }
   
-  
-    const searchResultItems = []
-    itemSearchResult.map((element, index) => {
+    const searchResultItems = itemSearchResult.map((element, index) => {
         const resultImage = getImagePath(element.thumbnail_image_path)
-    
         const mutatedItemId = mutateItemId(element.itemCode)
-        searchResultItems.push(
+        const href = `/product/${mutatedItemId}/${element.invMastUid}`
+        return (
             <DivSearchItemContainer key={index}>
-                <img src={resultImage} width="auto" height="125" margin="28px 14px" alt={element.itemCode} ></img>
+                <img src={resultImage} width="auto" height="125" alt={element.itemCode}/>
                 <h6>{element.itemCode}</h6>
                 <p>{element.itemDescription}</p>
-                <a href={`/product/${mutatedItemId}/${element.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                    View Details
+                </a>
             </DivSearchItemContainer>
         )
     })
   
     return (
         <>
-            {!_.isNil(submitResponse) && <ItemCreationModal submitResponse={submitResponse} handleCloseModal={() => setSubmitResponse(null)} />}
+            {!!submitResponse && (
+                <ItemCreationModal
+                    submitResponse={submitResponse}
+                    handleCloseModal={() => setSubmitResponse(null)}
+                    history={history}
+                />
+            )}
+            
             <ContentScreenContainer>
-                <DivSearchInputWrapper>
-                    <DivSpacer>
-                        <AirlineInput
-                            label="Manufacturer ID:"
+                <div style={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center', maxWidth: 500 }}>
+                    <div style={{ maxWidth: '500px', flex: 1 }}>
+                        <InputType
+                            autoFocus
                             type="text"
-                            placeholder="Enter Manufacturer ID"
-                            name="itemIDSearch"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
+                            placeholder="Enter Manufacturer ID"
+                            label="Manufacturer Part Number"
                         />
-                    </DivSpacer>
-                    <DivSpacer>
-                        <AirlineSelect
-                            label="Supplier Name:"
-                            name="supplierNameSearch"
-                            placeholder='Select a Supplier'
-                            value={selectedSupplier}
-                            options={[{ id: null, name: null, prefix: null }, ...supplierList]}
-                            changeFunction={handleChange}
-                            getOptionLabel={(option) => {
-                                if (option.name === null) {
-                                    return ('Select a Supplier')
-                                } else {
-                                    return (option.id + ' - ' + option.name)
-                                }
-                            }}
-                            getOptionValue={(option) => option.name}
-                            isClearable={true}
-                            isLoading={supplierList.length === 0}
-                        />
-                    </DivSpacer>
-                </DivSearchInputWrapper>
+                    
+                        <Grid container wrap="nowrap">
+                            <InputType
+                                style={{ margin: '16px 0' }}
+                                type="select"
+                                label="Supplier"
+                                name="supplierNameSearch"
+                                placeholder='Select a Supplier'
+                                value={selectedSupplier}
+                                onSelectChange={handleChange}
+                                options={supplierList}
+                            />
+                            {!supplierList.length && <div style={{ marginTop: 35, marginLeft: 10 }}><CircularProgress size={25}/></div>}
+                        </Grid>
+                    </div>
+                </div>
+                
                 <ButtonContainer>
-                    <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+                    <Button
+                        disabled={loading}
+                        onClick={resetItem}
+                    >
                         Clear Item
                     </Button>
-                    <Button variant="contained" color="primary" disabled={!searchEnabled | isSearching} onClick={() => { searchItems() }}>
-                        {isSearching ? 'Searching Items..' : 'Search for Item'}
+                    
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        disabled={!searchEnabled || loading}
+                        onClick={searchItems}
+                    >
+                        {loading ? 'Searching Items..' : 'Search for Item'}
                     </Button>
                 </ButtonContainer>
+                
                 {searched && (
-                    <div>
+                    <>
                         <SearchResultsContainer>
                             {searchResultItems}
                             {searchResultItems.length === 0 && <p>No Items Found</p>}
                         </SearchResultsContainer>
+                        
                         <ButtonContainer>
-                            <Button variant="contained" color="secondary" disabled={isSearching} onClick={() => resetItem()}>
+                            <Button
+                                disabled={loading}
+                                onClick={resetItem}
+                            >
                                 Clear Item
                             </Button>
-                            <Button variant="contained" color="primary" disabled={currentPage > maxPage || isSearching} onClick={() => loadMoreItems()}>
+                            
+                            <Button
+                                color="secondary"
+                                disabled={(currentPage > maxPage) || loading || !searchResultItems.length}
+                                onClick={searchItems}
+                            >
                                 {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
                             </Button>
-                            <Button variant="contained" color="primary" disabled={showNewItemForm} onClick={() => setShowNewItemForm(true)}>
+                            
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                disabled={showNewItemForm}
+                                onClick={() => setShowNewItemForm(true)}
+                            >
                                 Create a New Item
                             </Button>
                         </ButtonContainer>
-                    </div>
+                    </>
                 )}
+                
                 {showNewItemForm && (
                     <NewItemForm
                         searchTerm={searchTerm}
@@ -281,8 +266,8 @@ export default function ItemCreationPage() {
                         supplierList={supplierList}
                         unitsOfMeasureList={unitsOfMeasureList}
                         productGroupsList={productGroupsList}
-                        clearForm={() => resetItem()}
-                        showModal={response => showModal(response)}
+                        clearForm={resetItem}
+                        showModal={showModal}
                     />
                 )}
             </ContentScreenContainer>
