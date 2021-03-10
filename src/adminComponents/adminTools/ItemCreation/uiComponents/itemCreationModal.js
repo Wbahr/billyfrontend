@@ -1,54 +1,46 @@
-import React from 'react'
-import Popup from 'reactjs-popup'
-import styled from 'styled-components'
-import { Button } from '@material-ui/core'
+import React, { useContext } from 'react'
+import { Button, Grid, Dialog, DialogTitle, DialogActions, Typography as Text } from '@material-ui/core'
+import Context from '../../../../setup/context'
 
-const DivContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 8px;
-  align-items: center;
-  p {
-    text-align: center;
-  }
-`
-
-const PpartTitle = styled.p`
-  margin: 0 0 8px 0;
-  font-weight: 700;
-  font-size: 18px;
-  color: #000000 !important;
-`
-
-export default function ItemCreationModal({ submitResponse, handleCloseModal }) {
-
-    let PopupContent
-    if (submitResponse.success){
-        PopupContent =(
-            <DivContainer>
-                <PpartTitle>Item Created!</PpartTitle>
-                <p>Item ID: {submitResponse.itemId}</p>
-                <a href={`/product/${submitResponse.itemId}/${submitResponse.invMastUid}`} target="_blank" rel="noopener noreferrer">View Details</a>
-                <Button variant="contained" color="secondary" onClick={() => {handleCloseModal()}}>
-                    Create New Item
-                </Button>
-            </DivContainer>
-        )
-    } else {
-        PopupContent =(
-            <DivContainer>
-                <PpartTitle>Item Creation Failed</PpartTitle>
-                <p>{submitResponse.message}</p>
-                <Button variant="contained" color="secondary" onClick={() => {handleCloseModal()}}>
-                    Edit Item
-                </Button>
-            </DivContainer>
-        )
+export default function ItemCreationModal({ submitResponse, handleCloseModal, history }) {
+    const context = useContext(Context)
+    const href = `/product/${submitResponse.itemId}/${submitResponse.invMastUid}`
+    
+    const handleAddToCart = () => {
+        context.addItem({ frecno: submitResponse.invMastUid, quantity: 1 })
+        history.push('/cart')
     }
-
+    
     return (
-        <Popup open={true} onClose={() => {handleCloseModal()}} closeOnDocumentClick contentStyle={{ maxWidth: '300px', borderRadius: '3px' }}>
-            {PopupContent}
-        </Popup>
+        <Dialog open onClose={handleCloseModal} maxWidth="sm">
+            <Grid container direction="column" alignItems="center" style={{ padding: 8 }}>
+                {submitResponse.success ? (
+                    <>
+                        <DialogTitle>Item Created!</DialogTitle>
+                        <Text align="center">Item ID: {submitResponse.itemId}</Text>
+                        <a href={href} target="_blank" rel="noopener noreferrer">View Details</a>
+                        <DialogActions>
+                            <Button onClick={handleCloseModal}>
+                                Create New Item
+                            </Button>
+                            <Button variant="contained" color="primary" onClick={handleAddToCart}>
+                                Add to Cart
+                            </Button>
+                        </DialogActions>
+                    </>
+                ) : (
+                    <>
+                        <DialogTitle>Item Creation Failed</DialogTitle>
+                        {(submitResponse.messages || []).map(string => <Text align="center" key={string}>{string}</Text>)}
+                        <Text align="center">{submitResponse.message}</Text>
+                        <DialogActions>
+                            <Button variant="contained" color="primary" onClick={handleCloseModal}>
+                                Edit Item
+                            </Button>
+                        </DialogActions>
+                    </>
+                )}
+            </Grid>
+        </Dialog>
     )
 }

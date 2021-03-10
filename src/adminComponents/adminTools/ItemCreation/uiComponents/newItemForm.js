@@ -1,257 +1,178 @@
-// Render Prop
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
-import { Button } from '@material-ui/core'
+import { Button, Grid } from '@material-ui/core'
 import * as Yup from 'yup'
 import { useMutation } from '@apollo/client'
-import AirlineInput from 'pageComponents/_common/form/inputv3'
-import AirlineSelect from 'pageComponents/_common/form/selectv3'
-import PropTypes from 'prop-types'
-
-const DivCenter = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-`
-
-const ItemCreationSchema = Yup.object().shape({
-    itemId: Yup.string()
-        .matches(/[A-Z0-9][A-Z0-9- ]+[A-Z0-9]/, 'Only alphanumeric, space, and dash characters are permitted.')
-        .min(3)
-        .max(30)
-        .uppercase()
-        .required()
-        .strict(),
-    shortDescription: Yup.string()
-        .min(5)
-        .max(40)
-        .matches(/[a-zA-Z0-9- ()+:/|_#*]/)
-        .required(),
-    longDescription: Yup.string()
-        .max(3000),
-    airlinePartCost: Yup.number()
-        .min(0.01)
-        .max(9999999)
-        .required(),
-    listPrice: Yup.number()
-        .min(0.01)
-        .max(9999999)
-        .required(),
-    tariff: Yup.number()
-        .min(0)
-        .max(9999999),
-    productGroupId: Yup.string().required(),
-    unitOfMeasure: Yup.string()
-        .required(),
-    supplierId: Yup.number()
-        .required()
-})
+import { MemoizedField } from 'pageComponents/_common/form/FormField'
 
 const CREATE_ITEM = gql`
-  mutation CreateItem($item: ItemCreateInputGraphType) {
+mutation CreateItem($item: ItemCreateInputGraphType) {
     itemCreate(item: $item){
-      itemId
-      message
-      success
-      invMastUid
+        itemId
+        invMastUid
+        success
+        messages
     }
-  }
+}
 `
-
-const ErrorBlock = ({ errors, fieldName }) => {
-
-    const fieldErrors = errors.filter(e => e.path === fieldName)
-    
-    if (fieldErrors.length){
-        return (
-            <div>
-                <ul>
-                    {
-                        fieldErrors.map(e => <li key={`${e.path}-${e.type}`}>{e.message}</li>)
-                    }
-                </ul>
-            </div>
-        )
-    } else {
-        return <></>
-    }
-}
-ErrorBlock.propTypes = {
-    errors: PropTypes.array,
-    fieldName: PropTypes.string
-}
 
 export default function NewItemForm(props) {
     const [formIsSubmitting, setFormIsSubmitting] = useState(false)
     const {
         searchTerm,
+        selectedSupplier,
         supplierList,
-        selectedSupplierId,
         unitsOfMeasureList,
         productGroupsList,
         showModal
     } = props
-
-    const selectedSupplier = supplierList.find(s => s.id === selectedSupplierId)
+    
     const initialItemId = selectedSupplier?.prefix ? `${selectedSupplier.prefix} ${searchTerm}` : searchTerm
-
-    const [itemFormData, setItemFormData] = useState({
+    
+    const initialState = {
         itemId: initialItemId,
         shortDescription: '',
-        longDescription: '',
-        airlinePartCost: 0.0,
-        listPrice: 0.0,
-        tariff: 0.0,
-        productGroupId: 0,
+        extendedDescription: '',
+        manufacturerPartNumber: searchTerm,
+        airlinePartCost: null,
+        listPrice: null,
+        tariff: undefined,
+        productGroup: null,
         unitOfMeasure: '',
-        supplierId: selectedSupplierId
-    })
-    const [isValid, setIsValid] = useState(false)
-    const [errors, setErrors] = useState([])
-
-    useEffect(() => {
-
-        ItemCreationSchema.validate(itemFormData, { abortEarly: false })
-            .then(data => {
-                setIsValid(true)
-                setErrors([])
-            })
-            .catch(err => {
-                setIsValid(false)
-                setErrors(err.inner)
-            })
-
-    }, [itemFormData])
-
-    const handleInput = (event, name, value, selection) => {
-        const formData = {
-            ...itemFormData,
-            [event?.target?.name || name]: event?.target?.value || value
-        }
-
-        setItemFormData(formData)
+        supplier: selectedSupplier
     }
-
+    
+    const [formData, setFormData] = useState(initialState)
+    
+    useEffect(() => {
+        setFormData({ ...formData, supplier: selectedSupplier })
+    }, [selectedSupplier])
+    
+    useEffect(() => {
+        setFormData({ ...formData, manufacturerPartNumber: searchTerm })
+    }, [searchTerm])
+    
+    useEffect(() => {
+        setFormData({ ...formData, itemId: `${formData.supplier?.prefix || ''} ${formData.manufacturerPartNumber || ''}`.trim() })
+    }, [formData.manufacturerPartNumber, formData.supplier])
+    
+    const itemCreationSchema = Yup.object({
+        manufacturerPartNumber: Yup.string()
+            .label('Manufacturer Part Number')
+            .matches(/[A-Za-z0-9 -]/, 'Only alphanumeric, space, and dash characters are permitted.')
+            .min(3)
+            .max(30)
+            .uppercase()
+            .required()
+            .meta({ autoFocus: true }),
+        itemId: Yup.string()
+            .label('Item ID')
+            .matches(/[A-Za-z0-9 -]/, 'Only alphanumeric, space, and dash characters are permitted.')
+            .min(3)
+            .max(30)
+            .uppercase()
+            .meta({ disabled: true }),
+        description: Yup.string()
+            .label('Description')
+            .meta({ type: 'textarea' })
+            .min(5)
+            .max(3000)
+            .required(),
+        unitOfMeasure: Yup.string()
+            .label('Unit Of Measure')
+            .meta({ options: unitsOfMeasureList, type: 'select' })
+            .required(),
+        airlinePartCost: Yup.number()
+            .label('Airline Cost')
+            .min(0.01)
+            .max(9999999)
+            .required(),
+        listPrice: Yup.number()
+            .label('List Price')
+            .moreThan(formData.airlinePartCost)
+            .required(),
+        tariff: Yup.number()
+            .label('Tariff')
+            .min(0)
+            .max(9999999),
+        productGroup: Yup.string()
+            .label('Product Group')
+            .meta({ options: productGroupsList, type: 'select' })
+            .required(),
+        supplier: Yup.string()
+            .label('Supplier')
+            .meta({ options: supplierList, type: 'select' })
+            .required()
+    })
+    
     const [executeCreateItem] = useMutation(CREATE_ITEM, {
         onCompleted: data => {
             setFormIsSubmitting(false)
             showModal(data.itemCreate)
+            if (data.itemCreate.success) {
+                setFormData(initialState)
+            }
+        },
+        onError: () => {
+            setFormIsSubmitting(false)
         }
     })
-
+    
     const submitNewItem = () => {
         setFormIsSubmitting(true)
+        
+        const { unitOfMeasure, productGroup, supplier, description, ...rest } = formData
         executeCreateItem({
-            variables: itemFormData
+            variables: {
+                item: {
+                    ...rest,
+                    shortDescription: description.slice(0, 40),
+                    extendedDescription: description.slice(40, description.length),
+                    unitOfMeasure: unitOfMeasure.value,
+                    productGroupId: productGroup.value,
+                    supplierId: supplier.value
+                }
+            }
         })
     }
-
+    
+    const validate = () => {
+        try {
+            itemCreationSchema.validateSync(formData)
+        } catch (e) { return e }
+    }
+    
+    const error = validate()
+    
+    const fields = Object.keys(itemCreationSchema.describe().fields)
+    
     return (
         <>
-            <form>
-                <div>
-                    <AirlineInput
-                        type="text"
-                        name="itemId"
-                        value={itemFormData.itemId}
-                        disabled={true}
-                        label="Item ID"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='itemId' />
-                </div>
-
-                <div>
-                    <AirlineInput 
-                        type="text"
-                        name="shortDescription"
-                        value={itemFormData.shortDescription}
-                        label="Short Description"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='shortDescription' />
-                </div>
-                <div>
-                    <AirlineInput 
-                        type="text"
-                        name="longDescription"
-                        value={itemFormData.longDescription}
-                        label="Long Description"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='longDescription' />
-                </div>
-                
-                <div>
-                    <AirlineSelect
-                        name="unitOfMeasure"
-                        label="Unit of Measure"
-                        value={itemFormData.unitOfMeasure} 
-                        options={unitsOfMeasureList}
-                        getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-                        getOptionValue={option => option.value}
-                        changeFunction={handleInput}
-                        isSearchable={true}
-                        placeholder="Unit of Measure"
-                    />
-                    <ErrorBlock errors={errors} fieldName='unitOfMeasure' />
-                </div>
-                
-                <div>
-                    <AirlineInput 
-                        type="text"
-                        name="listPrice"
-                        value={itemFormData.listPrice}
-                        label="List Price"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='listPrice' />
-                </div>
-                
-                <div>
-                    <AirlineInput 
-                        type="text"
-                        name="airlinePartCost"
-                        value={itemFormData.airlineCost}
-                        label="Airline Cost"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='airlinePartCost' />
-                </div>
-                
-                <div>
-                    <AirlineInput 
-                        type="text"
-                        name="tariff"
-                        value={itemFormData.tariff}
-                        label="Tariff"
-                        onChange={handleInput}
-                    />
-                    <ErrorBlock errors={errors} fieldName='tariff' />
-                </div>
-                
-                <div>
-                    <AirlineSelect
-                        name="productGroupId"
-                        label="Product Group"
-                        value={itemFormData.productGroupId} 
-                        options={productGroupsList}
-                        getOptionLabel={(option) => { return (option.value + ' - ' + option.label)}}
-                        getOptionValue={option => option.value}
-                        changeFunction={handleInput}
-                        isSearchable={true}
-                        placeholder="Product Group"
-                    />
-                    <ErrorBlock errors={errors} fieldName='productGroupId' />
-                </div>
-                
-            </form>
-            <DivCenter>
-                <Button onClick={submitNewItem} variant="contained" color="secondary" type="submit" disabled={formIsSubmitting || errors.length > 0}>
+            <Grid container justify="center">
+                <form style={{ flex: 1, padding: 16, maxWidth: 500 }}>
+                    {fields.map(field => (
+                        <MemoizedField
+                            key={field}
+                            field={field}
+                            formData={formData}
+                            setFormData={setFormData}
+                            yupSchema={itemCreationSchema}
+                        />
+                    ))}
+                </form>
+            </Grid>
+            
+            <Grid container justify="center">
+                <Button
+                    onClick={submitNewItem}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    disabled={formIsSubmitting || !!error}
+                >
                     {formIsSubmitting ? 'Registering Item..' : 'Register Item'}
                 </Button>
-            </DivCenter>
+            </Grid>
         </>
     )
 }

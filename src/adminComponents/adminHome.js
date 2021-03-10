@@ -88,7 +88,7 @@ function ListItemLink(props) {
     )
 }
 
-export default function AdminHome() {
+export default function AdminHome({ history }) {
     const { path, url } = useRouteMatch()
     const classes = useStyles()
 
@@ -131,7 +131,7 @@ export default function AdminHome() {
                         <AdminDashboard />
                     </Route>
                     <Route path={`${path}/item-creation`}>
-                        <ItemCreation />
+                        <ItemCreation history={history} />
                     </Route>
                     <Route path={`${path}/open-orders`}>
                         <OpenOrders />

@@ -20,6 +20,8 @@ import ContextProvider from './setup/provider'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { logout } from './pageComponents/_common/helpers/generalHelperFunctions'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { PRIMARY_RED, SECONDARY_GRAY } from './pageComponents/_common/constants/colors'
 import 'index.css'
 
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare,
@@ -51,14 +53,35 @@ const client = new ApolloClient({
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
 
+const defaults = createMuiTheme()
+const muiTheme = createMuiTheme(Object.assign({}, defaults, {
+    palette: {
+        primary: {
+            main: PRIMARY_RED
+        },
+        secondary: {
+            main: SECONDARY_GRAY
+        }
+    },
+    overrides: {
+        MuiButton: {
+            containedPrimary: {
+                background: 'linear-gradient(to top left,#950f23,#DB1633)'
+            }
+        }
+    }
+}))
+
 ReactDOM.render(
     <ApolloProvider client={client}>
         <ContextProvider history={customHistory}>
-            <Elements stripe={stripePromise}>
-                <Router history={customHistory}>
-                    <Switch />
-                </Router>
-            </Elements>
+            <MuiThemeProvider theme={muiTheme}>
+                <Elements stripe={stripePromise}>
+                    <Router history={customHistory}>
+                        <Switch />
+                    </Router>
+                </Elements>
+            </MuiThemeProvider>
         </ContextProvider>
     </ApolloProvider>
     , document.getElementById('index')
