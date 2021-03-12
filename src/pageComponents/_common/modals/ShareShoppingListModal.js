@@ -40,10 +40,10 @@ export default function ShareShoppingListModal({ open, hide, shoppingList }) {
 	
     const loading = context.upsertShoppingListState?.loading
 	
-    const mapUserOptions = ({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId })
+    const mapUserOptions = ({ firstName, lastName, webUserId }) => ({ label: `${firstName} ${lastName || ''}`, value: webUserId })
 	
     const userOptions = context.webUserContacts
-        .filter(user => shoppingList.contactIdOwner !== user.webUserId)
+        .filter(user => shoppingList.webUserIdOwner !== user.webUserId)
         .map(mapUserOptions)
 	
     useEffect(() => {
@@ -59,7 +59,7 @@ export default function ShareShoppingListModal({ open, hide, shoppingList }) {
         if (!context.userInfo.webUserId && !selectedUsers.length) {
             setError('Please select a user')
         } else {
-            context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({ contactId: u.value })) })
+            context.upsertShoppingList({ ...shoppingList, editors: selectedUsers.map(u => ({ webUserId: u.value })) })
                 .then(() => hide())
         }
     }

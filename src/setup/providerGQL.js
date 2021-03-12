@@ -406,11 +406,11 @@ export const GET_SHOPPING_LISTS = gql`
 	query GetShoppingLists {
 		shoppingList {
 	    id
-	    contactIdOwner
+	    webUserIdOwner
 	    name
 	    notes
 	    editors {
-	      contactId
+	      webUserId
 	      firstName
 	      lastName
 	    }
@@ -431,12 +431,12 @@ export const UPDATE_SHOPPING_LISTS = gql`
 	mutation ShoppingListUpdate($shoppingList: ShoppingListInput) {
 		shoppingListEdit(shoppingList: $shoppingList) {
 		  id
-		  contactIdOwner
+		  webUserIdOwner
 		  name
 		  notes
 		  deleted
 		  editors {
-		    contactId
+		    webUserId
 		    firstName
 		    lastName
 		  }
@@ -456,7 +456,7 @@ export const UPDATE_SHOPPING_LISTS = gql`
 export const GET_WEB_USER_CONTACTS = gql`
 	query GetWebUserContacts {
 		webUsers {
-			contactId
+			webUserId
 			firstName
 			lastName
 		}
