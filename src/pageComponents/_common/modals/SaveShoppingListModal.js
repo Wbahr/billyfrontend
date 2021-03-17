@@ -56,7 +56,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     const [error, setError] = useState('')
 	
     const loading = context.upsertShoppingListState?.loading
-    const userOptions = context.webUserContacts.map(({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId }))
+    const userOptions = context.webUserContacts.map(({ firstName, lastName, webUserId }) => ({ label: `${firstName} ${lastName || ''}`, value: webUserId }))
 	
     useEffect(() => {
         setSelectedUser(preSelectedUser)
@@ -112,7 +112,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                     })
             } else {
                 context.upsertShoppingList({
-                    contactIdOwner: context.userInfo.webUserId || selectedUser.value,
+                    webUserIdOwner: context.userInfo.webUserId || selectedUser.value,
                     name: listName,
                     notes: listNotes,
                     items,
@@ -169,7 +169,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                                 <Select
                                     value={selectedShoppingList}
                                     setValue={handleListChange}
-                                    options={shoppingListOptions.filter(list => list.contactIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
+                                    options={shoppingListOptions.filter(list => list.webUserIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
                                     placeholder='Search lists by Name, Item ID'
                                 />
                             </DivItem>

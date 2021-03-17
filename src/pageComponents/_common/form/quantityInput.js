@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
+import { useDidUpdateEffect } from '../helpers/generalHelperFunctions'
 
 const IncrementDecrementButton = styled.button`
     box-shadow: none;
@@ -36,7 +37,7 @@ const QuantityInput = (props) => {
         setDisplayQuantity(quantity)
     }, [quantity])
 
-    useEffect(() => {
+    useDidUpdateEffect(() => {
         if (debouncedDisplayQuantity !== '') {
             handleUpdate(debouncedDisplayQuantity)
         }

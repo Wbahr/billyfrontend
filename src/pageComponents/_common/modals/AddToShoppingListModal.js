@@ -54,7 +54,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
     const [quantity, setQuantity] = useState(1)
     const [error, setError] = useState('')
 	
-    const userOptions = context.webUserContacts.map(({ firstName, lastName, contactId }) => ({ label: `${firstName} ${lastName || ''}`, value: contactId }))
+    const userOptions = context.webUserContacts.map(({ firstName, lastName, webUserId }) => ({ label: `${firstName} ${lastName || ''}`, value: webUserId }))
     const loading = context.upsertShoppingListState?.loading
 	
     useEffect(() => {
@@ -65,7 +65,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
     const mapListOptions = ({ name, id }) => ({ label: name, value: id })
 	
     const listOptions = context.shoppingLists
-        .filter(list => (context.userInfo.webUserId || selectedUser?.value) === list.contactIdOwner)
+        .filter(list => (context.userInfo.webUserId || selectedUser?.value) === list.webUserIdOwner)
         .map(mapListOptions)
 	
     const handleListNameChange = ({ target: { value } }) => setListName(value)
@@ -91,7 +91,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
         } else if (listName && listName.length) {
             setError('')
             context.upsertShoppingList({
-                contactIdOwner: context.userInfo.webUserId || selectedUser.value,
+                webUserIdOwner: context.userInfo.webUserId || selectedUser.value,
                 name: listName,
                 notes: listNotes,
                 items: [{ ...item, customerPartNumberId }],

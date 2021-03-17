@@ -374,12 +374,11 @@ export default function Provider({ history, children }) {
 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
-                    const newCart = cartItems.map(({ __typename, ...rest }) => rest)
-                    setShoppingCart(action === 'merge' ? [...newCart, ...shoppingCart] : newCart)
+                    setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
                     setOrderNotes(orderNotes)
+                    setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
                 }
             }
-            setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
     })
 
