@@ -107,7 +107,7 @@ export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice
     const getLocationVerbiage = () => {
         const locationsWithStock = (airlineStock || []).filter(loc => loc.quantityAvailable)
         if (locationsWithStock.length === 1 && !factoryStock?.factoryAvailability) {
-            return airlineStock[0].locationName
+            return locationsWithStock[0].locationName
         } else if (!locationsWithStock.length && factoryStock?.factoryAvailability) {
             return 'Factory Stock'
         } else  {
