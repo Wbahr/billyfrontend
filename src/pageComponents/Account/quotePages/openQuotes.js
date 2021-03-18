@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
+import Loader from '../../_common/loader'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -89,13 +90,16 @@ export default function QuotesTable({ history }) {
     const [showOrderType] = useState('all')
     const [dateFrom, setDateFrom] = useState()
     const [dateTo, setDateTo] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (!didMountRef.current && context.ordersCache.length === 0) {
+            setLoading(true)
             context.getOrders()
         } else if (context.ordersCache.length > 0) {
             const mutatedData = formatTableData('quotes', context.ordersCache)
             setData(mutatedData)
+            setLoading(false)
         }
     }, [context.ordersCache])
 
@@ -229,6 +233,7 @@ export default function QuotesTable({ history }) {
                     <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
                 </DivSpacer>
             </DivRowDate>
+            {loading && <Loader/>}
             <Table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup, i) => (

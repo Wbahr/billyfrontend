@@ -198,6 +198,7 @@ export const GET_ORDERS = gql`
 			isQuote
 			status
 			isMine
+			quoteRefNo
 			lineItems{
 				invMastUid
 				itemCode
@@ -230,6 +231,7 @@ export const GET_ORDERS_DETAIL = gql`
 			shipToState
 			shipToZip
 			shipToCountry
+			quoteRefNo
 			lineItems{
 				lineItemId
 				orderNumber
