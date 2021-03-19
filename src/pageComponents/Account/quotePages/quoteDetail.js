@@ -85,7 +85,8 @@ export default function OrderDetail({ history, orderId: quoteId }) {
         shipToCity,
         shipToState,
         shipToZip,
-        lineItems
+        lineItems,
+        quoteRefNo
     } = orderDetails?.accountOrderDetails || {}
 
     const invMastUids = lineItems?.map(item => item.invMastUid) || []
@@ -189,6 +190,7 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                     <DivOrderInfo>
                         <p>Order Date: {orderDate ? dateFormat(new Date(orderDate), 'MM/dd/yyyy') : '--'}</p>
                         <p>Quote Number: {quoteId}</p>
+                        <p>Quote Ref No: {quoteRefNo}</p>
                         <p>P.O. Number: {poNo}</p>
                         <p>Status: {status}</p>
                         <p>Packing Basis: {packingBasis}</p>

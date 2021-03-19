@@ -112,8 +112,17 @@ export function ShippingScheduleForm(props) {
         ? cartWithDates.map(mapShippingScheduleLines)
         : <p>No Cart Items</p>
   
+    console.log('props', props.values)
+    
     return (
         <>
+            <FormRow>
+                <label htmlFor="schedule.packingBasisName">Quote Reference Number</label>
+                <div style={{ flexGrow: 99 }}>
+                    <FormikInput name="schedule.quoteRefNo" />
+                </div>
+            </FormRow>
+    
             <FormRow>
                 <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
                 <div style={{ flexGrow: 99 }}>
