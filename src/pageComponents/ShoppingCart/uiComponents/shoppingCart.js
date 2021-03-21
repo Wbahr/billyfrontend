@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import ShoppingCartItem from './shoppingCartItem'
