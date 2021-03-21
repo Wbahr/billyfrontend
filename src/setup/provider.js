@@ -56,6 +56,8 @@ export default function Provider({ history, children }) {
     const [customerPartNumbers, setCustomerPartNumbers] = useState([])
     const [sourceLocations, setSourceLocations] = useState([])
     const [shoppingLists, setShoppingLists] = useState([])
+    const [shoppingCartPayload, setShoppingCartPayload] = useState(null)
+    const debouncedCartPayload = useDebounceValue(shoppingCartPayload)
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
 
@@ -381,6 +383,10 @@ export default function Provider({ history, children }) {
             }
         }
     })
+    
+    useEffect(() => {
+        if (debouncedCartPayload) shoppingCartApiCall(debouncedCartPayload)
+    }, [debouncedCartPayload])
 
     const updateShoppingCart = (cartItems, notes=orderNotes) => {
         setShoppingCart(cartItems)
@@ -392,7 +398,7 @@ export default function Provider({ history, children }) {
     const updateCartWrapper = cartInfo => {
         const shoppingCartToken = localStorage.getItem('shoppingCartToken')
         setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
-        shoppingCartApiCall({
+        setShoppingCartPayload({
             variables: {
                 cartInfo: {
                     token: shoppingCartToken,
