@@ -9,6 +9,7 @@ import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
 import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
 import { useLazyQuery } from '@apollo/client'
 import MergeCartModal from './MergeCartModal'
+import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 
 const Div = styled.div`
 	display: flex;
@@ -67,6 +68,7 @@ export default function ShoppingCart({ history }) {
     } = useContext(Context)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
+    const debouncedCart = useDebounceValue(cart, 1000)
 
     const [getAvailabilitiesWithLeadTimes] = useLazyQuery(GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, {
         fetchPolicy: 'no-cache',
@@ -74,23 +76,20 @@ export default function ShoppingCart({ history }) {
             setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
         }
     })
-
+    
     useEffect(() => {
-        if (cart) {
+        if (cart?.length) {
             const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
             hasMissingPrices && getItemPrices(cart)
-            getAvailabilitiesWithLeadTimes({
-                variables: {
-                    itemsAndQuantities: cart.map(({ frecno, quantity }) => {
-                        return {
-                            invMastUid: frecno,
-                            quantity: quantity
-                        }
-                    })
-                }
-            })
         }
     }, [cart])
+    
+    useEffect(() => {
+        if (cart?.length) {
+            const itemsAndQuantities = cart.map(({ frecno, quantity }) => ({ invMastUid: frecno, quantity: quantity }))
+            getAvailabilitiesWithLeadTimes({ variables: { itemsAndQuantities } })
+        }
+    }, [debouncedCart])
 
     useEffect(() => {
         if (cart) {
@@ -105,9 +104,7 @@ export default function ShoppingCart({ history }) {
         }
     }, [cart?.length])
 
-    const handleSaveAsShoppingList = () => {
-        setShowShoppingListModal(true)
-    }
+    const handleSaveAsShoppingList = () => setShowShoppingListModal(true)
 
     return (
         <>
