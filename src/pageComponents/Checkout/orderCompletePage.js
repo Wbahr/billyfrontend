@@ -11,12 +11,12 @@ const DivConfirmationBox = styled.div`
 	margin: auto;
 `
 
-export default function OrderCompletePage() {
+export default function OrderCompletePage(match) {
     const { orderId } = useParams()
-
+    const isQuote = match.match.path.indexOf('quote-complete') != -1
     return (
         <DivConfirmationBox>
-            <p>Order Number ({orderId}) Confirmed</p>
+            <p>{isQuote ? 'Web Quote Number' : 'Web Order Number'} ({orderId}) Confirmed</p>
             <p>We'll be sending out a confirmation email shortly.</p>
         </DivConfirmationBox>
     )
