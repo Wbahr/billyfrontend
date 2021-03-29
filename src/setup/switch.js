@@ -108,6 +108,7 @@ class App extends React.Component {
                 <WrapperRoute exact path='/linecards' component={LineCards} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
                 <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
+                <WrapperRoute exact path='/quote-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
                 <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
