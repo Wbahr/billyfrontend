@@ -120,9 +120,9 @@ export default function ConfirmationScreen(props) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
                 if (schedule.isQuote) {
-                    history.push(`/order-complete/${orderId}`)
-                } else {
                     history.push(`/quote-complete/${orderId}`)
+                } else {
+                    history.push(`/order-complete/${orderId}`)
                 }
             } else {
                 setShowOrderFailedModal(true)

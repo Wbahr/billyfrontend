@@ -11,9 +11,9 @@ const DivConfirmationBox = styled.div`
 	margin: auto;
 `
 
-export default function OrderCompletePage(match) {
+export default function OrderCompletePage(props) {
     const { orderId } = useParams()
-    const isQuote = match.match.path.indexOf('quote-complete') != -1
+    const isQuote = props.match.path.includes('quote-complete')
     return (
         <DivConfirmationBox>
             <p>{isQuote ? 'Web Quote Number' : 'Web Order Number'} ({orderId}) Confirmed</p>
