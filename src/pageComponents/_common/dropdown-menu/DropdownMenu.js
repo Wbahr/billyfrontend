@@ -69,7 +69,7 @@ const DropdownLink = styled.div`
     padding: 0.5rem 1rem;
     text-align: center;
     background-color: #535353;
-    a {
+    a, div {
         color: white;
         display: block;
         white-space: nowrap;
@@ -113,7 +113,7 @@ export const DropdownMenu = ({ children, className }) => (
 
 export const DropDownMenuAction = React.forwardRef(({ linkText, onClick }, ref) => (
     <DropdownLink ref={ref}>
-        <Link to="#" onClick={onClick}>{linkText}</Link>
+        <div onClick={onClick}>{linkText}</div>
     </DropdownLink>
 ))
 
