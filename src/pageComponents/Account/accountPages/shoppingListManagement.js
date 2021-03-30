@@ -207,14 +207,14 @@ export default function ShoppingListManagementPage() {
         setListItems(itemsCopy)
     }
   
-    const handleAddToCart = ({ row: { original: { idx, invMastUid: frecno } } }) => () => {
+    const handleAddToCart = ({ row: { original: { idx, invMastUid } } }) => () => {
         const quantity = data[idx]?.quantity ? parseInt(data[idx].quantity) : 1
         setShowModal(true)
-        context.addItem({ quantity, frecno })
+        context.addItem({ quantity, invMastUid })
     }
   
     const handleCopyToCart = () => {
-        context.addItems(selectedList.items.map(({ invMastUid: frecno, customerPartNumberId, quantity }) => ({ frecno, customerPartNumberId, quantity })))
+        context.addItems(selectedList.items.map(({ invMastUid, customerPartNumberId, quantity }) => ({ invMastUid, customerPartNumberId, quantity })))
         setShowModal(true)
     }
   

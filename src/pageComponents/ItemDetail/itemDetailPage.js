@@ -277,7 +277,7 @@ export default function ItemDetailPage({ history }) {
 
     const handleAddToCart = () => {
         addItem({
-            frecno: invMastUid,
+            invMastUid: invMastUid,
             quantity: parseInt(quantity, 10),
             itemNotes: null,
             itemUnitPriceOverride: null,

@@ -118,7 +118,7 @@ function CheckoutPage({ history }) {
         variables: {
             items: context.cart?.map(cartItem => {
                 return {
-                    invMastUid: cartItem.frecno,
+                    invMastUid: cartItem.invMastUid,
                     quantity: cartItem.quantity
                 }
             })
@@ -206,7 +206,7 @@ function CheckoutPage({ history }) {
             .then((valid) => setStepValidated({ ...stepValidated, [currentStep]: valid }))
     }
 
-    const invMastUids = context.cart?.map(item => item.frecno)
+    const invMastUids = context.cart?.map(item => item.invMastUid)
     const { data: itemsDetails } = useQuery(GET_CHECKOUT_ITEM_DETAIL, {
         variables: {
             invMastUids: invMastUids

@@ -148,7 +148,7 @@ export default function OrderDetailItem({ item, quoteId, itemDetails, availabili
                         {({ addItem }) => (
                             <ButtonSmall onClick={() => {
                                 addItem({
-                                    frecno: item.invMastUid,
+                                    invMastUid: item.invMastUid,
                                     quantity: parseInt(quantity, 10),
                                     itemNotes: `Quote ${quoteId}`,
                                     itemUnitPriceOverride: null,

@@ -172,10 +172,10 @@ export default function ItemPurchaseHistoryTable({ history }) {
     }
 	
     const handleAddToCart = ({ row }) => () => {
-        const { addToCartAmt, invMastUid: frecno } = row.original
+        const { addToCartAmt, invMastUid } = row.original
         const quantity = addToCartAmt ? parseInt(addToCartAmt) : 1
         setShowModal(true)
-        context.addItem({ quantity, frecno })
+        context.addItem({ quantity, invMastUid })
     }
 	
     const renderItemPrice = ({ row: { original, values } }) => {

@@ -215,7 +215,7 @@ export default function ShoppingCartItem(props) {
     const [showCustomerPartModal, setShowCustomerPartModal] = useState(false)
     const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
     const [showDispositionModal, setShowDispositionModal] = useState(false)
-    const itemId = parseInt(cartItem.frecno, 10)
+    const itemId = parseInt(cartItem.invMastUid, 10)
 
     useEffect(() => {
         if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
@@ -245,7 +245,7 @@ export default function ShoppingCartItem(props) {
     const handleShowFactoryStockModal = () => {
         setFactoryStockModalData({
             name: itemDetails?.itemDesc,
-            frecno: itemId
+            invMastUid: itemId
         })
     }
 
@@ -277,7 +277,7 @@ export default function ShoppingCartItem(props) {
         <DivContainer>
             {
                 !itemDetails
-                    ? <p>{cartItem.frecno}</p>
+                    ? <p>{cartItem.invMastUid}</p>
                     : (
                         <DivCard>
                             <DivMove
@@ -305,7 +305,7 @@ export default function ShoppingCartItem(props) {
                                     <CustomerPartModal
                                         open={showCustomerPartModal}
                                         setOpen={() => setShowCustomerPartModal(false)}
-                                        invMastUid={cart?.[index].frecno}
+                                        invMastUid={cart?.[index].invMastUid}
                                         {...{ customerPartNumbers, selectedCustomerPartNumber, selectCustomerPartNumber, clearCustomerPartNumber }}
                                     />
                                 )}

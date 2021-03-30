@@ -195,26 +195,26 @@ export default function Provider({ history, children }) {
     })
 
     function getItemPrices(items) {
-        handleGetItemPrices({ variables: { items: items.map(({ invMastUid, frecno, quantity }) => ({
-            invMastUid: invMastUid || frecno,
+        handleGetItemPrices({ variables: { items: items.map(({ invMastUid, quantity }) => ({
+            invMastUid: invMastUid,
             quantity: quantity !== null && quantity !== undefined ? quantity : 1
         })) } })
     }
 
     function getItemAvailabilities(items) {
-        handleGetItemAvailabilities({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetItemAvailabilities({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
     }
 
     function getItemDetails(items) {
-        handleGetItemDetails({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetItemDetails({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
     }
 
     function getCustomerPartNumbers(items) {
-        handleGetCustomerPartNumbers({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetCustomerPartNumbers({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
     }
 
     function getSourceLocations(items) {
-        handleGetSourceLocations({ variables: { invMastUids: items.map(({ invMastUid, frecno }) => invMastUid || frecno) } })
+        handleGetSourceLocations({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
     }
 
     const addCustomerPartNumber = newCustomerPartNumber => {
@@ -247,8 +247,8 @@ export default function Provider({ history, children }) {
     })
 
     const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
-        const items = shoppingList.items.map(({ itemCode, frecno, invMastUid, quantity, customerPartNumberId }) => (
-            { itemCode, invMastUid: invMastUid || frecno, quantity, customerPartNumberId }
+        const items = shoppingList.items.map(({ itemCode, invMastUid, quantity, customerPartNumberId }) => (
+            { itemCode, invMastUid, quantity, customerPartNumberId }
         ))
         return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
     }
@@ -370,7 +370,7 @@ export default function Provider({ history, children }) {
                 const lastCartItems = lastShoppingCartPayload.current
 
                 const cartsMatch = lastCartItems && cartItems.length === lastCartItems.length
-                    && !cartItems.find((item, idx) => item.frecno !== lastCartItems[idx]?.frecno)
+                    && !cartItems.find((item, idx) => item.invMastUid !== lastCartItems[idx]?.invMastUid)
 
                 const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
 
@@ -433,7 +433,7 @@ export default function Provider({ history, children }) {
         const splitItems = []
         for (let i = 0; i < lineCount; i++) {
             splitItems.push({
-                frecno: shoppingCart[index].frecno,
+                invMastUid: shoppingCart[index].invMastUid,
                 quantity: parseInt(lineQuantity),
                 itemNotes: shoppingCart[index].itemNotes,
             })
