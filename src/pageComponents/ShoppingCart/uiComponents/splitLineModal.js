@@ -68,11 +68,11 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
     }
 
     const handleQtyUpdate = idx => quantity => {
-        setLines(lines.map((l, i) => i === idx ? { ...l, quantity } : l))
+        setLines(lines.map((l, i) => i === idx ? { ...l, quantity, uniqueId: null } : l))
     }
 
     const handleAddLine = () => {
-        setLines([ ...lines, { ...cart[index], quantity: 1 } ])
+        setLines([ ...lines, { ...cart[index], quantity: 1, uniqueId: null } ])
     }
 
     const handleRemoveLine = idx => () => {

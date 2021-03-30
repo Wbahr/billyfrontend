@@ -401,7 +401,7 @@ export default function Provider({ history, children }) {
         setShoppingCartPayload({
             variables: {
                 cartInfo: {
-                    token: shoppingCartToken,
+                    tokenString: shoppingCartToken,
                     ...cartInfo
                 }
             }

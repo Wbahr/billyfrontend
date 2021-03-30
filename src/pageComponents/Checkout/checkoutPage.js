@@ -116,12 +116,10 @@ function CheckoutPage({ history }) {
 
     const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
         variables: {
-            items: context.cart?.map(cartItem => {
-                return {
-                    invMastUid: cartItem.invMastUid,
-                    quantity: cartItem.quantity
-                }
-            })
+            items: context.cart?.map(cartItem => ({
+                invMastUid: cartItem.invMastUid,
+                quantity: cartItem.quantity
+            }))
         }
     })
 
