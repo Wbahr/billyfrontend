@@ -370,7 +370,6 @@ export default function Provider({ history, children }) {
                 const lastCartItems = lastShoppingCartPayload.current
 
                 const cartsMatch = lastCartItems && cartItems.length === lastCartItems.length
-                    && !cartItems.find((item, idx) => item.invMastUid !== lastCartItems[idx]?.invMastUid)
 
                 const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
 
