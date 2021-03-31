@@ -158,9 +158,9 @@ export default function ConfirmationScreen(props) {
     }
 
     const CartDates = schedule.cartWithDates.map((item, index) => {
-        const price = itemsPrices?.find(price => price.invMastUid === item.frecno)
-        const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
-        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+        const price = itemsPrices?.find(price => price.invMastUid === item.invMastUid)
+        const details = itemsDetails?.find(detail => detail.invMastUid === item.invMastUid)
+        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.invMastUid)
 
         return (
             <ShippingScheduleLineDisplay

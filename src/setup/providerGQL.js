@@ -99,7 +99,7 @@ export const GET_ITEM_BY_ID = gql`
         mediaType
       }
     }
-    customerPartNumbers(frecno: $itemId){
+    customerPartNumbers(invMastUid: $itemId){
       customerPartNumber
       id
     }
@@ -134,7 +134,8 @@ export const UPDATE_CART = gql`
     shoppingCart(cartUpdate: $cartInfo){
       token
       cartItems{
-        frecno
+        uniqueId
+        invMastUid
         customerPartNumberId
         quantity
         itemNotes
@@ -815,7 +816,7 @@ export const MERGE_CART_TO_CUSTOMER = gql`
     copyShoppingCartToCustomer(customerId: $customerId) {
         customerId
         cartItems{
-          frecno
+          invMastUid
         }
     }
   }

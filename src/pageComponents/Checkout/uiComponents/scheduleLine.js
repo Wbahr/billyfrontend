@@ -88,7 +88,7 @@ const DivSpacer = styled.div`
 
 const getContent = (itemDetails, item, customerPartNumbers, index) => {
     if (!itemDetails) {
-        return <p>{item.frecno}</p>
+        return <p>{item.invMastUid}</p>
     } else {
         const imagePath = getThumbnailImagePath(itemDetails)
         const tomorrowDate = new Date()
@@ -98,7 +98,7 @@ const getContent = (itemDetails, item, customerPartNumbers, index) => {
         return (
             <DivCard>
                 <DivCol1>
-                    <Img height='65px' src={imagePath} alt={item.frecno} />
+                    <Img height='65px' src={imagePath} alt={item.invMastUid} />
                 </DivCol1>
 				
                 <DivCol2>

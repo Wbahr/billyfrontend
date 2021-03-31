@@ -151,7 +151,7 @@ export default function OrderDetail({ history, orderId: quoteId }) {
     function handleAddQuote() {
         const items = lineItems.map(item => {
             return {
-                frecno: item.invMastUid,
+                invMastUid: item.invMastUid,
                 quantity: parseInt(item.quantityOrdered, 10),
                 itemNotes: '',
                 itemUnitPriceOverride: null,

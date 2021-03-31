@@ -8,7 +8,7 @@ import { FRAGMENT_ITEM_DETAIL, FRAGMENT_ITEM_DETAIL_ASSOCIATED_ITEMS,
 
 export const GET_ITEM_DETAIL_PAGE_ITEM_INFO = gql`
 	query ItemById($invMastUid: Int) {
-		customerPartNumbers(frecno: $invMastUid){
+		customerPartNumbers(invMastUid: $invMastUid){
 			...ItemCustomerPartNumber
 		}
 		itemAvailabilitySingular(invMastUid: $invMastUid){

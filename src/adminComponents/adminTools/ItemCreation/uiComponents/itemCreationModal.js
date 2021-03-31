@@ -7,7 +7,7 @@ export default function ItemCreationModal({ submitResponse, handleCloseModal, hi
     const href = `/product/${submitResponse.itemId}/${submitResponse.invMastUid}`
     
     const handleAddToCart = () => {
-        context.addItem({ frecno: submitResponse.invMastUid, quantity: 1 })
+        context.addItem({ invMastUid: submitResponse.invMastUid, quantity: 1 })
         history.push('/cart')
     }
     

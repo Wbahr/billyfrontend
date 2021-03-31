@@ -187,7 +187,7 @@ export default function ItemResult({ result, details, addedToCart }) {
 
     const handleAddToCart = () => {
         addItem({
-            frecno: result.invMastUid,
+            invMastUid: result.invMastUid,
             quantity: parseInt(quantity),
             itemNotes: '',
             itemUnitPriceOverride: null,

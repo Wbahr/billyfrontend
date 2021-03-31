@@ -79,27 +79,27 @@ export default function ShoppingCart({ history }) {
     
     useEffect(() => {
         if (cart?.length) {
-            const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.frecno && price.quantity === item.quantity))
+            const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.invMastUid && price.quantity === item.quantity))
             hasMissingPrices && getItemPrices(cart)
         }
     }, [cart])
     
     useEffect(() => {
         if (cart?.length) {
-            const itemsAndQuantities = cart.map(({ frecno, quantity }) => ({ invMastUid: frecno, quantity: quantity }))
+            const itemsAndQuantities = cart.map(({ invMastUid, quantity }) => ({ invMastUid, quantity: quantity }))
             getAvailabilitiesWithLeadTimes({ variables: { itemsAndQuantities } })
         }
     }, [debouncedCart])
 
     useEffect(() => {
         if (cart) {
-            const itemsWithoutDetails = cart.filter(item => !itemDetails?.some(detail => detail.invMastUid === item.frecno))
+            const itemsWithoutDetails = cart.filter(item => !itemDetails?.some(detail => detail.invMastUid === item.invMastUid))
             if (itemsWithoutDetails.length) {
                 getItemDetails(itemsWithoutDetails)
                 getCustomerPartNumbers(itemsWithoutDetails)
             }
 
-            const itemsWithoutSourceLocations = cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.frecno))
+            const itemsWithoutSourceLocations = cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.invMastUid))
             itemsWithoutSourceLocations.length && getSourceLocations(itemsWithoutSourceLocations)
         }
     }, [cart?.length])
@@ -212,11 +212,11 @@ const CartComponent = (props) => {
     }
 
     const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {
-        const details = itemDetails?.find(detail => detail.invMastUid === cartItem.frecno)
-        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
-        const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.frecno)
-        const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.frecno)
-        const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.frecno)
+        const details = itemDetails?.find(detail => detail.invMastUid === cartItem.invMastUid)
+        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.invMastUid)
+        const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.invMastUid)
+        const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.invMastUid)
+        const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.invMastUid)
 
         return (
             <Draggable

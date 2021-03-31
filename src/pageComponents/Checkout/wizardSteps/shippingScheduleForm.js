@@ -96,8 +96,8 @@ export function ShippingScheduleForm(props) {
     const InfoMessage = ({ packingBasisName }) => getInfoMessage(packingBasisName)
   
     const mapShippingScheduleLines = (item, index) => {
-        const details = itemsDetails?.find(detail => detail.invMastUid === item.frecno)
-        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.frecno)
+        const details = itemsDetails?.find(detail => detail.invMastUid === item.invMastUid)
+        const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.invMastUid)
     
         return (
             <ShippingScheduleLine

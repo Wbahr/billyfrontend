@@ -146,7 +146,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
     function handleAddToCart() {
         if (quantity > 0){
             context.addItem({
-                frecno: itemDetails?.invMastUid,
+                invMastUid: itemDetails?.invMastUid,
                 quantity: quantity,
                 itemNotes: null,
                 itemUnitPriceOverride: null,

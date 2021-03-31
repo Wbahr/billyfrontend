@@ -170,7 +170,7 @@ export const cartHasZeroPricedItem = (cart, itemPrices) => {
     }
 
     return (cart || []).some(cartItem => {
-        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.frecno)
+        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.invMastUid)
 
         return itemPrice?.unitPrice === 0 && !cartItem.itemUnitPriceOverride
     })
