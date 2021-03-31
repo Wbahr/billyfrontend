@@ -59,7 +59,7 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
     function splitItem() {
         const frontCart = cart?.slice(0, index) || []// returns cart item before split item
         const backCart = cart?.slice(index + 1) || [] // returns cart item after split item
-        setCart([...frontCart, ...lines, ...backCart])
+        setCart([...frontCart, ...lines.map(l => ({ ...l, uniqueId: null })), ...backCart])
     }
 
     const handleSplitClick = () => {
@@ -68,11 +68,11 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
     }
 
     const handleQtyUpdate = idx => quantity => {
-        setLines(lines.map((l, i) => i === idx ? { ...l, quantity, uniqueId: null } : l))
+        setLines(lines.map((l, i) => i === idx ? { ...l, quantity } : l))
     }
 
     const handleAddLine = () => {
-        setLines([ ...lines, { ...cart[index], quantity: 1, uniqueId: null } ])
+        setLines([ ...lines, { ...cart[index], quantity: 1 } ])
     }
 
     const handleRemoveLine = idx => () => {

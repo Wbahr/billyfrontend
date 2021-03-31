@@ -372,6 +372,7 @@ export default function Provider({ history, children }) {
                 const cartsMatch = lastCartItems && cartItems.length === lastCartItems.length
 
                 const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
+                    && !cartItems.find((item, idx) => item.invMastUid !== lastCartItems[idx]?.invMastUid)
 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
@@ -437,7 +438,7 @@ export default function Provider({ history, children }) {
                 itemNotes: shoppingCart[index].itemNotes,
             })
         }
-        const frontCart = shoppingCart?.slice(0, index) || []// returns cart item before split item
+        const frontCart = shoppingCart?.slice(0, index) || [] // returns cart item before split item
         const backCart = shoppingCart?.slice(index + 1) || [] // returns cart item after split item
         updateShoppingCart([...frontCart, ...splitItems, ...backCart])
     }
