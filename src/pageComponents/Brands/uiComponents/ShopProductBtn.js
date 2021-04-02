@@ -7,6 +7,10 @@ const Div = styled.div`
   width: 100%;
   margin: 25px 0;
   align-items: center;
+  transition-property: transform;
+  transition: 0.5s ease;
+  &:hover {
+      transform: translateY(-5px);
 `
 const ShopBtn = styled.a`
   background-color: ${props => props.theme.mainColor};
@@ -38,7 +42,7 @@ const ConfiguratorBtn = styled(ShopBtn)`
 export default function ShopProductBtn(props) {
     return (
         <Div>
-            <ShopBtn href={`/search?searchTerm=${props.searchTerm}`}>{props.text}</ShopBtn>
+            <ShopBtn href={`/search?searchTerm=${props.searchTerm}`} target="_blank">{props.text}</ShopBtn>
         </Div>
     )
 }

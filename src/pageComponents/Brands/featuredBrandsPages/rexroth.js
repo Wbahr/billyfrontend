@@ -36,11 +36,11 @@ const RelatedLinkDiv = styled.div`
 	width: 100%;
 	height: 220px;
 	margin: 20px 0;
-
 `
 const Span = styled.span`
 	font-weight: bold;
 `
+
 export default function Rexroth() {
 
     return (
@@ -62,6 +62,7 @@ export default function Rexroth() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/industrial-hydraulics.png"
                     title="Industrial & Mobile Hydraulics"
                     text="Bosch Rexroth’s Industrial Hydraulics Division offers product solutions for the most demanding industrial applications, such as chemical processing plants, power and environmental engineering, automotive engineering, plastics processing machinery, paper industry, presses, test rigs and simulation systems, marine engineering, offshore engineering, civil/water engineering, transportation technology and machine tools. Their Mobile Hydraulics Division has a wide range of products to meet the needs of agriculture, construction, forestry, mining and oilfield applications."
+                    learnMoreLink="/search?innerSearchTerms=Industrial%2CMobile%2CHydraulics&resultPage=1&searchTerm=Rexroth"
                     additionalText={(
                         <div>
                             <ul>
@@ -78,6 +79,7 @@ export default function Rexroth() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Aluminum Structural Framing & Assembly"
                     text="Save time and money building complex guarding, machine frames, workstations and more with the simple bolt-together construction of Bosch Rexroth extruded aluminum. This high-quality structural framing material is as durable as steel, but much easier to assemble, reconfigure, and reuse. With Bosch Rexroth aluminum structural framing, there’s no welding, no painting and no waiting. It goes together quickly and can easily be modified for reuse if your requirements change. Look to Airline for fast delivery of the widest range of profile shapes, accessories, and connectors, available for every application and load requirement:"
+                    learnMoreLink="/search?innerSearchTerms=Aluminum%2CStructural%2CFraming%2CAssembly&resultPage=1&searchTerm=Rexroth"
                     additionalText={(
                         <div>
                             <ul>
@@ -103,6 +105,7 @@ export default function Rexroth() {
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Linear Motion Technologies"
+                    learnMoreLink="/search?innerSearchTerms=Linear%2CMotion&resultPage=1&searchTerm=Rexroth"
                     text={(
                         <div>
                             <p>Bosch Rexroth offers a full array of linear motion products to fit your specific automation needs. Choose from:</p>
@@ -127,6 +130,7 @@ export default function Rexroth() {
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/electric-drives-and-controls.png"
                     title="Electric Drives and Controls"
+                    learnMoreLink="/search?innerSearchTerms=Electric&resultPage=1&searchTerm=Rexroth"
                     text={(
                         <div>
                             <p>Put the world’s most comprehensive, state-of-the-art drive, control and machine automation products to work for you. Enhance machine control, improve flexibility and efficiency, and increase energy efficiency with individual products and complete industrial automation systems. We offer the following drive and control system solutions from Rexroth:</p>
@@ -203,7 +207,7 @@ export default function Rexroth() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="#"
+                        href="/search?resultPage=1&searchTerm=Rexroth"
                         text="Shop Rexroth Products"
                         icon="shopping-cart"
                     />
@@ -213,7 +217,7 @@ export default function Rexroth() {
                         icon={faYoutube}
                     />
                     <RelatedLink
-                        href="#"
+                        href="/pages/resources/catalog-request"
                         text="Rexroth Catalogs"
                         icon="address-book"
                     />

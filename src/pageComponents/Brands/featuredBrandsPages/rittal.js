@@ -36,8 +36,8 @@ const RelatedLinkDiv = styled.div`
 	width: 100%;
 	height: 220px;
 	margin: 20px 0;
-
 `
+
 export default function Rittal() {
 
     return (
@@ -72,6 +72,7 @@ export default function Rittal() {
                         </div>
                     )}
                     title="Control Technology, I/O Systems and Automation"
+                    learnMoreLink="/search?searchTerm=rittal%20Control%20Technology%2C%20I%2FO%20Systems%20and%20Automation&sortType=relevancy&nonweb=false&brands=Rittal%20Corporation&resultPage=1"
                 />
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rittal/Rittal_Climate.png"
@@ -91,6 +92,7 @@ export default function Rittal() {
                         </div>
                     )}
                     title="Interface Technology and Switching Devicess"
+                    learnMoreLink="/search?searchTerm=rittal%20Interface%20Technology%20and%20Switching%20Devicess&sortType=relevancy&nonweb=false&brands=Rittal%20Corporation&resultPage=1"
                     reverse
                 />
                 <SectionHeader
@@ -138,12 +140,12 @@ export default function Rittal() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="#"
+                        href="/search?searchTerm=Rittal"
                         text="Shop Rittal Products"
                         icon="shopping-cart"
                     />
                     <RelatedLink
-                        href="#"
+                        href="/pages/resources/catalog-request"
                         text="Rittal Catalogs"
                         icon="address-book"
                     />

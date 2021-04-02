@@ -1,411 +1,153 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import FeaturedBrandLogo from '../uiComponents/FeaturedBrandLogo'
+import H1 from '../uiComponents/H1'
+import BrandDetail from '../uiComponents/BrandDetail'
+import ShopProductBtn from '../uiComponents/ShopProductBtn'
+import SectionHeader from '../uiComponents/SectionHeader'
+import ProductItems from '../uiComponents/ProductItems'
+import Articles from '../uiComponents/Articles'
+import Videos from '../uiComponents/Videos'
+import RelatedLink from '../uiComponents/RelatedLink'
 
 const Container = styled.div`
-  display: flex;
-  width: 100%;
-  flex-wrap: wrap;
+	display: flex;
+	max-width: 1200px;
+	width: 100%;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	`
+const ArticlesDiv = styled.div`
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	flex-wrap: wrap;
 `
-
-const FeaturedBrandLogo = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding: 80px 0;
-  background-image: url('https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  `
-const BrandDetailsContainer = styled.div`
-  display: flex;
-  max-width: 1200px;
-  width: 100%;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  `
-const ProductsDetails = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 16px;
-  margin: 0px 30px 0 30px;
-  align-content: center;
-  flex: 2;
-`
-const AirlineDistributorH1 = styled.h1`
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 20px;
-  margin-top: 40px;
-`
-const DistributorDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 18px;
-`
-const ProductsTitle = styled.div`
-  font-size: 25px;
-  color: #555555;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: flex;
-  flex: 1;
-`
-const Div = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin: 25px 0;
-  align-items: center;
-`
-const SectionDiv = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin: 25px 0;
-  align-items: center;
-`
-const ProductsDiv = styled.div`
-  display: flex;  
-  flex-wrap: nowrap;
-  margin: 20px 0 20px 0;
-  background-color:  #f2f3f4;
-  padding: 15px 
-`
-const ProductsH4 = styled.a`
-  margin: 0 auto;
-  color: 	#000000;
-  margin-bottom: 15px;
-  font-size: 25px;
-  font-weight: bold;
-  &:hover{
-    color: #b51029;
-    text-decoration: none;
-  }
-`
-const ShopAbbButton = styled.button`
-background-image: linear-gradient(to top left,#950f23,#DB1633);
-color: white;
-font-weight: 600;
-border-radius:3px;
-font-size: 16px;
-text-transform: uppercase;
-letter-spacing: 1px;
-border: 0;
-padding: 10px 15px;
-margin: 0 auto;
-outline: none;
-`
-const BorderBottom = styled.div`
-  display: flex;
-  border-bottom: 1px solid #555555;
-  flex: 3.5;
-  `
-const RelatedLinkCircle = styled.div`
-  margin: 0 auto;
-  // position: relative;
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
- `
-const LinkStyle = styled.a`
-  color: #246696;
-  font-size: 16px;
-  position: absolute;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-align: center;
-  padding: 0 15px;
-  background-color: #f2f3f4;
-  width: 200px;
-  height: 200px;    
-  border-radius: 50%;
-  &:hover{
-    color: #133752 ;
-    text-decoration: none;
-  }
- `
 const VideoDiv = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin-bottom: 30px; 
-  justify-content: space-between;
-`
-const ArticlesVideo = styled.iframe`
-  width: 100%;
-
-`
-const ArticlesContentDiv = styled.div`
-  text-align: center;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-`
-const ArticlesPicture = styled.img`
-  width: 100%;
-  min-height: 100%;
-`
-const ArticlesShortLine = styled.div`
-  display: flex;
-  border-bottom: 2px solid #555555;
-  width: 15%;
-  margin: 25px 0 0;
-  `
-const ArticlesTopic = styled.h6`
-  color: #B51F2B;
-  font-weight: bold;
-  margin: 25px 15px;
-  font-size: 18px;
-  text-align: left;
-`
-const ArticlesImgDiv = styled.div`
-  max-width: 350px;
-  padding: 20px;
-  height: 300px;
-  overflow: hidden;
-`
-
-const SmallArticlesContent = styled.div`
-  display: flex
-  flex-wrap: nowrap;
-  max-width: 380px;
-  margin-bottom: 30px;
-`
-const FontAwesomeDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  color: #DB1633;
-  &:hover{
-  color: #555555;
-  }
-`
-const LinkStyleDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  color: white;
-`
-const ArticlesContentDetails = styled.p`
-  margin: 0 15px;
-  text-align: left;
-  font-size: 14px;
-`
-const ShopProducts = styled.a`
-  color: #246696;
-  font-size: 14px;
-  margin-top: 10px;
-`
-const ImgDiv = styled.div`
-  display: flex;
-  flex: 1;
-  max-width: 350px;
-  height: 250px;
-`
-const Img = styled.img`
-  width: 100%;
-  object-fit: scale-down;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
 `
 const RelatedLinkDiv = styled.div`
-  width: 100%;
-  height: 350px;
-`
-const Video = styled.div`
-  display: flex;
-  flex: 1;
-  max-width: 380px;
-  height: 250px;
-`
-const ArticlesDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-`
-const RelatedContainer = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-`
-const BannerDiv = styled.div`
-
-`
-const BannerImg = styled.img`
-  width: 250px;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 220px;
+	margin: 20px 0;
 `
 
 export default function Aventics() {
 
     return (
-
-        <Container>
-            <FeaturedBrandLogo>
-                <BannerDiv> <BannerImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png"/></BannerDiv>
-            </FeaturedBrandLogo>
-            <BrandDetailsContainer>
-                <AirlineDistributorH1>Aventics
-                </AirlineDistributorH1>
-                <DistributorDetails>Aventics, formerly Bosch Rexroth Pneumatics, provides pneumatic, electro-pneumatic, and electronic products for industrial automation, oilfield, mobile and marine applications. Aventics has a sophisticated and extensive product line, offering standard products in both NPT and ISO G (BSPP) port configurations, as well as application-specific custom product solutions. Products include pneumatic valves and actuators, pneumatic and hydraulic cylinders, pneumatic fieldbus valve manifolds, electro-pneumatic valves and positioners, FRLs, tubing and fittings, vacuum components, industrial shock absorbers and tooth chain products.</DistributorDetails>
-                <Div>
-                    <ShopAbbButton>Shop Products </ShopAbbButton>
-                </Div>
-
-                {/*............................... PRODUCTS................................... */}
-
-                <SectionDiv>
-                    <ProductsTitle>Products</ProductsTitle>
-                    <BorderBottom></BorderBottom>
-                </SectionDiv>
-                <ProductsDiv>
-                    <ImgDiv>  <Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-cylinders.png" /></ImgDiv>
-                    <ProductsDetails>
-                        <ProductsH4 href="#">Air Cylinders</ProductsH4>
-                        NFPA steel air cylinders, rodless shuttle cylinders, round mini cylinders, aluminum cylinders, stainless steel cylinders and compact cylinders. Construction grade (cast iron) and multi-position air cylinders normally used for mobile/construction and oilfield applications, mounting bracket kits for mating to SUNSTRAND pumps.
-                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Air Cylinders Products</ShopProducts>
-                    </ProductsDetails>
-                </ProductsDiv>
-                <ProductsDiv>
-                    <ProductsDetails>
-                        <ProductsH4 href="#">Air Prep Equipment</ProductsH4>
-                        Filters, regulators and lubricators with NPT or G(ISO) BSPP ports, as well as lockout valves, slow start valves and anti-freezer units.
-                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Air Prep Equipment Products</ShopProducts>
-                    </ProductsDetails>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-prep.png" /></ImgDiv>
-                </ProductsDiv>
-                <ProductsDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/valves.png" /></ImgDiv>
-                    <ProductsDetails>
-                        <ProductsH4 href="#">Valves</ProductsH4>
-                        Pneumatic directional control valves, choose from in-line valves, manual / mechanical valves, plug-in valve manifold systems or traditional valve manifold systems. AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application.
-                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Valves Products</ShopProducts>
-                    </ProductsDetails>
-                </ProductsDiv>
-                <ProductsDiv>
-                    <ProductsDetails>
-                        <ProductsH4 href="#">Electrical Products</ProductsH4>
-                        AVENTICS electro-pneumatic (E/P) pressure control valves offer industry leading performance. The converter valves provide graduated pneumatic pressure outputs directly proportional to analog electrical signal inputs (voltage or current). AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application.
-                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Electrical Products</ShopProducts>
-                    </ProductsDetails>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/electrical.png" /></ImgDiv>
-                </ProductsDiv>
-                <ProductsDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/pneumatic.png" /></ImgDiv>
-                    <ProductsDetails>
-                        <ProductsH4 href="#">Pneumatic Accessories</ProductsH4>
-                        Accessory air valves and devices such as flow control valves and quick exhaust valves, plus part present sensing, air gauges, timing volumes, shock absorbers, fittings and air line tubing.
-                        <ShopProducts href="#"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Shop Aventics's Pneumatic Accessories Products</ShopProducts>
-                    </ProductsDetails>
-                </ProductsDiv>
-
-                {/*.................................. ARTICLES................................... */}
-
-                <SectionDiv>
-                    <ProductsTitle>Articles & Videos</ProductsTitle>
-                    <BorderBottom></BorderBottom>
-                </SectionDiv>
+        <>
+            <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" />
+            <Container>
+                <H1 text="Aventics"/>
+                <BrandDetail
+                    text="Aventics, formerly Bosch Rexroth Pneumatics, provides pneumatic, electro-pneumatic, and electronic products for industrial automation, oilfield, mobile and marine applications. Aventics has a sophisticated and extensive product line, offering standard products in both NPT and ISO G (BSPP) port configurations, as well as application-specific custom product solutions. Products include pneumatic valves and actuators, pneumatic and hydraulic cylinders, pneumatic fieldbus valve manifolds, electro-pneumatic valves and positioners, FRLs, tubing and fittings, vacuum components, industrial shock absorbers and tooth chain products."
+                />
+                <ShopProductBtn
+                    searchTerm="Aventics"
+                    text="Shop Products"
+                />
+                <SectionHeader
+                    text="Products"
+                />
+                <ProductItems
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-cylinders.png"
+                    text="NFPA steel air cylinders, rodless shuttle cylinders, round mini cylinders, aluminum cylinders, stainless steel cylinders and compact cylinders. Construction grade (cast iron) and multi-position air cylinders normally used for mobile/construction and oilfield applications, mounting bracket kits for mating to SUNSTRAND pumps."
+                    title="Air Cylinders"
+                    learnMoreLink="/search?searchTerm=Aventics%20Air%20Cylinders&sortType=relevancy&resultPage=1"
+                />
+                <ProductItems
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-prep.png"
+                    title="Air Prep Equipment"
+                    learnMoreLink="/search?searchTerm=Aventics%20Air%20Prep%20Equipment&sortType=relevancy&resultPage=1"
+                    text=" Filters, regulators and lubricators with NPT or G(ISO) BSPP ports, as well as lockout valves, slow start valves and anti-freezer units."
+                    reverse
+                />
+                <ProductItems
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/valves.png"
+                    title="Valves"
+                    learnMoreLink="/search?searchTerm=Aventics%20Valves&sortType=relevancy&resultPage=1"
+                    text="Pneumatic directional control valves, choose from in-line valves, manual / mechanical valves, plug-in valve manifold systems or traditional valve manifold systems. AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application."
+                />
+                <ProductItems
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/electrical.png"
+                    title="Electrical Products"
+                    learnMoreLink="/search?searchTerm=Aventics%20Electrical%20Products&sortType=relevancy&resultPage=1"
+                    text="AVENTICS electro-pneumatic (E/P) pressure control valves offer industry leading performance. The converter valves provide graduated pneumatic pressure outputs directly proportional to analog electrical signal inputs (voltage or current). AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application."
+                    reverse
+                />
+                <ProductItems
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/pneumatic.png"
+                    title="Pneumatic Accessories"
+                    learnMoreLink="/search?searchTerm=Aventics%20Pneumatic%20Accessories&sortType=relevancy&nonweb=false&brands=Aventics%20Corporation&resultPage=1"
+                    text="Accessory air valves and devices such as flow control valves and quick exhaust valves, plus part present sensing, air gauges, timing volumes, shock absorbers, fittings and air line tubing."
+                />
+                <SectionHeader
+                    text="Articles & Videos"
+                />
                 <ArticlesDiv>
-                    <SmallArticlesContent>
-                        <ArticlesContentDiv>
-                            <ArticlesImgDiv>
-                                <ArticlesPicture src="https://www.aventics.com/media/_processed_/5/5/Landingpage-ib_140d01280c.jpg" />
-                            </ArticlesImgDiv>
-                            <ArticlesTopic>
-                                The Internet of Things
-                                <ArticlesShortLine></ArticlesShortLine>
-                            </ArticlesTopic>
-                            <ArticlesContentDetails>Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics.<a href="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/" target="_blank" rel="noopener noreferrer"> Read more >> </a></ArticlesContentDetails>
-                        </ArticlesContentDiv>
-                    </SmallArticlesContent>
-                    <SmallArticlesContent>
-                        <ArticlesContentDiv>
-                            <ArticlesImgDiv>
-                                <ArticlesPicture src="https://www.aventics.com/media/_processed_/3/e/ES05_-_the_simple_solution_for_elementary_pneumatics_6319ac1552.jpg" />
-                            </ArticlesImgDiv>
-                            <ArticlesTopic>
-                                ES05 – the simple solution for elementary pneumatics
-                                <ArticlesShortLine></ArticlesShortLine>
-                            </ArticlesTopic>
-                            <ArticlesContentDetails>ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. <a href="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154" target="_blank" rel="noopener noreferrer"> Read more >> </a>
-                            </ArticlesContentDetails>
-                        </ArticlesContentDiv>
-                    </SmallArticlesContent>
-                    <SmallArticlesContent>
-                        <ArticlesContentDiv>
-                            <ArticlesImgDiv>
-                                <ArticlesPicture src="https://www.aventics.com/media/AVENTICS_USA/Expertise/Trends_topics/IoT/SPA_250wide.jpg" />
-                            </ArticlesImgDiv>
-                            <ArticlesTopic>
-                                It’s that easy: AVENTICS supplies pneumatics at the press of a button
-                                <ArticlesShortLine></ArticlesShortLine>
-                            </ArticlesTopic>
-                            <ArticlesContentDetails>You are the center of our attention. We offer fast results and reliable, simple solutions for industrial pneumatics. Based on our many years of expertise, we develop customized products for your applications, tailored to your needs and delivered just in time. Our service: We are at your service at the press of a button! Our ambition is being the smart pneumatic company that is easy to do business with: It’s that easy.
-                            </ArticlesContentDetails>
-                        </ArticlesContentDiv>
-                    </SmallArticlesContent>
+                    <Articles
+                        src="https://www.aventics.com/media/_processed_/5/5/Landingpage-ib_140d01280c.jpg"
+                        text="The Internet of Things"
+                        Link="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/"
+                        detail="Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics."
+                    />
+                    <Articles
+                        src="https://www.aventics.com/media/_processed_/3/e/ES05_-_the_simple_solution_for_elementary_pneumatics_6319ac1552.jpg"
+                        text="ES05 – the simple solution for elementary pneumatics"
+                        Link="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154"
+                        detail="ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. "
+                    />
+
+                    <Articles
+                        src="https://www.aventics.com/media/AVENTICS_USA/Expertise/Trends_topics/IoT/SPA_250wide.jpg"
+                        text="It’s that easy: AVENTICS supplies pneumatics at the press of a button"
+                        detail="You are the center of our attention. We offer fast results and reliable, simple solutions for industrial pneumatics. Based on our many years of expertise, we develop customized products for your applications, tailored to your needs and delivered just in time. Our service: We are at your service at the press of a button! Our ambition is being the smart pneumatic company that is easy to do business with: It’s that easy."                      
+                    />
                 </ArticlesDiv>
+
                 <VideoDiv>
-                    <Video><ArticlesVideo src="https://www.youtube.com/embed/_r27LoChqMA"></ArticlesVideo></Video>
-                    <Video><ArticlesVideo src="https://www.youtube.com/embed/sILf43yMi3c"></ArticlesVideo></Video>
-                    <Video><ArticlesVideo src="https://www.youtube.com/embed/H9slLX3o3KQ"></ArticlesVideo></Video>
+                    <Videos
+                        src="https://www.youtube.com/embed/_r27LoChqMA"
+                    />
+                    <Videos
+                        src="https://www.youtube.com/embed/sILf43yMi3c"
+                    />
+                    <Videos
+                        src="https://www.youtube.com/embed/H9slLX3o3KQ"
+                    />
                 </VideoDiv>
-
-                {/*.............................. RELATED LINK ................................... */}
-
+                <SectionHeader
+                    text="Related Links"
+                />
                 <RelatedLinkDiv>
-                    <SectionDiv>
-                        <ProductsTitle>Related Links</ProductsTitle>
-                        <BorderBottom></BorderBottom>
-                    </SectionDiv>
-                    <RelatedContainer>
-                        <RelatedLinkCircle>
-                            <LinkStyleDiv>
-                                <LinkStyle href="http://www.aventics.us/en/homepage/" target="_blank" rel="noopener noreferrer">
-                                    <FontAwesomeDiv>
-                                        <FontAwesomeIcon icon='globe-americas' size='4x' />
-                                    </FontAwesomeDiv>
-                                    Aventics's US Website
-                                </LinkStyle>
-                            </LinkStyleDiv>
-                        </RelatedLinkCircle>
-                        <RelatedLinkCircle>
-                            <LinkStyleDiv>
-                                <LinkStyle href="https://www.youtube.com/user/aventics" target="_blank" rel="noopener noreferrer">
-                                    <FontAwesomeDiv>
-                                        <FontAwesomeIcon icon={faYoutube} size='4x' />
-                                    </FontAwesomeDiv>
-                                    Videos
-                                </LinkStyle>
-                            </LinkStyleDiv>
-                        </RelatedLinkCircle>
-                        <RelatedLinkCircle>
-                            <LinkStyleDiv>
-                                <LinkStyle href="https://www.airlinehyd.com/Results.aspx?srh=Aventics&x=0&y=0" target="_blank" rel="noopener noreferrer">
-                                    <FontAwesomeDiv>
-                                        <FontAwesomeIcon icon='shopping-cart' size='4x' />
-                                    </FontAwesomeDiv>
-                                    shop Aventics products
-                                </LinkStyle>
-                            </LinkStyleDiv>
-                        </RelatedLinkCircle>
-                        <RelatedLinkCircle>
-                            <LinkStyleDiv>
-                                <LinkStyle href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Aventics%20(Bosch%20Rexroth)" target="_blank" rel="noopener noreferrer">
-                                    <FontAwesomeDiv>
-                                        <FontAwesomeIcon icon='address-book' size='4x' />
-                                    </FontAwesomeDiv>
-                                    Aventics Catalogs
-                                </LinkStyle>
-                            </LinkStyleDiv>
-                        </RelatedLinkCircle>
-                    </RelatedContainer>
+                    <RelatedLink
+                        href="http://www.aventics.us/en/homepage/"
+                        text="Aventics's Website"
+                        icon="globe-americas"
+                    />
+                    <RelatedLink
+                        href="/search?searchTerm=Aventics"
+                        text="Shop Aventics Products"
+                        icon="shopping-cart"
+                    />
+                    <RelatedLink
+                        href="http://www.aventics.us/en/homepage/"
+                        text="Videos"
+                        icon={faYoutube}
+                    />
+                    <RelatedLink
+                        href="/pages/resources/catalog-request"
+                        text="Aventics Catalogs"
+                        icon="address-book"
+                    />
                 </RelatedLinkDiv>
-            </BrandDetailsContainer>
-        </Container >
-
+            </Container>
+        </>
     )
 }
-
-

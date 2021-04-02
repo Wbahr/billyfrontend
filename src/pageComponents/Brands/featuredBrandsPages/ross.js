@@ -40,6 +40,7 @@ const RelatedLinkDiv = styled.div`
 const Span = styled.span`
 	font-weight: bold;
 `
+
 export default function Ross() {
 
     return (
@@ -61,11 +62,13 @@ export default function Ross() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/line-mounted.png"
                     title="Line-Mounted Valves"
                     text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
+                    learnMoreLink="/search?innerSearchTerms=Line-Mounted%2CValves&resultPage=1&searchTerm=Ross"
                 />
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/base-mounted.png"
                     title="Base-Mounted Valves"
                     text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
+                    learnMoreLink="/search?innerSearchTerms=Base-Mounted%2CValves&resultPage=1&searchTerm=Ross"
                     reverse
                 />
                 <ProductItems
@@ -83,19 +86,21 @@ export default function Ross() {
                             <p>EEZ-ON Valves gently turn on air for pneumatic circuits. When compressed air is initially applied to a pneumatic circuit, the working parts may move suddenly, potentially causing machine damage or injury to employees. The EEZ-ON valve provides a gradual startup by allowing a gradual and adjustable increase in downstream pressure.</p>
                         </div>
                     )}
+                    learnMoreLink="/search?innerSearchTerms=Safety&resultPage=1&searchTerm=Ross"
                 />
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/check-valves.png"
                     title="Check Valves"
                     text="Check valves allow full flow through a pneumatic circuit, but in only one direction. They are ideal for applications in which reverse flow of air pressure is unnecessary or detrimental. Pilot-operated check valves operate like regular check valves. The flow in only one direction, but when the pilot is actuated, the check valve is forced open so flow can go both ways. The pilot-operated check valve can stop a cylinder in any position."
+                    learnMoreLink="/search?innerSearchTerms=Valves&resultPage=1&searchTerm=Ross"
                     reverse
                 />
                 <ProductItems
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/flow-control.png"
                     title="Flow Control Valves"
                     text="A flow control valve should be used on almost every pneumatic circuit. Some are mounted inline while others are placed directly into cylinder ports. Flow control valves allow air flow to go in both directions. In one direction, flow is at full speed. In the other direction, flow is metered. By managing the air flow out of the cylinder, a flow control valve controls the speed of the cylinder. Cylinder speed determines the speed of work processes."
+                    learnMoreLink="/search?innerSearchTerms=Control%2CValves&resultPage=1&searchTerm=Ross"
                 />
-
                 <SectionHeader
                     text="Articles & Videos"
                 />
@@ -142,7 +147,7 @@ export default function Ross() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="#"
+                        href="/search?searchTerm=Ross"
                         text="Shop Ross Products"
                         icon="shopping-cart"
                     />
@@ -152,7 +157,7 @@ export default function Ross() {
                         icon={faYoutube}
                     />
                     <RelatedLink
-                        href="#"
+                        href="/pages/resources/catalog-request"
                         text="Ross Catalogs"
                         icon="address-book"
                     />
