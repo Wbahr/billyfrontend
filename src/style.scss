@@ -70,6 +70,9 @@
 				width: 10%;
 				margin-bottom: 15px;
 			}
+			.contactTab{
+				
+			}
 			.resources{
 				h6{
 					font-weight: bold;
@@ -80,6 +83,371 @@
 					font-size: 14px;
 				}
 			}	
+			.ourHistory{
+
+				#HistoryWrapper {
+					background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/about/history/TimeLineBackground.png");
+					background-position: center;
+					height: 4587px;
+					width: 755px;
+					margin: 0 auto;
+					margin-top: 20px;
+			}
+			
+			#HistoryTitle {
+					border-bottom: 3px solid #0d57a4;
+					line-height: 40px;
+					font-size: 30px;
+			}
+			
+			#LeftSideDates {
+					top: 20px;
+					float: left;
+			}
+			
+			.LeftTextWrapper1949, .LeftTextWrapper1967, 
+			.LeftTextWrapper1968, .LeftTextWrapper1981, 
+			.LeftTextWrapperBlurb3, .LeftTextWrapper1998, 
+			.LeftTextWrapper2002, .LeftTextWrapper2008, 
+			.LeftTextWrapper2009, .LeftTextWrapper2010, 
+			.LeftTextWrapper2012, .LeftTextWrapper2017 {
+					border: 1px solid #ccc;
+					background-repeat: no-repeat;
+					background-position: top right;
+					width: 320px;
+					text-align: center;
+					background-color: #ebe7e7;
+					box-sizing: border-box;
+			}
+			
+			.LeftTextWrapper1949 {
+					position: relative;
+					bottom: 120px;
+			}
+			
+			.LeftTextWrapper1967 {
+					margin-top: 30px;
+					position: relative;
+					bottom: 120px;
+					box-sizing: border-box;
+			}
+			
+			.LeftTextWrapper1968 {
+					margin-top: -45px;
+			}
+			
+			.LeftTextWrapper1981 {
+					margin-top: 118px;
+			}
+			
+			.LeftTextWrapperBlurb3 {
+					margin-top: 40px;
+					padding: 26px 0px;
+			}
+			
+			.LeftTextWrapper1998 {
+					margin-top: 50px;
+			}
+			
+			.LeftTextWrapper2002 {
+					margin-top: 40px;
+			}
+			
+			.LeftTextWrapper2008 {
+					margin-top: 130px;
+			}
+			
+			.LeftTextWrapper2010 {
+					margin-top: 100px;
+			}
+			
+			.LeftTextWrapper2012 {
+					margin-top: 60px;
+			}
+			
+			.LeftTextWrapper2017 {
+					margin-top: 70px;
+			}
+			
+			#RightSideDates {
+					vertical-align:top;
+					margin-top: 20px;
+					float: right;
+			}
+			
+			.RightTextWrapperBlurb1, .RightTextWrapperBlurb2, 
+			.RightTextWrapper1972, .RightTextWrapper1986, 
+			.RightTextWrapperBlurb4, .RightTextWrapper2000, 
+			.RightTextWrapper2005, .RightTextWrapper2009, 
+			.RightTextWrapper2011, .RightTextWrapper2015 {
+					border: 1px solid #ccc;
+					background-repeat: no-repeat;
+					background-position: top left;
+					width: 320px;
+					text-align: center;
+					background-color: #ebe7e7;
+					box-sizing: border-box;
+			}
+			
+			.RightTextWrapperBlurb1 {
+					// margin-top: 50px;
+					padding: 26px 0px;
+			}
+			
+			.RightTextWrapperBlurb2 {
+					margin-top: 122px;
+					padding: 26px 0px;
+			}
+			
+			.RightTextWrapper1972 {
+					margin-top: 30px;
+			}
+			
+			.RightTextWrapper1986 {
+					margin-top: 240px;
+			}
+			
+			.RightTextWrapperBlurb4 {
+					margin-top: 70px;
+					padding: 26px 0px;
+			}
+			
+			.RightTextWrapper2000 {
+					margin-top: 145px;
+			}
+			
+			.RightTextWrapper2005 {
+					margin-top: 110px;
+			
+			}
+			
+			.RightTextWrapper2009 {
+				 margin-top: 60px;
+			}
+			
+			
+			.RightTextWrapper2011 {
+					margin-top: 125px;
+			}
+			
+			.RightTextWrapper2015 {
+					margin-top: 50px;
+			}
+			
+			#LeftSideDates p, #RightSideDates p {
+					padding: 0px 20px 10px 20px;
+					text-align: left;
+					font-family: verdana;
+					margin: 0 auto;
+			}
+			
+			#LeftSideDates h3, #RightSideDates h3 {
+					color: #db1633;
+					font-family: Arial, sans-serif;
+					font-size: 16px;
+					margin: 0 auto;
+					position: relative;
+					bottom: 6px;
+			}
+			
+			#Year1940s {
+				 width: 60px;
+				 color: #757575;
+				 background-color: #E4E6E7;
+				 text-align: center;
+				 margin: 0 auto;
+				 padding: 5px;
+				 font-weight: bold;
+				 font-family: Arial, sans-serif;
+			}
+			
+			.MiddleYear {
+				 color: #757575;
+				 background-color: #E4E6E7;
+				 text-align: center;
+				 margin: 0 auto;
+				 padding: 5px;
+				 font-weight: bold;
+				 font-family: Arial, sans-serif;
+			}
+			
+			.Year1950s {
+					position: relative;
+					top: 204px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year1960s {
+					position: relative;
+					top: 555px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year1970s {
+					position: relative;
+					top: 1215px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year1980s {
+					position: relative;
+					top: 1422px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year1990s {
+					position: relative;
+					top: 1934px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year2000s {
+					position: relative;
+					top: 2250px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			.Year2010s {
+					position: relative;
+					top: 3356px;
+					width: 73px;
+					margin: 0 auto;
+			}
+			
+			#Year1940Mobile {
+				 width: 60px;
+				 color: #757575;
+				 background-color: #E4E6E7;
+				 text-align: center;
+				 margin: 0 auto;
+				 padding: 5px;
+				 font-weight: bold;
+			}
+			
+			#Year1949, #Year1967, #Year1968, #Year1981, #Blurb3, #Year1998, #Year2002, #Year2008, #Year2010, #Year2012 {
+					position: relative;
+					width: 72px;
+					left: 195px;
+					top: 20px;
+			}
+			
+			#Blurb1, #Blurb2, #Year1972, #Year1986, #Blurb4, #Year2000, #Year2005, #Year2009, #Year2011, #Year2015 {
+					position: relative;
+					right: 195px;
+					top: 20px;
+			}
+			
+			.TimelineImg {
+					padding-top: 5px;
+			}
+			
+			.ImageText {
+					padding-top: 10px !important;
+			}
+			
+			
+			.imagesubtitle {
+					font-size: 10px;
+					font-style: italic; 
+					text-align: center !important;
+			}
+			
+			#MobileHistoryWrapper {
+					display: none;
+			}
+			@media screen and (max-width: 367px) {
+
+				#HistoryWrapper {
+						display: none;
+				}
+		
+				#MobileHistoryWrapper {
+						display: inherit;
+						padding-top: 10px;
+				}
+		
+				.TextWrapper {
+						border: 1px solid #ccc;
+						background-repeat: no-repeat;
+						background-position: top left;
+						width: 90%;
+						margin: 0 auto;
+						text-align: center;
+						margin-top: 50px;
+						background-color: #E4E6E7;
+				}
+		
+						.TextWrapper h3 {
+								color: #db1633;
+								font-family: Arial, sans-serif;
+								font-size: 16px;
+						}
+		
+				.TextImage {
+				}
+		
+				.TextImage1 {
+						width: 150px
+				}
+		
+				.TextWrapper p {
+						padding: 10px;
+				}
+		
+				.TimelineArrowWrapper {
+						width: 100%;
+						text-align: center;
+						height: 99px;
+				}
+		
+				.TimelineLineWrapper {
+						width: 100%;
+						text-align: center;
+						height: 75px;
+				}
+		
+				.TimelineArrow {
+						position: relative;
+						top: 0px;
+				}
+		
+				.MobileYear {
+					 background-color: #E4E6E7;
+					 text-align: center;
+					 padding: 5px;
+					 font-weight: bold;
+					 font-family: Arial, sans-serif;
+					 width: 60px;
+					 border: none !important;
+					 margin-top: 0px;
+				}
+		
+						.MobileYear h3 {                  
+								color: #757575 !important;
+								margin: 0 auto;
+								font-size: 14px;
+						}
+		
+				.Line {
+						height: 75px;
+						width: 20px;
+				}
+		
+				.Blurb {
+					padding-top: 40px;
+				}
+		
+				.NoTopMargin {
+						margin-top: 0px !important;
+				}
+		}
+			}
 
 			a.landing-nav-item {
         display: flex;
@@ -426,12 +794,17 @@
 						text-decoration: none;
 				}
 				.btn{
-					border-radius: 18px;
+					border-radius: 4px;
 					background-image: linear-gradient(to top left, #950f23, #DB1633);
 					color: white;
 					border: 0;
 					font-weight: bold;
 					padding: 5px 12px;
+					transition-property: transform;
+					transition: 0.5s ease;
+					&:hover {
+							transform: translateY(-5px);
+					} 
 				}
 				.btnLink{
 					color: white;
