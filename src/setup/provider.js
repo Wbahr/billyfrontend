@@ -247,10 +247,10 @@ export default function Provider({ history, children }) {
     })
 
     const upsertShoppingList = (shoppingList) => { // if shoppingList.id === null then this will insert otherwise it will update
-        const items = shoppingList.items.map(({ itemCode, invMastUid, quantity, customerPartNumberId }) => (
-            { itemCode, invMastUid, quantity, customerPartNumberId }
+        const items = shoppingList.shoppingListItems.map(({ invMastUid, quantity, customerPartNumberId }) => (
+            { invMastUid, quantity, customerPartNumberId }
         ))
-        return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, items } } })
+        return handleUpdateShoppingList({ variables: { shoppingList: { ...shoppingList, shoppingListItems: items } } })
     }
 
     const [getWebUserContacts, getWebUserContactsState] = useLazyQuery(GET_WEB_USER_CONTACTS, {
