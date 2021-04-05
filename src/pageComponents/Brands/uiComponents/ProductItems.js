@@ -6,13 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const ImgDiv = styled.div`
 	display: flex;
 	flex: 1;
-	max-width: 350px;
+	justify-content: center;
 	height: 250px;
 `
 
 const Img = styled.img`
 	width: 100%;
-	object-fit: scale-down;
+	max-width: 180px;
+	object-fit: contain;
 `
 
 const ProductsDetails = styled.div`
@@ -79,13 +80,13 @@ export default function ProductItems(props) {
         <ProductsDiv reverse={reverse}>
             <ImgDiv><Img src={src} /></ImgDiv>
             <ProductsDetails>
-                <ProductsH4 href={learnMoreLink}>{title}</ProductsH4>
+                <ProductsH4 href={learnMoreLink} target="_blank">{title}</ProductsH4>
                 {text}
                 {!_.isNil(additionalText) &&
                     <ShowMoreBtn onClick={() => setShowText(!showText)}>{showText ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>}</ShowMoreBtn>
                 }
                 {showText && additionalText}
-                <ShopProducts href={learnMoreLink}><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Learn more and Shop for {title}</ShopProducts>
+                <ShopProducts href={learnMoreLink} target="_blank"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Learn more and Shop for {title}</ShopProducts>
             </ProductsDetails>
         </ProductsDiv>
 

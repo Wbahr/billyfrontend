@@ -37,6 +37,7 @@ const RelatedLinkDiv = styled.div`
 	height: 220px;
 	margin: 20px 0;
 `
+
 export default function Phoenix() {
 
     return (
@@ -149,7 +150,7 @@ export default function Phoenix() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="#"
+                        href="/search?searchTerm=Phoenix"
                         text="Shop Phoenix Contact Products"
                         icon="shopping-cart"
                     />
@@ -159,7 +160,7 @@ export default function Phoenix() {
                         icon={faYoutube}
                     />
                     <RelatedLink
-                        href="#"
+                        href="/pages/resources/catalog-request"
                         text="Phoenix Contact Catalogs"
                         icon="address-book"
                     />

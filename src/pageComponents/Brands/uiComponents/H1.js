@@ -9,6 +9,7 @@ const Header = styled.h1`
 `
 export default function H1(props) {
     return (
-        <Header>{props.text}</Header>
+        <Header>Airline is your Authorized Distributor of {props.text} Products</Header>
+        
     )
 }

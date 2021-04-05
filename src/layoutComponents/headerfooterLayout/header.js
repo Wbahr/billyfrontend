@@ -565,8 +565,8 @@ const resourcesSubItems = [
         isExternalLink: true
     },
     {
-        label: 'Knowledge Center & FAQ',
-        to: '/pages/resources/knowledge-center-and-faq'
+        label: 'Resources Center',
+        to: '/pages/resources/resources-center'
     },
     {
         label: 'Line Cards & Brochures',
@@ -578,7 +578,7 @@ const resourcesSubItems = [
     },
     {
         label: 'Manufacturer Catalogs',
-        to: '/catalogrequest'
+        to: '/pages/resources/catalog-request'
     },
     {
         label: 'Social Distancing Barrier Linecards',
@@ -597,11 +597,11 @@ const aboutSubItems = [
     },
     {
         label: 'News',
-        to: '/about/news',
+        to: '/pages/about/news',
     },
     {
         label: 'Events',
-        to: '/about/events',
+        to: '/pages/about/events',
     },
     {
         label: 'Careers',
@@ -609,11 +609,11 @@ const aboutSubItems = [
     },
     {
         label: 'Quality Policy',
-        to: '/about/quality-policy',
+        to: '/pages/about/quality-policy',
     },
     {
         label: 'Our History',
-        to: '/about/our-history',
+        to: '/pages/about/our-history',
     },
     {
         label: 'Our Mission',
@@ -628,11 +628,11 @@ const contactSubItems = [
     },
     {
         label: 'Credit Application',
-        to: '/credit-application'
+        to: '/pages/contact/credit-application'
     },
     {
         label: 'Framing Request',
-        to: '/framing-request'
+        to: '/pages/contact/framing-request'
     },
     {
         label: 'Government Sales',

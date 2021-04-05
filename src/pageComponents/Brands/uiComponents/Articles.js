@@ -61,7 +61,7 @@ export default function Articles(props) {
                     <ArticlesShortLine></ArticlesShortLine>
                 </ArticlesTopic>
                 <ArticlesContentDetails>{detail}</ArticlesContentDetails>
-                <A href={Link}>Read More >></A>
+                <A href={Link} target="_blank">Read More >></A>
             </ArticlesContentDiv>
         </SmallArticlesContent>
     )

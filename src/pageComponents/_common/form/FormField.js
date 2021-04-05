@@ -48,22 +48,22 @@ export default function FormField({ field, formData, setFormData, yupSchema }) {
     
     const getCleanValue = (dirtyValue) => {
         switch (type) {
-        case 'integer':
+        case 'integer': {
             const cleanInt = dirtyValue.replace(/\D/g, '')
             return cleanInt.length && parseInt(cleanInt)
-        
-        case 'decimal':
+        }
+        case 'decimal': {
             const cleanFloat = dirtyValue.replace(/[^0-9.]|\.(?=.*\.)/g, '')
             setValue(cleanFloat)
             return cleanFloat.length && parseFloat(cleanFloat)
-        
-        case 'text':
-        case 'string':
+        }
+        case 'text': 
+        case 'string': {
             const regexSource = fieldSchema.tests.find(test => test.params?.regex)?.params?.regex?.source
             const regex = regexSource && new RegExp(regexSource, 'gi')
             const cleanString = regex ? dirtyValue.match(regex)?.join('') : dirtyValue
             return cleanString
-        
+        }
         default:
             return dirtyValue
         }

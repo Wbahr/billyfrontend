@@ -35,8 +35,8 @@ const RelatedLinkDiv = styled.div`
 	width: 100%;
 	height: 220px;
 	margin: 20px 0;
-
 `
+
 export default function Paccar() {
 
     return (
@@ -203,7 +203,7 @@ export default function Paccar() {
                         icon="shopping-cart"
                     />
                     <RelatedLink
-                        href="https://www.airlinehyd.com/customer/aihyco/b2bse/catalogrequest.aspx?mfg=Braden"
+                        href="/pages/resources/catalog-request"
                         text="Paccar Catalogs"
                         icon="address-book"
                     />

@@ -1,63 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- <link href='index.css'/>  -->
-    <script id="stripe-js" src="https://js.stripe.com/v3/"></script>
-    <script>
-      /**
-        * This is a hack made necessary by the way we are handling static page management
-        * on the site. The documented method of enabling a Cincopa Photo Gallery 
-        * lives at https://www.cincopa.com/media-platform/api-documentation
-        * 
-        * We can definitely find a better place for this code.
-        * 
-        * Because scripts included directly in the injected static page HTML do not get executed,
-        * we had to modify the initialization of the Cincopa Photo Gallery as seen below.
-        */
-      var setupCincopaGallery = (galleryId) => {
-          /*
-           * Generates an asynchronous script tag with an external script source and 
-           * programatically adds it to the static page. The external script gets executed when
-           * it fully loads .
-           */
-          var cp = document.createElement("script"); 
-          cp.type = "text/javascript";
-          cp.async = true; 
-          cp.src = "//www.cincopa.com/media-platform/runtime/libasync.js";
-          var c = document.getElementById(galleryId);
-          c.parentNode.insertBefore(cp, c);
 
-          /*
-           * We have to wait a small amount of time for the injected async script tag to load 
-           * before we can initialize the gallery.
-           * 
-           * This is bad practice because it could take longer than the below wait time for the 
-           * external script to load, which would cause the following code to throw an error, breaking
-           * the page.
-           */
-          setTimeout(() => {
-              var cpo = [];
-              cpo["_object"] = galleryId;
-              cpo["_fid"] = "A4EAAvOf5BgW";
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- <link href='index.css'/>  -->
+  <script id="stripe-js" src="https://js.stripe.com/v3/"></script>
+  <script>
+    /**
+      * This is a hack made necessary by the way we are handling static page management
+      * on the site. The documented method of enabling a Cincopa Photo Gallery 
+      * lives at https://www.cincopa.com/media-platform/api-documentation
+      * 
+      * We can definitely find a better place for this code.
+      * 
+      * Because scripts included directly in the injected static page HTML do not get executed,
+      * we had to modify the initialization of the Cincopa Photo Gallery as seen below.
+      */
+    var setupCincopaGallery = (galleryId) => {
+      /*
+       * Generates an asynchronous script tag with an external script source and 
+       * programatically adds it to the static page. The external script gets executed when
+       * it fully loads .
+       */
+      var cp = document.createElement("script");
+      cp.type = "text/javascript";
+      cp.async = true;
+      cp.src = "//www.cincopa.com/media-platform/runtime/libasync.js";
+      var c = document.getElementById(galleryId);
+      c.parentNode.insertBefore(cp, c);
 
-              _cpmp = _cpmp || []
-              _cpmp.push(cpo);
+      /*
+       * We have to wait a small amount of time for the injected async script tag to load 
+       * before we can initialize the gallery.
+       * 
+       * This is bad practice because it could take longer than the below wait time for the 
+       * external script to load, which would cause the following code to throw an error, breaking
+       * the page.
+       */
+      setTimeout(() => {
+        var cpo = [];
+        cpo["_object"] = galleryId;
+        cpo["_fid"] = "A4EAAvOf5BgW";
 
-              /*
-               * This is an artifact from the external script from Cincopa. It activates Cincopa galleries\
-               * represented by the contents of the above array.
-               */
-              cincopa.boot_all()
-              
-          }, 1500);
-      }
-    </script>
-  </head>
-  <body>
-    <section id="index"></section>
-  </body>
+        _cpmp = _cpmp || []
+        _cpmp.push(cpo);
+
+        /*
+         * This is an artifact from the external script from Cincopa. It activates Cincopa galleries\
+         * represented by the contents of the above array.
+         */
+        cincopa.boot_all()
+
+      }, 1500);
+    }
+
+    var setupHubSpotForm = (portalId, formId) => {
+      var hubSpotForm = document.createElement("script");
+      hubSpotForm.type = "text/javascript";
+      hubSpotForm.async = true;
+      hubSpotForm.src = "//js.hsforms.net/forms/v2.js";
+      var hubSpotElement = document.querySelector(`div[hubSpotForm='${formId}']`);
+      hubSpotElement.parentNode.insertBefore(hubSpotForm, hubSpotElement);
+
+      setTimeout(() => {
+        hbspt.forms.create({
+          portalId: portalId,
+          formId: formId,
+          target: `div[hubSpotForm='${formId}']`,
+        });
+      }, 1500);
+    }
+  </script>
+</head>
+
+<body>
+  <section id="index"></section>
+</body>
+
 </html>
