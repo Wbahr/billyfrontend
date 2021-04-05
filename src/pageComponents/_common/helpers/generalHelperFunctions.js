@@ -4,8 +4,8 @@ export const searchObjectArrayForString = (options, searchString) => { //Searche
     return options.filter(o => Object.keys(o).some(key => o[key].toString().toLowerCase().includes(searchString.toLowerCase())))
 }
 
-export const getRidOf__typename = ({ __typename, editors, items, ...rest }) => (
-    { ...rest, editors: editors.map(({ __typename, ...rest1 }) => rest1), items: items.map(({ __typename, ...rest2 }) => rest2) }
+export const getRidOf__typename = ({ __typename, editors, shoppingListItems, ...rest }) => (
+    { ...rest, editors: editors.map(({ __typename, ...rest1 }) => rest1), shoppingListItems: shoppingListItems.map(({ __typename, ...rest2 }) => rest2) }
 )
 
 export const distinct = (obj, idx, self) => self.findIndex(ele => !Object.keys(obj).find(key => ele[key] !== obj[key])) === idx

@@ -94,7 +94,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
                 webUserIdOwner: context.userInfo.webUserId || selectedUser.value,
                 name: listName,
                 notes: listNotes,
-                items: [{ ...item, customerPartNumberId }],
+                shoppingListItems: [{ ...item, customerPartNumberId }],
                 editors: []
             }).then(() => hide())
         } else {
@@ -102,7 +102,7 @@ export default function AddToShoppingListModal({ open, hide, item, customerPartN
             const { itemCode, invMastUid } = item
             const shoppingLists = selectedLists.map(selectedList => {
                 const foundList = context.shoppingLists.find(list => list.id === selectedList.value)
-                return { ...foundList, items: [...foundList.items, { itemCode, invMastUid, quantity, customerPartNumberId }] }
+                return { ...foundList, shoppingListItems: [...foundList.shoppingListItems, { itemCode, invMastUid, quantity, customerPartNumberId }] }
             })
             Promise.all(shoppingLists.map(list => context.upsertShoppingList(list)))
                 .then(() => hide())

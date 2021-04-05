@@ -104,7 +104,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                 const shoppingList = context.shoppingLists.find(list => list.id === selectedShoppingList.value)
                 context.upsertShoppingList({
                     ...shoppingList,
-                    items: [...items || [], ...shoppingList.items],
+                    shoppingListItems: [...items || [], ...shoppingList.shoppingListItems],
                 })
                     .then(({ data: { shoppingListEdit } }) => {
                         saveCallback && saveCallback(shoppingListEdit)
@@ -115,7 +115,7 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                     webUserIdOwner: context.userInfo.webUserId || selectedUser.value,
                     name: listName,
                     notes: listNotes,
-                    items,
+                    shoppingListItems: items,
                     editors: []
                 })
                     .then(({ data: { shoppingListEdit } }) => {
