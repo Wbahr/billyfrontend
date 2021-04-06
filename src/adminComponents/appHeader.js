@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import _ from 'lodash'
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Context from '../setup/context'
@@ -28,28 +27,24 @@ export default function AppHeader() {
     const classes = useStyles()
     const context = useContext(Context)
   
-
-    let AdminTool
-    switch (tool){
-    case 'item-creation':
-        AdminTool = 'Item Creation'
-        break
-    case 'open-orders':
-        AdminTool = 'Open Orders'
-        break
-    case 'new-customers':
-        AdminTool = 'New Customers'
-        break
-    case 'settings':
-        AdminTool = 'System Settings'
-        break
-    default:
-        AdminTool = `Welcome Back, ${_.get(context, 'userInfo.firstName', 'Airline Employee')}`
+    const getTitle = () => {
+        switch (tool){
+        case 'item-creation':
+            return 'Item Creation'
+        case 'open-orders':
+            return 'Open Orders'
+        case 'new-customers':
+            return 'New Customers'
+        case 'settings':
+            return 'System Settings'
+        default:
+            return `Welcome Back, ${context?.userInfo?.firstName || 'Airline Employee'}`
+        }
     }
 
     return (
         <div className={classes.root}>
-            {AdminTool}
+            {getTitle()}
         </div>
     )
 }
