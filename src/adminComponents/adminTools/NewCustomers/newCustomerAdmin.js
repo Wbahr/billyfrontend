@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
-import { useTable } from 'react-table'
 import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'setup/providerGQL'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { ButtonRed, ButtonBlack } from 'styles/buttons'
 import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
+import DataGrid from 'pageComponents/_common/table'
 import { FormikFormFieldContainer } from 'styles/formikForm'
 import Modal from 'pageComponents/_common/modal'
+import { format, parseISO } from 'date-fns'
 
 const Container = styled.div`
   display: flex;
@@ -36,101 +37,20 @@ const DivRow = styled.div`
 
 const Styles = styled.div`
   padding: 1rem;
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
-
-    tr {
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
+  height: 100%;
+  flex: 1;
 `
-
-//Note this can be made editable
-//https://codesandbox.io/s/github/tannerlinsley/react-table/tree/master/examples/editable-data?from-embed=&file=/src/App.js
-function Table({ columns, data }) {
-    // Use the state and functions returned from useTable to build your UI
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = useTable({
-        columns,
-        data,
-    })
-
-    // Render the UI for your table
-    return (
-        <table {...getTableProps()}>
-            <thead>
-                {headerGroups.map((headerGroup, i) => (
-                    <tr key={i} {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column, i) => (
-                            <th key={i} {...column.getHeaderProps()}>{column.render('Header')}</th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row)
-                    return (
-                        <tr key={i} {...row.getRowProps()}>
-                            {row.cells.map((cell, i) => {
-                                return <td key={i} {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
-    )
-}
 
 
 export default function NewCustomerAdmin() {
-    const [newCustomers, setNewCustomers] = useState(null)
+    const [newCustomers, setNewCustomers] = useState([])
     const [alertMessage, setAlertMessage] = useState(null)
-    const [showRejectReasonModal, setShowRejectReasonModal] = useState(false)
-    const [rejectReason, setRejectReason] = useState('')
     const [rejectId, setRejectId] = useState(null)
-    const [error, setError] = useState(null)
     const { path } = useRouteMatch()
-
-    const handleRejectModalClose = () => {
-        setShowRejectReasonModal(false)
-    }
-
-    const rejectRegistrationCall = (id) => {
-    //Stash the ID and show modal, when the modal closes then mutuate on the stashed data.
-        console.log('Stashing reject id ', id)
-        setRejectId(id)
-        setShowRejectReasonModal(true)
-    }
-
 
     const [rejectRegistrationMutation, { error: rejectError, loading: rejectLoading }] = useMutation(REJECT_NEW_CUSTOMER, {
         onCompleted: () => {
             setAlertMessage('Registration rejected.')
-            setRejectReason('')
             setRejectId(null)
             loadNewCustomers()
         }
@@ -151,19 +71,31 @@ export default function NewCustomerAdmin() {
     })
 
     useEffect(() => {
-        console.log('starting reject call')
-        if (rejectReason && rejectId) {
-            rejectRegistrationMutation({ variables: { id: rejectId, reason: rejectReason } })
-        } 
-    }, [rejectReason])
-
-    useEffect(() => {
-        setError(rejectError || approveError || getError)
-    }, [rejectError, approveError, getError])
-
-    useEffect(() => {
         loadNewCustomers()
     }, [])
+    
+    const tableButtonStyle = { height: 24, fontSize: 'inherit' }
+    
+    const renderEditLink = ({ row: { values: { id } } }) => {
+        return <Link to={`${path}/${id}`}>Edit</Link>
+    }
+    const formatDateTime = ({ value }) => format(parseISO(value), 'MMM do yy p')
+    
+    const renderApproveButton = ({ value }) => (
+        <ButtonRed style={tableButtonStyle} disabled={approveLoading} onClick={handleApproveClick(value)}>
+            Approve
+        </ButtonRed>
+    )
+    
+    const handleApproveClick = id => () => approveRegistrationCall({ variables: { id } })
+    
+    const renderRejectButton = ({ row: { values: { id } } }) => (
+        <ButtonRed style={tableButtonStyle} disabled={rejectLoading} onClick={showRejectModal(id)}>
+            Reject
+        </ButtonRed>
+    )
+    
+    const showRejectModal = id => () => setRejectId(id)
 
     const columns = React.useMemo(
         () => [
@@ -173,7 +105,7 @@ export default function NewCustomerAdmin() {
                     {
                         id: 'id', 
                         accessor: 'id',
-                        Cell: ({ value }) => (<Link to={`${path}/${value}`}>Edit</Link>)
+                        Cell: renderEditLink
                     },
                     {
                         Header: 'Reg Id',
@@ -183,6 +115,7 @@ export default function NewCustomerAdmin() {
                     {
                         Header: 'Date',
                         accessor: 'received',
+                        Cell: formatDateTime
                     },
                 ],
             },
@@ -304,72 +237,88 @@ export default function NewCustomerAdmin() {
                 columns: [
                     {
                         id: 'approve',
-                        accessor: 'id',
-                        Cell: ({ value }) => (<ButtonRed disabled={approveLoading} onClick={() => approveRegistrationCall({ variables: { id: value } })}>Approve</ButtonRed>)
+                        accessor: '',
+                        Cell: renderApproveButton
                     },
                     {
                         id: 'reject',
-                        accessor: 'id',
-                        Cell: ({ value }) => (<ButtonRed disabled={rejectLoading} onClick={() => rejectRegistrationCall(value)}>Reject</ButtonRed>)
+                        accessor: '',
+                        Cell: renderRejectButton
                     }
                 ],
             }
         ],
         [approveLoading, rejectLoading]
     )
-
+    
+    const error = rejectError || approveError || getError
+    
     return (
         <Styles>
             {alertMessage && <ShowInfoAlert message={alertMessage} />}
             {error && error.networkError && <ShowErrorAlert message={error.networkError.result.detail} /> }
             {error && !error.networkError && <ShowErrorAlert message="An error occurred" />}
-            {loading && <Loader />}
-            {newCustomers && <Table columns={columns} data={newCustomers} />}
-            <SelectRejectReasonModal visible={showRejectReasonModal} valueCallback={setRejectReason} close={handleRejectModalClose}/>
+            <DataGrid columns={columns} data={newCustomers} loading={loading} />
+            {rejectId && (
+                <SelectRejectReasonModal
+                    rejectId={rejectId}
+                    rejectRegistrationMutation={rejectRegistrationMutation}
+                    close={() => setRejectId(null)}
+                />
+            )}
         </Styles>
     )
 }
 
-function SelectRejectReasonModal({ valueCallback, visible, close }){
+function SelectRejectReasonModal({ rejectId, close, rejectRegistrationMutation }){
     const rejectReasons = ['Not enough information', 'Duplicate customer or contact', 'Potential Spam', 'Customer needs to call', 'Other...']
     const initialState = { reason: rejectReasons[0], customReason: '' }
     const [formValues, setFormValues] = useState(initialState)
-    const [showOtherField, setShowOtherField] = useState(false)
-
-    //Handle custom input box
-    useEffect(() => {
-        setShowOtherField(formValues.reason === 'Other...')
-    }, [formValues.reason])
-
-    const changeHandler = (event) => setFormValues({
+    const [loading, setLoading] = useState(false)
+    
+    const changeHandler = ({ target: { name, value } }) => setFormValues({
         ...formValues,
-        [event.target.name]: event.target.value
+        [name]: value
     })
-
-    //Reset the form on load
-    useEffect(() => {
-        if (visible === true) {
-            setFormValues(initialState)
-        }
-    }, [visible])
+    
+    const handleRejectClick = () => {
+        setLoading(true)
+        rejectRegistrationMutation({
+            variables: {
+                id: rejectId,
+                reason: formValues.customReason || formValues.reason
+            }
+        })
+    }
+    
+    const showOtherField = formValues.reason === 'Other...'
     
     return (
-        <Modal open={visible} onClose={close}>
+        <Modal open={true} onClose={close}>
             <Container>
                 <FormikFormFieldContainer>
                     <label htmlFor="reason">Select Reject Reason</label>
+                    
                     <select name="reason" value={formValues.reason} onChange={changeHandler}>
                         {rejectReasons.map((r) => <option key={r} value={r}>{`${r}`}</option>)}
                     </select>
                 </FormikFormFieldContainer>
-                {showOtherField && <FormikStyleInput label="Custom Reason (this will be sent to the customer)" type="text" name="customReason" value={formValues.customReason} onChange={changeHandler} />}
+                
+                {showOtherField && (
+                    <FormikStyleInput
+                        label="Custom Reason (this will be sent to the customer)"
+                        type="text"
+                        name="customReason"
+                        value={formValues.customReason}
+                        onChange={changeHandler}
+                    />
+                )}
+                
+                {loading && <Loader/>}
+                
                 <DivRow>
                     <ButtonBlack onClick={close}>Cancel</ButtonBlack>
-                    <ButtonRed onClick={() => {
-                        close()
-                        valueCallback(formValues.customReason || formValues.reason)}
-                    }
-                    >
+                    <ButtonRed onClick={handleRejectClick} disabled={loading}>
                         Reject
                     </ButtonRed>
                 </DivRow>
