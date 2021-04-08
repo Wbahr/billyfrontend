@@ -171,7 +171,7 @@ export default function ShoppingListManagementPage() {
     useEffect(() => {
         setListName(selectedList?.name)
         setListNotes(selectedList?.notes)
-        setListItems(selectedList?.items.map((item, idx) => ({ ...item, idx })))
+        setListItems(selectedList?.shoppingListItems.map((item, idx) => ({ ...item, idx })))
     }, [selectedSharedList, selectedSavedList])
   
     const getFilter = row => Object.keys(row).map(key => row[key]).join(', ')
@@ -214,7 +214,7 @@ export default function ShoppingListManagementPage() {
     }
   
     const handleCopyToCart = () => {
-        context.addItems(selectedList.items.map(({ invMastUid, customerPartNumberId, quantity }) => ({ invMastUid, customerPartNumberId, quantity })))
+        context.addItems(selectedList.shoppingListItems.map(({ invMastUid, customerPartNumberId, quantity }) => ({ invMastUid, customerPartNumberId, quantity })))
         setShowModal(true)
     }
   
@@ -249,7 +249,7 @@ export default function ShoppingListManagementPage() {
             webUserIdOwner: selectedList.webUserIdOwner,
             name: listName,
             notes: listNotes,
-            items: listItems,
+            shoppingListItems: listItems,
             editors: selectedList.editors
         })
             .then(({ data }) => {
@@ -415,12 +415,12 @@ export default function ShoppingListManagementPage() {
     }
   
     const SaveChanges = () => {
-        const { notes, name, items } = selectedList || {}
+        const { notes, name, shoppingListItems } = selectedList || {}
         const isItemsListChanged = () => {
-            if (items && listItems) {
-                if (items.length !== listItems.length) return true
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i].itemCode !== listItems[i].itemCode || items[i].quantity !== listItems[i].quantity) {
+            if (shoppingListItems && listItems) {
+                if (shoppingListItems.length !== listItems.length) return true
+                for (let i = 0; i < shoppingListItems.length; i++) {
+                    if (shoppingListItems[i].itemCode !== listItems[i].itemCode || shoppingListItems[i].quantity !== listItems[i].quantity) {
                         return true
                     }
                 }
@@ -461,13 +461,13 @@ export default function ShoppingListManagementPage() {
   
     const handleExcelExport = () => {
         if (selectedList) {
-            exportToExcel(selectedList.items.map(prepareDataForExport), columns, selectedList.name, exportIgnoreColumns)
+            exportToExcel(selectedList.shoppingListItems.map(prepareDataForExport), columns, selectedList.name, exportIgnoreColumns)
         }
     }
   
     const handlePdfExport = () => {
         if (selectedList) {
-            exportToPdf(selectedList.items.map(prepareDataForExport), columns, selectedList.name, exportIgnoreColumns)
+            exportToPdf(selectedList.shoppingListItems.map(prepareDataForExport), columns, selectedList.name, exportIgnoreColumns)
         }
     }
   
@@ -674,7 +674,7 @@ export default function ShoppingListManagementPage() {
             <SaveShoppingListModal
                 open={showSaveModal}
                 hide={() => setShowSaveModal(false)}
-                items={selectedList?.items || []}
+                items={selectedList?.shoppingListItems || []}
                 preSelectedUser={selectedUser}
                 saveCallback={saveCallback}
             />

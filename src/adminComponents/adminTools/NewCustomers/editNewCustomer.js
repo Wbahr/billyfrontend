@@ -66,7 +66,7 @@ export default function EditNewCustomer() {
                     />
                 </>
             )}
-            <Link to={`${path.split('/:')[0]}`}>Go back</Link>
+            <Link to="/admin-dashboard/new-customers">Go back</Link>
         </>
     )
 }

@@ -417,7 +417,7 @@ export const GET_SHOPPING_LISTS = gql`
 	      firstName
 	      lastName
 	    }
-	    items {
+	    shoppingListItems {
 	      invMastUid
 	      itemCode
 	      quantity
@@ -440,10 +440,10 @@ export const UPDATE_SHOPPING_LISTS = gql`
 		  deleted
 		  editors {
 		    webUserId
-		    firstName
-		    lastName
+        firstName
+        lastName
 		  }
-		  items {
+		  shoppingListItems {
 	      invMastUid
 	      itemCode
 	      quantity

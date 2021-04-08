@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useLazyQuery } from '@apollo/client'
@@ -83,10 +82,11 @@ export default function LoginPage(props) {
 
     // Account for delays in loading context
     useEffect(() => {
-        if (!_.isNil(context.userInfo)) {
+        if (context.userInfo) {
             const urlParams = new URLSearchParams(props.location.search)
             const redirect = urlParams.get('next')
-            if (!_.isNil(redirect)){
+            if (redirect) {
+                console.log('reached1')
                 history.push(redirect)
             }
         }
@@ -109,7 +109,8 @@ export default function LoginPage(props) {
                     context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
                     const urlParams = new URLSearchParams(props.location.search)
                     const redirect = urlParams.get('next')
-                    if (!_.isNil(redirect)) {
+                    if (redirect) {
+                        console.log('reached0')
                         history.push(redirect)
                     } else {
                         history.push('/')
@@ -121,8 +122,12 @@ export default function LoginPage(props) {
             }
         }
     })
+    
+    const handleEnterPress = e => {
+        if (e.key === 'Enter') handleSignIn()
+    }
 
-    function handleSignin() {
+    function handleSignIn() {
         if (email.length === 0 || password.length === 0) {
             setErrorMessage('Email and Password Required')
         } else {
@@ -144,25 +149,45 @@ export default function LoginPage(props) {
         <LoginPageContainer>
             <PasswordResetModal 
                 open={showPasswordResetModal} 
-                hideModal={() => {setShowPasswordResetModal(false)}}
+                hideModal={() => setShowPasswordResetModal(false)}
             />
+            
             <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
+            
             <P>Airline Hydraulics Login</P>
+            
             {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
             {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
             {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
+            
             <DivInput>
                 <Label htmlFor='email'>Username or Email</Label>
-                <Input id='email' onChange={(e) => setEmail(e.target.value)} value={email} onKeyPress={(e) => {e.key === 'Enter' ? handleSignin() : null}}/>
+                <Input
+                    id='email'
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    onKeyPress={handleEnterPress}
+                />
             </DivInput>
+            
             <DivInput>
                 <Label htmlFor='password'>Password</Label>
-                <Input id='password' type='password' onChange={(e) => setPassword(e.target.value)} value={password} onKeyPress={(e) => {e.key === 'Enter' ? handleSignin() : null}}/>
+                <Input
+                    id='password'
+                    type='password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    onKeyPress={handleEnterPress}
+                />
             </DivInput>
-            <Button disabled={loading} onClick={handleSignin}>{loading ? 'Logging In...' : 'Log In'}</Button>
+            
+            <Button disabled={loading} onClick={handleSignIn}>
+                {loading ? 'Logging In...' : 'Log In'}
+            </Button>
+            
             <A onClick={() => setShowPasswordResetModal(true)}>Forgot your Password?</A>
+            
             <A onClick={() => history.push('/signup')}>Create an Account</A>
-
         </LoginPageContainer>
     )
 }

@@ -1,26 +1,13 @@
 import React from 'react'
 import { Switch, Route, useRouteMatch, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
-import AppBar from '@material-ui/core/AppBar'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Toolbar from '@material-ui/core/Toolbar'
-import List from '@material-ui/core/List'
-import Link from '@material-ui/core/Link'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import AddBoxIcon from '@material-ui/icons/AddBox'
-import DashboardIcon from '@material-ui/icons/Dashboard'
-import CodeIcon from '@material-ui/icons/Code'
+import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
+import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, FlashOn } from '@material-ui/icons'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import OpenOrders from './adminTools/OpenOrders/openOrders'
 import AppHeader from './appHeader'
-import ContactMail from '@material-ui/icons/ContactMail'
-import FlashOn from '@material-ui/icons/FlashOn'
 import Settings from './adminTools/Settings/settings'
 import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
 import EditNewCustomer from './adminTools/NewCustomers/editNewCustomer'
@@ -30,6 +17,7 @@ const drawerWidth = 240
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+        flex: 1
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -49,10 +37,18 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth,
-    // backgroundColor: 'rgb(33,33,33,.75)',
+        '& a': {
+            color: 'unset',
+        },
+        '& a:hover': {
+            textDecoration: 'none'
+        }
     },
     content: {
-        flexGrow: 1,
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto'
     },
     toolbar: theme.mixins.toolbar,
     avatar: {
@@ -72,24 +68,16 @@ const useStyles = makeStyles(theme => ({
 
 function ListItemLink(props) {
     const { icon, primary, to } = props
-
-    const renderLink = React.useMemo(
-        () => React.forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
-        [to],
-    )
-
     return (
-        <li>
-            <ListItem button component={renderLink}>
-                {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-                <ListItemText primary={primary} />
-            </ListItem>
-        </li>
+        <ListItem button to={to} component={RouterLink}>
+            {icon && <ListItemIcon>{icon}</ListItemIcon>}
+            <ListItemText primary={primary} />
+        </ListItem>
     )
 }
 
 export default function AdminHome({ history }) {
-    const { path, url } = useRouteMatch()
+    const { path } = useRouteMatch()
     const classes = useStyles()
 
     return (
@@ -98,51 +86,59 @@ export default function AdminHome({ history }) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Link component={RouterLink} to="/">
-                        <img src={AirlineLogo} height="50px" style={{ paddingRight: '20px' }} />
+                        <img src={AirlineLogo} height="50px" style={{ marginRight: 20 }} />
                     </Link>
-                    <h4>Admin Tools</h4>
+                    
+                    <Text variant="h4" style={{ marginTop: 10 }}>
+                        Admin Tools
+                    </Text>
                 </Toolbar>
             </AppBar>
+            
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
+                classes={{ paper: classes.drawerPaper }}
             >
                 <div className={classes.toolbar} />
                 <List aria-label="main mailbox folders">
-                    <ListItemLink to={`${url}`} primary="Dashboard" icon={<DashboardIcon />} />
-                    <Divider />
-                    <ListItemLink to={`${url}/item-creation`} primary="Item Creation" icon={<AddBoxIcon />} />
-                    <Divider />
-                    <ListItemLink to={`${url}/open-orders`} primary="Open Orders" icon={<CodeIcon />} />
-                    <Divider />
-                    <ListItemLink to={`${url}/new-customers`} primary="New Customers" icon={<ContactMail />} />
-                    <Divider />
-                    <ListItemLink to={`${url}/settings`} primary="System Settings" icon={<FlashOn />} />
-                    <Divider />
+                    <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon/>}/>
+                    <Divider/>
+                    <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon/>}/>
+                    <Divider/>
+                    <ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon/>}/>
+                    <Divider/>
+                    <ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail/>}/>
+                    <Divider/>
+                    <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn/>}/>
+                    <Divider/>
                 </List>
             </Drawer>
+            
             <main className={classes.content}>
                 <AppHeader />
                 <Switch>
                     <Route exact path={path}>
                         <AdminDashboard />
                     </Route>
-                    <Route path={`${path}/item-creation`}>
+                    
+                    <Route path="/admin-dashboard/item-creation">
                         <ItemCreation history={history} />
                     </Route>
-                    <Route path={`${path}/open-orders`}>
+                    
+                    <Route path="/admin-dashboard/open-orders">
                         <OpenOrders />
                     </Route>
-                    <Route exact path={`${path}/new-customers`}>
+                    
+                    <Route exact path="/admin-dashboard/new-customers">
                         <NewCustomerAdmin />
                     </Route>
-                    <Route path={`${path}/new-customers/:regId`}>
+                    
+                    <Route exact path="/admin-dashboard/new-customers/:regId">
                         <EditNewCustomer />
                     </Route>
-                    <Route path={`${path}/settings`}>
+                    
+                    <Route path="/admin-dashboard/settings">
                         <Settings />
                     </Route>
                 </Switch>

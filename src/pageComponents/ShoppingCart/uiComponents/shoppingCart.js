@@ -149,7 +149,11 @@ export default function ShoppingCart({ history }) {
                     <SaveShoppingListModal
                         open={showShoppingListModal}
                         hide={() => setShowShoppingListModal(false)}
-                        items={cart}
+                        items={cart?.map(item => ({
+                            invMastUid: item.invMastUid,
+                            customerPartNumberId: item.customerPartNumberId,
+                            quantity: item.quantity
+                        }))}
                         enableAddToExisting
                     />
                 )
