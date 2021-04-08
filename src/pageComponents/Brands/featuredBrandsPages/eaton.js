@@ -56,6 +56,7 @@ export default function Eaton() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/circuit%20protection.png"
                     text={(
                         <div>
@@ -74,12 +75,11 @@ export default function Eaton() {
                         </div>
                     )}
                     title="Circuit Protection"
-                    learnMoreLink="/search?innerSearchTerms=Automatic&resultPage=1&searchTerm=Lincoln"
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/contactors.png"
                     title="Contactors, Starters and Protective Relays"
-                    learnMoreLink="/search?searchTerm=Eaton%20Contactors&sortType=relevancy&resultPage=1"
                     text={(
                         <div>
                             <p> Eaton offers the protection your system needs against equipment failure and danger caused by voltage faults, current conditions or excessive load requirements. Their extensive line includes:</p>
@@ -97,22 +97,22 @@ export default function Eaton() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/safety-relays.png"
                     title="Safety Contactors"
-                    learnMoreLink="/search?searchTerm=Eaton%20Safety%20Contactors&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     text="Providing enhanced levels of safety, XTSE contactors integrate to applications to not only achieve the highest safety circuits, but provide additional levels of protection that reinforce end-user safety."
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/distribution_termination.png"
                     title="Distribution and Termination"
-                    learnMoreLink="/search?searchTerm=Distribution%20and%20Termination&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     text="Power distribution blocks provide a means for termination of up to 12 load wires in a single point while being supplied by a single line. Terminal blocks are suited to conserve space while allowing maximum flexibility, when labor cost reduction and ease of assembly is desired. Eaton’s fuse blocks and holders provide a simple DIN mounting device for protection in control circuits."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/pushbuttons.png"
                     title="Pushbuttons, Pilot Lights and Selector Switche"
-                    learnMoreLink="/search?searchTerm=Pilot%20Lights%20and%20Selector%20Switches&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     text={(
                         <div>
                             <p>Eaton offers an extensive variety of pushbuttons, pilot lights and selector switches to suit virtually any industrial or commercial application. Choose from:</p>
@@ -125,16 +125,16 @@ export default function Eaton() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/connectivity.png"
                     title="Connectivity"
-                    learnMoreLink="/search?searchTerm=Connectivity&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     text="Eaton’s SmartWire-DT system uses a continuous green flat cable located in the control cabinet to connect motor starters, pushbutton actuators, and indicator lights."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/relays_timers.png"
                     title="Relays and Timers"
-                    learnMoreLink="/search?searchTerm=Relays%20and%20Timers&sortType=relevancy&nonweb=false&brands=Eaton%20Hydraulics%20LLC&resultPage=1"
                     text={(
                         <div>
                             <p>Whether you're a machine builder or end user, control panel designer or facility maintenance manager, Eaton's expansive offering of relay options with customization capabilities can meet all of your specific application requirements:</p>
@@ -151,30 +151,30 @@ export default function Eaton() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/operator%20interfaces.png"
                     title="Operator Interfaces"
-                    learnMoreLink="/search?searchTerm=Operator%20Interfaces&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     text="Manufacturing environments are complex and require products that offer control, reduce downtime and increase efficiency. Eaton’s electronic operator interfaces (OI) do that while being easy to install, understand, modify and use. The features, hardware design, development software and high quality provide the best value on the market."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/HMI-PLCs.png"
                     title="HMI-PLCs"
                     text="Eaton's Programmable Logic Controllers (PLCs) are microprocessor-based devices used to control industrial processes or machines. They provide advanced functions, including analog monitoring, control and high speed motion control as well as share data over communication networks."
-                    learnMoreLink="/search?searchTerm=eaton%20HMI-PLCs&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1" 
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/variable_frequency_drives.png"
                     title="Variable Frequency Drives"
                     text="Adjustable frequency drives (also known as variable frequency drives) adjust a motor's speed to closely match output requirements, resulting in a typical energy savings of 10 to 50 percent."
-                    learnMoreLink="/search?searchTerm=Operator%20Interfaces&sortType=relevancy&nonweb=false&brands=Eaton%20Corp&resultPage=1"
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/transformers_power.png"
                     title="Transformers and Power Supplies"
                     text="Eaton offers control power transformers that provide stepped-down voltages to machine tool control devices, enabling circuits to be isolated from all power and lighting circuits. Eaton also provides a wide selection of durable and reliable power supplies for many 24 Vdc applications in a variety of sizes and features."
-                    learnMoreLink="/search?searchTerm=eaton%20Transformers%20and%20Power%20Supplies&sortType=relevancy&nonweb=false&brands=Eaton%20Hydraulics%20LLC&resultPage=1" 
                 />
                 <SectionHeader
                     text="Articles & Videos"
@@ -183,13 +183,13 @@ export default function Eaton() {
                     <Articles
                         src="https://www.eaton.com/content/dam/eaton/eaton-own-or-royalty-free-purchased-images/city-top-view.jpg.transform/default-desktop/image.jpg"
                         text=" Managing complexities to prepare the grid of the future"
-                        Link="https://www.eaton.com/us/en-us/company/news-insights/grid-modernization.html"
+                        link="https://www.eaton.com/us/en-us/company/news-insights/grid-modernization.html"
                         detail="The electrical grid has served businesses and consumers for over 100 years. Utility system planners, operators and maintenance personnel have always faced challenges, but never have they compounded as rapidly as they are now."
                     />
                     <Articles
                         src="https://cf-images.us-east-1.prod.boltdns.net/v1/static/1302165871001/ed09b29e-bf96-4ea1-bf8e-64503d71ac3e/21360df1-8321-4a10-9cd6-0c9a4e1551c2/1280x720/match/image.jpg"
                         text="Innovation that enables dynamic machine control"
-                        Link="https://www.eaton.com/us/en-us/services/dynamic-machine-control.html"
+                        link="https://www.eaton.com/us/en-us/services/dynamic-machine-control.html"
                         detail="The industry is moving to smarter, more efficient machines. It’s no longer just about components, it’s about how those components connect to create intelligent subsystems that dynamically adapt and respond.  "
                     />
 
@@ -197,7 +197,7 @@ export default function Eaton() {
                         src="https://www.eaton.com/content/dam/eaton/markets/utility/inteligent-microgrid-thumb.jpg.transform/default-desktop/image.jpg"
                         text="Powering resilience: preparing for the unexpected"
                         detail="It’s devasting to see how climate emergencies are affecting millions of people with increasing frequency. The impact of natural disasters makes it clear that the climate challenges we face are not abstract issues.  More than ever, our global energy supply and infrastructure must be able to withstand extreme conditions. Our lives and livelihoods depend on it."
-                        Link="https://www.eaton.com/us/en-us/company/news-insights/resilience.html"
+                        link="https://www.eaton.com/us/en-us/company/news-insights/resilience.html"
                     />
                 </ArticlesDiv>
 
@@ -222,7 +222,7 @@ export default function Eaton() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=Eaton&sortType=relevancy&resultPage=1"
+                        searchTerm="Eaton"
                         text="Shop Eaton Products"
                         icon="shopping-cart"
                     />

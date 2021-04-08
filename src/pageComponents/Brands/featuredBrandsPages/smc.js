@@ -53,42 +53,42 @@ export default function SMC() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/Actuator-and-Air-cylinders.png"
                     title="Actuators & Air Cylinders"
                     text="Actuator and air cylinders from SMC offer innovative design features to provide precision performance and reliability for the automation industry. Engineers trust SMC actuators to provide long life, and reliable service. SMC’s standard air cylinders are available in a wide range of bore sizes, multiple mounting configurations and auto switch capability as a standard on most series. SMC also offers electric actuators, designed with a focus on easy setup and operation. Pneumatic and electric actuator products are available in a wide variety of styles, including linear, guided, rotary, gripper, rodless air cylinders and specialty air cylinders. Each pneumatic or electric actuator series comes with a full complement of standard options and related products."
-                    learnMoreLink="/search?searchTerm=smc%20Actuators%20%26%20Air%20Cylinders&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/valves.png"
                     title="Valves"
                     text="SMC's solenoid valves and manifolds offer industry leading valve performance advancements such as remarkably high flow capacities from very compact designs, low power consumption, high speed response, long life, built-in surge suppression and indicator lights.
 					SMC mechanical, manual and air pilot valves are designed to meet general industry standards and are capable of long, trouble-free life. SMC also offers fluid process valves for air, water, steam, oil, chemicals and liquids as well as valve accessories and fieldbus solutions."
-                    learnMoreLink="/search?searchTerm=smc%20Valves&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                     reverse
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/temperature%20controls.png"
                     title="Temperature Controls"
                     text="Chillers are products that control the temperature of heat sources in customers' devices and equipment using temperature-controlled circulating fluid. Maintaining a fixed temperature can improve the quality, reliability and service life of devices or equipment. SMC's line of temperature control units utilizes best-in-class technologies to accomplish the exact range of temperature ranges and temperature stability desired by our customers."
-                    learnMoreLink="/search?searchTerm=smc%20Temperature%20Controls&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/electrical%20products.png"
                     title="Electrical Products"
                     text="SMC provides multiple options for pneumatic solutions such as electronic regulators, pressure switches, flow switches, and vacuum flow switches."
-                    learnMoreLink="/search?searchTerm=smc%20Electrical%20Products&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                     reverse
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/vacuum-products.png"
                     title="Vacuum Products"
                     text="SMC vacuum products offer comprehensive options for vacuum applications. Compact, lightweight air vacuum generators are available in a wide range of sizes and performance ranges."
-                    learnMoreLink="/search?searchTerm=smc%20Vacuum%20Products&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/connectors.png"
                     title="Connectors"
-                    learnMoreLink="/search?searchTerm=smc%20Connectors&sortType=relevancy&nonweb=false&resultPage=1"
                     text={(
                         <div>
                             <p>The SMC connector line includes inch and metric one touch fittings, fitting manifolds, and pneumatic tubing available in multiple colors, sizes, and materials:</p>
@@ -105,16 +105,16 @@ export default function SMC() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/air-dryers.png"
                     title="Air Dryers"
                     text="Compressed air contains moisture (water vapor, droplets), oil, debris and other foreign matter. Filters and mist separators can be used to remove droplets, oil, debris and so on, but a dryer is necessary to remove water vapor. SMC air dryers are insurance for downstream components, and in the long run, allow for sustainable performance/production for an end customer."
-                    learnMoreLink="/search?searchTerm=smc%20Air%20Dryers&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="SMC"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/air-prep-equipment.png"
                     title="Air Prep Equipment"
                     text="SMC's air preparation equipment and instrumentation provides unsurpassed sensing, regulation and filtration to provide the clean dry air necessary for the peak performance of your pneumatic system. SMC’s offering includes many sizes and variations of filter, regulator and/or lubrication (FRL) units and a wide range of accessories. Their electronic controls include electronic regulators, pressure switches and vacuum switches. SMC also has membrane dryers, desiccant dryers, and refrigerated dryers to keep moisture out of your systems."
-                    learnMoreLink="/search?searchTerm=smc%20Air%20Prep%20Equipment&sortType=relevancy&nonweb=false&brands=SMC&resultPage=1"
                     reverse
                 />
                 <SectionHeader
@@ -142,7 +142,7 @@ export default function SMC() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=SMC"
+                        searchTerm="SMC"
                         text="Shop SMC Products"
                         icon="shopping-cart"
                     />

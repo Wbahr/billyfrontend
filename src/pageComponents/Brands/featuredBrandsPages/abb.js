@@ -56,28 +56,28 @@ export default function ABB() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/drives.png"
                     text="ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks."
                     title="Drives"
-                    learnMoreLink="/search?searchTerm=ABB%27s%20Drives&sortType=relevancy&nonweb=false&brands=ABB%20Drives%20Inc&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/motors%20and%20generators.png"
                     title="Motors and Generators"
-                    learnMoreLink="/search?searchTerm=Motors%20and%20Generators%20&sortType=relevancy&nonweb=false&brands=ABB%20Inc&resultPage=1"
                     text=" ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/transformers.png"
                     title="Transformers"
-                    learnMoreLink="/search?searchTerm=Abb%20Transformers%20&sortType=relevancy&nonweb=false&brands=ABB%20Inc&resultPage=1"
                     text="ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers."
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/control%20systems.png"
                     title="Control Systems"
-                    learnMoreLink="/search?searchTerm=Control%20Systems&sortType=relevancy&nonweb=false&brands=ABB%20Inc&resultPage=1"
                     text={(
                         <div>
                             <p>ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.</p>
@@ -98,9 +98,9 @@ export default function ABB() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/low%20voltage%20products%20and%20systems.png"
                     title="Low Voltage Products and Systems"
-                    learnMoreLink="/search?searchTerm=abb%20Low%20Voltage%20Products%20and%20Systems&sortType=relevancy&nonweb=false&brands=ABB%20Inc&resultPage=1"
                     text={(
                         <div>
                             <p>ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:</p>
@@ -182,9 +182,9 @@ export default function ABB() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/medium%20voltage%20products%20and%20systems.png"
                     title="Medium Voltage Products and Systems"
-                    learnMoreLink="/search?searchTerm=abb%20Medium%20Voltage%20Products%20and%20Systems&sortType=relevancy&nonweb=false&brands=ABB%20Inc&resultPage=1"
                     text={(
                         <div>
                             <p>ABB provides utility, industrial and commercial customers with safe, reliable and smart technologies for the distribution of electricity. Airline’s offering includes Circuit Breakers, Compact Secondary Substations (CSS), Contactors, E-Houses, Fault Current Limitation and Arc Protection.</p>
@@ -199,13 +199,13 @@ export default function ABB() {
                     <Articles
                         src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1"
                         text="Thermistor protection modules for ACS880 drives"
-                        Link="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules"
+                        link="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules"
                         detail="The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation."
                     />
                     <Articles
                         src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1"
                         text="Drives give South African farmer 40% energy savings, smoother operation and less work"
-                        Link="https://new.abb.com/drives/media/customer-case-riecor-farming"
+                        link="https://new.abb.com/drives/media/customer-case-riecor-farming"
                         detail="Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier."
                     />
 
@@ -213,7 +213,7 @@ export default function ABB() {
                         src="https://www07.abb.com/images/librariesprovider87/Energy-efficiency/energy-efficient-drives.jpg?sfvrsn=1"
                         text="Energy efficiency: Using drives to control motors can lead to big savings"
                         detail="Nearly 70 percent of all industrial electrical energy use goes to powering electric motors. These motors are the workhorses of business, from pumps moving fluids to fans moving air to compressors, conveyors, and every type of machine that depends on rotational force to get its job done."
-                        Link="https://new.abb.com/drives/energy-efficiency"
+                        link="https://new.abb.com/drives/energy-efficiency"
 
                     />
                 </ArticlesDiv>
@@ -239,7 +239,7 @@ export default function ABB() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=abb&sortType=relevancy&resultPage=1"
+                        searchTerm="ABB"
                         text="Shop ABB Products"
                         icon="shopping-cart"
                     />

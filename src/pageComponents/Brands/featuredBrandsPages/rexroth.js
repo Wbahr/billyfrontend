@@ -59,10 +59,10 @@ export default function Rexroth() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/industrial-hydraulics.png"
                     title="Industrial & Mobile Hydraulics"
                     text="Bosch Rexroth’s Industrial Hydraulics Division offers product solutions for the most demanding industrial applications, such as chemical processing plants, power and environmental engineering, automotive engineering, plastics processing machinery, paper industry, presses, test rigs and simulation systems, marine engineering, offshore engineering, civil/water engineering, transportation technology and machine tools. Their Mobile Hydraulics Division has a wide range of products to meet the needs of agriculture, construction, forestry, mining and oilfield applications."
-                    learnMoreLink="/search?innerSearchTerms=Industrial%2CMobile%2CHydraulics&resultPage=1&searchTerm=Rexroth"
                     additionalText={(
                         <div>
                             <ul>
@@ -76,10 +76,10 @@ export default function Rexroth() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Aluminum Structural Framing & Assembly"
                     text="Save time and money building complex guarding, machine frames, workstations and more with the simple bolt-together construction of Bosch Rexroth extruded aluminum. This high-quality structural framing material is as durable as steel, but much easier to assemble, reconfigure, and reuse. With Bosch Rexroth aluminum structural framing, there’s no welding, no painting and no waiting. It goes together quickly and can easily be modified for reuse if your requirements change. Look to Airline for fast delivery of the widest range of profile shapes, accessories, and connectors, available for every application and load requirement:"
-                    learnMoreLink="/search?innerSearchTerms=Aluminum%2CStructural%2CFraming%2CAssembly&resultPage=1&searchTerm=Rexroth"
                     additionalText={(
                         <div>
                             <ul>
@@ -103,9 +103,9 @@ export default function Rexroth() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Linear Motion Technologies"
-                    learnMoreLink="/search?innerSearchTerms=Linear%2CMotion&resultPage=1&searchTerm=Rexroth"
                     text={(
                         <div>
                             <p>Bosch Rexroth offers a full array of linear motion products to fit your specific automation needs. Choose from:</p>
@@ -128,9 +128,9 @@ export default function Rexroth() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/electric-drives-and-controls.png"
                     title="Electric Drives and Controls"
-                    learnMoreLink="/search?innerSearchTerms=Electric&resultPage=1&searchTerm=Rexroth"
                     text={(
                         <div>
                             <p>Put the world’s most comprehensive, state-of-the-art drive, control and machine automation products to work for you. Enhance machine control, improve flexibility and efficiency, and increase energy efficiency with individual products and complete industrial automation systems. We offer the following drive and control system solutions from Rexroth:</p>
@@ -167,14 +167,14 @@ export default function Rexroth() {
                     <Articles
                         src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20002/MA20002-Rexroth-Piston-Gear-Pump_IMAGE_w176.jpg"
                         text="Bosch Rexroth Launches Piston-Gear Pump Assembly with Common Suction Port"
-                        Link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49216"
+                        link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49216"
                         detail="New tandem pump configuration simplifies design and installation of combined axial/gear pump systems to save space on mobile machines
 						"
                     />
                     <Articles
                         src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20014/MA20014-Rexroth-MCR8T_IMAGE_w176.jpg"
                         text="The new MCR8T radial piston motor from Rexroth"
-                        Link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49344"
+                        link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49344"
                         detail="As end-users demand ever higher performance from their CTLs, Rexroth has called upon its decades of industry experience and continued innovation to produce their most advanced track motor yet."
                     />
 
@@ -182,7 +182,7 @@ export default function Rexroth() {
                         src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20015/MA20015-Rexroth-RM10-RM15_LSValves_IMAGE_w176.png"
                         text="Bosch Rexroth launches new load sensing valves"
                         detail="The RM10 and RM15 are easy to configure, compact, general purpose, multi-application valves fit for use in today’s mobile machines"
-                        Link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49280"
+                        link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49280"
 
                     />
                 </ArticlesDiv>
@@ -207,7 +207,7 @@ export default function Rexroth() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?resultPage=1&searchTerm=Rexroth"
+                        searchTerm="Rexroth"
                         text="Shop Rexroth Products"
                         icon="shopping-cart"
                     />

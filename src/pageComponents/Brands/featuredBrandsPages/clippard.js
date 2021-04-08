@@ -59,22 +59,22 @@ export default function Clippard() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/cylinders.png"
                     text='Minimatic Cylinders range from 5/32" to 1 1/8" in bore size, and are available in spring return and double acting models, with a full line of associated devices for mounting and use.'
                     title="Cylinders"
-                    learnMoreLink="/search?searchTerm=clippard%20Cylinders&sortType=relevancy&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/Directional%20control%20valves.png"
                     title="Directional Control Valves"
-                    learnMoreLink="/search?searchTerm=clippard%20Directional%20Control%20Valves&sortType=relevancy&resultPage=1"
                     text=" Every air system is unique, and Clippard has the air valve you need. Clippard control valves are available in poppet or spool design; 2-, 3-, or 4-way functions, in sizes from #3-56 and #10-32 (M5) through 1/8” NPT (G1/8) ports; and for pressures to 300 psig/21 bar. They are available with solenoid, air pilot, manual and mechanical actuators. Mounting styles include in-line, panel mount, manifold mount or clearance holes for mounting screws."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/electronic%20valves.png"
                     title="Electronic Valves"
-                    learnMoreLink="/search?searchTerm=clippard%20Electronic%20Valves&sortType=relevancy&resultPage=1"
                     text={(
                         <div>
                             <p>Clippard’s product range includes:</p>
@@ -89,29 +89,29 @@ export default function Clippard() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/circuit%20boards.jpg"
                     title="Circuit Boards & I/O Modules"
-                    learnMoreLink="/search?searchTerm=clippard%20Circuit%20Boards%20and%20I%2FO%20Modules&sortType=relevancy&nonweb=false&brands=Clippard%20Instrument%20Lab%20Inc&resultPage=1"
                     text="Clippard clear acrylic pneumatic circuit boards are designed to provide a compact and highly efficient pneumatic control system, with the use of Clippard modular components and other Clippard products. Clippard’s pneumatic I/O devices are ideal for Intrinsically Safe environments; simple custom machinery requiring only one program; and PLC type applications that have all pneumatic components for inputs and outputs. This system provides a safe, simple, and cost-efficient answer for pneumatic automation control solutions."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/fitting.jpg"
                     title="Fittings"
-                    learnMoreLink="/search?searchTerm=clippard%20Fittings&sortType=relevancy&nonweb=false&resultPage=1"
                     text="Clippard precision fittings will save you time, space, and money when designing versatile, productive, trouble free, pneumatic circuits. Our endless variety of fittings insure that you find just the right “fit” when plumbing pneumatic circuits or assemblies. These fittings are small in size but large in performance, allowing for streamlining of pneumatic assemblies and eliminating the need for larger, more expensive, cumbersome fittings"
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Hose & Tubing"
-                    learnMoreLink="/search?searchTerm=clippard%20Hose%20and%20Tubing&sortType=relevancy&nonweb=false&brands=Clippard%20Instrument%20Lab%20Inc&resultPage=1"
                     text="Clippard offers a variety of miniature hose and tubing from copper and nylon tubing to flexible urethane, and vinyl."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/air%20prep%20equipment.png"
                     title="Air Prep Equipment"
-                    learnMoreLink="/search?searchTerm=Clippard%27s%20Air%20Prep%20Equipment&sortType=relevancy&nonweb=false&brands=Clippard%20Instrument%20Lab%20Inc&resultPage=1"
                     text={(
                         <div>
                             <p><Span>Filters :</Span> Filters capture solid particulate and remove water by “spinning” the air centrifugally. Water and larger particles are thrown against the side of the bowl where they condense and/or fall to the lower part of the bowl. Smaller particles are captured as the air flows through the filter element.</p> 
@@ -127,13 +127,13 @@ export default function Clippard() {
                     <Articles
                         src="https://www.clippard.com/cms/sites/default/files/wiki_images/cordis-high-resolution-proportional-pressure-controls_1.png"
                         text="6 Ways Clippard's New Cordis EPR is Revolutionizing Electronic Pressure Control"
-                        Link="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control"
+                        link="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control"
                         detail="The future of proportional control has arrived—and it's digital! The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant."
                     />
                     <Articles
                         src="https://www.clippard.com/cms/sites/default/files/wiki_images/stepper-motor-diagram.jpg"
                         text=" How Stepper Motors Provide Precision Control"
-                        Link="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control"
+                        link="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control"
                         detail="Stepper motors are used in a variety of applications to provide a means for tightly controlled motion. But what is a stepper motor, and how does it work? "
                     />
 
@@ -141,7 +141,7 @@ export default function Clippard() {
                         src="https://www.clippard.com/cms/sites/default/files/wiki_images/digital-proportional-pressure-controls.jpg"
                         text="New Cordis Proportional Pressure Controls"
                         detail="Clippard Releases New High Resolution Digital Proportional Pressure Controls"
-                        Link="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls"
+                        link="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls"
 
                     />
                 </ArticlesDiv>
@@ -167,7 +167,7 @@ export default function Clippard() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=clippard&sortType=relevancy&resultPage=1"
+                        searchTerm="Clippard"
                         text="Shop Clippard Products"
                         icon="shopping-cart"
                     />
