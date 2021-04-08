@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { buildSearchString } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const ImgDiv = styled.div`
 	display: flex;
@@ -72,21 +73,24 @@ export default function ProductItems(props) {
         additionalText,
         title,
         reverse,
+        searchTerm,
         learnMoreLink,
     } = props
-	
+		
+    const searchItem = { searchTerm: searchTerm, innerSearchTerms: title }
+    const searchForItem = buildSearchString(searchItem)
 
     return (
         <ProductsDiv reverse={reverse}>
             <ImgDiv><Img src={src} /></ImgDiv>
             <ProductsDetails>
-                <ProductsH4 href={learnMoreLink} target="_blank">{title}</ProductsH4>
+                <ProductsH4 href={learnMoreLink ? learnMoreLink : searchForItem } target="_blank">{title}</ProductsH4>
                 {text}
-                {!_.isNil(additionalText) &&
+                {(additionalText) &&
                     <ShowMoreBtn onClick={() => setShowText(!showText)}>{showText ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>}</ShowMoreBtn>
                 }
                 {showText && additionalText}
-                <ShopProducts href={learnMoreLink} target="_blank"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> Learn more and Shop for {title}</ShopProducts>
+                <ShopProducts href={learnMoreLink ? learnMoreLink : searchForItem } target="_blank"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> {learnMoreLink ? 'Learn more and Shop for' : 'Shop for'} {title}</ShopProducts>
             </ProductsDetails>
         </ProductsDiv>
 
