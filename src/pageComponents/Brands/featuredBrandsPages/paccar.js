@@ -55,6 +55,7 @@ export default function Paccar() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/bg_series.png"
                     text="Braden’s BG Series is designed for long life and efficient operation to meet a variety of applications—from marine industry boom hoists to the dynamic swing winch systems used on dredges. Dynamic and static braking features provide safe, smooth operation."
                     title="Braden BG Series Planetary Hoists"
@@ -77,6 +78,7 @@ export default function Paccar() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/plantary_swing.png"
                     text="The compact and durable Braden SD Planetary Swing Drive offers superior performance in a wide range of cost-effective configurations that provide turnkey power solutions for utility and construction applications."
                     title="Braden Planetary Swing Drives"
@@ -106,6 +108,7 @@ export default function Paccar() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="PD18D Utility Bumper"
                     text={(
@@ -160,20 +163,20 @@ export default function Paccar() {
                         src="https://www.paccarwinch.com/images/c9388ef0-1d48-49c9-91bf-a140a5528245"
                         text="PACCAR Winch Believes in SafetyPACCAR Winch Believes in Safety"
                         detail="PACCAR Winch believes in safety. We provide hands-on training, build products with rigorous safety standards, and encourage preparedness in a day-to-day work environment. Of course, this dedication to protect those involved in our industry reflects on our employees."
-                        Link="https://www.paccarwinch.com/media/display/55a70e8a-0587-4044-b8da-1da867004d79?listtype=news"
+                        link="https://www.paccarwinch.com/media/display/55a70e8a-0587-4044-b8da-1da867004d79?listtype=news"
                     />
                     <Articles
                         src="https://www.paccarwinch.com/images/4690f8cc-8b53-4916-b29c-7ee9650a4475"
                         text="PACCAR Winch Presents Educational Session on Hoist Safety at NATE UNITE’s 25th annual Conference."
                         detail="NATE UNITE’s 25th annual conference was this week in Raleigh, North Carolina. PACCAR Winches Training Manager Clint Ross and North American Sales Manager Jim Braden presented an educational session on hoist safety.
 					NATE: The Communications Infrastructure Contractors Association is a non-profit trade association in the wireless and broadcast infrastructure industries providing a unified voice for tower erection, maintenance and service companies."
-                        Link="https://www.paccarwinch.com/media/display/b6c0645c-76eb-4d26-9933-506c1a3c413a?listtype=news"
+                        link="https://www.paccarwinch.com/media/display/b6c0645c-76eb-4d26-9933-506c1a3c413a?listtype=news"
                     />
                     <Articles
                         src="https://www.paccarwinch.com/images/55d9676f-c142-42f5-afdf-42c80b700509"
                         text="PACCAR Winch Announces New Vice President of Sales & Marketing"
                         detail="We are pleased to announce that Roger Kelly has joined PACCAR Winch as the Vice President of Sales and Marketing. Mr. Kelly brings 30 years of operations and sales experience including Business Manager at Hilti, Business Development at Ametek, and Vice President of Sales and Marketing at Bliss Industries.  We're excited to have him as an integral leader at PACCAR Winch."
-                        Link="https://www.paccarwinch.com/media/display/fb0c092f-7300-47a4-9a6e-d2831e300d52?listtype=news"
+                        link="https://www.paccarwinch.com/media/display/fb0c092f-7300-47a4-9a6e-d2831e300d52?listtype=news"
                     />
                 </ArticlesDiv>
 
@@ -198,7 +201,7 @@ export default function Paccar() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="#"
+                        searchTerm="Paccar"
                         text="Shop Paccar Products"
                         icon="shopping-cart"
                     />

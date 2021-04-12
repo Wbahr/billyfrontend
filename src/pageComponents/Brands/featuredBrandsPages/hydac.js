@@ -60,6 +60,7 @@ export default function Hydac() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/Filters.png"
                     text={(
                         <div>
@@ -80,59 +81,50 @@ export default function Hydac() {
                         </div>
                     )}
                     title="Filters & Filter Systems"
-                    learnMoreLink="/search?searchTerm=hydac%20Filter%20Systems&sortType=relevancy&nonweb=false&brands=Hydac%20Technology%20Corporation&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/Accumulators.png"
                     title="Accumulators"
-                    learnMoreLink="/search?searchTerm=hydac%20Accumulators&sortType=relevancy&nonweb=false&resultPage=1"
                     text=" Three distinct accumulator designs are available, ensuring the accumulator fits the application, rather than forcing the application to fit the accumulator. The designs are Bladder, Diaphragm and Piston. Available up to 15,000 psi working pressure. Specialized variations of Diaphragm and Bladder Accumulators are available for pulsation dampening, silencing and shock absorption. In addition, HYDAC carries accumulator accessories to ensure proper installation and correct maintenance."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/valves.png"
                     title="Valves, Clamps & Accessories"
-                    learnMoreLink="/search?searchTerm=hydac%20Valves%2C%20Clamps%20and%20Accessories&sortType=relevancy&nonweb=false&brands=Hydac%20Technology%20Corporation&resultPage=1"
                     text=" HYDAC manufactures high-pressure ball valves, needle valves, flow control valves, check valves and cartridge valves to ensure safe and reliable operation. A complete range of DIN 3015 clamps for mounting hoses, tubes, and pipes is complimented by HYDAC's specialty and custom mounting solutions. Reservoir accessories include breathers, fluid level indicators, test points, gauge isolators and more."
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/electronics.png"
                     title="Electronics & Diagnostics"
-                    learnMoreLink="/search?searchTerm=hydac%20Electronics%20and%20Diagnostics&sortType=relevancy&nonweb=false&brands=Hydac%20Technology%20Corporation&resultPage=1"
                     text="HYDAC's product range includes diagnostics, pressure transducers and switches, temperature transducers and switches, flow sensors, level sensors, displays and accessories. HYDAC also offers intrinsically safe pressure transducers and sensors for applications in hazardous environments. OEM pressure transducers and switches are available for use in volume production machines."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/compact.png"
                     title="Compact Hydraulics"
-                    learnMoreLink="/search?searchTerm=hydac%20Compact%20Hydraulics&sortType=relevancy&nonweb=false&brands=Hydac%20Technology%20Corporation&resultPage=1"
                     text="  HYDAC carries compact and high-pressure power units, cartridge valves, manifold assemblies and controls. Compact power units feature a seamless reservoir and pressure-balanced gear pump offering efficiencies over 90%, even at full load, greatly reducing wear and noise. HYDAC also has a wide range of cooling systems for mobile and industrial applications, including combination coolers, pump-filter cooler units, plate-in-frame coolers and brazed plate heat exchangers."
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/mobile%20directional.png"
                     title="Mobile Directional Control Valves"
-                    learnMoreLink="/search?searchTerm=hydac%20Mobile%20Directional%20Control%20Valves&sortType=relevancy&resultPage=1"
                     text=" HYDAC line of directional control spool valves for mobile applications fulfill the requirements of truck-mounted cranes, front end loaders, wheel loaders, skid steer loaders, fork lift trucks, refuse trucks, roll off trucks & trailers, and many other specialized machine applications. The valves are characterized by highly advanced design solutions including customized spools for optimal metering and load interference management. Valve types include monoblock, sectional, cable or radio, pressure control valves and selector valves."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/hydraulic-cylinders.png"
                     title="Hydraulic Cylinders"
-                    learnMoreLink="/search?searchTerm=hydac%20Hydraulic%20Cylinders&sortType=relevancy&nonweb=false&resultPage=1"
                     text="HYDAC is your source for custom hydraulic cylinders, available in bore sizes from 1.5' - 30' with stroke lengths up to 30'. Various engineered designs are available, including: welded, mobile type, mill type, custom hybrids, special custom tie rod type, and double rod end. Customers may specify virtually any mounting configuration or port options. These heavy-duty cylinders are ideal for the toughest applications, including: earthmoving, oilfield, logging and forestry equipment; steel and foundry machinery; press applications such as forming, stamping and molding; cranes and lifting equipment; and many others."
                 />
                 <SectionHeader
                     text="Articles & Videos"
                 />
                 <ArticlesDiv>
-                    <Articles
-                        src="https://www.skf.com/binaries/pub12/Images/0901d19680a910db-LumenRadios-reliable-wireless-mesh-technology-enables-each-sensor-to-forward-data-and-automatically-create-a-self-healing-and-building-wide-network_tcm_12-554983.jpeg"
-                        text="SKF collaborates with wireless specialist LumenRadio to enhance automated machine monitoring"
-                        Link="https://www.skf.com/group/news-and-events/news/2020/2020-04-15-skf-collaborates-with-wireless-specialist-lumenradio-to-enhance-automated-machine-monitoring"
-                        detail="By collaborating with wireless specialist LumenRadio, SKF has developed a new wireless sensor as part of a condition monitoring system for improving rotating equipment performance programs on a scale previously considered uneconomic.
-						LumenRadio began in areas such as professional lighting, its products are used to monitor, and control sophisticated light shows remotely. The company has since expanded into IoT applications in heating, ventilation and air conditioning (HVAC) and heavy industrial applications.
-						"
-                    />
                     <VideoDiv>
                         <Videos
                             src="https://www.youtube.com/embed/dNRz2Efm8o8"
@@ -155,7 +147,7 @@ export default function Hydac() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=Hydac"
+                        searchTerm="Hydac"
                         text="Shop Hydac Products"
                         icon="shopping-cart"
                     />

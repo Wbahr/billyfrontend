@@ -46,11 +46,12 @@ export default function RelatedLink(props) {
         href,
         icon,
         text,
+        searchTerm,
     } = props
     return (
         <RelatedLinkCircle>
             <LinkStyleDiv>
-                <LinkStyle href={href} target="_blank" rel="noopener noreferrer">
+                <LinkStyle href={ href ? href : `/search?searchTerm=${searchTerm}`} target="_blank" rel="noopener noreferrer">
                     <FontAwesomeDiv>
                         <FontAwesomeIcon icon={icon} size='4x' />
                     </FontAwesomeDiv>

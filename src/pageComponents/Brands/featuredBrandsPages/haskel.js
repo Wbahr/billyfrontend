@@ -56,6 +56,7 @@ export default function Haskel() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-pressure.png"
                     text={(
                         <div>
@@ -71,19 +72,18 @@ export default function Haskel() {
                         </div>
                     )}
                     title="Air pressure amplifiers"
-                    learnMoreLink="/search?searchTerm=haskel%20Air%20pressure%20amplifiers&sortType=relevancy&nonweb=false&brands=Haskel%20International%20LLC&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-driven.png"
                     title="Air-driven liquid pumps"
-                    learnMoreLink="/search?searchTerm=haskel%20Air-driven%20liquid%20pumps&sortType=relevancy&nonweb=false&resultPage=1"
                     text=" Air Driven Pumps are used industrially to pump a wide variety of liquids, handling a consistency range from thin and viscous to thick slurries. The pumps are ideal when flammable gas is present, requiring no electricity to work and delivering constant flow and a consistently high pressure. Liquids handled include, but are not limited to – petroleum based oils, water, diesel fuel, most phosphate-ester based fire-resistant hydraulic fluids, petroleum based solvents, Skydrol and Aerosafe fluid, deionized water and demineralized water."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-hydraulic.png"
                     title="Air & hydraulic-driven gas boosters"
-                    learnMoreLink="/search?searchTerm=haskel%20hydraulic-driven%20gas%20boosters&sortType=relevancy&nonweb=false&brands=Haskel%20International%20LLC&resultPage=1"
                     text={(
                         <div>
                             <p>Haskel Gas Boosters are used to clean and boost the pressures — up to 39,000 psi (2690 bar) — of most types of gas, such as oxygen, argon and hydrogen. A Gas Booster eliminates the need for potentially more costly gas stored in higher-pressure supply cylinders. Instead, you will be able to boost gas repeatedly to the required pressures in a safe, reliable manner, with no heat, flame or spark risk.</p>
@@ -113,14 +113,14 @@ export default function Haskel() {
                     <Articles
                         src="https://www.haskel.com/-/media/images/haskel/blog/hydrogen-mobility-in-the-us/insider-evs-us-sales.png?mh=301&mw=624"
                         text="Three Major Signs that May Change the Future of Hydrogen Mobility in the U.S."
-                        Link="https://www.haskel.com/en-us/blog/hydrogen-mobility-in-the-us"
+                        link="https://www.haskel.com/en-us/blog/hydrogen-mobility-in-the-us"
                         detail="As the global hydrogen economy makes significant progress, investing in the innovation and infrastructure needed to make fuel cell vehicles a powerful tool in achieving emissions targets, where is the U.S.?
                         The United States has largely been considered a bystander to the hydrogen mobility movement in recent years. While there are FCEV (fuel cell electric vehicles) passenger cars commercially available and"
                     />
                     <Articles
                         src="https://www.haskel.com/-/media/images/haskel/blog/driving-consumer-adoption/haskel-toyota-shoot-sunderland-min06.png?mh=1872&mw=1140"
                         text="Driving Consumer Adoption in Hydrogen Mobility Market"
-                        Link="https://www.haskel.com/en-us/blog/driving-consumer-adoption-in-hydrogen-mobility"
+                        link="https://www.haskel.com/en-us/blog/driving-consumer-adoption-in-hydrogen-mobility"
                         detail="One of hydrogen mobility’s biggest barriers to widespread adoption is consumer awareness and education. Despite fuel cell electric vehicles (FCEVs) and hydrogen-powered technology being far from new, there are still several misconceptions and a lack of consumer information."
                     />
 
@@ -128,7 +128,7 @@ export default function Haskel() {
                         src="https://www.haskel.com/-/media/images/haskel/blog/embracing-industry-iot/iiot_header.jpg?mh=229&mw=1140"
                         text="Embracing the Industrial IoT to Advance High-Pressure Manufacturing"
                         detail="The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?)."
-                        Link="https://www.haskel.com/en-us/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"
+                        link="https://www.haskel.com/en-us/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"
                     />
                 </ArticlesDiv>
 
@@ -153,7 +153,7 @@ export default function Haskel() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=Haskel"
+                        searchTerm="Haskel"
                         text="Shop Haskel Products"
                         icon="shopping-cart"
                     />

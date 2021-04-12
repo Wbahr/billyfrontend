@@ -58,6 +58,7 @@ export default function Omron() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/automation.png"
                     text=" Omron's Automation Systems include programmable controllers that support machine control, and network/software products to support easy information exchange with host systems."
                     additionalText={(
@@ -72,12 +73,11 @@ export default function Omron() {
                         </div>
                     )}
                     title="Automation Systems"
-                    learnMoreLink="/search?innerSearchTerms=Automation&resultPage=1&searchTerm=omron"
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/motion-drives.png"
                     title="Motion & Drives"
-                    learnMoreLink="/search?innerSearchTerms=Motion%2CDrives&resultPage=1&searchTerm=omron"
                     text={(
                         <div>
                             <p>Omron's Motion & Drives offering includes Sysmac machine automation controllers (described above), motion controllers, servo motors and inverters ideal for positioning, speed and torque controls in various automation systems.</p>
@@ -91,9 +91,9 @@ export default function Omron() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/sensing.png"
                     title="Sensing"
-                    learnMoreLink="/search?innerSearchTerms=Sensing&resultPage=1&searchTerm=omron"
                     text={(
                         <div>
                             <p>OMRON Sensing Components detect, measure, analyze, and process various changes that occur on production sites, such as changes in position, length, height, displacement, and appearance. They also contribute to predicting and preventing future events. Their vast product range includes:</p>
@@ -112,9 +112,9 @@ export default function Omron() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/control-components.png"
                     title="Control Components"
-                    learnMoreLink="/search?innerSearchTerms=Control%2CComponents&resultPage=1&searchTerm=omron"
                     text={(
                         <div>
                             <p>From power suppliers to counters to temperature controllers, we have all needed components for a successful and complete automation solution.</p>
@@ -132,9 +132,9 @@ export default function Omron() {
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/switching-components.png"
                     title="Switching Components"
-                    learnMoreLink="/search?innerSearchTerms=Switching&resultPage=1&searchTerm=omron"
                     text={(
                         <div>
                             <p>OMRON Switching Components provide high levels of control, reliability and accuracy with a line that includes the following products:</p>
@@ -148,9 +148,9 @@ export default function Omron() {
                     )}
                 />
                 <ProductItems
+                    searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/robotics.png"
                     title="Robotics"
-                    learnMoreLink="/search?innerSearchTerms=Robotics&resultPage=1&searchTerm=omron"
                     text=" Omron Robotic automation solutions enhance the most demanding manufacturing lines. Choose from collaborative robots (cobots), industrial SCARA robots, spider robots, six-axis robots, or AIV (Automated Intelligent Vehicle) mobile robots."
                     reverse
                 />
@@ -162,13 +162,13 @@ export default function Omron() {
                     <Articles
                         src="https://assets.omron.com/m/25e734b88ede85e/webimage-V275_Product_launch_image.jpg"
                         text="New V275 Series from Omron improves label compliance and quality monitoring"
-                        Link="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"
+                        link="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"
                         detail="Industry-leading automation solutions pioneer Omron Automation Americas recently released a new system for inspecting and verifying labels and barcodes to improve compliance in medical device manufacturing, automotive labeling, food and beverage secondary and tertiary package labeling, and other applications requiring comprehensive label quality monitoring."
                     />
                     <Articles
                         src="https://assets.omron.com/m/3ee2a2c3baa312f0/webimage-NXR-IP67-IO-Article-Image.png"
                         text=" Omron provides college students with free access to the Sysmac Studio automation platform."
-                        Link="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived"
+                        link="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived"
                         detail="For the college students just getting started on their path to becoming an engineer, automation solutions provider Omron Automation Americas is offering a powerful resource for preparation at a professional level."
                     />
 
@@ -176,7 +176,7 @@ export default function Omron() {
                         src="https://assets.omron.com/m/27756748ca369fad/webimage-Omron_Sysmac_Studio_pic.jpg"
                         text="Four major safety-related benefits of robots"
                         detail="Manufacturing facilities employ a variety of hazardous machines, and safeguarding is paramount. While traditional safety strategies are designed to mitigate risk in hazardous situations, it’s possible to eliminate this risk altogether by letting robots cover the dangerous tasks. Let’s take a look at a few ways that robots make manufacturing safer overall. "
-                        Link="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase"
+                        link="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase"
 
                     />
                 </ArticlesDiv>
@@ -202,7 +202,7 @@ export default function Omron() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?resultPage=1&searchTerm=Omron"
+                        searchTerm="Omron"
                         text="Shop Omron Products"
                         icon="shopping-cart"
                     />

@@ -56,35 +56,35 @@ export default function Aventics() {
                     text="Products"
                 />
                 <ProductItems
+                    searchTerm="Aventics"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-cylinders.png"
                     text="NFPA steel air cylinders, rodless shuttle cylinders, round mini cylinders, aluminum cylinders, stainless steel cylinders and compact cylinders. Construction grade (cast iron) and multi-position air cylinders normally used for mobile/construction and oilfield applications, mounting bracket kits for mating to SUNSTRAND pumps."
                     title="Air Cylinders"
-                    learnMoreLink="/search?searchTerm=Aventics%20Air%20Cylinders&sortType=relevancy&resultPage=1"
                 />
                 <ProductItems
+                    searchTerm="Aventics"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/air-prep.png"
                     title="Air Prep Equipment"
-                    learnMoreLink="/search?searchTerm=Aventics%20Air%20Prep%20Equipment&sortType=relevancy&resultPage=1"
                     text=" Filters, regulators and lubricators with NPT or G(ISO) BSPP ports, as well as lockout valves, slow start valves and anti-freezer units."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Aventics"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/valves.png"
                     title="Valves"
-                    learnMoreLink="/search?searchTerm=Aventics%20Valves&sortType=relevancy&resultPage=1"
                     text="Pneumatic directional control valves, choose from in-line valves, manual / mechanical valves, plug-in valve manifold systems or traditional valve manifold systems. AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application."
                 />
                 <ProductItems
+                    searchTerm="Aventics"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/electrical.png"
                     title="Electrical Products"
-                    learnMoreLink="/search?searchTerm=Aventics%20Electrical%20Products&sortType=relevancy&resultPage=1"
                     text="AVENTICS electro-pneumatic (E/P) pressure control valves offer industry leading performance. The converter valves provide graduated pneumatic pressure outputs directly proportional to analog electrical signal inputs (voltage or current). AVENTICS pneumatic valves for oilfield and mobile applications have been the industry leader for decades due to their rugged, proven reliability and precise control. Graduated pneumatic pressure delivery, most often used for mobile, oilfield and marine application."
                     reverse
                 />
                 <ProductItems
+                    searchTerm="Aventics"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Aventics/pneumatic.png"
                     title="Pneumatic Accessories"
-                    learnMoreLink="/search?searchTerm=Aventics%20Pneumatic%20Accessories&sortType=relevancy&nonweb=false&brands=Aventics%20Corporation&resultPage=1"
                     text="Accessory air valves and devices such as flow control valves and quick exhaust valves, plus part present sensing, air gauges, timing volumes, shock absorbers, fittings and air line tubing."
                 />
                 <SectionHeader
@@ -94,13 +94,13 @@ export default function Aventics() {
                     <Articles
                         src="https://www.aventics.com/media/_processed_/5/5/Landingpage-ib_140d01280c.jpg"
                         text="The Internet of Things"
-                        Link="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/"
+                        link="https://www.aventics.com/us/en/industries-trends/top-trends-and-topics/industry-40-iot/"
                         detail="Intelligent pneumatic systems build bridges to the Internet of Things, ensure system availability, and lower operating costs thanks to central analysis and control electronics."
                     />
                     <Articles
                         src="https://www.aventics.com/media/_processed_/3/e/ES05_-_the_simple_solution_for_elementary_pneumatics_6319ac1552.jpg"
                         text="ES05 – the simple solution for elementary pneumatics"
-                        Link="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154"
+                        link="https://www.aventics.com/us/en/pneumatics-shop/single-valves-pgr.256154"
                         detail="ES05 is a valve system that has been designed especially for standard pneumatics applications and industrial automation. Simple, flexible and efficient – without bells and whistles. "
                     />
 
@@ -132,7 +132,7 @@ export default function Aventics() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=Aventics"
+                        searchTerm="Aventics"
                         text="Shop Aventics Products"
                         icon="shopping-cart"
                     />

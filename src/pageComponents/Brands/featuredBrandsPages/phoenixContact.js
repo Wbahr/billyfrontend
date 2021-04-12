@@ -108,13 +108,13 @@ export default function Phoenix() {
                     <Articles
                         src="https://dam-mdc.phoenixcontact.com/rendition/156443151564/7e8bcbceecd75e0fd2e7cb4c08cde8a8/-S220x217-C98.83333333%25x93.33333333%25%2C1.0462963%25%2C5.33333333%25-FPNG"
                         text="Loop-powered temperature transducers"
-                        Link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/2aac9d14-e323-4341-8f6d-1737844bd68a"
+                        link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/2aac9d14-e323-4341-8f6d-1737844bd68a"
                         detail="Dual-channel temperature transmitters with HART compatibilityMiddletown, Pa. – Phoenix Contact introduces six new universal temperature transducers. These new additions to the MACX MCR family are loop-powered and have two channels."
                     />
                     <Articles
                         src="https://dam-mdc.phoenixcontact.com/rendition/156443151564/370be705816f36d75e2ed47617cb1158/-S220x172-C100%25x61.18556701%25%2C0%25%2C20%25-FPNG"
                         text="Reduce energy costs"
-                        Link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/703e7164-375b-4a41-adf6-d6b9bc28e233"
+                        link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/703e7164-375b-4a41-adf6-d6b9bc28e233"
                         detail="Easy-to-configure EMpro simplifies remote energy monitoring Middletown, Pa. – Plant operators and facility managers now have real-time, remote access to their machines’ energy consumption data, with Phoenix Contact’s EMpro. "
                     />
 
@@ -124,7 +124,7 @@ export default function Phoenix() {
                         detail="New 24 V DC/20 A UNO power supply provides high-quality, cost-effective power
 
 						Middletown, Pa. – Phoenix Contact’s UNO POWER family now includes a cost-effective option for applications requiring a basic DC voltage. The newest single-phase power supply is ideal for loads of up to 480 W."
-                        Link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/ecafb002-18da-430b-a6a9-8e67dc610b65"
+                        link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/ecafb002-18da-430b-a6a9-8e67dc610b65"
 
                     />
                 </ArticlesDiv>
@@ -150,7 +150,7 @@ export default function Phoenix() {
                         icon="globe-americas"
                     />
                     <RelatedLink
-                        href="/search?searchTerm=Phoenix"
+                        searchTerm="Phoenix"
                         text="Shop Phoenix Contact Products"
                         icon="shopping-cart"
                     />
