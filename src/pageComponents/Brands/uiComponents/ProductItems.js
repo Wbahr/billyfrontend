@@ -77,7 +77,7 @@ export default function ProductItems(props) {
         learnMoreLink,
     } = props
 		
-    const searchItem = { searchTerm: searchTerm, innerSearchTerms: title }
+    const searchItem = { searchTerm: searchTerm + ' ' + title }
     const searchForItem = buildSearchString(searchItem)
 
     return (
