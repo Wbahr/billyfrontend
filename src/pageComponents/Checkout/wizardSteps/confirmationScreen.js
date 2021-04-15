@@ -288,7 +288,7 @@ export default function ConfirmationScreen(props) {
                 </ButtonRed>
             </DivNavigation>
 
-            {submitting && <ProcessingOrderModal />}
+            {submitting && <ProcessingOrderModal isQuote={history.location.pathname === '/create-quote'} />}
             {showOrderFailedModal && <OrderFailedModal />}
         </div>
     )
