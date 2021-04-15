@@ -122,11 +122,6 @@ export default function ShoppingCart({ history }) {
                     ) : <Ashare/>}
 
                     {userInfo && <MergeCartModal/>}
-
-                    <DivShare>
-                        <Ashare>Email Cart</Ashare>
-                        <FontAwesomeIcon icon="share" color="grey" />
-                    </DivShare>
                 </DivRow>
             </Div>
             <CartComponent
