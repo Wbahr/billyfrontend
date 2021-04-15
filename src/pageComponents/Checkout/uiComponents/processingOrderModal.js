@@ -37,7 +37,8 @@ function useInterval(callback, delay) {
     }, [delay])
 }
 
-export default function ProcessingOrderModal() {
+export default function ProcessingOrderModal(props) {
+    const { isQuote } = props
     const [timeElapsed, setTimeElapsed] = useState(0)
     const totalSeconds = 8
     useInterval(() => {
@@ -51,8 +52,8 @@ export default function ProcessingOrderModal() {
                     complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}
                     totalSeconds={totalSeconds * 1000}
                 />
-                <h5>Processing Order... Please wait</h5>
-                <p>You will be redirected to a confirmation screen upon completion.</p>
+                <h5>Processing {isQuote ? 'Quote' : 'Order'}... Please wait</h5>
+                <p>You will be redirected to the confirmation screen in a moment.</p>
             </Container>
         </Popup>
     )
