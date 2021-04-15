@@ -57,6 +57,7 @@ export const FRAGMENT_ITEM_DETAIL_MEDIA = gql`
             itemMediaType
             mediaType
             mediaId
+            altText
         }
     }
 `

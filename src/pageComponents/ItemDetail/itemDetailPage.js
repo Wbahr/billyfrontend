@@ -8,7 +8,7 @@ import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../setup/context'
 import AddToShoppingListModal from '../_common/modals/AddToShoppingListModal'
 import { GET_ITEM_PRICE } from 'setup/providerGQL'
-import { getOriginalImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getOriginalImagePath, getAltTextForOriginalImage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'setup/gqlQueries/gqlItemQueries'
 import LocationsModal from '../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
@@ -332,7 +332,7 @@ export default function ItemDetailPage({ history }) {
 
                 <DivLeftCol>
                     <DivPhoto>
-                        <Img src={getOriginalImagePath(itemDetails)} alt={itemDetails.invMastUid} />
+                        <Img src={getOriginalImagePath(itemDetails)} alt={getAltTextForOriginalImage(itemDetails)} />
                     </DivPhoto>
 
                     <DivPurchaseInfo>

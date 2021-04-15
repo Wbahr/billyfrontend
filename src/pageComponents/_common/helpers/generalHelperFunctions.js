@@ -73,6 +73,8 @@ export const getLargeImagePath = itemDetails => getImagePath(getTypeImage(itemDe
 
 export const getOriginalImagePath = itemDetails => getImagePath(getTypeImage(itemDetails, ImageTypes.Original)?.path)
 
+export const getAltTextForOriginalImage = itemDetails => getTypeImage(itemDetails, ImageTypes.Original)?.altText
+
 export const buildSearchString = ({
     searchTerm,
     sortType='relevancy',
