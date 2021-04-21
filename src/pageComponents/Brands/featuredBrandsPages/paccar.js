@@ -9,6 +9,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -37,15 +38,23 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Paccar() {
+export function paccar() {
+    const description = 'PACCAR Winch Division is the industry leader in the design and manufacture of winch, hoist and ' +
+        'drive systems. Their products are sold under the brands of Braden, Carco and Gearmatic. PACCAR manufactures ' +
+        'high quality, high value winches, hoists and drive systems and offers custom-engineered products that meet the ' +
+        'highest manufacturing standards.'
 
     return (
         <>
+            <Helmet>
+                <title>Paccar Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/paccar-logo.png" />
             <Container>
                 <H1 text="Paccar"/>
                 <BrandDetail
-                    text="PACCAR Winch Division is the industry leader in the design and manufacture of winch, hoist and drive systems. Their products are sold under the brands of Braden, Carco and Gearmatic. PACCAR manufactures high quality, high value winches, hoists and drive systems and offers custom-engineered products that meet the highest manufacturing standards."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Paccar"

@@ -67,7 +67,9 @@ const ImgDiv = styled.div`
 		padding: 10px;
 	}
 `
-const H5 = styled.h5`
+const AboutP = styled.p`
+    margin: 0;
+    font-size: 20px;
 	color: #B51F2B;
 	@media (max-width: 800px) {
 		font-size: 18px;
@@ -78,21 +80,21 @@ export default () =>  (
     <BannerContainer>
         <Col>
             <LgBanner>
-                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/inch%20framing%20main_header.png" />
+                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/inch%20framing%20main_header.png" alt="banner image"/>
             </LgBanner>
 
             <SmBanner>
                 <BannerDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" /></ImgDiv>
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>
 
                     <AboutAirline>
-                        <H5>About Airline Hydraulics</H5>
+                        <AboutP>About Airline Hydraulics</AboutP>
                         We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
                     </AboutAirline>
                 </BannerDiv>
 
                 <BannerDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" /></ImgDiv>
+                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" alt="esop" /></ImgDiv>
 
                     <AboutAirline>
                         <P> We're 100% Employee Owned and proud of it! </P>

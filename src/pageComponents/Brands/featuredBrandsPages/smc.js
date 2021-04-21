@@ -9,6 +9,7 @@ import SectionHeader from '../uiComponents/SectionHeader'
 import ProductItems from '../uiComponents/ProductItems'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -31,15 +32,23 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function SMC() {
+export function smc() {
+    const description = 'SMC has established a position as the world leader in pneumatic technology and supports a range' +
+        ' of over 600,000 product variations to meet the complex and diversified needs of its customers. The company is ' +
+        'continually applying world class design to pneumatic component and power control technology to develop advanced' +
+        ' products with ever higher levels of performance.'
 
     return (
         <>
+            <Helmet>
+                <title>SMC Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" />
             <Container>
                 <H1 text="SMC"/>
                 <BrandDetail
-                    text="SMC has established a position as the world leader in pneumatic technology and supports a range of over 600,000 product variations to meet the complex and diversified needs of its customers. The company is continually applying world class design to pneumatic component and power control technology to develop advanced products with ever higher levels of performance."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="SMC"

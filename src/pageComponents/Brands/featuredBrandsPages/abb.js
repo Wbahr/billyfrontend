@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,16 +39,24 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function ABB() {
+export function abb() {
+    
+    const description = 'ABB is a leader in power and automation technologies that enable utility and industry ' +
+        'customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a ' +
+        'robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and ' +
+        'plant integration.'
 
     return (
         <>
+            <Helmet>
+                <title>ABB Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
+            
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ABB_logo.png" />
             <Container>
                 <H1 text="ABB"/>
-                <BrandDetail
-                    text="ABB is a leader in power and automation technologies that enable utility and industry customers to improve performance while lowering environmental impact. ABB’s automation technologies blend a robust product portfolio with end-user expertise to deliver solutions for control, motion, protection, and plant integration."
-                />
+                <BrandDetail text={description}/>
                 <ShopProductBtn
                     searchTerm="ABB"
                     text="Shop Products"

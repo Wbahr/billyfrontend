@@ -5,7 +5,7 @@ import { useLazyQuery } from '@apollo/client'
 import { CATEGORY_SEARCH } from '../../../setup/providerGQL'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { cleanSearchState, useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
+import { buildSearchString, cleanSearchState, useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
 import AppBarPlugin from '../../SearchResults/plugins/AppBarPlugin'
 import SearchContainer from '../../SearchResults/uiComponents/SearchContainer'
 import DrawerPlugin from '../../SearchResults/plugins/DrawerPlugin'
@@ -18,6 +18,8 @@ import { useSearchState } from '../../SearchResults/hooks'
 import ResultSummaryPlugin from '../../SearchResults/plugins/ResultSummaryPlugin'
 import { ArrowForward } from '@material-ui/icons'
 import Carousel from '../../_common/Carousel'
+import { Helmet } from 'react-helmet'
+import { breadcrumbSchema } from '../../_common/richSearchSchemas/breadcrumbSchema'
 
 const DivRow = styled.div`
 	display: flex;
@@ -136,12 +138,28 @@ export default function CategorySearch({ match, history }) {
             Image={<img src={imageUrl} alt={name} title={name}/>}
         />
     ))
+    
+    const breadCrumbTrail = categorySearch?.category?.breadCrumbs?.breadcrumbTrail
 
     return !categorySearch ? (
         <Loader/>
     ) : (
         <DivCol>
-            <BreadCrumbs breadCrumbTrail={categorySearch?.category?.breadCrumbs?.breadcrumbTrail}/>
+            <Helmet>
+                <title>Airline Hydraulics | {categoryName}</title>
+                <meta name="description" content={seoHtml ? seoHtml.replace(/<[^>]+>/g, '') : categoryName}/>
+                {breadcrumbSchema([
+                    {
+                        name: 'Categories',
+                        item: 'https://airlinehyd.com/categories'
+                    },
+                    ...(breadCrumbTrail || []).map(({ urlSlug, name }) => ({
+                        name,
+                        item: 'https://airlinehyd.com/categories/' + urlSlug
+                    }))
+                ])}
+            </Helmet>
+            <BreadCrumbs breadCrumbTrail={breadCrumbTrail}/>
 
             <BorderContainer>
                 <H1>{categoryName}</H1>

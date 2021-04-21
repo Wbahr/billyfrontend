@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,23 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Phoenix() {
+export function phoenixcontact() {
+    const description = 'Phoenix Contact is a world leader for electronic components, systems, and solutions in the ' +
+        'fields of electrical engineering, electronics, and automation. Phoenix Contact provides products for ' +
+        'applications in a wide range of industries such as automotive, oil and gas, solar power, transportation, ' +
+        'water management, and wind power.'
 
     return (
         <>
+            <Helmet>
+                <title>Phoenix Contact Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png" />
             <Container>
                 <H1 text="Phoenix Contact"/>
                 <BrandDetail
-                    text="Phoenix Contact is a world leader for electronic components, systems, and solutions in the fields of electrical engineering, electronics, and automation. Phoenix Contact provides products for applications in a wide range of industries such as automotive, oil and gas, solar power, transportation, water management, and wind power."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Phoenix"

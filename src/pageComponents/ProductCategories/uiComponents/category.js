@@ -38,12 +38,16 @@ const CategoryBlock = styled.div`
   }
 `
 
+const H3 = styled.h3`
+  font-size: 20px;
+`
+
 export default ({ size, text, linkTo, Image, ...rest }) => {
     return (
         <Link to={linkTo || '#'}>
             <CategoryBlock {...{ ...rest, size }}>
                 {Image}
-                <section>{text}</section>
+                <H3>{text}</H3>
             </CategoryBlock>
         </Link>
     )

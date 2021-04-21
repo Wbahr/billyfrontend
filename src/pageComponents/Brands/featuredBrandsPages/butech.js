@@ -8,6 +8,7 @@ import ShopProductBtn from '../uiComponents/ShopProductBtn'
 import SectionHeader from '../uiComponents/SectionHeader'
 import ProductItems from '../uiComponents/ProductItems'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -24,16 +25,24 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Butech() {
+export function butech() {
+    const description = 'BuTech a leading brand of high pressure valves, fittings and tubing. The BuTech line of ' +
+        'products was established in 1973, offering high pressure piping components and the most extensive and versatile' +
+        ' product line available for pressures up to 150,000 PSI. BuTech products are used in oil, natural gas, chemical' +
+        ' and petrochemical industries, as well as waterjet/waterblast, aerospace, marine, government and niche ' +
+        'industrial markets.'
 
     return (
         <>
+            <Helmet>
+                <title>Butech Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
+            
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/BuTech_Logo.png" />
             <Container>
                 <H1 text="BuTech"/>
-                <BrandDetail
-                    text="BuTech a leading brand of high pressure valves, fittings and tubing. The BuTech line of products was established in 1973, offering high pressure piping components and the most extensive and versatile product line available for pressures up to 150,000 PSI. BuTech products are used in oil, natural gas, chemical and petrochemical industries, as well as waterjet/waterblast, aerospace, marine, government and niche industrial markets."
-                />
+                <BrandDetail text={description}/>
                 <ShopProductBtn
                     searchTerm="BuTech"
                     text="Shop Products"

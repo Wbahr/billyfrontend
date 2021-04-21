@@ -7,9 +7,9 @@ import BrandDetail from '../uiComponents/BrandDetail'
 import ShopProductBtn from '../uiComponents/ShopProductBtn'
 import SectionHeader from '../uiComponents/SectionHeader'
 import ProductItems from '../uiComponents/ProductItems'
-import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -42,15 +42,24 @@ const Span = styled.span`
     font-weight: bold;
 `
 
-export default function Hydac() {
+export function hydac() {
+    const description = 'HYDAC is a global leader in fluid power, offering a complete range of hydraulic products ' +
+        'including filters, accumulators, power units, valves, coolers, electronics, and much more. Airline provides ' +
+        'HYDAC fluid power solutions to OEMs and end-users in a wide range of industries where industrial or mobile ' +
+        'hydraulic applications are found. In addition, HYDAC offers water and process filtration equipment to meet ' +
+        'the growing need for these products.'
 
     return (
         <>
+            <Helmet>
+                <title>Hydac Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
             <Container>
                 <H1 text="Hydac"/>
                 <BrandDetail
-                    text="HYDAC is a global leader in fluid power, offering a complete range of hydraulic products including filters, accumulators, power units, valves, coolers, electronics, and much more. Airline provides HYDAC fluid power solutions to OEMs and end-users in a wide range of industries where industrial or mobile hydraulic applications are found. In addition, HYDAC offers water and process filtration equipment to meet the growing need for these products."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Hydac"

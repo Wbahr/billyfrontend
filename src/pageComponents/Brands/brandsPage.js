@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Helmet } from 'react-helmet'
 
 const H1Div = styled.div`
     width: 100%;
@@ -166,9 +167,12 @@ export default function BrandsPage() {
 
     return (
         <Container>
+            <Helmet>
+                <title>Manufacturers | Airline Hydraulics</title>
+            </Helmet>
             <H1Div>
                 <H1>Featured Manufacturers</H1>
-                <BorderLine></BorderLine>
+                <BorderLine/>
             </H1Div>
             <FullBrandsDiv>
                 <BrandsImgDiv>
@@ -271,13 +275,13 @@ export default function BrandsPage() {
 
             <H4Div>
                 <H4>Product Categories</H4>
-                <BorderLine></BorderLine>
+                <BorderLine/>
             </H4Div>
             <CategoryDiv>
                 <CategoryName>
                     <CategoryP>HYDRAULIC COMPONENTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -323,7 +327,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>HOSE, CONNECTORS & ACCESSORIES</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -363,7 +367,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>PNEUMATIC COMPONENTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -400,7 +404,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>LUBRICATION EQUIPMENT</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -419,7 +423,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>WINCHES & GEAR DRIVES</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -444,7 +448,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>ALUMINUM STRUCTURAL FRAMING & ACCESSORIES</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -464,7 +468,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>AUTOMATION & CONTROL PRODUCTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -514,7 +518,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>ELECTRICAL COMPONENTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -558,7 +562,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>LIQUID & GAS PRESSURE PRODUCTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -577,7 +581,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>PROCESS CONTROL & COMPONENTS</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -603,7 +607,7 @@ export default function BrandsPage() {
                 <CategoryName>
                     <CategoryP>MACHINE SAFETY PRODUCTS & SERVICES</CategoryP>
                 </CategoryName>
-                <ProductBorder></ProductBorder>
+                <ProductBorder/>
             </CategoryDiv>
             <ProductDiv>
                 <CompanyListDiv>
@@ -629,12 +633,12 @@ export default function BrandsPage() {
 
             <H4Div>
                 <H4>All Manufacturers</H4>
-                <BorderLine></BorderLine>
+                <BorderLine/>
             </H4Div>
             <AlphabetListDiv>
                 <H6>A B C D E F G H I J K L M N O P Q R S T U V W X Y Z #</H6>
             </AlphabetListDiv>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>A</H6>
@@ -669,7 +673,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>B</H6>
@@ -698,7 +702,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>C</H6>
@@ -726,13 +730,13 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href=""></BrandList></li>
-                        <li><BrandList href=""></BrandList></li>
-                        <li><BrandList href=""></BrandList></li>
+                        <li><BrandList href=""/></li>
+                        <li><BrandList href=""/></li>
+                        <li><BrandList href=""/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>D</H6>
@@ -761,7 +765,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>E</H6>
@@ -790,7 +794,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>F</H6>
@@ -816,7 +820,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>G</H6>
@@ -842,7 +846,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>H</H6>
@@ -877,7 +881,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>I</H6>
@@ -899,11 +903,11 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href=""></BrandList></li>
+                        <li><BrandList href=""/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>K</H6>
@@ -925,11 +929,11 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href=""></BrandList></li>
+                        <li><BrandList href=""/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>L</H6>
@@ -957,11 +961,11 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href=""></BrandList></li>
+                        <li><BrandList href=""/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>M</H6>
@@ -993,7 +997,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>N</H6>
@@ -1012,17 +1016,17 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
 
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>O</H6>
@@ -1047,11 +1051,11 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>p</H6>
@@ -1080,7 +1084,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>q</H6>
@@ -1092,24 +1096,24 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
-                    <H6>r</H6>
+                    <H6>R</H6>
                 </LetterDiv>
                 <ListDiv>
                     <Ul>
@@ -1123,19 +1127,19 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
-                    <H6>s</H6>
+                    <H6>S</H6>
                 </LetterDiv>
                 <ListDiv>
                     <Ul>
@@ -1161,10 +1165,10 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
-                    <H6>t</H6>
+                    <H6>T</H6>
                 </LetterDiv>
                 <ListDiv>
                     <Ul>
@@ -1186,14 +1190,14 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
-                    <H6>u</H6>
+                    <H6>U</H6>
                 </LetterDiv>
                 <ListDiv>
                     <Ul>
@@ -1202,21 +1206,21 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>V</H6>
@@ -1233,19 +1237,19 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
-                    <H6>w</H6>
+                    <H6>W</H6>
                 </LetterDiv>
                 <ListDiv>
                     <Ul>
@@ -1268,7 +1272,7 @@ export default function BrandsPage() {
                     </Ul>
                 </ListDiv>
             </Div>
-            <LongBorderLine></LongBorderLine>
+            <LongBorderLine/>
             <Div>
                 <LetterDiv>
                     <H6>Y</H6>
@@ -1280,17 +1284,17 @@ export default function BrandsPage() {
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
                 <ListDiv>
                     <Ul>
-                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"></BrandList></li>
+                        <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                     </Ul>
                 </ListDiv>
             </Div>

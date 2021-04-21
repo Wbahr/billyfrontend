@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,22 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Eaton() {
+export function eaton() {
+    const description = 'Eaton is a global technology leader in power management solutions that make electrical, ' +
+        'hydraulic and mechanical power operate more efficiently, reliably, safely and sustainably. Airline carries a ' +
+        'wide range of Eaton Cutler-Hammer products for circuit protection, automation and control.'
 
     return (
         <>
+            <Helmet>
+                <title>Eaton Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Eaton_logo.png" />
             <Container>
                 <H1 text="Eaton"/>
                 <BrandDetail
-                    text="Eaton is a global technology leader in power management solutions that make electrical, hydraulic and mechanical power operate more efficiently, reliably, safely and sustainably. Airline carries a wide range of Eaton Cutler-Hammer products for circuit protection, automation and control."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Eaton"

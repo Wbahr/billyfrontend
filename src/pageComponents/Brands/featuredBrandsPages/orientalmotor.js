@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,24 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Orientalmotor() {
+export function orientalmotor() {
+    const description = 'Oriental Motor manufactures a wide range of motion control products including; stepper motors ' +
+        'and drivers, servo motors, brushless DC motors, fractional HP AC motors, linear and rotary actuators, and ' +
+        'cooling fans. Since its founding in 1885, Oriental Motor has been providing the optimal motion systems as part ' +
+        'of their total service, to meet the widest market demands. Oriental Motor offers an extensive product line of ' +
+        'about 50,000 products that provide the optimal motion system solutions.'
 
     return (
         <>
+            <Helmet>
+                <title>Airline Hydraulics | Oriental Motor</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" />
             <Container>
                 <H1 text="Oriental Motor"/>
                 <BrandDetail
-                    text="Oriental Motor manufactures a wide range of motion control products including; stepper motors and drivers, servo motors, brushless DC motors, fractional HP AC motors, linear and rotary actuators, and cooling fans. Since its founding in 1885, Oriental Motor has been providing the optimal motion systems as part of their total service, to meet the widest market demands. Oriental Motor offers an extensive product line of about 50,000 products that provide the optimal motion system solutions."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Oriental Motor"

@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -43,17 +44,26 @@ const ListDiv = styled.div`
 	justify-content: space-evenly;
 `
 
-export default function Parker() {
-
+export function parker() {
+    const description = 'Parker Hannifin provides precision-engineered solutions for a wide variety of mobile, ' +
+        'industrial and aerospace markets. As a Parker Fluid Connector distributor, Airline carries Parker’s full line ' +
+        'of high-quality hose and hose fittings, tube fittings, thermoplastic tubing, brass fittings and valves, ' +
+        'quick-disconnect couplings and assembly tools. In addition, Airline is your source for many fluid power and ' +
+        'automation products that are now a part of Parker’s offering, including:'
+    
     return (
         <>
+            <Helmet>
+                <title>Parker Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/parker_logo.jpg" />
             <Container>
                 <H1 text="Parker"/>
                 <BrandDetail
                     text={(
                         <div>
-                            <p>Parker Hannifin provides precision-engineered solutions for a wide variety of mobile, industrial and aerospace markets. As a Parker Fluid Connector distributor, Airline carries Parker’s full line of high-quality hose and hose fittings, tube fittings, thermoplastic tubing, brass fittings and valves, quick-disconnect couplings and assembly tools. In addition, Airline is your source for many fluid power and automation products that are now a part of Parker’s offering, including:</p>
+                            <p>{description}</p>
                             <ListDiv>
                                 <ul>
                                     <li>Ross High-Torque, Low-Speed Motors</li>

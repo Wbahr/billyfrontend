@@ -43,7 +43,7 @@ import Auth from './auth'
 import AdminHome from '../adminComponents/adminHome'
 import PermissionDenied from '../pageComponents/Error/permissionDenied'
 import FourOFour from '../pageComponents/Error/fourOFourPage'
-import ErrorBoundry from './errorBoundry'
+import ErrorBoundary from './errorBoundary'
 import CategoriesPage from 'pageComponents/ProductCategories/categoriesPage'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
@@ -55,9 +55,9 @@ function WrapperRoute({ auth, roles, component: Component, layout: LayoutWrapper
             render={routeProps => (
                 <Auth auth={auth} roles={roles} {...routeProps}>
                     <LayoutWrapperComponent {...routeProps}>
-                        <ErrorBoundry>
+                        <ErrorBoundary>
                             <Component {...routeProps} />
-                        </ErrorBoundry>
+                        </ErrorBoundary>
                     </LayoutWrapperComponent>
                 </Auth>
             )}

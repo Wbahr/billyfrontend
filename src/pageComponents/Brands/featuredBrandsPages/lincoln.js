@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,26 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Lincoln() {
-
+export function lincoln() {
+    const description = 'Poor lubrication causes about 36% of all premature bearing failures. But with the right ' +
+        'lubrication solution you can increase uptime and productivity. Together, SKF and Lincoln offer the world’s most' +
+        ' complete portfolio of lubrication systems and solutions. As an authorized distributor, Airline offers sales, ' +
+        'system design, installation, service and repair of SKF and Lincoln lubrication products. Lincoln and SKF’s ' +
+        'cost-effective lubrication components and systems can be configured for industrial, mobile, off-road and other ' +
+        'applications requiring equipment lubrication at specific intervals to minimize friction and wear and optimize ' +
+        'bearing and machinery service life.'
+    
     return (
         <>
+            <Helmet>
+                <title>Lincoln Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
             <Container>
                 <H1 text="Lincoln"/>
                 <BrandDetail
-                    text="Poor lubrication causes about 36% of all premature bearing failures. But with the right lubrication solution you can increase uptime and productivity. Together, SKF and Lincoln offer the world’s most complete portfolio of lubrication systems and solutions. As an authorized distributor, Airline offers sales, system design, installation, service and repair of SKF and Lincoln lubrication products. Lincoln and SKF’s cost-effective lubrication components and systems can be configured for industrial, mobile, off-road and other applications requiring equipment lubrication at specific intervals to minimize friction and wear and optimize bearing and machinery service life."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Lincoln"

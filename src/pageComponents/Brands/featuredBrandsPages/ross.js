@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -41,15 +42,21 @@ const Span = styled.span`
 	font-weight: bold;
 `
 
-export default function Ross() {
+export function ross() {
+    const description = 'Ross controls is a global manufacturer of pneumatic valves, control systems and safety ' +
+        'products. Their products are used anywhere compressed air is used to perform a work process.'
 
     return (
         <>
+            <Helmet>
+                <title>Ross Controls Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ROSS_LOGO.png" />
             <Container>
                 <H1 text="Ross controls"/>
                 <BrandDetail
-                    text="Ross controls is a global manufacturer of pneumatic valves, control systems and safety products. Their products are used anywhere compressed air is used to perform a work process."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Ross"

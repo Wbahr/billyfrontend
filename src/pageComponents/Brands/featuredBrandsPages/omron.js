@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -40,15 +41,24 @@ const RelatedLinkDiv = styled.div`
 const Span = styled.span`
   font-weight: bold;
 `
-export default function Omron() {
-
+export function omron() {
+    const description = 'Omron Automation & Safety is a worldwide company and leading manufacturer of technologically ' +
+        'advanced industrial automation products offering unsurpassed application expertise. With core competences in ' +
+        'sensing, control, vision and panel components, Omron is also a world-class supplier of complete motion control ' +
+        'solutions including programmable logic controllers (PLCs), machine controllers, human machine interfaces, ' +
+        'variable frequency drives and servos.'
+    
     return (
         <>
+            <Helmet>
+                <title>Omron Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/OMRON_logo.png" />
             <Container>
                 <H1 text="Omron"/>
                 <BrandDetail
-                    text="Omron Automation & Safety is a worldwide company and leading manufacturer of technologically advanced industrial automation products offering unsurpassed application expertise. With core competences in sensing, control, vision and panel components, Omron is also a world-class supplier of complete motion control solutions including programmable logic controllers (PLCs), machine controllers, human machine interfaces, variable frequency drives and servos."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Omron"

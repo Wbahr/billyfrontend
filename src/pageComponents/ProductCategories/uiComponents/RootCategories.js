@@ -10,7 +10,7 @@ const DivRow = styled.div`
     width: 100%;
     justify-content: center;
 `
-const AllCategoriesTitle = styled.p`
+const AllCategoriesTitle = styled.h2`
     margin-top: 20px;
     font-size: 1.5rem;
     text-transform: uppercase;

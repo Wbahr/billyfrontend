@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,16 +39,24 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Schmersal() {
-
+export function schmersal() {
+    const description = 'Safety requirements for workers in almost all industries have evolved to ensure that safety in ' +
+        'the workplace is no longer an option. Government organizations around the world have made worker safety a ' +
+        'priority for companies which has drawn even greater attention to the topic of safety. The latest product ' +
+        'developments from the Schmersal Group have focused on advanced safety systems designed to satisfy the most ' +
+        'current safety standards and regulations.'
+    
     return (
         <>
+            <Helmet>
+                <title>Schmersal Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" />
             <Container>
                 <H1 text="Schmersal"/>
                 <BrandDetail
-                    text=" 
-					Safety requirements for workers in almost all industries have evolved to ensure that safety in the workplace is no longer an option. Government organizations around the world have made worker safety a priority for companies which has drawn even greater attention to the topic of safety. The latest product developments from the Schmersal Group have focused on advanced safety systems designed to satisfy the most current safety standards and regulations."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Schmersal"
