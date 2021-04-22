@@ -49,7 +49,7 @@ export function orientalmotor() {
     return (
         <>
             <Helmet>
-                <title>Airline Hydraulics | Oriental Motor</title>
+                <title>Oriental Motor Authorized Distributor | Airline Hydraulics</title>
                 <meta name="description" content={description}/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" />
