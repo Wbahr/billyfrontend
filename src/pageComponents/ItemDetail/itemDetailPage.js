@@ -8,13 +8,16 @@ import AddedModal from '../SearchResults/uiComponents/addedModal'
 import Context from '../../setup/context'
 import AddToShoppingListModal from '../_common/modals/AddToShoppingListModal'
 import { GET_ITEM_PRICE } from 'setup/providerGQL'
-import { getOriginalImagePath, getAltTextForOriginalImage } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getOriginalImagePath, getAltTextForOriginalImage, buildSearchString } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_DETAIL_PAGE_ITEM_INFO, GET_ACCESSORY_ITEMS_INFO } from 'setup/gqlQueries/gqlItemQueries'
 import LocationsModal from '../_common/modals/LocationsModal'
 import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import { Detail1 as SkeletonLine, Title as SkeletonTitle } from '../SearchResults/uiComponents/skeletonItem'
 import CustomerPartModal from '../_common/modals/CustomerPartModal'
+import { Helmet } from 'react-helmet'
+import { productSchema } from '../_common/richSearchSchemas/productSchema'
+import { breadcrumbSchema } from '../_common/richSearchSchemas/breadcrumbSchema'
 
 const ItemDetailPageContainer = styled.div`
 	display: flex;
@@ -85,7 +88,7 @@ const P = styled.p`
 	margin: 0;
 `
 
-const H4 = styled.h5`
+const H2 = styled.h2`
 	margin: 12px 0 0 0;
 	font-weight: 600;
 `
@@ -175,6 +178,11 @@ const TDGrey = styled.td`
 	background-color: whitesmoke;
 `
 
+const H3 = styled.h3`
+  font-size: 18px;
+  margin: 0;
+`
+
 const TDWhite = styled.td`
     padding: 4px 24px 4px 8px;
 `
@@ -219,6 +227,7 @@ export default function ItemDetailPage({ history }) {
         variables: { invMastUid },
         fetchPolicy: 'no-cache',
         onCompleted: result => {
+            console.log('result', result)
             const details = result.itemDetails
             if (!cachedItemPrice) getItemPrices([details])
 
@@ -323,9 +332,23 @@ export default function ItemDetailPage({ history }) {
             <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
         ))
 
-
         return (
             <ItemDetailPageContainer>
+                <Helmet>
+                    <title>Airline Hydraulics | {itemDetails.itemCode}</title>
+                    <meta name="description" content={itemDetails.extendedDesc} />
+                    {productSchema(itemDetails, cachedItemPrice, itemAvailability)}
+                    {breadcrumbSchema([
+                        {
+                            name: itemDetails.brand.name,
+                            item: 'https://airlinehyd.com' + buildSearchString({ searchTerm: itemDetails.brand.name })
+                        },
+                        {
+                            name: itemDetails.itemCode
+                        }
+                    ])}
+                </Helmet>
+                
                 <DivTitle>
                     <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
                 </DivTitle>
@@ -393,14 +416,14 @@ export default function ItemDetailPage({ history }) {
 
                     <TABLE>
                         <tbody>
-                            <TR2><TDGrey>Manufacturer</TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand?.logoLink} /></TDWhite></TR2>
-                            <TR2><TDGrey>Item ID</TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
-                            <TR2><TDGrey>Manufacturer Part #</TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
-                            <TR2><TDGrey>AHC Part #</TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
+                            <TR2><TDGrey><H3>Manufacturer</H3></TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand?.logoLink} /></TDWhite></TR2>
+                            <TR2><TDGrey><H3>Item ID</H3></TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
+                            <TR2><TDGrey><H3>Manufacturer Part #</H3></TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
+                            <TR2><TDGrey><H3>AHC Part #</H3></TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
 
                             {!!CustomerPartOptions?.length && (
                                 <TR2>
-                                    <TDGrey>Customer Part #</TDGrey>
+                                    <TDGrey><H3>Customer Part #</H3></TDGrey>
                                     <TDWhite>
                                         <CustomerPartModal
                                             invMastUid={invMastUid}
@@ -414,7 +437,7 @@ export default function ItemDetailPage({ history }) {
                             )}
 
                             <TR2>
-                                <TDGrey>Unit Size</TDGrey>
+                                <TDGrey><H3>Unit Size</H3></TDGrey>
                                 <TDWhite>{itemDetails.unitSizeMultiple}</TDWhite>
                             </TR2>
                         </tbody>
@@ -424,24 +447,24 @@ export default function ItemDetailPage({ history }) {
 
                     {!!FeatureItems?.length && (
                         <>
-                            <H4 id='feature'>Features</H4>
+                            <H2 id='feature'>Features</H2>
                             <ul>{FeatureItems}</ul>
                         </>
                     )}
 
                     {!!TechSpecItems?.length && (
                         <>
-                            <H4 id='techspec'>Tech Specifications</H4>
+                            <H2 id='techspec'>Tech Specifications</H2>
                             <Table>
                                 <tbody>{TechSpecItems}</tbody>
                             </Table>
                         </>
                     )}
 
-                    {itemDetails.itemLinks?.length > 0 && <H4>Links</H4>}
+                    {itemDetails.itemLinks?.length > 0 && <H2>Links</H2>}
                     <DivSection>{ItemLinks}</DivSection>
 
-                    {accessoryItems?.length > 0 && <H4 id='accessory'>Accessory Items</H4>}
+                    {accessoryItems?.length > 0 && <H2 id='accessory'>Accessory Items</H2>}
 
                     <DivAccessoryItems>
                         {AccessoryItems}

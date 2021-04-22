@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -41,15 +42,23 @@ const Span = styled.span`
 	font-weight: bold;
 `
 
-export default function Rexroth() {
+export function rexroth() {
+    const description = 'Bosch Rexroth is the world leader in the drive, motion and control technologies that power ' +
+        'today’s most advanced manufacturing systems. We carry the full line of products from each of Bosch Rexroth’s ' +
+        'technology areas: Industrial and Mobile Hydraulics, Pneumatics, Aluminum Structural Framing, Linear Motion ' +
+        'Technologies and Electric Drives and Controls.'
 
     return (
         <>
+            <Helmet>
+                <title>Rexroth Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Rexroth-Logo_RGB.png" />
             <Container>
                 <H1 text="Bosch Rexroth"/>
                 <BrandDetail
-                    text="Bosch Rexroth is the world leader in the drive, motion and control technologies that power today’s most advanced manufacturing systems. We carry the full line of products from each of Bosch Rexroth’s technology areas: Industrial and Mobile Hydraulics, Pneumatics, Aluminum Structural Framing, Linear Motion Technologies and Electric Drives and Controls."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Rexroth"

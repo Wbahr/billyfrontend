@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import LoadingRing from './loadingRing'
+import { useInterval } from '../../_common/helpers/generalHelperFunctions'
 
 
 const Container = styled.div`
@@ -16,26 +17,6 @@ const Container = styled.div`
     text-align: center;
   }
 `
-
-function useInterval(callback, delay) {
-    const savedCallback = useRef()
-
-    // Remember the latest function.
-    useEffect(() => {
-        savedCallback.current = callback
-    }, [callback])
-
-    // Set up the interval.
-    useEffect(() => {
-        function tick() {
-            savedCallback.current()
-        }
-        if (delay !== null) {
-            const id = setInterval(tick, delay)
-            return () => clearInterval(id)
-        }
-    }, [delay])
-}
 
 export default function ProcessingOrderModal(props) {
     const { isQuote } = props

@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,26 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Aventics() {
+export function aventics() {
+    const description = 'Aventics, formerly Bosch Rexroth Pneumatics, provides pneumatic, electro-pneumatic, and ' +
+        'electronic products for industrial automation, oilfield, mobile and marine applications. Aventics has a ' +
+        'sophisticated and extensive product line, offering standard products in both NPT and ISO G (BSPP) port ' +
+        'configurations, as well as application-specific custom product solutions. Products include pneumatic valves ' +
+        'and actuators, pneumatic and hydraulic cylinders, pneumatic fieldbus valve manifolds, electro-pneumatic valves ' +
+        'and positioners, FRLs, tubing and fittings, vacuum components, industrial shock absorbers and tooth chain products.'
 
     return (
         <>
+            <Helmet>
+                <title>Aventics Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
+            
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" />
             <Container>
                 <H1 text="Aventics"/>
                 <BrandDetail
-                    text="Aventics, formerly Bosch Rexroth Pneumatics, provides pneumatic, electro-pneumatic, and electronic products for industrial automation, oilfield, mobile and marine applications. Aventics has a sophisticated and extensive product line, offering standard products in both NPT and ISO G (BSPP) port configurations, as well as application-specific custom product solutions. Products include pneumatic valves and actuators, pneumatic and hydraulic cylinders, pneumatic fieldbus valve manifolds, electro-pneumatic valves and positioners, FRLs, tubing and fittings, vacuum components, industrial shock absorbers and tooth chain products."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Aventics"

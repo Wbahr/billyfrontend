@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Helmet } from 'react-helmet'
 
 const PageContainer = styled.div`
     max-width: 1200px;
@@ -94,22 +95,30 @@ const RelatedLinkH6 = styled.h6`
     letter-spacing: 1px;
     font-weight: bold;
 `
-export default function AcmeElectric() {
+export function acmeelectric() {
+    const description = ' is a manufacturer of dry-type distribution transformers that for decades has covered a full ' +
+        'spectrum of applications including general commercial power distribution, high harmonic conditions, specific ' +
+        'industrial motor drive/factory automation systems and low-voltage landscape lighting.'
     return (
         <PageContainer>
+            <Helmet>
+                <title>Acme Electric Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={'Acme Electric' + description}/>
+            </Helmet>
             <BrandHeaderDiv>
                 <BrandHeaderH1>Acme Electric</BrandHeaderH1>
                 <ShortLine></ShortLine>
             </BrandHeaderDiv>
             <BrandDetailsDiv>
-                <BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"></BrandLogo>
+                <BrandLogo src="https://www.powermotionsales.com/wp-content/uploads/2018/01/AcmeElectric.png"/>
                 <BrandDetails>
-                    <BrandNameSpan>Acme Electric</BrandNameSpan> is a manufacturer of dry-type distribution transformers that for decades has covered a full spectrum of applications including general commercial power distribution, high harmonic conditions, specific industrial motor drive/factory automation systems and low-voltage landscape lighting.
+                    <BrandNameSpan>Acme Electric</BrandNameSpan>
+                    {description}
                 </BrandDetails>
             </BrandDetailsDiv>
             <RelatedLinkDiv>
                 <RelatedLinkH6>Related Links</RelatedLinkH6>
-                <ShortLine></ShortLine>
+                <ShortLine/>
             </RelatedLinkDiv> 
             <Div>
                 <LinkDetailDiv>

@@ -7,6 +7,7 @@ import TechnicallySpeaking from './uiComponents/technicallySpeaking'
 import SectionHeader from '../_common/sectionHeader'
 import { CategoryContainer } from '../ProductCategories/categoriesPage'
 import RootCategories from '../ProductCategories/uiComponents/RootCategories'
+import { Helmet } from 'react-helmet'
 
 const ContentScreenContainer = styled.div`
 	display: flex;
@@ -20,7 +21,11 @@ const ContentScreenContainer = styled.div`
 export default function HomePage() {
     return (
         <ContentScreenContainer>
-            <Banner />
+            <Helmet>
+                <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
+            </Helmet>
+            
+            <Banner/>
 			
             <div>
                 <SectionHeader text='Shop by Categories' />

@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,16 +39,27 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Rittal() {
+export function rittal() {
+    const description = 'Since 1961, Rittal has designed and manufactured the world’s most comprehensive offering of ' +
+        'affordable, reliable and durable industrial enclosures. Rittal cabinets can be found all over the world in ' +
+        'some of the most rugged and demanding environments, helping companies, large and small, power their ' +
+        'manufacturing operations. The experts here at Airline Hydraulics can help you select the right Rittal product ' +
+        'for your application. Our product offering doesn\'t stop at the cabinet. We also provide the electriacl and ' +
+        'automation products that fill Rittal enclosures.\n ' +
+        'Let us help you take your project from start to finish with our automation engineering services or let our ' +
+        'sub-assembly department provide you with a pre-assembled, ready to use unit.'
 
     return (
         <>
+            <Helmet>
+                <title>Rittal Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/RITTAL.png" />
             <Container>
                 <H1 text="Rittal"/>
                 <BrandDetail
-                    text="Since 1961, Rittal has designed and manufactured the world’s most comprehensive offering of affordable, reliable and durable industrial enclosures. Rittal cabinets can be found all over the world in some of the most rugged and demanding environments, helping companies, large and small, power their manufacturing operations. The experts here at Airline Hydraulics can help you select the right Rittal product for your application. Our product offering doesn't stop at the cabinet. We also provide the electriacl and automation products that fill Rittal enclosures.
-					Let us help you take your project from start to finish with our automation engineering services or let our sub-assembly department provide you with a pre-assembled, ready to use unit."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Rittal"

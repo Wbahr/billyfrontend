@@ -113,7 +113,7 @@ const DivMenu = styled.div`
 		display: none;
 	}
 `
-const Head = styled.p`
+const Head = styled.h4`
 	font-size: 16px;
 	font-weight: 700;
 	color: rgb(33, 37, 41);

@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -38,15 +39,27 @@ const RelatedLinkDiv = styled.div`
 	margin: 20px 0;
 `
 
-export default function Haskel() {
+export function haskel() {
+    const description = 'Haskel International, Inc. is the world\'s leading manufacturer of high-pressure liquid pumps, ' +
+        'gas boosters, air pressure amplifiers, and high pressure systems and accessories. For over a half-century, the ' +
+        'Company has been recognized as a leader in high-pressure technology. Haskel’s products have a wide range of ' +
+        'applications generally focused on the pressurization, transfer, storage or control of liquids and gases under ' +
+        'pressure. Typically, the applications include pressure testing, work holding and actuation, transferring and ' +
+        'mixing of liquids and gases under pressure and generally ensuring the effectiveness of the customer\'s ' +
+        'production and quality processes. Haskel\'s products are frequently used in safety devices and the protection ' +
+        'of the environment.'
 
     return (
         <>
+            <Helmet>
+                <title>Haskel Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" />
             <Container>
                 <H1 text="Haskel"/>
                 <BrandDetail
-                    text="Haskel International, Inc. is the world's leading manufacturer of high-pressure liquid pumps, gas boosters, air pressure amplifiers, and high pressure systems and accessories. For over a half-century, the Company has been recognized as a leader in high-pressure technology. Haskel’s products have a wide range of applications generally focused on the pressurization, transfer, storage or control of liquids and gases under pressure. Typically, the applications include pressure testing, work holding and actuation, transferring and mixing of liquids and gases under pressure and generally ensuring the effectiveness of the customer's production and quality processes. Haskel's products are frequently used in safety devices and the protection of the environment."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Haskel"

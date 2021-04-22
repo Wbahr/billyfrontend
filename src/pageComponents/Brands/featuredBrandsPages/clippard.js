@@ -10,6 +10,7 @@ import ProductItems from '../uiComponents/ProductItems'
 import Articles from '../uiComponents/Articles'
 import Videos from '../uiComponents/Videos'
 import RelatedLink from '../uiComponents/RelatedLink'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
 	display: flex;
@@ -41,15 +42,23 @@ const Span = styled.span`
   font-weight: bold;
 `
 
-export default function Clippard() {
+export function clippard() {
+    const description = 'Clippard Instrument Laboratory, Inc. is the leading manufacturer of miniature pneumatic valves,' +
+        ' electronic valves, brass, stainless, and corrosion resistant cylinders, modular components, and fittings. The ' +
+        'Minimatic line includes over 3,400 standard products and the company’s growth continues today maintaining its ' +
+        'position as the industry’s most complete supplier of quality, miniature pneumatic components.'
 
     return (
         <>
+            <Helmet>
+                <title>Clippard Authorized Distributor | Airline Hydraulics</title>
+                <meta name="description" content={description}/>
+            </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Clippard.png" />
             <Container>
                 <H1 text="Clippard"/>
                 <BrandDetail
-                    text="Clippard Instrument Laboratory, Inc. is the leading manufacturer of miniature pneumatic valves, electronic valves, brass, stainless, and corrosion resistant cylinders, modular components, and fittings. The Minimatic line includes over 3,400 standard products and the company’s growth continues today maintaining its position as the industry’s most complete supplier of quality, miniature pneumatic components."
+                    text={description}
                 />
                 <ShopProductBtn
                     searchTerm="Clippard"

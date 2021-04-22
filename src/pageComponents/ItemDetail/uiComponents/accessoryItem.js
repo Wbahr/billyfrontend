@@ -59,7 +59,7 @@ const DivPartDetails = styled.div`
   padding: 4px;
 `
 
-const PpartTitle = styled.p`
+const PartTitle = styled.h3`
   margin: 0;
   font-weight: 700;
   font-size: 15px;
@@ -127,7 +127,8 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
+export default function
+AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
     const [quantity, setQuantity] = useState(1)
 
     const context = useContext(Context)
@@ -172,7 +173,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                 </DivPartImg>
 
                 <DivPartDetails>
-                    <PpartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PpartTitle>
+                    <PartTitle><a href={itemLink}>{itemDetails.itemDesc}</a></PartTitle>
                 </DivPartDetails>
 
                 <DivPartNumberRow>
