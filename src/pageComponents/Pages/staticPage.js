@@ -47,7 +47,7 @@ const ShortBorder = styled.div`
     border-bottom: 3px solid #B51F2B;
     width: 10%;
     margin: 15px auto;
-    padding: 5px
+    padding: 5px;
 `
 
 const CrumbContainer = styled.div`
@@ -62,6 +62,8 @@ const GET_STATIC_PAGE = gql`
             html
             javascript
             name
+            metaTitle
+            metaDescription
             primaryAncestor {
                name
                pageIdPrimary
@@ -141,6 +143,8 @@ export default function StaticPage({ match }) {
     const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null)
     const [pageSecondaryAncestor, setPageSecondaryAncestor] = useState(null)
     const [pageTeritaryAncestor, setPageTeriaryAncestor] = useState(null)
+    const [metaTitle, setMetaTitle] = useState('Airline Hydraulics')
+    const [metaDescription, setMetaDescription] = useState('Airline Hydraulics Corporation')
 
     const createMarkup = (htmlString) => ({ __html: htmlString })
 
@@ -151,6 +155,8 @@ export default function StaticPage({ match }) {
                 setPageName(result.getStaticPage.name)
                 setPageHtml(<div dangerouslySetInnerHTML={createMarkup(result.getStaticPage.html)} />)
                 setPageJs(result.getStaticPage.javascript)
+                setMetaTitle(result.getStaticPage.metaTitle)
+                setMetaDescription(result.getStaticPage.metaDescription)
                 setPagePrimaryAncestor(result.getStaticPage.primaryAncestor)
                 setPageSecondaryAncestor(result.getStaticPage.secondaryAncestor)
                 setPageTeriaryAncestor(result.getStaticPage.tertiaryAncestor)
@@ -162,6 +168,23 @@ export default function StaticPage({ match }) {
             setPageHtml(<FourOFourPage />)
         }
     })
+
+    useEffect(() => {
+        if (metaTitle){
+            document.title = metaTitle
+        }
+    }, [metaTitle])
+
+    useEffect(() => {
+        if (metaDescription){
+            const descriptionEl = [...document.getElementsByTagName('meta')]
+                .find(e => e.getAttribute('name') === 'description')
+
+            if (descriptionEl){
+                descriptionEl.setAttribute('content', metaDescription)
+            }
+        }
+    }, [metaDescription])
 
     useEffect(() => {
         eval(pageJs)
