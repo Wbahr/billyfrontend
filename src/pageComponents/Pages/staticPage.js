@@ -178,7 +178,7 @@ export default function StaticPage({ match }) {
     useEffect(() => {
         if (metaDescription){
             const descriptionEl = [...document.getElementsByTagName('meta')]
-                .find(e => e.getAttribute('name') === 'description')
+                .find(element => element.getAttribute('name') === 'description')
 
             if (descriptionEl){
                 descriptionEl.setAttribute('content', metaDescription)
