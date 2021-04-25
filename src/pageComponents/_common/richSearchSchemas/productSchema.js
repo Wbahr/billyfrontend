@@ -24,14 +24,14 @@ export function productSchema(itemDetails, itemPrice, itemAvailability) {
                     itemOffered: itemDetails.itemDesc,
                     inventoryLevel: {
                         '@type': 'QuantitativeValue',
-                        value: itemAvailability.availability,
+                        value: itemAvailability?.availability,
                     },
                     // deliveryLeadTime: {
                     //     '@type': 'QuantitativeValue',
                     //     value: itemAvailability.leadTimeDays,
                     //     valueReference: 'days'
                     // },
-                    availability: itemAvailability.availability > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
+                    availability: itemAvailability?.availability > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock'
                 }
             })}
         </script>
