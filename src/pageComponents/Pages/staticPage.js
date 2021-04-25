@@ -6,6 +6,7 @@ import Loader from 'pageComponents/_common/loader'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import  'style.scss'
+import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
   display: flex;
@@ -100,32 +101,17 @@ function Crumb({ baseUrl, ancestor }) {
     }
 }
 
-function Crumbs({ currentPageName, primary, secondary, tertiary, baseUrl }) {
-    let primaryCrumb = null
-    let secondaryCrumb = null
-    let tertiaryCrumb = null
-
-    if (primary) {
-        primaryCrumb = <Crumb baseUrl={baseUrl} ancestor={primary}/>
-    }
-    if (secondary) {
-        secondaryCrumb = <Crumb baseUrl={baseUrl} ancestor={secondary}/>
-    }
-    if (tertiary) {
-        tertiaryCrumb = <Crumb baseUrl={baseUrl} ancestor={tertiary}/>
-    }
+function Crumbs({ currentPageName, primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }) {
     return (
         <>
-            <PageName>{currentPageName}
+            <PageName>
+                {currentPageName}
                 <ShortBorder />
             </PageName>
             <CrumbContainer>
-                {primaryCrumb && <> &#9751;</> }
-                {primaryCrumb}
-                {secondaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
-                {secondaryCrumb}
-                {tertiaryCrumb && <>&nbsp;&raquo;&nbsp;</>}
-                {tertiaryCrumb}
+                {primaryAncestor && <> &#9751;<Crumb baseUrl={baseUrl} ancestor={primaryAncestor}/></>}
+                {secondaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={secondaryAncestor}/></>}
+                {tertiaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={tertiaryAncestor}/></>}
             </CrumbContainer>
         </>
     )
@@ -136,67 +122,35 @@ export default function StaticPage({ match }) {
     const pageId2 = match.params.pageId2 || null
     const pageId3 = match.params.pageId3 || null
     const pageId4 = match.params.pageId4 || null
+    
 
-    const [pageName, setPageName] = useState('')
-    const [pageHtml, setPageHtml] = useState(<Loader />)
-    const [pageJs, setPageJs] = useState(';')
-    const [pagePrimaryAncestor, setPagePrimaryAncestor] = useState(null)
-    const [pageSecondaryAncestor, setPageSecondaryAncestor] = useState(null)
-    const [pageTeritaryAncestor, setPageTeriaryAncestor] = useState(null)
-    const [metaTitle, setMetaTitle] = useState('Airline Hydraulics')
-    const [metaDescription, setMetaDescription] = useState('Airline Hydraulics Corporation')
-
-    const createMarkup = (htmlString) => ({ __html: htmlString })
-
-    useQuery(GET_STATIC_PAGE, {
-        variables: { pageId1, pageId2, pageId3, pageId4 },
-        onCompleted: result => {
-            if (result && result.getStaticPage) {
-                setPageName(result.getStaticPage.name)
-                setPageHtml(<div dangerouslySetInnerHTML={createMarkup(result.getStaticPage.html)} />)
-                setPageJs(result.getStaticPage.javascript)
-                setMetaTitle(result.getStaticPage.metaTitle)
-                setMetaDescription(result.getStaticPage.metaDescription)
-                setPagePrimaryAncestor(result.getStaticPage.primaryAncestor)
-                setPageSecondaryAncestor(result.getStaticPage.secondaryAncestor)
-                setPageTeriaryAncestor(result.getStaticPage.tertiaryAncestor)
-            } else {
-                setPageHtml(<FourOFourPage />)
-            }
-        },
-        onError: () => {
-            setPageHtml(<FourOFourPage />)
-        }
+    const {  data: { getStaticPage={} }={}, error } = useQuery(GET_STATIC_PAGE, {
+        variables: { pageId1, pageId2, pageId3, pageId4 }
     })
-
-    useEffect(() => {
-        if (metaTitle){
-            document.title = metaTitle
-        }
-    }, [metaTitle])
-
-    useEffect(() => {
-        if (metaDescription){
-            const descriptionEl = [...document.getElementsByTagName('meta')]
-                .find(element => element.getAttribute('name') === 'description')
-
-            if (descriptionEl){
-                descriptionEl.setAttribute('content', metaDescription)
-            }
-        }
-    }, [metaDescription])
-
-    useEffect(() => {
-        eval(pageJs)
-    }, [pageJs])
 
     return (
         <Container>
+            <Helmet>
+                <title>{getStaticPage.metaTitle || 'Airline Hydraulics'}</title>
+                <meta name="description" content={getStaticPage.metaDescription || 'Airline Hydraulics Corporation'}/>
+                {getStaticPage.javascript && (
+                    <script type="text/javascript">
+                        {getStaticPage.javascript}
+                    </script>
+                )}
+            </Helmet>
+            
             <DivRowHeader>
-                <Crumbs currentPageName={pageName} primary={pagePrimaryAncestor} secondary={pageSecondaryAncestor} tertiary={pageTeritaryAncestor} baseUrl={match.path.split('/:')[0]} />
+                <Crumbs {...getStaticPage} baseUrl={match.path.split('/:')[0]} />
             </DivRowHeader>
+            
             <DivRow>
-                {pageHtml}
+                {getStaticPage.html
+                    ? <div dangerouslySetInnerHTML={{ __html: getStaticPage.html }} />
+                    : error
+                        ? <FourOFourPage/>
+                        : <Loader/>
+                }
             </DivRow>
         </Container>
     )
