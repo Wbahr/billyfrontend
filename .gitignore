@@ -8,7 +8,6 @@
 # ignore these file types
 
 # ignore these files
-package-lock.json
 *.xml
 *.iml
 .DS_Store
