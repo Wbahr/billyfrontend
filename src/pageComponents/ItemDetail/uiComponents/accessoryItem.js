@@ -127,8 +127,7 @@ const Img = styled.img`
   max-width: 100%;
 `
 
-export default function
-AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
+export default function AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal, isParentCalculateStock }) {
     const [quantity, setQuantity] = useState(1)
 
     const context = useContext(Context)
@@ -184,6 +183,7 @@ AccessoryItem({ itemDetails, price, availability, setShowAddedToCartModal }) {
                     invMastUid={itemDetails?.invMastUid}
                     availabilityInfo={availability}
                     unitPrice={price?.unitPrice}
+                    isParentCalculateStock={isParentCalculateStock}
                 />
 
                 <DivPartNumberRowSpread>
