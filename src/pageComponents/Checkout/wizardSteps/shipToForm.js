@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Field } from 'formik'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -7,6 +7,7 @@ import SelectField from '../../_common/formik/select'
 import Context from '../../../setup/context'
 import FormikCheckbox from '../../_common/formik/checkBox'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
+import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -40,6 +41,7 @@ const DivNavigation = styled.div`
 
 export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep } = props
+    const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
 
     useEffect(() => {
@@ -128,6 +130,12 @@ export function ShipToForm(props) {
             handleMoveStep(2)
         }
     }
+    
+    const handleSaveShipToChange = ({ target: { checked } }) => {
+        if (checked && context.userInfo?.isAirlineEmployee) {
+            setShowSaveShipToModal(true)
+        }
+    }
 
     const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
@@ -191,7 +199,7 @@ export function ShipToForm(props) {
                     />
                     {(values.shipto.selectedShipTo === -1) && (
                         <FormRow>
-                            <FormikCheckbox label="Save Ship To" name="shipto.saveShipTo"/>
+                            <FormikCheckbox label="Save Ship To" name="shipto.saveShipTo" onChange={handleSaveShipToChange}/>
                         </FormRow>
                     )}
                 </>
@@ -301,6 +309,8 @@ export function ShipToForm(props) {
                 <ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
                 <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
+            
+            <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)}/>
         </WrapForm>
     )
 }

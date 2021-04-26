@@ -340,8 +340,8 @@ export default function ItemDetailPage({ history }) {
                     {productSchema(itemDetails, cachedItemPrice, itemAvailability)}
                     {breadcrumbSchema([
                         {
-                            name: itemDetails.brand.name,
-                            item: 'https://airlinehyd.com' + buildSearchString({ searchTerm: itemDetails.brand.name })
+                            name: itemDetails.brand?.name,
+                            item: 'https://airlinehyd.com' + buildSearchString({ searchTerm: itemDetails.brand?.name })
                         },
                         {
                             name: itemDetails.itemCode
