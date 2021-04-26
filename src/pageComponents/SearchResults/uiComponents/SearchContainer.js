@@ -58,7 +58,18 @@ export default (props) => {
     const [ottoFindPart, setOttoFindPart] = useState(false)
     const [drawerOpen, setDrawerOpen] = useState(window.innerWidth > 750)
 
-    const { userInfo, itemDetails, getItemDetails, getItemAvailabilities, itemAvailabilities, getItemPrices, impersonatedCompanyInfo, getCustomerPartNumbers } = useContext(Context)
+    const { 
+        userInfo, 
+        itemDetails, 
+        getItemDetails, 
+        getItemAvailabilities,
+        itemAvailabilities, 
+        getStocks,
+        getItemPrices, 
+        impersonatedCompanyInfo, 
+        getCustomerPartNumbers,
+        stockAvailabilities,
+    } = useContext(Context)
 
     const childrenArray = React.Children.toArray(children)
 
@@ -92,6 +103,10 @@ export default (props) => {
 
         const itemsWithoutAvailabilities = result => !itemAvailabilities.some(avail => avail.invMastUid === result.invMastUid)
         getItemAvailabilities(results.filter(itemsWithoutAvailabilities))
+
+        const itemsWithoutStockInfo = result => !stockAvailabilities.some(stock => stock.invMastUid === result.invMastUid)
+        getStocks(results.filter(itemsWithoutStockInfo))
+
     }, [results])
 
     useDidUpdateEffect(() => {
@@ -108,6 +123,7 @@ export default (props) => {
             result={result}
             details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
             addedToCart={handleAddedToCart}
+            isParentCalculateStock={true}
         />
     )), [results, itemDetails])
 

@@ -61,7 +61,7 @@ const PBlue = styled.p`
     }
 `
 
-export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice }) {
+export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice, isParentCalculateStock }) {
     const { availability, leadTimeDays } = availabilityInfo || {}
     const { stockAvailabilities, setStockAvailabilities } = useContext(Context)
     const stockAvailability = stockAvailabilities.find(sa => sa.invMastUid === invMastUid)
@@ -69,14 +69,14 @@ export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice
 
     const [open, setOpen] = useState(false)
 
-    const [getStockAvailability, { variables: stockVariables }] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
+    const [getStockSingular, { variables: stockVariables }] = useLazyQuery(QUERY_STOCK_AVAILABILITY, {
         variables: { invMastUid },
         fetchPolicy: 'no-cache',
         onCompleted: ({ airlineStock, factoryStock }) => {
             const stockAvailability = {
                 invMastUid: stockVariables.invMastUid,
                 airlineStock: airlineStock || [],
-                factoryStock: factoryStock || []
+                factoryStock: factoryStock || null
             }
             const duplicateInvMasUids = (sa, i, self) => self.findIndex(s => s.invMastUid === sa.invMastUid) === i
             const newStockAvailabilities = [stockAvailability, ...stockAvailabilities].filter(duplicateInvMasUids)
@@ -84,8 +84,11 @@ export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice
         }
     })
 
+    //Calculate the stock information here if the information is not being retrieved elsewhere
     useEffect(() => {
-        if (!stockAvailability) getStockAvailability()
+        if (!stockAvailability && !isParentCalculateStock){
+            getStockSingular()
+        }
     }, [])
 
     const AirlineStockRows = () => !!airlineStock?.length && airlineStock?.map((location, idx) => {
