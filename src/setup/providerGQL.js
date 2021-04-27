@@ -598,6 +598,28 @@ export const QUERY_STOCK_AVAILABILITY = gql`
     }
 `
 
+export const QUERY_STOCK_AVAILABILITY_BATCH = gql`
+    query GetStockAvailabilityBatch($invMastUids: [Int]){
+        airlineStockBatch(invMastUids: $invMastUids){
+            invMastUid
+            itemCode
+            itemCodeUrlSanitized
+            companyId
+            locationId
+            locationName
+            quantityAvailable
+        }
+        factoryStockBatch(invMastUids: $invMastUids){
+            invMastUid
+            factoryAvailability
+            leadTimeDays
+            factoryMessage
+            modifiedBy
+            modifiedDate
+        }
+    }
+`
+
 export const SAVE_NEW_CUSTOMER = gql`
   mutation SaveRegistration($reg: NewCustomerRegistrationInputGraphType) {
 		saveRegistration(reg: $reg)

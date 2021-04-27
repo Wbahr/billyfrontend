@@ -16,6 +16,7 @@ import {
     UPDATE_SHOPPING_LISTS,
     GET_PRICE_REASONS,
     GET_ITEMS_BY_ID,
+    QUERY_STOCK_AVAILABILITY_BATCH
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -194,6 +195,27 @@ export default function Provider({ history, children }) {
         }
     })
 
+    const [handleGetStocks, { variables: stockVariables }] = useLazyQuery(QUERY_STOCK_AVAILABILITY_BATCH, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const airlineStockRecords = data.airlineStockBatch
+            const factoryStockRecords = data.factoryStockBatch
+
+            const stockInfoRecords = stockVariables.invMastUids.map(invMastUid => {
+                return {
+                    invMastUid: invMastUid,
+                    airlineStock: airlineStockRecords?.filter(airlineStock => airlineStock.invMastUid === invMastUid) || [],
+                    factoryStock: factoryStockRecords?.find(factoryStock => factoryStock.invMastUid === invMastUid) || null
+                }
+            })
+
+            const duplicateInvMasUids = (sa, i, self) => self.findIndex(s => s.invMastUid === sa.invMastUid) === i
+            const newStockRecords = [...stockInfoRecords, ...stockAvailabilities].filter(duplicateInvMasUids)
+
+            setStockAvailabilities(newStockRecords)
+        }
+    })
+
     function getItemPrices(items) {
         handleGetItemPrices({ variables: { items: items.map(({ invMastUid, quantity }) => ({
             invMastUid: invMastUid,
@@ -215,6 +237,10 @@ export default function Provider({ history, children }) {
 
     function getSourceLocations(items) {
         handleGetSourceLocations({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
+    }
+
+    function getStocks(items) {
+        handleGetStocks({ variables: { invMastUids: items.map(({ invMastUid }) => invMastUid ) } })
     }
 
     const addCustomerPartNumber = newCustomerPartNumber => {
@@ -528,6 +554,7 @@ export default function Provider({ history, children }) {
                 getPurchaseHistory,
                 getItemPrices,
                 getItemAvailabilities,
+                getStocks,
                 getItemDetails,
                 getCustomerPartNumbers,
                 addCustomerPartNumber,

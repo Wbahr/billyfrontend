@@ -192,7 +192,18 @@ const IMG = styled.img`
 `
 
 export default function ItemDetailPage({ history }) {
-    const { userInfo, addItem, itemDetails: cachedDetails, itemPrices: cachedPrices, getItemPrices, itemAvailabilities: cachedAvailabilities, customerPartNumbers: cachedCustomerPartNumbers } = useContext(Context)
+    const { 
+        userInfo, 
+        addItem, 
+        itemDetails: cachedDetails, 
+        itemPrices: cachedPrices, 
+        getItemPrices, 
+        itemAvailabilities: cachedAvailabilities, 
+        customerPartNumbers: cachedCustomerPartNumbers,
+        stockAvailabilities,
+        getStocks 
+    } = useContext(Context)
+
     const { itemId, customerPartNumber, item } = useParams()
     const invMastUid = parseInt(itemId)
     const [accessoryItems, setAccessoryItems] = useState([])
@@ -227,12 +238,12 @@ export default function ItemDetailPage({ history }) {
         variables: { invMastUid },
         fetchPolicy: 'no-cache',
         onCompleted: result => {
-            console.log('result', result)
             const details = result.itemDetails
             if (!cachedItemPrice) getItemPrices([details])
 
             //If there are accessory items attached to this item, query for their details
             if (details.associatedItems.length){
+                
                 setAccessoryItems(details.associatedItems)
 
                 //Build the price request objects
@@ -259,6 +270,19 @@ export default function ItemDetailPage({ history }) {
             }
         }
     })
+
+    useEffect(() => {
+        if (accessoryItems.length){
+            const itemsWithoutStockInfo = accessoryItem => 
+                !stockAvailabilities.some(stock => stock.invMastUid === accessoryItem.associatedInvMastUid)
+
+            const filteredAccessoryItems = accessoryItems
+                .filter(itemsWithoutStockInfo)
+                .map(accessoryItem => ({ invMastUid: accessoryItem.associatedInvMastUid }))
+
+            getStocks(filteredAccessoryItems)
+        }
+    }, [accessoryItems])
 
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
 
@@ -324,6 +348,7 @@ export default function ItemDetailPage({ history }) {
                     price={price}
                     history={history}
                     setShowAddedToCartModal={setShowAddedToCartModal}
+                    isParentCalculateStock={true}
                 />
             )
         })

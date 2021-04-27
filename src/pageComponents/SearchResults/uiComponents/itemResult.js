@@ -157,7 +157,7 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-export default function ItemResult({ result, details, addedToCart }) {
+export default function ItemResult({ result, details, addedToCart, isParentCalculateStock }) {
     const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
 
     const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
@@ -256,6 +256,7 @@ export default function ItemResult({ result, details, addedToCart }) {
                     invMastUid={result.invMastUid}
                     availabilityInfo={foundAvailability}
                     unitPrice={unitPrice}
+                    isParentCalculateStock={isParentCalculateStock}
                 />
 
                 <DivPartNumberRowSpread>
