@@ -81,8 +81,8 @@ export default function NewCustomerAdmin() {
     }
     const formatDateTime = ({ value }) => format(parseISO(value), 'MMM do yy p')
     
-    const renderApproveButton = ({ value }) => (
-        <ButtonRed style={tableButtonStyle} disabled={approveLoading} onClick={handleApproveClick(value)}>
+    const renderApproveButton = ({ row: { values: { id } } }) => (
+        <ButtonRed style={tableButtonStyle} disabled={approveLoading} onClick={handleApproveClick(id)}>
             Approve
         </ButtonRed>
     )
