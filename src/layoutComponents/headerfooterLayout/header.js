@@ -398,8 +398,9 @@ const servicesSubItems = [
         to: '/pages/services/machine-safeguarding'
     },
     {
-        label: 'Fluid Cleanliness & Maintenance',
-        to: '/pages/services/fluid-cleanliness-and-maintenance'
+        label: 'Hydraulic Fluid Maintenance',
+        to: 'https://info.airlinehyd.com/fluid-cleanliness',
+        isExternalLink: true
     },
     {
         label: 'Engineered Systems & Assemblies',
