@@ -56,7 +56,9 @@ export const editCustomerSchema =  Yup.object().shape({
         .max(50, 'Maximum length of 50')
         .required('required'),
     jobTitle: Yup.string(),
-    phone: Yup.string(),
+    phone: Yup.string()
+        .length(10)
+        .required(),
     phoneExtension: Yup.string(),
     email: Yup.string()
         .email('Invalid email address')
@@ -81,7 +83,7 @@ export const editCustomerSchema =  Yup.object().shape({
     billingCompany: Yup.string()
         .max(70)
         .when(['billingSame', 'customerId'], 
-            { is: (billingSame, customerId) => billingSame == true || customerId !== '', then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
+            { is: (billingSame, customerId) => billingSame || customerId !== '', then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingAddress1: Yup.string()
         .max(50),
     billingAddress2: Yup.string()
