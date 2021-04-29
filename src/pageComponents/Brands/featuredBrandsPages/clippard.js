@@ -52,7 +52,7 @@ export function clippard() {
         <>
             <Helmet>
                 <title>Clippard Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Clippard products from Airline Hydraulics, a leading distributor. Find products and information on pneumatic cylinders, directional control valves, electronic valves, circuit boards, I/O modules, fittings, hose, tubing, and air prep equipment."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Clippard.png" />
             <Container>

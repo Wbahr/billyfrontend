@@ -51,7 +51,7 @@ export function aventics() {
         <>
             <Helmet>
                 <title>Aventics Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Aventics products from Airline Hydraulics, an authorized distributor. Find products and information on air cylinders, air prep equipment, valves, electro-pneumatic valves, and pneumatic accessories."/>
             </Helmet>
             
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" />

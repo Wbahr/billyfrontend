@@ -48,7 +48,7 @@ export function eaton() {
         <>
             <Helmet>
                 <title>Eaton Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Eaton products from Airline Hydraulics, a leading distributor. Find products and information on circuit protection, contactors, starters, protective relays, distribution, termination,transformers, power supplies, pushbuttons, pilot lights, selector switches, connectivity, relays, timers, operator interfaces, HMI/PLC, and variable frequency drives."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Eaton_logo.png" />
             <Container>

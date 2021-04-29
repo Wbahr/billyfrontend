@@ -53,7 +53,7 @@ export function haskel() {
         <>
             <Helmet>
                 <title>Haskel Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Haskel products from Airline Hydraulics, a leading distributor. Find products and information on air pressure amplifiers, air-driven liquid pumps, air and hydraulic-driven gas boosters."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Haskel.png" />
             <Container>

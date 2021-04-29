@@ -49,7 +49,7 @@ export function phoenixcontact() {
         <>
             <Helmet>
                 <title>Phoenix Contact Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Phoenix Contact products from Airline Hydraulics, a leading distributor. Find products and information on Control Technology, I/O Systems, Automation, Interface Technology, Switching Devicess, Surge Protection, Power Supply Units, Marking Systems, Tools, Mounting Material, Sensor/Actuator Cabling, Plug-in Connectors, Modular Terminal Blocks, Connection Technology for Field Devices, PCB connection technology, and Electronics Enclosure."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png" />
             <Container>

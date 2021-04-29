@@ -53,7 +53,7 @@ export function hydac() {
         <>
             <Helmet>
                 <title>Hydac Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for HYDAC products from Airline Hydraulics, a leading distributor. Find products and information on filters and filter systems, accumulators, valves, clamps, electronics, diagnostics, compact hydraulics, mobile directional control valves, and hydraulic cylinders."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
             <Container>
