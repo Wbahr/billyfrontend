@@ -101,7 +101,7 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>Electric Case Lifters: Helping Employee Safety, Productivity & Happiness
                                 <ButtonDiv>
-                                    <Button href="https://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog/electric-case-lifters" target="_blank">Read More</Button>
+                                    <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
@@ -113,7 +113,7 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection & Plumbing
                                 <ButtonDiv>
-                                    <Button href="https://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
+                                    <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
@@ -124,7 +124,7 @@ export default function TechnicallySpeaking() {
                         </ImgDiv>
                         <TextDiv>
                             <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
-                                <ButtonDiv> <Button href="https://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
@@ -135,7 +135,7 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>How to Prevent & Remove Moisture in Compressed Air Lines
                                 <ButtonDiv>
-                                    <Button href="https://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog/air-line-moisture-removal" target="_blank">Read More</Button>
+                                    <Button href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>

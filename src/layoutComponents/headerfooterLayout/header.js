@@ -556,7 +556,7 @@ const brandsSubItems = [
 const resourcesSubItems = [
     {
         label: 'Blog - Technically Speaking',
-        to: 'http://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog',
+        to: 'https://blog.airlinehyd.com/',
         isExternalLink: true
     },
     {
