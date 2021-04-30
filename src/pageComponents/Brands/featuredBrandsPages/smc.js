@@ -42,7 +42,7 @@ export function smc() {
         <>
             <Helmet>
                 <title>SMC Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="SMC has established a position as the world leader in pneumatic technology and supports a range of over 600,000 product variations to meet the complex and diversified needs of its customers. "/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" />
             <Container>

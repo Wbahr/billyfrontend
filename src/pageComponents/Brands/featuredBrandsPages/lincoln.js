@@ -52,7 +52,7 @@ export function lincoln() {
         <>
             <Helmet>
                 <title>Lincoln Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for SKF/Lincoln products from Airline Hydraulics, a leading distributor. Find products and information on Automatic Lubricators, Single-Line Systems, Dual-Line Systems, Progressive Lubrication Systems, Multi-Line Lubrication Systems, Circulating Oil Lubracation Systems, Oil and Air Lubrication Systems, Minimal Quantity Lubrication Systems (MQL) and Microdosage Systems (MDS),Hand-Held Lubrication Equipment, Pumps and Accessories, Reels and Meters, and Used Fluid Systems."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
             <Container>

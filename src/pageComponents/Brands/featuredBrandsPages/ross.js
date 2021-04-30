@@ -50,7 +50,7 @@ export function ross() {
         <>
             <Helmet>
                 <title>Ross Controls Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Ross Controls products from Airline Hydraulics, a leading distributor. Find products and information on line-mounted valves, base-mounted valves, safety related products, check valves, and flow control valves."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ROSS_LOGO.png" />
             <Container>

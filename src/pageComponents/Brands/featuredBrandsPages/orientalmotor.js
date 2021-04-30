@@ -50,7 +50,7 @@ export function orientalmotor() {
         <>
             <Helmet>
                 <title>Oriental Motor Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Oriental Motor products from Airline Hydraulics, a leading distributor. Find products and information on stepper motors, cooling fans, and AC motors."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/oriental-motor.png" />
             <Container>

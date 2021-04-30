@@ -48,7 +48,7 @@ export function paccar() {
         <>
             <Helmet>
                 <title>Paccar Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for PACCAR/Braden products from Airline Hydraulics, a leading distributor. Find products and information on planetary swing drives, utility bumpers, and planetary hoists."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/paccar-logo.png" />
             <Container>

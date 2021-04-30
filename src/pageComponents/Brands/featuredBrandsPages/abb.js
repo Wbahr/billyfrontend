@@ -50,7 +50,7 @@ export function abb() {
         <>
             <Helmet>
                 <title>ABB Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for ABB products from Airline Hydraulics, a leading authorized distributor. Find products and information on drives, motors, generators, control systems, transformers, and low and medium voltage products."/>
             </Helmet>
             
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/ABB_logo.png" />

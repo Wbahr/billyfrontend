@@ -52,7 +52,7 @@ export function omron() {
         <>
             <Helmet>
                 <title>Omron Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Omron products from Airline Hydraulics, a leading distributor. Find products and information on automation, motion and drives, sensing, safety products, control components, and switching components."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/OMRON_logo.png" />
             <Container>

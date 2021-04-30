@@ -50,7 +50,7 @@ export function schmersal() {
         <>
             <Helmet>
                 <title>Schmersal Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for Schmersal products from Airline Hydraulics, a leading distributor. Find products and information on Compact Safety-Rated Limit Switches, Safety Interlock Switches, Emergency Stop Pushbuttons, Safety Light Curtains, Safety Mats, Safety Edges, Enabling Devices, Door-handle Actuator, Switches, Safety Monitoring Relays, and Programmable Safety Controllers."/>
             </Helmet>
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" />
             <Container>

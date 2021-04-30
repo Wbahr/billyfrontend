@@ -36,7 +36,7 @@ export function butech() {
         <>
             <Helmet>
                 <title>Butech Authorized Distributor | Airline Hydraulics</title>
-                <meta name="description" content={description}/>
+                <meta name="description" content="Shop online for BuTech products from Airline Hydraulics, a leading distributor. Find products and information on ball valves, needle valves, check valves, and high pressure fittings."/>
             </Helmet>
             
             <FeaturedBrandLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/BuTech_Logo.png" />
