@@ -34,3 +34,7 @@ Disallow:/admin-dashboard/settings
 Noindex:/admin-dashboard/settings
 Disallow:/cart
 Noindex:/cart
+
+Allow: /
+
+Sitemap: https://www.airlinehyd.com/sitemaps/sitemap_index.xml
