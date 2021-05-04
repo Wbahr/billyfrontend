@@ -38,3 +38,6 @@ Noindex:/cart
 Allow: /
 
 Sitemap: https://www.airlinehyd.com/sitemaps/sitemap_index.xml
+# Sitemaps added by secondary process
+Sitemap: https://www.airlinehyd.com/sitemaps/products_index.xml
+Sitemap: https://www.airlinehyd.com/sitemaps/categories_index.xml
