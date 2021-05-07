@@ -169,7 +169,6 @@ export default function ItemCreationPage({ history }) {
     })
     
     const handlePartNoChange = e => {
-        console.log('change', e.target.value.replace(/[^A-Za-z0-9 \-,./+=:()#]/, ''))
         setSearchTerm(e.target.value.replace(/[^A-Za-z0-9 \-,./+=:()#]/, ''))
     }
   
