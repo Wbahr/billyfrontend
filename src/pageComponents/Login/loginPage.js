@@ -86,7 +86,6 @@ export default function LoginPage(props) {
             const urlParams = new URLSearchParams(props.location.search)
             const redirect = urlParams.get('next')
             if (redirect) {
-                console.log('reached1')
                 history.push(redirect)
             }
         }
@@ -110,7 +109,6 @@ export default function LoginPage(props) {
                     const urlParams = new URLSearchParams(props.location.search)
                     const redirect = urlParams.get('next')
                     if (redirect) {
-                        console.log('reached0')
                         history.push(redirect)
                     } else {
                         history.push('/')

@@ -59,7 +59,7 @@ export default function NewItemForm(props) {
     const itemCreationSchema = Yup.object({
         manufacturerPartNumber: Yup.string()
             .label('Manufacturer Part Number')
-            .matches(/[A-Za-z0-9 -]/, 'Only alphanumeric, space, and dash characters are permitted.')
+            .matches(/[A-Za-z0-9 -,./+=:()#]/, 'Only alphanumeric, space, and -,./=:()# characters are permitted.')
             .min(3)
             .max(30)
             .uppercase()
@@ -67,7 +67,7 @@ export default function NewItemForm(props) {
             .meta({ autoFocus: true }),
         itemId: Yup.string()
             .label('Item ID')
-            .matches(/[A-Za-z0-9 -]/, 'Only alphanumeric, space, and dash characters are permitted.')
+            .matches(/[A-Za-z0-9 -,./+=:()#]/, 'Only alphanumeric, space, and -,./=:()# characters are permitted.')
             .min(3)
             .max(30)
             .uppercase()
