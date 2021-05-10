@@ -100,6 +100,7 @@ export default function FactoryStockModal({ open, product, hideFactoryStockModal
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setFactoryStockDetails(data.factoryStock)
+            hideFactoryStockModal()
         }
     })
     function handleClose(){

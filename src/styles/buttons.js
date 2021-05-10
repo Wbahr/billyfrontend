@@ -35,6 +35,10 @@ export const ButtonBlack = styled.button`
   font-family: ${props => props.theme.fontName};
   font-weight: 600;
   border: none;
+  &:disabled {
+    cursor: default;
+    background-image: linear-gradient(to top left, grey, darkgrey);
+  }
   svg {
     margin-right: 5px;
   }
