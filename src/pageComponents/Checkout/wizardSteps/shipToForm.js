@@ -136,9 +136,13 @@ export function ShipToForm(props) {
             setShowSaveShipToModal(true)
         }
     }
+    
+    const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
 
     const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
+    
+    console.log('values', values)
 
     return (
         <WrapForm>
@@ -301,9 +305,16 @@ export function ShipToForm(props) {
                 value={values.shipto.carrierId}
             />
 
-            <FormRow>
-                <FormikCheckbox label="Ship Collect?" name="shipto.isCollect" value={values.shipto.isCollect}/>
-            </FormRow>
+            {context.userInfo && context.userInfo.isAirlineEmployee && (
+                <FormRow>
+                    <FormikCheckbox
+                        label="Ship Collect?"
+                        name="shipto.isCollect"
+                        value={values.shipto.isCollect}
+                        onChange={handleIsCollectChange}
+                    />
+                </FormRow>
+            )}
             {!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber"/>}
             <DivNavigation>
                 <ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
