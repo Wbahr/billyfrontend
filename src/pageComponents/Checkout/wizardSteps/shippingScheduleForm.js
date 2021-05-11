@@ -118,7 +118,7 @@ export function ShippingScheduleForm(props) {
         <>
             {isQuote && (
                 <FormRow>
-                    <label htmlFor="schedule.packingBasisName">Quote Reference Number</label>
+                    <label htmlFor="schedule.packingBasisName">Quote Reference Number *</label>
                     <div style={{ flexGrow: 99 }}>
                         <FormikInput name="schedule.quoteRefNo" />
                     </div>

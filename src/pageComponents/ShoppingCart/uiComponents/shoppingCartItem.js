@@ -318,9 +318,13 @@ export default function ShoppingCartItem(props) {
 
                                 <DivRow>
                                     <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
-                                    <DivSplitLine>|</DivSplitLine>
-                                    <DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
-                                    {userInfo && !userInfo.isAirlineEngineerUser && (
+                                    {userInfo && userInfo.isAirlineEmployee && (
+                                        <>
+                                            <DivSplitLine>|</DivSplitLine>
+                                            <DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
+                                        </>
+                                    )}
+                                    {userInfo && !userInfo.isAirlineEmployee && (
                                         <>
                                             <DivSplitLine>|</DivSplitLine>
                                             <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>

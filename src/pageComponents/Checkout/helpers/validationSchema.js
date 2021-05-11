@@ -3,7 +3,12 @@ const { object, string, boolean, array } = require('yup')
 // Step 1
 export const shippingScheduleSchema = object({
     schedule: object({
-        packingBasis: string().min(1).required()
+        packingBasis: string().min(1).required(),
+        quoteRefNo: string().when('isQuote', (isQuote, schema) => {
+            return isQuote
+                ? schema.min(1).required()
+                : schema
+        })
     })
 })
 
@@ -76,9 +81,9 @@ export function getBillToSchema(requirePoNumber) {
         billing: object({
             cardIsValid: boolean()
                 .when('paymentMethod', (paymentMethod, schema) => {
-                    return requirePoNumber || paymentMethod === 'purchase_order'
-                        ? schema.oneOf([true], 'Must be valid credit card')
-                        : schema
+                    return paymentMethod === 'purchase_order'
+                        ? schema
+                        : schema.oneOf([true], 'Must be valid credit card')
                 }),
             purchaseOrder: string()
                 .when('paymentMethod', (paymentMethod, schema) => {
