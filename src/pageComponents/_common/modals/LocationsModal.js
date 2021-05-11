@@ -126,7 +126,7 @@ export default function LocationsModal({ invMastUid, availabilityInfo, unitPrice
                 <Availability>Availability:</Availability>
 
                 {!unitPrice || !availability ? (
-                    <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} business days` : 'Call for availability'}</PBlue>
+                    <PBlue>{leadTimeDays ? `Lead Time: ${leadTimeDays} bus. days` : 'Call for availability'}</PBlue>
                 ) : !availabilityInfo ? (
                     <SkeletonDetail style={{ margin: 'auto 0' }}/>
                 ) : (

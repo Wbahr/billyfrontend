@@ -289,7 +289,7 @@ export default function ShoppingListManagementPage() {
             : foundMatch?.availability
         const quantityAvailable = availability
             ? availability
-            : foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} business days`
+            : foundMatch?.leadTimeDays && `Estimated Lead Time: ${foundMatch.leadTimeDays} bus. days`
         return <span>{quantityAvailable ? quantityAvailable : 'Call us'}</span>
     }
   
