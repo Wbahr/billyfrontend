@@ -144,6 +144,8 @@ export const UPDATE_CART = gql`
         priceReasonId
         sourceLocId
         disposition
+        promiseDateOverride
+        isDropship
       }
       subtotal
       tariff
