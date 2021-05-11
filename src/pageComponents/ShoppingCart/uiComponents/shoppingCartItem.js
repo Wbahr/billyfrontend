@@ -15,6 +15,8 @@ import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
+import DatePicker from 'react-datepicker'
+import { Checkbox, FormLabel, Grid } from '@material-ui/core'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -216,6 +218,8 @@ export default function ShoppingCartItem(props) {
     const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.invMastUid, 10)
+    const tomorrowDate = new Date()
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
     useEffect(() => {
         if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
@@ -272,6 +276,8 @@ export default function ShoppingCartItem(props) {
     const handleRemoveItem = () => {
         setCartItem(null)
     }
+    
+    const handleDropshipChange = ({ target: { checked } }) => setCartItemField('isDropship', checked)
 
     return (
         <DivContainer>
@@ -427,6 +433,37 @@ export default function ShoppingCartItem(props) {
                                         </DivTotalPrice>
                                     </DivItem>
                                 </DivItemInfo>
+    
+                                {userInfo?.isAirlineEmployee && (
+                                    <>
+                                        <Grid container alignItems="center">
+                                            <Label>Is Dropship?: </Label>
+                                            <Checkbox
+                                                style={{ padding: 3 }}
+                                                size="small"
+                                                defaultChecked={cartItem.isDropship}
+                                                onChange={handleDropshipChange}
+                                            />
+                                        </Grid>
+    
+                                        <DivItem>
+                                            <Label>Promise Date:</Label>
+                                        </DivItem>
+    
+                                        <Grid container>
+                                            <div style={{ marginRight: 8 }}>
+                                                <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                                            </div>
+        
+                                            <DatePicker
+                                                minDate={tomorrowDate}
+                                                selected={Date.parse(cartItem.promiseDateOverride)}
+                                                onChange={(value) => setCartItemField('promiseDateOverride', value)}
+                                            />
+                                        </Grid>
+                                    </>
+                                )}
+                                
                                 <DivItemInfo>
                                     <DivItem>
                                         <Label>Item Notes:</Label>
