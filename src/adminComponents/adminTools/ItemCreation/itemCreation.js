@@ -167,6 +167,10 @@ export default function ItemCreationPage({ history }) {
             </DivSearchItemContainer>
         )
     })
+    
+    const handlePartNoChange = e => {
+        setSearchTerm(e.target.value.replace(/[^A-Za-z0-9 \-,./+=:()#]/, ''))
+    }
   
     return (
         <>
@@ -185,7 +189,7 @@ export default function ItemCreationPage({ history }) {
                             autoFocus
                             type="text"
                             value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
+                            onChange={handlePartNoChange}
                             placeholder="Enter Manufacturer ID"
                             label="Manufacturer Part Number"
                         />
