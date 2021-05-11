@@ -13,6 +13,7 @@ export const defaultBilling = {
     phone: '',
     email: '',
     cardType: 'new_card',
+    cardIsValid: false,
     companyName: '',
     savePaymentMethod: 0,
     sameAsShipping: 0,

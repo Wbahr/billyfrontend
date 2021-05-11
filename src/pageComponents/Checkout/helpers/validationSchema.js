@@ -76,9 +76,9 @@ export function getBillToSchema(requirePoNumber) {
         billing: object({
             cardIsValid: boolean()
                 .when('paymentMethod', (paymentMethod, schema) => {
-                    return requirePoNumber || paymentMethod === 'purchase_order'
-                        ? schema.oneOf([true], 'Must be valid credit card')
-                        : schema
+                    return paymentMethod === 'purchase_order'
+                        ? schema
+                        : schema.oneOf([true], 'Must be valid credit card')
                 }),
             purchaseOrder: string()
                 .when('paymentMethod', (paymentMethod, schema) => {
