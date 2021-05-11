@@ -141,8 +141,6 @@ export function ShipToForm(props) {
 
     const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
-    
-    console.log('values', values)
 
     return (
         <WrapForm>
