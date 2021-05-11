@@ -461,7 +461,7 @@ export default function ShoppingCartItem(props) {
         
                                             <DatePicker
                                                 minDate={tomorrowDate}
-                                                selected={Date.parse(cartItem.promiseDateOverride)}
+                                                selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
                                                 onChange={(value) => setCartItemField('promiseDateOverride', value)}
                                             />
                                         </Grid>

@@ -144,6 +144,7 @@ export const UPDATE_CART = gql`
         priceReasonId
         sourceLocId
         disposition
+        promiseDate
         promiseDateOverride
         isDropship
       }
