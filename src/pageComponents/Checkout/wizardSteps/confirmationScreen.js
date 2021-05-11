@@ -101,7 +101,8 @@ export default function ConfirmationScreen(props) {
         itemsPrices,
         itemsCustomerPartNumbers,
         isStepValid,
-        validateForm
+        validateForm,
+        setFieldValue
     } = props
 
     useEffect(() => {
@@ -156,6 +157,8 @@ export default function ConfirmationScreen(props) {
             }
         })
     }
+    
+    const handleCheckboxChange = name => ({ target: { checked } }) => setFieldValue(name, checked)
 
     const CartDates = schedule.cartWithDates.map((item, index) => {
         const price = itemsPrices?.find(price => price.invMastUid === item.invMastUid)
@@ -176,15 +179,27 @@ export default function ConfirmationScreen(props) {
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
-
+    
     return (
         <div>
             {(userInfo?.isAirlineEmployee) && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
-                    <FormikCheckbox value={sendToShipTo} label={`Send confirmation email to ${shipto.email}?`} name="confirmationEmail.sendToShipTo" />
+                    <FormikCheckbox
+                        value={sendToShipTo}
+                        label={`Send confirmation email to ${shipto.email}?`}
+                        name="confirmationEmail.sendToShipTo"
+                        onChange={handleCheckboxChange('confirmationEmail.sendToShipTo')}
+                    />
                     <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-                    {history.location.pathname === '/create-quote' && <FormikCheckbox value={imagesOnQuote} label="Include Images on Quotes?" name="confirmationEmail.imagesOnQuote" />}
+                    {history.location.pathname === '/create-quote' && (
+                        <FormikCheckbox
+                            value={imagesOnQuote}
+                            label="Include Images on Quotes?"
+                            name="confirmationEmail.imagesOnQuote"
+                            onChange={handleCheckboxChange('confirmationEmail.imagesOnQuote')}
+                        />
+                    )}
                 </SectionContainerBlue>
             )}
 

@@ -3,7 +3,12 @@ const { object, string, boolean, array } = require('yup')
 // Step 1
 export const shippingScheduleSchema = object({
     schedule: object({
-        packingBasis: string().min(1).required()
+        packingBasis: string().min(1).required(),
+        quoteRefNo: string().when('isQuote', (isQuote, schema) => {
+            return isQuote
+                ? schema.min(1).required()
+                : schema
+        })
     })
 })
 
