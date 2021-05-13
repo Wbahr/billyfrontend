@@ -176,7 +176,7 @@ export default function OrderDatapage() {
                                     if (cell.column.id === 'orderNumber') {
                                         return (
                                             <TDrow {...cell.getCellProps()} isOrderDetail>
-                                                <a style={{ cursor: 'pointer' }} href={`https://p21wc.airlinehyd.com/common/orderdetails.aspx?orderid=${cell.value}`} target='_blank' rel="noopener noreferrer">
+                                                <a style={{ cursor: 'pointer' }} href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/orderdetails.aspx?orderid=${cell.value}`} target='_blank' rel="noopener noreferrer">
                                                     {cell.render('Cell')}
                                                 </a>
                                             </TDrow>
