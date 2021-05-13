@@ -625,7 +625,7 @@ const aboutSubItems = [
 const contactSubItems = [
     {
         label: 'Contact Us',
-        to: '/contact-us'
+        to: '/pages/contact/contact-us'
     },
     {
         label: 'Credit Application',
