@@ -70,9 +70,30 @@
 				width: 10%;
 				margin-bottom: 15px;
 			}
-			.contactTab{
-				
+			div[hubspotform] iframe {
+				width: 100% !important;
 			}
+			.boxShadow {
+				box-shadow: 0 1px 1px rgba(0,0,0,0.11), 
+					0 2px 2px rgba(0,0,0,0.11), 
+					0 4px 4px rgba(0,0,0,0.11), 
+					0 8px 8px rgba(0,0,0,0.11), 
+					0 16px 16px rgba(0,0,0,0.11), 
+					0 32px 32px rgba(0,0,0,0.11);
+			}
+			.contactTab{
+				.callCustomerServiceButton{
+					background-image: linear-gradient(to top left,#950f23,#DB1633);
+					padding: 5px 0;
+					border-radius: 5px;
+					color: white;
+					margin-bottom: 28px;
+				}
+				.callCustomerServiceButton, a:hover{
+					text-decoration: none;
+				}
+			}
+
 			.resources{
 				h6{
 					font-weight: bold;
@@ -83,6 +104,14 @@
 					font-size: 14px;
 				}
 			}	
+			.engineered_systems{
+				a {
+					color: black;
+					a:hover{
+						text-decoration: none;	
+					}
+				}
+			}
 			.ourHistory{
 
 				#HistoryWrapper {
@@ -1020,7 +1049,12 @@
 						.span_2_of_2, .span_1_of_2 { width: 100%; }
 					}
 					@media only screen and (max-width: 480px) {
-							.span_3_of_3, .span_2_of_3, .span_1_of_3, .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4, .span_1_of_5, .span_2_of_5, .span_3_of_5, .span_4_of_5, .span_5_of_5, .span_1_of_6, .span_2_of_6, .span_3_of_6, .span_4_of_6, .span_5_of_6, .span_6_of_6, .span_1_of_7, .span_2_of_7, .span_3_of_7, .span_4_of_7, .span_5_of_7, .span_6_of_7, .span_7_of_7, .span_1_of_8, .span_2_of_8, .span_3_of_8, .span_4_of_8, .span_5_of_8, .span_6_of_8, .span_7_of_8, .span_8_of_8, .span_1_of_9, .span_2_of_9, .span_3_of_9, .span_4_of_9, .span_5_of_9, .span_6_of_9, .span_7_of_9, .span_8_of_9, .span_9_of_9, .span_1_of_10, .span_2_of_10, .span_3_of_10, .span_4_of_10, .span_5_of_10, .span_6_of_10, .span_7_of_10, .span_8_of_10, .span_9_of_10, .span_10_of_10, .span_1_of_11, .span_2_of_11, .span_3_of_11, .span_4_of_11, .span_5_of_11, .span_6_of_11, .span_7_of_11, .span_8_of_11, .span_9_of_11, .span_10_of_11, .span_11_of_11, .span_1_of_12, .span_2_of_12, .span_3_of_12, .span_4_of_12, .span_5_of_12, .span_6_of_12, .span_7_of_12, .span_8_of_12, .span_9_of_12, .span_10_of_12, .span_11_of_12, .span_12_of_12 {width: 100%; }
+						.span_3_of_3, .span_2_of_3, .span_1_of_3, .span_1_of_4, .span_2_of_4, .span_3_of_4, .span_4_of_4, .span_1_of_5, .span_2_of_5, .span_3_of_5, .span_4_of_5, .span_5_of_5, .span_1_of_6, .span_2_of_6, .span_3_of_6, .span_4_of_6, .span_5_of_6, .span_6_of_6, .span_1_of_7, .span_2_of_7, .span_3_of_7, .span_4_of_7, .span_5_of_7, .span_6_of_7, .span_7_of_7, .span_1_of_8, .span_2_of_8, .span_3_of_8, .span_4_of_8, .span_5_of_8, .span_6_of_8, .span_7_of_8, .span_8_of_8, .span_1_of_9, .span_2_of_9, .span_3_of_9, .span_4_of_9, .span_5_of_9, .span_6_of_9, .span_7_of_9, .span_8_of_9, .span_9_of_9, .span_1_of_10, .span_2_of_10, .span_3_of_10, .span_4_of_10, .span_5_of_10, .span_6_of_10, .span_7_of_10, .span_8_of_10, .span_9_of_10, .span_10_of_10, .span_1_of_11, .span_2_of_11, .span_3_of_11, .span_4_of_11, .span_5_of_11, .span_6_of_11, .span_7_of_11, .span_8_of_11, .span_9_of_11, .span_10_of_11, .span_11_of_11, .span_1_of_12, .span_2_of_12, .span_3_of_12, .span_4_of_12, .span_5_of_12, .span_6_of_12, .span_7_of_12, .span_8_of_12, .span_9_of_12, .span_10_of_12, .span_11_of_12, .span_12_of_12 {width: 100%; }
+					}
+					@media only screen and (max-width: 375px) {
+						.greyButtonOutline{
+							font-size: 14px;
+						}
 					}
 			/*-------------------------------------
 
