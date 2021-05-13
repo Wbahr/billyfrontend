@@ -238,7 +238,7 @@ const BreadCrumbs = ({ breadCrumbTrail }) => (
 const EmptyCategory = () => (
     <>
         <h2>This category is currently empty</h2>
-        <p>Let us help: <a href="/contact-us">Customer Service</a></p>
+        <p>Let us help: <a href="/pages/contact/contact-us">Customer Service</a></p>
         <p>Or call one of our reps <a href="tel:8009997378">(800) 999-7378</a></p>
         <DivRow><Link to="/categories">Back to all categories</Link></DivRow>
     </>
