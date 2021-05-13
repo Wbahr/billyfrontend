@@ -139,7 +139,7 @@ export function ShipToForm(props) {
     
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
 
-    const changeContactLink = `https://p21wc.airlinehyd.com/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
+    const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
 
     return (
