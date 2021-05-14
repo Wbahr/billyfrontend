@@ -248,7 +248,7 @@ export default function HeaderComponent({ history }) {
             <MyAccountDropdownMenu className={showMyAccountDropdown ? 'visible' : ''}>
                 <DropdownMenuItem to="/account/shopping-lists">Shopping Lists</DropdownMenuItem>
                 <DropdownMenuItem to="/account/dashboard">Upload List to Cart</DropdownMenuItem>
-                <DropdownMenuItem to="/contact-us">Request for Quote</DropdownMenuItem>
+                <DropdownMenuItem to="/pages/contact/contact-us">Request for Quote</DropdownMenuItem>
                 <DropdownMenuItem to="/account/dashboard">Account Profile</DropdownMenuItem>
                 <DropdownMenuItem to="/account/invoices">Invoices</DropdownMenuItem>
                 <DropdownMenuItem to="/account/orders">Orders</DropdownMenuItem>
@@ -676,7 +676,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Contact',
-        to: '/contact-us',
+        to: '/pages/contact/contact-us',
         subItems: contactSubItems
     }
 ]

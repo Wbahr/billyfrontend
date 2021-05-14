@@ -194,7 +194,7 @@ export default function BlogPage() {
                     <Blog1>
                         <Contact>Need More Information?</Contact>
                         <CallUs>We're here to help. Customer approvals and help requests are answered by our staff as promptly as possible during regular business hours.</CallUs>
-                        <PopDiv><Button href="/contact-us">Contact Us</Button></PopDiv>
+                        <PopDiv><Button href="/pages/contact/contact-us">Contact Us</Button></PopDiv>
                     </Blog1>
                 </List>
                 <ThumbnailCol>

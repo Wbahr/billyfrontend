@@ -91,7 +91,7 @@ export default function AccountManagementPage({ history }) {
             <DivNavSection>
                 <h5>Quotes</h5>
                 <p onClick={() => history.push('/account/open-quotes')}>Open Quotes</p>
-                <p onClick={() => history.push('/contact-us')}>Request a Quote</p>
+                <p onClick={() => history.push('/pages/contact/contact-us')}>Request a Quote</p>
             </DivNavSection>
             <DivNavSection>
                 <h5>Invoices</h5>
@@ -99,7 +99,7 @@ export default function AccountManagementPage({ history }) {
             </DivNavSection>      
             <DivNavSection>
                 <h5>Customer Service</h5>
-                <p onClick={() => history.push('/contact-us')}>Contact Us</p>
+                <p onClick={() => history.push('/pages/contact/contact-us')}>Contact Us</p>
             </DivNavSection>
         </Container>
     )

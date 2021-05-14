@@ -61,7 +61,7 @@ export default function QualityPolicy() {
                     </DetailDiv>
                     <InfoDiv>
                         <Info>Need More Information?</Info>
-                        <MoreInfo><ClickHere href="/contact-us">Click Here</ClickHere> to contact an Airline representative, or call us at<Span href="tel:+18009997378"> (800) 999-7378</Span></MoreInfo>
+                        <MoreInfo><ClickHere href="/pages/contact/contact-us">Click Here</ClickHere> to contact an Airline representative, or call us at<Span href="tel:+18009997378"> (800) 999-7378</Span></MoreInfo>
                     </InfoDiv>
                 </Col>
             </MainContainer>
