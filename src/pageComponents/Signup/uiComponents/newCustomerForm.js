@@ -168,7 +168,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                     <FormikInput label="First Name*" type="text" name="firstName" />
                     <FormikInput label="Last Name*" type="text" name="lastName" />
                     <FormikInput label="Job Title" type="text" name="jobTitle" />
-                    <FormikInput label="Phone" type="text" name="phone" />
+                    <FormikInput label="Phone*" type="text" name="phone" />
                     <FormikInput label="Phone Extension" type="text" name="phoneExtension" />
                     <FormikInput label="Email*" type="email" name="email" />
                     <FormikInput label="Fax" type="text" name="fax" />

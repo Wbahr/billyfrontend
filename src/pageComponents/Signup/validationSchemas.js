@@ -12,7 +12,10 @@ export const existingCustomerSchema = Yup.object().shape({
     email: Yup.string()
         .email('Invalid email address')
         .required('required'),
-    phone: Yup.string(),
+    phone: Yup.string()
+        .min(10, 'Must be exactly 10 characters')
+        .max(10, 'Must be exactly 10 characters')
+        .required('required'),
     phoneExtension: Yup.string(),
     fax: Yup.string(),
     jobTitle: Yup.string(),
@@ -57,8 +60,9 @@ export const editCustomerSchema =  Yup.object().shape({
         .required('required'),
     jobTitle: Yup.string(),
     phone: Yup.string()
-        .length(10)
-        .required(),
+        .min(10, 'Must be exactly 10 characters')
+        .max(10, 'Must be exactly 10 characters')
+        .required('required'),
     phoneExtension: Yup.string(),
     email: Yup.string()
         .email('Invalid email address')
@@ -111,7 +115,10 @@ export const newCustomerSchema = Yup.object().shape({
         .max(50, 'Maximum length of 50')
         .required('required'),
     jobTitle: Yup.string(),
-    phone: Yup.string(),
+    phone: Yup.string()
+        .min(10, 'Must be exactly 10 characters')
+        .max(10, 'Must be exactly 10 characters')
+        .required('required'),
     phoneExtension: Yup.string(),
     email: Yup.string()
         .email('Invalid email address')
