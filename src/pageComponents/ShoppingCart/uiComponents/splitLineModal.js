@@ -44,7 +44,8 @@ const Thumbnail = styled.img`
 `
 
 export default function SplitLineModal({ open, index, hideSplitLineModal, cart, setCart, itemDetails, priceInfo }) {
-    const roundToNearestIncrement = (amt) => Math.ceil(amt / priceInfo.unitSize) * priceInfo.unitSize
+    const unitSize = priceInfo?.unitSize || 1
+    const roundToNearestIncrement = (amt) => Math.ceil(amt / unitSize) * unitSize
     const splitQty = roundToNearestIncrement(Math.ceil(cart[index].quantity / 2))
     const initialLines = [
         { ...cart[index], quantity: splitQty },
@@ -55,7 +56,7 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
 
     useEffect(() => {
         setLines(initialLines)
-    }, [open])
+    }, [open, priceInfo])
 
     function splitItem() {
         const frontCart = cart?.slice(0, index) || []// returns cart item before split item

@@ -31,14 +31,14 @@ export default function AccountDashboard({ history }) {
             label: 'User Settings',
             page: 'user-settings'
         },
-        {
-            label: 'Shipping',
-            page: 'shipping-preferences'
-        },
-        {
-            label: 'Billing',
-            page: 'payment-preferences'
-        },
+        // {
+        //     label: 'Shipping',
+        //     page: 'shipping-preferences'
+        // },
+        // {
+        //     label: 'Billing',
+        //     page: 'payment-preferences'
+        // },
         {
             label: 'Shopping Lists',
             page: 'shopping-lists'

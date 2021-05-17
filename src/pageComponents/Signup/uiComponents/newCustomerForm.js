@@ -156,6 +156,8 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
             validateForm()
         }
     }, [values.billingSame])
+    
+    const billingDisabled = values.customerId !== '' || values.billingSame
 
     return (
         <Form>
@@ -168,7 +170,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                     <FormikInput label="First Name*" type="text" name="firstName" />
                     <FormikInput label="Last Name*" type="text" name="lastName" />
                     <FormikInput label="Job Title" type="text" name="jobTitle" />
-                    <FormikInput label="Phone" type="text" name="phone" />
+                    <FormikInput label="Phone*" type="text" name="phone" />
                     <FormikInput label="Phone Extension" type="text" name="phoneExtension" />
                     <FormikInput label="Email*" type="email" name="email" />
                     <FormikInput label="Fax" type="text" name="fax" />
@@ -193,24 +195,100 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                     <>
                         <FormikFormGroup>
                             <H3>Shipping Information</H3>
-                            <FormikInput label="Company*" type="text" name="shippingCompany" disabled={values.customerId !== ''} />
-                            <FormikInput label="Address Line 1" type="text" name="shippingAddress1" disabled={values.customerId !== ''} />
-                            <FormikInput label="Address Line 2" type="text" name="shippingAddress2" disabled={values.customerId !== ''} />
-                            <FormikInput label="City" type="text" name="shippingCity" disabled={values.customerId !== ''} />
-                            <FormikInput label="State" type="text" name="shippingState" disabled={values.customerId !== ''} />
-                            <FormikInput label="Zip/Postal Code" type="text" name="shippingPostal" disabled={values.customerId !== ''} />
-                            <FormikInput label="Country" type="text" name="shippingCountry" disabled={values.customerId !== ''} />
+                            <FormikInput
+                                label="Company*"
+                                type="text"
+                                name="shippingCompany"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="Address Line 1*"
+                                type="text"
+                                name="shippingAddress1"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="Address Line 2"
+                                type="text"
+                                name="shippingAddress2"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="City*"
+                                type="text"
+                                name="shippingCity"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="State*"
+                                type="text"
+                                name="shippingState"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="Zip/Postal Code*"
+                                type="text"
+                                name="shippingPostal"
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="Country*"
+                                type="text"
+                                name="shippingCountry"
+                                disabled={values.customerId !== ''}
+                            />
                         </FormikFormGroup>
+                        
                         <FormikFormGroup>
                             <H3>Billing Information</H3>
-                            <CheckBox label="Same as Shipping" name="billingSame" disabled={values.customerId !== ''} />
-                            <FormikInput label="Company" type="text" name="billingCompany" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="Address Line 1" type="text" name="billingAddress1" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="Address Line 2" type="text" name="billingAddress2" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="City" type="text" name="billingCity" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="State" type="text" name="billingState" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="Zip/Postal Code" type="text" name="billingPostal" disabled={values.customerId !== '' || values.billingSame === 1} />
-                            <FormikInput label="Country" type="text" name="billingCountry" disabled={values.customerId !== '' || values.billingSame === 1} />
+                            <CheckBox
+                                label="Same as Shipping"
+                                name="billingSame"
+                                onChange={e => setFieldValue('billingSame', e.target.checked)}
+                                disabled={values.customerId !== ''}
+                            />
+                            <FormikInput
+                                label="Company*"
+                                type="text"
+                                name="billingCompany"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="Address Line 1*"
+                                type="text"
+                                name="billingAddress1"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="Address Line 2"
+                                type="text"
+                                name="billingAddress2"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="City*"
+                                type="text"
+                                name="billingCity"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="State*"
+                                type="text"
+                                name="billingState"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="Zip/Postal Code*"
+                                type="text"
+                                name="billingPostal"
+                                disabled={billingDisabled}
+                            />
+                            <FormikInput
+                                label="Country*"
+                                type="text"
+                                name="billingCountry"
+                                disabled={billingDisabled}
+                            />
                         </FormikFormGroup>
                     </>
                 )}

@@ -16,7 +16,7 @@ import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import DatePicker from 'react-datepicker'
-import { Checkbox, FormLabel, Grid } from '@material-ui/core'
+import { Checkbox, Grid } from '@material-ui/core'
 
 const DivContainer = styled.div`
 	display: flex;
