@@ -78,7 +78,7 @@ export default function AccountManagementPage({ history }) {
             </div>
             <DivNavSection>
                 <h5>Manage Account</h5>
-                <p onClick={() => history.push('/admin-dashboard')}>Admin Tools</p>
+                {context.userInfo?.isAirlineEmployee && <p onClick={() => history.push('/admin-dashboard')}>Admin Tools</p>}
                 <p onClick={() => history.push('/account/dashboard')}>Account Settings</p>
                 <p onClick={() => history.push('/account/shopping-lists')}>Shopping Lists</p>
                 <p onClick={() => history.push('/account/my-ordered-items')}>Item Purchase History</p>
