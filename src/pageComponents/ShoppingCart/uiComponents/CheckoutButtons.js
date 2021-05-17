@@ -8,7 +8,7 @@ const DivButtonContainer = styled.div `
 	margin: auto auto 0 auto;
 `
 
-const DivCheckoutButton = styled.div`
+const DivCheckoutButton = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -20,6 +20,7 @@ const DivCheckoutButton = styled.div`
 	width: 250px;
 	margin: 8px 0;
 	box-shadow: 1px 1px 2px #000;
+    border: 0;
 	
 	p {
 		margin: 0;
