@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
 import styled from 'styled-components'
-import { useTable, usePagination, useSortBy  } from 'react-table'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
@@ -8,11 +7,19 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import _ from 'lodash'
-import { CircularProgress } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import NumberFormat from 'react-number-format'
-import { exportToExcel, exportToPdf, getCsvFormattedData, getImagePath } from '../../_common/helpers/generalHelperFunctions'
+import {
+    exportToExcel,
+    exportToPdf,
+    getCsvFormattedData,
+    getImagePath,
+    useDidUpdateEffect
+} from '../../_common/helpers/generalHelperFunctions'
 import { CSVLink } from 'react-csv'
+import QuantityInput from '../../_common/form/quantityInput'
+import AirlineChip from '../../_common/styledComponents/AirlineChip'
+import Table from '../../_common/table'
 
 const TableContainer = styled.div`
   display: flex;
@@ -23,40 +30,6 @@ const TableContainer = styled.div`
   margin: 0 auto 0 0;
 `
 
-const Table = styled.table`
-  margin: 16px;
-`
-
-const TRheader = styled.tr`
-  border-bottom: 1px solid gray;
-`
-
-const THheader = styled.th`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 500;
-  font-size: 15px;
-`
-
-const TRrow = styled.tr`
-  border-bottom: 1px solid lightgray;
-`
-
-const TDrow = styled.td`
-  padding: 8px 16px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 300;
-  font-size: 15px;
-`
-
-const ButtonPagination = styled.button`
-  cursor: pointer;
-  background-color: black;
-  color: white;
-  border: 1px solid black;
-  border-radius: 1px;
-`
-
 const TableButton = styled.button`
   width: 110px;
 	background-image: linear-gradient(to top left, #950f23, #DB1633);
@@ -64,15 +37,6 @@ const TableButton = styled.button`
 	font-weight: 500;
 	border: 0;
 	border-radius: 5px;
-`
-
-const AddToCartInput = styled.input`
-	margin-right: 5px;
-	width: 50px;
-`
-
-const SpanSort = styled.span`
-  margin-left: 4px;
 `
 
 const DivSpacer = styled.div`
@@ -112,15 +76,8 @@ const ButtonExport = styled.div`
 	}
 `
 
-const SpinnerDiv = styled.div`
-	display: flex;
-	justify-content: center;
-	margin: 50px;
-`
-
 export default function ItemPurchaseHistoryTable({ history }) {
     const context = useContext(Context)
-    const didMountRef = useRef(false)
     const [data, setData] = useState([])
     const [filter, setFilter] = useState('')
     const [dateFrom, setDateFrom] = useState(null)
@@ -140,20 +97,17 @@ export default function ItemPurchaseHistoryTable({ history }) {
     const applyFilters = (accum, row) => {
         if (
             (!filter.length || getFilter(row).includes(filter.toUpperCase()))
-			&& (_.isNil(dateFrom) || Date.parse(row.lastDateOrdered) >= dateFrom.valueOf())
-			&& (_.isNil(dateTo) || Date.parse(row.lastDateOrdered) <= dateTo.valueOf())
+			&& (!dateFrom || Date.parse(row.lastDateOrdered) >= dateFrom.valueOf())
+			&& (!dateTo || Date.parse(row.lastDateOrdered) <= dateTo.valueOf())
         ) {
             accum.push(row)
         }
         return accum
     }
 	
-    useEffect(() => {
-        if (didMountRef) {
-            const mutatedData = context.purchaseHistory.reduce(applyFilters, [])
-            setData(mutatedData)
-        }
-        didMountRef.current = true
+    useDidUpdateEffect(() => {
+        const mutatedData = context.purchaseHistory.reduce(applyFilters, [])
+        setData(mutatedData)
     }, [context.purchaseHistory, filter, dateFrom, dateTo])
 	
     const handleViewOrderHistory = ({ row }) => () => {
@@ -245,73 +199,51 @@ export default function ItemPurchaseHistoryTable({ history }) {
             {
                 Header: '',
                 accessor: 'addToCartAmt',
-                Cell: props => (
-                    <div>
-                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <TableButton onClick={handleViewOrderHistory(props)}>Order History</TableButton>
+                Cell: props => {
+                    const priceInfo = context.itemPrices.find(priceInfo => priceInfo.invMastUid === props.row.values.invMastUid)
+                    return (
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <TableButton onClick={handleViewOrderHistory(props)}>Order History</TableButton>
+                            </div>
+                            {priceInfo && (
+                                <DivRow>
+                                    <Grid container justify="center">
+                                        <span>Qty:</span>
+                                        <QuantityInput
+                                            quantity={props.value || 1}
+                                            unitSize={priceInfo.unitSize}
+                                            unitOfMeasure={priceInfo.unitOfMeasure}
+                                            roundType={priceInfo.roundType}
+                                            handleUpdate={handleAddToCartAmtChange(props)}
+                                            min='0'
+                                        />
+                                        {(priceInfo.unitSize > 1) && (
+                                            <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                                                X {priceInfo.unitSize}
+                                            </AirlineChip>
+                                        )}
+                                    </Grid>
+                                    <TableButton onClick={handleAddToCart(props)}>Add to Cart</TableButton>
+                                </DivRow>
+                            )}
                         </div>
-                        <DivRow>
-                            <AddToCartInput type="number" min={1} value={props.value === undefined ? 1 : props.value} onChange={handleAddToCartAmtChange(props)}/>
-                            <TableButton onClick={handleAddToCart(props)}>Add to Cart</TableButton>
-                        </DivRow>
-                    </div>
-                )
+                    )
+                }
             },
-            {
-                Header: 'Filter',
-                accessor: 'filter'
-            }
         ],
         [context.itemAvailabilities, context.itemPrices, context.cart],
     )
-    const tableProps = useTable(
-        {
-            columns,
-            data,
-            initialState: {
-                pageIndex: 0,
-                hiddenColumns: ['filter'],
-                sortBy: [{
-                    id: 'numberTimesOrdered',
-                    desc: true
-                }]
-            },
-        },
-        useSortBy,
-        usePagination
-    )
-	
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows, //all rows
-        prepareRow,
-        page, // current page in rows
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        pageCount,
-        gotoPage,
-        nextPage,
-        previousPage,
-        setPageSize,
-        state: { pageIndex, pageSize, sortBy },
-    } = tableProps
 	
     useEffect(() => {
-        if (page.length) {
-            const dataToFetchPricesFor = page
-                .filter(d => !context.itemPrices.find(({ invMastUid }) => invMastUid === d.original.invMastUid))
-                .map(({ original }) => original)
-            if (dataToFetchPricesFor.length) context.getItemPrices(dataToFetchPricesFor)
-			
-            const dataToFetchAvailabilitiesFor = page
-                .filter(d => !context.itemAvailabilities.find(({ invMastUid }) => invMastUid === d.original.invMastUid))
-                .map(({ original }) => original)
-            if (dataToFetchAvailabilitiesFor.length) context.getItemAvailabilities(dataToFetchAvailabilitiesFor)
-        }
-    }, [pageIndex, pageSize, sortBy, data])
+        const dataToFetchPricesFor = data
+            .filter(d => !context.itemPrices.find(({ invMastUid }) => invMastUid === d.invMastUid))
+        if (dataToFetchPricesFor.length) context.getItemPrices(dataToFetchPricesFor)
+        
+        const dataToFetchAvailabilitiesFor = data
+            .filter(d => !context.itemAvailabilities.find(({ invMastUid }) => invMastUid === d.invMastUid))
+        if (dataToFetchAvailabilitiesFor.length) context.getItemAvailabilities(dataToFetchAvailabilitiesFor)
+    }, [data])
 	
     const exportIgnoreColumns = ['filter', 'addToCartAmt', 'itemImageUrl']
 	
@@ -341,12 +273,12 @@ export default function ItemPurchaseHistoryTable({ history }) {
         <TableContainer>
             <h4>Item Purchase History</h4>
             <DivRow>
-                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}/>
             </DivRow>
 			
             <DivRow>
                 {/* Date From */}
-                <div>
+                <div style={{ position: 'relative', zIndex: 3 }}>
                     <DivRowDate>
                         <DivSpacer>
                             <FontAwesomeIcon icon="calendar" color="lightgrey"/>
@@ -378,9 +310,6 @@ export default function ItemPurchaseHistoryTable({ history }) {
                 </div>
 				
                 <DivRow>
-                    {/*<ButtonExport>*/}
-                    {/*<FontAwesomeIcon size='lg' icon="copy" color="grey"/>*/}
-                    {/*</ButtonExport>*/}
                     <ButtonExport onClick={handlePdfExport}>
                         <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
                     </ButtonExport>
@@ -395,100 +324,8 @@ export default function ItemPurchaseHistoryTable({ history }) {
                 </DivRow>
             </DivRow>
 			
-            {
-                context.getPurchaseHistoryState.loading ? (
-                    <SpinnerDiv>
-                        <CircularProgress />
-                    </SpinnerDiv>
-                ) : (
-                    <Table {...getTableProps()}>
-                        <thead>
-                            {headerGroups.map((headerGroup, i) => (
-                                <TRheader key={i} {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column, i) => (
-                                        <THheader key={i} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                            {column.render('Header')}
-                                            <SpanSort>
-                                                {column.isSorted
-                                                    ? column.isSortedDesc
-                                                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
-                                                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
-                                                    : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-                                            </SpanSort>
-                                        </THheader>
-                                    ))}
-                                </TRheader>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                                prepareRow(row)
-                                return (
-                                    <TRrow key={i} {...row.getRowProps()}>
-                                        {row.cells.map((cell, i) => {
-                                            return (
-                                                <TDrow key={i} {...cell.getCellProps()}>
-                                                    {cell.render('Cell')}
-                                                </TDrow>
-                                            )
-                                        })}
-                                    </TRrow>
-                                )
-                            })}
-                        </tbody>
-                    </Table>
-                )
-            }
+            <Table data={data} columns={columns} loading={context.getPurchaseHistoryState.loading} stickyHeader />
 			
-            {/*
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
-            <div>
-                <ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {'<<'}
-                </ButtonPagination>{' '}
-                <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
-                    {'<'}
-                </ButtonPagination>{' '}
-                <span>
-                    Page{' '}
-                    <strong>
-                        {pageIndex + 1} of {pageOptions.length}
-                    </strong>{' '}
-                </span>
-                <ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
-                    {'>'}
-                </ButtonPagination>{' '}
-                <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {'>>'}
-                </ButtonPagination>{' '}
-                <span>
-                    | Go to page:{' '}
-                    <input
-                        type="number"
-                        defaultValue={pageIndex + 1}
-                        onChange={e => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                            gotoPage(page)
-                        }}
-                        style={{ width: '100px' }}
-                    />
-                </span>{' '}
-                <select
-                    value={pageSize}
-                    onChange={e => {
-                        setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 25, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
-                </select>
-                <p>Results: {rows.length}</p>
-            </div>
             <AddedModal
                 open={showModal}
                 onClose={() => setShowModal(false)}
