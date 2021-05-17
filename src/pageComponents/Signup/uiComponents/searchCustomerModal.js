@@ -68,7 +68,7 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
                     <FormikStyleInput name="customerSearch" type="text" label="Search Customer" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                 </DivRow>
                 <DivRow>
-                    <ButtonRed type="button" onClick={() => { customerSearch() }}><SearchIcon /> Search</ButtonRed>
+                    <ButtonRed type="button" onClick={customerSearch}><SearchIcon /> Search</ButtonRed>
                 </DivRow>
                 <DivRow>
                     {loading && <Loader />}
