@@ -104,6 +104,7 @@ export function ShipToForm(props) {
 
     function handleSavedContactSelectChange(name, savedContact) {
         const contact = (checkoutDropdownData.contacts || []).find(elem => elem.id === savedContact)
+        console.log({ contact, savedContact })
         setValues({
             ...values,
             shipto: {

@@ -48,7 +48,7 @@ export default function ContactUsForm() {
                     }, 1000)
                 }}
             >
-                {({ isSubmitting, isValid }) => (
+                {({ isSubmitting }) => (
                     <Form name="contactUsForm">
                         {/*{ !isValid && <ShowErrorAlert message="Please correct the problems and try again" />}*/}
                         <FormikFormContainerColumnMajor>

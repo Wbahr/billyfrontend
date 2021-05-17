@@ -222,6 +222,8 @@ function CheckoutPage({ history }) {
         itemsPrices: itemsPrices?.getItemPrices,
         itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
     }
+    
+    const loggedInUserContactInfo = checkoutDropdownData.contacts?.[0]
 
     const initValues = {
         contact: { ...defaultContact },
@@ -234,14 +236,16 @@ function CheckoutPage({ history }) {
         shipto: {
             ...defaultShipTo,
             selectedShipTo: null,
-            firstName: context.userInfo?.isImpersonatorUser ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.firstName || '',
+            lastName: context.userInfo?.isImpersonatorUser  ? '' : loggedInUserContactInfo?.lastName || '',
+            phone: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.phoneNumber || '',
+            email: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.email || ''
         },
         billing: {
             ...defaultBilling,
             paymentMethod: checkoutDropdownData.billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card',
-            firstName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.firstName || '',
-            lastName: context.userInfo?.isImpersonatorUser  ? '' : context.userInfo?.lastName || '',
+            firstName: context.userInfo?.isImpersonatorUser ? '' : context.userInfo?.firstName || '',
+            lastName: context.userInfo?.isImpersonatorUser ? '' : context.userInfo?.lastName || '',
             companyName: checkoutDropdownData.billingInfo?.companyName || '',
             address1: checkoutDropdownData.billingInfo?.address1 || '',
             address2: checkoutDropdownData.billingInfo?.address2 || '',

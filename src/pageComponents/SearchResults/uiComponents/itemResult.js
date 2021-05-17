@@ -158,7 +158,7 @@ const Img = styled.img`
 `
 
 export default function ItemResult({ result, details, addedToCart, isParentCalculateStock }) {
-    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, userInfo } = useContext(Context)
+    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem } = useContext(Context)
 
     const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 
