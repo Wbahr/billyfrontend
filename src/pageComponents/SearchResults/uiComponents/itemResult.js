@@ -270,13 +270,11 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                             handleUpdate={setQuantity}
                             min='0'
                         />
-                        {
-                            (unitSize > 1) && (
-                                <AirlineChip style={{ marginLeft: '0.5rem' }}>
-                                    X {unitSize}
-                                </AirlineChip>
-                            )
-                        }
+                        {(unitSize > 1) && (
+                            <AirlineChip style={{ marginLeft: '0.5rem' }}>
+                                X {unitSize}
+                            </AirlineChip>
+                        )}
                     </Div>
 
                     {unitPrice ? (
@@ -294,7 +292,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                 </DivPartNumberRowSpread>
 
                 <DivSpace>
-                    {(!!unitPrice || userInfo?.isAirlineEmployee) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                    {!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>

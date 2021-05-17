@@ -71,7 +71,7 @@ const QuantityInput = (props) => {
         if (unitSizeVal !== 1 && roundType !== 'N' && Number.isInteger(quantity) && (quantity % unitSizeVal !== 0)) {
             handleUpdate(getNewQuantity())
         }
-    }, [quantity])
+    }, [quantity, unitSize])
 
     const incrementDecrementHandler = (amount) => {
         const newQuantity = displayQuantity + Number(amount)

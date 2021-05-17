@@ -29,7 +29,7 @@ const DivPhoto = styled.div`
 	min-width: 200px;
 	max-width: 400px;
 	max-height: 400px;
-	margin: 0px 8px;
+	margin: 0 8px;
 	text-align: center;
 `
 
@@ -62,7 +62,7 @@ const DivLeftCol = styled.div`
  	flex-direction: column;
  	max-width: 400px;
  	align-items: center;
- 	padding: '0 16px';
+ 	padding: 0 16px;
  	margin-bottom: 16px;
 `
 
@@ -135,7 +135,7 @@ const ButtonRed = styled.button`
 	}
 	&:active{
 		background-color: #b51029;
-		box-shadow: 0px 0px 1px #000;
+		box-shadow: 0 0 1px #000;
 	}
 `
 
@@ -218,8 +218,8 @@ export default function ItemDetailPage({ history }) {
         roundType,
         unitPrice
     } = cachedItemPrice || { unitPrice: 0 }
-
-    const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || '')
+    
+    const [selectedCustomerPartNumber, selectCustomerPartNumber] = useState(customerPartNumber || null)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const [showAddListModal, setShowAddListModal] = useState(false)
 
@@ -228,7 +228,7 @@ export default function ItemDetailPage({ history }) {
     }
 
     useEffect(() => {
-        selectCustomerPartNumber(customerPartNumber || '')
+        selectCustomerPartNumber(customerPartNumber || null)
         getItemInfo()
     }, [userInfo])
 
@@ -289,10 +289,11 @@ export default function ItemDetailPage({ history }) {
     useEffect(() => {
         document.title = `${itemDetails?.itemDesc || item} at Airline Hydraulics`
     }, [itemDetails])
-
+    
     const cachedItemCustomerPartNumbers = cachedCustomerPartNumbers.filter(part => part.invMastUid === invMastUid)
     const distinctPart = (part, i, self) => self.findIndex(s => s.customerPartNumber === part.customerPartNumber)
     const customerPartNumbers = (itemInfo?.customerPartNumbers || []).concat(cachedItemCustomerPartNumbers || []).filter(distinctPart)
+    const customerPartNumberId = selectedCustomerPartNumber && customerPartNumbers.find(cpn => cpn.customerPartNumber === selectedCustomerPartNumber)?.id
     const cachedItemAvailability = cachedAvailabilities.find(avail => avail.invMastUid === invMastUid)
     const itemAvailability = itemInfo?.itemAvailabilitySingular || cachedItemAvailability
 
@@ -406,18 +407,18 @@ export default function ItemDetailPage({ history }) {
                                     handleUpdate={setQuantity}
                                     min='0'
                                 />
-                                {
-                                    (unitSize > 1) && (
-                                        <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
-                                            X {unitSize }
-                                        </AirlineChip>
-                                    )
-                                }
+                                {(unitSize > 1) && (
+                                    <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                                        X {unitSize}
+                                    </AirlineChip>
+                                )}
                             </RowCentered>
 
-                            <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
+                            {userInfo && !userInfo.isAirlineEngineerUser && (
+                                <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
+                            )}
 
-                            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+                            {!!cachedItemPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                         </DivPurchaseInfoButtons>
 
                         {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
@@ -510,7 +511,7 @@ export default function ItemDetailPage({ history }) {
                         open={showAddListModal}
                         hide={() => setShowAddListModal(false)}
                         item={itemDetails}
-                        customerPartNumberId={selectedCustomerPartNumber}
+                        customerPartNumberId={customerPartNumberId}
                     />
                 )}
             </ItemDetailPageContainer>

@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-import _ from 'lodash'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import Input from '../../_common/form/inputv2'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import QuantityInput from '../../_common/form/quantityInput'
+import AirlineChip from '../../_common/styledComponents/AirlineChip'
+import { Grid } from '@material-ui/core'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -82,7 +83,7 @@ const ButtonSmall = styled.button`
 		}
 		&:active{
 			background-color: #b51029;
-			box-shadow: 0px 0px 1px #000;
+			box-shadow: 0 0 1px #000;
 		}
 	`
 
@@ -90,9 +91,22 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
     const [quantity, setQuantity] = useState(1)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const imagePath = getThumbnailImagePath(itemDetails)
+    const context = useContext(Context)
    
     function handleAddedToCart(){
         setShowAddedToCartModal(false)
+    }
+    
+    const handleAddToCart = () => {
+        context.addItem({
+            invMastUid: item.invMastUid,
+            quantity: parseInt(quantity, 10),
+            itemNotes: '',
+            itemUnitPriceOverride: null,
+            customerPartNumberId: item.customerPartNumberId
+        })
+        setShowAddedToCartModal(true)
+        setQuantity(1)
     }
 	
     return (
@@ -115,22 +129,20 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                         <CopyToClipboard text={`AHC${item.invMastUid}`}>
                             <P2>AHC{item.invMastUid}</P2>
                         </CopyToClipboard>
-                        {
-                            item.customerPartNumber && (
-                                <>
-                                    <P2>|</P2>
-                                    <CopyToClipboard text={item.customerPartNumber}>
-                                        <P2>{item.customerPartNumber}</P2>
-                                    </CopyToClipboard>
-                                </>
-                            )
-                        }
+                        {item.customerPartNumber && (
+                            <>
+                                <P2>|</P2>
+                                <CopyToClipboard text={item.customerPartNumber}>
+                                    <P2>{item.customerPartNumber}</P2>
+                                </CopyToClipboard>
+                            </>
+                        )}
                     </TextRow>
                     <P2>Quantity Received: {item.quantityOpen}</P2>
                     <P2>Quantity Ordered: {item.quantityOrdered}</P2>
                 </DivCol2>
                 <DivCol2>
-                    <P2>{!_.isNil(item.trackingNumbers) && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
+                    <P2>{item.trackingNumbers && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
                     <P2>Order Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
                     <P2>Order Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
                     <P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
@@ -138,24 +150,25 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                 <DivCol2>
                     <DivRow>Availability: {availability?.availability}</DivRow>
                     <DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
-                    <DivRow>Quantity: <Input width='75px' value={quantity} onChange={(e) => setQuantity(e.target.value)}/></DivRow>
-                    <Context.Consumer>
-                        {({ addItem }) => (
-                            <ButtonSmall onClick={() => {
-                                addItem({
-                                    invMastUid: item.invMastUid,
-                                    quantity: parseInt(quantity, 10),
-                                    itemNotes: '',
-                                    itemUnitPriceOverride: null,
-                                    customerPartNumberId: item.customerPartNumberId
-                                })
-                                setShowAddedToCartModal(true)
-                                setQuantity(1)
-                            }}
-                            >Add to Cart
-                            </ButtonSmall>
-                        )}
-                    </Context.Consumer>
+                    {priceInfo && (
+                        <Grid container justify="center">
+                            <span>Qty:</span>
+                            <QuantityInput
+                                quantity={quantity}
+                                unitSize={priceInfo.unitSize}
+                                unitOfMeasure={priceInfo.unitOfMeasure}
+                                roundType={priceInfo.roundType}
+                                handleUpdate={setQuantity}
+                                min='0'
+                            />
+                            {(priceInfo.unitSize > 1) && (
+                                <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                                    X {priceInfo.unitSize}
+                                </AirlineChip>
+                            )}
+                        </Grid>
+                    )}
+                    {priceInfo && <ButtonSmall onClick={handleAddToCart}>Add to Cart</ButtonSmall>}
                 </DivCol2>
             </DivCard>
         </DivContainer>

@@ -222,7 +222,7 @@ export default function AccessoryItem({ itemDetails, price, availability, setSho
                 </DivPartNumberRowSpread>
 
                 <DivSpace>
-                    { (context.userInfo?.isAirlineEmployee || !!price) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
+                    {!!price && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed> }
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>
