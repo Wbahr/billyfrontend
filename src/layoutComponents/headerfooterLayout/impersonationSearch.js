@@ -95,7 +95,7 @@ export default function ImpersonationSearchComponent() {
     }
 
     useEffect(() => {
-        if (impersonationTerm.length > 0) {
+        if (impersonationTerm.length > 0 && context.userInfo?.isAirlineEmployee) {
             impersonationSearch({ variables: { searchString: impersonationTerm } })
         } else {
             setSearchResult([])

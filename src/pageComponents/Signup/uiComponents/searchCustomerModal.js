@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import Context from '../../../setup/context'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
@@ -36,6 +37,7 @@ const Container = styled.div`
 `
 
 export default function SearchCustomerModal({ open, hideModal, initialValue, setSelectedCustomerIdCallback }) {
+    const context = useContext(Context)
     const [searchResults, setSearchResults] = useState([])
     const [searchQuery, setSearchQuery] = useState('')
 
@@ -53,6 +55,12 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
     }
     )
 
+    const customerSearch = () => {
+        if (context.userInfo?.isAirlineEmployee) { 
+            performSearch({ variables: { searchString: searchQuery } }) 
+        }
+    }
+
     return (
         <Modal open={open} onClose={() => hideModal()} >
             <Container>
@@ -60,7 +68,7 @@ export default function SearchCustomerModal({ open, hideModal, initialValue, set
                     <FormikStyleInput name="customerSearch" type="text" label="Search Customer" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                 </DivRow>
                 <DivRow>
-                    <ButtonRed type="button" onClick={() => performSearch({ variables: { searchString: searchQuery } })}><SearchIcon /> Search</ButtonRed>
+                    <ButtonRed type="button" onClick={customerSearch}><SearchIcon /> Search</ButtonRed>
                 </DivRow>
                 <DivRow>
                     {loading && <Loader />}
