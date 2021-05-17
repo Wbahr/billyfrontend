@@ -51,7 +51,9 @@ export default function MergeCartModal() {
     const debouncedSearch = useDebounceValue(searchString)
 
     useEffect(() => {
-        impersonationSearch({ variables: { searchString: debouncedSearch } })
+        if (context.userInfo?.isAirlineEmployee){
+            impersonationSearch({ variables: { searchString: debouncedSearch } })
+        }
     }, [debouncedSearch])
 
     const [mergeCart, { loading: mergeCartLoading }] = useMutation(MERGE_CART_TO_CUSTOMER, {

@@ -248,7 +248,7 @@ function CheckoutPage({ history }) {
             city: checkoutDropdownData.billingInfo?.city || '',
             stateOrProvince: checkoutDropdownData.billingInfo?.state || '',
             zip: checkoutDropdownData.billingInfo?.zip || '',
-            country: checkoutDropdownData.billingInfo?.country.toLowerCase() || '',
+            country: checkoutDropdownData.billingInfo?.country?.toLowerCase() || '',
         },
         confirmationEmail: defaultConfirmationEmail
     }
