@@ -72,17 +72,22 @@ export const editCustomerSchema =  Yup.object().shape({
         .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
         .max(70),
     shippingAddress1: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingAddress2: Yup.string()
         .max(50),
     shippingCity: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingState: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingPostal: Yup.string()
-        .max(11),
+        .max(11)
+        .required(),
     shippingCountry: Yup.string()
-        .max(60),
+        .max(60)
+        .required(),
     billingSame: Yup.boolean(),
     billingCompany: Yup.string()
         .max(70)
@@ -135,33 +140,43 @@ export const newCustomerSchema = Yup.object().shape({
         .required('required')
         .max(70),
     shippingAddress1: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingAddress2: Yup.string()
         .max(50),
     shippingCity: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingState: Yup.string()
-        .max(50),
+        .max(50)
+        .required(),
     shippingPostal: Yup.string()
-        .max(11),
+        .max(11)
+        .required(),
     shippingCountry: Yup.string()
-        .max(60),
+        .max(60)
+        .required(),
     billingSame: Yup.boolean(),
     billingCompany: Yup.string()
         .max(70)
         .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingAddress1: Yup.string()
-        .max(50),
+        .max(50)
+        .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingAddress2: Yup.string()
         .max(50),
     billingCity: Yup.string()
-        .max(50),
+        .max(50)
+        .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingState: Yup.string()
-        .max(50),
+        .max(50)
+        .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingPostal: Yup.string()
-        .max(11),
+        .max(11)
+        .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     billingCountry: Yup.string()
-        .max(60),
+        .max(60)
+        .when('billingSame', { is: true, then: Yup.string().notRequired(), otherwise: Yup.string().required('required') }),
     passwordStrength: Yup.boolean()
         .equals([true], 'Check the password complexity requirements.'),
 })
