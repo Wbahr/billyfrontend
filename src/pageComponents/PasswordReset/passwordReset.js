@@ -148,7 +148,7 @@ export default function PasswordResetPage({ history }) {
                 <Input id='username' onChange={(e) => setUsername(e.target.value)} value={username} />
             </DivInput>
             <DivInput>
-                <Label htmlFor='password'>Password</Label>
+                <Label htmlFor='password'>New Password</Label>
                 <Input id='password' type='password' onChange={(e) => { setPassword(e.target.value.replace(/\s/g, '')) }} value={password} />
             </DivInput>
             <DivInput>
