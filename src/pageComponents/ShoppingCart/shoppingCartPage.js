@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import ShoppingCart from './uiComponents/shoppingCart'
 import SubtotalBox from './uiComponents/subtotalBox'
 import OrderSummary from './uiComponents/orderSummary'
+import { Helmet } from 'react-helmet'
 
 const DivContainer = styled.div`
   display: flex;
@@ -29,6 +30,9 @@ export default function ShoppingCartPage(props) {
 	
     return (
         <DivContainer>
+            <Helmet>
+                <title>Airline Hydraulics | Cart</title>
+            </Helmet>
             <DivShoppingCartCol>
                 <ShoppingCart history={props.history}/>
                 <SubtotalBox history={props.history}/>
