@@ -716,6 +716,7 @@ export const GET_ALL_SETTINGS = gql`
             emailFrom
             siteBaseUrl
             adminDashNewCustomersRelativeUrl
+            orderConfirmationEmailRecipients
         }
     }
 `

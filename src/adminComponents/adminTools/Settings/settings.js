@@ -38,6 +38,8 @@ const systemSettingsSchema = Yup.object().shape({
         .required('required'),
     siteBaseUrl: Yup.string().required(),
     adminDashNewCustomersRelativeUrl: Yup.string().required(),
+    orderConfirmationEmailRecipients: Yup.array().of(
+        Yup.string().email('Must be an email'))
 })
 
 const FormWrapper = () => {
@@ -53,6 +55,7 @@ const FormWrapper = () => {
                     <FormikInput type="text" name="emailFrom" label="Send Email From" />
                     <FormikInput type="text" name="siteBaseUrl" label="Website Base URL" />
                     <FormikInput type="text" name="adminDashNewCustomersRelativeUrl" label="Relative URL to New Customers Admin Dash (do not start with /)" />
+                    <FormikFieldArray name="orderConfirmationEmailRecipients" label="Order Confirmation Email Recipients (additional emails to copy on every email confirmation. These will be visible to the customer)" addMore="+" />
                 </FormikFormGroup>
             </FormikFormContainer>
             {!isValid && <DivCenter><ShowErrorAlert message="Please correct the problems and try again" /></DivCenter>}
@@ -98,6 +101,7 @@ export default function Settings() {
                     emailFrom: values.emailFrom,
                     siteBaseUrl: values.siteBaseUrl,
                     adminDashNewCustomersRelativeUrl: values.adminDashNewCustomersRelativeUrl,
+                    orderConfirmationEmailRecipients: values.orderConfirmationEmailRecipients,
                 }
             }
         })
