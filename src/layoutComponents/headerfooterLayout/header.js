@@ -422,10 +422,6 @@ const industriesSubItems = [
         to: '/pages/industries/commercial-protective-barriers'
     },
     {
-        label: 'Covid Medical Structures',
-        to: '/pages/industries/covid-medical-structures'
-    },
-    {
         label: 'Primary Metals',
         to: '/pages/industries/primary-metals'
     },
