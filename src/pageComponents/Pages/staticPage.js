@@ -101,11 +101,11 @@ function Crumb({ baseUrl, ancestor }) {
     }
 }
 
-function Crumbs({ currentPageName, primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }) {
+function Crumbs({ name, primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }) {
     return (
         <>
             <PageName>
-                {currentPageName}
+                {name}
                 <ShortBorder />
             </PageName>
             <CrumbContainer>
