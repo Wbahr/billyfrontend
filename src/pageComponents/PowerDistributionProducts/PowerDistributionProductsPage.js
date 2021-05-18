@@ -22,6 +22,7 @@ const BrandDetailsContainer = styled.div`
     width: 100%;
     flex-wrap: wrap;
     margin: 0 auto;
+    padding: 0 10px;
   `
 const AirlineDistributorH1 = styled.h1`
     display: flex;
@@ -39,6 +40,7 @@ const DistributorDetails = styled.div`
     display: flex;
     font-size: 18px;
     margin: 0 0 30px;
+    flex-wrap: wrap;
 `
 const ProductsTitle = styled.div`
     font-size: 25px;
@@ -125,6 +127,7 @@ const SubHeader = styled.p`
 const IndustryColDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 `
 const ProductDiv = styled.div`
     display: flex;
@@ -196,6 +199,7 @@ const LogoBtn = styled.button`
 `
 const InfoDiv = styled.div`
     display: flex;
+    flex-wrap: wrap;
     margin: 20px 0 50px;
 `
 const ServiceSection = styled.div`

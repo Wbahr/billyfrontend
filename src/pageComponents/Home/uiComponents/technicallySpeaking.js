@@ -78,6 +78,13 @@ const SeeAll = styled.div`
 const A = styled.a`
 		color: #333;
 `
+const Link = styled.a`
+		color: #333;
+        &:hover{
+            text-decoration: none;
+            color: #333;
+        }
+`
 const Wrapper = styled.div`
 		margin-bottom: 50px;
 		flex-wrap: wrap;
@@ -95,56 +102,64 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
-                        </ImgDiv>
-                        <TextDiv>
-                            <Details>Electric Case Lifters: Helping Employee Safety, Productivity & Happiness
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
+                        <Link href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
+                                    <ButtonDiv>
+                                        <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
+                                    </ButtonDiv>
+                                </Details>
+                            </TextDiv>
+                        </Link>
                     </Row>
                     <Row>
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/gas%20booster%20controls%20website%20thumb.png" />
-                        </ImgDiv>
-                        <TextDiv>
-                            <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection & Plumbing
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
+                        <Link href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/gas%20booster%20controls%20website%20thumb.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection &amp; Plumbing
+                                    <ButtonDiv>
+                                        <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
+                                    </ButtonDiv>
+                                </Details>
+                            </TextDiv>
+                        </Link>
                     </Row>
                     <Row>
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/smart%20elements%20website%20thumb.png" />
-                        </ImgDiv>
-                        <TextDiv>
-                            <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
+                        <Link href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/smart%20elements%20website%20thumb.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
+                                    <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
+                                </Details>
+                            </TextDiv>
+                        </Link>
                     </Row>
                     <Row>
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/moisture%20website%20thumb.png" />
-                        </ImgDiv>
-                        <TextDiv>
-                            <Details>How to Prevent & Remove Moisture in Compressed Air Lines
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
+                        <Link href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/moisture%20website%20thumb.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>How to Prevent & Remove Moisture in Compressed Air Lines
+                                    <ButtonDiv>
+                                        <Button href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">Read More</Button>
+                                    </ButtonDiv>
+                                </Details>
+                            </TextDiv>
+                        </Link>
                     </Row>
                 </Container>
 
                 <div>
                     <SeeAll>
-                        <A href="https://airlinehyd-8466844.hs-sites.com/airline-hydraulics-blog" target="_blank">See All Blog Posts <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
+                        <A href="https://blog.airlinehyd.com/" target="_blank">See All Blog Posts <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>
                     </SeeAll>
                 </div>
             </Wrapper>

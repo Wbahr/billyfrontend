@@ -11,8 +11,9 @@ const CategoryBlock = styled.div`
   height: ${props => props.size === 'small' ? 'auto' : '160px'};
   cursor: pointer;
   border: ${props => props.size === 'small' ? '' : `3px solid ${props.theme.backgroundColor}`};
+  transition: 0.2s;
   &:hover {
-      border: ${props => props.size === 'small' ? '' : `3px solid ${props.theme.mainColor}`};
+	transform: translate(0, -4px);	
   }
   padding: 3px;
   margin: 7px;
@@ -22,8 +23,9 @@ const CategoryBlock = styled.div`
   border-radius: 5px;
   img {
       margin: 0 8px;
-      max-height: ${props => props.size === 'small' ? '100px' : '150px'};
-      max-width: ${props => props.size === 'small' ? '100%' : '100%'};
+      max-width: ${props => props.size === 'small' ? '100px' : '120px'};
+      width: ${props => props.size === 'small' ? '100%' : '100%'};
+
   }
   section {
       display: block;
@@ -40,6 +42,8 @@ const CategoryBlock = styled.div`
 
 const H3 = styled.h3`
   font-size: 20px;
+  text-align: center;
+  padding: 0 20px;
 `
 
 export default ({ size, text, linkTo, Image, ...rest }) => {

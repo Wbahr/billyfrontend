@@ -4,6 +4,7 @@ import FeaturedManufacturers from './uiComponents/featuredManufacturers'
 import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
+import NewAndNoteworthy from './uiComponents/newAndNoteworthy'
 import SectionHeader from '../_common/sectionHeader'
 import { CategoryContainer } from '../ProductCategories/categoriesPage'
 import RootCategories from '../ProductCategories/uiComponents/RootCategories'
@@ -24,17 +25,17 @@ export default function HomePage() {
             <Helmet>
                 <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
             </Helmet>
-            
-            <Banner/>
-			
+
+            <Banner />
+            <NewAndNoteworthy />
             <div>
                 <SectionHeader text='Shop by Categories' />
-			
+
                 <CategoryContainer>
-                    <RootCategories/>
+                    <RootCategories />
                 </CategoryContainer>
             </div>
-			
+
             <TechnicallySpeaking />
             <FeaturedManufacturers />
             <LineCards />

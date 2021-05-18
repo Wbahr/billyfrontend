@@ -9,7 +9,7 @@ const BannerContainer = styled.div`
 const Col = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 50px;
+	margin-bottom: 10px;
 `
 const Img = styled.img`
 	max-width: 80%;
@@ -75,12 +75,15 @@ const AboutP = styled.p`
 		font-size: 18px;
 	}
 `
+const LgBannerLink = styled.a`
+		
+`
 
 export default () =>  (
     <BannerContainer>
         <Col>
             <LgBanner>
-                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/inch%20framing%20main_header.png" alt="banner image"/>
+                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new-site-background-02.png" alt="banner image"/>
             </LgBanner>
 
             <SmBanner>

@@ -28,7 +28,8 @@ const Ul = styled.ul`
 const Li = styled.li`
 `
 const ServiceDiv = styled.div`
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     margin: 20px;
     display: flex;
     flex-direction: column;
