@@ -14,8 +14,6 @@ const LineCardDiv = styled.div`
 		flex-direction: column;
 `
 const ImgDiv = styled.div`
-		width: 260px;
-		height: 340px;
 		display: flex;
 		justify-content: center;
 `
@@ -29,12 +27,16 @@ const NameDiv = styled.div`
 `
 const Img = styled.img`
 		width:  100%;
+        max-width: 200px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        @media (max-width: 768px) {
+            max-width: 260px;
+       }
 `
 const P = styled.p`
 		margin: 0;
 		font-weight: bold;
-		color: #5a5a5a;
+		color: #212529;
 `
 
 export default function LineCards() {
@@ -74,6 +76,18 @@ export default function LineCards() {
                             <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/automation-catalog.png" />
                         </ImgDiv>
                         <NameDiv><P>Automation Catalog</P></NameDiv>
+                    </a>
+                </LineCardDiv>
+                <LineCardDiv>
+                    <a
+                        href="https://airlinemedia.airlinehyd.com/Literature/Airline_Hydraulics_Aftermarket_Brochure.pdf"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <ImgDiv>
+                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Airline_Hydraulics_Aftermarket_Brochure.pdf.png" />
+                        </ImgDiv>
+                        <NameDiv><P>Aftermarket Services</P></NameDiv>
                     </a>
                 </LineCardDiv>
             </LineCardWrapper>
