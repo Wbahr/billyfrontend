@@ -42,14 +42,17 @@ const AndroidDownload = styled.a`
 const WebBrowser = styled.a`
     font-size: 14px;
 `
+const MobileAppOverView = styled.div`
+    padding: 0 10px;
+`
 export default function Apps() {
     return (
         <>
             <Container>
                 <Header text="Mobile Apps" />
-                <div>
+                <MobileAppOverView>
                     <p>Airline represents best-in-class manufacturers that provide helpful moblie applications to serve customers while out in the field. Find applications here for both IosDownload and Android devices that range from product catalogs to industry specific calculators.</p>
-                </div>
+                </MobileAppOverView>
                 <MainAppDiv>
                     <ApplicationDiv>
                         <AppImgDiv>
