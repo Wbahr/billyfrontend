@@ -38,6 +38,8 @@ const systemSettingsSchema = Yup.object().shape({
         .required('required'),
     siteBaseUrl: Yup.string().required(),
     adminDashNewCustomersRelativeUrl: Yup.string().required(),
+    orderConfirmationEmailRecipients: Yup.array().of(
+        Yup.string().email('Must be an email'))
 })
 
 const FormWrapper = () => {
