@@ -37,7 +37,8 @@ const DivNavigation = styled.div`
 
 function BillingInfoForm(props) {
     const { setValues, setFieldValue, selectedCard, setSelectedCard, values: { contact, billing: { paymentMethod, cardType } },
-        checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption, creditCardLoading } = props
+        checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption,
+        creditCardLoading, checkoutDropdownData } = props
     const context = useContext(Context)
     const [cardIsValid, setCardIsValid] = useState(false)
 
@@ -74,11 +75,12 @@ function BillingInfoForm(props) {
 
     const handleRadioButtonClick = ({ target: { value } }) => {
         const cardType = selectedCard === 'new_card' ? 'new_card' : 'saved_card'
+    
+        const loggedInUserContactInfo = checkoutDropdownData.contacts?.[0]
 
         //If the customer requires a PO, we need to reload the canned data
         // and not persist changes made in Credit Card mode.
-        if (billingInfo?.isNetTerms)
-        {
+        if (billingInfo?.isNetTerms) {
             setFieldValue('billing', {
                 ...props.values.billing,
                 paymentMethod: value,
@@ -90,10 +92,10 @@ function BillingInfoForm(props) {
                 stateOrProvince: billingInfo?.state || '',
                 zip: billingInfo?.zip || '',
                 country: billingInfo?.country.toLowerCase() || '',
-                firstName: contact?.firstName || '',
-                lastName: contact?.lastName || '',
-                email: contact?.email || '',
-                phone: contact?.phone || '',
+                firstName: (context.userInfo?.isImpersonatorUser ? contact?.firstName : loggedInUserContactInfo?.firstName) || '',
+                lastName: (context.userInfo?.isImpersonatorUser ? contact?.lastName : loggedInUserContactInfo?.lastName) || '',
+                email: (context.userInfo?.isImpersonatorUser ? contact?.email : loggedInUserContactInfo?.email) || '',
+                phone: (context.userInfo?.isImpersonatorUser ? contact?.phone : loggedInUserContactInfo?.phoneNumber) || '',
 
             })
         } else {
