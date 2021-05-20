@@ -47,7 +47,7 @@ const CustomSelectComponent = ({
             <Select
                 {...field}
                 {...props}
-                isDisabled={isDisabled}
+                isDisabled={isDisabled || props.disabled}
                 options={options}
                 value={options?.find(option => option.value === field.value) || ''}
                 onChange={handleChange}
@@ -55,7 +55,7 @@ const CustomSelectComponent = ({
                 styles={SelectStyle}
             />
 			
-            {!!isDisabled && (
+            {!!isDisabled || props.disabled && (
                 <input
                     type="hidden"
                     {...field}

@@ -10,6 +10,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import SearchCustomerModal from './searchCustomerModal'
 import { ButtonLink } from 'styles/tables'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
+import SelectField from '../../_common/formik/select'
+import { CanadianProvinceList, StateList } from '../../_common/helpers/helperObjects'
 
 const DivCenter = styled.div`
   display: flex;
@@ -220,23 +222,52 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                 disabled={values.customerId !== ''}
                             />
                             <FormikInput
-                                label="State*"
-                                type="text"
-                                name="shippingState"
-                                disabled={values.customerId !== ''}
-                            />
-                            <FormikInput
                                 label="Zip/Postal Code*"
                                 type="text"
                                 name="shippingPostal"
                                 disabled={values.customerId !== ''}
                             />
-                            <FormikInput
-                                label="Country*"
-                                type="text"
-                                name="shippingCountry"
-                                disabled={values.customerId !== ''}
-                            />
+                            <div>
+                                <Field
+                                    style={{ margin: 0 }}
+                                    name="shippingCountry"
+                                    component={SelectField}
+                                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                                    placeholder="Select a Country"
+                                    width="250px"
+                                    isSearchable={false}
+                                    label="Country*"
+                                    disabled={values.customerId !== ''}
+                                />
+                            </div>
+                            {values.shippingCountry === 'us' && (
+                                <div>
+                                    <Field
+                                        style={{ margin: 0 }}
+                                        name="shippingState"
+                                        component={SelectField}
+                                        options={StateList}
+                                        placeholder="Select a State"
+                                        label="State*"
+                                        width="200px"
+                                        disabled={values.customerId !== ''}
+                                    />
+                                </div>
+                            )}
+                            {values.shippingCountry === 'canada' && (
+                                <div>
+                                    <Field
+                                        style={{ margin: 0 }}
+                                        name="shippingState"
+                                        component={SelectField}
+                                        options={CanadianProvinceList}
+                                        placeholder="Select a Province"
+                                        label="Province*"
+                                        width="200px"
+                                        disabled={values.customerId !== ''}
+                                    />
+                                </div>
+                            )}
                         </FormikFormGroup>
                         
                         <FormikFormGroup>
@@ -272,23 +303,49 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                 disabled={billingDisabled}
                             />
                             <FormikInput
-                                label="State*"
-                                type="text"
-                                name="billingState"
-                                disabled={billingDisabled}
-                            />
-                            <FormikInput
                                 label="Zip/Postal Code*"
                                 type="text"
                                 name="billingPostal"
                                 disabled={billingDisabled}
                             />
-                            <FormikInput
-                                label="Country*"
-                                type="text"
-                                name="billingCountry"
-                                disabled={billingDisabled}
-                            />
+                            <div>
+                                <Field
+                                    name="billingCountry"
+                                    component={SelectField}
+                                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                                    placeholder="Select a Country"
+                                    width="250px"
+                                    isSearchable={false}
+                                    label="Country*"
+                                    disabled={billingDisabled}
+                                />
+                            </div>
+                            {values.billingCountry === 'us' && (
+                                <div>
+                                    <Field
+                                        name="billingState"
+                                        component={SelectField}
+                                        options={StateList}
+                                        placeholder="Select a State"
+                                        label="State*"
+                                        width="200px"
+                                        disabled={billingDisabled}
+                                    />
+                                </div>
+                            )}
+                            {values.billingCountry === 'canada' && (
+                                <div>
+                                    <Field
+                                        name="billingState"
+                                        component={SelectField}
+                                        options={CanadianProvinceList}
+                                        placeholder="Select a Province"
+                                        label="Province*"
+                                        width="200px"
+                                        disabled={billingDisabled}
+                                    />
+                                </div>
+                            )}
                         </FormikFormGroup>
                     </>
                 )}
