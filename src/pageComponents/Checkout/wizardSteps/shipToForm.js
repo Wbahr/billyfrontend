@@ -43,7 +43,7 @@ export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
-
+    
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
@@ -57,11 +57,10 @@ export function ShipToForm(props) {
         setFieldValue(field, value)
     }
 
-    function handleCountryChange(field, value, handleChange) {
-        handleSavedAddressChange(field, handleChange)
-
+    function handleCountryChange(field, value) {
         //Changing the country resets the state/province
         setFieldValue('shipto.stateOrProvince', '')
+        setFieldValue('shipto.country', value)
     }
 
     const handleStateChange = (field, value, handleChange) => {
@@ -139,6 +138,8 @@ export function ShipToForm(props) {
 
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
+    
+    console.log('values', values.shipto)
 
     return (
         <WrapForm>
@@ -263,7 +264,7 @@ export function ShipToForm(props) {
                     width="250px"
                     isSearchable={false}
                     label="Country*"
-                    changeFunction={(field, value) => handleCountryChange(field, value, handleChange)}
+                    changeFunction={handleCountryChange}
                 />
                 {values.shipto.country === 'us' && (
                     <Field
