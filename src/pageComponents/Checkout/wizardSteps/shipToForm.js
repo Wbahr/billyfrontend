@@ -49,9 +49,7 @@ export function ShipToForm(props) {
     }, [])
 
     function handleSavedAddressChange(changeEvent, handleChange) {
-        if (values.shipto.selectedShipTo) {
-            setFieldValue('shipto.selectedShipTo', -1)
-        }
+        setFieldValue('shipto.selectedShipTo', -1)
         handleChange(changeEvent)
     }
 
