@@ -16,7 +16,20 @@ const Img = styled.img`
 `
 const LgBanner = styled.div`
 	display: flex;
-	width: 100%;
+	background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new-site-background-02.png");
+	height: 300px;
+	background-color: #464646;
+	background-size: cover;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	@media (max-width: 768px) {
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/bg_launch_mobile.png);
+		height: 240px;
+	}
+	@media (max-width: 375px) {
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/bg_new_site_sm.png);
+		height: 190px;
+	}
 `
 const LgImg = styled.img`
 	width: 100%;
@@ -82,10 +95,9 @@ const LgBannerLink = styled.a`
 export default () =>  (
     <BannerContainer>
         <Col>
-            <LgBanner>
-                <LgImg src="https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new-site-background-02.png" alt="banner image"/>
-            </LgBanner>
-
+            <LgBannerLink href="#" target="_blank">
+                <LgBanner />
+            </LgBannerLink>
             <SmBanner>
                 <BannerDiv>
                     <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>

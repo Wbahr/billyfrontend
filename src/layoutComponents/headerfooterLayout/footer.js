@@ -11,10 +11,9 @@ const Newsletter = styled.div`
 	justify-content: flex-end;
 	background-color: black;
 	height: 70px;
-	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2) ), url(${props => props.theme.sectionBackgroundImageUrl});
+	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) ), url(${props => props.theme.sectionBackgroundImageUrl});
 	background-color: black;
-	box-shadow: inset 0px 1px 2px black;
-	padding-right: 350px;
+	justify-content: center;
 	@media (max-width: 1200px){
 		padding: 0;
 		justify-content: center;
@@ -30,7 +29,7 @@ const NewsletterLabel = styled.label`
 	font-family: ${props => props.theme.fancyFontNameBold};
 	font-size: 18px;
 	font-weight: 700;
-	color: ${props => props.theme.buttonForegroundColor};
+	color: #535353;
 	margin: 0;
 `
 
@@ -171,7 +170,7 @@ export default function FooterComponent() {
     return (
         <>
             <Newsletter>
-                <NewsletterLabel>Subscribe to Airline Tech Journals</NewsletterLabel>
+                <NewsletterLabel>Subscribe to our blog</NewsletterLabel>
                 <NewsletterInput placeholder='your@email.com'/>
                 <ButtonBlack>Subscribe</ButtonBlack>
             </Newsletter>

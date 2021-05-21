@@ -11,11 +11,14 @@ const H1Div = styled.div`
 const H1 = styled.h1`
     display: flex;
     margin: auto;
-		font-size: 38px;
+	font-size: 38px;
     text-transform: uppercase;
     color: #333;
     letter-spacing: 1px;
     font-family: verdana;
+    @media (max-width: 375px){
+		font-size: 30px;
+	}
 `
 const H4Div = styled.div`
     display: flex;
@@ -38,28 +41,28 @@ const BorderLine = styled.div`
 const Container = styled.div`
     max-width: 1200px;
     width: 100%;
-    // background-color: silver;
     margin: 0 auto;
 `
 const FullBrandsDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    padding: 25px 0;
 `
 const BrandsImgDiv = styled.div`
-    width: 150px;
-    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0;
+    margin: 10px 10px 25px;
  `
 const Link = styled.a`
 `
 const BrandsImg = styled.img`
     width: 100%;
+    max-width: 150px;
     align-items: center;
+    @media (max-width: 768px){
+		max-width: 125px;
+	}
 `
 const AlphabetListDiv = styled.div`
     width: 100%;
@@ -87,7 +90,8 @@ const H6 = styled.h6`
 const Div = styled.div`
     display: flex;
     flex-direction: row;
-    margin-left: 89px;
+    flex-wrap: wrap;
+    margin: 0 auto;
     width: 88%;
 `
 const LetterDiv = styled.div`
@@ -217,11 +221,7 @@ export default function BrandsPage() {
                         <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/schmersal.png" />
                     </Link>
                 </BrandsImgDiv>
-                <BrandsImgDiv>
-                    <Link href="/Brands/featured/smc">
-                        <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" />
-                    </Link>
-                </BrandsImgDiv>
+                
             </FullBrandsDiv>
             <FullBrandsDiv>
                 <BrandsImgDiv>
@@ -266,9 +266,17 @@ export default function BrandsPage() {
                         <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Lincoln_SKF_condensed%20RGB%20nobkgrd.jpg" />
                     </Link>
                 </BrandsImgDiv>
+               
+            </FullBrandsDiv>
+            <FullBrandsDiv>
                 <BrandsImgDiv>
                     <Link href="/Brands/featured/clippard">
                         <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Clippard.png" />
+                    </Link>
+                </BrandsImgDiv>
+                <BrandsImgDiv>
+                    <Link href="/Brands/featured/smc">
+                        <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/SMC%20Elite%20Dist%20web.png" />
                     </Link>
                 </BrandsImgDiv>
             </FullBrandsDiv>

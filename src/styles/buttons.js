@@ -31,10 +31,11 @@ export const ButtonBlack = styled.button`
   background-image: linear-gradient(to top left, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   color: ${props => props.theme.buttonForegroundColor};
   padding: 4px 12px;
-  font-size: 20px;
+  font-size: 18px;
   font-family: ${props => props.theme.fontName};
   font-weight: 600;
   border: none;
+  margin: 5px 0;
   &:disabled {
     cursor: default;
     background-image: linear-gradient(to top left, grey, darkgrey);
