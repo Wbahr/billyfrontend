@@ -6,7 +6,7 @@ const CategoryBlock = styled.div`
   display: flex;
   flex-direction: ${props => props.size === 'small' ? 'column' : 'row'};
   align-items: center;
-  justify-content: ${props => props.size === 'small' ? 'center' : 'left'};
+  justify-content: ${props => props.size === 'small' ? 'center' : 'center'};
   width: ${props => props.size === 'small' ? '200px' : '350px'};
   height: ${props => props.size === 'small' ? 'auto' : '160px'};
   cursor: pointer;

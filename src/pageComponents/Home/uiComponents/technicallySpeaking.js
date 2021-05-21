@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/SensoNODE.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>How SensoNODE Makes Advanced IoT Condition Monitoring Simple and Accessible
+                                    <ButtonDiv>
+                                        <Button href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">Read More</Button>
+                                    </ButtonDiv>
+                                </Details>
+                            </TextDiv>
+                        </Link>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
@@ -137,20 +151,6 @@ export default function TechnicallySpeaking() {
                             <TextDiv>
                                 <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
                                     <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
-                                </Details>
-                            </TextDiv>
-                        </Link>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/moisture%20website%20thumb.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>How to Prevent & Remove Moisture in Compressed Air Lines
-                                    <ButtonDiv>
-                                        <Button href="https://blog.airlinehyd.com/air-line-moisture-removal" target="_blank">Read More</Button>
-                                    </ButtonDiv>
                                 </Details>
                             </TextDiv>
                         </Link>
