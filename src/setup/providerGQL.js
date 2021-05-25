@@ -156,6 +156,33 @@ export const UPDATE_CART = gql`
   }
 `
 
+export const ADD_CATALOG_ITEM = gql`
+  mutation CatalogItemAdd($catalogItem: ShoppingCartCatalogItemAdd){
+    shoppingCartAddCatalogItem(catalogItem: $catalogItem){
+      token
+      cartItems{
+        uniqueId
+        invMastUid
+        customerPartNumberId
+        quantity
+        itemNotes
+        itemUnitPriceOverride
+        airlineCost
+        priceReasonId
+        sourceLocId
+        disposition
+        promiseDate
+        promiseDateOverride
+        isDropship
+      }
+      subtotal
+      tariff
+      orderNotes
+      action
+    }
+  }
+`
+
 export const CHANGE_PASSWORD = gql`
     mutation ChangePassword($changePasswordInfo: ChangePasswordGraphType) {
         changePassword(changePasswordInfo: $changePasswordInfo) {

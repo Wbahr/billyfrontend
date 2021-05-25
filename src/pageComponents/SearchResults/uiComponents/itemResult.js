@@ -93,6 +93,20 @@ const PartTitleLink = styled(Link)`
 	}
 `
 
+const PartTitleItemCatalog = styled.p`
+	margin: 0;
+	font-weight: 700;
+	font-size: 15px;
+	color: #000000 !important;
+	height: 36px;
+    line-height: 1.25;
+	overflow: hidden;
+	&:hover{
+		cursor: pointer;
+		color: #328EFC;
+	}
+`
+
 const PpartAvailability = styled.p`
 	margin: 0 5px 0 0;
 	font-size: 13px;
@@ -115,6 +129,16 @@ const ButtonRed = styled.button`
 	}
 `
 const MoreDetailsLink = styled(Link)`
+	width: max-content;
+	background-color: white;
+	color: #328EFC;
+	font-weight: 600;
+	font-size: 12px;
+	border: 0;
+	margin-top: 4px;
+`
+
+const MoreDetailsCatalogItem = styled.p`
 	width: max-content;
 	background-color: white;
 	color: #328EFC;
@@ -158,17 +182,30 @@ const Img = styled.img`
 `
 
 export default function ItemResult({ result, details, addedToCart, isParentCalculateStock }) {
-    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem } = useContext(Context)
+    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, addCatalogItem } = useContext(Context)
 
-    const foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
+    let foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 
     const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
-    const {
+    let {
         unitPrice,
         unitOfMeasure,
         unitSize,
         roundType
     } = foundPrice || {}
+
+    const isCatalogItem = !!result.itemCatalogUid
+
+    if (result.itemCatalogUid) {
+        unitPrice = result.listPrice
+        unitOfMeasure = 'EA'
+        unitSize = 1
+        roundType = 'U'
+        foundAvailability = {
+            totalQuantity: 0,
+            availability: 0
+        }
+    }
 
     const [quantity, setQuantity] = useState(1)
 
@@ -183,16 +220,26 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
         }
     }, [customerPartNumbers])
 
-    const itemDetailsLink = `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
+    const itemDetailsLink = isCatalogItem 
+        ? null
+        : `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
 
     const handleAddToCart = () => {
-        addItem({
-            invMastUid: result.invMastUid,
-            quantity: parseInt(quantity),
-            itemNotes: '',
-            itemUnitPriceOverride: null,
-            customerPartNumberId: customerPartNumber || null
-        })
+        if (isCatalogItem){
+            addCatalogItem({
+                itemCatalogUid: result.itemCatalogUid,
+                quantity: parseInt(quantity)
+            })
+        } else {
+            addItem({
+                invMastUid: result.invMastUid,
+                quantity: parseInt(quantity),
+                itemNotes: '',
+                itemUnitPriceOverride: null,
+                customerPartNumberId: customerPartNumber || null
+            })
+        }
+        
         addedToCart()
         setQuantity(1)
     }
@@ -202,39 +249,75 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
     return (
         <DivItemResultContainer>
             <DivPartDetailsRow>
-                <Link to={itemDetailsLink}>
-                    <DivPartImg>
-                        {!details.itemMedia ? (
-                            <SkeletonImage/>
-                        ) : (
-                            <Img src={getLargeImagePath(details)}/>
-                        )}
-                    </DivPartImg>
-                </Link>
-
-                <MoreDetailsLink to={itemDetailsLink}>More Details</MoreDetailsLink>
+                {
+                    isCatalogItem ? (
+                        <>
+                            <DivPartImg>
+                                <Img src={getLargeImagePath(details)}/>
+                            </DivPartImg>
+                            <MoreDetailsCatalogItem>Catalog Item</MoreDetailsCatalogItem>
+                        </>
+                    ) : (
+                        <>
+                            <Link to={itemDetailsLink}>
+                                <DivPartImg>
+                                    {!details.itemMedia ? (
+                                        <SkeletonImage/>
+                                    ) : (
+                                        <Img src={getLargeImagePath(details)}/>
+                                    )}
+                                </DivPartImg>
+                            </Link>
+                            <MoreDetailsLink to={itemDetailsLink}>More Details</MoreDetailsLink>
+                        </>
+                    )
+                }
 
                 <DivPartDetails>
-                    <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
+                    {
+                        isCatalogItem ? (
+                            <PartTitleItemCatalog>{result.itemDescription}</PartTitleItemCatalog>
+                        ) : (
+                            <PartTitleLink to={itemDetailsLink}>{result.itemDescription}</PartTitleLink>
+                        )
+                    }
                 </DivPartDetails>
 
-                {details.extendedDesc ? (
-                    <ExtendedDescSpan>
-                        {details.extendedDesc}
-                    </ExtendedDescSpan>
-                ) : (
-                    <div style={{ width: '100%' }}>
-                        <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
-                        <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
-                    </div>
-                )}
+                {
+                    isCatalogItem ? (
+                        <ExtendedDescSpan>
+                            {result.extendedDescription}
+                        </ExtendedDescSpan>
+                    ) : (
+                        <>
+                            {
+                                details.extendedDesc ? (
+                                    <ExtendedDescSpan>
+                                        {details.extendedDesc}
+                                    </ExtendedDescSpan>
+                                ) : (
+                                    <div style={{ width: '100%' }}>
+                                        <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
+                                        <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
+                                    </div>
+                                )
+                            }
+                        </>
+                    )
+                }
 
                 <DivPartNumberRow>
                     <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
                 </DivPartNumberRow>
 
                 <DivPartNumberRow>
-                    <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
+                    {
+                        isCatalogItem ? (
+                            <PpartAvailability>Airline #: CAT{result.itemCatalogUid}</PpartAvailability>
+                        ) : (
+                            <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
+                        )
+                    }
                 </DivPartNumberRow>
 
                 {!!customerPartOptions.length && (
