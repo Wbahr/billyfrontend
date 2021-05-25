@@ -4,6 +4,7 @@ import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ButtonBlack } from 'styles/buttons'
 import OttoDrift from 'pageComponents/_common/ottoDrift'
+import { green, pink } from '@material-ui/core/colors'
 
 const Newsletter = styled.div`
 	display: flex;
@@ -16,7 +17,8 @@ const Newsletter = styled.div`
 	background-repeat: no-repeat;
 	background-color: black;
 	justify-content: center;
-	flex-direction: column;
+	flex-direction: row;
+	height: 70px;
 	@media (max-width: 1200px){
 		padding: 0;
 		justify-content: center;
@@ -37,19 +39,6 @@ const NewsletterLabel = styled.label`
 	margin: 15px 0 5px;
 `
 
-const NewsletterInput = styled.input`
-	height: 35px;
-	width: 300px;
-	font-weight: 600;
-	color: rgb(33, 37, 41);
-	border: 0;
-	margin: 0 12px;
-	padding: 4px 12px;
-	text-transform: uppercase;
-	::placeholder {
-		text-transform: none;
-	}
-`
 const ContainerTop = styled.div`
 	display: flex;
 	align-items: center;
@@ -182,7 +171,8 @@ export default function FooterComponent() {
                 window.hbspt.forms.create({
                     portalId: '8466844',
                     formId: 'eb49d36f-ebce-4de5-ac00-4bcc64563e16',
-                    target: '#hubspotForm'
+                    target: '#hubspotForm',
+                    css: 'form { display: flex; align-items: center;}  li:nth-child(1) label.hs-main-font-element {display: none;} ul {padding: 2px; margin: 0;} li:nth-child(1) {color: #b51029; font-size: 12px; list-style-type:none;}  form div:nth-child(1) {display: flex; align-items: center; flex-direction: column;} form div:nth-child(1) input {border: 0; margin-bottom: 4px;}  form div:nth-child(2) input {background-color: #246696; padding: 3px 10px; color: white; border: 0; border-radius: 3px; margin-left: 5px;}' 
                 })
             }
         })
@@ -193,11 +183,10 @@ export default function FooterComponent() {
         }
     }, [])
   
-   
     return (
         <>
             <Newsletter>
-                <NewsletterLabel>Subscribe to Our Blog Technically Speaking</NewsletterLabel>
+                <NewsletterLabel>Subscribe to Our Blog</NewsletterLabel>
                 <ButtonBlack id="hubspotForm"></ButtonBlack>
             </Newsletter>
 			
