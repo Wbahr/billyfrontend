@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect }  from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,10 +10,13 @@ const Newsletter = styled.div`
 	align-items: center;
 	justify-content: flex-end;
 	background-color: black;
-	height: 70px;
 	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3) ), url(${props => props.theme.sectionBackgroundImageUrl});
+	background-size: cover;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
 	background-color: black;
 	justify-content: center;
+	flex-direction: column;
 	@media (max-width: 1200px){
 		padding: 0;
 		justify-content: center;
@@ -31,6 +34,7 @@ const NewsletterLabel = styled.label`
 	font-weight: 700;
 	color: #535353;
 	margin: 0;
+	margin: 15px 0 5px;
 `
 
 const NewsletterInput = styled.input`
@@ -166,13 +170,35 @@ const ACallUs = styled.a`
 	margin: 0 0 0 8px;
 `
 
+
 export default function FooterComponent() {
+    
+    useEffect(() => {
+        const script = document.createElement('script')
+        script.src = '//js.hsforms.net/forms/v2.js'
+        script.async = true
+        script.addEventListener('load', () => {
+            if (window.hbspt) {
+                window.hbspt.forms.create({
+                    portalId: '8466844',
+                    formId: 'eb49d36f-ebce-4de5-ac00-4bcc64563e16',
+                    target: '#hubspotForm'
+                })
+            }
+        })
+        document.body.appendChild(script)
+	
+        return () => {
+            document.body.removeChild(script)
+        }
+    }, [])
+  
+   
     return (
         <>
             <Newsletter>
-                <NewsletterLabel>Subscribe to our blog</NewsletterLabel>
-                <NewsletterInput placeholder='your@email.com'/>
-                <ButtonBlack>Subscribe</ButtonBlack>
+                <NewsletterLabel>Subscribe to Our Blog Technically Speaking</NewsletterLabel>
+                <ButtonBlack id="hubspotForm"></ButtonBlack>
             </Newsletter>
 			
             <ContainerTop>
