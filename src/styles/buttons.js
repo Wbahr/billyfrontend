@@ -28,7 +28,6 @@ export const ButtonBlack = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  // background-image: linear-gradient(to top left, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   color: ${props => props.theme.buttonForegroundColor};
   background: transparent;
   padding: 4px 12px;
