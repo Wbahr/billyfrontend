@@ -3,6 +3,7 @@ import Context from './context'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import {
     UPDATE_CART,
+    ADD_CATALOG_ITEM,
     BEGIN_IMPERSONATION,
     END_IMPERSONATION,
     GET_TAX_RATE,
@@ -409,6 +410,16 @@ export default function Provider({ history, children }) {
             }
         }
     })
+
+    const [addCatalogItemApiCall] = useMutation(ADD_CATALOG_ITEM, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ shoppingCartAddCatalogItem: { token, cartItems, subtotal, tariff, orderNotes } }) => {
+            localStorage.setItem('shoppingCartToken', token)
+            setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
+            setOrderNotes(orderNotes)
+            setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
+        }
+    })
     
     useEffect(() => {
         if (debouncedCartPayload) shoppingCartApiCall(debouncedCartPayload)
@@ -440,6 +451,20 @@ export default function Provider({ history, children }) {
 
     const addItems = (items) => {
         updateShoppingCart([...shoppingCart, ...items])
+    }
+
+    const addCatalogItem = ({ itemCatalogUid, quantity }) => {
+        const shoppingCartToken = localStorage.getItem('shoppingCartToken')
+        setShoppingCartPricing({ state: 'loading', subTotal: '--', tariff: '--' })
+        addCatalogItemApiCall({
+            variables: {
+                catalogItem: {
+                    token: shoppingCartToken,
+                    itemCatalogUid: itemCatalogUid,
+                    quantity: quantity
+                }
+            }
+        })
     }
 
     function removeItem(itemLocation) {
@@ -529,6 +554,7 @@ export default function Provider({ history, children }) {
                 orderNotes,
                 addItem,
                 addItems,
+                addCatalogItem,
                 removeItem,
                 moveItem,
                 splitItem,
