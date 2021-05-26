@@ -6,6 +6,8 @@ import LineCardThumbnail from './uiComponents/LineCardThumbnail'
 const DivContainer = styled.div`
     width: 1300px;
     margin: 50px auto;   
+    display: flex;
+    flex-wrap: wrap;
 `
 const HeaderDivDiv = styled.div`
     display: flex;
@@ -35,6 +37,7 @@ const SideDiv = styled.div`
 const LinkDiv = styled.div`
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 `
 const A = styled.a`
     text-decoration: none;
@@ -42,6 +45,7 @@ const A = styled.a`
 `
 const List = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     margin-top: 80px;
     flex: 1;
@@ -49,19 +53,20 @@ const List = styled.div`
 `
 const ThumbnailCol = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex: 3;
     margin-top: 80px;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-self: flex-start;
 `
 const ThumbnailDiv = styled.a`
-    margin: 0 40px 40px;
+    // margin: 0 40px 40px;
     display: flex;
     flex-direction: column;
     align-self: flex-start;
     color: #555555;
-    width: 206px;
+    max-width: 206px;
+    width: 100%;
     text-align: center;
     &:hover{
         transform: scale(1.1);
@@ -70,6 +75,8 @@ const ThumbnailDiv = styled.a`
 `
 const MainContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    padding: 0 10px;
 `
 const Blog1 = styled.div`
     margin-top: 40px;

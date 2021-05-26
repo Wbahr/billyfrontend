@@ -95,6 +95,7 @@ const Wrapper = styled.div`
 
 
 export default function TechnicallySpeaking() {
+    
 
     return (
         <>
@@ -106,54 +107,55 @@ export default function TechnicallySpeaking() {
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/SensoNODE.png" />
                             </ImgDiv>
-                            <TextDiv>
-                                <Details>How SensoNODE Makes Advanced IoT Condition Monitoring Simple and Accessible
-                                    <ButtonDiv>
-                                        <Button href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">Read More</Button>
-                                    </ButtonDiv>
-                                </Details>
-                            </TextDiv>
                         </Link>
+                        <TextDiv>
+                            <Details>How SensoNODE Makes Advanced IoT Condition Monitoring Simple and Accessible
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                        
                     </Row>
                     <Row>
                         <Link href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
                             </ImgDiv>
-                            <TextDiv>
-                                <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
-                                    <ButtonDiv>
-                                        <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
-                                    </ButtonDiv>
-                                </Details>
-                            </TextDiv>
                         </Link>
+                        <TextDiv>
+                            <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
                     </Row>
                     <Row>
                         <Link href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/gas%20booster%20controls%20website%20thumb.png" />
                             </ImgDiv>
-                            <TextDiv>
-                                <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection &amp; Plumbing
-                                    <ButtonDiv>
-                                        <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
-                                    </ButtonDiv>
-                                </Details>
-                            </TextDiv>
                         </Link>
+                        <TextDiv>
+                            <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection &amp; Plumbing
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
                     </Row>
                     <Row>
                         <Link href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/smart%20elements%20website%20thumb.png" />
                             </ImgDiv>
-                            <TextDiv>
-                                <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
-                                    <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
-                                </Details>
-                            </TextDiv>
                         </Link>
+                        <TextDiv>
+                            <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
+                            </Details>
+                        </TextDiv>
                     </Row>
                 </Container>
 
