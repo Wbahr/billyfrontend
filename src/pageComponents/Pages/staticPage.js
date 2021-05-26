@@ -12,16 +12,21 @@ const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  max-width: 1300px;
+//   max-width: 1300px;
   width: 100%;
-  padding: 0 10px;
-  margin: 50px auto;
+//   padding: 0 10px;
+//   margin: 50px auto;
+
 `
 
 const DivRow = styled.div`
   display: flex;
   justify-content: left;
   margin: 0 auto;
+  flex-direction: column;
+  max-width: 1300px;
+  width: 100%;
+  padding: 0 5px;
 `
 
 const DivRowHeader = styled.div`
@@ -32,9 +37,20 @@ const DivRowHeader = styled.div`
   letter-spacing : 2px;
   font-family: verdana;
   color: #333;
+  background-image: linear-gradient( rgba(0,0,0,0),rgba(0,0,0,0.3) ),url(https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg);
+  background-size: cover;
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-color: black;
+  height: 200px;
+  margin-bottom: 10px;
 `
 const PageName = styled.h1`
     text-align: center;
+    padding: 70px 0 25px;
+    @media (max-width: 425px) {
+        font-size: 30px;
+      }
 `
 const CrumbLink = styled(Link)`
     padding: 0 10px;
@@ -108,6 +124,18 @@ function Crumbs({ name, primaryAncestor, secondaryAncestor, tertiaryAncestor, ba
                 {name}
                 <ShortBorder />
             </PageName>
+            {/* <CrumbContainer>
+                {primaryAncestor && <> &#9751;<Crumb baseUrl={baseUrl} ancestor={primaryAncestor}/></>}
+                {secondaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={secondaryAncestor}/></>}
+                {tertiaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={tertiaryAncestor}/></>}
+            </CrumbContainer> */}
+        </>
+    )
+}
+
+function CrumbPage({ primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }){
+    return (
+        <>
             <CrumbContainer>
                 {primaryAncestor && <> &#9751;<Crumb baseUrl={baseUrl} ancestor={primaryAncestor}/></>}
                 {secondaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={secondaryAncestor}/></>}
@@ -145,6 +173,7 @@ export default function StaticPage({ match }) {
             </DivRowHeader>
             
             <DivRow>
+                <CrumbPage {...getStaticPage} baseUrl={match.path.split('/:')[0]}/>
                 {getStaticPage.html
                     ? <div dangerouslySetInnerHTML={{ __html: getStaticPage.html }} />
                     : error
