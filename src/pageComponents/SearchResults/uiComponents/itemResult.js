@@ -362,22 +362,43 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                         )}
                     </Div>
 
-                    {unitPrice ? (
-                        <Div>
-                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                            <P>/{unitOfMeasure}</P>
-                        </Div>
-                    ) : !foundPrice ? (
-                        <Div>
-                            <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
-                        </Div>
-                    ) : (
-                        <ACall href="tel:+18009997378">Call for Price</ACall>
-                    )}
+                    {
+                        isCatalogItem ? (
+                            <>
+                                {
+                                    unitPrice ? (
+                                        <Div>
+                                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                            <P>/{unitOfMeasure}</P>
+                                        </Div>
+                                    ) : (
+                                        <ACall href="tel:+18009997378">Call for Price</ACall>
+                                    )
+                                }
+                            </>
+                        ) : (
+                            <>
+                                {unitPrice ? (
+                                    <Div>
+                                        <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                        <P>/{unitOfMeasure}</P>
+                                    </Div>
+                                ) : !foundPrice ? (
+                                    <Div>
+                                        <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
+                                    </Div>
+                                ) : (
+                                    <ACall href="tel:+18009997378">Call for Price</ACall>
+                                )}
+                            </>
+                        )
+                    }
+
+                    
                 </DivPartNumberRowSpread>
 
                 <DivSpace>
-                    {!!unitPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                    {(isCatalogItem || !!unitPrice) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>
