@@ -291,15 +291,17 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                     ) : (
                         <>
                             {
-                                details.extendedDesc ? (
+                                !details ? (
+                                    <>
+                                        <div style={{ width: '100%' }}>
+                                            <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
+                                            <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
+                                        </div>
+                                    </>
+                                ) : (
                                     <ExtendedDescSpan>
                                         {details.extendedDesc}
                                     </ExtendedDescSpan>
-                                ) : (
-                                    <div style={{ width: '100%' }}>
-                                        <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
-                                        <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
-                                    </div>
                                 )
                             }
                         </>
