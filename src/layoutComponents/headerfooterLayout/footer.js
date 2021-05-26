@@ -172,7 +172,7 @@ export default function FooterComponent() {
                     portalId: '8466844',
                     formId: 'eb49d36f-ebce-4de5-ac00-4bcc64563e16',
                     target: '#hubspotForm',
-                    css: 'form { display: flex; align-items: center;}  li:nth-child(1) label.hs-main-font-element {display: none;} ul {padding: 2px; margin: 0;} li:nth-child(1) {color: #b51029; font-size: 12px; list-style-type:none;}  form div:nth-child(1) {display: flex; align-items: center; flex-direction: column;} form div:nth-child(1) input {border: 0; margin-bottom: 4px;}  form div:nth-child(2) input {background-color: #246696; padding: 3px 10px; color: white; border: 0; border-radius: 3px; margin-left: 5px;}' 
+                    css: 'form.hsForm_eb49d36f-ebce-4de5-ac00-4bcc64563e16 { display: flex; align-items: center;} form div.hs-dependent-field div.hs_email {display: flex; flex-direction: column; margin: 0 3px;} form div.hs-dependent-field div.hs_email ul.no-list {list-style-type: none;} form div.hs-dependent-field div.hs_email ul.no-list li label.hs-error-msg {color: #B51F2B; font-size: 10px;}' 
                 })
             }
         })
