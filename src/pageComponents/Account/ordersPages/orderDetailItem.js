@@ -92,11 +92,11 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const imagePath = getThumbnailImagePath(itemDetails)
     const context = useContext(Context)
-   
+
     function handleAddedToCart(){
         setShowAddedToCartModal(false)
     }
-    
+
     const handleAddToCart = () => {
         context.addItem({
             invMastUid: item.invMastUid,
@@ -108,12 +108,12 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
         setShowAddedToCartModal(true)
         setQuantity(1)
     }
-	
+
     return (
         <DivContainer>
-            <AddedModal 
-                open={showShowAddedToCartModal} 
-                text={'Added to Cart!'} 
+            <AddedModal
+                open={showShowAddedToCartModal}
+                text={'Added to Cart!'}
                 onClose={handleAddedToCart}
                 timeout={900}
             />
@@ -138,7 +138,7 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                             </>
                         )}
                     </TextRow>
-                    <P2>Quantity Received: {item.quantityOpen}</P2>
+                    <P2>Quantity Received: {item.quantityInvoiced}</P2>
                     <P2>Quantity Ordered: {item.quantityOrdered}</P2>
                 </DivCol2>
                 <DivCol2>

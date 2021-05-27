@@ -273,6 +273,7 @@ export const GET_ORDERS_DETAIL = gql`
 				customerPartNumberId
 				quantityOrdered
 				quantityOpen
+				quantityInvoiced
 				unitPrice
 				totalPrice
 				trackingNumbers{
