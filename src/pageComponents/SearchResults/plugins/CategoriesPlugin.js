@@ -67,23 +67,15 @@ const CategoriesDiv = styled.div`
 	margin-left: 48px;
 `
 
-export default function CategoriesPlugin({ isSearching, parentCategories, childCategories, setParentCategories, setChildCategories, classes, drawerOpen }) {
+export default function CategoriesPlugin({ isSearching, classes, drawerOpen, categories, setNewCategory }) {
     const [isOpen, setIsOpen] = useState(true)
-    const selectedParentIdx = parentCategories.findIndex(category => category.selected)
-    const selectedChildIdx = (childCategories || []).findIndex(category => category.selected)
 	
     useEffect(() => {
         if (drawerOpen) setIsOpen(true)
     }, [drawerOpen])
-	
-    const handleUpdateCategories = (type, idx) => () => {
-        const toggleSelected = (category, i) => ({ ...category, selected: i === idx ? !category.selected : false })
-        const newCategories = type === 'parent' ? parentCategories.map(toggleSelected) : childCategories.map(toggleSelected)
-        if (type === 'parent') {
-            setParentCategories(newCategories)
-        } else {
-            setChildCategories(newCategories)
-        }
+
+    const handleUpdateCategories = (categoryId) => () => {
+        setNewCategory(categoryId)
     }
 	
     const sortAndMapToOption = toOption => (accum, curVal, idx) => {
@@ -95,54 +87,20 @@ export default function CategoriesPlugin({ isSearching, parentCategories, childC
         return accum
     }
 	
-    const toChildCategory = ({ childCategoryName, childCategoryDisplayName, childCategoryCount }, idx) => (
-        <DivOptionRow key={childCategoryName}>
+    const toCategory = ({ categoryId, categoryName, categoryDisplayName, categoryCount }, idx) => (
+        <DivOptionRow key={categoryId}>
             <DivRow>
                 <Acategory
-                    value={childCategoryName}
+                    value={categoryName}
                     onClick={handleUpdateCategories('child', idx)}
                 >
-                    {childCategoryDisplayName}
+                    {categoryDisplayName}
                 </Acategory>
-                {selectedChildIdx === idx && !isSearching && (
-                    <span onClick={handleUpdateCategories('child', selectedChildIdx)}>
-                        <FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
-                    </span>
-                )}
             </DivRow>
-			
-            <PCount>({childCategoryCount})</PCount>
         </DivOptionRow>
     )
 	
-    const ChildCategories = () => <div>{(childCategories || []).reduce(sortAndMapToOption(toChildCategory), [])}</div>
-	
-    const toParentCategory = ({ parentCategoryName, parentCategoryDisplayName, parentCategoryCount }, idx) => (
-        <DivOption key={parentCategoryName}>
-            <Row>
-                <DivRow>
-                    <Acategory
-                        value={parentCategoryName}
-                        onClick={handleUpdateCategories('parent', idx)}
-                    >
-                        {parentCategoryDisplayName}
-                    </Acategory>
-                    {selectedParentIdx === idx && (
-                        <span onClick={handleUpdateCategories('parent', selectedParentIdx)}>
-                            <FontAwesomeIcon icon={faMinusSquare} color="#961427"/>
-                        </span>
-                    )}
-                </DivRow>
-				
-                <PCount>({parentCategoryCount})</PCount>
-            </Row>
-			
-            {selectedParentIdx === idx && !isSearching && <ChildCategories/>}
-            {selectedParentIdx === idx && isSearching && <Loader/>}
-        </DivOption>
-    )
-	
-    const ParentCategories = () => <>{(parentCategories || []).reduce(sortAndMapToOption(toParentCategory), [])}</>
+    const Categories = () => <div>{(categories || []).reduce(sortAndMapToOption(toCategory), [])}</div>
 	
     return (
         <div>
@@ -157,7 +115,8 @@ export default function CategoriesPlugin({ isSearching, parentCategories, childC
                 [classes.collapse]: !isOpen || !drawerOpen
             })}
             >
-                <ParentCategories/>
+                { !isSearching && <Categories/> }
+                { isSearching && <Loader/> }
             </CategoriesDiv>
         </div>
     )
