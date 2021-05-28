@@ -21,7 +21,15 @@ export const useSearchState = (initialValue) => {
 
 export const useSearchQueryParams = (history) => {
     const setQueryParam = (fieldName, value) => {
-        const search = queryString.stringify({ ...queryString.parse(location.search), [fieldName]: value })
+        let search = ''
+        if (value){
+            search = queryString.stringify({ ...queryString.parse(location.search), [fieldName]: value })
+        } else {
+            const parsed = queryString.parse(location.search)
+            delete parsed[fieldName]
+            search = queryString.stringify(parsed)
+        }
+
         history.push({ pathname: '/search', search })
     }
 	
