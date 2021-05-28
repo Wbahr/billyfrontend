@@ -55,7 +55,7 @@ const InputSearch = styled.input`
 
 const Row = styled.div`
     display: flex;
-    flex: 1
+    flex: 1;
 `
 
 export default function AttributeTypeFilter({ open, attribute, updateAttribute }) {

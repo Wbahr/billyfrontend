@@ -80,14 +80,11 @@ export const buildSearchString = ({
     sortType='relevancy',
     nonweb='false',
     innerSearchTerms,
-    parentCategory,
-    childCategory,
     brands,
     resultPage='1',
     ...attributes
 }) => {
-    return convertObjectToSearchQuery({ searchTerm, sortType, nonweb, innerSearchTerms, parentCategory,
-        childCategory, brands, resultPage, ...attributes })
+    return convertObjectToSearchQuery({ searchTerm, sortType, nonweb, innerSearchTerms, brands, resultPage, ...attributes })
 }
 
 const convertObjectToSearchQuery = object => {
@@ -138,13 +135,13 @@ export const useDebounceValue = (value, time = 500) => {
     return debouncedValue
 }
 
-export const cleanSearchState = ({ searchState }) => {
-    const { brands, attributes, parentCategories, childCategories } = searchState || {}
+export const cleanSearchState = ({ searchState, selectedCategory, childCategories }) => {
+    const { brands, attributes } = searchState || {}
     const removeTypeName = ({ __typename, ...rest }) => rest
     return {
         brands: brands?.map(removeTypeName) || [],
         attributes: attributes?.map(({ __typename, features, ...rest }) => ({ ...rest, features: features.map(removeTypeName) })) || [],
-        parentCategories: parentCategories?.map(removeTypeName) || [],
+        category: selectedCategory ? removeTypeName(selectedCategory) : null,
         childCategories: childCategories?.map(removeTypeName) || []
     }
 }
