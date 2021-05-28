@@ -67,40 +67,46 @@ const CategoriesDiv = styled.div`
 	margin-left: 48px;
 `
 
-export default function CategoriesPlugin({ isSearching, classes, drawerOpen, categories, setNewCategory }) {
+export default function CategoriesPlugin({ isSearching, classes, drawerOpen, category, childCategories, setCategoryId }) {
     const [isOpen, setIsOpen] = useState(true)
 	
     useEffect(() => {
         if (drawerOpen) setIsOpen(true)
     }, [drawerOpen])
-
-    const handleUpdateCategories = (categoryId) => () => {
-        setNewCategory(categoryId)
-    }
 	
-    const sortAndMapToOption = toOption => (accum, curVal, idx) => {
-        if (curVal.selected) {
-            accum.unshift(toOption(curVal, idx))
-        } else {
-            accum.push(toOption(curVal, idx))
-        }
-        return accum
-    }
-	
-    const toCategory = ({ categoryId, categoryName, categoryDisplayName, categoryCount }, idx) => (
+    const toChildCategory = ({ categoryId, categoryName, categoryDisplayName, categoryCount }) => (
         <DivOptionRow key={categoryId}>
             <DivRow>
                 <Acategory
                     value={categoryName}
-                    onClick={handleUpdateCategories('child', idx)}
+                    onClick={() => setCategoryId(categoryId)}
                 >
                     {categoryDisplayName}
                 </Acategory>
             </DivRow>
         </DivOptionRow>
     )
+
+    const SelectedCategory = () => (
+        category
+            ? (
+                <DivOptionRow>
+                    <DivRow>
+                        <Acategory
+                            value={category.categoryName}
+                            onClick={() => setCategoryId(null)}
+                        >
+                            <span>{category.categoryDisplayName}</span>
+                        </Acategory>
+
+                        <FontAwesomeIcon icon="times" color="#535353" onClick={() => setCategoryId(null)} />
+                    </DivRow>
+                </DivOptionRow>
+            )
+            : <></>
+    )
 	
-    const Categories = () => <div>{(categories || []).reduce(sortAndMapToOption(toCategory), [])}</div>
+    const ChildCategories = () => <div>{(childCategories || []).map(toChildCategory)}</div>
 	
     return (
         <div>
@@ -115,7 +121,12 @@ export default function CategoriesPlugin({ isSearching, classes, drawerOpen, cat
                 [classes.collapse]: !isOpen || !drawerOpen
             })}
             >
-                { !isSearching && <Categories/> }
+                { !isSearching && (
+                    <>
+                        <SelectedCategory />
+                        <ChildCategories/>
+                    </>
+                ) }
                 { isSearching && <Loader/> }
             </CategoriesDiv>
         </div>

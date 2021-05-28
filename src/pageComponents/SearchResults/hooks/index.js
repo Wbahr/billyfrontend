@@ -27,8 +27,8 @@ export const useSearchQueryParams = (history) => {
 	
     const getParsedQueryString = () => {
         const parsed = queryString.parse(location.search)
-        const { searchTerm, innerSearchTerms, sortType, nonweb, resultPage, brands, ...selectedAttributes } = parsed
-        return { searchTerm, innerSearchTerms, sortType, nonweb, resultPage, brands, selectedAttributes }
+        const { searchTerm, innerSearchTerms, sortType, nonweb, selectedCategoryId, resultPage, brands, ...selectedAttributes } = parsed
+        return { searchTerm, innerSearchTerms, sortType, nonweb, selectedCategoryId, resultPage, brands, selectedAttributes }
     }
 	
     const [parsedQueryString, setParsedQueryString] = useState(getParsedQueryString)
@@ -38,7 +38,7 @@ export const useSearchQueryParams = (history) => {
     }, [history.location.search])
 	
     const { searchTerm, innerSearchTerms='', sortType='relevancy', nonweb='false', resultPage, 
-        brands: selectedBrands, selectedAttributes } = parsedQueryString
+        selectedCategoryId, brands: selectedBrands, selectedAttributes } = parsedQueryString
 	
     const attributes = Object.keys(selectedAttributes)
         .map(attributeName => ({
@@ -52,5 +52,5 @@ export const useSearchQueryParams = (history) => {
         }))
     const brands = selectedBrands ? selectedBrands.split(',').map(b => ({ brandName: b, selected: true })) : []
 	
-    return [{ brands, attributes, sortType, searchTerm, searchTerms: innerSearchTerms, nonweb, resultPage }, setQueryParam]
+    return [{ brands, attributes, sortType, searchTerm, selectedCategoryId, searchTerms: innerSearchTerms, nonweb, resultPage }, setQueryParam]
 }

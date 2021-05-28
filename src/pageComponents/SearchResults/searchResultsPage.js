@@ -18,7 +18,14 @@ const RESULT_SIZE = 24
 
 export default function SearchResultsPage({ history }) {
     const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
-    const { sortType, searchTerm, searchTerms, resultPage, nonweb } = searchQueryParams
+    const { 
+        sortType, 
+        searchTerm, 
+        searchTerms, 
+        resultPage, 
+        nonweb, 
+        selectedCategoryId,
+    } = searchQueryParams
 
     const setSearchTerms = newInnerSearchTerms => {
         setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
@@ -30,10 +37,15 @@ export default function SearchResultsPage({ history }) {
         handleSetSearchState({ sortType: newSortType })
     }
 
+    const setCategoryId = newCategoryId => {
+        setQueryParam('selectedCategoryId', newCategoryId)
+        handleSetSearchState({ selectedCategoryId: newCategoryId })
+    }
+
     const queryParamSearchState = { ...searchQueryParams, isSynced: false, results: [], totalResults: '--', isSearching: false }
     const [searchState, setSearchState, { setBrands, setAttributes }] = useSearchState(queryParamSearchState)
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
-    const { totalResults, isSynced, brands, attributes } = searchState
+    const { totalResults, isSynced, brands, attributes, category, childCategories } = searchState
 
     const [lastSearchPayload, setLastSearchPayload] = useState({})
 
@@ -66,7 +78,7 @@ export default function SearchResultsPage({ history }) {
         } else {
             setQueryParam('resultPage', 1)
         }
-    }, [searchTerm, searchTerms, sortType, nonweb])
+    }, [searchTerm, searchTerms, sortType, nonweb, selectedCategoryId])
 
     useEffect(() => {
         performItemSearch()
@@ -88,11 +100,12 @@ export default function SearchResultsPage({ history }) {
                 innerSearchTerms: searchTerms ? searchTerms.split(',') : [],
                 searchType: nonweb === 'true' ? 'nonweb' :'web',
                 sortType,
+                selectedCategoryId,
                 resultPage,
                 resultSize: RESULT_SIZE,
                 searchState: {
                     brands,
-                    attributes,
+                    attributes
                 }
             }
         }
@@ -125,7 +138,11 @@ export default function SearchResultsPage({ history }) {
                 title="Search Results"
             />
             <DrawerPlugin>
-                <CategoriesPlugin />
+                <CategoriesPlugin 
+                    category={category}
+                    childCategories={childCategories}
+                    setCategoryId={setCategoryId}
+                />
                 <BrandsPlugin
                     brands={searchState.brands}
                     setBrands={setBrands}

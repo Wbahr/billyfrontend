@@ -135,12 +135,14 @@ export const useDebounceValue = (value, time = 500) => {
     return debouncedValue
 }
 
-export const cleanSearchState = ({ searchState }) => {
+export const cleanSearchState = ({ searchState, selectedCategory, childCategories }) => {
     const { brands, attributes } = searchState || {}
     const removeTypeName = ({ __typename, ...rest }) => rest
     return {
         brands: brands?.map(removeTypeName) || [],
-        attributes: attributes?.map(({ __typename, features, ...rest }) => ({ ...rest, features: features.map(removeTypeName) })) || []
+        attributes: attributes?.map(({ __typename, features, ...rest }) => ({ ...rest, features: features.map(removeTypeName) })) || [],
+        category: selectedCategory ? removeTypeName(selectedCategory) : null,
+        childCategories: childCategories?.map(removeTypeName) || []
     }
 }
 
