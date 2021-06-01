@@ -103,6 +103,18 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps....png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>How to Get Started with Machine Safety (in FOUR Easy Steps)
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">Read More</Button></ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/SensoNODE.png" />
@@ -142,18 +154,6 @@ export default function TechnicallySpeaking() {
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
                                 </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/smart%20elements%20website%20thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>What you need to know about Phoenix Contact's new Axioline Smart Elements
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/axioline-smart-elements" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
