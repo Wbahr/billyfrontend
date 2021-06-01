@@ -29,7 +29,7 @@
       * Because scripts included directly in the injected static page HTML do not get executed,
       * we had to modify the initialization of the Cincopa Photo Gallery as seen below.
       */
-    var setupCincopaGallery = (galleryId) => {
+    var setupCincopaGallery = (galleryId, fid) => {
       /*
        * Generates an asynchronous script tag with an external script source and 
        * programatically adds it to the static page. The external script gets executed when
@@ -53,7 +53,7 @@
       setTimeout(() => {
         var cpo = [];
         cpo["_object"] = galleryId;
-        cpo["_fid"] = "A4EAAvOf5BgW";
+        cpo["_fid"] = fid;
 
         _cpmp = _cpmp || []
         _cpmp.push(cpo);

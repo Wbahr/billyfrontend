@@ -16,7 +16,7 @@ const LinkStyleDiv = styled.div`
 `
 const LinkStyle = styled.a`
   color: #246696;
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
   text-transform: uppercase;
   font-weight: bold;

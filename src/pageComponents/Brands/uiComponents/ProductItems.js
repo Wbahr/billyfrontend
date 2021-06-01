@@ -56,12 +56,15 @@ const ShowMoreBtn = styled.button`
 
 const ProductsDiv = styled.div`
 display: flex;  
-flex-wrap: nowrap;
+flex-wrap: wrap;
 margin: 20px 0 20px 0;
 background-color:  #f2f3f4;
 padding: 15px;
 width: 100%;
 flex-direction: ${ props => props.reverse ? 'row-reverse' : 'row'}; 
+@media (max-width: 768px) {
+	flex-direction: column;
+}
 `
 
 export default function ProductItems(props) {

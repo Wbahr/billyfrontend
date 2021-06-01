@@ -75,6 +75,16 @@ export default function NewAndNoteworthy() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <A href="https://info.airlinehyd.com/pumpmd" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/pump.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>PumpMD™ │ Hydraulic Predictive Maintenance Made Easy</Details>
+                            </TextDiv>
+                        </A>
+                    </Row>
+                    <Row>
                         <A href="https://info.airlinehyd.com/webinar-nfpa-79" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/webinar%20thumb.png" />
@@ -91,16 +101,6 @@ export default function NewAndNoteworthy() {
                             </ImgDiv>
                             <TextDiv>
                                 <Details>Fast-Shipping Inch Aluminum Extrusion</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="https://www.mpsasafety.com/" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/noteworthy/AIHce%20EXP%20website%20promo.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>MPSA Group: Exhibiting Turnkey Machine Safety Solutions at AIHce EXP</Details>
                             </TextDiv>
                         </A>
                     </Row>

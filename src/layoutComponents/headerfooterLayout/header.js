@@ -552,6 +552,11 @@ const brandsSubItems = [
 
 const resourcesSubItems = [
     {
+        label: 'Tech Traveler',
+        to: 'https://info.airlinehyd.com/book-tech-traveler',
+        isExternalLink: true
+    },
+    {
         label: 'Blog - Technically Speaking',
         to: 'https://blog.airlinehyd.com/',
         isExternalLink: true
@@ -576,6 +581,11 @@ const resourcesSubItems = [
     {
         label: 'Manufacturer Catalogs',
         to: '/pages/resources/catalog-request'
+    },
+    {
+        label: 'FAQ',
+        to: 'https://airlinehyd.drift.help/',
+        isExternalLink: true
     },
     {
         label: 'Social Distancing Barrier Linecards',
@@ -614,7 +624,7 @@ const aboutSubItems = [
     },
     {
         label: 'Our Mission',
-        to: '/about/mission-statement',
+        to: '/pages/about/mission-statement',
     }
 ]
 

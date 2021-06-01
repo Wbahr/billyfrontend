@@ -12,7 +12,6 @@ const ArticlesContentDiv = styled.div`
   padding: 15px 0;
 `
 const ArticlesImgDiv = styled.div`
-  max-width: 350px;
   padding: 20px;
   height: 300px;
   overflow: hidden;
@@ -32,6 +31,7 @@ const ArticlesShortLine = styled.div`
   `
 const ArticlesPicture = styled.img`
   width: 100%;
+  max-width: 270px;
   min-height: 100%;
   object-fit: cover;
 `

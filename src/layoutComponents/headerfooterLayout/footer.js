@@ -140,6 +140,13 @@ const Pcopyright = styled.p`
 	color: whitesmoke;
 	margin: 0 16px;
 `
+const A = styled.a`
+	color: white;
+	:hover{
+		text-decoration: none;
+		color: white;
+	}
+`
 const P = styled.p`
 	font-size: 12px;
 	font-weight: 500;
@@ -184,6 +191,8 @@ export default function FooterComponent() {
 						}
 						form div.hs-dependent-field div.hs_email ul.no-list {
 							list-style-type: none;
+							margin: 0;
+							padding: 0;
 						}
 						form div.hs-dependent-field div.hs_email ul.no-list li label.hs-error-msg {
 							color: #B51F2B;
@@ -197,6 +206,9 @@ export default function FooterComponent() {
 							padding: 3px 10px;
 							font-size: 16px;
 							margin-top: 8px;
+						}
+						form div.hs_error_rollup ul {
+							display: none !important;
 						}
 					` 
                 })
@@ -289,9 +301,9 @@ export default function FooterComponent() {
 			
             <Container>
                 <Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
-                <Pcopyright>Privacy Policy</Pcopyright> |
-                <Pcopyright>Terms &amp; Conditions</Pcopyright> |
-                <Pcopyright>Legal Disclaimer</Pcopyright> |
+                <Pcopyright><A href="/pages/privacy-policy" target="_blank">Privacy Policy</A></Pcopyright> |
+                <Pcopyright><A href="https://airlinemedia.airlinehyd.com/Literature/Terms_and_Conditions.pdf">Terms &amp; Conditions</A></Pcopyright> |
+                <Pcopyright><A href="/pages/legal-disclaimer">Legal Disclaimer</A></Pcopyright> |
                 <Pcopyright>Help Center</Pcopyright>
             </Container>
             <OttoDrift />
