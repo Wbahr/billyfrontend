@@ -105,7 +105,7 @@ export default function TechnicallySpeaking() {
                     <Row>
                         <Link href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">
                             <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps....png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps.png" />
                             </ImgDiv>
                         </Link>
                         <TextDiv>
