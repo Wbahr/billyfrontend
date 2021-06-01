@@ -273,6 +273,7 @@ export const GET_ORDERS_DETAIL = gql`
 				customerPartNumberId
 				quantityOrdered
 				quantityOpen
+				quantityInvoiced
 				unitPrice
 				totalPrice
 				trackingNumbers{
@@ -506,19 +507,19 @@ export const QUERY_ITEM_SEARCH = gql`
 			resultPage
 			resultSize
 			searchTotalCount
+      selectedCategory {
+        categoryId
+        categoryName
+        categoryDisplayName
+        categoryCount
+      }
+      childCategories {
+        categoryId
+        categoryName
+        categoryDisplayName
+        categoryCount
+      }
 			searchState {
-				parentCategories {
-					parentCategoryName
-					parentCategoryDisplayName
-					parentCategoryCount
-					selected
-				}
-				childCategories {
-					childCategoryName,
-					childCategoryDisplayName
-					childCategoryCount
-					selected
-				}
 				brands {
 					brandName
 					brandNameDisplay

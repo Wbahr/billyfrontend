@@ -18,7 +18,14 @@ const RESULT_SIZE = 24
 
 export default function SearchResultsPage({ history }) {
     const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
-    const { sortType, searchTerm, searchTerms, resultPage, nonweb } = searchQueryParams
+    const { 
+        sortType, 
+        searchTerm, 
+        searchTerms, 
+        resultPage, 
+        nonweb, 
+        selectedCategoryId,
+    } = searchQueryParams
 
     const setSearchTerms = newInnerSearchTerms => {
         setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
@@ -30,17 +37,20 @@ export default function SearchResultsPage({ history }) {
         handleSetSearchState({ sortType: newSortType })
     }
 
+    const setCategoryId = newCategoryId => {
+        setQueryParam('selectedCategoryId', newCategoryId)
+        handleSetSearchState({ selectedCategoryId: newCategoryId })
+    }
+
     const queryParamSearchState = { ...searchQueryParams, isSynced: false, results: [], totalResults: '--', isSearching: false }
-    const [searchState, setSearchState, { setBrands, setAttributes, setParentCategory, setChildCategory }] = useSearchState(queryParamSearchState)
+    const [searchState, setSearchState, { setBrands, setAttributes }] = useSearchState(queryParamSearchState)
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
-    const { totalResults, isSynced, brands, attributes, parentCategories, childCategories } = searchState
+    const { totalResults, isSynced, brands, attributes, category, childCategories } = searchState
 
     const [lastSearchPayload, setLastSearchPayload] = useState({})
 
     useDidUpdateEffect(() => {
         if (!isSynced) {
-            const parentCategory = parentCategories.find(cat => cat.selected)?.parentCategoryName
-            const childCategory = childCategories && childCategories.find(cat => cat.selected)?.childCategoryName
             const selectedBrands = brands.filter(b => b.selected).map(b => b.brandName).join(',')
             const selectedAttributes = attributes.reduce((accum, { attributeName, features }) => {
                 const selectedFeatures = features.filter(f => f.selected).map(f => f.featureName)
@@ -54,15 +64,13 @@ export default function SearchResultsPage({ history }) {
                 sortType,
                 nonweb,
                 resultPage: 1,
-                parentCategory,
-                childCategory,
                 brands: selectedBrands,
                 ...selectedAttributes
             }))
 
             if (resultPage === '1') performItemSearch()
         }
-    }, [searchState.brands, searchState.attributes, searchState.childCategories, searchState.parentCategories])
+    }, [searchState.brands, searchState.attributes])
 
     useDidUpdateEffect(() => {
         if (resultPage === '1') {
@@ -70,21 +78,19 @@ export default function SearchResultsPage({ history }) {
         } else {
             setQueryParam('resultPage', 1)
         }
-    }, [searchTerm, searchTerms, sortType, nonweb])
+    }, [searchTerm, searchTerms, sortType, nonweb, selectedCategoryId])
 
     useEffect(() => {
         performItemSearch()
     }, [resultPage])
 
     useDidUpdateEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
-        if (!searchQueryParams.parentCategories.length
-			&& !searchQueryParams.childCategories.length
-			&& !searchQueryParams.brands.length
+        if (!searchQueryParams.brands.length
 			&& !searchQueryParams.attributes.length //If these contain values, that means the search state updated the query string, so we do not need to reset
         ) {
             setSearchState(queryParamSearchState)
         }
-    }, [searchQueryParams.parentCategories.length, searchQueryParams.childCategories.length, searchQueryParams.brands.length, searchQueryParams.attributes.length])
+    }, [searchQueryParams.brands.length, searchQueryParams.attributes.length])
 
     const performItemSearch = () => {
         handleSetSearchState({ isSearching: true })
@@ -94,13 +100,12 @@ export default function SearchResultsPage({ history }) {
                 innerSearchTerms: searchTerms ? searchTerms.split(',') : [],
                 searchType: nonweb === 'true' ? 'nonweb' :'web',
                 sortType,
+                selectedCategoryId,
                 resultPage,
                 resultSize: RESULT_SIZE,
                 searchState: {
                     brands,
-                    parentCategories,
-                    childCategories,
-                    attributes,
+                    attributes
                 }
             }
         }
@@ -133,11 +138,10 @@ export default function SearchResultsPage({ history }) {
                 title="Search Results"
             />
             <DrawerPlugin>
-                <CategoriesPlugin
+                <CategoriesPlugin 
+                    category={category}
                     childCategories={childCategories}
-                    setChildCategories={setChildCategory}
-                    parentCategories={parentCategories}
-                    setParentCategories={setParentCategory}
+                    setCategoryId={setCategoryId}
                 />
                 <BrandsPlugin
                     brands={searchState.brands}
