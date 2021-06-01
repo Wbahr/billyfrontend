@@ -16,12 +16,12 @@ const Container = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	margin: 0 auto;
+    padding: 0 5px;
 `
 const RelatedLinkDiv = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	width: 100%;
-	height: 220px;
 	margin: 20px 0;
 `
 

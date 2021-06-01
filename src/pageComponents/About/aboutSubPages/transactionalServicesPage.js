@@ -5,9 +5,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
     max-width: 1300px;
-    margin: 50px auto;
+    margin: 0px auto;
     display: flex;
     flex-direction: column;
+`
+const HeaderContainer = styled.div`
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2)), url(https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg);
+    background-size: cover;
+    background-position: 50% 0px;
+    background-repeat: no-repeat;
+    background-color: black;
+    height: 200px;
 `
 const Span = styled.span`
     font-weight: bold;
@@ -21,6 +29,8 @@ const Div_2 = styled.div`
 const ServiceList = styled.p`
 `
 const HeaderDiv = styled.div`
+    padding: 70px 0 25px;
+    text-align: center;
 `
 const Ul = styled.ul`
     font-size: 12px;
@@ -47,7 +57,7 @@ const Div_icon = styled.div`
 const AllServiceDiv = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
+    margin: 50px 0;
     justify-content: center;
     flex-wrap: wrap;
 `
@@ -73,10 +83,12 @@ export default function TransactionalServicesPage() {
 
     return (
         <>
-            <Container>
+            <HeaderContainer>
                 <HeaderDiv>
                     <Header text="Transactional Services" />
                 </HeaderDiv>
+            </HeaderContainer>
+            <Container>
                 <AllServiceDiv>
                     <ServiceDiv>
                         <Div_icon>
