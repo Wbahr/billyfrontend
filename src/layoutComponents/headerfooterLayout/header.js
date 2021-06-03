@@ -413,6 +413,10 @@ const servicesSubItems = [
     {
         label: 'Trola-Dyne Systems',
         to: '/pages/services/trola-dyne'
+    },
+    {
+        label: 'Rexroth/Indramat Repair Service',
+        to: '/pages/services/indramat-repair'
     }
 ]
 
@@ -572,7 +576,7 @@ const resourcesSubItems = [
     },
     {
         label: 'Line Cards & Brochures',
-        to: '/linecards'
+        to: '/pages/resources/linecards'
     },
     {
         label: 'Apps',
@@ -643,7 +647,7 @@ const contactSubItems = [
     },
     {
         label: 'Government Sales',
-        to: '/government-sales'
+        to: '/pages/government-sales'
     }
 ]
 const headerTabs = categories => [
