@@ -95,7 +95,7 @@ export default function NewAndNoteworthy() {
                         </A>
                     </Row>
                     <Row>
-                        <A href="https://www.airlinehyd.com/pages/industries/inch-extrusion.htm" target="_blank">
+                        <A href="/pages/industries/inch-extrusionhtm" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/frame-world%20thumb.png" />
                             </ImgDiv>
