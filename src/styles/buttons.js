@@ -29,7 +29,7 @@ export const ButtonBlack = styled.button`
   align-items: center;
   justify-content: center;
   color: ${props => props.theme.buttonForegroundColor};
-  background: transparent;
+  background-image: linear-gradient(to top left, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   padding: 4px 12px;
   font-size: 18px;
   font-family: ${props => props.theme.fontName};
