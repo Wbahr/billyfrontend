@@ -165,7 +165,7 @@ const ACallUs = styled.a`
 	font-weight: 600;
 	margin: 0 0 0 8px;
 `
-const Button = styled.button`
+const TransparentButton = styled.button`
 	cursor: pointer;
 	display: flex;
 	align-items: center;
@@ -234,7 +234,7 @@ export default function FooterComponent() {
         <>
             <Newsletter>
                 <NewsletterLabel>Subscribe to Our Blog</NewsletterLabel>
-                <Button id="hubspotForm"></Button>
+                <TransparentButton id="hubspotForm"></TransparentButton>
             </Newsletter>
 			
             <ContainerTop>
