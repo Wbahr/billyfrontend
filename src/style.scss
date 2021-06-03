@@ -81,6 +81,9 @@
 					0 16px 16px rgba(0,0,0,0.11), 
 					0 32px 32px rgba(0,0,0,0.11);
 			}
+			.boxShadow2{
+					box-shadow: 0 10px 6px -6px #777;
+			}
 			.contactTab{
 				.callCustomerServiceButton{
 					background-image: linear-gradient(to top left,#950f23,#DB1633);
@@ -93,8 +96,50 @@
 					text-decoration: none;
 				}
 			}
-
+			.industries{
+				.inchExtrusion{
+					h2{
+						font-size: 27px;
+						letter-spacing: 1px;
+						line-height: 35px;
+						color: #333333;
+						text-transform: uppercase;
+					}
+					a{
+						transition: 0.2s;
+					}
+					a:hover{
+						text-decoration: none;
+						transform: translate(0, -4px);	
+					}
+				}
+			}
 			.resources{
+				.lineCards{
+					h6{
+						text-transform: uppercase;
+						letter-spacing: 1px;
+						font-weight: bold;
+					}
+					p{
+						margin-bottom: 0;
+					}
+					.lineCardsName{
+						font-weight: 500;
+						color: black;
+						&:hover{
+							text-decoration: none;	
+						}
+					}
+					.moveUpEffect{
+						margin: 15px 0;
+						transition: 0.2s;
+						&:hover{
+							text-decoration: none;
+							transform: translate(0, -4px);	
+						}
+					}
+				}
 				h6{
 					font-weight: bold;
 				}
@@ -102,6 +147,12 @@
 			.trolaDyne{
 				h5{
 					color:	#246696;
+					font-weight: bold;
+				}
+			}
+			.services{
+				.indramatRepair{
+
 				}
 			}
 			.primaryMetals{
@@ -109,6 +160,17 @@
 					font-size: 14px;
 				}
 			}	
+			.government{
+				span{
+					font-weight: bold;
+				}
+				h6{
+					font-weight: bold;
+				}
+				h2{
+					font-weight: bold;
+				}
+			}
 			.engineered_systems{
 				a {
 					color: black;
@@ -783,7 +845,7 @@
 					.moreInfoDiv{
 						border-bottom: 3px solid #f2f3f4;
 						width: 30%;
-						margin: 50px auto;
+						margin: 25px auto;
 					}
 	
 					/*--------Margin and Padding styling--------------*/
@@ -839,6 +901,31 @@
 					&:hover {
 							transform: translateY(-5px);
 					} 
+					a {
+						color: white;
+					}
+				}
+				.blueButton{
+					background-color: #246696;
+					color: white;
+					font-weight: bold;
+					border-radius: 3px;
+					font-size: 16px;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+					border: 0;
+					padding: 10px 15px;
+					transition-property: transform;
+					transition: 0.5s ease;
+					&:hover {
+							transform: translateY(-5px);
+					} 
+					a {
+						color: white; 
+						&:hover{
+							text-decoration: none;
+						}
+					}
 				}
 				.btnLink{
 					color: white;
@@ -924,6 +1011,12 @@
 					@media only screen and (max-width: 768px) {
 						.historyBanner {
 							 background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/images/airline_building/Airline%20Headquarters.jpg);
+						}
+						h1{
+							font-size: 32px;
+						}
+						h2{
+							font-size: 22px;
 						}
 					}
 					.airlineHistory{

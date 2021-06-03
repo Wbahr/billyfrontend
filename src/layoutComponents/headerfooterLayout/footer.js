@@ -165,7 +165,16 @@ const ACallUs = styled.a`
 	font-weight: 600;
 	margin: 0 0 0 8px;
 `
-
+const TransparentButton = styled.button`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	padding: 4px 12px;
+	border: none;
+	margin: 5px 0;
+`
 
 export default function FooterComponent() {
     
@@ -225,7 +234,7 @@ export default function FooterComponent() {
         <>
             <Newsletter>
                 <NewsletterLabel>Subscribe to Our Blog</NewsletterLabel>
-                <ButtonBlack id="hubspotForm"></ButtonBlack>
+                <TransparentButton id="hubspotForm"></TransparentButton>
             </Newsletter>
 			
             <ContainerTop>
