@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../setup/context'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
-const DivButtonContainer = styled.div `
+const DivButtonContainer = styled.div`
 	margin: auto auto 0 auto;
 `
 
@@ -53,13 +53,13 @@ const CheckoutButtons = ({ history }) => {
     const hasZeroPriceItem = cartHasZeroPricedItem(cart, itemPrices)
 
     const moveToCheckoutHandler = () => {
-        if (!hasZeroPriceItem){
+        if (!hasZeroPriceItem) {
             history.push('/checkout')
         }
     }
 
     const moveToCreateQuoteHandler = () => {
-        if (!hasZeroPriceItem){
+        if (!hasZeroPriceItem) {
             history.push('/create-quote')
         }
     }
@@ -72,16 +72,16 @@ const CheckoutButtons = ({ history }) => {
                         hasZeroPriceItem && <p>Zero Price items present</p>
                     }
                     {
-                        (userInfo?.isAirlineEngineerUser) 
+                        (userInfo?.isAirlineEngineerUser)
                             ? (
                                 <DivCheckoutButton disabled>
-                                    <FontAwesomeIcon icon="lock" color="white"/>
+                                    <FontAwesomeIcon icon="lock" color="white" />
                                     <p>Engineer User</p>
                                 </DivCheckoutButton>
                             )
                             : (
                                 <DivCheckoutButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCheckoutHandler}>
-                                    <FontAwesomeIcon icon="lock" color="white"/>
+                                    <FontAwesomeIcon icon="lock" color="white" />
                                     <p>Start Secure Checkout</p>
                                 </DivCheckoutButton>
                             )
@@ -89,7 +89,7 @@ const CheckoutButtons = ({ history }) => {
                     {
                         (userInfo?.isImpersonatorUser) && (
                             <DivQuoteButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCreateQuoteHandler}>
-                                <FontAwesomeIcon icon='file-invoice-dollar' color="white"/>
+                                <FontAwesomeIcon icon='file-invoice-dollar' color="white" />
                                 <p>Create a Quote</p>
                             </DivQuoteButton>
                         )

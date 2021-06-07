@@ -6,7 +6,7 @@ export const shippingScheduleSchema = object({
         packingBasis: string().min(1).required(),
         quoteRefNo: string().when('isQuote', (isQuote, schema) => {
             return isQuote
-                ? schema.min(1).required()
+                ? schema.min(1)
                 : schema
         })
     })
