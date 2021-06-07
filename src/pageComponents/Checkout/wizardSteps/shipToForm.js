@@ -132,14 +132,14 @@ export function ShipToForm(props) {
         if (checked && context.userInfo?.isAirlineEmployee) {
             setShowSaveShipToModal(true)
         }
+
+        setFieldValue('shipto.saveShipTo', checked)
     }
     
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
 
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
-    
-    console.log('values', values.shipto)
 
     return (
         <WrapForm>
@@ -200,7 +200,12 @@ export function ShipToForm(props) {
                     />
                     {(values.shipto.selectedShipTo === -1) && (
                         <FormRow>
-                            <FormikCheckbox label="Save Ship To" name="shipto.saveShipTo" onChange={handleSaveShipToChange}/>
+                            <FormikCheckbox 
+                                label="Save Ship To" 
+                                name="shipto.saveShipTo" 
+                                value={values.shipto.saveShipTo} 
+                                onChange={(event) => { handleSaveShipToChange(event) }}
+                            />
                         </FormRow>
                     )}
                 </>
