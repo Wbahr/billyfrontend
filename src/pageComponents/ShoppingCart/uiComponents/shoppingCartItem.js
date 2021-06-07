@@ -445,8 +445,8 @@ export default function ShoppingCartItem(props) {
                                             <Checkbox
                                                 style={{ padding: 3 }}
                                                 size="small"
-                                                defaultChecked={cartItem.isDropship}
-                                                onChange={handleDropshipChange}
+                                                checked={cartItem.isDropship}
+                                                onChange={(event) => { handleDropshipChange(event) }}
                                             />
                                         </Grid>
     
