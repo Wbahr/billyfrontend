@@ -404,7 +404,11 @@ const servicesSubItems = [
     },
     {
         label: 'Engineered Systems & Assemblies',
-        to: '/pages/services/engineered-systems-and-assemblies'
+        to: '/pages/services/engineered-systems-and-assemblies'    
+    },
+    {
+        label: 'Repair & Field Services',
+        to: '/pages/services/repair-field-services'
     },
     {
         label: 'Energy Efficiency',
@@ -580,7 +584,7 @@ const resourcesSubItems = [
     },
     {
         label: 'Apps',
-        to: '/apps'
+        to: '/pages/apps'
     },
     {
         label: 'Manufacturer Catalogs',
@@ -600,7 +604,7 @@ const resourcesSubItems = [
 const aboutSubItems = [
     {
         label: 'Locations',
-        to: '/about/locations',
+        to: '/pages/about/locations',
     },
     {
         label: 'Transactional Services',
