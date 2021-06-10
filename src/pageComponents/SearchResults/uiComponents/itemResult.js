@@ -8,6 +8,7 @@ import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import CustomerPartModal from '../../_common/modals/CustomerPartModal'
+import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -182,7 +183,7 @@ const Img = styled.img`
 `
 
 export default function ItemResult({ result, details, addedToCart, isParentCalculateStock }) {
-    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, addCatalogItem } = useContext(Context)
+    const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, addCatalogItem, userInfo } = useContext(Context)
 
     let foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
 
@@ -398,7 +399,10 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                 </DivPartNumberRowSpread>
 
                 <DivSpace>
-                    {(isCatalogItem || !!unitPrice) && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                    {(isCatalogItem || 
+                        !!unitPrice || 
+                        (userInfo && [AIRLINE_ENGINEER_USER, IMPERSONATOR_USER].includes(userInfo.role))) && 
+                            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
                 </DivSpace>
             </DivPartDetailsRow>
         </DivItemResultContainer>
