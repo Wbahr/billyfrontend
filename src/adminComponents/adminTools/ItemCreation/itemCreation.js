@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
+import Context from '../../../setup/context'
 import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Button, CircularProgress, Grid } from '@material-ui/core'
 import ItemCreationModal from './uiComponents/itemCreationModal'
-import { getImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import ItemResult from '../../../pageComponents/SearchResults/uiComponents/itemResult'
 import { InputType } from 'pageComponents/_common/form/FormField'
 
 const QUERY_ITEM_CREATION_DATA = gql`
@@ -47,14 +48,12 @@ const DivSearchItemContainer = styled.div`
 	flex-direction: column;
 	margin: 10px;
 	padding: 5px;
-	width: 225px;
+	width: 320px;
 	height: auto;
 	text-align: center;
 	justify-content: center;
 	align-items: center;
 	background-color: white;
-	border: 1px solid grey;
-	border-radius: 2px;
 `
 
 const SearchResultsContainer = styled.div`
@@ -91,6 +90,11 @@ export default function ItemCreationPage({ history }) {
     const [searched, setSearched] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [submitResponse, setSubmitResponse] = useState(null)
+
+    const {
+        itemDetails,
+        getItemDetails,
+    } = useContext(Context)
     
     useEffect(() => {
         if (searchTerm && selectedSupplier) {
@@ -101,7 +105,16 @@ export default function ItemCreationPage({ history }) {
             }
         }
     }, [searchTerm, selectedSupplier])
-  
+
+    useEffect(() => {
+        if (itemSearchResult.length > 0) {
+            const itemsWithoutDetails = itemSearchResult.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUid))
+            if (itemsWithoutDetails.length) {
+                getItemDetails(itemsWithoutDetails)
+            }
+        }
+    }, [itemSearchResult])
+
     const maxPage = 3
     useQuery(QUERY_ITEM_CREATION_DATA, {
         onCompleted: data => {
@@ -119,7 +132,7 @@ export default function ItemCreationPage({ history }) {
             setItemSearchResult([...itemSearchResult, ...data.itemSearch.result])
         }
     })
-  
+
     function searchItems() {
         performItemSearch({
             variables: {
@@ -131,9 +144,9 @@ export default function ItemCreationPage({ history }) {
             }
         })
     }
-  
+
     const handleChange = (e, value) => setSelectedSupplier(value)
-  
+
     function resetItem() {
         setSearched(false)
         setSearchTerm('')
@@ -142,36 +155,33 @@ export default function ItemCreationPage({ history }) {
         setCurrentPage(1)
         setShowNewItemForm(false)
     }
-  
-    const mutateItemId = (itemId) => itemId.replace(/\s/g, '-')
-  
+
     function showModal(response) {
         setSubmitResponse(response)
         if (response.success) {
             resetItem()
         }
     }
-  
-    const searchResultItems = itemSearchResult.map((element, index) => {
-        const resultImage = getImagePath(element.thumbnail_image_path)
-        const mutatedItemId = mutateItemId(element.itemCode)
-        const href = `/product/${mutatedItemId}/${element.invMastUid}`
+
+    const searchResultItems = itemSearchResult.map((result, index) => {
+        const details = itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}
         return (
             <DivSearchItemContainer key={index}>
-                <img src={resultImage} width="auto" height="125" alt={element.itemCode}/>
-                <h6>{element.itemCode}</h6>
-                <p>{element.itemDescription}</p>
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                    View Details
-                </a>
+                <ItemResult
+                    key={result.invMastUid}
+                    result={result}
+                    details={details}
+                    itemCreationFlag={true}
+                    isParentCalculateStock={true}
+                />
             </DivSearchItemContainer>
         )
     })
-    
+
     const handlePartNoChange = e => {
         setSearchTerm(e.target.value.replace(/[^A-Za-z0-9 \-,./+=:()#]/, ''))
     }
-  
+
     return (
         <>
             {!!submitResponse && (
@@ -181,7 +191,7 @@ export default function ItemCreationPage({ history }) {
                     history={history}
                 />
             )}
-            
+
             <ContentScreenContainer>
                 <div style={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center', maxWidth: 500 }}>
                     <div style={{ maxWidth: '500px', flex: 1 }}>
@@ -193,7 +203,7 @@ export default function ItemCreationPage({ history }) {
                             placeholder="Enter Manufacturer ID"
                             label="Manufacturer Part Number"
                         />
-                    
+
                         <Grid container wrap="nowrap">
                             <InputType
                                 style={{ margin: '16px 0' }}
@@ -205,11 +215,11 @@ export default function ItemCreationPage({ history }) {
                                 onSelectChange={handleChange}
                                 options={supplierList}
                             />
-                            {!supplierList.length && <div style={{ marginTop: 35, marginLeft: 10 }}><CircularProgress size={25}/></div>}
+                            {!supplierList.length && <div style={{ marginTop: 35, marginLeft: 10 }}><CircularProgress size={25} /></div>}
                         </Grid>
                     </div>
                 </div>
-                
+
                 <ButtonContainer>
                     <Button
                         disabled={loading}
@@ -217,7 +227,7 @@ export default function ItemCreationPage({ history }) {
                     >
                         Clear Item
                     </Button>
-                    
+
                     <Button
                         variant="contained"
                         color="primary"
@@ -227,14 +237,14 @@ export default function ItemCreationPage({ history }) {
                         {loading ? 'Searching Items..' : 'Search for Item'}
                     </Button>
                 </ButtonContainer>
-                
+
                 {searched && (
                     <>
                         <SearchResultsContainer>
                             {searchResultItems}
                             {searchResultItems.length === 0 && <p>No Items Found</p>}
                         </SearchResultsContainer>
-                        
+
                         <ButtonContainer>
                             <Button
                                 disabled={loading}
@@ -242,7 +252,7 @@ export default function ItemCreationPage({ history }) {
                             >
                                 Clear Item
                             </Button>
-                            
+
                             <Button
                                 color="secondary"
                                 disabled={(currentPage > maxPage) || loading || !searchResultItems.length}
@@ -250,7 +260,7 @@ export default function ItemCreationPage({ history }) {
                             >
                                 {currentPage <= maxPage ? 'View more Items' : 'Contact Item Master'}
                             </Button>
-                            
+
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -262,7 +272,7 @@ export default function ItemCreationPage({ history }) {
                         </ButtonContainer>
                     </>
                 )}
-                
+
                 {showNewItemForm && (
                     <NewItemForm
                         searchTerm={searchTerm}
