@@ -139,6 +139,7 @@ export default function ItemCreationPage({ history }) {
                 searchParams: {
                     searchTerm: `${selectedSupplier.prefix || ''} ${searchTerm}`.trim(),
                     resultSize: 10,
+                    resultPage: currentPage,
                     sortType: 'relevancy',
                 }
             }
