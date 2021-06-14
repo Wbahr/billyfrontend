@@ -53,7 +53,7 @@ export default function StripePaymentSection({ setCardIsValid }) {
 
     return (
         <Container>
-            <Label>Credit Card</Label>
+            <Label>Credit Card*</Label>
             <Div>
                 <CardElement style={cardStyle} onChange={handleChange}/>
                 <p>{error}</p>

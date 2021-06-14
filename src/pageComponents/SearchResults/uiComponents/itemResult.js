@@ -182,7 +182,7 @@ const Img = styled.img`
 	max-width: 100%;
 `
 
-export default function ItemResult({ result, details, addedToCart, isParentCalculateStock }) {
+export default function ItemResult({ result, details, addedToCart, isParentCalculateStock, itemCreationFlag  }) {
     const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, addCatalogItem, userInfo } = useContext(Context)
 
     let foundAvailability = itemAvailabilities.find(avail => avail.invMastUid === result.invMastUid)
@@ -221,12 +221,12 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
         }
     }, [customerPartNumbers])
 
-    const itemDetailsLink = isCatalogItem 
+    const itemDetailsLink = isCatalogItem
         ? null
         : `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
 
     const handleAddToCart = () => {
-        if (isCatalogItem){
+        if (isCatalogItem) {
             addCatalogItem({
                 itemCatalogUid: result.itemCatalogUid,
                 quantity: parseInt(quantity)
@@ -240,7 +240,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                 customerPartNumberId: customerPartNumber || null
             })
         }
-        
+
         addedToCart()
         setQuantity(1)
     }
@@ -254,7 +254,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                     isCatalogItem ? (
                         <>
                             <DivPartImg>
-                                <Img src={getLargeImagePath(details)}/>
+                                <Img src={getLargeImagePath(details)} />
                             </DivPartImg>
                             <MoreDetailsCatalogItem>Catalog Item</MoreDetailsCatalogItem>
                         </>
@@ -263,9 +263,9 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                             <Link to={itemDetailsLink}>
                                 <DivPartImg>
                                     {!details.itemMedia ? (
-                                        <SkeletonImage/>
+                                        <SkeletonImage />
                                     ) : (
-                                        <Img src={getLargeImagePath(details)}/>
+                                        <Img src={getLargeImagePath(details)} />
                                     )}
                                 </DivPartImg>
                             </Link>
@@ -295,8 +295,8 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                 !details ? (
                                     <>
                                         <div style={{ width: '100%' }}>
-                                            <SkeletonDetail style={{ width: '85%', margin: '5px' }}/>
-                                            <SkeletonDetail style={{ width: '60%', margin: '5px' }}/>
+                                            <SkeletonDetail style={{ width: '85%', margin: '5px' }} />
+                                            <SkeletonDetail style={{ width: '60%', margin: '5px' }} />
                                         </div>
                                     </>
                                 ) : (
@@ -337,73 +337,75 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                         />
                     </DivPartNumberRow>
                 )}
-
-                <LocationsModal
-                    invMastUid={result.invMastUid}
-                    availabilityInfo={foundAvailability}
-                    unitPrice={unitPrice}
-                    isParentCalculateStock={isParentCalculateStock}
-                />
-
-                <DivPartNumberRowSpread>
-                    <Div>
-                        <span>Quantity:</span>
-                        <QuantityInput
-                            quantity={quantity}
-                            unitSize={unitSize}
-                            unitOfMeasure={unitOfMeasure}
-                            roundType={roundType}
-                            handleUpdate={setQuantity}
-                            min='0'
+                {!itemCreationFlag && (
+                    <>
+                        <LocationsModal
+                            invMastUid={result.invMastUid}
+                            availabilityInfo={foundAvailability}
+                            unitPrice={unitPrice}
+                            isParentCalculateStock={isParentCalculateStock}
                         />
-                        {(unitSize > 1) && (
-                            <AirlineChip style={{ marginLeft: '0.5rem' }}>
-                                X {unitSize}
-                            </AirlineChip>
-                        )}
-                    </Div>
 
-                    {
-                        isCatalogItem ? (
-                            <>
-                                {
-                                    unitPrice ? (
-                                        <Div>
-                                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                            <P>/{unitOfMeasure}</P>
-                                        </Div>
-                                    ) : (
-                                        <ACall href="tel:+18009997378">Call for Price</ACall>
-                                    )
-                                }
-                            </>
-                        ) : (
-                            <>
-                                {unitPrice ? (
-                                    <Div>
-                                        <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                        <P>/{unitOfMeasure}</P>
-                                    </Div>
-                                ) : !foundPrice ? (
-                                    <Div>
-                                        <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }}/>
-                                    </Div>
-                                ) : (
-                                    <ACall href="tel:+18009997378">Call for Price</ACall>
+                        <DivPartNumberRowSpread>
+                            <Div>
+                                <span>Quantity:</span>
+                                <QuantityInput
+                                    quantity={quantity}
+                                    unitSize={unitSize}
+                                    unitOfMeasure={unitOfMeasure}
+                                    roundType={roundType}
+                                    handleUpdate={setQuantity}
+                                    min='0'
+                                />
+                                {(unitSize > 1) && (
+                                    <AirlineChip style={{ marginLeft: '0.5rem' }}>
+                                        X {unitSize}
+                                    </AirlineChip>
                                 )}
-                            </>
-                        )
-                    }
+                            </Div>
 
-                    
-                </DivPartNumberRowSpread>
+                            {
+                                isCatalogItem ? (
+                                    <>
+                                        {
+                                            unitPrice ? (
+                                                <Div>
+                                                    <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                    <P>/{unitOfMeasure}</P>
+                                                </Div>
+                                            ) : (
+                                                <ACall href="tel:+18009997378">Call for Price</ACall>
+                                            )
+                                        }
+                                    </>
+                                ) : (
+                                    <>
+                                        {unitPrice ? (
+                                            <Div>
+                                                <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                <P>/{unitOfMeasure}</P>
+                                            </Div>
+                                        ) : !foundPrice ? (
+                                            <Div>
+                                                <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }} />
+                                            </Div>
+                                        ) : (
+                                            <ACall href="tel:+18009997378">Call for Price</ACall>
+                                        )}
+                                    </>
+                                )
+                            }
 
-                <DivSpace>
-                    {(isCatalogItem || 
-                        !!unitPrice || 
-                        (userInfo && [AIRLINE_ENGINEER_USER, IMPERSONATOR_USER].includes(userInfo.role))) && 
-                            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
-                </DivSpace>
+                        </DivPartNumberRowSpread>
+                        
+                        <DivSpace>
+                            {(isCatalogItem || 
+                                !!unitPrice || 
+                                (userInfo && [AIRLINE_ENGINEER_USER, IMPERSONATOR_USER].includes(userInfo.role))) && 
+                                    <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                        </DivSpace>
+                    </>
+                )}
             </DivPartDetailsRow>
         </DivItemResultContainer>
     )
