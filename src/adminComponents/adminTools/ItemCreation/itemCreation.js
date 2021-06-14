@@ -97,6 +97,10 @@ export default function ItemCreationPage({ history }) {
     } = useContext(Context)
     
     useEffect(() => {
+        setSearched(false)
+        setItemSearchResult([])
+        setCurrentPage(1)
+        setShowNewItemForm(false)
         if (searchTerm && selectedSupplier) {
             setSearchEnabled(true)
         } else {
