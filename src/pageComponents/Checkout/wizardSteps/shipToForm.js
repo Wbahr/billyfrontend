@@ -138,6 +138,11 @@ export function ShipToForm(props) {
     
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
 
+    const handleCustomContactInput = name => ({ target: { value } }) => {
+        setFieldValue(`contact.${name}`, value)
+        setFieldValue(`shipto.${name}`, value)
+    }
+    
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
 
@@ -160,21 +165,25 @@ export function ShipToForm(props) {
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact First Name*"
                                 name="contact.firstName"
+                                onChange={handleCustomContactInput('firstName')}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Last Name*"
                                 name="contact.lastName"
+                                onChange={handleCustomContactInput('lastName')}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Phone*"
                                 name="contact.phone"
+                                onChange={handleCustomContactInput('phone')}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Email*"
                                 name="contact.email"
+                                onChange={handleCustomContactInput('email')}
                             />
                             {values.contact.savedContact !== -1 && (
                                 <SavedContactDiv>
