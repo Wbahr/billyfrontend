@@ -44,6 +44,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.companyName', values.shipto.companyName)
             setFieldValue('billing.email', values.shipto.email)
             setFieldValue('billing.phone', values.shipto.phone)
+            setFieldValue('billing.sameAsShipping', true)
         } else {
             setFieldValue('billing.firstName', defaultBilling.firstName)
             setFieldValue('billing.lastName', defaultBilling.lastName)
@@ -56,6 +57,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.companyName', defaultBilling.companyName)
             setFieldValue('billing.email', defaultBilling.email)
             setFieldValue('billing.phone', defaultBilling.phone)
+            setFieldValue('billing.sameAsShipping', false)
         }
 
         //setFieldValue does not trigger validation. This is a workaround.
@@ -64,18 +66,33 @@ export default function NewCardSection(props) {
         setTimeout(() => setFieldTouched('billing.zip', true))
     }
 
+    const handleCheckboxChange = name => ({ target: { checked } }) => {
+        setFieldValue(name, checked)
+    }
+
     return (
         <div>
             {!isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
-                    {!!context.userInfo &&  (
-                        <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" style={{ margin: 'auto 10px auto 0px' }} />
+                    {!!context.userInfo && (
+                        <FormikCheckbox
+                            label="Save card for future payments?"
+                            name="billing.savePaymentMethod"
+                            style={{ margin: 'auto 10px auto 0px' }}
+                            value={values.billing.savePaymentMethod}
+                            onChange={handleCheckboxChange('billing.savePaymentMethod')}
+                        />
                     )}
                 </Row>
             )}
             <Row style={{ padding: '8px 10px' }}>
-                <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
+                <StyledCheckbox
+                    onChange={handleSameAsShippingChange}
+                    type='checkbox'
+                    name="billing.sameAsShipping"
+                    checked={values.billing.sameAsShipping}
+                />
                 <Label htmlFor="billing.sameAsShipping">Billing same as shipping</Label>
             </Row>
 
