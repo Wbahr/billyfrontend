@@ -36,7 +36,7 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
                 head: [columns.filter(filterCols).map(({ Header }) => Header)],
                 body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
             }
-            const doc = new jsPDF()
+            const doc = new jsPDF.jsPDF()
             doc.autoTable(pdfFormat)
             doc.save(`${name}.pdf`)
         })

@@ -8,11 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
+import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
 import { parse } from 'query-string'
 import { CircularProgress } from '@material-ui/core'
-import { exportToExcel, exportToPdf, getCsvFormattedData } from '../../_common/helpers/generalHelperFunctions'
-import { CSVLink } from 'react-csv'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -87,21 +86,6 @@ const Pdate = styled.p`
 
 const Select = styled.select`
 	margin-left: 16px;
-`
-
-const ButtonExport = styled.div`
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 40px;
-	border: 1px solid lightgrey;
-	border-radius: 5px;
-	margin: 10px 4px;
-	&:hover {
-		background-color: whitesmoke;
-	}
 `
 
 const SpinnerDiv = styled.div`
@@ -231,21 +215,6 @@ export default function OrdersTable({ history }) {
         usePagination
     )
 	
-    const exportIgnoreColumns = ['filter']
-    const prepareDataForExport = ({ total, ...rest }) => ({ ...rest, total: total.props.value })
-	
-    const handleExcelExport = () => {
-        if (data.length) {
-            exportToExcel(data.map(prepareDataForExport), columns, 'Orders', exportIgnoreColumns)
-        }
-    }
-	
-    const handlePdfExport = () => {
-        if (data.length) {
-            exportToPdf(data.map(prepareDataForExport), columns, 'Orders', exportIgnoreColumns)
-        }
-    }
-	
     return (
         <TableContainer>
             <h4>Orders</h4>
@@ -289,22 +258,7 @@ export default function OrdersTable({ history }) {
                         </DivSpacer>
                     </DivRowDate>
                 </div>
-                <DivRow>
-                    <ButtonExport>
-                        <FontAwesomeIcon size='lg' icon="copy" color="grey"/>
-                    </ButtonExport>
-                    <ButtonExport onClick={handlePdfExport}>
-                        <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000"/>
-                    </ButtonExport>
-                    <ButtonExport onClick={handleExcelExport}>
-                        <FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42"/>
-                    </ButtonExport>
-                    <CSVLink data={getCsvFormattedData(data.map(prepareDataForExport), columns, exportIgnoreColumns)}>
-                        <ButtonExport>
-                            <FontAwesomeIcon size='lg' icon="file-csv" color="grey"/>
-                        </ButtonExport>
-                    </CSVLink>
-                </DivRow>
+                <ExportButtons data={data} columns={columns} title='Orders' />
             </DivRow>
 			
             {
