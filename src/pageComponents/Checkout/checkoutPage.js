@@ -323,9 +323,10 @@ const FormContainer = props => {
     const [paymentInfo, setPaymentInfo] = useState({})
     const [selectedCard, setSelectedCard] = useState('new_card')
     const [creditCardLoading, setCreditCardLoading] = useState(false)
+    const [guestFetching, setGuestFetching] = useState(false)
     const { userInfo } = useContext(Context)
 
-    const confirmCardSetup = () => {
+    const confirmCardSetup = (paymentInfo) => {
         if (cardType === 'new_card' && !creditCardLoading) {
             setCreditCardLoading(true)
             const cardElement = elements.getElement(CardElement)
@@ -350,15 +351,24 @@ const FormContainer = props => {
         }
     })
 
+    const [handleGuestPayment] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ paymentMethodInfo }) => {
+            setPaymentInfo({ ...paymentInfo, ...paymentMethodInfo })
+            confirmCardSetup({ ...paymentInfo, ...paymentMethodInfo })
+            setGuestFetching(false)
+        }
+    })
+
     const handleMoveStep = nextStepIdx => {
         const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)
         if (prevStepKeys.every(i => stepValidated[i]) && nextStepIdx !== currentStep) {
             if (nextStepIdx === 3 && paymentMethod !== 'purchase_order') {
                 if (userInfo) {
-                    confirmCardSetup()
+                    confirmCardSetup(paymentInfo)
                 } else {
-                    getPaymentInfo(transformForPaymentInfo(props.values))
-                    setCurrentStep(nextStepIdx)
+                    setGuestFetching(true)
+                    handleGuestPayment(transformForPaymentInfo(props.values))
                 }
             } else {
                 setCurrentStep(nextStepIdx)
@@ -382,7 +392,7 @@ const FormContainer = props => {
 
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, getPaymentInfo, handleMoveStep }}/>
+                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, getPaymentInfo, handleMoveStep }}/>
                 {!validationSchema && <Loader />}
             </Container>
         </>

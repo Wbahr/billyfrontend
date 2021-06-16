@@ -38,7 +38,7 @@ const DivNavigation = styled.div`
 function BillingInfoForm(props) {
     const { setValues, setFieldValue, selectedCard, setSelectedCard, values: { contact, billing: { paymentMethod, cardType } },
         checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption,
-        creditCardLoading, checkoutDropdownData } = props
+        creditCardLoading, guestFetching, checkoutDropdownData } = props
     const context = useContext(Context)
     const [cardIsValid, setCardIsValid] = useState(false)
 
@@ -184,7 +184,7 @@ function BillingInfoForm(props) {
 
             <DivNavigation>
                 <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
-                {creditCardLoading ? (
+                {(creditCardLoading || guestFetching) ? (
                     <div style={{ width: 250 }}>
                         <Loader/>
                     </div>
