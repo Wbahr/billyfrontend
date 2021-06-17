@@ -103,7 +103,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setMargin(calculateMargin(floatValue))
         } else {
             setMargin(floatValue)
-            setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue/100))).toFixed(2)))
+            setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue / 100))).toFixed(2)))
         }
     }
 
@@ -128,6 +128,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
         || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)
         || (itemPrice !== data?.originalItemPrice && !selectedReason?.value)
+        || (itemPrice === 0 && (![1089, 1097].includes(selectedReason?.value) || data?.cartItem?.itemNotes?.length < 1))
 
     return (
         <Modal
@@ -184,7 +185,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         <LabelInline>{spaNumber || 'N/A'}</LabelInline>
                     </DivItem>
                 </PriceInfoRow>
-                
+
                 {itemPrice !== data?.originalItemPrice && (
                     <AirlineSelect
                         label="Reason"
@@ -193,6 +194,14 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         setValue={handleReasonCodeChange}
                     />
                 )}
+
+                {itemPrice === 0 && data?.cartItem?.itemNotes?.length < 1 &&
+                    <div>Item note required for $0 price.</div>
+                }
+
+                {itemPrice === 0 && ![1089, 1097].includes(selectedReason?.value) &&
+                    <div>Reason must be sample or corrective action for $0 price.</div>
+                }
 
                 <DivRow>
                     <ButtonBlack onClick={handleCancel}>Cancel</ButtonBlack>

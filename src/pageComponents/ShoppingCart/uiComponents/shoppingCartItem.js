@@ -375,7 +375,7 @@ export default function ShoppingCartItem(props) {
                                             <div>
                                                 <EditPriceDiv>
                                                     <NumberFormat
-                                                        value={cartItem.itemUnitPriceOverride || unitPrice || 0}
+                                                        value={cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : (unitPrice || 0)}
                                                         displayType={'text'}
                                                         thousandSeparator={true}
                                                         prefix={'$'}
@@ -385,7 +385,7 @@ export default function ShoppingCartItem(props) {
                                                     <span>{`/${unitOfMeasure || ''}`}</span>
                                                     {userInfo?.isAirlineEmployee && (
                                                         <EditPriceIcon onClick={handleShowEditPriceModal}>
-                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride ? '#328EFC' : 'grey'} />
+                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride !== null ? '#328EFC' : 'grey'} />
                                                         </EditPriceIcon>
                                                     )}
                                                 </EditPriceDiv>
@@ -413,7 +413,7 @@ export default function ShoppingCartItem(props) {
                                         <DivTotalPrice>
                                             <p>
                                                 {
-                                                    !cartItem.itemUnitPriceOverride ? (
+                                                    cartItem.itemUnitPriceOverride === null ? (
                                                         <NumberFormat
                                                             value={(unitPrice ? unitPrice : 0.0).toFixed(2) * cartItem.quantity}
                                                             displayType={'text'}
@@ -422,6 +422,8 @@ export default function ShoppingCartItem(props) {
                                                             decimalScale={2}
                                                             fixedDecimalScale
                                                         />
+                                                    ) : cartItem.itemUnitPriceOverride === 0 && cartItem.itemNotes?.length < 1 ? (
+                                                        <span>Note required for $0 item</span>
                                                     ) : (
                                                         <NumberFormat
                                                             value={cartItem.itemUnitPriceOverride * cartItem.quantity}
@@ -494,7 +496,7 @@ export default function ShoppingCartItem(props) {
                 hideEditPriceModal={() => setShowEditPriceModal(null)}
                 data={{
                     originalItemPrice: unitPrice,
-                    itemPrice: cartItem.itemUnitPriceOverride ? cartItem.itemUnitPriceOverride : unitPrice,
+                    itemPrice: cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : unitPrice,
                     spaType: spaType,
                     spaNumber: spaNumber,
                     spaCost: spaCost,
