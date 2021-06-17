@@ -43,7 +43,7 @@ export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
-    
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
@@ -127,7 +127,7 @@ export function ShipToForm(props) {
             handleMoveStep(2)
         }
     }
-    
+
     const handleSaveShipToChange = ({ target: { checked } }) => {
         if (checked && context.userInfo?.isAirlineEmployee) {
             setShowSaveShipToModal(true)
@@ -135,20 +135,20 @@ export function ShipToForm(props) {
 
         setFieldValue('shipto.saveShipTo', checked)
     }
-    
+
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
 
     const handleCustomContactInput = name => ({ target: { value } }) => {
         setFieldValue(`contact.${name}`, value)
         setFieldValue(`shipto.${name}`, value)
     }
-    
+
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
     const disabled = !isStepValid && values.contact
 
     return (
         <WrapForm>
-            {context.userInfo?.isImpersonatorUser  && (
+            {context.userInfo?.isImpersonatorUser && (
                 <ContactSection>
                     <Field
                         name="contact.savedContact"
@@ -166,24 +166,28 @@ export function ShipToForm(props) {
                                 label="Order Contact First Name*"
                                 name="contact.firstName"
                                 onChange={handleCustomContactInput('firstName')}
+                                value={values.contact.firstName}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Last Name*"
                                 name="contact.lastName"
                                 onChange={handleCustomContactInput('lastName')}
+                                value={values.contact.lastName}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Phone*"
                                 name="contact.phone"
                                 onChange={handleCustomContactInput('phone')}
+                                value={values.contact.phone}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact Email*"
                                 name="contact.email"
                                 onChange={handleCustomContactInput('email')}
+                                value={values.contact.email}
                             />
                             {values.contact.savedContact !== -1 && (
                                 <SavedContactDiv>
@@ -209,10 +213,10 @@ export function ShipToForm(props) {
                     />
                     {(values.shipto.selectedShipTo === -1) && (
                         <FormRow>
-                            <FormikCheckbox 
-                                label="Save Ship To" 
-                                name="shipto.saveShipTo" 
-                                value={values.shipto.saveShipTo} 
+                            <FormikCheckbox
+                                label="Save Ship To"
+                                name="shipto.saveShipTo"
+                                value={values.shipto.saveShipTo}
                                 onChange={(event) => { handleSaveShipToChange(event) }}
                             />
                         </FormRow>
@@ -228,13 +232,13 @@ export function ShipToForm(props) {
             />
 
             <FormRow>
-                <FormikInput label="First Name*" name="shipto.firstName"/>
-                <FormikInput label="Last Name*" name="shipto.lastName"/>
+                <FormikInput label="First Name*" name="shipto.firstName" />
+                <FormikInput label="Last Name*" name="shipto.lastName" />
             </FormRow>
 
             <FormRow>
-                <FormikInput label="Phone*" name="shipto.phone"/>
-                <FormikInput label="Email*" name="shipto.email"/>
+                <FormikInput label="Phone*" name="shipto.phone" />
+                <FormikInput label="Email*" name="shipto.email" />
             </FormRow>
 
             <FormikInput
@@ -304,7 +308,7 @@ export function ShipToForm(props) {
                 )}
             </FormRow>
 
-            <FormikInput label="Shipping Notes" name="shipto.shippingNotes" width={800}/>
+            <FormikInput label="Shipping Notes" name="shipto.shippingNotes" width={800} />
             <Field
                 name="shipto.carrierId"
                 component={SelectField}
@@ -326,13 +330,13 @@ export function ShipToForm(props) {
                     />
                 </FormRow>
             )}
-            {!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber"/>}
+            {!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
             <DivNavigation>
                 <ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
                 <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
-            
-            <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)}/>
+
+            <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />
         </WrapForm>
     )
 }
