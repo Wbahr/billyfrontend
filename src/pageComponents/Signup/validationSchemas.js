@@ -2,11 +2,9 @@ import * as Yup from 'yup'
 
 export const existingCustomerSchema = Yup.object().shape({
     firstName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     lastName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     email: Yup.string()
@@ -51,11 +49,9 @@ export const existingCustomerInitialValues = {
 
 export const editCustomerSchema =  Yup.object().shape({
     firstName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     lastName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     jobTitle: Yup.string(),
@@ -112,11 +108,9 @@ export const editCustomerSchema =  Yup.object().shape({
 
 export const newCustomerSchema = Yup.object().shape({
     firstName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     lastName: Yup.string()
-        .min(2, 'Minimum length of 2')
         .max(50, 'Maximum length of 50')
         .required('required'),
     jobTitle: Yup.string(),
