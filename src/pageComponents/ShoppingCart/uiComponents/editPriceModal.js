@@ -5,6 +5,7 @@ import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../../_common/form/inputv2'
 import AirlineSelect from '../../_common/form/select'
+import { ALLOW_ZERO } from '../../_common/constants/overrideReasons'
 
 const DivRow = styled.div`
     display: flex;
@@ -128,7 +129,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
         || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)
         || (itemPrice !== data?.originalItemPrice && !selectedReason?.value)
-        || (itemPrice === 0 && (![1089, 1097].includes(selectedReason?.value) || data?.cartItem?.itemNotes?.length < 1))
+        || (itemPrice === 0 && (!ALLOW_ZERO.includes(selectedReason?.value) || data?.cartItem?.itemNotes?.length < 1))
 
     return (
         <Modal
@@ -199,7 +200,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                     <div>Item note required for $0 price.</div>
                 }
 
-                {itemPrice === 0 && ![1089, 1097].includes(selectedReason?.value) &&
+                {itemPrice === 0 && !ALLOW_ZERO.includes(selectedReason?.value) &&
                     <div>Reason must be sample or corrective action for $0 price.</div>
                 }
 
