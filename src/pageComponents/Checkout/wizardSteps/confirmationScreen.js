@@ -179,7 +179,7 @@ export default function ConfirmationScreen(props) {
 
     const packingBasisName = packingBasis.find(elem => elem.value === schedule.packingBasisName)?.label
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
-    
+
     return (
         <div>
             {(userInfo?.isAirlineEmployee) && (

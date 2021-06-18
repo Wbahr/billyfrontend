@@ -1,0 +1,22 @@
+export const B2B_ANONYMOUS_SHOPPER = 1088
+export const CONFIGURABLE_ITEM = 216
+export const CORRECTIVE_ACTION = 1089
+export const CUSTOMER_PO_HIGHER = 241
+export const DEMO = 1090
+export const FEE_ADDED_INTO_SALES_PRICE = 219
+export const INCORRECT_SUPPLIER_COST = 222
+export const MISSING_SPA = 223
+export const NEW_MATRIX_ITEM = 1091
+export const NO_REGIONAL_LIBRARY = 1092
+export const ONETIME_PROJECT_PRICE = 1093
+export const QUOTE_CONVERTED = 242
+export const REGIONAL_LIBRARY_TOO_HIGH = 1094
+export const REGIONAL_LIBRARY_TOO_LOW = 1095
+export const ROUNDING = 240
+export const SALES_REP_VALUE_ADD = 1096
+export const SAMPLE = 1097
+export const SOURCING = 1098
+export const SPA_TASK_PENDING = 1151
+export const VOLUME_PRICING = 224
+
+export const ALLOW_ZERO = [CORRECTIVE_ACTION, SAMPLE]
