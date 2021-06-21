@@ -84,6 +84,14 @@
 			.boxShadow2{
 					box-shadow: 0 10px 6px -6px #777;
 			}
+			.moveUpEffect{
+				margin: 15px 0;
+				transition: 0.2s;
+				&:hover{
+					text-decoration: none;
+					transform: translate(0, -4px);	
+				}
+			}
 			.contactTab{
 				.callCustomerServiceButton{
 					background-image: linear-gradient(to top left,#950f23,#DB1633);
@@ -94,6 +102,45 @@
 				}
 				.callCustomerServiceButton, a:hover{
 					text-decoration: none;
+				}
+			}
+			.aboutTab{
+				.locations{
+					.icon {
+						box-sizing: border-box;
+							position: relative;
+							display: inline-block;
+							width: 16px;
+							height: 16px;
+							border: 5px solid red;
+							border-radius: 100%;
+					}
+					
+					.icon::after {
+							position: absolute;
+							top: 100%;
+							left: 50%;
+							margin: 1px 0 0 -6px;
+							display: block;
+							content: '';
+							border: 6px solid transparent;
+							border-top: 10px solid red;
+							border-bottom: none;
+					}
+					.locationBlock{
+						p{
+							margin: 1px;
+						}
+					}
+					.locationBlock_details{
+						padding: 10px 5px;
+						background-color: #cddee7;
+					}
+					@media only screen and (max-width: 600px) {
+						.span_1_of_3{
+							width: 100%;
+						}
+					}
 				}
 			}
 			.industries{
@@ -139,6 +186,11 @@
 							transform: translate(0, -4px);	
 						}
 					}
+					@media only screen and (max-width: 768px) {
+						.span_1_of_4{
+							width: 50%;
+						}
+					}
 				}
 				h6{
 					font-weight: bold;
@@ -153,6 +205,40 @@
 			.services{
 				.indramatRepair{
 
+				}
+				.repairFieldServices{
+					.servicesComponents{
+						.moveUpEffect{
+							transition: 0.2s;
+							&:hover{
+								text-decoration: none;
+								transform: translate(0, -4px);
+							}
+						}
+						a{
+							color: #353536;
+							&:hover{
+								text-decoration: none;	
+							}
+						}
+						h6{
+							color: black;
+							font-weight: bold;
+						}
+					}
+				}
+			}
+			.apps{
+				.applications{
+					h6{
+						font-weight: bold;
+					}
+					p{
+						margin-bottom: 0;
+					}
+				}
+				.spacing{
+					margin: 5px 0;
 				}
 			}
 			.primaryMetals{

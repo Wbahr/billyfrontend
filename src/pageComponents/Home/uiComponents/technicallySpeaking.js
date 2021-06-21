@@ -103,6 +103,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/build%20anything%20homepage%20thumb.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>How to Build Anything with Aluminum Extrusion in Three Steps
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps.png" />
@@ -139,20 +153,6 @@ export default function TechnicallySpeaking() {
                             <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/gas%20booster%20controls%20website%20thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to Set Gas Booster Controls: A Technical Guide for Control Selection &amp; Plumbing
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-set-gas-booster-controls" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>

@@ -577,10 +577,10 @@ export default function BrandsPage() {
                             <Li><CompanyList href="http://www.panduit.com/" target="_blank" rel="noopener noreferrer">Panduit</CompanyList> - Wire Duct, Terminals, Grounding Systems, Labels & Identification</Li>
                             <Li><CompanyList href="https://www.phoenixcontact.com/us" target="_blank" rel="noopener noreferrer">Phoenix Contact</CompanyList> - Terminal Blocks, Power Supplies, Sensor & Actuator Cables, 24VDC Power Distribution, Circuit Protection, Relays</Li>
                             <Li><CompanyList href="http://www.powerstandards.com/" target="_blank" rel="noopener noreferrer">PSL</CompanyList> - NIST-Cert. Power Quality Metering & Monitoring</Li>
-                            <Li><CompanyList href="http://www.rittal.com/" target="_blank" rel="noopener noreferrer">Rittal</CompanyList> - Industrial & IT Enclosures, Climate Control, Busbar Systems</Li>
+                            <Li><CompanyList href="/pages/rittal" target="_blank" rel="noopener noreferrer">Rittal</CompanyList> - Industrial & IT Enclosures, Climate Control, Busbar Systems</Li>
                             <Li><CompanyList href="http://www.turck.us/en/" target="_blank" rel="noopener noreferrer">Turck</CompanyList> - Sensor & Acutator Cables, IP67 Power Supplies </Li>
                             <Li><CompanyList href="http://www.weg.net/institutional/US/en/" target="_blank" rel="noopener noreferrer">WEG</CompanyList> - Circuit Breakers, Terminal Blocks, Contactors, Motor Starters, Overload Relays, Pilot Devices</Li>
-                            <Li><CompanyList href=" www.werma.com/us" target="_blank" rel="noopener noreferrer">Werma</CompanyList> - Stack Lights, SCADA Systems</Li>
+                            <Li><CompanyList href="/pages/werma" target="_blank" rel="noopener noreferrer">Werma</CompanyList> - Stack Lights, SCADA Systems</Li>
                         </Ul>
                     </CompanyListDiv>
                 </ProductDiv>
@@ -914,7 +914,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/icotek.htm" target="_blank" rel="noopener noreferrer">Icotek</BrandList></li>
+                            <li><BrandList href="/pages/brands/icotek" target="_blank" rel="noopener noreferrer">Icotek</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1280,6 +1280,13 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/WEG.htm" target="_blank" rel="noopener noreferrer">WEG</BrandList></li>
+                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/wittenstein.htm" target="_blank" rel="noopener noreferrer">Wittenstein</BrandList></li>
+
+                        </Ul>
+                    </ListDiv>
+                    <ListDiv>
+                        <Ul>
+                            <li><BrandList href="/pages/werma" target="_blank" rel="noopener noreferrer">Werma</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1290,11 +1297,6 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/white_drive.htm" target="_blank" rel="noopener noreferrer">White Drive Products</BrandList></li>
-                        </Ul>
-                    </ListDiv>
-                    <ListDiv>
-                        <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/wittenstein.htm" target="_blank" rel="noopener noreferrer">Wittenstein</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
