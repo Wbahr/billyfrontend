@@ -84,6 +84,14 @@
 			.boxShadow2{
 					box-shadow: 0 10px 6px -6px #777;
 			}
+			.moveUpEffect{
+				margin: 15px 0;
+				transition: 0.2s;
+				&:hover{
+					text-decoration: none;
+					transform: translate(0, -4px);	
+				}
+			}
 			.contactTab{
 				.callCustomerServiceButton{
 					background-image: linear-gradient(to top left,#950f23,#DB1633);
