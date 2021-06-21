@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
-import { useTable, usePagination, useSortBy  } from 'react-table'
+import { useTable, usePagination, useSortBy } from 'react-table'
 import { formatTableData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
+import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
 import Loader from '../../_common/loader'
 
@@ -122,14 +123,14 @@ export default function QuotesTable({ history }) {
             // Apply date filters
             if (!_.isNil(dateFrom)) {
                 const epochDateFrom = dateFrom.valueOf()
-                mutatedData = mutatedData.filter(row => { 
-                    return Date.parse(row.orderDate) >= epochDateFrom 
+                mutatedData = mutatedData.filter(row => {
+                    return Date.parse(row.orderDate) >= epochDateFrom
                 })
             }
             if (!_.isNil(dateTo)) {
                 const epochDateTo = dateTo.valueOf()
-                mutatedData = mutatedData.filter(row => { 
-                    return Date.parse(row.orderDate) <= epochDateTo 
+                mutatedData = mutatedData.filter(row => {
+                    return Date.parse(row.orderDate) <= epochDateTo
                 })
             }
             setData(mutatedData)
@@ -163,7 +164,7 @@ export default function QuotesTable({ history }) {
         ],
         [],
     )
-	
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -180,12 +181,12 @@ export default function QuotesTable({ history }) {
         previousPage,
         setPageSize,
         state: { pageIndex, pageSize },
-    } = useTable(    
+    } = useTable(
         {
             columns,
             data,
-            initialState: { 
-                pageIndex: 0, 
+            initialState: {
+                pageIndex: 0,
                 hiddenColumns: ['filter'],
                 sortBy: [
                     {
@@ -203,37 +204,42 @@ export default function QuotesTable({ history }) {
         <TableContainer>
             <h4>Open Quotes</h4>
             <DivRow>
-                <AirlineInput placeholder='Search Quote #, Quote Ref #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search Quote #, Quote Ref #, Item ID' value={filter} onChange={(e) => { setFilter(e.target.value) }}></AirlineInput>
             </DivRow>
             {/* Date From */}
-            <DivRowDate>
-                <DivSpacer>
-                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                </DivSpacer>
-                <Pdate>Date from:</Pdate>
-                <DatePicker
-                    selected={Date.parse(dateFrom)}
-                    onChange={(value) => setDateFrom(value)}
-                />
-                <DivSpacer onClick={() => {setDateFrom(null)}}>
-                    <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
-                </DivSpacer>
-            </DivRowDate>
-            {/* Date To */}
-            <DivRowDate>
-                <DivSpacer>
-                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                </DivSpacer>
-                <Pdate>Date to:</Pdate>
-                <DatePicker
-                    selected={Date.parse(dateTo)}
-                    onChange={(value) => setDateTo(value)}
-                />
-                <DivSpacer onClick={() => {setDateTo(null)}}>
-                    <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
-                </DivSpacer>
-            </DivRowDate>
-            {loading && <Loader/>}
+            <DivRow>
+                <div>
+                    <DivRowDate>
+                        <DivSpacer>
+                            <FontAwesomeIcon icon="calendar" color="lightgrey" />
+                        </DivSpacer>
+                        <Pdate>Date from:</Pdate>
+                        <DatePicker
+                            selected={Date.parse(dateFrom)}
+                            onChange={(value) => setDateFrom(value)}
+                        />
+                        <DivSpacer onClick={() => { setDateFrom(null) }}>
+                            <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey" />
+                        </DivSpacer>
+                    </DivRowDate>
+                    {/* Date To */}
+                    <DivRowDate>
+                        <DivSpacer>
+                            <FontAwesomeIcon icon="calendar" color="lightgrey" />
+                        </DivSpacer>
+                        <Pdate>Date to:</Pdate>
+                        <DatePicker
+                            selected={Date.parse(dateTo)}
+                            onChange={(value) => setDateTo(value)}
+                        />
+                        <DivSpacer onClick={() => { setDateTo(null) }}>
+                            <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey" />
+                        </DivSpacer>
+                    </DivRowDate>
+                </div>
+                <ExportButtons data={data} columns={columns} title='Quotes' />
+            </DivRow>
+            {loading && <Loader />}
             <Table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup, i) => (
@@ -244,9 +250,9 @@ export default function QuotesTable({ history }) {
                                     <SpanSort>
                                         {column.isSorted
                                             ? column.isSortedDesc
-                                                ?  <FontAwesomeIcon icon="caret-up" color="black"/>
-                                                :  <FontAwesomeIcon icon="caret-down" color="black"/>
-                                            : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+                                                ? <FontAwesomeIcon icon="caret-up" color="black" />
+                                                : <FontAwesomeIcon icon="caret-down" color="black" />
+                                            : <FontAwesomeIcon icon="caret-down" color="lightgrey" />}
                                     </SpanSort>
                                 </THheader>
                             ))}

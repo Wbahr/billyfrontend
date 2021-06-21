@@ -44,6 +44,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.companyName', values.shipto.companyName)
             setFieldValue('billing.email', values.shipto.email)
             setFieldValue('billing.phone', values.shipto.phone)
+            setFieldValue('billing.sameAsShipping', true)
         } else {
             setFieldValue('billing.firstName', defaultBilling.firstName)
             setFieldValue('billing.lastName', defaultBilling.lastName)
@@ -56,6 +57,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.companyName', defaultBilling.companyName)
             setFieldValue('billing.email', defaultBilling.email)
             setFieldValue('billing.phone', defaultBilling.phone)
+            setFieldValue('billing.sameAsShipping', false)
         }
 
         //setFieldValue does not trigger validation. This is a workaround.
@@ -64,18 +66,33 @@ export default function NewCardSection(props) {
         setTimeout(() => setFieldTouched('billing.zip', true))
     }
 
+    const handleCheckboxChange = name => ({ target: { checked } }) => {
+        setFieldValue(name, checked)
+    }
+
     return (
         <div>
             {!isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
-                    {!!context.userInfo &&  (
-                        <FormikCheckbox label="Save card for future payments?" name="billing.savePaymentMethod" style={{ margin: 'auto 10px auto 0px' }} />
+                    {!!context.userInfo && (
+                        <FormikCheckbox
+                            label="Save card for future payments?"
+                            name="billing.savePaymentMethod"
+                            style={{ margin: 'auto 10px auto 0px' }}
+                            value={values.billing.savePaymentMethod}
+                            onChange={handleCheckboxChange('billing.savePaymentMethod')}
+                        />
                     )}
                 </Row>
             )}
             <Row style={{ padding: '8px 10px' }}>
-                <StyledCheckbox onChange={handleSameAsShippingChange} type='checkbox' name="billing.sameAsShipping" />
+                <StyledCheckbox
+                    onChange={handleSameAsShippingChange}
+                    type='checkbox'
+                    name="billing.sameAsShipping"
+                    checked={values.billing.sameAsShipping}
+                />
                 <Label htmlFor="billing.sameAsShipping">Billing same as shipping</Label>
             </Row>
 
@@ -94,12 +111,12 @@ export default function NewCardSection(props) {
                 <FormikInput label="Phone" name="billing.phone" />
             </Row>
 
-            <FormikInput label="Address 1" name="billing.address1" width={500} />
+            <FormikInput label="Address 1*" name="billing.address1" width={500} />
             <FormikInput label="Address 2" name="billing.address2" width={500} />
 
             <Row>
-                <FormikInput label="City" name="billing.city" />
-                <FormikInput label="Zip" name="billing.zip" width={150} style={{ width: 'auto' }} />
+                <FormikInput label="City*" name="billing.city" />
+                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} />
             </Row>
 
             <Row>
@@ -109,7 +126,7 @@ export default function NewCardSection(props) {
                     options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
                     placeholder="Select a Country"
                     isSearchable={false}
-                    label="Country"
+                    label="Country*"
                 />
                 {values.billing.country === 'us' && (
                     <Field
@@ -117,7 +134,7 @@ export default function NewCardSection(props) {
                         component={SelectField}
                         options={StateList}
                         placeholder="Select a State"
-                        label="State"
+                        label="State*"
                         width="200px"
                     />
                 )}
@@ -127,7 +144,7 @@ export default function NewCardSection(props) {
                         component={SelectField}
                         options={CanadianProvinceList}
                         placeholder="Select a Province"
-                        label="Province"
+                        label="Province*"
                         width="200px"
                     />
                 )}

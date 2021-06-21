@@ -16,11 +16,9 @@ export const shippingScheduleSchema = object({
 const contactSchema = object({
     contact: object({
         firstName: string()
-            .min(2, 'First Name must be at least 2 characters long')
             .max(50)
             .required('First Name is required'),
         lastName: string()
-            .min(2, 'Last Name must be at least 2 characters long')
             .max(50)
             .required('Last Name is required'),
         phone: string()
@@ -35,11 +33,9 @@ const contactSchema = object({
 export const shipToSchema = object({
     shipto: object({
         firstName: string()
-            .min(2, 'First Name must be at least 2 characters long')
             .max(50)
             .required('First Name is required'),
         lastName: string()
-            .min(2, 'Last Name must be at least 2 characters long')
             .max(50)
             .required('Last Name is required'),
         address1: string()
@@ -99,7 +95,6 @@ export function getBillToSchema(requirePoNumber) {
                     is: 'saved_card',
                     then: string(),
                     otherwise: string()
-                        .min(2, 'First Name must be at least 2 characters long')
                         .max(50)
                         .required('First Name is required')
                 }),
@@ -108,7 +103,6 @@ export function getBillToSchema(requirePoNumber) {
                     is: 'saved_card',
                     then: string(),
                     otherwise: string()
-                        .min(2, 'Last Name must be at least 2 characters long')
                         .max(50)
                         .required('Last Name is required'),
                 }),
