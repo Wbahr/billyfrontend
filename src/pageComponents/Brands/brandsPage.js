@@ -914,7 +914,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/icotek.htm" target="_blank" rel="noopener noreferrer">Icotek</BrandList></li>
+                            <li><BrandList href="/pages/brands/icotek" target="_blank" rel="noopener noreferrer">Icotek</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
