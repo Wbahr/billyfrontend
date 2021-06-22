@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../setup/context'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { cartMissingItemNote } from 'pageComponents/_common/helpers/generalHelperFunctions'
 
 const DivButtonContainer = styled.div`
 	margin: auto auto 0 auto;
@@ -51,15 +52,16 @@ const CheckoutButtons = ({ history }) => {
 
     const pricesLoading = !itemPrices?.length || cartPricing?.state === 'loading'
     const hasZeroPriceItem = cartHasZeroPricedItem(cart, itemPrices)
-
+    const missingItemNote = cartMissingItemNote(cart)
+    
     const moveToCheckoutHandler = () => {
-        if (!hasZeroPriceItem) {
+        if (!hasZeroPriceItem && !missingItemNote) {
             history.push('/checkout')
         }
     }
 
     const moveToCreateQuoteHandler = () => {
-        if (!hasZeroPriceItem) {
+        if (!hasZeroPriceItem && !missingItemNote) {
             history.push('/create-quote')
         }
     }
@@ -72,6 +74,9 @@ const CheckoutButtons = ({ history }) => {
                         hasZeroPriceItem && <p>Zero Price items present</p>
                     }
                     {
+                        missingItemNote && <span>Note required for $0 item</span>   
+                    }
+                    {
                         (userInfo?.isAirlineEngineerUser)
                             ? (
                                 <DivCheckoutButton disabled>
@@ -80,7 +85,7 @@ const CheckoutButtons = ({ history }) => {
                                 </DivCheckoutButton>
                             )
                             : (
-                                <DivCheckoutButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCheckoutHandler}>
+                                <DivCheckoutButton disabled={(pricesLoading || hasZeroPriceItem || missingItemNote)} onClick={moveToCheckoutHandler}>
                                     <FontAwesomeIcon icon="lock" color="white" />
                                     <p>Start Secure Checkout</p>
                                 </DivCheckoutButton>
@@ -88,7 +93,7 @@ const CheckoutButtons = ({ history }) => {
                     }
                     {
                         (userInfo?.isImpersonatorUser) && (
-                            <DivQuoteButton disabled={(pricesLoading || hasZeroPriceItem)} onClick={moveToCreateQuoteHandler}>
+                            <DivQuoteButton disabled={(pricesLoading || hasZeroPriceItem || missingItemNote)} onClick={moveToCreateQuoteHandler}>
                                 <FontAwesomeIcon icon='file-invoice-dollar' color="white" />
                                 <p>Create a Quote</p>
                             </DivQuoteButton>
