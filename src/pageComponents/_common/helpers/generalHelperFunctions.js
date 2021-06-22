@@ -175,6 +175,17 @@ export const cartHasZeroPricedItem = (cart, itemPrices) => {
     })
 }
 
+export function cartMissingItemNote(cart) {
+    if (!cart?.length) return false
+
+    for (const cartItem of cart) {
+        if (cartItem.itemUnitPriceOverride === 0 && cartItem.itemNotes?.length < 1) {
+            return true
+        }
+    }
+    return false
+}
+
 export function useInterval(callback, delay) {
     const savedCallback = useRef()
     
