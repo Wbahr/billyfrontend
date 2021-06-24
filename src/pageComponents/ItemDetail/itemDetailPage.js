@@ -154,6 +154,12 @@ const TD = styled.td`
 	padding-right: 8px;
 `
 
+const TDshort = styled.td`
+	word-wrap:break-word;
+    padding-right: 8px;
+    width: 200px;
+`
+
 const Pprice = styled.p`
 	color: #328EFC;
 	font-size: 18px;
@@ -329,7 +335,7 @@ export default function ItemDetailPage({ history }) {
         const FeatureItems = itemDetails.itemFeatures?.map((elem, idx) => <li key={idx}>{elem.text}</li>)
         const TechSpecItems = itemDetails.itemTechSpecs?.map((elem, idx) => (
             <TR key={idx}>
-                <TD>{elem.name}</TD>
+                <TDshort>{elem.name}</TDshort>
                 <TD>{elem.value}</TD>
             </TR>
         ))
