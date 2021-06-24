@@ -75,11 +75,11 @@ export default function OrderDetail({ history, orderId }) {
     const [isTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-    const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
+    const { loading: isOrderDetailsLoading, data: orderDetails, error } = useQuery(GET_ORDERS_DETAIL, {
         fetchPolicy: 'no-cache',
         variables: { orderNumber: String(orderId) }
     })
-
+    console.log(error)
     const {
         orderDate,
         poNo,
@@ -175,7 +175,7 @@ export default function OrderDetail({ history, orderId }) {
     }
     const OrderDetailDownloadButton = useMemo(() => {
         return (
-            <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
+            <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails?.accountOrderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
                 {({ loading }) => (loading ? 'Loading document...' : 'Download this Order')}
             </PDFDownloadLink>
         )

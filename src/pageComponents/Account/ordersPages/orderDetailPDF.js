@@ -264,14 +264,14 @@ export default React.memo(({ orderId, data }) => {
                     <P5 style={styles.font}>Order Summary</P5>
                 </DivThanks>
                 <DivBillingInfoContainer>
-                    <DivOrderInfo>
+                    {/* <DivOrderInfo>
                         <P1>Bill-to-Address:</P1>
                         <P0>{billingName}</P0>
                         <P0>{billingAddress1}</P0>
                         {billingAddress2 && <P0>{billingAddress2}</P0>}
                         {billingAddress3 && <P0>{billingAddress3}</P0>}
                         <P0>{billingCity}, {billingState} {billingZip}</P0>
-                    </DivOrderInfo>
+                    </DivOrderInfo> */}
                     <DivOrderInfo>
                         <P1>Ship-to-Address:</P1>
                         <P0>{shipToName}</P0>
