@@ -79,7 +79,7 @@ export default function OrderDetail({ history, orderId }) {
         fetchPolicy: 'no-cache',
         variables: { orderNumber: String(orderId) }
     })
-    console.log(error)
+    
     const {
         orderDate,
         poNo,
