@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../setup/context'
 import ImpersonationSearch from './impersonationSearch'
+import Loader from '../../pageComponents/_common/loader'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
@@ -170,6 +171,12 @@ const AccountSectionRow = styled.div`
  	padding: 5px 0;
 `
 
+const LoaderContainer = styled.div`
+    height: 38px;
+    position: relative;
+    top: -10px;
+`
+
 export default function HeaderComponent({ history }) {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
@@ -283,10 +290,15 @@ export default function HeaderComponent({ history }) {
 
                 <P>|</P>
 
-                {context.cart && (
+                {context.cart && !context.cartLoading && (
                     <Link to='/cart' style={{ textDecoration: 'none' }}>
                         <P>Cart({context.cart.length})</P>
                     </Link>
+                )}
+                {context.cartLoading && (
+                    <LoaderContainer>
+                        <Loader />
+                    </LoaderContainer>
                 )}
             </Row>
         </AccountSectionRow>
