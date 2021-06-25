@@ -231,9 +231,9 @@ export const GET_ORDERS = gql`
 			isMine
 			quoteRefNo
 			lineItems{
-				invMastUid
-				itemCode
-				customerPartNumber
+                invMastUid
+                itemCode
+                customerPartNumber
                 customerPartNumberId
                 unitPrice
                 quantityOrdered
