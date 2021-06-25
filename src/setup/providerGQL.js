@@ -234,7 +234,10 @@ export const GET_ORDERS = gql`
 				invMastUid
 				itemCode
 				customerPartNumber
-				customerPartNumberId
+        customerPartNumberId
+        unitPrice
+        quantityOrdered
+        quantityOpen
 			}
 		}
 	}
