@@ -138,9 +138,9 @@ export default function ConfirmationScreen(props) {
 
     const handlePreviousClick = () => {
         if (history.location.pathname === '/create-quote') {
-            handleMoveStep(1)
+            handleMoveStep(0)
         } else {
-            handleMoveStep(2)
+            handleMoveStep(1)
         }
     }
 
