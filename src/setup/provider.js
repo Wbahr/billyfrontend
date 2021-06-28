@@ -62,6 +62,7 @@ export default function Provider({ history, children }) {
     const debouncedCartPayload = useDebounceValue(shoppingCartPayload)
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
+    const [cartLoading, setCartLoading] = useState(false)
 
     const invoiceBatchSize = 1000
 
@@ -77,6 +78,11 @@ export default function Provider({ history, children }) {
         }
         didMountRef.current = true
     })
+
+    useEffect(() => {
+        setCartLoading(true)
+        setTimeout(() => setCartLoading(false), 1200)
+    }, [shoppingCart])
 
     useEffect(() => {
         userInfo?.isAirlineEmployee && getPriceReasons()
@@ -596,7 +602,8 @@ export default function Provider({ history, children }) {
                 editPriceReasonCodes,
                 updateCartItem,
                 updateCartItemField,
-                updateShoppingCart
+                updateShoppingCart,
+                cartLoading,
             }}
         >
             {children}
