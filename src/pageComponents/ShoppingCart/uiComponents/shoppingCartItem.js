@@ -422,8 +422,6 @@ export default function ShoppingCartItem(props) {
                                                             decimalScale={2}
                                                             fixedDecimalScale
                                                         />
-                                                    ) : cartItem.itemUnitPriceOverride === 0 && cartItem.itemNotes?.length < 1 ? (
-                                                        <span>Note required for $0 item</span>
                                                     ) : (
                                                         <NumberFormat
                                                             value={cartItem.itemUnitPriceOverride * cartItem.quantity}
