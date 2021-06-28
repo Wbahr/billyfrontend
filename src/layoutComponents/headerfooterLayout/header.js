@@ -390,37 +390,20 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
 
 const servicesSubItems = [
     {
-        label: 'Arc Flash Safety',
-        to: '/pages/services/arc-flash-safety'
-    },
-    {
-        label: 'Machine Safeguarding',
-        to: '/pages/services/machine-safeguarding'
-    },
-    {
-        label: 'Hydraulic Fluid Maintenance',
-        to: 'https://info.airlinehyd.com/fluid-cleanliness',
-        isExternalLink: true
-    },
-    {
         label: 'Engineered Systems & Assemblies',
         to: '/pages/services/engineered-systems-and-assemblies'    
     },
     {
-        label: 'Repair & Field Services',
+        label: 'Repair │ Field Service │ Maintenance',
         to: '/pages/services/repair-field-services'
     },
     {
-        label: 'Energy Efficiency',
-        to: '/pages/services/energy-efficiency'
+        label: 'Safety',
+        to: '/pages/services/safety'
     },
     {
-        label: 'Trola-Dyne Systems',
-        to: '/pages/services/trola-dyne'
-    },
-    {
-        label: 'Rexroth/Indramat Repair Service',
-        to: '/pages/services/indramat-repair'
+        label: 'Efficiency',
+        to: '/pages/services/efficiency'
     }
 ]
 
@@ -631,8 +614,9 @@ const aboutSubItems = [
         to: '/pages/about/our-history',
     },
     {
-        label: 'Our Mission',
-        to: '/pages/about/mission-statement',
+        label: 'Our Culture corner',
+        to: 'https://info.airlinehyd.com/culture-corner',
+        isExternalLink: true
     }
 ]
 
