@@ -18,8 +18,7 @@ const Container = styled.div`
   }
 `
 
-export default function ProcessingOrderModal(props) {
-    const { isQuote } = props
+export default function ProcessingSubmissionModal() {
     const [timeElapsed, setTimeElapsed] = useState(0)
     const totalSeconds = 8
     useInterval(() => {
@@ -33,7 +32,7 @@ export default function ProcessingOrderModal(props) {
                     complete={(timeElapsed/totalSeconds) >= .99 ? ((totalSeconds * 1000)* .99) : timeElapsed * 1000}
                     totalSeconds={totalSeconds * 1000}
                 />
-                <h5>Processing {isQuote ? 'Quote' : 'Order'}... Please wait</h5>
+                <h5>Processing request... Please wait</h5>
                 <p>You will be redirected to the confirmation screen in a moment.</p>
             </Container>
         </Popup>

@@ -62,6 +62,7 @@ export default function Provider({ history, children }) {
     const debouncedCartPayload = useDebounceValue(shoppingCartPayload)
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
+    const [serviceParts, setServiceParts] = useState([])
 
     const invoiceBatchSize = 1000
 
@@ -538,6 +539,19 @@ export default function Provider({ history, children }) {
         setInvoiceBatchNumber(invoiceBatchNumber + 1)
     }
 
+    function addServicePart(part) {
+        setServiceParts({ ...serviceParts, part })
+    }
+
+    function removeServicePart(index) {
+        setServiceParts(serviceParts?.filter((item, idx) => idx !== index))
+    }
+
+    const updateServicePartField = (index, field, value) => {
+        setServiceParts(serviceParts?.map((item, idx) => idx === index ? { ...item, [field]: value } : item))
+    }
+
+
     return (
         <Context.Provider
             value={{
@@ -596,7 +610,11 @@ export default function Provider({ history, children }) {
                 editPriceReasonCodes,
                 updateCartItem,
                 updateCartItemField,
-                updateShoppingCart
+                updateShoppingCart,
+                serviceParts,
+                addServicePart,
+                updateServicePartField,
+                removeServicePart,
             }}
         >
             {children}

@@ -13,8 +13,8 @@ export default function CheckBox({ disabled, name, label, value, onChange, style
                 checked={value}
                 id={name}
                 disabled={disabled}
-                onChange={onChange}
-                style={{ cursor: 'pointer', width: '25px' }}
+                {...(onChange ? { onChange } : null)}
+                style={{ cursor: 'pointer', width: '25px' }}  
             />
         </FormikFormFieldContainer>
     )

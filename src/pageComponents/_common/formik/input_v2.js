@@ -27,7 +27,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
 const input = props => <Field {...props} />
 
 export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
-    if (type === 'text' || type === 'email' || type === 'password') {
+    if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
         return (
             <FormikFormFieldContainer style={style}>
                 {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
