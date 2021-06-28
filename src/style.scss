@@ -23,11 +23,7 @@
 			.infoDetail{
 				padding: 15px 10px;
 				text-align: center;
-			}			
-			.center{
-				text-align: center;
-				color: #133752;
-			}
+			}	
 			.aboutUsIcon{
 				text-transform: uppercase;
 				color: #555555;
@@ -105,6 +101,33 @@
 				}
 			}
 			.aboutTab{
+				.aboutUs{
+					.testimonials {
+							padding: 25px 0;
+						}
+						.testimonials h3 {
+							margin-bottom: 20px;
+						}
+						.testimonials .card {
+							border-bottom: 3px #007bff solid !important;
+							transition: 0.5s;
+							margin-top: 60px;
+						}
+						.testimonials .card i {
+							background-color: #007bff;
+							color: #ffffff;
+							width: 75px;
+							height: 75px;
+							line-height: 75px;
+							margin: -40px auto 0 auto;
+						}
+					
+					@media only screen and (max-width: 768px) {
+						.span_1_of_2{
+							width: 100%;
+						}
+					}
+				}
 				.locations{
 					.icon {
 						box-sizing: border-box;
@@ -264,9 +287,23 @@
 						text-decoration: none;	
 					}
 				}
+			}	
+			.video-container {
+				position: relative;
+				padding-bottom: 56.25%;
+				padding-top: 35px;
+				height: 0;
+				overflow: hidden;
+				margin: 5px 0 10px;
+			}	
+			.video-container iframe {
+				position: absolute;
+				top:0;
+				left: 0;
+				width: 100%;
+				height: 100%;
 			}
 			.ourHistory{
-
 				#HistoryWrapper {
 					background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/about/history/TimeLineBackground.png");
 					background-position: center;
@@ -929,7 +966,7 @@
 					}
 			
 					.moreInfoDiv{
-						border-bottom: 3px solid #f2f3f4;
+						border-bottom: 3px solid #5555;
 						width: 30%;
 						margin: 25px auto;
 					}
@@ -958,6 +995,9 @@
 					}
 					.my-25{
 						margin: 25px 0;
+					}
+					.my-50{
+						margin: 50px 0;
 					}
 
 				/*--------Button Styling--------------*/
