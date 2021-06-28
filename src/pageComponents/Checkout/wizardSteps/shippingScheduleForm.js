@@ -120,7 +120,7 @@ export function ShippingScheduleForm(props) {
                 <FormRow>
                     <label htmlFor="schedule.packingBasisName">Quote Reference Number</label>
                     <div style={{ flexGrow: 99 }}>
-                        <FormikInput name="schedule.quoteRefNo" />
+                        <FormikInput name="schedule.quoteRefNo" maxlength={40} />
                     </div>
                 </FormRow>
             )}
