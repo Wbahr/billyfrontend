@@ -88,34 +88,38 @@ const AboutP = styled.p`
 		font-size: 18px;
 	}
 `
-const LgBannerLink = styled.a`
-		
+const A = styled.a`
+		color: black;
+		&:hover{
+			text-decoration: none;
+		}
 `
 
 export default () =>  (
     <BannerContainer>
         <Col>
-            <LgBannerLink href="#" target="_blank">
+            <A href="/pages/about-us" target="_blank">
                 <LgBanner />
-            </LgBannerLink>
+            </A>
             <SmBanner>
-                <BannerDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>
+                <A href="https://info.airlinehyd.com/culture-corner" target="_blank">
+                    <BannerDiv>
+                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>
+                        <AboutAirline>
+                            <AboutP>About Airline Hydraulics</AboutP>
+                            We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
+                        </AboutAirline>
+                    </BannerDiv>
+                </A>
+                <A href="https://info.airlinehyd.com/culture-corner" target="_blank">
+                    <BannerDiv>
+                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" alt="esop" /></ImgDiv>
 
-                    <AboutAirline>
-                        <AboutP>About Airline Hydraulics</AboutP>
-                        We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
-                    </AboutAirline>
-                </BannerDiv>
-
-                <BannerDiv>
-                    <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" alt="esop" /></ImgDiv>
-
-                    <AboutAirline>
-                        <P> We're 100% Employee Owned and proud of it! </P>
-                    </AboutAirline>
-                </BannerDiv>
-
+                        <AboutAirline>
+                            <P> We're 100% Employee Owned and proud of it! </P>
+                        </AboutAirline>
+                    </BannerDiv>
+                </A>
                 <BannerDiv>
                     <ImgDiv><FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
                     <AboutAirline>
