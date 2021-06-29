@@ -103,6 +103,34 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/lean-manufacturing-101" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/lean%20101.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>lean Manufacturing 101: Explaning Ergonomics, 5S, and Lean Principles
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/lean-manufacturing-101" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
+                        <Link href="https://blog.airlinehyd.com/employee-ownership" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/esop%20ownership.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>We're 100% Employee-Owened. But What Does That Mean?
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/employee-ownership" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/build%20anything%20homepage%20thumb.png" />
@@ -125,35 +153,6 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>How to Get Started with Machine Safety (in FOUR Easy Steps)
                                 <ButtonDiv> <Button href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/SensoNODE.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How SensoNODE Makes Advanced IoT Condition Monitoring Simple and Accessible
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                        
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
-                                </ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>

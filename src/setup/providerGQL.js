@@ -775,6 +775,7 @@ export const GET_CHECKOUT_DATA = gql`
         collectNumberUps
         carrierId
         shippingNote
+        shipToPackingBasis
       }
       carriers {
         id

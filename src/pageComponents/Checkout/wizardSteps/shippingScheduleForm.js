@@ -5,8 +5,6 @@ import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { packingBasis } from '../helpers/checkoutDropdownData'
-import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const FormRow = styled.div`
 	display: flex;
@@ -45,13 +43,6 @@ const DivScheduleHeader = styled.div`
 	}
 `
 
-const DivNavigation = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  width: 100%;
-`
-
 const getInfoMessage = packingBasisName => {
     switch (packingBasisName) {
     case 1:
@@ -74,19 +65,14 @@ const getInfoMessage = packingBasisName => {
 
 export function ShippingScheduleForm(props) {
     const {
-        history,
         values: {
             schedule: { cartWithDates, packingBasisName }
         },
         setFieldValue,
-        isStepValid,
-        handleMoveStep,
         itemsDetails,
         itemsCustomerPartNumbers
     } = props
-    
-    const isQuote = history.location.pathname === '/create-quote'
-  
+
     function handlePackingBasisChange(name, value) {
         setFieldValue(name, value)
         const foundPackingBasis = packingBasis.find(elem => elem.value === value)
@@ -116,15 +102,6 @@ export function ShippingScheduleForm(props) {
     
     return (
         <>
-            {isQuote && (
-                <FormRow>
-                    <label htmlFor="schedule.packingBasisName">Quote Reference Number</label>
-                    <div style={{ flexGrow: 99 }}>
-                        <FormikInput name="schedule.quoteRefNo" maxlength={40} />
-                    </div>
-                </FormRow>
-            )}
-    
             <FormRow>
                 <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
                 <div style={{ flexGrow: 99 }}>
@@ -148,15 +125,6 @@ export function ShippingScheduleForm(props) {
                         render={renderLineItems}
                     />
                 )}
-      
-            <DivNavigation>
-                <ButtonBlack onClick={() => history.push('/cart')}>
-                    <FontAwesomeIcon icon='shopping-cart' size="sm" color="white"/>
-                    Back to Cart
-                </ButtonBlack>
-        
-                <ButtonRed disabled={!isStepValid} onClick={() => handleMoveStep(1)}>Continue</ButtonRed>
-            </DivNavigation>
         </>
     )
 }

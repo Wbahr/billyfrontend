@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Field } from 'formik'
+import { ShippingScheduleForm } from './shippingScheduleForm'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
 import { StateList, CanadianProvinceList } from '../../_common/helpers/helperObjects'
@@ -7,6 +8,8 @@ import SelectField from '../../_common/formik/select'
 import Context from '../../../setup/context'
 import FormikCheckbox from '../../_common/formik/checkBox'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { packingBasis } from '../helpers/checkoutDropdownData'
 import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 
 const WrapForm = styled.div`
@@ -44,6 +47,8 @@ export function ShipToForm(props) {
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
 
+    const isQuote = history.location.pathname === '/create-quote'
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
@@ -76,7 +81,6 @@ export function ShipToForm(props) {
 
     function handleSavedAddressSelectChange(e, selectedShipTo, handleChange) {
         const shipToAddress = checkoutDropdownData.shipToAddresses.find(elem => elem.id === selectedShipTo)
-
         //Update the formik context values state
         const shipto = {
             ...values.shipto,
@@ -94,7 +98,16 @@ export function ShipToForm(props) {
             carrierId: shipToAddress?.carrierId || '',
             shippingNotes: shipToAddress?.shippingNote || ''
         }
-        setFieldValue('shipto', shipto)
+
+        const foundPackingBasis = packingBasis.find(elem => elem.apiValue === shipToAddress?.shipToPackingBasis)
+
+        const schedule = {
+            ...values.schedule,
+            packingBasisName: foundPackingBasis?.value || null,
+            packingBasis: shipToAddress?.shipToPackingBasis || null
+        }
+
+        setValues({ ...values, shipto, schedule })
         updateZip(shipToAddress?.id || -1, values.billing?.zip || '')
         handleChange(e)
     }
@@ -122,9 +135,9 @@ export function ShipToForm(props) {
 
     function handleContinueClick() {
         if (history.location.pathname === '/create-quote') {
-            handleMoveStep(3)
-        } else {
             handleMoveStep(2)
+        } else {
+            handleMoveStep(1)
         }
     }
 
@@ -148,6 +161,15 @@ export function ShipToForm(props) {
 
     return (
         <WrapForm>
+            {isQuote && (
+                <FormRow>
+                    <FormikInput
+                        label="Quote Refererence Number"
+                        name="schedule.quoteRefNo"
+                        maxlength={40}
+                    />
+                </FormRow>
+            )}
             {context.userInfo?.isImpersonatorUser && (
                 <ContactSection>
                     <Field
@@ -331,8 +353,12 @@ export function ShipToForm(props) {
                 </FormRow>
             )}
             {!!values.shipto.isCollect && <FormikInput label="Collect Number*" name="shipto.collectNumber" />}
+            <ShippingScheduleForm {...props} />
             <DivNavigation>
-                <ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
+                <ButtonBlack onClick={() => history.push('/cart')}>
+                    <FontAwesomeIcon icon='shopping-cart' size="sm" color="white" />
+                    Back to Cart
+                </ButtonBlack>
                 <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
 
