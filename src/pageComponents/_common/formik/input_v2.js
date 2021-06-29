@@ -38,7 +38,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
                     placeholder={placeholder} 
                     disabled={disabled} 
                     style={{ width: width || '400px' }}
-                    maxLength={maxlength}
+                    maxlength={maxlength}
                     {
                         ...(onChange ? {
                             as: input,
@@ -106,11 +106,11 @@ Input.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     width: PropTypes.number,
-    maxLength: PropTypes.number,
+    maxlength: PropTypes.number,
 }
 
 Input.defaultProps = {
     type: 'text',
     placeholder: '',
-    maxlength: 'none'
+    maxlength: null
 }

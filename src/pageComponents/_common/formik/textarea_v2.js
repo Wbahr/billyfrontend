@@ -52,7 +52,7 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
                     placeholder={placeholder} 
                     disabled={disabled} 
                     style={{ width: width || '400px' }}
-                    maxLength={maxlength}
+                    maxlength={maxlength}
                     rows={rows}
                 />
             </DivContainer>
@@ -69,7 +69,7 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
                     disabled={disabled} 
                     style={{ width: width || '400px' }}
                     onChange={(e) => changeFunction(name, e.target.value)}
-                    maxLength={maxlength}
+                    maxlength={maxlength}
                     rows={rows}
                 />
             </DivContainer>
@@ -93,6 +93,6 @@ TextArea.propTypes = {
 TextArea.defaultProps = {
     type: 'text',
     placeholder: '',
-    maxlength: 'none',
+    maxlength: null,
     rows: '3'
 }
