@@ -108,9 +108,8 @@ function CheckoutPage({ history }) {
     const [stepValidated, setStepValidated] = useState(
         {
             0: false,
-            1: false,
-            2: history.location.pathname === '/create-quote',
-            3: false
+            1: history.location.pathname === '/create-quote',
+            2: false
         }
     )
 
@@ -166,19 +165,17 @@ function CheckoutPage({ history }) {
 
     function yupSchema(requiresPONumber) {
         return {
-            0: shippingScheduleSchema,
-            1: shipToSchema,
-            2: getBillToSchema(requiresPONumber),
-            3: confirmationSchema
+            0: shipToSchema,
+            1: getBillToSchema(requiresPONumber),
+            2: confirmationSchema
         }
     }
 
     function airlineYupSchema(requiresPONumber) {
         return {
-            0: shippingScheduleSchema,
-            1: airlineShipToSchema,
-            2: getBillToSchema(requiresPONumber),
-            3: confirmationSchema
+            0: airlineShipToSchema,
+            1: getBillToSchema(requiresPONumber),
+            2: confirmationSchema
         }
     }
 
@@ -303,15 +300,13 @@ function CheckoutPage({ history }) {
 const getFormStepComponent = currentStep => {
     switch (currentStep) {
     case 0:
-        return ShippingScheduleForm
-    case 1:
         return ShipToForm
-    case 2:
+    case 1:
         return BillingInfoForm
-    case 3:
+    case 2:
         return ConfirmationScreen
     default:
-        return ShippingScheduleForm
+        return ShipToForm
     }
 }
 
@@ -335,12 +330,12 @@ const FormContainer = props => {
                 .then(data => {
                     setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
                     setSelectedCard(data.setupIntent.payment_method)
-                    setCurrentStep(3)
+                    setCurrentStep(2)
                     setCreditCardLoading(false)
                 })
         } else {
             setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
-            setCurrentStep(3)
+            setCurrentStep(2)
         }
     }
 
@@ -363,7 +358,7 @@ const FormContainer = props => {
     const handleMoveStep = nextStepIdx => {
         const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)
         if (prevStepKeys.every(i => stepValidated[i]) && nextStepIdx !== currentStep) {
-            if (nextStepIdx === 3 && paymentMethod !== 'purchase_order') {
+            if (nextStepIdx === 2 && paymentMethod !== 'purchase_order') {
                 if (userInfo) {
                     confirmCardSetup(paymentInfo)
                 } else {
@@ -378,7 +373,7 @@ const FormContainer = props => {
 
     const FormStepComponent = getFormStepComponent(currentStep)
 
-    const stepLabels = ['Shipping Schedule', 'Ship To', 'Bill To', history.location.pathname === '/create-quote' ? 'Quote Review' : 'Order Review']
+    const stepLabels = ['Ship To', 'Bill To', history.location.pathname === '/create-quote' ? 'Quote Review' : 'Order Review']
 
     return (
         <>

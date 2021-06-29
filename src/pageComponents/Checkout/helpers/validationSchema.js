@@ -1,18 +1,6 @@
 const { object, string, boolean, array } = require('yup')
 
 // Step 1
-export const shippingScheduleSchema = object({
-    schedule: object({
-        packingBasis: string().min(1).required(),
-        quoteRefNo: string().when('isQuote', (isQuote, schema) => {
-            return isQuote
-                ? schema.min(1)
-                : schema
-        })
-    })
-})
-
-// Step 2
 const contactSchema = object({
     contact: object({
         firstName: string()
@@ -28,6 +16,17 @@ const contactSchema = object({
             .email('Email is not valid')
             .required('Email is required')
     })
+})
+
+const scheduleSchema = object({
+    schedule: object({
+        packingBasis: string().min(1).required(),
+        quoteRefNo: string().when('isQuote', (isQuote, schema) => {
+            return isQuote
+                ? schema.min(1)
+                : schema
+        })
+    }),
 })
 
 export const shipToSchema = object({
@@ -67,11 +66,11 @@ export const shipToSchema = object({
                 otherwise: string()
             })
     })
-})
+}).concat(scheduleSchema)
 
 export const airlineShipToSchema = shipToSchema.concat(contactSchema)
 
-// Step 3
+// Step 2
 export function getBillToSchema(requirePoNumber) {
     return object({
         billing: object({

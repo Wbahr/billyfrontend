@@ -59,7 +59,7 @@ function BillingInfoForm(props) {
         }
     }, [])
 
-    const handleContinueClick = () => handleMoveStep(3)
+    const handleContinueClick = () => handleMoveStep(2)
 
     const handleCardChange = value => {
         setValues({
@@ -183,7 +183,7 @@ function BillingInfoForm(props) {
             )}
 
             <DivNavigation>
-                <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
+                <ButtonBlack onClick={() => handleMoveStep(0)}>Previous</ButtonBlack>
                 {(creditCardLoading || guestFetching) ? (
                     <div style={{ width: 250 }}>
                         <Loader/>
