@@ -119,7 +119,7 @@ export default (props) => {
 
     const itemSearchResults = useMemo(() => results.map(result => (
         <ItemResult
-            key={result.invMastUid}
+            key={result.invMastUid || result.itemCatalogUid}
             result={result}
             details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
             addedToCart={handleAddedToCart}

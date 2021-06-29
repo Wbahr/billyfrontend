@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { Fragment, useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import ShoppingCartItem from './shoppingCartItem'
@@ -218,35 +218,37 @@ const CartComponent = (props) => {
         const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.invMastUid)
 
         return (
-            <Draggable
-                key={index}
-                draggableId={String(index)}
-                index={index}
-                isDragDisabled={!details || isDragDisabled}
-            >
-                {(provided) => (
-                    <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
+            <Fragment key={index}>
+                {(details && cartItem.uniqueId) ? (
+                    <Draggable
+                        key={index}
+                        draggableId={String(index)}
+                        index={index}
+                        isDragDisabled={!details || isDragDisabled}
                     >
-                        {details ? (
-                            <ShoppingCartItem
-                                key={index}
-                                itemDetails={details}
-                                priceInfo={itemPrice}
-                                availabilityInfo={itemAvailability}
-                                customerPartNumbers={itemCustomerPartNumbers}
-                                sourceLocations={itemSourceLocations}
-                                cart={shoppingCart || []}
-                                setCartItem={setCartItem(index)}
-                                setCartItemField={setCartItemField(index)}
-                                {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
-                            />
-                        ) : <SkeletonItem index={index} />}
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Draggable>
+                        {(provided) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                            >
+                                <ShoppingCartItem
+                                    key={index}
+                                    itemDetails={details}
+                                    priceInfo={itemPrice}
+                                    availabilityInfo={itemAvailability}
+                                    customerPartNumbers={itemCustomerPartNumbers}
+                                    sourceLocations={itemSourceLocations}
+                                    cart={shoppingCart || []}
+                                    setCartItem={setCartItem(index)}
+                                    setCartItemField={setCartItemField(index)}
+                                    {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
+                                />   
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Draggable>
+                ) : <SkeletonItem index={index} />}
+            </Fragment>
         )
     })
 

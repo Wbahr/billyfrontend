@@ -528,7 +528,7 @@ export default function Provider({ history, children }) {
     }
 
     const emptyCart = () => {
-        updateShoppingCart(null, null)
+        updateShoppingCart(null, '')
     }
 
     function getInvoices() {
