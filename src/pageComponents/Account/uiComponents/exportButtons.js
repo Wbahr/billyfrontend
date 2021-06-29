@@ -24,10 +24,10 @@ const DivRow = styled.div`
 	align-items: center;
 `
 
-export default function ExportButtons({ data, columns, title }) {
+export default function ExportButtons({ data, columns, title, hidePDF }) {
     const exportIgnoreColumns = ['filter']
     const prepareDataForExport = ({ total, ...rest }) => ({ ...rest, total: total.props.value })
-    
+
     const preparedData = title === 'Orders' ? data.map(prepareDataForExport) : data
 
     const handleExcelExport = () => {
@@ -35,7 +35,7 @@ export default function ExportButtons({ data, columns, title }) {
             exportToExcel(preparedData, columns, title, exportIgnoreColumns)
         }
     }
-	
+
     const handlePdfExport = () => {
         if (data.length) {
             exportToPdf(preparedData, columns, title, exportIgnoreColumns)
@@ -44,9 +44,11 @@ export default function ExportButtons({ data, columns, title }) {
 
     return (
         <DivRow>
-            <ButtonExport onClick={handlePdfExport}>
-                <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
-            </ButtonExport>
+            {!hidePDF && (
+                <ButtonExport onClick={handlePdfExport}>
+                    <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
+                </ButtonExport>
+            )}
             <ButtonExport onClick={handleExcelExport}>
                 <FontAwesomeIcon size='lg' icon="file-excel" color="#1d6f42" />
             </ButtonExport>
