@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import { DivNavigation } from '../../../styles/divs'
 import PartForm from '../uiComponents/partForm'
@@ -30,6 +30,10 @@ const PartContainer = styled.div`
 export default function PartsForm(props) {
     const { isStepValid, handleMoveStep, values, emptyPart } = props
     const handleContinueClick = () => handleMoveStep(3)
+
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+    }, [])
 
     return (
         <div>

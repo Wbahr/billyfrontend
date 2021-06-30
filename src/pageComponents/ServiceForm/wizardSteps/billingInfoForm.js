@@ -33,6 +33,7 @@ export default function BillingInfoForm(props) {
     const context = useContext(Context)
 
     useEffect(() => {
+        window.scrollTo({ top: 0 })
         setFieldValue('billing', {
             ...props.values.billing,
             firstName: (context.userInfo?.isImpersonatorUser ? contact?.firstName : loggedInUserContactInfo?.firstName) || '',

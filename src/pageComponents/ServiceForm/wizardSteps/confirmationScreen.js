@@ -39,6 +39,7 @@ export default function ConfirmationScreen(props) {
     const [termsAccepted, setTermsAccepted] = useState(false)
     
     useEffect(() => {
+        window.scrollTo({ top: 0 })
         if (context.userInfo) {
             setCaptchaPassed(true)
         }
