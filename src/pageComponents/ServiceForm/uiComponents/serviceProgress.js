@@ -13,6 +13,7 @@ li {
 	text-align: center;
 	text-transform: uppercase;
 	color: #535353;
+	padding: 0 5px;
 }
 
 li:before {
