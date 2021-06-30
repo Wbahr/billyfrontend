@@ -30,7 +30,7 @@ const CreatableSelectComponent = (props) => {
     } = props
 
     return (
-        <FormikFormFieldContainer style={style}>
+        <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
             {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
             <FormikFormField
                 name={name}
@@ -38,7 +38,7 @@ const CreatableSelectComponent = (props) => {
                 placeholder={placeholder || notCreatable ? 'Select' : 'Select or type'}
                 disabled={disabled}
                 options={options}
-                style={{ width: width || '400px' }}
+                style={{ width: width || '400px', maxWidth: '100%' }}
                 styles={SelectStyle}
                 onChange={(option) => setFieldValue(name, option.value)}
                 component={notCreatable ? Select : Creatable}

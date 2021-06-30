@@ -13,7 +13,8 @@ import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 
 const WrapForm = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	flex-direction: column;
 	flex-wrap: wrap;
 `
@@ -22,8 +23,10 @@ const Flex = styled.div`
 `
 
 const FormRow = styled.div`
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    max-width: 100%;
 `
 
 const ContactSection = styled.div`
@@ -36,6 +39,10 @@ const ContactSection = styled.div`
 
 const SavedContactDiv = styled.div`
 	margin-left: 8px;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 export default function ShipToForm(props) {
@@ -154,7 +161,7 @@ export default function ShipToForm(props) {
                         changeFunction={handleSavedContactSelectChange}
                     />
                     {values.contact.savedContact !== null && (
-                        <div>
+                        <Container>
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact First Name*"
@@ -190,7 +197,7 @@ export default function ShipToForm(props) {
                                     - then refresh this page.
                                 </SavedContactDiv>
                             )}
-                        </div>
+                        </Container>
                     )}
                 </ContactSection>
             )}

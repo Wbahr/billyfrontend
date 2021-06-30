@@ -50,7 +50,8 @@ const TO_CUSTOMER_SHIP_TYPES = [
 ]
 
 const FormRow = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	width: 100%;
 	margin-top: 24px;
     align-items: flex-start;
@@ -83,6 +84,7 @@ const ImageContainer = styled.div`
 
 const ImagesContainer = styled.div`
     display: flex;
+    width: 100%;
     height: 120px;
 `
 
@@ -93,6 +95,10 @@ const Margin = styled.div`
 const Warning = styled.div`
     color: red;
     text-decoration: underline;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 function makeOptions(arr) {
@@ -108,7 +114,6 @@ const toCustomerOptions = makeOptions(TO_CUSTOMER_SHIP_TYPES)
 
 export default function PartForm(props) {
     const { idx, URGENCY, locationOptions, values, formType } = props
-
     const uploadRef = useRef()
 
     const context = useContext(Context)
@@ -139,8 +144,8 @@ export default function PartForm(props) {
             <ImagesContainer>
                 {values?.parts[idx]?.images?.map(img => {
                     return (
-                        <ImageContainer key={img.name}>
-                            <img src={URL.createObjectURL(img)} style={{ height: '100px' }} alt={img.name} />
+                        <ImageContainer key={img.name} style={{ maxWidth: `calc(100% / ${values?.parts[idx]?.images?.length} - 40px)` }}>
+                            <img src={URL.createObjectURL(img)} style={{ height: '100%', width: '100%' }} alt={img.name} />
                         </ImageContainer>
                     )
                 })}
@@ -185,16 +190,16 @@ export default function PartForm(props) {
             {values.parts[idx].urgency === URGENCY.EMERGENCY &&
                 <Warning>Please note that all emergency repairs require a PO or credit card prior to receiving the component.  We will call you at the number provided on the first page for this information.</Warning>}
             <FormRow>
-                <div>
+                <Container>
                     <FormikCreatableSelect
                         label='Type of part*'
                         name={`parts[${idx}].type`}
                         options={partOptions}
                         {...props}
                     />
-                </div>
+                </Container>
                 {context.userInfo && context.userInfo.isAirlineEmployee && (
-                    <div>
+                    <Container>
                         <FormikCreatableSelect
                             label='Part Repair Location*'
                             name={`parts[${idx}].repairLocation`}
@@ -202,7 +207,7 @@ export default function PartForm(props) {
                             notCreatable={true}
                             {...props}
                         />
-                    </div>
+                    </Container>
                 )}
             </FormRow>
             <FormRow>
@@ -288,7 +293,7 @@ export default function PartForm(props) {
                 />
             </FormRow>
             <FormRow>
-                <div>
+                <Container>
                     <FormikCreatableSelect
                         label='Fluid type*'
                         name={`parts[${idx}].fluidType`}
@@ -296,11 +301,11 @@ export default function PartForm(props) {
                         {...props}
                     />
                     <Instructions>PLEASE NOTE: THERE WILL BE AN ADDITIONAL CHARGE FOR FLUID AND RESIDUE DISPOSAL. PLEASE DRAIN ALL FLUIDS FROM COMPONENTS.</Instructions>
-                </div>
+                </Container>
             </FormRow>
             {formType === 'parts' && (
                 <FormRow>
-                    <div>
+                    <Container>
                         <FormikCreatableSelect
                             label='Getting the part to Airline*'
                             name={`parts[${idx}].toAirline`}
@@ -308,7 +313,7 @@ export default function PartForm(props) {
                             {...props}
                         />
                         <Instructions>PLEASE DRAIN ALL FLUIDS FROM COMPONENTS BEFORE SHIPMENT.</Instructions>
-                    </div>
+                    </Container>
                     <FormikCreatableSelect
                         label='Returning the part to the Customer*'
                         name={`parts[${idx}].toCustomer`}

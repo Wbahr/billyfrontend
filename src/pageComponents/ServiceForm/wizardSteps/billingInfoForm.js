@@ -12,12 +12,14 @@ import Loader from '../../_common/loader'
 import { defaultBilling } from '../helpers'
 
 const WrapForm = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	flex-direction: column;
 `
 
 const FormRow = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	width: 100%;
 	margin-top: 24px;
 	align-items: center;

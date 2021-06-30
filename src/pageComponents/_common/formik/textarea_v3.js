@@ -14,18 +14,18 @@ const areaStyle = {
 export default function TextArea({ disabled, name, label, placeholder, width, maxlength, rows }) {
 
     return (
-        <FormikFormFieldContainer>
-            <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>
+        <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+            <FormikFormFieldLabel style={{ maxWidth: '100%' }} htmlFor={name}>{`${label}`}</FormikFormFieldLabel>
             <FormikField
                 as="textarea"
                 name={name}
                 placeholder={placeholder}
                 disabled={disabled}
-                style={{ ...areaStyle, width: width }}
+                style={{ ...areaStyle, width: width, maxWidth: '100%' }}
                 maxLength={maxlength}
                 rows={rows}
             />
-            <FormikFormFieldError style={{ width: '400px' }}>
+            <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
                 <ErrorMessage name={name} />
             </FormikFormFieldError>
         </FormikFormFieldContainer>

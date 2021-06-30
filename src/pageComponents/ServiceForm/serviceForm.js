@@ -34,6 +34,7 @@ import Loader from 'pageComponents/_common/loader'
 
 const DivContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   max-width: 1400px;
   margin: 0 auto;
   flex-grow: inherit;
@@ -55,6 +56,7 @@ const Div = styled.div`
 
 const DivRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-bottom;
   margin: 0 20px 0 20px;
@@ -79,8 +81,13 @@ const Container = styled.div`
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 18px;
   height: 100%;
+  max-width: calc(100vw - 40px);
   border: 1px solid lightgrey;
   padding: 20px;
+  @media(max-width: 500px) {
+    border: none;
+    padding: 0px;
+  }
 `
 
 const Pformheader = styled.p`
@@ -271,7 +278,8 @@ const FormContainer = props => {
                 name="formType" 
                 value={formType} 
                 onChange={(e) => setFormType(e.target.value)}
-                style={{ marginLeft: '20px', display: 'inline' }}
+                row
+                style={{ marginLeft: '20px' }}
             >
                 <FormControlLabel value="parts" control={<Radio />} label="Repair part(s)" />
                 <FormControlLabel value="service" control={<Radio />} label="Service or Installation at Customer's Location" />
