@@ -12,12 +12,14 @@ import Loader from '../../_common/loader'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
 
 const WrapForm = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	flex-direction: column;
 `
 
 const FormRow = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	width: 100%;
 	margin-top: 24px;
 	align-items: center;
@@ -30,6 +32,7 @@ const FormRow = styled.div`
 
 const DivNavigation = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 30px;
   width: 100%;

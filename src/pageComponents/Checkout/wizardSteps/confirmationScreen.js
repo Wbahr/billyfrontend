@@ -13,14 +13,16 @@ import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
 
 const SectionRow = styled.div`
-	display: flew;
+    display: flew;
+    flex-wrap: wrap;
 	justify-content: space-between;
 `
 
 const SectionContainer = styled.div`
 	border: 1px solid whitesmoke;
 	margin: 8px 0;
-	padding: 8px 16px;
+    padding: 8px 16px;
+    max-width: 100%;
 `
 
 const SectionContainerBlue = styled(SectionContainer)`
@@ -28,7 +30,10 @@ const SectionContainerBlue = styled(SectionContainer)`
 `
 
 const SectionContainerHalf = styled(SectionContainer)`
-	width: 49%;
+    width: 49%;
+    @media(max-width: 500px) {
+        width: 100%;
+    }
 `
 
 const DivAddressSection = styled.div`
@@ -72,9 +77,14 @@ const DivTextRow = styled.div`
 
 const DivNavigation = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 30px;
   width: 100%;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 export default function ConfirmationScreen(props) {
@@ -181,7 +191,7 @@ export default function ConfirmationScreen(props) {
     const carrierName = checkoutDropdownDataLabels.carriers.find(elem => elem.value === shipto.carrierId)?.label
 
     return (
-        <div>
+        <Container>
             {(userInfo?.isAirlineEmployee) && (
                 <SectionContainerBlue>
                     <SectionTitle>Confirmation Email</SectionTitle>
@@ -305,6 +315,6 @@ export default function ConfirmationScreen(props) {
 
             {submitting && <ProcessingOrderModal isQuote={history.location.pathname === '/create-quote'} />}
             {showOrderFailedModal && <OrderFailedModal />}
-        </div>
+        </Container>
     )
 }

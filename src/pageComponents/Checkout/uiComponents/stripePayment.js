@@ -5,12 +5,14 @@ import { CardElement } from '@stripe/react-stripe-js'
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 `
 
 const Div = styled.div`
   width: 450px;
   border: 1px solid #e1e1e1;
   padding: 8px;
+  max-width: 100%;
   margin: 12px 8px;
 `
 const Label = styled.label`

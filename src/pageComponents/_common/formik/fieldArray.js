@@ -45,7 +45,7 @@ export default function FormikFieldArray({ name, label, addMore }){
         <FieldArray
             name={name}
             render={arrayHelpers => (
-                <FormikFormFieldContainer>
+                <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
                     <Label>{label}</Label>
                     {valueArrLen > 0 ? (
                         valueArray.map((elem, index) => (

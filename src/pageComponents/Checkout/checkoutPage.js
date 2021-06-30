@@ -61,6 +61,7 @@ const Div = styled.div`
 
 const DivRow = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-bottom;
   margin: 0 20px 0 20px;
@@ -85,8 +86,13 @@ const Container = styled.div`
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 18px;
   height: 100%;
+  max-width: calc(100vw - 40px);
   border: 1px solid lightgrey;
   padding: 20px;
+  @media(max-width: 500px) {
+    border: none;
+    padding: 0px;
+  }
 `
 
 const Pformheader = styled.p`
