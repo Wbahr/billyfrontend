@@ -13,6 +13,8 @@ import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 
 const Div = styled.div`
 	display: flex;
+    flex-wrap: wrap;
+    max-width: calc(100vw - 40px);
 	justify-content: space-between;
 	// border-bottom: 1px grey solid;
 	margin-top: 24px;
