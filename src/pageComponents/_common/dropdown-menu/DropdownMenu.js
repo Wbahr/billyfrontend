@@ -31,7 +31,7 @@ const NavigationItemContainerElement = styled.div`
 `
 
 const DropdownElement = styled.div`
-		z-index: 1;
+    z-index: 1;
     position: absolute;
     display: block;
     height: auto;
