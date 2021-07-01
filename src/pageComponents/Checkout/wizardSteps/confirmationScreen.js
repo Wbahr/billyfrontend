@@ -13,7 +13,7 @@ import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
 
 const SectionRow = styled.div`
-    display: flew;
+    display: flex;
     flex-wrap: wrap;
 	justify-content: space-between;
 `
