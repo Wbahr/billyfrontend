@@ -20,7 +20,12 @@ const StyledCheckbox = styled.input`
 const Row = styled.div`
 	display: flex;
 	flexDirection: row;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 const Label = styled.label`
@@ -71,7 +76,7 @@ export default function NewCardSection(props) {
     }
 
     return (
-        <div>
+        <Container>
             {!isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
@@ -149,6 +154,6 @@ export default function NewCardSection(props) {
                     />
                 )}
             </Row>
-        </div>
+        </Container>
     )
 }

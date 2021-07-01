@@ -15,12 +15,15 @@ import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 const WrapForm = styled.div`
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-width: 100%;
 `
 
 const FormRow = styled.div`
-	display: flex;
-	flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    max-width: 100%;
 `
 
 const ContactSection = styled.div`
@@ -37,9 +40,14 @@ const SavedContactDiv = styled.div`
 
 const DivNavigation = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 30px;
   width: 100%;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 export function ShipToForm(props) {
@@ -182,7 +190,7 @@ export function ShipToForm(props) {
                         changeFunction={handleSavedContactSelectChange}
                     />
                     {values.contact.savedContact !== null && (
-                        <div>
+                        <Container>
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
                                 label="Order Contact First Name*"
@@ -218,12 +226,12 @@ export function ShipToForm(props) {
                                     - then refresh this page.
                                 </SavedContactDiv>
                             )}
-                        </div>
+                        </Container>
                     )}
                 </ContactSection>
             )}
             {!!context.userInfo && (
-                <>
+                <Container>
                     <Field
                         name="shipto.selectedShipTo"
                         component={SelectField}
@@ -243,7 +251,7 @@ export function ShipToForm(props) {
                             />
                         </FormRow>
                     )}
-                </>
+                </Container>
             )}
             <FormikInput
                 label="Company Name"

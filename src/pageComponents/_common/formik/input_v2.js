@@ -29,7 +29,7 @@ const input = props => <Field {...props} />
 export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
     if (type === 'text' || type === 'email' || type === 'password') {
         return (
-            <FormikFormFieldContainer style={style}>
+            <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
                 {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
                 <FormikFormField 
                     type={type}
@@ -37,7 +37,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
                     id={name}
                     placeholder={placeholder} 
                     disabled={disabled} 
-                    style={{ width: width || '400px' }}
+                    style={{ width: width || '400px', maxWidth: '100%' }}
                     maxlength={maxlength}
                     {
                         ...(onChange ? {
@@ -47,31 +47,31 @@ export default function Input({ type, disabled, name, label, placeholder, width,
                         } : {})
                     }
                 />
-                <FormikFormFieldError style={{ width: width || '400px' }}>
+                <FormikFormFieldError style={{ width: width || '400px', maxWidth: '100%' }}>
                     <ErrorMessage name={name} />
                 </FormikFormFieldError> 
             </FormikFormFieldContainer>
         )
     } else if (type === 'currency') {
         return (
-            <FormikFormFieldContainer style={style}>
+            <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
                 {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
-                <FormikFormField name={name}>
+                <FormikFormField name={name} style={{ maxWidth: '100%' }}>
                     {({
                         field, 
                         form
                     }) => (
-                        <MainCurrencyInput id={name} {...field} value={field.value} prefix='$' style={{ width: width || '400px' }} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
+                        <MainCurrencyInput id={name} {...field} value={field.value} prefix='$' style={{ width: width || '400px', maxWidth: '100%' }} onChangeEvent={e => form.setFieldValue(field.name, e.target.value)}/>
                     )}
                 </FormikFormField>
             </FormikFormFieldContainer>
         )
     } else {
         return (
-            <FormikFormFieldContainer style={style}>
+            <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
                 {label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
                 <FormikFormField id={name} type={type} name={name} />
-                <FormikFormFieldError style={{ width: width || '400px' }}>
+                <FormikFormFieldError style={{ width: width || '200px', maxWidth: '100%' }}>
                     <ErrorMessage name={name} />
                 </FormikFormFieldError> 
             </FormikFormFieldContainer>
@@ -82,7 +82,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
 /*Creates a non-formik bound input, but styled to look the same */
 export function FormikStyleInput({ type, value, disabled, name, label, placeholder, width, maxlength, onChange }) {
     return (
-        <FormikFormFieldContainer>
+        <FormikFormFieldContainer style={{ maxWidth: '100%' }}>>
             {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
             <input 
                 type={type}
@@ -90,7 +90,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
                 id={name}
                 placeholder={placeholder} 
                 disabled={disabled} 
-                style={{ width: width || '400px' }}
+                style={{ width: width || '400px', maxWidth: '100%' }}
                 maxLength={maxlength}
                 onChange={onChange}
                 value={value}

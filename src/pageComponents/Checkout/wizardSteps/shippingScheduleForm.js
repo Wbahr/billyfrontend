@@ -7,7 +7,8 @@ import FormikInput from '../../_common/formik/input_v2'
 import { packingBasis } from '../helpers/checkoutDropdownData'
 
 const FormRow = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	width: 100%;
 	margin-top: 24px;
 	align-items: center;
@@ -31,7 +32,8 @@ const Pinfo = styled.p`
 `
 
 const DivScheduleHeader = styled.div`
-	display: flex;
+    display: flex;
+    flex-wrap: wrap;
 	justify-content: space-between;
 	padding: 0 36px;
 	margin: 24px 0 12px 0;
@@ -41,6 +43,10 @@ const DivScheduleHeader = styled.div`
 		font-style: italic;
 		margin: 0;
 	}
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 const getInfoMessage = packingBasisName => {
@@ -101,10 +107,10 @@ export function ShippingScheduleForm(props) {
         : <p>No Cart Items</p>
     
     return (
-        <>
+        <Container>
             <FormRow>
                 <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
-                <div style={{ flexGrow: 99 }}>
+                <div style={{ flexGrow: 99, maxWidth: '100%' }}>
                     <Field
                         name="schedule.packingBasisName"
                         component={SelectField}
@@ -125,6 +131,6 @@ export function ShippingScheduleForm(props) {
                         render={renderLineItems}
                     />
                 )}
-        </>
+        </Container>
     )
 }
