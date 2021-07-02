@@ -101,10 +101,6 @@ const PartTitleItemCatalog = styled.p`
 	height: 36px;
     line-height: 1.25;
 	overflow: hidden;
-	&:hover{
-		cursor: pointer;
-		color: #328EFC;
-	}
 `
 
 const PpartAvailability = styled.p`
@@ -229,7 +225,7 @@ export default function ItemResult({ result, details, subDetails, addedToCart, i
 
     const itemDetailsLink = `/product/${details.itemCodeUrlSanitized || encodeURIComponent(result.itemCode)}/${result.invMastUid}${customerPartNumber ? `/${customerPartNumber}` : ''}`
 
-    const subItemDetailsLink = `/product/${subDetails.itemCodeUrlSanitized}/${result.invMastUidSubstitute}`
+    const subItemDetailsLink = `/product/${subDetails.itemCodeUrlSanitized || encodeURIComponent(subDetails.itemCode)}/${result.invMastUidSubstitute}`
 
     const handleAddToCart = () => {        
         addItem({
@@ -304,7 +300,7 @@ export default function ItemResult({ result, details, subDetails, addedToCart, i
                 </DivPartNumberRow>
 
                 <DivPartNumberRow>
-                    <PpartAvailability>Airline #: AHC{result.invMastUid}</PpartAvailability>
+                    <PpartAvailability>Airline #: <StrikeThrough>AHC{result.invMastUid}</StrikeThrough> Discontinued</PpartAvailability>
                 </DivPartNumberRow>
 
                 {!!customerPartOptions.length && isAirline && (
