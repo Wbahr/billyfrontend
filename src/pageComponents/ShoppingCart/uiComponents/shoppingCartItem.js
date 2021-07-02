@@ -100,7 +100,10 @@ const DivMove = styled.div`
 const DivCol1 = styled.div`
 	display: flex;
     flex-wrap: wrap;
-	width: 100px;
+    max-width: 100px;
+	width: 100%;
+    max-height: 100px;
+    height: 100%;
 `
 
 const DivCol2 = styled.div`
