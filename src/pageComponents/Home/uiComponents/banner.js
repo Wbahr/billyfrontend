@@ -23,11 +23,11 @@ const LgBanner = styled.div`
 	background-position: 50% 0;
 	background-repeat: no-repeat;
 	@media (max-width: 768px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/bg_launch_mobile.png);
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new%20launch%20headers%20mobile-05.png);
 		height: 240px;
 	}
-	@media (max-width: 375px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/bg_new_site_sm.png);
+	@media (max-width: 400px) {
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new%20launch%20headers%20mobile-06.png);
 		height: 190px;
 	}
 `
