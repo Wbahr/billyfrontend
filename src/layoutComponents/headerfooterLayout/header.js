@@ -18,7 +18,7 @@ const Nav = styled.div`
 	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
 	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
 	top: 0;
-	z-index: 2;
+	z-index: 4;
 `
 const NavTop = styled.div`
 	display: flex;

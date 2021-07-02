@@ -3,6 +3,7 @@ import AddedModal from './addedModal'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
+import DiscontinuedItemResult from './discontinuedItemResult'
 import ItemResult from './itemResult'
 import SkeletonItem from './skeletonItem'
 import AppBarPlugin from '../plugins/AppBarPlugin'
@@ -96,9 +97,12 @@ export default (props) => {
         if (results.length >= resultSize * 2) setOttoFindPart(true)
 
         const itemsWithoutDetails = results.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUid))
-        if (itemsWithoutDetails.length) {
-            getItemDetails(itemsWithoutDetails)
-            getCustomerPartNumbers(itemsWithoutDetails)
+        const subItemsWithoutDetails = results.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUidSubstitute))
+        if (itemsWithoutDetails.length || subItemsWithoutDetails.length) {
+            getItemDetails([...itemsWithoutDetails, ...subItemsWithoutDetails])
+            if (itemsWithoutDetails.length) {
+                getCustomerPartNumbers(itemsWithoutDetails)
+            }
         }
 
         const itemsWithoutAvailabilities = result => !itemAvailabilities.some(avail => avail.invMastUid === result.invMastUid)
@@ -117,15 +121,26 @@ export default (props) => {
 
     const handleAddedToCartModal = () => setShowAddedToCartModal(false)
 
-    const itemSearchResults = useMemo(() => results.map(result => (
-        <ItemResult
-            key={result.invMastUid || result.itemCatalogUid}
-            result={result}
-            details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
-            addedToCart={handleAddedToCart}
-            isParentCalculateStock={true}
-        />
-    )), [results, itemDetails])
+    const itemSearchResults = useMemo(() => results.map(result => {
+        return result.isDiscontinued ? (
+            <DiscontinuedItemResult
+                key={result.invMastUid || result.itemCatalogUid}
+                result={result}
+                details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
+                subDetails={itemDetails.find(detail => detail.invMastUid === result.invMastUidSubstitute) || {}}
+                addedToCart={handleAddedToCart}
+                isParentCalculateStock={true}
+            />    
+        ) : (
+            <ItemResult
+                key={result.invMastUid || result.itemCatalogUid}
+                result={result}
+                details={itemDetails.find(detail => detail.invMastUid === result.invMastUid) || {}}
+                addedToCart={handleAddedToCart}
+                isParentCalculateStock={true}
+            />
+        )
+    }), [results, itemDetails])
 
     return (
         <div style={{ width: '100%' }}>
