@@ -97,7 +97,13 @@ export default (props) => {
         if (results.length >= resultSize * 2) setOttoFindPart(true)
 
         const itemsWithoutDetails = results.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUid))
-        const subItemsWithoutDetails = results.filter(result => !itemDetails.some(detail => detail.invMastUid === result.invMastUidSubstitute))
+        const subItemsWithoutDetails = results.filter(result => {
+            return result.isDiscontinued && !itemDetails.some(detail => detail.invMastUid === result.invMastUidSubstitute)
+        }).map(obj => { 
+            return {
+                invMastUid: obj.invMastUidSubstitute
+            }
+        })
         if (itemsWithoutDetails.length || subItemsWithoutDetails.length) {
             getItemDetails([...itemsWithoutDetails, ...subItemsWithoutDetails])
             if (itemsWithoutDetails.length) {
