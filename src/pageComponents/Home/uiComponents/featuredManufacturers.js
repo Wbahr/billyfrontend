@@ -118,7 +118,7 @@ const manufacturers = [
         logo: 'https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/phoenix-contact-logo.png'
     },
     {
-        brandPagePath: '/Brands/featured/aventics',
-        logo: 'https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png'
+        brandPagePath: '/pages/brands/icotek',
+        logo: 'https://airlinemedia.airlinehyd.com/Static_pages/Brands/icotek/icotek_logo1.png'
     }
 ]

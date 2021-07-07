@@ -484,10 +484,6 @@ const brandsSubItems = [
         to: '/brands/featured/abb'
     },
     {
-        label: 'Aventics',
-        to: '/brands/featured/aventics'
-    },
-    {
         label: 'Butech',
         to: '/brands/featured/butech'
     },
@@ -507,6 +503,11 @@ const brandsSubItems = [
         label: 'Hydac',
         to: '/brands/featured/hydac'
     },
+    {
+        label: 'icotek',
+        to: '/pages/brands/icotek'
+    }
+    ,
     {
         label: 'Lincoln',
         to: '/brands/featured/lincoln'
@@ -606,7 +607,7 @@ const aboutSubItems = [
         to: '/about/transactional-services',
     },
     {
-        label: 'News',
+        label: 'Press Room',
         to: '/pages/about/news',
     },
     {
@@ -622,11 +623,11 @@ const aboutSubItems = [
         to: '/pages/about/quality-policy',
     },
     {
-        label: 'Our History',
+        label: 'Company History',
         to: '/pages/about/our-history',
     },
     {
-        label: 'Our Culture corner',
+        label: 'Culture corner',
         to: 'https://info.airlinehyd.com/culture-corner',
         isExternalLink: true
     }
