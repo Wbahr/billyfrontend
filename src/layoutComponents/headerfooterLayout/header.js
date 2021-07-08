@@ -172,9 +172,10 @@ const AccountSectionRow = styled.div`
 `
 
 const LoaderContainer = styled.div`
-    height: 38px;
+    height: 20px;
+    width: 58px;
     position: relative;
-    top: -10px;
+    top: -20px;
 `
 
 export default function HeaderComponent({ history }) {
