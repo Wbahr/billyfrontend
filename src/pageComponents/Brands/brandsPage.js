@@ -258,8 +258,8 @@ export default function BrandsPage() {
                         </Link>
                     </BrandsImgDiv>
                     <BrandsImgDiv>
-                        <Link href="/Brands/featured/aventics">
-                            <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/Aventics.png" />
+                        <Link href="/pages/brands/icotek">
+                            <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/icotek/icotek_logo1.png" />
                         </Link>
                     </BrandsImgDiv>
                 </FullBrandsDiv>

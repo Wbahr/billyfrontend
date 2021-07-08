@@ -121,9 +121,15 @@
 							line-height: 75px;
 							margin: -40px auto 0 auto;
 						}
-					
 					@media only screen and (max-width: 768px) {
 						.span_1_of_2{
+							width: 100%;
+						}
+					}
+				}
+				.news{
+					@media only screen and (max-width: 768px) {
+						.span_1_of_3{
 							width: 100%;
 						}
 					}

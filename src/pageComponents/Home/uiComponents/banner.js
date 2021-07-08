@@ -98,11 +98,11 @@ const A = styled.a`
 export default () =>  (
     <BannerContainer>
         <Col>
-            <A href="/pages/about-us" target="_blank">
+            <A href="https://info.airlinehyd.com/new-airlinehyd.com-launched" target="_blank">
                 <LgBanner />
             </A>
             <SmBanner>
-                <A href="https://info.airlinehyd.com/culture-corner" target="_blank">
+                <A href="/pages/about" target="_blank">
                     <BannerDiv>
                         <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>
                         <AboutAirline>
