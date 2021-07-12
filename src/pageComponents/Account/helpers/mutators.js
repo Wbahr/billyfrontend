@@ -50,8 +50,7 @@ export function formatTableData(type, data, orderId){
                             orderDate: elem.orderDate,
                             line: j + 1,
                             poNo: elem.poNo,
-                            //needs to be added to accountOrders endpoint
-                            promiseDate: '1/1/2020',
+                            promiseDate: elem.promiseDate,
                             itemId: lineItem.itemCode,
                             customerPartId: lineItem.customerPartNumber,
                             qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
@@ -60,7 +59,8 @@ export function formatTableData(type, data, orderId){
                             filter: filterField,
                             rawUnitPrice: lineItem.unitPrice.toFixed(2),
                             rawExtPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
-                            formattedOrderDate: _.isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy')
+                            formattedOrderDate: _.isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                            formattedPromiseDate: _.isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
                         }
                     )
                 }

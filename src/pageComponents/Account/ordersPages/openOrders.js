@@ -157,6 +157,7 @@ export default function OpenOrdersTable({ history }) {
             {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
+                Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
             },
             {
                 Header: 'Item ID',
@@ -205,7 +206,7 @@ export default function OpenOrdersTable({ history }) {
             },
             {
                 Header: 'Promise Date',
-                accessor: 'promiseDate', // accessor is the "key" in the data
+                accessor: 'formattedPromiseDate', // accessor is the "key" in the data
             },
             {
                 Header: 'Item ID',
