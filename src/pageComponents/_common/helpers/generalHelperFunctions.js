@@ -28,7 +28,7 @@ export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
     })
 }
 
-export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
+export const exportToPdf = (data, columns, name, ignoreCols=[], landscape) => {
     import('jspdf').then(jsPDF => {
         import('jspdf-autotable').then(() => {
             const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
@@ -36,7 +36,7 @@ export const exportToPdf = (data, columns, name, ignoreCols=[]) => {
                 head: [columns.filter(filterCols).map(({ Header }) => Header)],
                 body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
             }
-            const doc = new jsPDF.jsPDF()
+            const doc = landscape ? new jsPDF.jsPDF('landscape') : new jsPDF.jsPDF() 
             doc.autoTable(pdfFormat)
             doc.save(`${name}.pdf`)
         })
