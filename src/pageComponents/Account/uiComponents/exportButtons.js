@@ -38,7 +38,7 @@ export default function ExportButtons({ data, columns, title, hidePDF }) {
 
     const handlePdfExport = () => {
         if (data.length) {
-            exportToPdf(preparedData, columns, title, exportIgnoreColumns)
+            exportToPdf(preparedData, columns, title, exportIgnoreColumns, title === 'Open Orders')
         }
     }
 

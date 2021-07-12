@@ -229,7 +229,8 @@ export const GET_ORDERS = gql`
 			isQuote
 			status
 			isMine
-			quoteRefNo
+      quoteRefNo
+      promiseDate
 			lineItems{
                 invMastUid
                 itemCode

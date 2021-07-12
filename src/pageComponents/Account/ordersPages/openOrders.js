@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
+import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
 
 const TableContainer = styled.div`
@@ -156,6 +157,7 @@ export default function OpenOrdersTable({ history }) {
             {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
+                Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
             },
             {
                 Header: 'Item ID',
@@ -176,6 +178,55 @@ export default function OpenOrdersTable({ history }) {
             {
                 Header: 'Ext $',
                 accessor: 'extPrice',
+            },
+            {
+                Header: 'Filter',
+                accessor: 'filter'
+            }
+        ],
+        [],
+    )
+    const exportColumns = useMemo(
+        () => [
+            {
+                Header: 'Order Date',
+                accessor: 'formattedOrderDate', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Order #',
+                accessor: 'orderNumber',
+            },
+            {
+                Header: 'Line',
+                accessor: 'line',
+            },
+            {
+                Header: 'PO #',
+                accessor: 'poNo',
+            },
+            {
+                Header: 'Promise Date',
+                accessor: 'formattedPromiseDate', // accessor is the "key" in the data
+            },
+            {
+                Header: 'Item ID',
+                accessor: 'itemId',
+            },
+            {
+                Header: 'Customer Part',
+                accessor: 'customerPartId',
+            },
+            {
+                Header: 'Qty Open / Ordered',
+                accessor: 'qtyRemaining',
+            },
+            {
+                Header: 'Unit $',
+                accessor: 'rawUnitPrice',
+            },
+            {
+                Header: 'Ext $',
+                accessor: 'rawExtPrice',
             },
             {
                 Header: 'Filter',
@@ -229,34 +280,39 @@ export default function OpenOrdersTable({ history }) {
             <DivRow>
                 <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
             </DivRow>
-            {/* Date From */}
-            <DivRowDate>
-                <DivSpacer>
-                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                </DivSpacer>
-                <Pdate>Date from:</Pdate>
-                <DatePicker
-                    selected={Date.parse(dateFrom)}
-                    onChange={(value) => setDateFrom(value)}
-                />
-                <DivSpacer onClick={() => {setDateFrom(null)}}>
-                    <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
-                </DivSpacer>
-            </DivRowDate>
-            {/* Date To */}
-            <DivRowDate>
-                <DivSpacer>
-                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                </DivSpacer>
-                <Pdate>Date to:</Pdate>
-                <DatePicker
-                    selected={Date.parse(dateTo)}
-                    onChange={(value) => setDateTo(value)}
-                />
-                <DivSpacer onClick={() => {setDateTo(null)}}>
-                    <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
-                </DivSpacer>
-            </DivRowDate>
+            <DivRow>
+                <div>
+                    {/* Date From */}
+                    <DivRowDate>
+                        <DivSpacer>
+                            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                        </DivSpacer>
+                        <Pdate>Date from:</Pdate>
+                        <DatePicker
+                            selected={Date.parse(dateFrom)}
+                            onChange={(value) => setDateFrom(value)}
+                        />
+                        <DivSpacer onClick={() => {setDateFrom(null)}}>
+                            <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
+                        </DivSpacer>
+                    </DivRowDate>
+                    {/* Date To */}
+                    <DivRowDate>
+                        <DivSpacer>
+                            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                        </DivSpacer>
+                        <Pdate>Date to:</Pdate>
+                        <DatePicker
+                            selected={Date.parse(dateTo)}
+                            onChange={(value) => setDateTo(value)}
+                        />
+                        <DivSpacer onClick={() => {setDateTo(null)}}>
+                            <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
+                        </DivSpacer>
+                    </DivRowDate>
+                </div>
+                <ExportButtons data={data} columns={exportColumns} title='Open Orders' />
+            </DivRow>
             <Table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup, i) => (
