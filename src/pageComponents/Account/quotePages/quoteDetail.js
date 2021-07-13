@@ -5,7 +5,6 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import QuoteDetailItem from './quoteDetailItem'
 import Input from '../../_common/form/inputv2'
-import ToggleSwitch from '../../_common/toggleSwitch'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
@@ -64,7 +63,6 @@ const ButtonSmall = styled.button`
 export default function OrderDetail({ history, orderId: quoteId }) {
     const context = useContext(Context)
     const [filter, setFilter] = useState('')
-    const [isTableView, setIsTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
     const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
@@ -115,37 +113,36 @@ export default function OrderDetail({ history, orderId: quoteId }) {
     })
 
     let itemDetails = []
-    if (!isTableView){
-        const filteredListItems = (!lineItems || !lineItems.length) 
-            ? [] 
-            : lineItems.filter(i => {
-                if (!filter || !filter.length) return true
+    
+    const filteredListItems = (!lineItems || !lineItems.length) 
+        ? [] 
+        : lineItems.filter(i => {
+            if (!filter || !filter.length) return true
 
-                const currentItemCode = i.itemCode.toLowerCase()
-                const filterLower = filter.toLowerCase()
+            const currentItemCode = i.itemCode.toLowerCase()
+            const filterLower = filter.toLowerCase()
 
-                return currentItemCode.indexOf(filterLower) > -1
-            })
-			
-        itemDetails = filteredListItems?.map((item) => {
-            const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
-            const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
-            const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
-            return (
-                <QuoteDetailItem 
-                    key={item.lineNumber} 
-                    quoteId={quoteId}
-                    item={item}
-                    itemDetails={itemDetails}
-                    availability={itemAvailability}
-                    priceInfo={itemPrice}
-                />
-            )
+            return currentItemCode.indexOf(filterLower) > -1
         })
+        
+    itemDetails = filteredListItems?.map((item) => {
+        const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
+        const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
+        const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
+        return (
+            <QuoteDetailItem 
+                key={item.lineNumber} 
+                quoteId={quoteId}
+                item={item}
+                itemDetails={itemDetails}
+                availability={itemAvailability}
+                priceInfo={itemPrice}
+            />
+        )
+    })
 
-        if (!itemDetails || itemDetails.length === 0) {
-            itemDetails = <p>No items found matching search.</p>
-        }
+    if (!itemDetails || itemDetails.length === 0) {
+        itemDetails = <p>No items found matching search.</p>
     }
 
     function handleAddQuote() {
@@ -206,13 +203,6 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <div>
-                    <ToggleSwitch 
-                        label='View:'
-                        text='Table'
-                        text2='List'
-                        toggled={isTableView}
-                        setToggled={(value) => setIsTableView(value)}
-                    />
                     <Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)}/>
                 </div>
                 {itemDetails}
