@@ -26,6 +26,7 @@ import OrderComplete from '../pageComponents/Checkout/orderCompletePage'
 import PasswordReset from '../pageComponents/PasswordReset/passwordReset'
 import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
+import PrepaymentsTable from '../pageComponents/Account/prepaymentPages/prepaymentTable'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
 import Shop from '../pageComponents/Shop/shopPage'
@@ -110,6 +111,7 @@ class App extends React.Component {
                 <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/quote-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
+                <WrapperRoute exact path='/prepayments' auth component={PrepaymentsTable} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>

@@ -889,3 +889,37 @@ export const GET_PRICE_REASONS = gql`
     }
   }
 `
+
+export const ADD_PREPAYMENT = gql`
+  mutation a($thing : PrepaymentModel) {
+    addPrepayment(prepayment: $thing) {
+      amountToCharge
+      orderNumber
+      paymentSystemCustomerId
+      paymentMethodId
+      amountCharged
+      status
+      id
+      createdDate
+      processingInfo
+      receiptCode
+    }
+  }
+`
+
+export const GET_PREPAYMENTS = gql`
+  query getRemittances($startDate: DateTime) {
+    getRemittances(startDate: $startDate) {
+      amountCharged
+      amountToCharge
+      createdDate
+      id
+      orderNumber
+      paymentMethodId
+      paymentSystemCustomerId
+      processingInfo
+      receiptCode
+      status
+    }
+  } 
+`
