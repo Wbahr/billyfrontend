@@ -226,10 +226,71 @@ export default function OrderDetail({ history, orderId }) {
             Header: 'Total Price',
             accessor: 'totalPrice',
         },
+        { 
+            Header: 'Order Date', 
+            accessor: 'orderDate' 
+        },
+        { 
+            Header: 'Promise Date', 
+            accessor: 'promiseDate' 
+        },
+        { 
+            Header: 'Order Number', 
+            accessor: 'orderNumber' 
+        },
+        { 
+            Header: 'P.O. Number', 
+            accessor: 'poNo' 
+        },
+        { 
+            Header: 'Status', 
+            accessor: 'status' 
+        },
+        { 
+            Header: 'Packing Basis', 
+            accessor: 'packingBasis' 
+        },
+        { 
+            Header: 'Order Total', 
+            accessor: 'total' 
+        },
+        { 
+            Header: 'Ship To Name', 
+            accessor: 'shipToName' 
+        },
+        { 
+            Header: 'Ship To Address 1', 
+            accessor: 'shipToAddress1' 
+        },
+        { 
+            Header: 'Ship To Address 2', 
+            accessor: 'shipToAddress2' 
+        },
+        { 
+            Header: 'Ship To Address 3', 
+            accessor: 'shipToAddress3' 
+        },
+        { 
+            Header: 'Ship To City', 
+            accessor: 'shipToCity' 
+        },
+        { 
+            Header: 'Ship To State', 
+            accessor: 'shipToState' 
+        },
+        { 
+            Header: 'Ship To Zip', 
+            accessor: 'shipToZip' 
+        },
     ]
 
-    const exportData = orderDetails?.accountOrderDetails?.lineItems
-
+    const exportData = orderDetails?.accountOrderDetails?.lineItems?.map(item => {
+        return {
+            ...item,
+            ...orderDetails.accountOrderDetails
+        }
+    })
+    
     if (isOrderDetailsLoading) {
         return (
             <p>Loading Order Data...</p>
