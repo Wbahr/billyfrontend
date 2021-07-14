@@ -144,7 +144,7 @@ export default function PasswordResetPage({ history }) {
             {showResendToken && <A onClick={() => { setShowPasswordResetModal(true) }}>Token Expired? Click here to send a new one</A>}
             {error && <ErrorAlert>An unexpected error has occured. Please try again or contact us.</ErrorAlert>}
             <DivInput>
-                <Label htmlFor='username'>Username</Label>
+                <Label htmlFor='username'>Your Email Address</Label>
                 <Input id='username' onChange={(e) => setUsername(e.target.value)} value={username} />
             </DivInput>
             <DivInput>
