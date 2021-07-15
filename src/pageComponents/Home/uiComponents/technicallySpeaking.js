@@ -103,6 +103,32 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/fast-panel-wiring" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/3%20time%20saving%20technologies.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Three Time-Saving Technologies for Control Panel Wiring
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/fast-panel-wiring" target="_blank">Read More</Button></ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
+                        <Link href="https://blog.airlinehyd.com/lean-manufacturing-principles" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/5%20lean%20principles%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Five Lean Manufacturing Principles You Can Implement Today
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/lean-manufacturing-principles" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/lean-manufacturing-101" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/lean%20101.png" />
@@ -127,32 +153,6 @@ export default function TechnicallySpeaking() {
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/employee-ownership" target="_blank">Read More</Button>
                                 </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/build%20anything%20homepage%20thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to Build Anything with Aluminum Extrusion in Three Steps
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to Get Started with Machine Safety (in FOUR Easy Steps)
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
