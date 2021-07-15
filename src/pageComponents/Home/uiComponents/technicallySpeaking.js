@@ -103,6 +103,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/IO%20Link%20webpage.jpg" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Whether you're new to the world of machine automation, or an industry veteran
+                                <ButtonDiv>
+                                    <Button href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/fast-panel-wiring" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/3%20time%20saving%20technologies.png" />
@@ -124,20 +138,6 @@ export default function TechnicallySpeaking() {
                             <Details>Five Lean Manufacturing Principles You Can Implement Today
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/lean-manufacturing-principles" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/lean-manufacturing-101" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/lean%20101.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>lean Manufacturing 101: Explaning Ergonomics, 5S, and Lean Principles
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/lean-manufacturing-101" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
