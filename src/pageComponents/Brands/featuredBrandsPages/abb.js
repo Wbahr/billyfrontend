@@ -206,20 +206,20 @@ export function abb() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www07.abb.com/images/librariesprovider87/products/packages/Ex-motor-and-drive-packages/thermistor-protection-modules-fptc-01-and-02.jpg?sfvrsn=1"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/thermistor-protection-modules-fptc-01-and-02.jpg"
                         text="Thermistor protection modules for ACS880 drives"
                         link="https://new.abb.com/drives/segments/motors-and-drives-in-potentially-explosive-atmospheres/thermistor-protection-modules"
                         detail="The ACS880 drives are available with ATEX-certified thermistor protection module FPTC-02 or with functional safety certified thermistor protection module FPTC-01 for ensuring safe motor temperature. These option modules enhance process safety and simplify installation."
                     />
                     <Articles
-                        src="https://www07.abb.com/images/librariesprovider87/Customer-cases/riecor-farming-motors.jpg?sfvrsn=1"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/riecor-farming-motors.jpg"
                         text="Drives give South African farmer 40% energy savings, smoother operation and less work"
                         link="https://new.abb.com/drives/media/customer-case-riecor-farming"
                         detail="Sometimes, when you are trying to solve one problem you can inadvertently cause another one. However, in the case of Riecor Farming in South Africa an attempt to resolve one problem actually solved it extremely well and, in addition, gave numerous side benefits that decreases costs, work and headaches while making the farmer’s job easier."
                     />
 
                     <Articles
-                        src="https://www07.abb.com/images/librariesprovider87/Energy-efficiency/energy-efficient-drives.jpg?sfvrsn=1"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/energy-efficient-drives.jpg"
                         text="Energy efficiency: Using drives to control motors can lead to big savings"
                         detail="Nearly 70 percent of all industrial electrical energy use goes to powering electric motors. These motors are the workhorses of business, from pumps moving fluids to fans moving air to compressors, conveyors, and every type of machine that depends on rotational force to get its job done."
                         link="https://new.abb.com/drives/energy-efficiency"

@@ -189,20 +189,20 @@ export function eaton() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.eaton.com/content/dam/eaton/eaton-own-or-royalty-free-purchased-images/city-top-view.jpg.transform/default-desktop/image.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/image.jpg"
                         text=" Managing complexities to prepare the grid of the future"
                         link="https://www.eaton.com/us/en-us/company/news-insights/grid-modernization.html"
                         detail="The electrical grid has served businesses and consumers for over 100 years. Utility system planners, operators and maintenance personnel have always faced challenges, but never have they compounded as rapidly as they are now."
                     />
                     <Articles
-                        src="https://cf-images.us-east-1.prod.boltdns.net/v1/static/1302165871001/ed09b29e-bf96-4ea1-bf8e-64503d71ac3e/21360df1-8321-4a10-9cd6-0c9a4e1551c2/1280x720/match/image.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/image%20%281%29.jpg"
                         text="Innovation that enables dynamic machine control"
                         link="https://www.eaton.com/us/en-us/services/dynamic-machine-control.html"
                         detail="The industry is moving to smarter, more efficient machines. It’s no longer just about components, it’s about how those components connect to create intelligent subsystems that dynamically adapt and respond.  "
                     />
 
                     <Articles
-                        src="https://www.eaton.com/content/dam/eaton/markets/utility/inteligent-microgrid-thumb.jpg.transform/default-desktop/image.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/image%20%282%29.jpg"
                         text="Powering resilience: preparing for the unexpected"
                         detail="It’s devasting to see how climate emergencies are affecting millions of people with increasing frequency. The impact of natural disasters makes it clear that the climate challenges we face are not abstract issues.  More than ever, our global energy supply and infrastructure must be able to withstand extreme conditions. Our lives and livelihoods depend on it."
                         link="https://www.eaton.com/us/en-us/company/news-insights/resilience.html"

@@ -47,7 +47,7 @@ export default function LineCards() {
                 <LineCardDiv>
                     <a href="/pages/resources/linecards">
                         <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/line-card.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/line_card.png" />
                         </ImgDiv>
                         <NameDiv><P>View all line cards</P></NameDiv>
                     </a>

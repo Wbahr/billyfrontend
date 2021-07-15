@@ -136,20 +136,20 @@ export function schmersal() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.schmersalusa.com/typo3temp/assets/_processed_/2/3/csm_SD-Bus-40_Inside_01_fe0d07780b.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/csm_SD-Bus-40_Inside_01_fe0d07780b.jpg"
                         text="SD-BUS 4.0 FROM SCHMERSAL NOMINATED FOR THE AUTOMATION AWARD"
                         link="https://www.schmersalusa.com/news/detail/article/sd-bus-40-from-schmersal-nominated-for-the-automation-award/"
                         detail="The SD-Bus 4.0, an innovative safety solution from Schmersal, has been nominated for the Automation Award 2020 from German Konradin Verlag /  publishing house in the section DIGITALIZATION. Voting is now possible online until Thursday, November 26, 2020 – the publishing house will announce the winners immediately afterwards."
                     />
                     <Articles
-                        src="https://www.schmersalusa.com/typo3temp/assets/_processed_/6/b/csm_SLC_BLE_300x250_94141a981b.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/csm_SLC_BLE_300x250_94141a981b.jpg"
                         text="2021 ENGINEERS' CHOICE AWARD - HONORABLE MENTION"
                         link="https://www.schmersalusa.com/news/detail/article/2021-engineers-choice-award-honorable-mention/"
                         detail="Safety Light Curtain with Bluetooth interface from Schmersal has received Honroable Mention in the Control Engineering 2021 Engineers’ Choice Awards, in the category: Safety – Machine Safety. "
                     />
 
                     <Articles
-                        src="https://www.schmersalusa.com/typo3temp/assets/_processed_/f/a/csm_Logo_AA20_2020_DIGITALIZATION_Platz3_01_cbc12106ee.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/csm_Logo_AA20_2020_DIGITALIZATION_Platz3_01_cbc12106ee.jpg"
                         text="SCHMERSAL AMONG THE WINNERS OF THE AUTOMATION AWARD 2020"
                         detail="The SD-Bus 4.0, an innovative safety solution from Schmersal, is one of the winners of the Automation Award 2020 from the German publishing house Konradin  in the DIGITALIZATION category."
                         link="https://www.schmersalusa.com/news/detail/article/schmersal-among-the-winners-of-the-automation-award-2020/"

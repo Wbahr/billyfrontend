@@ -149,22 +149,22 @@ export function parker() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.parker.com/parkerimages/Parker.com/News%20Release/2020%20News%20Release/Multi-Coupler%20Hero%20Image%20Newsroom.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/parker1.png"
                         text="The Sub-Compact Tractor Multi-Coupler: Making Connections with Purpose"
                         link="https://www.parker.com/portal/site/PARKER/menuitem.31c35c58f54e63cb97b11b10237ad1ca/?vgnextoid=a116371ed94d0710VgnVCM100000e6651dacRCRD&vgnextchannel=c38888b5bd16e010VgnVCM1000000308a8c0RCRD&vgnextfmt=EN&newsroom=Y&vgnextcat=News%20Release%20Details"
                         detail="At Parker, we love a breakthrough product story. But innovation doesn’t always mean reinventing the wheel. Or the multi-coupler. In the case of Parker’s Sub-Compact Tractor Multi-Coupler, the innovation was in taking a proven product for large commercial tractors and adapting it for use in a whole new market segment."
                     />
                     <Articles
-                        src="https://www.parker.com/parkerimages/Parker.com/News%20Release/2020%20News%20Release/Purpose%20Firefighter%20Video%20Thumb%20386play.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/Purpose%20Firefighter%20Video%20Thumb%20386play.jpg"
                         text="SCBA Quick Disconnect Couplings: A Breath of Fresh Air"
                         link="https://www.parker.com/portal/site/PARKER/menuitem.31c35c58f54e63cb97b11b10237ad1ca/?vgnextoid=25096193498df610VgnVCM100000e6651dacRCRD&vgnextchannel=c38888b5bd16e010VgnVCM1000000308a8c0RCRD&vgnextfmt=EN&newsroom=Y&vgnextcat=News%20Release%20Details"
                         detail="Many Parker team members, driven by Purpose, wish to give back and have a positive impact in the communities they call home. For Jason Manning, Environmental, Health & Safety Manager for the Quick Coupling Division, that impact has been twofold."
                     />
 
                     <Articles
-                        src="https://www.parker.com/parkerimages/Parker.com/Countries-2011/United%20States/Newsroom/Media%20Gallery/Purpose-Thumb-withPlay-386.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/parker3.png"
                         text="Parker Hannifin Defines its Unique Contribution to the World Through New Purpose Statement"
-                        detail="CLEVELAND – October 14, 2019 – Parker Hannifin Corporation (NYSE:PH), the global leader in motion and control technologies, today announced a new purpose statement that defines its unique contribution to the world. The simple expression: Enabling Engineering Breakthroughs that Lead to a Better Tomorrow, is the culmination of months of research and team member input and refinement. To bring the purpose to life, the company has developed a website at parker.com/purpose and created a signature video."
+                        detail="CLEVELAND – October 14, 2019 – Parker Hannifin Corporation (NYSE:PH), the global leader in motion and control technologies, today announced a new purpose statement that defines its unique contribution to the world. The simple expression: Enabling Engineering Breakthroughs that Lead to a Better Tomorrow, is the culmination of months of research and team member input and refinement."
                         link="https://www.parker.com/portal/site/PARKER/menuitem.31c35c58f54e63cb97b11b10237ad1ca/?vgnextoid=cb5accf44bbbd610VgnVCM100000e6651dacRCRD&vgnextchannel=c38888b5bd16e010VgnVCM1000000308a8c0RCRD&vgnextfmt=EN&newsroom=Y&vgnextcat=News%20Release%20Details"
 
                     />
