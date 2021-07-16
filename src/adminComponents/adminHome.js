@@ -2,11 +2,13 @@ import React from 'react'
 import { Switch, Route, useRouteMatch, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
-import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, FlashOn } from '@material-ui/icons'
+import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn } from '@material-ui/icons'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
 import OpenOrders from './adminTools/OpenOrders/openOrders'
+import DownpaymentsTable from './adminTools/Downpayments/downpaymentsTable'
+import AddDownpayment from './adminTools/Downpayments/addDownpayment'
 import AppHeader from './appHeader'
 import Settings from './adminTools/Settings/settings'
 import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
@@ -108,6 +110,8 @@ export default function AdminHome({ history }) {
                     <Divider/>
                     <ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon/>}/>
                     <Divider/>
+                    <ListItemLink to="/admin-dashboard/downpayments" primary="Downpayments" icon={<CreditCard/>}/>
+                    <Divider/>
                     <ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail/>}/>
                     <Divider/>
                     <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn/>}/>
@@ -130,6 +134,14 @@ export default function AdminHome({ history }) {
                         <OpenOrders />
                     </Route>
                     
+                    <Route exact path="/admin-dashboard/downpayments">
+                        <DownpaymentsTable />
+                    </Route>
+
+                    <Route exact path="/admin-dashboard/downpayments/add">
+                        <AddDownpayment />
+                    </Route>
+
                     <Route exact path="/admin-dashboard/new-customers">
                         <NewCustomerAdmin />
                     </Route>

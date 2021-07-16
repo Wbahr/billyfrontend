@@ -1,12 +1,13 @@
 import React, { useState, useMemo, useContext } from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
 import { GET_PREPAYMENTS } from 'setup/providerGQL'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom' 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { ButtonBlack } from 'styles/buttons'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
 import { CircularProgress } from '@material-ui/core'
@@ -15,9 +16,11 @@ const TableContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	// box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
 	padding: 20px 40px;
     margin: 0 auto 0 0;
+`
+const OverflowContainer = styled.div`
     overflow: auto;
 `
 
@@ -93,6 +96,12 @@ const SpinnerDiv = styled.div`
 const RefundTextColor = styled.span`
 	color: red;
 `
+const DivRowSpace = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+`
 
 export default function OrdersTable({ history }) {
     const context = useContext(Context)
@@ -159,9 +168,9 @@ export default function OrdersTable({ history }) {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        rows, //all rows
+        rows,
         prepareRow,
-        page, // current page in rows
+        page,
         canPreviousPage,
         canNextPage,
         pageOptions,
@@ -191,7 +200,12 @@ export default function OrdersTable({ history }) {
 	
     return (
         <TableContainer>
-            <h4>Prepayments</h4>
+            <DivRowSpace>
+                <h4>Downpayments</h4>
+                <Link to='/admin-dashboard/downpayments/add'>
+                    <ButtonBlack>Add Downpayment</ButtonBlack>
+                </Link>
+            </DivRowSpace>
             <DivRow>
                 <div>
                     <DivRowDate>
@@ -208,7 +222,6 @@ export default function OrdersTable({ history }) {
                         </DivSpacer>
                     </DivRowDate>
                 </div>
-                {/* <ExportButtons data={data} columns={columns} title='Orders' /> */}
             </DivRow>
             {
                 context.getOrdersState.loading ? (
@@ -216,58 +229,60 @@ export default function OrdersTable({ history }) {
                         <CircularProgress />
                     </SpinnerDiv>
                 ) : (
-                    <Table {...getTableProps()}>
-                        <thead>
-                            {headerGroups.map((headerGroup, i) => (
-                                <TRheader key={i} {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column, i) => (
-                                        <THheader key={i} {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                            {column.render('Header')}
-                                            <SpanSort>
-                                                {column.isSorted
-                                                    ? column.isSortedDesc
-                                                        ?  <FontAwesomeIcon icon="caret-up" color="black"/>
-                                                        :  <FontAwesomeIcon icon="caret-down" color="black"/>
-                                                    : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-                                            </SpanSort>
-                                        </THheader>
-                                    ))}
-                                </TRheader>
-                            ))}
-                        </thead>
-                        <tbody {...getTableBodyProps()}>
-                            {page.map((row, i) => {
-                                prepareRow(row)
-                                return (
-                                    <TRrow key={i} {...row.getRowProps()}>
-                                        {row.cells.map(cell => {
-                                            if (cell.column.id === 'orderNumber') {
-                                                return (
-                                                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
-                                                        {cell.render('Cell')}
-                                                    </TDrow>
-                                                )
-                                            } else if (cell.column.id === 'total' && cell.value.props.value < 0 ) {
-                                                return (
-                                                    <TDrow {...cell.getCellProps()}>
-                                                        <RefundTextColor>
+                    <OverflowContainer>
+                        <Table {...getTableProps()}>
+                            <thead>
+                                {headerGroups.map((headerGroup, i) => (
+                                    <TRheader key={i} {...headerGroup.getHeaderGroupProps()}>
+                                        {headerGroup.headers.map((column, i) => (
+                                            <THheader key={i} {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                                {column.render('Header')}
+                                                <SpanSort>
+                                                    {column.isSorted
+                                                        ? column.isSortedDesc
+                                                            ?  <FontAwesomeIcon icon="caret-up" color="black"/>
+                                                            :  <FontAwesomeIcon icon="caret-down" color="black"/>
+                                                        : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
+                                                </SpanSort>
+                                            </THheader>
+                                        ))}
+                                    </TRheader>
+                                ))}
+                            </thead>
+                            <tbody {...getTableBodyProps()}>
+                                {page.map((row, i) => {
+                                    prepareRow(row)
+                                    return (
+                                        <TRrow key={i} {...row.getRowProps()}>
+                                            {row.cells.map(cell => {
+                                                if (cell.column.id === 'orderNumber') {
+                                                    return (
+                                                        <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
                                                             {cell.render('Cell')}
-                                                        </RefundTextColor>	
-                                                    </TDrow>
-                                                )
-                                            } else {
-                                                return (
-                                                    <TDrow {...cell.getCellProps()}>
-                                                        {cell.render('Cell')}
-                                                    </TDrow>
-                                                )
-                                            }
-                                        })}
-                                    </TRrow>
-                                )
-                            })}
-                        </tbody>
-                    </Table>
+                                                        </TDrow>
+                                                    )
+                                                } else if (cell.column.id === 'total' && cell.value.props.value < 0 ) {
+                                                    return (
+                                                        <TDrow {...cell.getCellProps()}>
+                                                            <RefundTextColor>
+                                                                {cell.render('Cell')}
+                                                            </RefundTextColor>	
+                                                        </TDrow>
+                                                    )
+                                                } else {
+                                                    return (
+                                                        <TDrow {...cell.getCellProps()}>
+                                                            {cell.render('Cell')}
+                                                        </TDrow>
+                                                    )
+                                                }
+                                            })}
+                                        </TRrow>
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                    </OverflowContainer>
                 )
             }
             <div>
