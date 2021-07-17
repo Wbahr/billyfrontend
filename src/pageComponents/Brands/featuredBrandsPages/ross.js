@@ -113,20 +113,20 @@ export function ross() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/image/34/covid19-1585926320.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/covid19-1585926320.png"
                         text="Company Update for Customers & Channel Partners"
                         link="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/pdf/34/Covid-19_Letter_jjh__002_-1585926320.pdf"
                         detail="An update on what ROSS Controls® is doing to keep employees safe and our critical infrastructure customer base supported."
                     />
                     <Articles
-                        src="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/image/33/MCSE-Double-Valve-_L2__with-Gauge-1574861538.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/MCSE-Double-Valve-_L2__with-Gauge-1574861538.png"
                         text="MCSE Series Safety Exhaust Double Valve"
                         link="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/pdf/33/ROSS_MCSE_Series_Safety_Exhaust_Double_Valves_Press-Release-1574861538.pdf"
                         detail="ROSS Controls® introduces its new internal monitored MCSE Series safety exhaust (dump) valves with EEZ-ON® Soft Start function for Category-4, PL e machine guarding applications."
                     />
 
                     <Articles
-                        src="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/image/32/ROSS-Die-Cushion-RF2018005-Non-Redundant-_2s-1569960758.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/ROSS-Die-Cushion-RF2018005-Non-Redundant-_2s-1569960758.png"
                         text="Automatic Die Cushion Control System"
                         detail="ROSS Controls® introduces its new Automatic Systems Series valve manifold assemblies for automatic pressure control, press metal forming applications."
                         link="https://assets-ross-controls.s3.amazonaws.com/production/uploads/news_event/pdf/32/Automatic_Die_Cushion_Control_Systems_for_Press_Metal_Forming_Applications-1569960758.pdf"

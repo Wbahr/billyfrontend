@@ -115,20 +115,20 @@ export function phoenixcontact() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://dam-mdc.phoenixcontact.com/rendition/156443151564/7e8bcbceecd75e0fd2e7cb4c08cde8a8/-S220x217-C98.83333333%25x93.33333333%25%2C1.0462963%25%2C5.33333333%25-FPNG"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/-S220x217-C747x738,8,42-FPNG.png"
                         text="Loop-powered temperature transducers"
                         link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/2aac9d14-e323-4341-8f6d-1737844bd68a"
                         detail="Dual-channel temperature transmitters with HART compatibilityMiddletown, Pa. – Phoenix Contact introduces six new universal temperature transducers. These new additions to the MACX MCR family are loop-powered and have two channels."
                     />
                     <Articles
-                        src="https://dam-mdc.phoenixcontact.com/rendition/156443151564/370be705816f36d75e2ed47617cb1158/-S220x172-C100%25x61.18556701%25%2C0%25%2C20%25-FPNG"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/-S220x172-C2362x1846,0,603-FPNG.png"
                         text="Reduce energy costs"
                         link="https://www.phoenixcontact.com/online/portal/us?1dmy&urile=wcm%3apath%3a/usen/web/corporate/Press/press_information/703e7164-375b-4a41-adf6-d6b9bc28e233"
                         detail="Easy-to-configure EMpro simplifies remote energy monitoring Middletown, Pa. – Plant operators and facility managers now have real-time, remote access to their machines’ energy consumption data, with Phoenix Contact’s EMpro. "
                     />
 
                     <Articles
-                        src="https://dam-mdc.phoenixcontact.com/rendition/156443151564/d05604fba27eaf54a936466af169c755/-S220x228-C99.65123457%25x98.5%25%2C0.34876543%25%2C1.5%25-FPNG"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/-S220x228-C753x779,3,12-FPNG.png"
                         text="Value-powered reliability now available in 480 W"
                         detail="New 24 V DC/20 A UNO power supply provides high-quality, cost-effective power
 

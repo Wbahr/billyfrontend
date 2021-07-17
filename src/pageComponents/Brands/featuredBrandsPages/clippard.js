@@ -134,20 +134,20 @@ export function clippard() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.clippard.com/cms/sites/default/files/wiki_images/cordis-high-resolution-proportional-pressure-controls_1.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/cordis-high-resolution-proportional-pressure-controls_1.png"
                         text="6 Ways Clippard's New Cordis EPR is Revolutionizing Electronic Pressure Control"
                         link="https://www.clippard.com/cms/wiki/6-ways-clippards-new-cordis-epr-revolutionizing-electronic-pressure-control"
                         detail="The future of proportional control has arrived—and it's digital! The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant."
                     />
                     <Articles
-                        src="https://www.clippard.com/cms/sites/default/files/wiki_images/stepper-motor-diagram.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/stepper-motor-diagram.jpg"
                         text=" How Stepper Motors Provide Precision Control"
                         link="https://www.clippard.com/cms/wiki/how-stepper-motors-provide-precision-control"
                         detail="Stepper motors are used in a variety of applications to provide a means for tightly controlled motion. But what is a stepper motor, and how does it work? "
                     />
 
                     <Articles
-                        src="https://www.clippard.com/cms/sites/default/files/wiki_images/digital-proportional-pressure-controls.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/digital-proportional-pressure-controls.jpg"
                         text="New Cordis Proportional Pressure Controls"
                         detail="Clippard Releases New High Resolution Digital Proportional Pressure Controls"
                         link="https://www.clippard.com/cms/wiki/press-release-new-cordis-proportional-pressure-controls"

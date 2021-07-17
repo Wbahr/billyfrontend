@@ -12,6 +12,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
   color: #303030;
   font-size: 16px;
   border-radius: 1px;
+  text-align: right;
   border: 1px solid #e1e1e1;  
   :focus{
     border: 1px solid #007bff;  
@@ -80,21 +81,50 @@ export default function Input({ type, disabled, name, label, placeholder, width,
 }
 
 /*Creates a non-formik bound input, but styled to look the same */
-export function FormikStyleInput({ type, value, disabled, name, label, placeholder, width, maxlength, onChange }) {
+export function FormikStyleInput({ type, value, disabled, name, label, placeholder, width, maxlength, onChange, alignment }) {
+    if (type === 'currency') {
+        return (
+            <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%', paddingRight: 7 }}>{`${label}`}</FormikFormFieldLabel>}      
+                <MainCurrencyInput
+                    type={type}
+                    name={name}
+                    id={name}
+                    placeholder={placeholder} 
+                    disabled={disabled} 
+                    style={{ width: width || '400px', maxWidth: '100%' }}
+                    maxLength={maxlength}
+                    onChangeEvent={onChange}
+                    value={value}
+                    prefix='$'
+                />
+            </FormikFormFieldContainer>
+        )
+    } else {
+        return (
+            <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%' }}>{`${label}`}</FormikFormFieldLabel>}
+                <input 
+                    type={type}
+                    name={name}
+                    id={name}
+                    placeholder={placeholder} 
+                    disabled={disabled} 
+                    style={{ width: width || '400px', maxWidth: '100%' }}
+                    maxLength={maxlength}
+                    onChange={onChange}
+                    value={value}
+                />
+            </FormikFormFieldContainer>
+        )
+    }
+}
+
+export function FormikStyleLabel({ name, label, children, alignment }) {
     return (
-        <FormikFormFieldContainer style={{ maxWidth: '100%' }}>>
-            {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
-            <input 
-                type={type}
-                name={name}
-                id={name}
-                placeholder={placeholder} 
-                disabled={disabled} 
-                style={{ width: width || '400px', maxWidth: '100%' }}
-                maxLength={maxlength}
-                onChange={onChange}
-                value={value}
-            />
+        <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+            {label && <FormikFormFieldLabel style={{ textAlign: alignment, width: '100%' }} htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+            {children}
         </FormikFormFieldContainer>
     )
 }
