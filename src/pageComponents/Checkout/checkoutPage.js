@@ -119,15 +119,6 @@ function CheckoutPage({ history }) {
         }
     )
 
-    const { data: itemsPrices } = useQuery(GET_ITEM_PRICE, {
-        variables: {
-            items: context.cart?.map(cartItem => ({
-                invMastUid: cartItem.invMastUid,
-                quantity: cartItem.quantity
-            }))
-        }
-    })
-
     useEffect(() => {
         if (!context.cart?.length) {
             history.replace('/cart')
@@ -136,13 +127,11 @@ function CheckoutPage({ history }) {
         if (context.userInfo?.isAirlineEngineerUser){
             history.replace('/cart')
         }
-    }, [])
 
-    useEffect(() => {
-        if (cartHasZeroPricedItem(context.cart, itemsPrices)){
+        if (context.cart?.some(item => item.itemUnitPrice === 0)){
             history.replace('/cart')
         }
-    }, [itemsPrices])
+    }, [])
 
     const [getTaxRate] = useLazyQuery(GET_TAX_RATE, {
         fetchPolicy: 'no-cache',
@@ -222,7 +211,6 @@ function CheckoutPage({ history }) {
 
     const itemInfo = {
         itemsDetails: itemsDetails?.itemDetailsBatch,
-        itemsPrices: itemsPrices?.getItemPrices,
         itemsCustomerPartNumbers: itemsCustomerPartNumbers?.customerPartNumbersBatch
     }
     

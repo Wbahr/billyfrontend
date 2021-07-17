@@ -304,8 +304,14 @@ export default function ShoppingCartItem(props) {
     const handleRemoveItem = () => {
         setCartItem(null)
     }
+
+    const handleQuoteItemReset = () => {
+        setCartItem({ ...cartItem, quantity: cartItem.quoteLineQuantity, itemUnitPriceOverride: null, priceReasonId: null })
+    }
     
     const handleDropshipChange = ({ target: { checked } }) => setCartItemField('isDropship', checked)
+
+    const backgroundColor = cartItem.isQuoteLineActive ? '#13375226' : 'white'
 
     return (
         <DivContainer>
@@ -313,7 +319,7 @@ export default function ShoppingCartItem(props) {
                 !itemDetails
                     ? <p>{cartItem.invMastUid}</p>
                     : (
-                        <DivFlex>
+                        <DivFlex style={{ backgroundColor: backgroundColor }}>
                             <DivCard>
                                 <DivImgAndItemDetails>
                                     <DivMove
@@ -367,6 +373,18 @@ export default function ShoppingCartItem(props) {
                                                 </>
                                             )}
                                         </DivRow>
+                                        {(userInfo?.isAirlineEmployee || userInfo?.isWebUser) && (cartItem.quoteLineId) && (
+                                            <>
+                                                {
+                                                    cartItem.isQuoteLineActive 
+                                                        ? (<strong>Quote Item</strong>) 
+                                                        : (
+                                                            <button onClick={() => { handleQuoteItemReset() }}>Reset Quote Item</button>
+                                                        )
+                                                }
+                                            </>
+                                        )} 
+                                        
                                     </DivCol2>
                                 </DivImgAndItemDetails>
                                 <DivCol3>
@@ -406,7 +424,7 @@ export default function ShoppingCartItem(props) {
                                                 <div>
                                                     <EditPriceDiv>
                                                         <NumberFormat
-                                                            value={cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : (unitPrice || 0)}
+                                                            value={cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : (cartItem.itemUnitPrice || 0)}
                                                             displayType={'text'}
                                                             thousandSeparator={true}
                                                             prefix={'$'}
@@ -446,7 +464,7 @@ export default function ShoppingCartItem(props) {
                                                     {
                                                         cartItem.itemUnitPriceOverride === null ? (
                                                             <NumberFormat
-                                                                value={(unitPrice ? unitPrice : 0.0).toFixed(2) * cartItem.quantity}
+                                                                value={(cartItem.itemUnitPrice ? cartItem.itemUnitPrice : 0.0).toFixed(2) * cartItem.quantity}
                                                                 displayType={'text'}
                                                                 thousandSeparator={true}
                                                                 prefix={'$'}
@@ -527,8 +545,8 @@ export default function ShoppingCartItem(props) {
                 open={!!showEditPriceModal}
                 hideEditPriceModal={() => setShowEditPriceModal(null)}
                 data={{
-                    originalItemPrice: unitPrice,
-                    itemPrice: cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : unitPrice,
+                    originalItemPrice: cartItem.itemUnitPriceOriginal,
+                    itemPrice: cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : cartItem.itemUnitPrice,
                     spaType: spaType,
                     spaNumber: spaNumber,
                     spaCost: spaCost,

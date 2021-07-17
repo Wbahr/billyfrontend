@@ -108,7 +108,6 @@ export default function ConfirmationScreen(props) {
         checkoutDropdownDataLabels,
         handleMoveStep,
         itemsDetails,
-        itemsPrices,
         itemsCustomerPartNumbers,
         isStepValid,
         validateForm,
@@ -171,7 +170,7 @@ export default function ConfirmationScreen(props) {
     const handleCheckboxChange = name => ({ target: { checked } }) => setFieldValue(name, checked)
 
     const CartDates = schedule.cartWithDates.map((item, index) => {
-        const price = itemsPrices?.find(price => price.invMastUid === item.invMastUid)
+        const price = item.itemUnitPrice
         const details = itemsDetails?.find(detail => detail.invMastUid === item.invMastUid)
         const customerPartNumbers = itemsCustomerPartNumbers?.filter(part => part.invMastUid === item.invMastUid)
 
