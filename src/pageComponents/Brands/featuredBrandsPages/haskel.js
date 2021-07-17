@@ -124,21 +124,21 @@ export function haskel() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.haskel.com/-/media/images/haskel/blog/hydrogen-mobility-in-the-us/insider-evs-us-sales.png?mh=301&mw=624"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/Insider%20EVs-US%20Sales.png"
                         text="Three Major Signs that May Change the Future of Hydrogen Mobility in the U.S."
                         link="https://www.haskel.com/en-us/blog/hydrogen-mobility-in-the-us"
                         detail="As the global hydrogen economy makes significant progress, investing in the innovation and infrastructure needed to make fuel cell vehicles a powerful tool in achieving emissions targets, where is the U.S.?
                         The United States has largely been considered a bystander to the hydrogen mobility movement in recent years. While there are FCEV (fuel cell electric vehicles) passenger cars commercially available and"
                     />
                     <Articles
-                        src="https://www.haskel.com/-/media/images/haskel/blog/driving-consumer-adoption/haskel-toyota-shoot-sunderland-min06.png?mh=1872&mw=1140"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/Haskel-Toyota-Shoot-Sunderland-min06.png"
                         text="Driving Consumer Adoption in Hydrogen Mobility Market"
                         link="https://www.haskel.com/en-us/blog/driving-consumer-adoption-in-hydrogen-mobility"
                         detail="One of hydrogen mobility’s biggest barriers to widespread adoption is consumer awareness and education. Despite fuel cell electric vehicles (FCEVs) and hydrogen-powered technology being far from new, there are still several misconceptions and a lack of consumer information."
                     />
 
                     <Articles
-                        src="https://www.haskel.com/-/media/images/haskel/blog/embracing-industry-iot/iiot_header.jpg?mh=229&mw=1140"
+                        src="https://airlinestatic.nyc3.cdn.digitaloceanspaces.com/Static_pages/images/articles/IIot_header.jpg"
                         text="Embracing the Industrial IoT to Advance High-Pressure Manufacturing"
                         detail="The “Internet of Things (IoT)” is a concept that has gained considerable exposure over the past decade, becoming increasingly embedded in household objects in order to more easily enable the sending and receiving of data. The IoT has already significantly changed the way that we live and work (Amazon’s Alexa, anyone?)."
                         link="https://www.haskel.com/en-us/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"

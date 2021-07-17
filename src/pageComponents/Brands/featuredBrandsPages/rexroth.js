@@ -174,21 +174,21 @@ export function rexroth() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20002/MA20002-Rexroth-Piston-Gear-Pump_IMAGE_w176.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/MA20002-Rexroth-Piston-Gear-Pump_IMAGE_w176.jpg"
                         text="Bosch Rexroth Launches Piston-Gear Pump Assembly with Common Suction Port"
                         link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49216"
                         detail="New tandem pump configuration simplifies design and installation of combined axial/gear pump systems to save space on mobile machines
 						"
                     />
                     <Articles
-                        src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20014/MA20014-Rexroth-MCR8T_IMAGE_w176.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/MA20014-Rexroth-MCR8T_IMAGE_w176.jpg"
                         text="The new MCR8T radial piston motor from Rexroth"
                         link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49344"
                         detail="As end-users demand ever higher performance from their CTLs, Rexroth has called upon its decades of industry experience and continued innovation to produce their most advanced track motor yet."
                     />
 
                     <Articles
-                        src="https://dc-us.resource.bosch.com/media/us/press_release/2020_1/ma20015/MA20015-Rexroth-RM10-RM15_LSValves_IMAGE_w176.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/MA20015A-Rexroth-RM10-15_LSValves_MPP_w176.jpg"
                         text="Bosch Rexroth launches new load sensing valves"
                         detail="The RM10 and RM15 are easy to configure, compact, general purpose, multi-application valves fit for use in today’s mobile machines"
                         link="https://www.boschrexroth.com/en/web/us/company/press/press-details-49280"
