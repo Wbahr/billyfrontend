@@ -28,6 +28,8 @@ import PlantServices from '../pageComponents/Services/plantServices'
 import PowerDistributionProducts from '../pageComponents/PowerDistributionProducts/PowerDistributionProductsPage'
 import RedPallet from '../pageComponents/RedPallet/redPalletPage'
 import SearchResults from '../pageComponents/SearchResults/searchResultsPage'
+import ServiceForm from '../pageComponents/ServiceForm/serviceForm'
+import ServiceFormComplete from '../pageComponents/ServiceForm/serviceFormComplete'
 import Shop from '../pageComponents/Shop/shopPage'
 import ShoppingCart from '../pageComponents/ShoppingCart/shoppingCartPage'
 import Signup from '../pageComponents/Signup/signupPage'
@@ -125,6 +127,8 @@ class App extends React.Component {
                 <WrapperRoute exact path='/shop/:page' component={Shop} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/signup' component={Signup} layout={EmptyLayout}/>
                 <WrapperRoute exact path='/cart' component={ShoppingCart} layout={HeaderFooterLayoutExpanded}/>
+                <WrapperRoute exact path='/serviceform' component={ServiceForm} layout={HeaderFooterLayout}/>
+                <WrapperRoute exact path='/serviceform-complete/:formNo' component={ServiceFormComplete} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/technologies/:page' component={technologyPage} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/pages/:pageId1/:pageId2?/:pageId3?/:pageId4?' component={StaticPage} layout={HeaderFooterLayoutExpanded} />
 

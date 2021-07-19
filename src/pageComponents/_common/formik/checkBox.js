@@ -4,7 +4,7 @@ import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormField } from 
 
 export default function CheckBox({ disabled, name, label, value, onChange, style }) {
     return (
-        <FormikFormFieldContainer style={{ flexDirection: 'row', width: 'auto', ...style }}>
+        <FormikFormFieldContainer style={{ flexDirection: 'row', width: 'auto', ...style, maxWidth: '100%' }}>
             {label && <FormikFormFieldLabel style={{ margin: 'auto 0', marginRight: 10 }} htmlFor={name}>{label}</FormikFormFieldLabel>}
             <FormikFormField 
                 type="checkbox" 
@@ -13,8 +13,8 @@ export default function CheckBox({ disabled, name, label, value, onChange, style
                 checked={value}
                 id={name}
                 disabled={disabled}
-                onChange={onChange}
-                style={{ cursor: 'pointer', width: '25px' }}
+                {...(onChange ? { onChange } : null)}
+                style={{ cursor: 'pointer', width: '25px', flexShrink: 0 }}  
             />
         </FormikFormFieldContainer>
     )

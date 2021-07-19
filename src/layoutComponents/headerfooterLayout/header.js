@@ -650,6 +650,10 @@ const contactSubItems = [
     {
         label: 'Government Sales',
         to: '/pages/government-sales'
+    },
+    {
+        label: 'Service Request',
+        to: '/serviceform'
     }
 ]
 const headerTabs = categories => [
