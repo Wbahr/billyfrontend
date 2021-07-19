@@ -72,12 +72,15 @@ export function formatTableData(type, data, orderId){
             const elem = data[i]
             if (elem.isQuote){
                 let partNumbers = ''
+
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
+                
                 let filterField = elem.orderNumber + ' ' + partNumbers
                 filterField = filterField.toUpperCase()
+
                 const displayTotal = '$' + elem.total.toFixed(2)
                 mutatedData.push(
                     {
@@ -86,6 +89,9 @@ export function formatTableData(type, data, orderId){
                         quoteRefNo: elem.quoteRefNo,
                         total: displayTotal,
                         filter: filterField,
+                        quoteId: elem.quoteHeader?.quoteId,
+                        isCompleted: elem.quoteHeader?.isCompleted,
+                        expirationDate: elem.quoteHeader?.expirationDate
                     }
                 )
             }

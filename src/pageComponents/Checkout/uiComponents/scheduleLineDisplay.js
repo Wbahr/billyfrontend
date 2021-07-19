@@ -87,8 +87,8 @@ export default function ScheduleLineDisplay({ item, price, itemDetails, customer
 
     const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
     const totalPrice = Number(item.quantity) * (
-        (item.itemUnitPriceOverride || price)
-            ? Number(item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : price.unitPrice)
+        (item.itemUnitPriceOverride || item.itemUnitPrice)
+            ? Number(item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : item.itemUnitPrice)
             : 0
     )
 
@@ -109,7 +109,7 @@ export default function ScheduleLineDisplay({ item, price, itemDetails, customer
                     <DivItem>
                         <Label>
                             <NumberFormat
-                                value={item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : (price ? price.unitPrice : 0) }
+                                value={item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : (item.itemUnitPrice ? item.itemUnitPrice : 0) }
                                 displayType="text"
                                 thousandSeparator={true}
                                 prefix="$"

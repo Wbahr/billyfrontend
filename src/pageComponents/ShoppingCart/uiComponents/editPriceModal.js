@@ -88,8 +88,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }, [data])
 
     function handleReset() {
-        setItemPrice(data.originalItemPrice)
-        setMargin(calculateMargin(data.originalItemPrice))
+        setItemPrice(data.cartItem.quoteUnitPrice ?? data.originalItemPrice)
+        setMargin(calculateMargin(data.cartItem.quoteUnitPrice ?? data.originalItemPrice))
         setSelectedReason(null)
     }
 
@@ -114,7 +114,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }
 
     const handleSave = () => {
-        if (itemPrice === data.originalItemPrice) {
+        if (itemPrice === (data?.cartItem.quoteUnitPrice ?? data.originalItemPrice)) {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
         } else {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
@@ -127,8 +127,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }
 
     const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
-        || (itemPrice === data?.originalItemPrice && !data?.cartItem?.priceReasonId)
-        || (itemPrice !== data?.originalItemPrice && !selectedReason?.value)
+        || (itemPrice === (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !data?.cartItem?.priceReasonId)
+        || (itemPrice !== (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !selectedReason?.value)
         || (itemPrice === 0 && !ALLOW_ZERO.includes(selectedReason?.value))
 
     return (

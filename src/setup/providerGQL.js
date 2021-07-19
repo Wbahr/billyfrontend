@@ -138,7 +138,14 @@ export const UPDATE_CART = gql`
         invMastUid
         customerPartNumberId
         quantity
+        quoteLineQuantity
+        quoteUnitPrice
+        isQuoteLineActive
         itemNotes
+        quoteLineId
+        itemTotalTariff
+        itemUnitPrice
+        itemUnitPriceOriginal
         itemUnitPriceOverride
         airlineCost
         priceReasonId
@@ -232,14 +239,20 @@ export const GET_ORDERS = gql`
       quoteRefNo
       promiseDate
 			lineItems{
-                invMastUid
-                itemCode
-                customerPartNumber
-                customerPartNumberId
-                unitPrice
-                quantityOrdered
-                quantityOpen
+        invMastUid
+        itemCode
+        customerPartNumber
+        customerPartNumberId
+        unitPrice
+        quantityOrdered
+        quantityOpen
+        quoteLineId
 			}
+      quoteHeader {
+        quoteId
+        isCompleted
+        expirationDate
+      }
 		}
 	}
 `
@@ -267,6 +280,11 @@ export const GET_ORDERS_DETAIL = gql`
 			shipToZip
 			shipToCountry
 			quoteRefNo
+      quoteHeader {
+        quoteId
+        isCompleted
+        expirationDate
+      }
 			lineItems{
 				lineItemId
 				orderNumber
@@ -280,6 +298,7 @@ export const GET_ORDERS_DETAIL = gql`
 				quantityInvoiced
 				unitPrice
 				totalPrice
+        quoteLineId
 				trackingNumbers{
 					carrierId
 					carrierName

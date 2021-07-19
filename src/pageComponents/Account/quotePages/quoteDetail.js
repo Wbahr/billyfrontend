@@ -108,7 +108,8 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
         shipToState,
         shipToZip,
         lineItems,
-        quoteRefNo
+        quoteRefNo,
+        quoteHeader,
     } = orderDetails?.accountOrderDetails || {}
 
     const [itemDetails, setItemDetails] = useState(<p>Loading Items...</p>)
@@ -211,7 +212,7 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
                 itemNotes: '',
                 itemUnitPriceOverride: null,
                 customerPartNumberId: item.customerPartNumberId,
-                //'quoteId': quoteId
+                quoteLineId: item.lineItemId
             }
         })
 
@@ -291,7 +292,15 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
                         <p>P.O. Number: {poNo}</p>
                         <p>Status: {status}</p>
                         <p>Packing Basis: {packingBasis}</p>
-                        <p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+                        <p>Order Total: <NumberFormat 
+                            value={total} 
+                            displayType={'text'} 
+                            thousandSeparator={true} 
+                            prefix={'$'} 
+                            decimalScale={2} 
+                            fixedDecimalScale
+                        />
+                        </p>
                     </DivOrderInfo>
                     <DivOrderInfo>
                         <p>Ship-to-Address:</p>
