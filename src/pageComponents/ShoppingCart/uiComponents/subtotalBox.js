@@ -7,8 +7,10 @@ import CheckoutButtons from './CheckoutButtons'
 
 const Container = styled.div`
 	display: flex;
+    flex-wrap: wrap;
 	justify-content: space-between;
 	margin: 16px 8px;
+    max-width: calc(100vw - 40px);
 `
 
 const Div = styled.div`

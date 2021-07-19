@@ -89,20 +89,20 @@ export function orientalmotor() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.orientalmotor.com/images/pr/dg2-series-dg-b.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/dg2-series-dg-b.jpg"
                         text="New DGII Series Type DG-B Rotary Actuator"
                         detail="Oriental Motor is pleased to announce the introduction of the DG-B horizontal mount type DGII Series rotary actuator.
 						The DG-B saves space by having the motor mounted horizontally instead of vertically. It also provides 2nd stage of gearing, allowing for inertial matching or increased torque."
                         link="https://www.orientalmotor.com/company/pr/press-release-03-30-20-dg2-dgb-series.html"
                     />
                     <Articles
-                        src="https://www.orientalmotor.com/images/linear-actuators/dr-pkp-compact-electric-cylinders-350px.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/dr-pkp-compact-electric-cylinders-350px.jpg"
                         text="New DR Series Compact Electric Cylinders"
                         detail="Oriental Motor is pleased to announce the introduction of the DR Series, the latest compact electric cylinder motion control products. The DR Series is available with an AZ Series or 2-phase PKP Series base motor."
                         link="https://www.orientalmotor.com/company/pr/press-release-03-23-20-new-dr-series-electric-cylinders.html"
                     />
                     <Articles
-                        src="https://www.orientalmotor.com/images/network-products/ethercat-drivers-top-350px.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/ethercat-drivers-top-350px.jpg"
                         text="New AZ Series Drivers Available with DC Input and EtherCAT Communication"
                         detail="Oriental Motor is pleased to announce the latest addition to the AZ Series family of single axis stored data drivers, which now includes AC and DC input. Both input types are available with EtherNet/IP or EtherCAT communication."
                         link="https://www.orientalmotor.com/company/pr/press-release-03-10-20-new-az-series-ethernet-ip_ethercat_drivers.html"

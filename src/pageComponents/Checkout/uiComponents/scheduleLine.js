@@ -8,10 +8,10 @@ import { getThumbnailImagePath } from '../../_common/helpers/generalHelperFuncti
 
 const DivContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px whitesmoke solid;
   padding: 8px 16px;
   margin: 8px 0;
-  height: 70px;
 `
 
 const DivRow = styled.div`
@@ -26,6 +26,7 @@ const DivItem = styled.div`
 
 const DivCard = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
 `
@@ -39,6 +40,7 @@ const DivQuantity = styled.div`
 
 const DivCol1 = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100px;
 `
 
@@ -48,7 +50,6 @@ const DivCol2 = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 300px;
-  height: 100%;
   margin-right: 50px;
   p {
     font-size: 16px;

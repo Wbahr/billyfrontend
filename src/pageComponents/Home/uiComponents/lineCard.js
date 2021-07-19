@@ -45,9 +45,9 @@ export default function LineCards() {
             <SectionHeader text="Line Card &amp; Catalogs"/>
             <LineCardWrapper>
                 <LineCardDiv>
-                    <a href="/linecards">
+                    <a href="/pages/resources/linecards">
                         <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/line-card.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/line_card.png" />
                         </ImgDiv>
                         <NameDiv><P>View all line cards</P></NameDiv>
                     </a>
@@ -68,14 +68,14 @@ export default function LineCards() {
                 
                 <LineCardDiv>
                     <a
-                        href="//airlinemedia.airlinehyd.com/Literature/Airline_Preferred_Stock_Catalog.pdf"
+                        href="https://airlinemedia.airlinehyd.com/Literature/Airline_Automation_Solutions.pdf"
                         target="_blank"
                         rel="noreferrer"
                     >
                         <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/automation-catalog.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/automation%20solutions.png" />
                         </ImgDiv>
-                        <NameDiv><P>Automation Catalog</P></NameDiv>
+                        <NameDiv><P>Automation Solutions</P></NameDiv>
                     </a>
                 </LineCardDiv>
                 <LineCardDiv>

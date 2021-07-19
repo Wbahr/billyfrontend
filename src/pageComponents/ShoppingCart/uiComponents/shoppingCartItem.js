@@ -24,7 +24,7 @@ const DivContainer = styled.div`
 	border-bottom: 2px whitesmoke solid;
 	padding: 8px 16px;
 	margin: 8px 0;
-	min-height: 135px;
+    max-width: calc(100vw - 25px);
 	background-color: white;
 `
 
@@ -49,15 +49,26 @@ const DivItemPrice = styled.div`
 
 const DivCard = styled.div`
 	display: flex;
+    flex-wrap: wrap;
 	align-items: center;
+    justify-content: center;
 	width: 100%;
+    @media(max-width: 768px) {
+        flex-wrap: wrap;
+    }
+    @media(max-width: 1024px) {
+        justify-content: flex-start;
+    }
 `
 
 const DivItemInfo = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 100%;
+    @media(max-width: 1024px) {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
 `
 
 const DivRemove = styled.div`
@@ -70,13 +81,11 @@ const DivRemove = styled.div`
 
 const DivSplitLine = styled(DivRemove)`
 	padding: 0 3px;
-	// border: 1px solid #328EFC;
 	margin: 0;
 	border-radius: 50px;
 	color: #328EFC;
 	height: 20px;
 	font-size: 12px;
-	// padding-left: 8px;
 	font-weight: 600;
 `
 
@@ -90,11 +99,16 @@ const DivMove = styled.div`
 
 const DivCol1 = styled.div`
 	display: flex;
-	width: 100px;
+    flex-wrap: wrap;
+    max-width: 100px;
+	width: 100%;
+    max-height: 100px;
+    height: 100%;
 `
 
 const DivCol2 = styled.div`
 	display: flex;
+    flex-wrap: wrap;
 	flex-direction: column;
 	align-items: flex-start;
 	width: 300px;
@@ -104,6 +118,9 @@ const DivCol2 = styled.div`
 		font-size: 16px;
 		margin: 0;
 	}
+    @media(max-width: 575px) {
+        margin: 0;
+      }
 `
 
 const DivCol3 = styled.div`
@@ -162,6 +179,17 @@ const P2 = styled.p`
 	color: grey;
 	font-size: 12px !important;
 	padding: 0 2px;
+`
+
+const DivImgAndItemDetails = styled.div`
+    display: flex;
+    margin: 30px 0;
+    @media(max-width: 540px) {
+        flex-wrap: wrap;
+    }
+`
+const DivFlex = styled.div`
+    display: flex;
 `
 
 export default function ShoppingCartItem(props) {
@@ -276,8 +304,14 @@ export default function ShoppingCartItem(props) {
     const handleRemoveItem = () => {
         setCartItem(null)
     }
+
+    const handleQuoteItemReset = () => {
+        setCartItem({ ...cartItem, quantity: cartItem.quoteLineQuantity, itemUnitPriceOverride: null, priceReasonId: null })
+    }
     
     const handleDropshipChange = ({ target: { checked } }) => setCartItemField('isDropship', checked)
+
+    const backgroundColor = cartItem.isQuoteLineActive ? '#13375226' : 'white'
 
     return (
         <DivContainer>
@@ -285,207 +319,225 @@ export default function ShoppingCartItem(props) {
                 !itemDetails
                     ? <p>{cartItem.invMastUid}</p>
                     : (
-                        <DivCard>
-                            <DivMove
-                                {...provided.dragHandleProps}
-                            >
-                                <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
-                            </DivMove>
-                            <DivCol1>
-                                <Img src={getThumbnailImagePath(itemDetails)} />
-                            </DivCol1>
-                            <DivCol2>
-                                <A1 onClick={() => {history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
-                                <CopyToClipboard text={itemDetails.itemDesc}>
-                                    <P2>Copy Item Desc</P2>
-                                </CopyToClipboard>
-                                <TextRow>
-                                    <CopyToClipboard text={itemDetails.itemCode}>
-                                        <P2>{itemDetails.itemCode}</P2>
-                                    </CopyToClipboard> <P2>|</P2>
-                                    <CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
-                                        <P2>AHC{itemDetails.invMastUid}</P2>
-                                    </CopyToClipboard>
-                                </TextRow>
-                                {userInfo && !userInfo.isAirlineEngineerUser && (
-                                    <CustomerPartModal
-                                        open={showCustomerPartModal}
-                                        setOpen={() => setShowCustomerPartModal(false)}
-                                        invMastUid={cart?.[index].invMastUid}
-                                        {...{ customerPartNumbers, selectedCustomerPartNumber, selectCustomerPartNumber, clearCustomerPartNumber }}
-                                    />
-                                )}
+                        <DivFlex style={{ backgroundColor: backgroundColor }}>
+                            <DivCard>
+                                <DivImgAndItemDetails>
+                                    <DivMove
+                                        {...provided.dragHandleProps}
+                                    >
+                                        <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+                                    </DivMove>
+                                    <DivCol1>
+                                        <Img src={getThumbnailImagePath(itemDetails)} />
+                                    </DivCol1>
+                                    <DivCol2>
+                                        <A1 onClick={() => {history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+                                        <CopyToClipboard text={itemDetails.itemDesc}>
+                                            <P2>Copy Item Desc</P2>
+                                        </CopyToClipboard>
+                                        <TextRow>
+                                            <CopyToClipboard text={itemDetails.itemCode}>
+                                                <P2>{itemDetails.itemCode}</P2>
+                                            </CopyToClipboard> <P2>|</P2>
+                                            <CopyToClipboard text={`AHC${itemDetails.invMastUid}`}>
+                                                <P2>AHC{itemDetails.invMastUid}</P2>
+                                            </CopyToClipboard>
+                                        </TextRow>
+                                        {userInfo && !userInfo.isAirlineEngineerUser && (
+                                            <CustomerPartModal
+                                                open={showCustomerPartModal}
+                                                setOpen={() => setShowCustomerPartModal(false)}
+                                                invMastUid={cart?.[index].invMastUid}
+                                                {...{ customerPartNumbers, selectedCustomerPartNumber, selectCustomerPartNumber, clearCustomerPartNumber }}
+                                            />
+                                        )}
 
-                                <LocationsModal
-                                    invMastUid={itemDetails.invMastUid}
-                                    availabilityInfo={availabilityInfo}
-                                    unitPrice={unitPrice}
-                                />
+                                        <LocationsModal
+                                            invMastUid={itemDetails.invMastUid}
+                                            availabilityInfo={availabilityInfo}
+                                            unitPrice={unitPrice}
+                                        />
 
-                                <DivRow>
-                                    <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
-                                    {userInfo && userInfo.isAirlineEmployee && (
-                                        <>
-                                            <DivSplitLine>|</DivSplitLine>
-                                            <DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
-                                        </>
-                                    )}
-                                    {userInfo && !userInfo.isAirlineEmployee && (
-                                        <>
-                                            <DivSplitLine>|</DivSplitLine>
-                                            <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
-                                        </>
-                                    )}
-                                </DivRow>
-                            </DivCol2>
-                            <DivCol3>
-                                <DivItemInfo>
-                                    <DivItem>
-                                        <DivItemQuantity>
-                                            <div>
-                                                <Label>Qty:</Label>
-                                                {
-                                                    (unitSize > 1) && (
-                                                        <AirlineChip style={{
-                                                            marginLeft: '0.5rem',
-                                                            fontSize: '0.7rem',
-                                                            padding: '0 0.5rem' }}
-                                                        >
-                                                            X {unitSize }
-                                                        </AirlineChip>
-                                                    )
-                                                }
-                                            </div>
-
-                                            <div>
-                                                <QuantityInput
-                                                    quantity={cartItem.quantity}
-                                                    unitSize={unitSize}
-                                                    unitOfMeasure={unitOfMeasure}
-                                                    roundType={roundType}
-                                                    handleUpdate={setQuantityHandler}
-                                                    min='0'
-                                                    debounce
-                                                />
-                                            </div>
-                                        </DivItemQuantity>
-                                    </DivItem>
-                                    <DivItem>
-                                        <DivItemPrice>
-                                            <div>
-                                                <EditPriceDiv>
-                                                    <NumberFormat
-                                                        value={cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : (unitPrice || 0)}
-                                                        displayType={'text'}
-                                                        thousandSeparator={true}
-                                                        prefix={'$'}
-                                                        decimalScale={2}
-                                                        fixedDecimalScale
-                                                    />
-                                                    <span>{`/${unitOfMeasure || ''}`}</span>
-                                                    {userInfo?.isAirlineEmployee && (
-                                                        <EditPriceIcon onClick={handleShowEditPriceModal}>
-                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride !== null ? '#328EFC' : 'grey'} />
-                                                        </EditPriceIcon>
-                                                    )}
-                                                </EditPriceDiv>
-                                            </div>
-                                            {userInfo?.isAirlineEmployee && (
+                                        <DivRow>
+                                            <DivSplitLine onClick={() => setShowSplitLineModal(true)}>Split Line</DivSplitLine>
+                                            {userInfo && userInfo.isAirlineEmployee && (
                                                 <>
-                                                    <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                        <span>Source Loc: {cartItem.sourceLocId || 'Any'}</span>
-                                                        <EditPriceIcon onClick={handleShowSourceLocModal}>
-                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
-                                                        </EditPriceIcon>
-                                                    </div>
-                                                    <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                        <span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || getDefaultDisposition()}</span>
-                                                        <EditPriceIcon onClick={handleShowDispositionModal}>
-                                                            <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
-                                                        </EditPriceIcon>
-                                                    </div>
+                                                    <DivSplitLine>|</DivSplitLine>
+                                                    <DivSplitLine onClick={handleShowFactoryStockModal}>Factory Stock</DivSplitLine>
                                                 </>
                                             )}
-                                        </DivItemPrice>
-
-                                    </DivItem>
-                                    <DivItem>
-                                        <DivTotalPrice>
-                                            <p>
+                                            {userInfo && !userInfo.isAirlineEmployee && (
+                                                <>
+                                                    <DivSplitLine>|</DivSplitLine>
+                                                    <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
+                                                </>
+                                            )}
+                                        </DivRow>
+                                        {(userInfo?.isAirlineEmployee || userInfo?.isWebUser) && (cartItem.quoteLineId) && (
+                                            <>
                                                 {
-                                                    cartItem.itemUnitPriceOverride === null ? (
-                                                        <NumberFormat
-                                                            value={(unitPrice ? unitPrice : 0.0).toFixed(2) * cartItem.quantity}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                            decimalScale={2}
-                                                            fixedDecimalScale
-                                                        />
-                                                    ) : (
-                                                        <NumberFormat
-                                                            value={cartItem.itemUnitPriceOverride * cartItem.quantity}
-                                                            displayType={'text'}
-                                                            thousandSeparator={true}
-                                                            prefix={'$'}
-                                                            decimalScale={2}
-                                                            fixedDecimalScale
-                                                        />
-                                                    )
+                                                    cartItem.isQuoteLineActive 
+                                                        ? (<strong>Quote Item</strong>) 
+                                                        : (
+                                                            <button onClick={() => { handleQuoteItemReset() }}>Reset Quote Item</button>
+                                                        )
                                                 }
-                                            </p>
-                                        </DivTotalPrice>
-                                    </DivItem>
-                                </DivItemInfo>
-    
-                                {userInfo?.isAirlineEmployee && (
-                                    <>
-                                        <Grid container alignItems="center">
-                                            <Label>Is Dropship?: </Label>
-                                            <Checkbox
-                                                style={{ padding: 3 }}
-                                                size="small"
-                                                checked={cartItem.isDropship}
-                                                onChange={(event) => { handleDropshipChange(event) }}
-                                            />
-                                        </Grid>
-    
+                                            </>
+                                        )} 
+                                        
+                                    </DivCol2>
+                                </DivImgAndItemDetails>
+                                <DivCol3>
+                                    <DivItemInfo>
                                         <DivItem>
-                                            <Label>Promise Date:</Label>
+                                            <DivItemQuantity>
+                                                <div>
+                                                    <Label>Qty:</Label>
+                                                    {
+                                                        (unitSize > 1) && (
+                                                            <AirlineChip style={{
+                                                                marginLeft: '0.5rem',
+                                                                fontSize: '0.7rem',
+                                                                padding: '0 0.5rem' }}
+                                                            >
+                                                                X {unitSize }
+                                                            </AirlineChip>
+                                                        )
+                                                    }
+                                                </div>
+
+                                                <div>
+                                                    <QuantityInput
+                                                        quantity={cartItem.quantity}
+                                                        unitSize={unitSize}
+                                                        unitOfMeasure={unitOfMeasure}
+                                                        roundType={roundType}
+                                                        handleUpdate={setQuantityHandler}
+                                                        min='0'
+                                                        debounce
+                                                    />
+                                                </div>
+                                            </DivItemQuantity>
                                         </DivItem>
+                                        <DivItem>
+                                            <DivItemPrice>
+                                                <div>
+                                                    <EditPriceDiv>
+                                                        <NumberFormat
+                                                            value={cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : (cartItem.itemUnitPrice || 0)}
+                                                            displayType={'text'}
+                                                            thousandSeparator={true}
+                                                            prefix={'$'}
+                                                            decimalScale={2}
+                                                            fixedDecimalScale
+                                                        />
+                                                        <span>{`/${unitOfMeasure || ''}`}</span>
+                                                        {userInfo?.isAirlineEmployee && (
+                                                            <EditPriceIcon onClick={handleShowEditPriceModal}>
+                                                                <FontAwesomeIcon icon="pencil-alt" color={cartItem.itemUnitPriceOverride !== null ? '#328EFC' : 'grey'} />
+                                                            </EditPriceIcon>
+                                                        )}
+                                                    </EditPriceDiv>
+                                                </div>
+                                                {userInfo?.isAirlineEmployee && (
+                                                    <>
+                                                        <div style={{ display: 'flex', fontSize: '0.85rem' }}>
+                                                            <span>Source Loc: {cartItem.sourceLocId || 'Any'}</span>
+                                                            <EditPriceIcon onClick={handleShowSourceLocModal}>
+                                                                <FontAwesomeIcon icon="pencil-alt" color={cartItem.sourceLocId ? '#328EFC' : 'grey'} />
+                                                            </EditPriceIcon>
+                                                        </div>
+                                                        <div style={{ display: 'flex', fontSize: '0.85rem' }}>
+                                                            <span>Disposition: {dispositions?.filter(d => d.value === cartItem.disposition)[0]?.text || getDefaultDisposition()}</span>
+                                                            <EditPriceIcon onClick={handleShowDispositionModal}>
+                                                                <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
+                                                            </EditPriceIcon>
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </DivItemPrice>
+
+                                        </DivItem>
+                                        <DivItem>
+                                            <DivTotalPrice>
+                                                <p>
+                                                    {
+                                                        cartItem.itemUnitPriceOverride === null ? (
+                                                            <NumberFormat
+                                                                value={(cartItem.itemUnitPrice ? cartItem.itemUnitPrice : 0.0).toFixed(2) * cartItem.quantity}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                                decimalScale={2}
+                                                                fixedDecimalScale
+                                                            />
+                                                        ) : (
+                                                            <NumberFormat
+                                                                value={cartItem.itemUnitPriceOverride * cartItem.quantity}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                                decimalScale={2}
+                                                                fixedDecimalScale
+                                                            />
+                                                        )
+                                                    }
+                                                </p>
+                                            </DivTotalPrice>
+                                        </DivItem>
+                                    </DivItemInfo>
     
-                                        <Grid container>
-                                            <div style={{ marginRight: 8 }}>
-                                                <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                                            </div>
+                                    {userInfo?.isAirlineEmployee && (
+                                        <>
+                                            <Grid container alignItems="center">
+                                                <Label>Is Dropship?: </Label>
+                                                <Checkbox
+                                                    style={{ padding: 3 }}
+                                                    size="small"
+                                                    checked={cartItem.isDropship}
+                                                    onChange={(event) => { handleDropshipChange(event) }}
+                                                />
+                                            </Grid>
+    
+                                            <DivItem>
+                                                <Label>Promise Date:</Label>
+                                            </DivItem>
+    
+                                            <Grid container>
+                                                <div style={{ marginRight: 8 }}>
+                                                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                                                </div>
         
-                                            <DatePicker
-                                                minDate={tomorrowDate}
-                                                selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
-                                                onChange={(value) => setCartItemField('promiseDateOverride', value)}
-                                            />
-                                        </Grid>
-                                    </>
-                                )}
+                                                <DatePicker
+                                                    minDate={tomorrowDate}
+                                                    selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
+                                                    onChange={(value) => setCartItemField('promiseDateOverride', value)}
+                                                />
+                                            </Grid>
+                                        </>
+                                    )}
                                 
-                                <DivItemInfo>
-                                    <DivItem>
-                                        <Label>Item Notes:</Label>
-                                        <DebounceInput
-                                            placeholder='Type item notes here'
-                                            minLength={0}
-                                            debounceTimeout={300}
-                                            onChange={handleUpdateItemNotes}
-                                            style={{ width: 300 }}
-                                            value={cartItem.itemNotes || ''}
-                                        />
-                                    </DivItem>
-                                </DivItemInfo>
-                            </DivCol3>
+                                    <DivItemInfo>
+                                        <DivItem>
+                                            <Label>Item Notes:</Label>
+                                            <DebounceInput
+                                                placeholder='Type item notes here'
+                                                minLength={0}
+                                                debounceTimeout={300}
+                                                onChange={handleUpdateItemNotes}
+                                                style={{ width: 300 }}
+                                                value={cartItem.itemNotes || ''}
+                                            />
+                                        </DivItem>
+                                    </DivItemInfo>
+                                </DivCol3>
+
+                            </DivCard>
+                       
                             <DivRemove onClick={handleRemoveItem} alt='remove-item'>
                                 <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
                             </DivRemove>
-                        </DivCard>
+                        </DivFlex>
                     )
             }
 
@@ -493,8 +545,8 @@ export default function ShoppingCartItem(props) {
                 open={!!showEditPriceModal}
                 hideEditPriceModal={() => setShowEditPriceModal(null)}
                 data={{
-                    originalItemPrice: unitPrice,
-                    itemPrice: cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : unitPrice,
+                    originalItemPrice: cartItem.itemUnitPriceOriginal,
+                    itemPrice: cartItem.itemUnitPriceOverride !== null ? cartItem.itemUnitPriceOverride : cartItem.itemUnitPrice,
                     spaType: spaType,
                     spaNumber: spaNumber,
                     spaCost: spaCost,

@@ -9,10 +9,15 @@ import Context from '../../../../setup/context'
 const Row = styled.div`
 	display: flex;
 	flexDirection: row;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-width: 100%;
 `
 const Label = styled.p`
 	margin: auto 10px;
+`
+
+const Container = styled.div`
+    max-width: 100%;
 `
 
 export default function PurchaseOrderSection(props) {
@@ -42,7 +47,7 @@ export default function PurchaseOrderSection(props) {
     /* Note: we don't show a "same as shipping" on this screen, because the customer has to use
     the accounting-approved address when paying by PO */
     return (
-        <div>
+        <Container>
             {!!billingInfo.requiresPONumber && <Row><Label>A PO# is required for this order.</Label></Row>}
             {!!billingInfo.terms && <Row><Label>Terms: {billingInfo.terms}</Label></Row>}
             <Row>
@@ -97,6 +102,6 @@ export default function PurchaseOrderSection(props) {
                 )}
 
             </Row>
-        </div>
+        </Container>
     )
 }

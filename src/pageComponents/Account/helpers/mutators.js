@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 
 export function formatTableData(type, data, orderId){
@@ -49,13 +50,17 @@ export function formatTableData(type, data, orderId){
                             orderDate: elem.orderDate,
                             line: j + 1,
                             poNo: elem.poNo,
-                            promiseDate: '1/1/2020',
+                            promiseDate: elem.promiseDate,
                             itemId: lineItem.itemCode,
                             customerPartId: lineItem.customerPartNumber,
                             qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
                             unitPrice: unitPrice,
                             extPrice: extPrice,
-                            filter: filterField
+                            filter: filterField,
+                            rawUnitPrice: lineItem.unitPrice.toFixed(2),
+                            rawExtPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
+                            formattedOrderDate: _.isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                            formattedPromiseDate: _.isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
                         }
                     )
                 }
@@ -67,12 +72,15 @@ export function formatTableData(type, data, orderId){
             const elem = data[i]
             if (elem.isQuote){
                 let partNumbers = ''
+
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
+                
                 let filterField = elem.orderNumber + ' ' + partNumbers
                 filterField = filterField.toUpperCase()
+
                 const displayTotal = '$' + elem.total.toFixed(2)
                 mutatedData.push(
                     {
@@ -81,6 +89,9 @@ export function formatTableData(type, data, orderId){
                         quoteRefNo: elem.quoteRefNo,
                         total: displayTotal,
                         filter: filterField,
+                        quoteId: elem.quoteHeader?.quoteId,
+                        isCompleted: elem.quoteHeader?.isCompleted,
+                        expirationDate: elem.quoteHeader?.expirationDate
                     }
                 )
             }

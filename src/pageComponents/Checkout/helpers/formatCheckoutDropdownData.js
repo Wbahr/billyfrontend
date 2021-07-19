@@ -53,7 +53,7 @@ function formatContacts(data){
         for (let i=0;data.length > i;i++){
             const element = data[i]
             mutatedData.push({
-                label: element.firstName + ' ' + element.lastName,
+                label: element.firstName + ' ' + element.lastName + ' - ' + element.id,
                 value: element.id
             })
         }

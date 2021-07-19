@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../setup/context'
 import ImpersonationSearch from './impersonationSearch'
+import Loader from '../../pageComponents/_common/loader'
 import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropdownMenu } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
@@ -17,7 +18,7 @@ const Nav = styled.div`
 	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
 	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
 	top: 0;
-	z-index: 2;
+	z-index: 4;
 `
 const NavTop = styled.div`
 	display: flex;
@@ -170,6 +171,13 @@ const AccountSectionRow = styled.div`
  	padding: 5px 0;
 `
 
+const LoaderContainer = styled.div`
+    height: 20px;
+    width: 58px;
+    position: relative;
+    top: -20px;
+`
+
 export default function HeaderComponent({ history }) {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
@@ -283,10 +291,15 @@ export default function HeaderComponent({ history }) {
 
                 <P>|</P>
 
-                {context.cart && (
+                {context.cart && !context.cartLoading && (
                     <Link to='/cart' style={{ textDecoration: 'none' }}>
                         <P>Cart({context.cart.length})</P>
                     </Link>
+                )}
+                {context.cartLoading && (
+                    <LoaderContainer>
+                        <Loader />
+                    </LoaderContainer>
                 )}
             </Row>
         </AccountSectionRow>
@@ -390,37 +403,20 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
 
 const servicesSubItems = [
     {
-        label: 'Arc Flash Safety',
-        to: '/pages/services/arc-flash-safety'
-    },
-    {
-        label: 'Machine Safeguarding',
-        to: '/pages/services/machine-safeguarding'
-    },
-    {
-        label: 'Hydraulic Fluid Maintenance',
-        to: 'https://info.airlinehyd.com/fluid-cleanliness',
-        isExternalLink: true
-    },
-    {
         label: 'Engineered Systems & Assemblies',
         to: '/pages/services/engineered-systems-and-assemblies'    
     },
     {
-        label: 'Repair & Field Services',
+        label: 'Repair │ Field Service │ Maintenance',
         to: '/pages/services/repair-field-services'
     },
     {
-        label: 'Energy Efficiency',
-        to: '/pages/services/energy-efficiency'
+        label: 'Safety',
+        to: '/pages/services/safety'
     },
     {
-        label: 'Trola-Dyne Systems',
-        to: '/pages/services/trola-dyne'
-    },
-    {
-        label: 'Rexroth/Indramat Repair Service',
-        to: '/pages/services/indramat-repair'
+        label: 'Efficiency',
+        to: '/pages/services/efficiency'
     }
 ]
 
@@ -489,10 +485,6 @@ const brandsSubItems = [
         to: '/brands/featured/abb'
     },
     {
-        label: 'Aventics',
-        to: '/brands/featured/aventics'
-    },
-    {
         label: 'Butech',
         to: '/brands/featured/butech'
     },
@@ -512,6 +504,11 @@ const brandsSubItems = [
         label: 'Hydac',
         to: '/brands/featured/hydac'
     },
+    {
+        label: 'icotek',
+        to: '/pages/brands/icotek'
+    }
+    ,
     {
         label: 'Lincoln',
         to: '/brands/featured/lincoln'
@@ -611,7 +608,7 @@ const aboutSubItems = [
         to: '/about/transactional-services',
     },
     {
-        label: 'News',
+        label: 'Press Room',
         to: '/pages/about/news',
     },
     {
@@ -627,12 +624,13 @@ const aboutSubItems = [
         to: '/pages/about/quality-policy',
     },
     {
-        label: 'Our History',
+        label: 'Company History',
         to: '/pages/about/our-history',
     },
     {
-        label: 'Our Mission',
-        to: '/pages/about/mission-statement',
+        label: 'Culture corner',
+        to: 'https://info.airlinehyd.com/culture-corner',
+        isExternalLink: true
     }
 ]
 

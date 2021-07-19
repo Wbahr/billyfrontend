@@ -1,14 +1,18 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useMemo, useEffect } from 'react'
 import styled from 'styled-components'
 import { useQuery } from '@apollo/client'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
+import ExportButtons from '../uiComponents/exportButtons'
 import QuoteDetailItem from './quoteDetailItem'
 import Input from '../../_common/form/inputv2'
-import ToggleSwitch from '../../_common/toggleSwitch'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import MyDocument from './quoteDetailPDF'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/providerGQL'
 import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'setup/gqlQueries/gqlItemQueries'
 
@@ -28,6 +32,25 @@ const DivOrderInfo = styled.div`
       margin-left: 8px;  
     }
   `
+
+const DivDownload = styled.div`
+	padding-left: 10px;
+`
+
+const ButtonExport = styled.div`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	margin: 10px 4px;
+	&:hover {
+		background-color: whitesmoke;
+	}
+`
 
 const DivHeader = styled.div`
     display: flex;
@@ -61,10 +84,9 @@ const ButtonSmall = styled.button`
     }
   `
 
-export default function OrderDetail({ history, orderId: quoteId }) {
+export default function QuoteDetail({ history, orderId: quoteId }) {
     const context = useContext(Context)
     const [filter, setFilter] = useState('')
-    const [isTableView, setIsTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
     const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
@@ -86,8 +108,13 @@ export default function OrderDetail({ history, orderId: quoteId }) {
         shipToState,
         shipToZip,
         lineItems,
-        quoteRefNo
+        quoteRefNo,
+        quoteHeader,
     } = orderDetails?.accountOrderDetails || {}
+
+    const [itemDetails, setItemDetails] = useState(<p>Loading Items...</p>)
+    const [exportData, setExportData] = useState([])
+    const [pdfData, setPdfData] = useState({})
 
     const invMastUids = lineItems?.map(item => item.invMastUid) || []
 
@@ -114,24 +141,31 @@ export default function OrderDetail({ history, orderId: quoteId }) {
         }
     })
 
-    let itemDetails = []
-    if (!isTableView){
-        const filteredListItems = (!lineItems || !lineItems.length) 
-            ? [] 
-            : lineItems.filter(i => {
-                if (!filter || !filter.length) return true
+    useEffect(() => {
+        if (lineItems && itemsDetails && itemsPrices && itemsAvailability && orderDetails) {
+            const filteredListItems = (!lineItems || !lineItems.length) 
+                ? [] 
+                : lineItems.filter(i => {
+                    if (!filter || !filter.length) return true
+        
+                    const currentItemCode = i.itemCode.toLowerCase()
+                    const filterLower = filter.toLowerCase()
+        
+                    return currentItemCode.indexOf(filterLower) > -1
+                })
+            getItemDetails(filteredListItems)    
+        }
+    }, [lineItems, itemsDetails, itemsPrices, itemsAvailability, orderDetails]) 
 
-                const currentItemCode = i.itemCode.toLowerCase()
-                const filterLower = filter.toLowerCase()
-
-                return currentItemCode.indexOf(filterLower) > -1
-            })
-			
-        itemDetails = filteredListItems?.map((item) => {
+    function getItemDetails(filteredListItems) {
+        const rtnItemDetails = []
+        const exportData = []
+        const pdfItems = []
+        for (const item of filteredListItems) {
             const itemDetails = itemsDetails?.itemDetailsBatch?.find(detail => detail.invMastUid === item.invMastUid)
             const itemPrice = itemsPrices?.getItemPrices?.find(price => price.invMastUid === item.invMastUid)
             const itemAvailability = itemsAvailability?.itemAvailability?.find(a => a.invMastUid === item.invMastUid)
-            return (
+            rtnItemDetails.push(
                 <QuoteDetailItem 
                     key={item.lineNumber} 
                     quoteId={quoteId}
@@ -140,12 +174,34 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                     availability={itemAvailability}
                     priceInfo={itemPrice}
                 />
+            )    
+            exportData.push(
+                {
+                    ...item,
+                    ...itemDetails,
+                    ...itemAvailability,
+                    currentPrice: itemPrice?.unitPrice,
+                    leadTimeDays: getAvailabilityMessage(1, itemAvailability?.availability, itemAvailability?.leadTimeDays),
+                    ...orderDetails.accountOrderDetails
+                }
             )
-        })
-
-        if (!itemDetails || itemDetails.length === 0) {
-            itemDetails = <p>No items found matching search.</p>
+            pdfItems.push(
+                {
+                    ...item,
+                    ...itemDetails,
+                    ...itemAvailability,
+                    currentPrice: itemPrice?.unitPrice,
+                    leadTimeDays: getAvailabilityMessage(1, itemAvailability?.availability, itemAvailability?.leadTimeDays),
+                }
+            )
         }
+        setItemDetails(rtnItemDetails)
+        setExportData(exportData)
+        setPdfData({ ...orderDetails?.accountOrderDetails, lineItems: pdfItems })
+    }
+
+    if (!itemDetails || itemDetails.length === 0) {
+        setItemDetails(<p>No items found matching search.</p>)
     }
 
     function handleAddQuote() {
@@ -156,7 +212,7 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                 itemNotes: '',
                 itemUnitPriceOverride: null,
                 customerPartNumberId: item.customerPartNumberId,
-                //'quoteId': quoteId
+                quoteLineId: item.lineItemId
             }
         })
 
@@ -167,6 +223,46 @@ export default function OrderDetail({ history, orderId: quoteId }) {
     function handleAddedToCart(){
         setShowAddedToCartModal(false)
     }
+    
+    const QuoteDetailDownloadButton = useMemo(() => {
+        return (
+            <DivDownload>
+                <PDFDownloadLink document={<MyDocument data={pdfData} />} fileName={`airline_quote_${quoteId}.pdf`}>
+                    {({ loading }) => (loading ? 'Loading document...' : (
+                        <ButtonExport>
+                            <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
+                        </ButtonExport>
+                    ))}
+                </PDFDownloadLink>
+            </DivDownload>
+        )
+    }, [pdfData])
+    
+    const exportColumns = [
+        { accessor: 'itemCode', Header: 'Item Code' },
+        { accessor: 'invMastUid', Header: 'AHC #' },
+        { accessor: 'unitPrice', Header: 'Quote Unit Price' },
+        { accessor: 'totalPrice', Header: 'Quote Total Price' },
+        { accessor: 'currentPrice', Header: 'Current Unit Price' },
+        { accessor: 'availability', Header: 'Availability' },
+        { accessor: 'leadTimeDays', Header: 'Lead Time' },
+        { accessor: 'quantityOrdered', Header: 'Quantity' },
+        { accessor: 'orderDate', Header: 'Order Date' },
+        { accessor: 'orderNumber', Header: 'Quote Number' },
+        { accessor: 'quoteRefNo', Header: 'Quote Ref No' },
+        { accessor: 'poNo', Header: 'P.O. Number' },
+        { accessor: 'status', Header: 'Status' },
+        { accessor: 'packingBasis', Header: 'Packing Basis' },
+        { accessor: 'total', Header: 'Total' },
+        { accessor: 'shipToName', Header: 'Ship To Name' },
+        { accessor: 'shipToAddress1', Header: 'Ship To Address 1' },
+        { accessor: 'shipToAddress2', Header: 'Ship To Address 2' },
+        { accessor: 'shipToAddress3', Header: 'Ship To Address 3' },
+        { accessor: 'shipToCity', Header: 'Ship To City' },
+        { accessor: 'shipToState', Header: 'Ship To State' },
+        { accessor: 'shipToZip', Header: 'Ship To Zip' },
+        { accessor: 'shipToCountry', Header: 'Ship To Country' },
+    ]
 
     if (isOrderDetailsLoading){
         return (
@@ -183,6 +279,8 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                 />
                 <DivHeader>
                     <h4>Quote #{quoteId}</h4>
+                    {QuoteDetailDownloadButton}
+                    <ExportButtons data={exportData} columns={exportColumns} title={`airline_quote_${quoteId}`} hidePDF={true} />
                     <p onClick={() => {history.push('/account/open-quotes')}}>Back to Quotes</p>
                     <ButtonSmall onClick={() => handleAddQuote()}>Add Quote to Cart</ButtonSmall>
                 </DivHeader>
@@ -194,7 +292,15 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                         <p>P.O. Number: {poNo}</p>
                         <p>Status: {status}</p>
                         <p>Packing Basis: {packingBasis}</p>
-                        <p>Order Total: <NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></p>
+                        <p>Order Total: <NumberFormat 
+                            value={total} 
+                            displayType={'text'} 
+                            thousandSeparator={true} 
+                            prefix={'$'} 
+                            decimalScale={2} 
+                            fixedDecimalScale
+                        />
+                        </p>
                     </DivOrderInfo>
                     <DivOrderInfo>
                         <p>Ship-to-Address:</p>
@@ -206,13 +312,6 @@ export default function OrderDetail({ history, orderId: quoteId }) {
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <div>
-                    <ToggleSwitch 
-                        label='View:'
-                        text='Table'
-                        text2='List'
-                        toggled={isTableView}
-                        setToggled={(value) => setIsTableView(value)}
-                    />
                     <Input value={filter} placeholder='Search by Item ID' onChange={(e) => setFilter(e.target.value)}/>
                 </div>
                 {itemDetails}

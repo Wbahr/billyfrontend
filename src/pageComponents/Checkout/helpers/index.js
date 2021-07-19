@@ -52,7 +52,7 @@ export const defaultShipTo = {
 
 export const defaultQuote = {
     packingBasisName: '',
-    packingBasis: '0',
+    packingBasis: '',
 }
 
 export const transformForPaymentInfo = ({ billing: { address1, address2, city, state, zip, country },

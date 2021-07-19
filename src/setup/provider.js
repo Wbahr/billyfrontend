@@ -63,6 +63,8 @@ export default function Provider({ history, children }) {
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
     const [serviceParts, setServiceParts] = useState([])
+    const [cartLoading, setCartLoading] = useState(false)
+
 
     const invoiceBatchSize = 1000
 
@@ -78,6 +80,11 @@ export default function Provider({ history, children }) {
         }
         didMountRef.current = true
     })
+
+    useEffect(() => {
+        setCartLoading(true)
+        setTimeout(() => setCartLoading(false), 1200)
+    }, [shoppingCart])
 
     useEffect(() => {
         userInfo?.isAirlineEmployee && getPriceReasons()
@@ -523,7 +530,7 @@ export default function Provider({ history, children }) {
     }
 
     const emptyCart = () => {
-        updateShoppingCart(null, null)
+        updateShoppingCart(null, '')
     }
 
     function getInvoices() {
@@ -615,6 +622,7 @@ export default function Provider({ history, children }) {
                 addServicePart,
                 updateServicePartField,
                 removeServicePart,
+                cartLoading,
             }}
         >
             {children}

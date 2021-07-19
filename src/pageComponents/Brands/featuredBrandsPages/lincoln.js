@@ -241,7 +241,7 @@ export function lincoln() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://www.skf.com/binaries/pub12/Images/0901d19680a910db-LumenRadios-reliable-wireless-mesh-technology-enables-each-sensor-to-forward-data-and-automatically-create-a-self-healing-and-building-wide-network_tcm_12-554983.jpeg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/skf.png"
                         text="SKF collaborates with wireless specialist LumenRadio to enhance automated machine monitoring"
                         link="https://www.skf.com/group/news-and-events/news/2020/2020-04-15-skf-collaborates-with-wireless-specialist-lumenradio-to-enhance-automated-machine-monitoring"
                         detail="By collaborating with wireless specialist LumenRadio, SKF has developed a new wireless sensor as part of a condition monitoring system for improving rotating equipment performance programs on a scale previously considered uneconomic.
@@ -249,7 +249,7 @@ export function lincoln() {
 						"
                     />
                     <Articles
-                        src="https://www.skf.com/binaries/pub12/Images/0901d19680a7f8f7-IMX1-Application_tcm_12-552919.jpeg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/0901d19680a7f8f7-IMX1-Application_tcm_12-552919.jpeg"
                         text="New wireless sensors enable automated machine monitoring for reliable rotation in heavy industries"
                         link="https://www.skf.com/group/news-and-events/news/2020/2020-03-27-new-wireless-sensors-enable-automated-machine-monitoring-for-reliable-rotation-in-heavy-industries"
                         detail="SKF has released a compact and cost-effective vibration and temperature sensor for monitoring the condition of rotating parts on heavy industrial machinery. Designed principally for use as part of an SKF Rotating Equipment Performance (REP) solution, the sensor - called the SKF Enlight Collect IMx-1 - enables customers to reduce both expensive unplanned downtime and their maintenance costs.
@@ -257,7 +257,7 @@ export function lincoln() {
                     />
 
                     <Articles
-                        src="https://www.skf.com/binaries/pub12/Images/0901d19680a7f8f5-AlrikDanielson_Twitter_tcm_12-552918.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/covid-19.png"
                         text="Covid-19"
                         detail="The world now faces an extremely challenging social and economic situation. At SKF, we are doing all we can to maintain a safe working environment for our colleagues, thereby helping to constrain the spread of the  Covid-19 virus. All of us have family members, relatives or loved ones who are part of risk groups and need to be protected."
                         link="https://www.skf.com/group/news-and-events/news/2020/2020-03-26-covid-19"

@@ -103,56 +103,55 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">
+                        <Link href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">
                             <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/build%20anything%20homepage%20thumb.png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/IO%20Link%20webpage.jpg" />
                             </ImgDiv>
                         </Link>
                         <TextDiv>
-                            <Details>How to Build Anything with Aluminum Extrusion in Three Steps
+                            <Details>Whether you're new to the world of machine automation, or an industry veteran
                                 <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-build-anything-with-aluminum-extrusion-in-3-steps" target="_blank">Read More</Button>
+                                    <Button href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
                     <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">
+                        <Link href="https://blog.airlinehyd.com/fast-panel-wiring" target="_blank">
                             <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Blog%20thumbnail%20template%20-%204%20easy%20steps.png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/3%20time%20saving%20technologies.png" />
                             </ImgDiv>
                         </Link>
                         <TextDiv>
-                            <Details>How to Get Started with Machine Safety (in FOUR Easy Steps)
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/how-to-get-started-with-machine-safety-in-four-easy-steps" target="_blank">Read More</Button></ButtonDiv>
+                            <Details>Three Time-Saving Technologies for Control Panel Wiring
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/fast-panel-wiring" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
                     <Row>
-                        <Link href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">
+                        <Link href="https://blog.airlinehyd.com/lean-manufacturing-principles" target="_blank">
                             <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/SensoNODE.png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/5%20lean%20principles%20copy.png" />
                             </ImgDiv>
                         </Link>
                         <TextDiv>
-                            <Details>How SensoNODE Makes Advanced IoT Condition Monitoring Simple and Accessible
+                            <Details>Five Lean Manufacturing Principles You Can Implement Today
                                 <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/parker-sensonode-condition-monitoring" target="_blank">Read More</Button>
+                                    <Button href="https://blog.airlinehyd.com/lean-manufacturing-principles" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
-                        
                     </Row>
                     <Row>
-                        <Link href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">
+                        <Link href="https://blog.airlinehyd.com/employee-ownership" target="_blank">
                             <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/case%20lifters%20website%20thumb.png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/esop%20ownership.png" />
                             </ImgDiv>
                         </Link>
                         <TextDiv>
-                            <Details>Electric Case Lifters: Helping Employee Safety, Productivity &amp; Happiness
+                            <Details>We're 100% Employee-Owened. But What Does That Mean?
                                 <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/electric-case-lifters" target="_blank">Read More</Button>
+                                    <Button href="https://blog.airlinehyd.com/employee-ownership" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>

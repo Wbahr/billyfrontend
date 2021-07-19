@@ -138,7 +138,14 @@ export const UPDATE_CART = gql`
         invMastUid
         customerPartNumberId
         quantity
+        quoteLineQuantity
+        quoteUnitPrice
+        isQuoteLineActive
         itemNotes
+        quoteLineId
+        itemTotalTariff
+        itemUnitPrice
+        itemUnitPriceOriginal
         itemUnitPriceOverride
         airlineCost
         priceReasonId
@@ -229,13 +236,23 @@ export const GET_ORDERS = gql`
 			isQuote
 			status
 			isMine
-			quoteRefNo
+      quoteRefNo
+      promiseDate
 			lineItems{
-				invMastUid
-				itemCode
-				customerPartNumber
-				customerPartNumberId
+        invMastUid
+        itemCode
+        customerPartNumber
+        customerPartNumberId
+        unitPrice
+        quantityOrdered
+        quantityOpen
+        quoteLineId
 			}
+      quoteHeader {
+        quoteId
+        isCompleted
+        expirationDate
+      }
 		}
 	}
 `
@@ -263,6 +280,11 @@ export const GET_ORDERS_DETAIL = gql`
 			shipToZip
 			shipToCountry
 			quoteRefNo
+      quoteHeader {
+        quoteId
+        isCompleted
+        expirationDate
+      }
 			lineItems{
 				lineItemId
 				orderNumber
@@ -276,6 +298,7 @@ export const GET_ORDERS_DETAIL = gql`
 				quantityInvoiced
 				unitPrice
 				totalPrice
+        quoteLineId
 				trackingNumbers{
 					carrierId
 					carrierName
@@ -772,6 +795,7 @@ export const GET_CHECKOUT_DATA = gql`
         collectNumberUps
         carrierId
         shippingNote
+        shipToPackingBasis
       }
       carriers {
         id
@@ -883,4 +907,38 @@ export const GET_PRICE_REASONS = gql`
       priceReason
     }
   }
+`
+
+export const ADD_PREPAYMENT = gql`
+  mutation a($thing : PrepaymentModel) {
+    addPrepayment(prepayment: $thing) {
+      amountToCharge
+      orderNumber
+      paymentSystemCustomerId
+      paymentMethodId
+      amountCharged
+      status
+      id
+      createdDate
+      processingInfo
+      receiptCode
+    }
+  }
+`
+
+export const GET_PREPAYMENTS = gql`
+  query getRemittances($startDate: DateTime) {
+    getRemittances(startDate: $startDate) {
+      amountCharged
+      amountToCharge
+      createdDate
+      id
+      orderNumber
+      paymentMethodId
+      paymentSystemCustomerId
+      processingInfo
+      receiptCode
+      status
+    }
+  } 
 `

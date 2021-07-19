@@ -113,7 +113,7 @@ export default function OrderDetailItem({ item, quoteId, itemDetails, availabili
             itemNotes: `Quote ${quoteId}`,
             itemUnitPriceOverride: null,
             customerPartNumberId: item.customerPartNumberId,
-            //'quoteId': quoteId
+            quoteLineId: item.lineItemId
         })
         setShowAddedToCartModal(true)
         setQuantity(1)

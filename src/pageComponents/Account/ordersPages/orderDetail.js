@@ -4,8 +4,10 @@ import { useQuery } from '@apollo/client'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import OrderDetailItem from './orderDetailItem'
+import ExportButtons from '../uiComponents/exportButtons'
 import Input from '../../_common/form/inputv2'
 import { format as dateFormat } from 'date-fns'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/providerGQL'
@@ -64,6 +66,20 @@ const ButtonSmall = styled.button`
       box-shadow: 0px 0px 1px #000;
     }
   `
+const ButtonExport = styled.div`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid lightgrey;
+	border-radius: 5px;
+	margin: 10px 4px;
+	&:hover {
+		background-color: whitesmoke;
+	}
+`
 
 const Container = styled.div`
     margin: 10px 0;
@@ -75,11 +91,11 @@ export default function OrderDetail({ history, orderId }) {
     const [isTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
 
-    const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
+    const { loading: isOrderDetailsLoading, data: orderDetails, error } = useQuery(GET_ORDERS_DETAIL, {
         fetchPolicy: 'no-cache',
         variables: { orderNumber: String(orderId) }
     })
-
+    
     const {
         orderDate,
         poNo,
@@ -175,12 +191,106 @@ export default function OrderDetail({ history, orderId }) {
     }
     const OrderDetailDownloadButton = useMemo(() => {
         return (
-            <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
-                {({ loading }) => (loading ? 'Loading document...' : 'Download this Order')}
+            <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails?.accountOrderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
+                {({ loading }) => (loading ? 'Loading document...' : (
+                    <ButtonExport>
+                        <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
+                    </ButtonExport>
+                ))}
             </PDFDownloadLink>
         )
     }, [orderDetails, orderId])
 
+    const exportColumns = [
+        {
+            Header: 'Item Code',
+            accessor: 'itemCode',
+        },
+        {
+            Header: 'AHC#',
+            accessor: 'invMastUid',
+        },
+        {
+            Header: 'Qty Recieved',
+            accessor: 'quantityInvoiced',
+        },
+        {
+            Header: 'Qty Ordered',
+            accessor: 'quantityOrdered',
+        },
+        {
+            Header: 'Unit Price',
+            accessor: 'unitPrice',
+        },
+        {
+            Header: 'Total Price',
+            accessor: 'totalPrice',
+        },
+        { 
+            Header: 'Order Date', 
+            accessor: 'orderDate' 
+        },
+        { 
+            Header: 'Promise Date', 
+            accessor: 'promiseDate' 
+        },
+        { 
+            Header: 'Order Number', 
+            accessor: 'orderNumber' 
+        },
+        { 
+            Header: 'P.O. Number', 
+            accessor: 'poNo' 
+        },
+        { 
+            Header: 'Status', 
+            accessor: 'status' 
+        },
+        { 
+            Header: 'Packing Basis', 
+            accessor: 'packingBasis' 
+        },
+        { 
+            Header: 'Order Total', 
+            accessor: 'total' 
+        },
+        { 
+            Header: 'Ship To Name', 
+            accessor: 'shipToName' 
+        },
+        { 
+            Header: 'Ship To Address 1', 
+            accessor: 'shipToAddress1' 
+        },
+        { 
+            Header: 'Ship To Address 2', 
+            accessor: 'shipToAddress2' 
+        },
+        { 
+            Header: 'Ship To Address 3', 
+            accessor: 'shipToAddress3' 
+        },
+        { 
+            Header: 'Ship To City', 
+            accessor: 'shipToCity' 
+        },
+        { 
+            Header: 'Ship To State', 
+            accessor: 'shipToState' 
+        },
+        { 
+            Header: 'Ship To Zip', 
+            accessor: 'shipToZip' 
+        },
+    ]
+
+    const exportData = orderDetails?.accountOrderDetails?.lineItems?.map(item => {
+        return {
+            ...item,
+            ...orderDetails.accountOrderDetails
+        }
+    })
+    
     if (isOrderDetailsLoading) {
         return (
             <p>Loading Order Data...</p>
@@ -197,6 +307,7 @@ export default function OrderDetail({ history, orderId }) {
                 <DivHeader>
                     <h4>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</h4>
                     <DivDownload>{OrderDetailDownloadButton}</DivDownload>
+                    <ExportButtons data={exportData} columns={exportColumns} title={`airline_order_${orderId}.pdf`} hidePDF={true} />
                     <p onClick={() => { history.push('/account/orders') }}>Back to Orders</p>
                     <ButtonSmall onClick={() => handleAddOrder()}>Add Order to Cart</ButtonSmall>
                 </DivHeader>

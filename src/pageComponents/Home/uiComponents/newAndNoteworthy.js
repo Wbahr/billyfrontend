@@ -75,22 +75,22 @@ export default function NewAndNoteworthy() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <A href="https://info.airlinehyd.com/fast-wiring" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Fast%20wiring.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>Solutions for Fast Control Cabinet Wiring</Details>
+                            </TextDiv>
+                        </A>
+                    </Row>
+                    <Row>
                         <A href="https://info.airlinehyd.com/pumpmd" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/pump.png" />
                             </ImgDiv>
                             <TextDiv>
                                 <Details>PumpMD™ │ Hydraulic Predictive Maintenance Made Easy</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="https://info.airlinehyd.com/webinar-nfpa-79" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/webinar%20thumb.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>Free Webinar: How to Navigate NFPA 79 and NEC Code Requirements for Surge Protection</Details>
                             </TextDiv>
                         </A>
                     </Row>
@@ -107,7 +107,7 @@ export default function NewAndNoteworthy() {
                     <Row>
                         <A href="https://info.airlinehyd.com/ctrlx" target="_blank">
                             <ImgDiv>
-                                <Img src="https://www.airlinehyd.com/Customer/aihyco/images/homepage/ctrlx%20thumb.png" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/ctrlx%20thumb.png" />
                             </ImgDiv>
                             <TextDiv>
                                 <Details>ctrlX AUTOMATION</Details>

@@ -170,20 +170,20 @@ export function omron() {
                 />
                 <ArticlesDiv>
                     <Articles
-                        src="https://assets.omron.com/m/25e734b88ede85e/webimage-V275_Product_launch_image.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/webimage-2F29037D-0898-4BAD-851A0C0E753D96FA.jpg"
                         text="New V275 Series from Omron improves label compliance and quality monitoring"
                         link="https://solutions.haskel.com/blog/embracing-the-industrial-iot-to-advance-high-pressure-manufacturing"
                         detail="Industry-leading automation solutions pioneer Omron Automation Americas recently released a new system for inspecting and verifying labels and barcodes to improve compliance in medical device manufacturing, automotive labeling, food and beverage secondary and tertiary package labeling, and other applications requiring comprehensive label quality monitoring."
                     />
                     <Articles
-                        src="https://assets.omron.com/m/3ee2a2c3baa312f0/webimage-NXR-IP67-IO-Article-Image.png"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/webimage-E243EBE9-F882-4123-88CEAEEA82C62846.png"
                         text=" Omron provides college students with free access to the Sysmac Studio automation platform."
                         link="https://solutions.haskel.com/blog/a-quiet-change-to-compression-technology-has-arrived"
                         detail="For the college students just getting started on their path to becoming an engineer, automation solutions provider Omron Automation Americas is offering a powerful resource for preparation at a professional level."
                     />
 
                     <Articles
-                        src="https://assets.omron.com/m/27756748ca369fad/webimage-Omron_Sysmac_Studio_pic.jpg"
+                        src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/webimage-E5B4D683-D2CE-49A6-8B9A661D40561A78.jpg"
                         text="Four major safety-related benefits of robots"
                         detail="Manufacturing facilities employ a variety of hazardous machines, and safeguarding is paramount. While traditional safety strategies are designed to mitigate risk in hazardous situations, it’s possible to eliminate this risk altogether by letting robots cover the dangerous tasks. Let’s take a look at a few ways that robots make manufacturing safer overall. "
                         link="https://solutions.haskel.com/blog/4-steps-for-planning-your-high-pressure-gas-liquid-system-purchase"

@@ -6,10 +6,10 @@ import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHel
 
 const DivContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px whitesmoke solid;
   padding: 8px 16px;
   margin: 8px 0;
-  height: 70px;
 `
 
 const DivItem = styled.div`
@@ -19,6 +19,7 @@ const DivItem = styled.div`
 
 const DivCard = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
 `
@@ -41,7 +42,6 @@ const DivCol2 = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 300px;
-  height: 100%;
   margin-right: 50px;
   p {
     font-size: 16px;
@@ -87,8 +87,8 @@ export default function ScheduleLineDisplay({ item, price, itemDetails, customer
 
     const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
     const totalPrice = Number(item.quantity) * (
-        (item.itemUnitPriceOverride || price)
-            ? Number(item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : price.unitPrice)
+        (item.itemUnitPriceOverride || item.itemUnitPrice)
+            ? Number(item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : item.itemUnitPrice)
             : 0
     )
 
@@ -109,7 +109,7 @@ export default function ScheduleLineDisplay({ item, price, itemDetails, customer
                     <DivItem>
                         <Label>
                             <NumberFormat
-                                value={item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : (price ? price.unitPrice : 0) }
+                                value={item.itemUnitPriceOverride !== null ? item.itemUnitPriceOverride : (item.itemUnitPrice ? item.itemUnitPrice : 0) }
                                 displayType="text"
                                 thousandSeparator={true}
                                 prefix="$"

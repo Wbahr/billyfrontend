@@ -182,7 +182,7 @@ const DivTotal = styled.View`
 		margin-top: 10px;
 `
 
-export default React.memo(({ orderId, data }) => {
+export default function quoteDetailPDF({ data }) {
 
     const {
         orderDate,
@@ -195,54 +195,37 @@ export default React.memo(({ orderId, data }) => {
         shipToCity,
         shipToState,
         shipToZip,
-        billingName,
-        billingAddress1,
-        billingAddress2,
-        billingAddress3,
-        billingCity,
-        billingState,
-        billingZip,
         lineItems,
         orderNumber,
+        quoteRefNo,
         total,
         packingBasis,
-        promiseDate
     } = data
+
     const itemDetails = _.map(lineItems, (item, index) => {
         return (
             <DivItemDetail key={index}>
                 <DivItemDetailCell width='35%'>
-                    <P1>{item.itemDescription}</P1>
-                    <P2>Item Code: {item.itemCode}</P2>
-                    <P2>AHC#: {item.invMastUid}</P2>
-                    {item.trackingNumbers?.map(tracking => {
-                        return (
-                            <DivTracking key={tracking.trackingNumber}>
-                                <P2>{tracking.carrierName}: </P2>
-                                <A src={tracking.trackingUrl}>{tracking.trackingNumber}</A>
-                            </DivTracking>
-                        )
-                    })}
-                </DivItemDetailCell>
-                <DivItemDetailCell width='18%' align='center'>
-                    <P0>
-                        {item.quantityInvoiced}
-                    </P0>
+                    <P0>Item Code: {item.itemCode}</P0>
+                    <P0>AHC#: {item.invMastUid}</P0>
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>
                     <P0>
                         {item.quantityOrdered}
                     </P0>
                 </DivItemDetailCell>
-                <DivItemDetailCell width='13%' align='right'>
-                    <P0>
-                        ${item.unitPrice.toFixed(2)}
-                    </P0>
+                <DivItemDetailCell width='13%' align='center'>
+                    <P0>{item.availability}</P0>
+                    <P0>{item.leadTimeDays}</P0>
                 </DivItemDetailCell>
                 <DivItemDetailCell width='13%' align='right'>
                     <P0>
-                        ${item.totalPrice.toFixed(2)}
+                        ${item.currentPrice?.toFixed(2)}
                     </P0>
+                </DivItemDetailCell>
+                <DivItemDetailCell width='18%' align='right'>
+                    <P0>${item.unitPrice?.toFixed(2)}</P0>
+                    <P0>${item.totalPrice?.toFixed(2)}</P0>
                 </DivItemDetailCell>
             </DivItemDetail>
         )
@@ -257,21 +240,13 @@ export default React.memo(({ orderId, data }) => {
                         <P6>www.airlinehyd.com</P6>
                         <P6>1-800-999-7378</P6>
                     </HeaderContact>
-                    <HeaderOrder><P3>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</P3></HeaderOrder>
+                    <HeaderOrder><P3>{'Quote #'}{orderNumber}</P3></HeaderOrder>
                 </Header>
                 <DivThanks>
-                    <P4>Thank you for ordering our products. Please find your order details below. If you have any questions or concerns, please contact us.</P4>
-                    <P5 style={styles.font}>Order Summary</P5>
+                    <P4>Thank you for ordering our products. Please find your quote details below. If you have any questions or concerns, please contact us.</P4>
+                    <P5 style={styles.font}>Quote Summary</P5>
                 </DivThanks>
                 <DivBillingInfoContainer>
-                    {/* <DivOrderInfo>
-                        <P1>Bill-to-Address:</P1>
-                        <P0>{billingName}</P0>
-                        <P0>{billingAddress1}</P0>
-                        {billingAddress2 && <P0>{billingAddress2}</P0>}
-                        {billingAddress3 && <P0>{billingAddress3}</P0>}
-                        <P0>{billingCity}, {billingState} {billingZip}</P0>
-                    </DivOrderInfo> */}
                     <DivOrderInfo>
                         <P1>Ship-to-Address:</P1>
                         <P0>{shipToName}</P0>
@@ -283,33 +258,37 @@ export default React.memo(({ orderId, data }) => {
                 </DivBillingInfoContainer>
                 <DivOrderInfoContainer>
                     <DivOrderInfoSm>
-                        <Row><P1>P.O. Number: </P1><P0>{poNo}</P0></Row>
-                        <Row><P1>Order Number: </P1><P0>{orderNumber}</P0></Row>
-                    </DivOrderInfoSm>
-                    <DivOrderInfoSm>
-                        <Row><P1>Status: </P1><P0>{status}</P0></Row>
-                        <Row><P1>Packing Basis: </P1><P0>{packingBasis}</P0></Row>
-                    </DivOrderInfoSm>
-                    <DivOrderInfoSm>
                         <Row><P1>Order Date: </P1><P0>{_.isNil(orderDate) ? '--' : dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
-                        <Row><P1>Promise Date </P1><P0>{_.isNil(promiseDate) ? '--' : dateFormat(new Date(promiseDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Quote Number: </P1><P0>{orderNumber}</P0></Row>
+                        <Row><P1>Quote Ref #: {quoteRefNo}</P1></Row>
+                    </DivOrderInfoSm>
+                    <DivOrderInfoSm>
+                        <Row><P1>P.O. #: </P1><P0>{poNo}</P0></Row>
+                        <Row><P1>Status: </P1><P0>{status}</P0></Row>
+                    </DivOrderInfoSm>
+                    <DivOrderInfoSm>
+                        <Row><P1>Packing Basis: </P1><P0>{packingBasis}</P0></Row>
+                        <Row><P1>Order Total </P1><P0>${total?.toFixed(2)}</P0></Row>
                     </DivOrderInfoSm>
                 </DivOrderInfoContainer>
-                <P5>Order Details</P5>
+                <P5>Quote Details</P5>
                 <DivItemDetailHeader>
                     <DivItemDetailCell width='35%'>
                         <P0>Item Information</P0>
                     </DivItemDetailCell>
                     <DivItemDetailCell width='18%' align='center'>
-                        <P0>Qty Received</P0>
-                    </DivItemDetailCell>
-                    <DivItemDetailCell width='18%' align='center'>
                         <P0>Qty Ordered</P0>
                     </DivItemDetailCell>
-                    <DivItemDetailCell width='13%' align='right'>
+                    <DivItemDetailCell width='13%' align='center'>
+                        <P0>Availability /</P0>
+                        <P0>Lead Time</P0>
+                    </DivItemDetailCell>
+                    <DivItemDetailCell width='13%' align='center'>
+                        <P0>Current</P0> 
                         <P0>Unit Price</P0>
                     </DivItemDetailCell>
-                    <DivItemDetailCell width='13%' align='right'>
+                    <DivItemDetailCell width='18%' align='center'>
+                        <P0>Quote Unit Price</P0> 
                         <P0>Total Price</P0>
                     </DivItemDetailCell>
                 </DivItemDetailHeader>
@@ -323,7 +302,4 @@ export default React.memo(({ orderId, data }) => {
             </Page>
         </Document>
     )
-},
-() => true
-
-)
+}
