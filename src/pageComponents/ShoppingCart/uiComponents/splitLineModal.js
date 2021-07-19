@@ -49,7 +49,7 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
     const splitQty = roundToNearestIncrement(Math.ceil(cart[index].quantity / 2))
     const initialLines = [
         { ...cart[index], quantity: splitQty },
-        { ...cart[index], quantity: cart[index].quantity - splitQty || 1 },
+        { ...cart[index], quantity: cart[index].quantity - splitQty || 1, quoteLineId: null },
     ]
 
     const [lines, setLines] = useState(initialLines)
@@ -74,7 +74,7 @@ export default function SplitLineModal({ open, index, hideSplitLineModal, cart, 
     }
 
     const handleAddLine = () => {
-        setLines([ ...lines, { ...cart[index], quantity: 1 } ])
+        setLines([ ...lines, { ...cart[index], quantity: 1, quoteLineId: null } ])
     }
 
     const handleRemoveLine = idx => () => {
