@@ -8,6 +8,7 @@ import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
 import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
 import { useLazyQuery } from '@apollo/client'
+import ErrorModal from 'pageComponents/_common/modals/ErrorModal'
 import MergeCartModal from './MergeCartModal'
 import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 
@@ -66,7 +67,9 @@ export default function ShoppingCart({ history }) {
         getCustomerPartNumbers,
         getSourceLocations,
         updateShoppingCart,
-        cartPricing
+        cartPricing,
+        showErrorModal,
+        setShowErrorModal
     } = useContext(Context)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [itemAvailabilities, setItemAvailabilities] = useState([])
@@ -155,6 +158,11 @@ export default function ShoppingCart({ history }) {
                     />
                 )
             }
+            <ErrorModal
+                open={showErrorModal} 
+                hide={() => setShowErrorModal(false)} 
+                text='There has been an error, please refresh and try again.'
+            />
         </>
     )
 }

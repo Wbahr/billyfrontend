@@ -63,6 +63,7 @@ export default function Provider({ history, children }) {
     const [webUserContacts, setWebUserContacts] = useState([])
     const [editPriceReasonCodes, setEditPriceReasonCodes] = useState([])
     const [cartLoading, setCartLoading] = useState(false)
+    const [showErrorModal, setShowErrorModal] = useState(false)
 
     const invoiceBatchSize = 1000
 
@@ -398,6 +399,9 @@ export default function Provider({ history, children }) {
 
     const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
         fetchPolicy: 'no-cache',
+        onError: (error) => {
+            setShowErrorModal(true)
+        },
         onCompleted: ({ shoppingCart: { token, action, cartItems, subtotal, tariff, orderNotes } }) => {
             if (action === 'merge' || action === 'retrieve' || action === 'update') {
                 const lastCartItems = lastShoppingCartPayload.current
@@ -604,6 +608,8 @@ export default function Provider({ history, children }) {
                 updateCartItemField,
                 updateShoppingCart,
                 cartLoading,
+                showErrorModal,
+                setShowErrorModal
             }}
         >
             {children}
