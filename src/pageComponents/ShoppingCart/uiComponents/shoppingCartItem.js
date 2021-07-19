@@ -308,7 +308,7 @@ export default function ShoppingCartItem(props) {
     const handleQuoteItemReset = () => {
         setCartItem({ ...cartItem, quantity: cartItem.quoteLineQuantity, itemUnitPriceOverride: null, priceReasonId: null })
     }
-    
+
     const handleDropshipChange = ({ target: { checked } }) => setCartItemField('isDropship', checked)
 
     const backgroundColor = cartItem.isQuoteLineActive ? '#13375226' : 'white'
@@ -439,6 +439,20 @@ export default function ShoppingCartItem(props) {
                                                         )}
                                                     </EditPriceDiv>
                                                 </div>
+                                                {cartItem?.itemTotalTariff > 0 && (
+                                                    <div style={{ display: 'flex', fontSize: '0.85rem' }}>
+                                                        <span>Tariff:
+                                                            <NumberFormat
+                                                                value={cartItem.itemTotalTariff}
+                                                                displayType={'text'}
+                                                                thousandSeparator={true}
+                                                                prefix={'$'}
+                                                                decimalScale={2}
+                                                                fixedDecimalScale
+                                                            />
+                                                        </span>
+                                                    </div>
+                                                )}
                                                 {userInfo?.isAirlineEmployee && (
                                                     <>
                                                         <div style={{ display: 'flex', fontSize: '0.85rem' }}>
