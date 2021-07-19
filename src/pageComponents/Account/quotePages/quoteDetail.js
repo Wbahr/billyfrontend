@@ -6,7 +6,7 @@ import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
 import QuoteDetailItem from './quoteDetailItem'
 import Input from '../../_common/form/inputv2'
-import { format as dateFormat } from 'date-fns'
+import { format as dateFormat, isBefore, parseJSON, startOfToday } from 'date-fns'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { PDFDownloadLink } from '@react-pdf/renderer'
@@ -115,7 +115,8 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
     const [itemDetails, setItemDetails] = useState(<p>Loading Items...</p>)
     const [exportData, setExportData] = useState([])
     const [pdfData, setPdfData] = useState({})
-
+    
+    const omitQuote = isBefore(parseJSON(quoteHeader?.expirationDate), startOfToday()) || quoteHeader?.isCompleted
     const invMastUids = lineItems?.map(item => item.invMastUid) || []
 
     const { data: itemsDetails } = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
@@ -173,6 +174,7 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
                     itemDetails={itemDetails}
                     availability={itemAvailability}
                     priceInfo={itemPrice}
+                    omitQuote={omitQuote}
                 />
             )    
             exportData.push(
@@ -212,10 +214,9 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
                 itemNotes: '',
                 itemUnitPriceOverride: null,
                 customerPartNumberId: item.customerPartNumberId,
-                quoteLineId: item.lineItemId
+                ...(!omitQuote ? { quoteLineId: item.lineItemId } : {})
             }
         })
-
         context.addItems(items)
         setShowAddedToCartModal(true)
     }
