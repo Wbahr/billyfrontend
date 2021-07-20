@@ -942,3 +942,13 @@ export const GET_PREPAYMENTS = gql`
     }
   } 
 `
+
+export const ADVANCED_IMPERSONATION_SEARCH = gql`
+  query GetImpersonationCustomerList($searchString: String){
+    getImpersonationCustomerList(searchString: $searchString){
+      customerIdP21
+      name
+      id
+    }
+  }
+`

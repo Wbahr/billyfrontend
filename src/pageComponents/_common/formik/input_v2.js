@@ -120,9 +120,9 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
     }
 }
 
-export function FormikStyleLabel({ name, label, children, alignment }) {
+export function FormikStyleLabel({ name, label, children, alignment, width }) {
     return (
-        <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+        <FormikFormFieldContainer style={{ maxWidth: '100%', width: width }}>
             {label && <FormikFormFieldLabel style={{ textAlign: alignment, width: '100%' }} htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
             {children}
         </FormikFormFieldContainer>
