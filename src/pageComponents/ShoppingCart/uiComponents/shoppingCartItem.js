@@ -247,6 +247,7 @@ export default function ShoppingCartItem(props) {
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.invMastUid, 10)
     const tomorrowDate = new Date()
+    const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
     tomorrowDate.setDate(tomorrowDate.getDate() + 1)
 
     useEffect(() => {
@@ -510,6 +511,7 @@ export default function ShoppingCartItem(props) {
         
                                                 <DatePicker
                                                     minDate={tomorrowDate}
+                                                    maxDate={maxDate}
                                                     selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
                                                     onChange={(value) => setCartItemField('promiseDateOverride', value)}
                                                 />
