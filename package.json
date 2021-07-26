@@ -92,7 +92,7 @@
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
-    "@react-pdf/renderer": "^2.0.0-beta.6",
+    "@react-pdf/renderer": "^2.0.17",
     "@react-pdf/styled-components": "^1.4.0",
     "@stripe/react-stripe-js": "^1.2.0",
     "@stripe/stripe-js": "^1.11.0",
