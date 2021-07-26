@@ -96,7 +96,7 @@ const ButtonSmall = styled.button`
 		}
 	`
 
-export default function OrderDetailItem({ item, quoteId, itemDetails, availability, priceInfo }) {
+export default function OrderDetailItem({ item, quoteId, itemDetails, availability, priceInfo, omitQuote }) {
     const [quantity, setQuantity] = useState(item.quantityOrdered)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const imagePath = getThumbnailImagePath(itemDetails)
@@ -113,7 +113,7 @@ export default function OrderDetailItem({ item, quoteId, itemDetails, availabili
             itemNotes: `Quote ${quoteId}`,
             itemUnitPriceOverride: null,
             customerPartNumberId: item.customerPartNumberId,
-            quoteLineId: item.lineItemId
+            quoteLineId: !omitQuote ? item.lineItemId : null
         })
         setShowAddedToCartModal(true)
         setQuantity(1)
