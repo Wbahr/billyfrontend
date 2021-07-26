@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import AdvancedSearch from '../modals/AdvancedSearch'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { Link } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
@@ -178,6 +179,23 @@ const LoaderContainer = styled.div`
     top: -20px;
 `
 
+const AdvancedButton = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    height: 25px;
+    padding: 0px 15px 3px;
+    background-image: linear-gradient(to top left, #950f23, #DB1633);
+    border-radius: 30px;
+    color: whitesmoke;
+`
+
+const ImpersonationSearchRow = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
+
 export default function HeaderComponent({ history }) {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
@@ -186,7 +204,7 @@ export default function HeaderComponent({ history }) {
     const tabDeclaration = headerTabs(categories)
     const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
     const [overflowMenu, setOverflowMenu] = useState(null)
-
+    const [showAdvancedModal, setShowAdvancedModal] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
     const [searchAsCustomer, setSearchAsCustomer] = useState(false)
     const [showMyAccountDropdown, setShowMyAccountDropdown] = useState(false)
@@ -333,7 +351,7 @@ export default function HeaderComponent({ history }) {
                 <ReverseNavContainer>
                     <AccountSection/>
 
-                    <UserNameSection {...context}/>
+                    <UserNameSection {...context} setShowAdvancedModal={setShowAdvancedModal} />
                 </ReverseNavContainer>
             </NavTop>
 
@@ -370,18 +388,26 @@ export default function HeaderComponent({ history }) {
                     {SearchBar}
                 </NavContainer>
             </NavBottom>
+            <AdvancedSearch open={showAdvancedModal} onClose={() => setShowAdvancedModal(false)} />
         </Nav>
     )
 }
 
-function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonation }) {
+function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonation, setShowAdvancedModal }) {
     if (userInfo && !impersonatedCompanyInfo) {
         return (
             <UserNameRow style={{ flex: 1 }}>
                 <Puser>
                     Hello, {userInfo.firstName} {userInfo.lastName} ({userInfo.companyName} - {userInfo.companyId})
                 </Puser>
-                {userInfo.isAirlineEngineerUser && <ImpersonationSearch/>}
+                {userInfo.isAirlineEngineerUser && (
+                    <ImpersonationSearchRow>
+                        <ImpersonationSearch/>
+                        <AdvancedButton onClick={() => setShowAdvancedModal(true)}>
+                            Advanced
+                        </AdvancedButton>
+                    </ImpersonationSearchRow>
+                )}
             </UserNameRow>
         )
     } else if (userInfo && impersonatedCompanyInfo) {
@@ -394,7 +420,12 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
                 <DivCancelImpersonation onClick={cancelImpersonation}>
                     <FontAwesomeIcon icon="times" color="white" />
                 </DivCancelImpersonation>
-                <ImpersonationSearch />
+                <ImpersonationSearchRow>
+                    <ImpersonationSearch/>
+                    <AdvancedButton onClick={() => setShowAdvancedModal(true)}>
+                        Advanced
+                    </AdvancedButton>
+                </ImpersonationSearchRow>
             </UserNameRow>
         )
     }
