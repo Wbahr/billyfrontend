@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { DebounceInput } from 'react-debounce-input'
 import Context from '../../../setup/context'
@@ -26,6 +26,12 @@ const Div = styled.div`
 export default function SubtotalBox({ history }) {
     const { cartPricing, updateOrderNotes, orderNotes } = useContext(Context)
 
+    const [notes, setNotes] = useState(orderNotes)
+
+    useEffect(() => {
+        setNotes(orderNotes)
+    }, [orderNotes])
+
     const subtotal = cartPricing.state === 'loading'
         ? 'Calculating...'
         : (
@@ -45,10 +51,13 @@ export default function SubtotalBox({ history }) {
                 element="textarea"
                 minLength={2}
                 debounceTimeout={900}
-                onChange={e => updateOrderNotes(e.target.value)}
+                onChange={e => {
+                    setNotes(e.target.value)
+                    updateOrderNotes(e.target.value)}
+                }
                 placeholder='Type Order Notes here'
                 style={{ width: 600 }}
-                value={orderNotes}
+                value={notes}
             />
 
             <Div>
