@@ -230,7 +230,7 @@ export default function HeaderComponent({ history }) {
 
     useEffect(() => {
         calculateTabs()
-        onWindowResize(calculateTabs)
+        return onWindowResize(calculateTabs)
     }, [tabRefs.current])
 
     const setTabRef = idx => ref => {
