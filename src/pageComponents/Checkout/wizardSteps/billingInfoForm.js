@@ -58,7 +58,7 @@ function BillingInfoForm(props) {
     useEffect(() => {
         window.scrollTo({ top: 0 })
         if (!paymentMethod) {
-            setFieldValue('billing.paymentMethod', context.userInfo && billingInfo.isNetTerms ? 'purchase_order' : 'credit_card')
+            setFieldValue('billing.paymentMethod', context.userInfo && billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card')
         }
     }, [])
 
@@ -182,7 +182,7 @@ function BillingInfoForm(props) {
                 <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod}/>
             )}
             {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
-                <FormikInput label={billingInfo.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
+                <FormikInput label={billingInfo?.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
             )}
 
             <DivNavigation>
