@@ -92,6 +92,7 @@ export function hydac() {
                     title="Filters & Filter Systems"
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/Accumulators.png"
                     title="Accumulators"
@@ -99,12 +100,14 @@ export function hydac() {
                     reverse
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/valves.png"
                     title="Valves, Clamps & Accessories"
                     text=" HYDAC manufactures high-pressure ball valves, needle valves, flow control valves, check valves and cartridge valves to ensure safe and reliable operation. A complete range of DIN 3015 clamps for mounting hoses, tubes, and pipes is complimented by HYDAC's specialty and custom mounting solutions. Reservoir accessories include breathers, fluid level indicators, test points, gauge isolators and more."
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/electronics.png"
                     title="Electronics & Diagnostics"
@@ -112,12 +115,14 @@ export function hydac() {
                     reverse
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/compact.png"
                     title="Compact Hydraulics"
                     text="  HYDAC carries compact and high-pressure power units, cartridge valves, manifold assemblies and controls. Compact power units feature a seamless reservoir and pressure-balanced gear pump offering efficiencies over 90%, even at full load, greatly reducing wear and noise. HYDAC also has a wide range of cooling systems for mobile and industrial applications, including combination coolers, pump-filter cooler units, plate-in-frame coolers and brazed plate heat exchangers."
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/mobile%20directional.png"
                     title="Mobile Directional Control Valves"
@@ -125,6 +130,7 @@ export function hydac() {
                     reverse
                 />
                 <ProductItems
+                    brand="Hydac Technology Corporation"
                     searchTerm="Hydac"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Hydac/hydraulic-cylinders.png"
                     title="Hydraulic Cylinders"

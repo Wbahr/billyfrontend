@@ -68,6 +68,7 @@ export function omron() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/automation.png"
                     text=" Omron's Automation Systems include programmable controllers that support machine control, and network/software products to support easy information exchange with host systems."
@@ -85,6 +86,7 @@ export function omron() {
                     title="Automation Systems"
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/motion-drives.png"
                     title="Motion & Drives"
@@ -101,6 +103,7 @@ export function omron() {
                     reverse
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/sensing.png"
                     title="Sensing"
@@ -122,6 +125,8 @@ export function omron() {
                     )}
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
+                    selectedCategoryId="4141"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/control-components.png"
                     title="Control Components"
@@ -142,6 +147,7 @@ export function omron() {
                     reverse
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/switching-components.png"
                     title="Switching Components"
@@ -158,6 +164,7 @@ export function omron() {
                     )}
                 />
                 <ProductItems
+                    brand="Omron Electronics LLC"
                     searchTerm="Omron"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/robotics.png"
                     title="Robotics"

@@ -77,9 +77,11 @@ export default function ProductItems(props) {
         reverse,
         searchTerm,
         learnMoreLink,
+        brand,
+        selectedCategoryId,
     } = props
 		
-    const searchItem = { searchTerm: searchTerm + ' ' + title }
+    const searchItem = { searchTerm: searchTerm + ' ' + title, brands: brand, selectedCategoryId: selectedCategoryId }
     const searchForItem = buildSearchString(searchItem)
 
     return (

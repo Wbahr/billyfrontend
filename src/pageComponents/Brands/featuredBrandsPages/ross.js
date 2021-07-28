@@ -66,12 +66,14 @@ export function ross() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Ross Controls"
                     searchTerm="Ross"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/line-mounted.png"
                     title="Line-Mounted Valves"
                     text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
                 />
                 <ProductItems
+                    brand="Ross Controls"
                     searchTerm="Ross"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/base-mounted.png"
                     title="Base-Mounted Valves"
@@ -79,6 +81,7 @@ export function ross() {
                     reverse
                 />
                 <ProductItems
+                    brand="Ross Controls"
                     searchTerm="Ross"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/safety-related.png"
                     title="Safety Related Products"
@@ -96,6 +99,7 @@ export function ross() {
                     )}
                 />
                 <ProductItems
+                    brand="Ross Controls"
                     searchTerm="Ross"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/check-valves.png"
                     title="Check Valves"
@@ -103,6 +107,7 @@ export function ross() {
                     reverse
                 />
                 <ProductItems
+                    brand="Ross Controls"
                     searchTerm="Ross"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/flow-control.png"
                     title="Flow Control Valves"

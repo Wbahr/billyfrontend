@@ -68,12 +68,14 @@ export function clippard() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/cylinders.png"
                     text='Minimatic Cylinders range from 5/32" to 1 1/8" in bore size, and are available in spring return and double acting models, with a full line of associated devices for mounting and use.'
                     title="Cylinders"
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/Directional%20control%20valves.png"
                     title="Directional Control Valves"
@@ -81,6 +83,7 @@ export function clippard() {
                     reverse
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/electronic%20valves.png"
                     title="Electronic Valves"
@@ -98,6 +101,7 @@ export function clippard() {
                     )}
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/circuit%20boards.jpg"
                     title="Circuit Boards & I/O Modules"
@@ -105,12 +109,14 @@ export function clippard() {
                     reverse
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/fitting.jpg"
                     title="Fittings"
                     text="Clippard precision fittings will save you time, space, and money when designing versatile, productive, trouble free, pneumatic circuits. Our endless variety of fittings insure that you find just the right “fit” when plumbing pneumatic circuits or assemblies. These fittings are small in size but large in performance, allowing for streamlining of pneumatic assemblies and eliminating the need for larger, more expensive, cumbersome fittings"
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Hose & Tubing"
@@ -118,6 +124,7 @@ export function clippard() {
                     reverse
                 />
                 <ProductItems
+                    brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/air%20prep%20equipment.png"
                     title="Air Prep Equipment"

@@ -51,12 +51,14 @@ export function butech() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Haskel International LLC/Butech"
                     searchTerm="BuTech"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/Ball%20Valves.png"
                     text="Ball valves are available in 2-way, 3-way, 4-way, and 5-way designs with pressures to 20,000 PSI (1,380 bar) at 72°F (22°C) and a wide range of connections including male and female NPT, low-pressure compression fittings, medium- and high-pressure tube ends, medium- and high-pressure female, JIC 37° flare, SAE O-ring boss, socket-weld, butt-weld, and metric connections. They are available with special seal materials or manufactured from any machinable material for extreme applications. They also can be fitted with pneumatic or electric actuators for remote control."
                     title="Ball Valves"
                 />
                 <ProductItems
+                    brand="Haskel International LLC/Butech"
                     searchTerm="BuTech"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/check%20valves.png"
                     title="Check Valves"
@@ -64,12 +66,14 @@ export function butech() {
                     reverse
                 />
                 <ProductItems
+                    brand="Haskel International LLC/Butech"
                     searchTerm="BuTech"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/high%20pressure%20fitting.png"
                     title="High Pressure Fittings"
                     text="BuTech offers a complete line of elbows, tees, crosses, bulkhead fittings and nipples, as well as adapters and couplings to connect different sizes and pressure ratings of tubing and pipe. Standard construction is 316 cold – worked stainless steel."
                 />
                 <ProductItems
+                    brand="Haskel International LLC/Butech"
                     searchTerm="BuTech"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/needle%20valves.png"
                     title="Needle Valves"
@@ -77,9 +81,10 @@ export function butech() {
                     reverse
                 />
                 <ProductItems
+                    brand="Haskel International LLC/Butech"
                     searchTerm="BuTech"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Butech/Butech%20accessories.png"
-                    title="BuTech Accessories"
+                    title="Accessories"
                     text=" BuTech Pressure Systems offers a complete line of accessories for use with its valve and pipe equipment."
                 />
 

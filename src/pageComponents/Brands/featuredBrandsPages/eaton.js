@@ -64,6 +64,7 @@ export function eaton() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/circuit%20protection.png"
                     text={(
@@ -85,6 +86,7 @@ export function eaton() {
                     title="Circuit Protection"
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/contactors.png"
                     title="Contactors, Starters and Protective Relays"
@@ -105,12 +107,14 @@ export function eaton() {
                     reverse
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/safety-relays.png"
                     title="Safety Contactors"
                     text="Providing enhanced levels of safety, XTSE contactors integrate to applications to not only achieve the highest safety circuits, but provide additional levels of protection that reinforce end-user safety."
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/distribution_termination.png"
                     title="Distribution and Termination"
@@ -118,6 +122,7 @@ export function eaton() {
                     reverse
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/pushbuttons.png"
                     title="Pushbuttons, Pilot Lights and Selector Switche"
@@ -133,6 +138,7 @@ export function eaton() {
                     )}
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/connectivity.png"
                     title="Connectivity"
@@ -140,6 +146,7 @@ export function eaton() {
                     reverse
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/relays_timers.png"
                     title="Relays and Timers"
@@ -159,6 +166,7 @@ export function eaton() {
                     )}
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/operator%20interfaces.png"
                     title="Operator Interfaces"
@@ -166,12 +174,14 @@ export function eaton() {
                     reverse
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/HMI-PLCs.png"
                     title="HMI-PLCs"
                     text="Eaton's Programmable Logic Controllers (PLCs) are microprocessor-based devices used to control industrial processes or machines. They provide advanced functions, including analog monitoring, control and high speed motion control as well as share data over communication networks."
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/variable_frequency_drives.png"
                     title="Variable Frequency Drives"
@@ -179,6 +189,7 @@ export function eaton() {
                     reverse
                 />
                 <ProductItems
+                    brand="Eaton Corp"
                     searchTerm="Eaton"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/transformers_power.png"
                     title="Transformers and Power Supplies"

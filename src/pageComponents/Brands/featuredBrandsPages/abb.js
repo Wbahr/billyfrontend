@@ -65,12 +65,14 @@ export function abb() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/drives.png"
                     text="ABB’s offering includes low voltage AC and DC drives and medium voltage AC drives which are used across all industries and applications. ABB drives offer application-specific functionality, control for different types of motors as well as flexible connectivity to automation networks."
                     title="Drives"
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/motors%20and%20generators.png"
                     title="Motors and Generators"
@@ -78,12 +80,14 @@ export function abb() {
                     reverse
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/transformers.png"
                     title="Transformers"
                     text="ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers."
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/control%20systems.png"
                     title="Control Systems"
@@ -107,6 +111,7 @@ export function abb() {
                     reverse
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/low%20voltage%20products%20and%20systems.png"
                     title="Low Voltage Products and Systems"
@@ -191,6 +196,7 @@ export function abb() {
                     )}
                 />
                 <ProductItems
+                    brand="ABB Drives Inc"
                     searchTerm="ABB"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/medium%20voltage%20products%20and%20systems.png"
                     title="Medium Voltage Products and Systems"

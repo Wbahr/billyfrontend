@@ -66,12 +66,14 @@ export function orientalmotor() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Oriental Motor Usa Corp"
                     searchTerm="Oriental Motor"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/stepper-motors.png"
                     text="Stepper motors are used to achieve precise positioning via digital control. The motor operates by accurately synchronizing with the pulse signal output from the controller to the driver. Stepper motors, with their ability to produce high torque at low speed while minimizing vibration, are ideal for applications requiring quick positioning over a short distance."
                     title="Stepper Motors"
                 />
                 <ProductItems
+                    brand="Oriental Motor Usa Corp"
                     searchTerm="Oriental Motor"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/cooling-fan.png"
                     text="Oriental Motor offers a wide range of cooling fans, including a cooling module suitable for enclosure cooling, axial flow fans for local cooling, as well as fans with low-speed or stall alarms or variable flow type."
@@ -79,6 +81,8 @@ export function orientalmotor() {
                     reverse
                 />
                 <ProductItems
+                    selectedCategoryId="4264"
+                    brand="Oriental Motor Usa Corp"
                     searchTerm="Oriental Motor"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Oriental-motor/ac-motors.png"
                     title="AC Motors"

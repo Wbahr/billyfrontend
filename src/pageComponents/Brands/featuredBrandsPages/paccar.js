@@ -64,6 +64,7 @@ export function paccar() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Braden Carco Gearmatic"
                     searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/bg_series.png"
                     text="Braden’s BG Series is designed for long life and efficient operation to meet a variety of applications—from marine industry boom hoists to the dynamic swing winch systems used on dredges. Dynamic and static braking features provide safe, smooth operation."
@@ -87,6 +88,7 @@ export function paccar() {
                     )}
                 />
                 <ProductItems
+                    brand="Braden Carco Gearmatic"
                     searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Paccar/plantary_swing.png"
                     text="The compact and durable Braden SD Planetary Swing Drive offers superior performance in a wide range of cost-effective configurations that provide turnkey power solutions for utility and construction applications."
@@ -117,6 +119,7 @@ export function paccar() {
                     reverse
                 />
                 <ProductItems
+                    brand="Braden Carco Gearmatic"
                     searchTerm="Paccar"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="PD18D Utility Bumper"
