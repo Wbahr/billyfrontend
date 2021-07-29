@@ -69,6 +69,7 @@ export function haskel() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Haskel International LLC"
                     searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-pressure.png"
                     text={(
@@ -87,6 +88,7 @@ export function haskel() {
                     title="Air pressure amplifiers"
                 />
                 <ProductItems
+                    brand="Haskel International LLC"
                     searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-driven.png"
                     title="Air-driven liquid pumps"
@@ -94,6 +96,7 @@ export function haskel() {
                     reverse
                 />
                 <ProductItems
+                    brand="Haskel International LLC"
                     searchTerm="Haskel"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Haskel/Air-hydraulic.png"
                     title="Air & hydraulic-driven gas boosters"

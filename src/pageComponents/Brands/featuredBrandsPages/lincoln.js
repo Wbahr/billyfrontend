@@ -68,6 +68,8 @@ export function lincoln() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
+                    selectedCategoryId="4223"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/automatic-lubricators.png"
                     text={(
@@ -83,6 +85,7 @@ export function lincoln() {
                     title="Automatic Lubricators"
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Single-Line Systems"
@@ -102,6 +105,7 @@ export function lincoln() {
                     reverse
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/dual-line.png"
                     title="Dual-Line Systems"
@@ -119,6 +123,7 @@ export function lincoln() {
                     )}
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/progressive_lubrication.png"
                     title="Progressive Lubrication Systems"
@@ -136,6 +141,7 @@ export function lincoln() {
                     reverse
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/multi-line%20lubrication.png"
                     title="Multi-Line Lubrication Systems"
@@ -152,6 +158,7 @@ export function lincoln() {
                     )}
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/circulating%20oil%20lubracation.png"
                     title="Circulating Oil Lubracation Systems"
@@ -169,6 +176,7 @@ export function lincoln() {
                     reverse
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/oil-and-air-lubrication.png"
                     title="Oil and Air Lubrication Systems"
@@ -185,6 +193,7 @@ export function lincoln() {
                     )}
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/MQL_MDS.png"
                     title="Minimal Quantity Lubrication Systems (MQL) and Microdosage Systems (MDS)"
@@ -211,12 +220,14 @@ export function lincoln() {
                     reverse
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/hand-held.png"
                     title="Hand-Held Lubrication Equipment"
                     text="Lincoln grease guns are designed with power and performance in mind. These tools are used around the world by technicians, mechanics, maintenance teams, farmers and others for almost every lubrication and preventative-maintenance task."
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/pumps-accessories.png"
                     title="Pumps and Accessories"
@@ -224,12 +235,14 @@ export function lincoln() {
                     reverse
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/reels-meters.png"
                     title="Reels and Meters"
                     text="Years of engineering, testing and experience preceded the introduction of Lincoln hose reels and meters, which are manufactured with the quality and reliability that professionals expect."
                 />
                 <ProductItems
+                    brand="Lincoln Industrial Corp"
                     searchTerm="Lincoln"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Lincoln/used-fluid.png"
                     title="Used Fluid Systems"

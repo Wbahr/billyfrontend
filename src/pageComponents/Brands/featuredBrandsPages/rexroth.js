@@ -68,6 +68,7 @@ export function rexroth() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/industrial-hydraulics.png"
                     title="Industrial & Mobile Hydraulics"
@@ -85,6 +86,7 @@ export function rexroth() {
                     )}
                 />
                 <ProductItems
+                    brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Aluminum Structural Framing & Assembly"
@@ -112,6 +114,7 @@ export function rexroth() {
                     reverse
                 />
                 <ProductItems
+                    brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Linear Motion Technologies"
@@ -137,6 +140,7 @@ export function rexroth() {
                     )}
                 />
                 <ProductItems
+                    brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/electric-drives-and-controls.png"
                     title="Electric Drives and Controls"

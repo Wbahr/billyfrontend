@@ -66,12 +66,14 @@ export function schmersal() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/compact-safety-rated-limit-switches.png"
                     title="Compact Safety-Rated Limit Switches"
                     text="Compact safety-rated limit switches are for determining the position of movable machine components or machine guards that can be moved laterally or rotated. The compact body allows these to be used in confined spaces to monitor the position or presence of moving parts, work pieces, or conveyed materials."
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-interlock.png"
                     title="Safety Interlock Switches"
@@ -79,12 +81,14 @@ export function schmersal() {
                     reverse
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/emergency-stop.png"
                     title="Emergency Stop Pushbuttons"
                     text="Command devices are of great importance for the man-machine interface in the area of industrial applications. For example, they are mounted in switch-boards, control panels, two-hand control panels, in lift manufacture and on materials-handling plants, including conveyors. Manual actuation of the devices starts operating sequences and functional processes or serves to bring these to an end."
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-light-curtains.png"
                     title="Safety Light Curtains"
@@ -92,12 +96,14 @@ export function schmersal() {
                     reverse
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-mats.png"
                     title="Safety Mats and Edges"
                     text="Actuated by physical contact, tactile safety monitoring devices stop the hazardous movement. The diversity of applications requires constructively different devices."
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/enabling-devices.png"
                     title="Enabling Devices"
@@ -105,12 +111,14 @@ export function schmersal() {
                     reverse
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/door-handle-actuator.png"
                     title="Door-handle Actuator"
                     text="The operator does not have to press a button on an external switching plate when the solenoid interlock at a safety guard needs to be unlocked. The switching function is now exactly where it is needed: On the safety door handle which is used to open the safety guard."
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/switches.png"
                     title="Switches"
@@ -119,12 +127,14 @@ export function schmersal() {
                     reverse
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-monitoring-relays.png"
                     title="Safety Monitoring Relays"
                     text="Suitable for signal processing of potential-free outputs, e.g. emergency stop command devices, position switches and solenoid interlocks."
                 />
                 <ProductItems
+                    brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/programmable-safety-controllers.png"
                     title="Programmable Safety Controllers"

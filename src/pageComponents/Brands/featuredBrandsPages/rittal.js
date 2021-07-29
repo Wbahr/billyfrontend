@@ -69,6 +69,7 @@ export function rittal() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Rittal North America LLC"
                     searchTerm="Rittal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rittal/Rittal_Enclosure.png"
                     text={(
@@ -87,6 +88,7 @@ export function rittal() {
                     title="Control Technology, I/O Systems and Automation"
                 />
                 <ProductItems
+                    brand="Rittal North America LLC"
                     searchTerm="Rittal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rittal/Rittal_Climate.png"
                     text={(

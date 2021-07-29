@@ -93,12 +93,14 @@ export function parker() {
                     text="Products"
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Parker/hose-fittings.png"
                     text="Parker offers the largest selection of hoses plus more fitting sizes than any other manufacturer. You’ll find a wide variety of hoses including braided, spiral and multi-purpose, and more than 4500 Parkrimp fittings. Parker products have been designed, tested and approved to meet and exceed global standards. The right product is available for your application, including hose that features a variety of abrasion-resistant cover choices, flexibility, a wide range of media compatibility, and more characteristics that make Parker the hose supplier of choice for leading companies everywhere."
                     title="Hose & Hose Fittings"
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     text="One motion completes multiple connections. That is the basic concept behind multi-coupling technology. Parker Quick Coupling Division is the market leader for single point connections. Choose from Pioneer Agricultural Quick Coupling Products, or quick couplings for hydraulic, pneumatic, process, power and instrumentation applications. Parker's Quick Coupling Division also carries thermoplastic quick couplings, hydraulic swivels, valves and more."
@@ -106,6 +108,7 @@ export function parker() {
                     reverse
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
                     title="Parflex"
@@ -124,6 +127,7 @@ export function parker() {
                     )}
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Parker/industrial-hose.png"
                     text="Parker industrial hose products are the preferred choice for transferring abrasive materials, acid and chemicals, air, compressed gases, food, fuel, oil, steam, welding gases, water and many other materials. Parker manufactures a variety of hoses with covers resistant to abrasion, chemicals, flame, heat, oil, ozone, ultraviolet light and weathering."
@@ -131,12 +135,14 @@ export function parker() {
                     reverse
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Parker/tube-fittings.png"
                     text=" Superior plating gives fittings from the Tube Fittings Division (TFD) unmatched protection against red rust. This helps customers avoid the many costs of corrosion - calculated not only in terms of possible leak points and replacement fittings, but also potential lost sales stemming from poor product perception. Parker TFD fittings withstand the harshest operating environments and are an integral component of any leak-free, well-functioning - and great looking - hydraulic system."
                     title="Tube Fittings"
                 />
                 <ProductItems
+                    brand="Parker Origa Corp"
                     searchTerm="Parker"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Parker/fluid-system-connectors.png"
                     text="Parker's Fluid System Connectors Division is a leader in brass, composite and thermoplastic fittings and valves for markets including: automation, industrial, food processing, life science, petrochemical, transportation, water and beverage. Fitting types range from Push-to-Connect to compression, flare, adapters, barbed, DOT, cartridges, manifolds, flow controls, ball valves and hose barb fittings."
