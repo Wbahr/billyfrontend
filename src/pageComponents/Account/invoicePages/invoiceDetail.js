@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
@@ -9,6 +8,8 @@ import { GET_INVOICE } from '../../../setup/providerGQL'
 import { useQuery } from '@apollo/client'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './invoiceDetailPDF'
+
+const isNil = val => val == null
 
 const PageContainer = styled.div`
 	padding: 16px 32px;
@@ -66,7 +67,7 @@ const DivItemDetailCell = styled.div`
 		flex-direction: column;
 		width: ${props => props.width};
 		align-self: center;
-		text-align: ${props => _.isNil(props.align) ? 'left' : props.align};
+		text-align: ${props => isNil(props.align) ? 'left' : props.align};
 	`
 
 const P1 = styled.p`
@@ -148,9 +149,9 @@ export default function InvoiceDetail({ history, invoiceId }) {
         amountDue
     } = data
 
-    const itemDetails = _.map(lineItems, item => {
+    const itemDetails = lineItems?.map(item => {
         return (
-            <DivItemDetail>
+            <DivItemDetail key={item.invMastUid}>
                 <DivItemDetailCell width='300px'>
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
@@ -182,7 +183,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
             </DivItemDetail>
         )
     })
-    if (_.isEmpty(data)) {
+    if (Object.keys(data).length === 0) {
         return (
             <div>
                 <p>Loading Invoice Data...</p>
@@ -204,22 +205,22 @@ export default function InvoiceDetail({ history, invoiceId }) {
                         <P1>Bill-to-Address:</P1>
                         <p>{billingName}</p>
                         <p>{billingAddress1}</p>
-                        {!_.isNil(billingAddress2) && <p>{billingAddress2}</p>}
-                        {!_.isNil(billingAddress3) && <p>{billingAddress3}</p>}
+                        {!isNil(billingAddress2) && <p>{billingAddress2}</p>}
+                        {!isNil(billingAddress3) && <p>{billingAddress3}</p>}
                         <p>{billingCity}, {billingState} {billingZip}</p>
                     </DivOrderInfo>
                     <DivOrderInfo>
                         <P1>Ship-to-Address:</P1>
                         <p>{shipToName}</p>
                         <p>{shipToAddress1}</p>
-                        {!_.isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
-                        {!_.isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
+                        {!isNil(shipToAddress2) && <p>{shipToAddress2}</p>}
+                        {!isNil(shipToAddress3) && <p>{shipToAddress3}</p>}
                         <p>{shipToCity}, {shipToState} {shipToZip}</p>
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <DivOrderInfoContainer>
                     <DivOrderInfo>
-                        <Row><P1>Invoice Date: </P1><p>{_.isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</p></Row>
+                        <Row><P1>Invoice Date: </P1><p>{isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</p></Row>
                         <Row><P1>Invoice Number: </P1><p>{invoiceId}</p></Row>
                         <Row><P1>P.O. Number: </P1><p>{poNo}</p></Row>
                         <Row><P1>Order Number: </P1><p>{orderNumber}</p></Row>
@@ -227,12 +228,12 @@ export default function InvoiceDetail({ history, invoiceId }) {
                     <DivOrderInfo>
                         <Row><P1>Status: </P1><p>{status}</p></Row>
                         <Row><P1>Terms: </P1><p>{terms}</p></Row>
-                        <Row><P1>Net Due Date: </P1><p>{_.isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</p></Row>
-                        <Row><P1>Disc Due Date: </P1><p>{_.isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</p></Row>
+                        <Row><P1>Net Due Date: </P1><p>{isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</p></Row>
+                        <Row><P1>Disc Due Date: </P1><p>{isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</p></Row>
                         <Row><P1>Discount Amount: </P1><p>{discountAmount}</p></Row>
                     </DivOrderInfo>
                     <DivOrderInfo>
-                        <Row><P1>Order Date: </P1><p>{_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p></Row>
+                        <Row><P1>Order Date: </P1><p>{isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</p></Row>
                         <Row><P1>Ordered By: </P1><p>{orderedBy}</p></Row>
                         <Row><P1>Taker: </P1><p>{taker}</p></Row>
                     </DivOrderInfo>
