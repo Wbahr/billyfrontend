@@ -74,47 +74,9 @@ export function abb() {
                 <ProductItems
                     brand="ABB Drives Inc"
                     searchTerm="ABB"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/motors%20and%20generators.png"
-                    title="Motors and Generators"
-                    text=" ABB offers a comprehensive range of reliable and high-efficiency motors and generators for all applications. Choose from IEC DC Motors, IEC Low Voltage AC Motors, Servo Motors, Synchronous Motors, or Synchronous Reluctance Motor and Drive Packages."
-                    reverse
-                />
-                <ProductItems
-                    brand="ABB Drives Inc"
-                    searchTerm="ABB"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/transformers.png"
-                    title="Transformers"
-                    text="ABB offers a full range of transformer products and solutions for ANSI, IEC and other local standards. ABB is a major transformer manufacturer throughout the world and offers both liquid-filled and dry-type transformers."
-                />
-                <ProductItems
-                    brand="ABB Drives Inc"
-                    searchTerm="ABB"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/control%20systems.png"
-                    title="Control Systems"
-                    text={(
-                        <div>
-                            <p>ABB is the #1 global provider of control technologies for industry, power and water. Airline offers the platforms and systems listed below to optimize processes and deliver operational excellence.</p>
-                        </div>
-                    )}
-                    additionalText={(
-                        <div>
-                            <ul>
-                                <li>ABB's 800xA platform provides the collaborative environment necessary for various organizations and departments to work as one and achieve operational excellence.</li>
-                                <li>Advant OCS (Open Control System) is an ABB solution for operators to improve their manufacturing productivity and achieve sustainable competitive advantages.</li>
-                                <li>The Compact Product Suite is a comprehensive group of control products for system integrators, OEMs and customers who like to engineer their own solution to meet their specific automation needs.</li>
-                                <li>ABB's Freelance Distributed Control System can run on any PC and is easy to install, learn, engineer, commission, back-up, maintain and expand.</li>
-                                <li>ABB offers Safety Systems to satisfy the safety requirements of industry (process and machinery). Additionally, it also provides the availability required in the most critical applications.</li>
-                                <li>Satt OCS comprises everything from products to total solutions for a wide variety of industries, including food processing, water, energy, pharmaceutical, light chemical, infrastructure, etc.</li>
-                            </ul>
-                        </div>
-                    )}
-                    reverse
-                />
-                <ProductItems
-                    brand="ABB Drives Inc"
-                    searchTerm="ABB"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/low%20voltage%20products%20and%20systems.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/Low_Voltage_Products.png"
                     title="Low Voltage Products and Systems"
+                    reverse
                     text={(
                         <div>
                             <p>ABB offers the largest product range that meets NEMA, UL & CSA standards. Their unique offering of electrical control and protection products enable customers to significantly reduce panel costs. This vast group of products includes:</p>
@@ -194,18 +156,6 @@ export function abb() {
                             </ul>
                         </div>
                     )}
-                />
-                <ProductItems
-                    brand="ABB Drives Inc"
-                    searchTerm="ABB"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Abb/medium%20voltage%20products%20and%20systems.png"
-                    title="Medium Voltage Products and Systems"
-                    text={(
-                        <div>
-                            <p>ABB provides utility, industrial and commercial customers with safe, reliable and smart technologies for the distribution of electricity. Airline’s offering includes Circuit Breakers, Compact Secondary Substations (CSS), Contactors, E-Houses, Fault Current Limitation and Arc Protection.</p>
-                        </div>
-                    )}
-                    reverse
                 />
                 <SectionHeader
                     text="Articles & Videos"

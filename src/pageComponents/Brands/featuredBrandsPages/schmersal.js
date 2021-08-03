@@ -75,17 +75,10 @@ export function schmersal() {
                 <ProductItems
                     brand="Schmersal Inc"
                     searchTerm="Schmersal"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-interlock.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/az1602zvrk2254_l.png"
                     title="Safety Interlock Switches"
-                    text="Protects operators by not allowing a machine to start without having all switches in place closed and also powers off the machine if any switches are tripped."
+                    text="Protects operators by not allowing a machine to start without having all switches in place closed and also powers off the machine if any switches are tripped"
                     reverse
-                />
-                <ProductItems
-                    brand="Schmersal Inc"
-                    searchTerm="Schmersal"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/emergency-stop.png"
-                    title="Emergency Stop Pushbuttons"
-                    text="Command devices are of great importance for the man-machine interface in the area of industrial applications. For example, they are mounted in switch-boards, control panels, two-hand control panels, in lift manufacture and on materials-handling plants, including conveyors. Manual actuation of the devices starts operating sequences and functional processes or serves to bring these to an end."
                 />
                 <ProductItems
                     brand="Schmersal Inc"
@@ -93,7 +86,6 @@ export function schmersal() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-light-curtains.png"
                     title="Safety Light Curtains"
                     text="Optoelectronic safety devices are used as entry, danger point or danger zone guards. Safety light grids and light curtains can be integrated into the safety concept of the machine or plant even under tight space conditions by virtue of their very compact design. These safety devices are also often used on presses to guard danger points or zones. Depending on the particular resolution of the safety light grids and curtains, protection of persons, hands or even fingers can be provided."
-                    reverse
                 />
                 <ProductItems
                     brand="Schmersal Inc"
@@ -101,6 +93,7 @@ export function schmersal() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-mats.png"
                     title="Safety Mats and Edges"
                     text="Actuated by physical contact, tactile safety monitoring devices stop the hazardous movement. The diversity of applications requires constructively different devices."
+                    reverse
                 />
                 <ProductItems
                     brand="Schmersal Inc"
@@ -108,30 +101,14 @@ export function schmersal() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/enabling-devices.png"
                     title="Enabling Devices"
                     text="Consent switches are used to protect persons from potentially hazardous situations where machine guards need to be inactivated completely or in part in special operating modes."
-                    reverse
-                />
-                <ProductItems
-                    brand="Schmersal Inc"
-                    searchTerm="Schmersal"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/door-handle-actuator.png"
-                    title="Door-handle Actuator"
-                    text="The operator does not have to press a button on an external switching plate when the solenoid interlock at a safety guard needs to be unlocked. The switching function is now exactly where it is needed: On the safety door handle which is used to open the safety guard."
-                />
-                <ProductItems
-                    brand="Schmersal Inc"
-                    searchTerm="Schmersal"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/switches.png"
-                    title="Switches"
-                    text="Switches are used to give signals to start machines and to open or close electrically driven doors, gates and barriers.
-					The pull-wire switches are manually operated by pulling."
-                    reverse
                 />
                 <ProductItems
                     brand="Schmersal Inc"
                     searchTerm="Schmersal"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/safety-monitoring-relays.png"
                     title="Safety Monitoring Relays"
-                    text="Suitable for signal processing of potential-free outputs, e.g. emergency stop command devices, position switches and solenoid interlocks."
+                    text="Safety monitoring relays evaluate the signals from safety inputs (switches, light curtains, etc._ and will cut power to a machine circuit if the safe conditions are not met.  They come in different varieties based on your application including off-delay timing, extra outputs, etc."
+                    reverse
                 />
                 <ProductItems
                     brand="Schmersal Inc"
@@ -139,7 +116,6 @@ export function schmersal() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Schmersal/programmable-safety-controllers.png"
                     title="Programmable Safety Controllers"
                     text="Safety controllers are connected between machine guarding devices such as keyed interlocks, non-contact sensors, light curtains, etc. and the machine’s stop control elements such as a motor contactor or control relay. These controllers contain redundant, self-checking monitoring circuits and positive-guided relays and/or solid state outputs. Each is designed to detect faults in the safety system’s components and interconnection wiring, and their own internal monitoring circuits and output."
-                    reverse
                 />
                 <SectionHeader
                     text="Articles & Videos"
