@@ -27,6 +27,14 @@ export default function SearchResultsPage({ history }) {
         selectedCategoryId,
     } = searchQueryParams
 
+    const initialSearchState = {
+        results: [],
+        totalResults: '--',
+        isSearching: false,
+        sortType: 'relevancy',
+        searchTerms: []
+    }
+
     const setSearchTerms = newInnerSearchTerms => {
         setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
         handleSetSearchState({ searchTerms: newInnerSearchTerms })
@@ -113,6 +121,19 @@ export default function SearchResultsPage({ history }) {
         search({ variables: payload })
     }
 
+    const clearFilter = () => {
+        setQueryParam('innerSearchTerms', '')
+        setSearchState({ ...initialSearchState, searchTerm: searchState.searchTerm, searchTerms: searchState.searchTerms, 
+            brands: [],
+            attributes: [],
+            sortType: 'relevancy',
+            selectedCategoryId: '',
+            nonweb: searchState.nonweb,
+            resultPage: '1',
+            isSynced: false,
+        })
+    }
+
     const [search, { variables }] = useLazyQuery(QUERY_ITEM_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ itemSearch }) => {
@@ -162,6 +183,7 @@ export default function SearchResultsPage({ history }) {
             <SearchTermsPlugin
                 searchTerms={searchTerms}
                 setSearchTerms={setSearchTerms}
+                clearFilter={clearFilter}
             />
             <PaginationPlugin
                 page={resultPage}
