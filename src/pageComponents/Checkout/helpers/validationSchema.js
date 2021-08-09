@@ -62,7 +62,9 @@ export const shipToSchema = object({
         collectNumber: string()
             .when('isCollect', {
                 is: true,
-                then: string().min(1).required('Collect Number is required'),
+                then: string()
+                    .min(6, 'Collect Number should be at least 6 characters long')
+                    .required('Collect Number is required'),
                 otherwise: string()
             })
     })
