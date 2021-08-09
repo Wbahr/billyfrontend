@@ -127,10 +127,6 @@ function CheckoutPage({ history }) {
         if (context.userInfo?.isAirlineEngineerUser){
             history.replace('/cart')
         }
-
-        if (context.cart?.some(item => item.itemUnitPrice === 0)){
-            history.replace('/cart')
-        }
     }, [])
 
     const [getTaxRate] = useLazyQuery(GET_TAX_RATE, {
