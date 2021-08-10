@@ -75,22 +75,22 @@ export default function NewAndNoteworthy() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <A href="https://info.airlinehyd.com/hy-performance-acquisition" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/Press-room/PR%20david%20op.png" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>Airline Acquires Hy-Performance Hydraulics</Details>
+                            </TextDiv>
+                        </A>
+                    </Row>
+                    <Row>
                         <A href="https://info.airlinehyd.com/fast-wiring" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Fast%20wiring.png" />
                             </ImgDiv>
                             <TextDiv>
                                 <Details>Solutions for Fast Control Cabinet Wiring</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="https://info.airlinehyd.com/pumpmd" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/pump.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>PumpMD™ │ Hydraulic Predictive Maintenance Made Easy</Details>
                             </TextDiv>
                         </A>
                     </Row>
