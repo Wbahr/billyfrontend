@@ -25,13 +25,13 @@ const QuantityInput = (props) => {
         handleUpdate,
         min,
         max,
-        debounce
     } = props
     const unitSizeVal = unitSize || 1
 
     const [displayQuantity, setDisplayQuantity] = useState(quantity)
     const [debouncedDisplayQuantity] = useDebounce(displayQuantity, 500)
     const nonDigitRegex = /\D/g
+    const debounce = unitSizeVal > 1 || props.debounce
 
     useEffect(() => {
         setDisplayQuantity(quantity)
@@ -96,10 +96,10 @@ const QuantityInput = (props) => {
     //Ensures the min/max constraints are met
     const isValueValid = (valueCandidate) => {
         if (!isNaN(min) && Number.isInteger(Number(min))
-      && valueCandidate < Number(min) || valueCandidate === 0)
+            && valueCandidate < Number(min) || valueCandidate === 0)
             return false
         if (!isNaN(max) && Number.isInteger(Number(max))
-      && valueCandidate > Number(max) || valueCandidate === 0)
+            && valueCandidate > Number(max) || valueCandidate === 0)
             return false
 
         return true
@@ -107,37 +107,21 @@ const QuantityInput = (props) => {
 
     const fontSize = props.fontSize || '1rem'
     const width = props.width || '60px'
-    const readOnly = unitSizeVal > 1
 
     return (
         <span>
-
             <IncrementDecrementButton
                 onClick={() => incrementDecrementHandler(-unitSizeVal)}
                 style={{ fontSize }}
             >
                 -
             </IncrementDecrementButton>
-            {
-                debounce ? (
-                    <input
-                        readOnly={readOnly}
-                        onChange={!readOnly ? handleQuantityUpdate : undefined}
-                        value={displayQuantity}
-                        step={unitSizeVal || 1}
-                        style={{ fontSize, width }}
-                    />
-                ) : (
-                    <input
-                        readOnly={readOnly}
-                        onChange={!readOnly ? handleQuantityUpdate : undefined}
-                        value={quantity}
-                        step={unitSizeVal || 1}
-                        style={{ fontSize, width }}
-                    />
-                )
-            }
-
+            <input
+                onChange={handleQuantityUpdate}
+                value={debounce ? displayQuantity : quantity}
+                step={unitSizeVal || 1}
+                style={{ fontSize, width }}
+            />
             <IncrementDecrementButton
                 onClick={() => incrementDecrementHandler(unitSizeVal)}
                 style={{ fontSize }}
