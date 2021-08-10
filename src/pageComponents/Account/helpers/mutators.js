@@ -1,7 +1,8 @@
 import React from 'react'
-import _ from 'lodash'
 import { format as dateFormat } from 'date-fns'
 import NumberFormat from 'react-number-format'
+
+const isNil = val => val == null
 
 export function formatTableData(type, data, orderId){
     let mutatedData = []
@@ -37,33 +38,34 @@ export function formatTableData(type, data, orderId){
         for (let i = 0; i < data.length; i++) {
             const elem = data[i]
             if (!elem.isQuote && elem.status === 'Open'){
+                let unitPrice = 0
+                let extPrice = 0
+                let quantityOpen = 0
+                let quantityOrdered = 0
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
-                    const unitPrice = <NumberFormat value={lineItem.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
-                    const extPrice = 
-                        <NumberFormat value={lineItem.unitPrice * lineItem.quantityOrdered} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
-                    let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
-                    filterField = filterField.toUpperCase()
-                    mutatedData.push(
-                        {
-                            orderNumber: elem.orderNumber,
-                            orderDate: elem.orderDate,
-                            line: j + 1,
-                            poNo: elem.poNo,
-                            promiseDate: elem.promiseDate,
-                            itemId: lineItem.itemCode,
-                            customerPartId: lineItem.customerPartNumber,
-                            qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
-                            unitPrice: unitPrice,
-                            extPrice: extPrice,
-                            filter: filterField,
-                            rawUnitPrice: lineItem.unitPrice.toFixed(2),
-                            rawExtPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
-                            formattedOrderDate: _.isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
-                            formattedPromiseDate: _.isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
-                        }
-                    )
+                    unitPrice += lineItem.unitPrice
+                    extPrice += lineItem.unitPrice * lineItem.quantityOrdered
+                    quantityOpen += lineItem.quantityOpen
+                    quantityOrdered += lineItem.quantityOrdered
                 }
+                let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
+                filterField = filterField.toUpperCase()
+                mutatedData.push(
+                    {
+                        orderNumber: elem.orderNumber,
+                        orderDate: elem.orderDate,
+                        poNo: elem.poNo,
+                        promiseDate: elem.promiseDate,
+                        qtyRemaining: `${quantityOpen} / ${quantityOrdered}`,
+                        unitPrice: <NumberFormat value={unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+                        extPrice: <NumberFormat value={extPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
+                        filter: filterField,
+                        
+                        formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                        formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
+                    }
+                )
             }
         }
         break
@@ -141,7 +143,7 @@ export function clipboardData(headers, data){
     let mutatedData = ''
     for (let i = 0; i < headers.length ;i++){
         const header = headers[i].Header
-        if (!_.isNil(header) && header !== 'Filter'){
+        if (!isNil(header) && header !== 'Filter'){
             mutatedData += header + ' '
         }
     }

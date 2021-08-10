@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
-import _ from 'lodash'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import { formatTableData } from '../helpers/mutators'
@@ -92,6 +91,8 @@ export default function OpenOrdersTable({ history }) {
     const [dateFrom, setDateFrom] = useState()
     const [dateTo, setDateTo] = useState()
 
+    const isNil = val => val == null
+    
     useEffect(() => {
         if (!didMountRef.current && context.ordersCache.length === 0) {
             context.getOrders()
@@ -100,7 +101,7 @@ export default function OpenOrdersTable({ history }) {
             setData(mutatedData)
         }
     }, [context.ordersCache])
-  
+
     useEffect(() => {
         if (didMountRef) {
             let mutatedData = formatTableData('open-orders', context.ordersCache)
@@ -118,13 +119,13 @@ export default function OpenOrdersTable({ history }) {
                 })
             }
             // Apply date filters
-            if (!_.isNil(dateFrom)) {
+            if (!isNil(dateFrom)) {
                 const epochDateFrom = dateFrom.valueOf()
                 mutatedData = mutatedData.filter(row => { 
                     return Date.parse(row.orderDate) >= epochDateFrom 
                 })
             }
-            if (!_.isNil(dateTo)) {
+            if (!isNil(dateTo)) {
                 const epochDateTo = dateTo.valueOf()
                 mutatedData = mutatedData.filter(row => { 
                     return Date.parse(row.orderDate) <= epochDateTo 
@@ -147,25 +148,16 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'orderNumber',
             },
             {
-                Header: 'Line',
-                accessor: 'line',
-            },
-            {
                 Header: 'PO #',
                 accessor: 'poNo',
             },
             {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
-                Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
-            },
-            {
-                Header: 'Item ID',
-                accessor: 'itemId',
-            },
-            {
-                Header: 'Customer Part',
-                accessor: 'customerPartId',
+                Cell: props => {
+                    const formattedDate = dateFormat(new Date(props.value), 'MM/dd/yyyy') 
+                    return <span>{formattedDate === '12/31/49' ? 'TBD' : formattedDate}</span>
+                }              
             },
             {
                 Header: 'Qty Open / Ordered',
@@ -197,24 +189,12 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'orderNumber',
             },
             {
-                Header: 'Line',
-                accessor: 'line',
-            },
-            {
                 Header: 'PO #',
                 accessor: 'poNo',
             },
             {
                 Header: 'Promise Date',
                 accessor: 'formattedPromiseDate', // accessor is the "key" in the data
-            },
-            {
-                Header: 'Item ID',
-                accessor: 'itemId',
-            },
-            {
-                Header: 'Customer Part',
-                accessor: 'customerPartId',
             },
             {
                 Header: 'Qty Open / Ordered',
