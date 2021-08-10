@@ -43,8 +43,7 @@ const Span = styled.span`
 `
 
 export function ross() {
-    const description = 'Ross controls is a global manufacturer of pneumatic valves, control systems and safety ' +
-        'products. Their products are used anywhere compressed air is used to perform a work process.'
+    const description = 'Ross Controls is a world leader in the developments and manufacturing of pneumatic and hydraulic machine safety products.  Ross’ core competencies include energy isolation (lockout devices), safe exhaust, soft start, safe return, and safe load holding.  All of their safety products are third party rated for use up to CAT4/Ple when used as directed.'
 
     return (
         <>
@@ -68,22 +67,7 @@ export function ross() {
                 <ProductItems
                     brand="Ross Controls"
                     searchTerm="Ross"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/line-mounted.png"
-                    title="Line-Mounted Valves"
-                    text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
-                />
-                <ProductItems
-                    brand="Ross Controls"
-                    searchTerm="Ross"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/base-mounted.png"
-                    title="Base-Mounted Valves"
-                    text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
-                    reverse
-                />
-                <ProductItems
-                    brand="Ross Controls"
-                    searchTerm="Ross"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/safety-related.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/safety_ross.png"
                     title="Safety Related Products"
                     text={(
                         <div>
@@ -97,6 +81,21 @@ export function ross() {
                             <p>EEZ-ON Valves gently turn on air for pneumatic circuits. When compressed air is initially applied to a pneumatic circuit, the working parts may move suddenly, potentially causing machine damage or injury to employees. The EEZ-ON valve provides a gradual startup by allowing a gradual and adjustable increase in downstream pressure.</p>
                         </div>
                     )}
+                />
+                <ProductItems
+                    brand="Ross Controls"
+                    searchTerm="Ross"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/base-mounted.png"
+                    title="Base-Mounted Valves"
+                    text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
+                    reverse
+                />
+                <ProductItems
+                    brand="Ross Controls"
+                    searchTerm="Ross"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Ross/line-mounted.png"
+                    title="Line-Mounted Valves"
+                    text="Line-mounted valves can be placed close to the action. The rugged construction of the line-mounted valve allows it to be effective in harsh environments. Their durability makes them ideal for industries that tend to be dirtier than most. Line-mounted valves feature poppet internals and are simple to maintain. ROSS line-mounted valves are frequently used in the aluminum, glass, steel, and forest products industries."
                 />
                 <ProductItems
                     brand="Ross Controls"

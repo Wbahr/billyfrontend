@@ -70,7 +70,7 @@ export function omron() {
                 <ProductItems
                     brand="Omron Electronics LLC"
                     searchTerm="Omron"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/automation.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/automation_systems.png"
                     text=" Omron's Automation Systems include programmable controllers that support machine control, and network/software products to support easy information exchange with host systems."
                     additionalText={(
                         <div>
@@ -128,7 +128,7 @@ export function omron() {
                     brand="Omron Electronics LLC"
                     selectedCategoryId="4141"
                     searchTerm="Omron"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/control-components.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/control.png"
                     title="Control Components"
                     text={(
                         <div>
@@ -149,7 +149,7 @@ export function omron() {
                 <ProductItems
                     brand="Omron Electronics LLC"
                     searchTerm="Omron"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/switching-components.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Omron/switching_components.png"
                     title="Switching Components"
                     text={(
                         <div>

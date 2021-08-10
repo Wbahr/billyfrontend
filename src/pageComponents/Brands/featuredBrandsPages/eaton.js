@@ -66,7 +66,7 @@ export function eaton() {
                 <ProductItems
                     brand="Eaton Corp"
                     searchTerm="Eaton"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/circuit%20protection.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/Circuit_Protection.png"
                     text={(
                         <div>
                             <p>Eaton’s complete line of low and medium voltage circuit breakers are used to provide circuit protection in a wide range of industries, where they protect against overloads and short circuits in conductors. These circuit breakers are applied in panel boards, switchboards, motor control centers, control panels, combination starters, individual enclosures, and as bus duct plug-in units. A partial list of Eaton’s circuit protection offering includes:</p>
@@ -88,7 +88,7 @@ export function eaton() {
                 <ProductItems
                     brand="Eaton Corp"
                     searchTerm="Eaton"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/contactors.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/Contactors.png"
                     title="Contactors, Starters and Protective Relays"
                     text={(
                         <div>
@@ -109,7 +109,7 @@ export function eaton() {
                 <ProductItems
                     brand="Eaton Corp"
                     searchTerm="Eaton"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/safety-relays.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Eaton/Safety_Contactors.png"
                     title="Safety Contactors"
                     text="Providing enhanced levels of safety, XTSE contactors integrate to applications to not only achieve the highest safety circuits, but provide additional levels of protection that reinforce end-user safety."
                 />
