@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from '@react-pdf/styled-components'
-import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/Airline-shop.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
-import { Page, Image, Document, StyleSheet } from '@react-pdf/renderer'
+import { Page, Image, Document, StyleSheet, Link, Text, View } from '@react-pdf/renderer'
 
+const isNil = val => val == null
 // Create styles
 const styles = StyleSheet.create({
     page: {
@@ -42,145 +41,269 @@ const styles = StyleSheet.create({
     }
 })
 
-const DivOrderInfoContainer = styled.View`
-		display: flex;
-		flex-direction: row;
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-`
-const DivBillingInfoContainer = styled.View`
-		display: flex;
-		flex-direction: row;
-`
+const DivOrderInfoContainer = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivOrderInfo = styled.View`
-		width: 50%;
-		display: flex;
-		flex-direction: column; 
-		margin: 2mm 1mm;
-`
+const DivBillingInfoContainer = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+    }}
+    >
+        { children }
+    </View>
+)
+	
+const DivOrderInfo = ({ children }) => (
+    <View style={{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'column', 
+        margin: '2mm 1mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivOrderInfoSm = styled.View`
-		width: 30%;
-		display: flex;
-		flex-direction: column; 
-		margin: 2mm 1mm;
-`
+const DivOrderInfoSm = ({ children }) => (
+    <View style={{
+        width: '30%',
+        display: 'flex',
+        flexDirection: 'column', 
+        margin: '2mm 1mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivItemDetailHeader = styled.View`
-		display: flex;
-		flex-direction: row;
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-		margin-top: 1mm;
-		padding: 2mm 2mm;
-`
+const DivItemDetailHeader = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black',
+        marginTop: '1mm',
+        padding: '2mm 2mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivItemDetailCell = styled.View`
-		display: flex;
-		flex-direction: column;
-		width: ${props => props.width};
-		align-self: center;
-		text-align: ${props => _.isNil(props.align) ? 'left' : props.align};
-`
+const DivItemDetailCell = ({ children, width, align }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: width,
+        alignSelf: 'center',
+        textAlign: isNil(align) ? 'left' : align,
+    }}
+    >
+        { children }
+    </View>
+)
 
-const Header = styled.View`
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		margin: 2mm 0;
-		align-items: center;
-`
-const HeaderContact = styled.View`
-		display: flex;
-		text-align: center;
-		width: 30%;
-		margin-top: 35px;
-`
-const HeaderOrder = styled.View`
-		display: flex;
-		margin-top: 60px;
-`
+const Header = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: '2mm 0',
+        alignItems: 'center'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const P0 = styled.Text`
-		font-size: 10pt;
-`
-const P1 = styled.Text`
-		font-size: 10pt;
-		padding-bottom: 4px;
-		font-weight: bold;
-`
+const HeaderContact =  ({ children }) => (
+    <View style={{
+        display: 'flex',
+        textAlign: 'center',
+        width: '30%',
+        marginTop: '35px'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const P2 = styled.Text`
-		font-size: 10pt;
-		color: grey;
-`
+const HeaderOrder =  ({ children }) => (
+    <View style={{
+        display: 'flex',
+        marginTop: '60px'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const P3 = styled.Text`
-		font-size: 18pt;
-`
+const P0 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const P4 = styled.Text`
-		font-size: 10pt;
-		color: #555555;
-		padding-top: 10px;
-`
+const P1 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        paddingBottom: '4px',
+        fontWeight: 'bold'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const P5 = styled.Text`
-		font-size: 12pt;
-		font-weight: bold;
-		padding-bottom: 7px;
-		padding-top: 20px;
-`
-const P6 = styled.Text`
-		font-size: 10pt;
-		padding-top: 10px;
-`
+const P2 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        color: 'grey'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const DivThanks = styled.View`
-		display: flex;
-		flex-direction: column;
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-`
+const P3 = ({ children }) => (
+    <Text style={{
+        fontSize: '18pt'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const DivItemDetail = styled.View`
-		display: flex;
-		flex-direction: row;
-		margin: 2mm 0;
-		padding: 1mm 2mm;
-`
+const P4 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        color: '#555555',
+        paddingTop: '10px'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const A = styled.Link`
-		font-size: 8px;
-		padding-left: 2mm;
-`
-const ShopLink = styled.Link`
-`
+const P5 = ({ children }) => (
+    <Text style={{
+        fontSize: '12pt',
+        fontWeight: 'bold',
+        paddingBottom: '7px',
+        paddingTop: '20px'
+    }}
+    >
+        { children }
+    </Text>
+) 
 
-const DivTracking = styled.View`
-		display: flex;
-		flex-direction: column;
-`
+const P6 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        paddingTop: '10px'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const Row = styled.View`
-		display: flex;
-		flex-direction: row;
-`
+const DivThanks =  ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'column',
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black',
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivTotalContainer = styled.View`
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-end;
-		padding: 1mm 4mm;
-		margin: 5px 10px 5px 0;
-`
+const DivItemDetail = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        margin: '2mm 0',
+        padding: '1mm 2mm',
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivTotal = styled.View`
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-		margin-top: 10px;
-`
+const A = ({ children }) => (
+    <Link style={{
+        fontSize: '8px',
+        paddingLeft: '2mm'
+    }}
+    >
+        { children }
+    </Link>
+)
+
+const ShopLink = ({ children }) => (
+    <Link>
+        { children }
+    </Link>
+)
+
+const DivTracking = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'column'
+    }}
+    >
+        { children }
+    </View>
+)
+
+const Row = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row'
+    }}
+    >
+        { children }
+    </View>
+)
+
+const DivTotalContainer = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding: '1mm 4mm',
+        margin: '5px 10px 5px 0',
+    }}
+    >
+        { children }
+    </View>
+)
+
+const DivTotal = ({ children }) => (
+    <View style={{
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black',
+        marginTop: '10px'
+    }}
+    >
+        { children }
+    </View>
+)
 
 export default React.memo(({ orderId, data }) => {
 
@@ -208,7 +331,7 @@ export default React.memo(({ orderId, data }) => {
         packingBasis,
         promiseDate
     } = data
-    const itemDetails = _.map(lineItems, (item, index) => {
+    const itemDetails = lineItems?.map((item, index) => {
         return (
             <DivItemDetail key={index}>
                 <DivItemDetailCell width='35%'>
@@ -291,8 +414,8 @@ export default React.memo(({ orderId, data }) => {
                         <Row><P1>Packing Basis: </P1><P0>{packingBasis}</P0></Row>
                     </DivOrderInfoSm>
                     <DivOrderInfoSm>
-                        <Row><P1>Order Date: </P1><P0>{_.isNil(orderDate) ? '--' : dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
-                        <Row><P1>Promise Date </P1><P0>{_.isNil(promiseDate) ? '--' : dateFormat(new Date(promiseDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Order Date: </P1><P0>{isNil(orderDate) ? '--' : dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Promise Date </P1><P0>{isNil(promiseDate) ? '--' : dateFormat(new Date(promiseDate), 'MM/dd/yyyy')}</P0></Row>
                     </DivOrderInfoSm>
                 </DivOrderInfoContainer>
                 <P5>Order Details</P5>

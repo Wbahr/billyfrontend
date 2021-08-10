@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from '@react-pdf/styled-components'
-import _ from 'lodash'
 import AirlineLogo from '../../../imgs/airline/airline_vector.png'
 import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
-import { Page, Image, Document, StyleSheet } from '@react-pdf/renderer'
+import { Page, Image, Link, Document, StyleSheet, Text, View } from '@react-pdf/renderer'
 
+const isNil = val => val == null
 // Create styles
 const styles = StyleSheet.create({
     page: {
@@ -40,101 +39,176 @@ const styles = StyleSheet.create({
     }
 })
 
-const DivOrderInfoContainer = styled.View`
-		display: flex;
-		flex-direction: row;
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-	`
+const DivOrderInfoContainer = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black'
+    }}
+    >
+        { children }
+    </View>
+)
+	
+const DivOrderInfo = ({ children }) => (
+    <View style={{
+        width: '50%',
+        display: 'flex',
+        flexDirection: 'column', 
+        margin: '2mm 1mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivOrderInfo = styled.View`
-		width: 50%;
-		display: flex;
-		flex-direction: column; 
-		margin: 2mm 1mm;
-	`
+const DivOrderInfoSm = ({ children }) => (
+    <View style={{
+        width: '30%',
+        display: 'flex',
+        flexDirection: 'column', 
+        margin: '2mm 1mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivOrderInfoSm = styled.View`
-		width: 30%;
-		display: flex;
-		flex-direction: column; 
-		margin: 2mm 1mm;
-	`
+const DivItemDetailHeader = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        borderTop: '1pt solid grey',
+        borderBottom: '1pt solid grey',
+        marginTop: '1mm',
+        padding: '2mm 2mm'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivItemDetailHeader = styled.View`
-		display: flex;
-		flex-direction: row;
-		border-top: 1pt solid grey;
-		border-bottom: 1pt solid grey;
-		margin-top: 1mm;
-		padding: 2mm 2mm;
-	`
+const DivItemDetailCell = ({ children, width, align }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: width,
+        alignSelf: 'center',
+        textAlign: isNil(align) ? 'left' : align,
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivItemDetailCell = styled.View`
-		display: flex;
-		flex-direction: column;
-		width: ${props => props.width};
-		align-self: center;
-		text-align: ${props => _.isNil(props.align) ? 'left' : props.align};
-	`
+const Header = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignContent: 'center',
+        margin: '2mm 0',
+        alignItems: 'center'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const Header = styled.View`
-	display: flex;
-	flex-direction: row;
-	align-content: center;
-	margin: 2mm 0;
-	align-items: center;
-`
+const P0 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const P0 = styled.Text`
-		font-size: 10pt;
+const P1 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-`
-const P1 = styled.Text`
-		font-size: 10pt;
-	`
+const P2 = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        color: 'grey'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const P2 = styled.Text`
-		font-size: 10pt;
-		color: grey;
-	`
+const P3 = ({ children }) => (
+    <Text style={{
+        fontSize: '18pt'
+    }}
+    >
+        { children }
+    </Text>
+)
 
-const P3 = styled.Text`
-	font-size: 18pt;
-`
+const DivItemDetail = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row',
+        margin: '2mm 0',
+        padding: '1mm 2mm',
+        borderTop: '1pt solid grey',
+        borderBottom: '1pt solid grey'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivItemDetail = styled.View`
-	display: flex;
-	flex-direction: row;
-	margin: 2mm 0;
-	padding: 1mm 2mm;
-	border-top: 1pt solid grey;
-	border-bottom: 1pt solid grey;
-`
+const A = ({ children }) => (
+    <Link style={{
+        fontSize: '8px',
+        paddingLeft: '2mm'
+    }}
+    >
+        { children }
+    </Link>
+)
 
-const A = styled.Link`
-		font-size: 8px;
-		padding-left: 2mm;
-	`
+const DivTracking = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'column'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const DivTracking = styled.View`
-		display: flex;
-		flex-direction: column;
-	`
+const Row = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        flexDirection: 'row'
+    }}
+    >
+        { children }
+    </View>
+)
 
-const Row = styled.View`
-		display: flex;
-		flex-direction: row;
-`
-
-const DivTotalContainer = styled.View`
-		display: flex;
-		width: 30%;
-		margin-left: auto;
-		padding: 1mm 4mm;
-		border-top: 1pt solid black;
-		border-bottom: 1pt solid black;
-`
+const DivTotalContainer = ({ children }) => (
+    <View style={{
+        display: 'flex',
+        width: '30%',
+        marginLeft: 'auto',
+        padding: '1mm 4mm',
+        borderTop: '1pt solid black',
+        borderBottom: '1pt solid black'
+    }}
+    >
+        { children }
+    </View>
+)
 
 export default function InvoiceDetailPDF({ invoiceId, data }) {
 
@@ -170,9 +244,9 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
         amountDue
     } = data
 
-    const itemDetails = _.map(lineItems, item => {
+    const itemDetails = lineItems?.map( item => {
         return (
-            <DivItemDetail>
+            <DivItemDetail key={item.invMastUid}>
                 <DivItemDetailCell width='31%'>
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
@@ -219,11 +293,11 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
             </DivItemDetail>
         )
     })
-
+    
     return (
         <Document>
             <Page size="A4" style={styles.page}>
-                <Header style={styled.headerView}>
+                <Header style={styles.headerView}>
                     <Image src={AirlineLogo} style={styles.logo}/>
                     <P3>Invoice #{invoiceId}</P3>
                 </Header>
@@ -232,22 +306,22 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
                         <P1>Bill-to-Address:</P1>
                         <P0>{billingName}</P0>
                         <P0>{billingAddress1}</P0>
-                        {!_.isNil(billingAddress2) && <P0>{billingAddress2}</P0>}
-                        {!_.isNil(billingAddress3) && <P0>{billingAddress3}</P0>}
+                        {!isNil(billingAddress2) && <P0>{billingAddress2}</P0>}
+                        {!isNil(billingAddress3) && <P0>{billingAddress3}</P0>}
                         <P0>{billingCity}, {billingState} {billingZip}</P0>
                     </DivOrderInfo>
                     <DivOrderInfo>
                         <P1>Ship-to-Address:</P1>
                         <P0>{shipToName}</P0>
                         <P0>{shipToAddress1}</P0>
-                        {!_.isNil(shipToAddress2) && <P0>{shipToAddress2}</P0>}
-                        {!_.isNil(shipToAddress3) && <P0>{shipToAddress3}</P0>}
+                        {!isNil(shipToAddress2) && <P0>{shipToAddress2}</P0>}
+                        {!isNil(shipToAddress3) && <P0>{shipToAddress3}</P0>}
                         <P0>{shipToCity}, {shipToState} {shipToZip}</P0>
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <DivOrderInfoContainer>
                     <DivOrderInfoSm>
-                        <Row><P1>Invoice Date: </P1><P0>{_.isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Invoice Date: </P1><P0>{isNil(invoiceDate) ? '--' :dateFormat(new Date(invoiceDate), 'MM/dd/yyyy')}</P0></Row>
                         <Row><P1>Invoice Number: </P1><P0>{invoiceId}</P0></Row>
                         <Row><P1>P.O. Number: </P1><P0>{poNo}</P0></Row>
                         <Row><P1>Order Number: </P1><P0>{orderNumber}</P0></Row>
@@ -255,12 +329,12 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
                     <DivOrderInfoSm>
                         <Row><P1>Status: </P1><P0>{status}</P0></Row>
                         <Row><P1>Terms: </P1><P0>{terms}</P0></Row>
-                        <Row><P1>Net Due Date: </P1><P0>{_.isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</P0></Row>
-                        <Row><P1>Disc Due Date: </P1><P0>{_.isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Net Due Date: </P1><P0>{isNil(netDueDate) ? '--' :dateFormat(new Date(netDueDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Disc Due Date: </P1><P0>{isNil(discDueDate) ? '--' :dateFormat(new Date(discDueDate), 'MM/dd/yyyy')}</P0></Row>
                         <Row><P1>Discount Amount: </P1><P0>{discountAmount}</P0></Row>
                     </DivOrderInfoSm>
                     <DivOrderInfoSm>
-                        <Row><P1>Order Date: </P1><P0>{_.isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
+                        <Row><P1>Order Date: </P1><P0>{isNil(orderDate) ? '--' :dateFormat(new Date(orderDate), 'MM/dd/yyyy')}</P0></Row>
                         <Row><P1>Ordered By: </P1><P0>{orderedBy}</P0></Row>
                         <Row><P1>Taker: </P1><P0>{taker}</P0></Row>
                     </DivOrderInfoSm>
