@@ -17,7 +17,7 @@ import ResultSummaryPlugin from './plugins/ResultSummaryPlugin'
 const RESULT_SIZE = 24
 
 export default function SearchResultsPage({ history }) {
-    const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
+    const [searchQueryParams, setQueryParam, clearSetQueryParam] = useSearchQueryParams(history)
     const { 
         sortType, 
         searchTerm, 
@@ -113,6 +113,10 @@ export default function SearchResultsPage({ history }) {
         search({ variables: payload })
     }
 
+    const clearFilter = () => {
+        clearSetQueryParam()
+    }
+
     const [search, { variables }] = useLazyQuery(QUERY_ITEM_SEARCH, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ itemSearch }) => {
@@ -162,6 +166,7 @@ export default function SearchResultsPage({ history }) {
             <SearchTermsPlugin
                 searchTerms={searchTerms}
                 setSearchTerms={setSearchTerms}
+                clearFilter={clearFilter}
             />
             <PaginationPlugin
                 page={resultPage}

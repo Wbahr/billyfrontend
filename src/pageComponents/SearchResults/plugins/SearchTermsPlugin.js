@@ -44,8 +44,16 @@ const SearchChipDiv = styled.div`
 	display: flex;
  	margin: 5px 0px;
 `
+const ClearButton = styled.button`
+    color: #db1633;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid #db1633;
+    font-size: 14px;
+    margin: 0 5px;
+`
 
-export default function SearchTermsPlugin({ searchTerms, setSearchTerms }) {
+export default function SearchTermsPlugin({ searchTerms, setSearchTerms, clearFilter }) {
     const [searchTerm, setSearchTerm] = useState('')
     const innerSearchTermsArray = searchTerms ? searchTerms.split(',') : []
 	
@@ -67,7 +75,9 @@ export default function SearchTermsPlugin({ searchTerms, setSearchTerms }) {
     const handleKeyPress = e => {
         if (e.key === 'Enter') handleUpdateSearchTerm()
     }
-	
+    const handleClearButton = () => {
+        clearFilter ()
+    }
     return (
         <Div>
             <SearchChipDiv>
@@ -84,6 +94,7 @@ export default function SearchTermsPlugin({ searchTerms, setSearchTerms }) {
                     value={searchTerm}
                 />
                 <ButtonSearch onClick={handleUpdateSearchTerm}>Refine Search</ButtonSearch>
+                <ClearButton type='button' onClick={handleClearButton}>Clear All Filters</ClearButton>
             </DivResultsSearch>
         </Div>
     )
