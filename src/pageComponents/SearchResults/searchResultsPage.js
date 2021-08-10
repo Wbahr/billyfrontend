@@ -17,7 +17,7 @@ import ResultSummaryPlugin from './plugins/ResultSummaryPlugin'
 const RESULT_SIZE = 24
 
 export default function SearchResultsPage({ history }) {
-    const [searchQueryParams, setQueryParam] = useSearchQueryParams(history)
+    const [searchQueryParams, setQueryParam, clearSetQueryParam] = useSearchQueryParams(history)
     const { 
         sortType, 
         searchTerm, 
@@ -26,14 +26,6 @@ export default function SearchResultsPage({ history }) {
         nonweb, 
         selectedCategoryId,
     } = searchQueryParams
-
-    const initialSearchState = {
-        results: [],
-        totalResults: '--',
-        isSearching: false,
-        sortType: 'relevancy',
-        searchTerms: []
-    }
 
     const setSearchTerms = newInnerSearchTerms => {
         setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
@@ -122,16 +114,7 @@ export default function SearchResultsPage({ history }) {
     }
 
     const clearFilter = () => {
-        setQueryParam('innerSearchTerms', '')
-        setSearchState({ ...initialSearchState, searchTerm: searchState.searchTerm, searchTerms: searchState.searchTerms, 
-            brands: [],
-            attributes: [],
-            sortType: 'relevancy',
-            selectedCategoryId: '',
-            nonweb: searchState.nonweb,
-            resultPage: '1',
-            isSynced: false,
-        })
+        clearSetQueryParam()
     }
 
     const [search, { variables }] = useLazyQuery(QUERY_ITEM_SEARCH, {
