@@ -11,7 +11,7 @@ const areaStyle = {
     border: '1px solid #e1e1e1',
 }
 
-export default function TextArea({ disabled, name, label, placeholder, width, maxlength, rows }) {
+export default function TextArea({ disabled, name, label, placeholder, width, maxLength, rows }) {
 
     return (
         <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
@@ -22,7 +22,7 @@ export default function TextArea({ disabled, name, label, placeholder, width, ma
                 placeholder={placeholder}
                 disabled={disabled}
                 style={{ ...areaStyle, width: width, maxWidth: '100%' }}
-                maxLength={maxlength}
+                maxLength={maxLength}
                 rows={rows}
             />
             <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
@@ -42,6 +42,6 @@ TextArea.propTypes = {
 
 TextArea.defaultProps = {
     placeholder: '',
-    maxlength: 'none',
+    maxLength: 'none',
     rows: '3'
 }

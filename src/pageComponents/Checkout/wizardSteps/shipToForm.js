@@ -174,7 +174,7 @@ export function ShipToForm(props) {
                     <FormikInput
                         label="Quote Refererence Number"
                         name="schedule.quoteRefNo"
-                        maxlength={40}
+                        maxLength={40}
                     />
                 </FormRow>
             )}
