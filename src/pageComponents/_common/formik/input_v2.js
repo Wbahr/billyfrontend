@@ -27,7 +27,7 @@ const MainCurrencyInput = styled(CurrencyInput)`
 
 const input = props => <Field {...props} />
 
-export default function Input({ type, disabled, name, label, placeholder, width, maxlength, style, onChange, value }){
+export default function Input({ type, disabled, name, label, placeholder, width, maxLength, style, onChange, value }){
     if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
         return (
             <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
@@ -39,7 +39,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
                     placeholder={placeholder} 
                     disabled={disabled} 
                     style={{ width: width || '400px', maxWidth: '100%' }}
-                    maxlength={maxlength}
+                    maxLength={maxLength}
                     {
                         ...(onChange ? {
                             as: input,
@@ -81,7 +81,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
 }
 
 /*Creates a non-formik bound input, but styled to look the same */
-export function FormikStyleInput({ type, value, disabled, name, label, placeholder, width, maxlength, onChange, alignment }) {
+export function FormikStyleInput({ type, value, disabled, name, label, placeholder, width, maxLength, onChange, alignment }) {
     if (type === 'currency') {
         return (
             <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
@@ -93,7 +93,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
                     placeholder={placeholder} 
                     disabled={disabled} 
                     style={{ width: width || '400px', maxWidth: '100%' }}
-                    maxLength={maxlength}
+                    maxLength={maxLength}
                     onChangeEvent={onChange}
                     value={value}
                     prefix='$'
@@ -111,7 +111,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
                     placeholder={placeholder} 
                     disabled={disabled} 
                     style={{ width: width || '400px', maxWidth: '100%' }}
-                    maxLength={maxlength}
+                    maxLength={maxLength}
                     onChange={onChange}
                     value={value}
                 />
@@ -136,11 +136,11 @@ Input.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
     width: PropTypes.number,
-    maxlength: PropTypes.number,
+    maxLength: PropTypes.number,
 }
 
 Input.defaultProps = {
     type: 'text',
     placeholder: '',
-    maxlength: null
+    maxLength: null
 }
