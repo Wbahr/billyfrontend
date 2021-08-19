@@ -9,6 +9,7 @@ import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import CustomerPartModal from '../../_common/modals/CustomerPartModal'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -181,6 +182,12 @@ const Img = styled.img`
 	max-height: 100%;
 	max-width: 100%;
 `
+const RestrictedItems = styled.div`
+    color: #b51029;
+    font-weight: bold;
+    border-bottom: 1px dotted black;
+    margin: 5px 0;
+`
 
 export default function ItemResult({ result, details, addedToCart, isParentCalculateStock, itemCreationFlag  }) {
     const { itemAvailabilities, customerPartNumbers, itemPrices, addItem, addCatalogItem, userInfo } = useContext(Context)
@@ -246,7 +253,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
     }
 
     const handlePartNumberChange = partNumber => setCustomerPartNumber(partNumber || null)
-
+    
     return (
         <DivItemResultContainer>
             <DivPartDetailsRow>
@@ -308,7 +315,23 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                         </>
                     )
                 }
-
+                <DivPartNumberRow>
+                    {
+                        userInfo && [AIRLINE_ENGINEER_USER, IMPERSONATOR_USER].includes(userInfo.role) && details?.restrictedCustomers?.length >0 && (
+                            <RestrictedItems>
+                                <Tooltip
+                                    title={(
+                                        <span style={{ fontSize: '12px', color: 'white', lineHeight: '18px' }}>
+                                            {details?.restrictedCustomers?.map(r => (<div key={r.customerIdP21}>{r.name}</div>) )}
+                                        </span>
+                                    )}
+                                >
+                                    <div>Restricted Item &#x1F6C8;</div>
+                                </Tooltip>
+                            </RestrictedItems>
+                        )
+                    }
+                </DivPartNumberRow>
                 <DivPartNumberRow>
                     <PpartAvailability>Item Id: {result.itemCode}</PpartAvailability>
                 </DivPartNumberRow>

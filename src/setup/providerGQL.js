@@ -98,6 +98,10 @@ export const GET_ITEM_BY_ID = gql`
         itemMediaType
         mediaType
       }
+      restrictedCustomers{
+        name
+        customerIdP21
+      }
     }
     customerPartNumbers(invMastUid: $itemId){
       customerPartNumber
@@ -124,6 +128,10 @@ export const GET_ITEMS_BY_ID = gql`
         sequence
         mediaType
         itemMediaType
+      }
+      restrictedCustomers{
+        name
+        customerIdP21
       }
     }
   }
