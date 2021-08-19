@@ -320,7 +320,11 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                         userInfo && [AIRLINE_ENGINEER_USER, IMPERSONATOR_USER].includes(userInfo.role) && details?.restrictedCustomers?.length >0 && (
                             <RestrictedItems>
                                 <Tooltip
-                                    title={<span style={{ fontSize: '12px', color: 'white', lineHeight: '18px' }}>{details?.restrictedCustomers?.map(r => (<div key={r.customerIdP21}>{r.name}</div>) )}</span>}
+                                    title={(
+                                        <span style={{ fontSize: '12px', color: 'white', lineHeight: '18px' }}>
+                                            {details?.restrictedCustomers?.map(r => (<div key={r.customerIdP21}>{r.name}</div>) )}
+                                        </span>
+                                    )}
                                 >
                                     <div>Restricted Item &#x1F6C8;</div>
                                 </Tooltip>
