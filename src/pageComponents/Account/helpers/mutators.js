@@ -38,34 +38,31 @@ export function formatTableData(type, data, orderId){
         for (let i = 0; i < data.length; i++) {
             const elem = data[i]
             if (!elem.isQuote && elem.status === 'Open'){
-                let unitPrice = 0
-                let extPrice = 0
-                let quantityOpen = 0
-                let quantityOrdered = 0
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
-                    unitPrice += lineItem.unitPrice
-                    extPrice += lineItem.unitPrice * lineItem.quantityOrdered
-                    quantityOpen += lineItem.quantityOpen
-                    quantityOrdered += lineItem.quantityOrdered
-                }
-                let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
-                filterField = filterField.toUpperCase()
-                mutatedData.push(
-                    {
-                        orderNumber: elem.orderNumber,
-                        orderDate: elem.orderDate,
-                        poNo: elem.poNo,
-                        promiseDate: elem.promiseDate,
-                        qtyRemaining: `${quantityOpen} / ${quantityOrdered}`,
-                        unitPrice: <NumberFormat value={unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-                        extPrice: <NumberFormat value={extPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>,
-                        filter: filterField,
-                        
-                        formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
-                        formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
+                    if (lineItem.quantityOpen > 0) {
+                        let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
+                        filterField = filterField.toUpperCase()
+                        mutatedData.push(
+                            {
+                                orderNumber: elem.orderNumber,
+                                orderDate: elem.orderDate,
+                                poNo: elem.poNo,
+                                promiseDate: elem.promiseDate,
+                                qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
+                                invMastUid: lineItem.invMastUid,
+                                customerPartNumber: lineItem.customerPartNumber,
+                                unitPrice: lineItem.unitPrice.toFixed(2),
+                                extPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
+                                filter: filterField,
+                                formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                                formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
+                            }
+                        )
                     }
-                )
+                    
+                }
+                
             }
         }
         break
