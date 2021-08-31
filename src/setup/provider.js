@@ -103,8 +103,9 @@ export default function Provider({ history, children }) {
         onCompleted: data => {
             const requestData = data.impersonationBegin
             if (requestData.success) {
-                const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
+                const { userInfo, impersonationUserInfo, token, refreshToken } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
+                localStorage.setItem('refreshToken', refreshToken)
                 manageUserInfo('begin-impersonation', userInfo, impersonationUserInfo)
                 getOrders()
                 retrieveShoppingCart()
@@ -118,8 +119,9 @@ export default function Provider({ history, children }) {
         fetchPolicy: 'no-cache',
         onCompleted: ({ impersonationEnd: requestData }) => {
             if (requestData.success) {
-                const { userInfo, impersonationUserInfo, token } = requestData.authorizationInfo
+                const { userInfo, impersonationUserInfo, token, refreshToken } = requestData.authorizationInfo
                 localStorage.setItem('apiToken', token)
+                localStorage.setItem('refreshToken', refreshToken)
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
                 retrieveShoppingCart('retrieve')
                 if (resetOnImpersonate) history.push('/')
