@@ -35,7 +35,6 @@ const DivResults = styled.div`
   flex-direction: column;
   position: absolute;
   background-color: white;
-  top: 35px;
   z-index: 99;
   padding: 8px;
   border-radius: 2px;
@@ -48,6 +47,10 @@ const DivResults = styled.div`
       color: #007bff;
     }
   }
+`
+
+const DivResultsContainer = styled.div`
+  position: relative;
 `
 
 const DebounceInputStyle = {
@@ -68,6 +71,7 @@ export default function ImpersonationSearchComponent() {
     const context = useContext(Context)
 
     const [impersonationSearch] = useLazyQuery(IMPERSONATION_SEARCH, {
+        fetchPolicy: 'no-cache',
         onCompleted: data => {
             setSearchResult(data.getImpersonationCustomerList)
         }
@@ -116,16 +120,19 @@ export default function ImpersonationSearchComponent() {
     
     return (
         <Container>
-            <DebounceInput
-                placeholder='Search by Customer Name or #'
-                minLength={0}
-                debounceTimeout={300}
-                onChange={(e) => setImpersonationTerm(e.target.value)} 
-                style={DebounceInputStyle}
-                value={impersonationTerm}
-                onKeyDown={handleKeyDown}
-                onBlur={handleBlur}
-            />
+            <div>
+                <DebounceInput
+                    placeholder='Search by Customer Name or #'
+                    minLength={0}
+                    debounceTimeout={300}
+                    onChange={(e) => setImpersonationTerm(e.target.value)} 
+                    style={DebounceInputStyle}
+                    value={impersonationTerm}
+                    onKeyDown={handleKeyDown}
+                    onBlur={handleBlur}
+                />
+                {searchResult.length > 0 && <DivResultsContainer>{searchResults}</DivResultsContainer>}
+            </div>
             <Div onClick={() => context.startImpersonation(impersonationTerm)}>
                 <FontAwesomeIcon icon="user-circle" color="whitesmoke"/>
             </Div>
@@ -152,7 +159,6 @@ export default function ImpersonationSearchComponent() {
                     {userCartsDataLoading && <Loader />}
                 </CartsDropdownMenu>
             </DivLast>
-            {searchResult.length > 0 && searchResults}
         </Container>
     )
 }
