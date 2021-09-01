@@ -150,6 +150,10 @@ export default function QuotesTable({ history }) {
                 accessor: 'quoteNumber',
             },
             {
+                Header: 'Status',
+                accessor: 'status'
+            },
+            {
                 Header: 'Quote Ref #',
                 accessor: 'quoteRefNo',
             },

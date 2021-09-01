@@ -87,6 +87,7 @@ export function formatTableData(type, data, orderId){
                         quoteDate: elem.orderDate,
                         quoteRefNo: elem.quoteRefNo,
                         total: displayTotal,
+                        status: elem.status,
                         filter: filterField,
                         quoteId: elem.quoteHeader?.quoteId,
                         isCompleted: elem.quoteHeader?.isCompleted,

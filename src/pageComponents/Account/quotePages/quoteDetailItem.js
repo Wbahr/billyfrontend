@@ -157,7 +157,7 @@ export default function OrderDetailItem({ item, quoteId, itemDetails, availabili
                 </DivCol2>
                 <DivCol3>
                     <DivRow>Availability: {availability?.availability}</DivRow>
-                    <DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
+                    <DivRow>ARO Days: {item.aroDays}</DivRow>
                     <DivRow>Quantity: {item.quantityOrdered}</DivRow>
                     {priceInfo && (
                         <Grid container justify="center">
