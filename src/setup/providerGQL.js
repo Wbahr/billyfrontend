@@ -310,6 +310,8 @@ export const GET_ORDERS_DETAIL = gql`
 				unitPrice
 				totalPrice
         quoteLineId
+        promiseDate
+        aroDays
 				trackingNumbers{
 					carrierId
 					carrierName
