@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, { useEffect }  from 'react'
 import styled from 'styled-components'
 import ShoppingCart from './uiComponents/shoppingCart'
 import SubtotalBox from './uiComponents/subtotalBox'
@@ -27,6 +27,10 @@ const DivOrderTotalCol = styled.div`
 `
 
 export default function ShoppingCartPage(props) {
+
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+    }, [])
 	
     return (
         <DivContainer>
