@@ -104,6 +104,7 @@ export default function LoginPage(props) {
                 } else {
                     const mergeToken = localStorage.getItem('shoppingCartToken')
                     localStorage.setItem('apiToken', requestData.authorizationInfo.token)
+                    localStorage.setItem('refreshToken', requestData.authorizationInfo.refreshToken)
                     localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
                     context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
                     const urlParams = new URLSearchParams(props.location.search)

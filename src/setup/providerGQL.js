@@ -8,6 +8,7 @@ export const BEGIN_IMPERSONATION = gql`
       message
       authorizationInfo {
         token
+        refreshToken
         userInfo {
           companyId
           companyName
@@ -37,6 +38,7 @@ export const END_IMPERSONATION = gql`
       message
       authorizationInfo{
         token
+        refreshToken
         userInfo{
           companyId
           companyName
@@ -215,6 +217,7 @@ export const QUERY_LOGIN = gql`
       isPasswordReset
       authorizationInfo{
         token
+        refreshToken
         userInfo {
           firstName
           lastName

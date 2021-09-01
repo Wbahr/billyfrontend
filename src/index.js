@@ -14,8 +14,7 @@ import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faC
     faCodeBranch, faCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { ApolloProvider } from '@apollo/client'
-import ApolloClient from 'apollo-boost'
+import { ApolloProvider, ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
 import ContextProvider from './setup/provider'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
@@ -33,22 +32,54 @@ library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRi
 
 const customHistory = createBrowserHistory()
 
-const client = new ApolloClient({
+const httpLink = new HttpLink({
     uri: `${process.env.REACT_APP_API_URL}/graphql`,
-    request: (operation) => {
-        const token = localStorage.getItem('apiToken')
-        operation.setContext({
-            headers: {
-                authorization: token ? `Bearer ${token}` : null
-            }
-        })
-    },
+})
+
+// Setup the header for the request
+const middlewareAuthLink = new ApolloLink((operation, forward) => {
+    const token = localStorage.getItem('apiToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    operation.setContext({
+        headers: {
+            authorization: token ? `Bearer ${token}` : null,
+            refreshToken: token ? `RefreshToken ${refreshToken}` : null
+        }
+    })
+    return forward(operation)
+})
+
+const afterwareLink = new ApolloLink((operation, forward) => {
+    return forward(operation).map((response) => {
+        const context = operation.getContext()
+
+        //Look for new API tokens on the response.
+        const newAccessToken = context.response.headers.get('accesstoken')
+        const newRefreshToken = context.response.headers.get('refreshToken')
+
+        //And set them if present. The Refresh Token generated new tokens.
+        if (newAccessToken){
+            localStorage.setItem('apiToken', newAccessToken)
+            localStorage.setItem('refreshToken', newRefreshToken)
+        }
+
+        return response
+    })
+})
+
+const client = new ApolloClient({
     onError: (response) => {
         if (response.networkError.statusCode === 401){
             logout()
             location.reload()
         }
-    }
+    },
+    link: ApolloLink.from([
+        middlewareAuthLink,
+        afterwareLink,
+        httpLink
+    ]),
+    cache: new InMemoryCache()
 })
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY)
