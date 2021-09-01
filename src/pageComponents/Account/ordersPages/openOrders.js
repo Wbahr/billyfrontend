@@ -6,6 +6,7 @@ import { formatTableData } from '../helpers/mutators'
 import AirlineInput from '../../_common/form/inputv2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import DatePicker from 'react-datepicker'
+import NumberFormat from 'react-number-format'
 import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
@@ -160,16 +161,30 @@ export default function OpenOrdersTable({ history }) {
                 }              
             },
             {
+                Header: 'Item ID',
+                accessor: 'invMastUid',
+            },
+            {
+                Header: 'Customer Part',
+                accessor: 'customerPartNumber',
+            },
+            {
                 Header: 'Qty Open / Ordered',
                 accessor: 'qtyRemaining',
             },
             {
                 Header: 'Unit $',
                 accessor: 'unitPrice',
+                Cell: props => {
+                    return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+                }
             },
             {
                 Header: 'Ext $',
                 accessor: 'extPrice',
+                Cell: props => {
+                    return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
+                }
             },
             {
                 Header: 'Filter',
@@ -197,16 +212,24 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'formattedPromiseDate', // accessor is the "key" in the data
             },
             {
+                Header: 'Item ID',
+                accessor: 'invMastUid',
+            },
+            {
+                Header: 'Customer Part',
+                accessor: 'customerPartNumber',
+            },
+            {
                 Header: 'Qty Open / Ordered',
                 accessor: 'qtyRemaining',
             },
             {
                 Header: 'Unit $',
-                accessor: 'rawUnitPrice',
+                accessor: 'unitPrice',
             },
             {
                 Header: 'Ext $',
-                accessor: 'rawExtPrice',
+                accessor: 'extPrice',
             },
             {
                 Header: 'Filter',
