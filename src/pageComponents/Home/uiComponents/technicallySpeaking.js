@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Container = styled.div`
 		display: flex;
 		flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-around;
 `
 const Row = styled.div`
 		display: flex;
@@ -88,11 +88,10 @@ const Link = styled.a`
 const Wrapper = styled.div`
 		margin-bottom: 50px;
 		flex-wrap: wrap;
-        // max-width: 1500px;
         width: 100%;
         margin: 0 auto;
+        max-width: 1400px;
 `
-
 
 export default function TechnicallySpeaking() {
     
