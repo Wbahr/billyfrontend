@@ -121,7 +121,7 @@ const ButtonRed = styled.button`
 	border: 0;
 	padding: 4px 8px;
 	box-shadow: 1px 1px 2px #000;
-	margin: 4px auto;
+	margin: 11px auto 7px;
 	&:hover{
 		background-color: rgb(219, 22, 51);
 	}

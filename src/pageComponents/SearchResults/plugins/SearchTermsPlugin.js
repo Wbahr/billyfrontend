@@ -30,7 +30,7 @@ const InputSearch = styled.input`
 const ButtonSearch = styled.button`
   width: 120px;
   height: 30px;
-  background-color: rgb(219, 22, 51);
+  background-color: #b51029;
   color: white;
   font-weight: 500;
   border: 0;
@@ -45,10 +45,10 @@ const SearchChipDiv = styled.div`
  	margin: 5px 0px;
 `
 const ClearButton = styled.button`
-    color: #db1633;
+    color: #0058A3;
     font-weight: bold;
     background-color: white;
-    border: 1px solid #db1633;
+    border: 1px solid #0058A3;
     font-size: 14px;
     margin: 0 5px;
 `
