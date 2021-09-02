@@ -116,6 +116,20 @@ export default function TechnicallySpeaking() {
                         </TextDiv>
                     </Row>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Wireless Ethernet Setup, Featuring the FL WLAN by Phoenix Contact
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.png" />
@@ -137,20 +151,6 @@ export default function TechnicallySpeaking() {
                             <Details>How to Get Started with IO-Link
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/enclosure-climate-control-101" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/climate%20control%20101%20-%20homepage%20version.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Electrical Enclosure Climate Control 101
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/enclosure-climate-control-101" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
