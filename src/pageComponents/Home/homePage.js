@@ -5,6 +5,7 @@ import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
 import NewAndNoteworthy from './uiComponents/newAndNoteworthy'
+import NewsAndEvents from './uiComponents/newsAndEvents'
 import SectionHeader from '../_common/sectionHeader'
 import { CategoryContainer } from '../ProductCategories/categoriesPage'
 import RootCategories from '../ProductCategories/uiComponents/RootCategories'
@@ -38,6 +39,7 @@ export default function HomePage() {
 
             <TechnicallySpeaking />
             <FeaturedManufacturers />
+            <NewsAndEvents />
             <LineCards />
         </ContentScreenContainer>
     )
