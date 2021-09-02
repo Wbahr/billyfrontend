@@ -674,7 +674,7 @@ export default function BrandsPage() {
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/ABB.htm" target="_blank" rel="noopener noreferrer">ABB</BrandList></li>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/abb_jokab.htm">ABB (Jokab)</BrandList></li>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/acme_electric.htm">Acme Electric</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/adaptall.htm">Adaptall</BrandList></li>
+                            <li><BrandList href="/pages/brands/adaptall">Adaptall</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1042,7 +1042,7 @@ export default function BrandsPage() {
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
+                            <li><BrandList href="/pages/brands/nvent-eriflex" target="_blank" rel="noopener noreferrer">nVent ERIFLEX</BrandList></li>
 
                         </Ul>
                     </ListDiv>
@@ -1205,7 +1205,7 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/tompkins.htm" target="_blank" rel="noopener noreferrer">Tompkins</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/turck.htm" target="_blank" rel="noopener noreferrer">Turck</BrandList></li>
+                            <li><BrandList href="/pages/brands/turck" target="_blank" rel="noopener noreferrer">Turck</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
