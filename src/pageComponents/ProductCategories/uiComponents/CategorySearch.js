@@ -41,7 +41,9 @@ const BorderContainer = styled.div`
   width: ${props => {
         const categoryName = props.children[0].props.children
         const approximateLetterWidth = 22 //This makes sure the h1 doesn't overflow off the page for mobile users
-        if (categoryName.length * approximateLetterWidth > window.innerWidth) {
+        if (!categoryName){
+            return 'max-content'
+        } else if (categoryName.length * approximateLetterWidth > window.innerWidth) {
             return 'min-content'
         } else {
             return 'max-content'
@@ -146,7 +148,7 @@ export default function CategorySearch({ match, history }) {
     ) : (
         <DivCol>
             <Helmet>
-                <title>Airline Hydraulics | {categoryName}</title>
+                <title>Airline Hydraulics | {categoryName || ''}</title>
                 <meta name="description" content={seoHtml ? seoHtml.replace(/<[^>]+>/g, '') : categoryName}/>
                 {breadcrumbSchema([
                     {
