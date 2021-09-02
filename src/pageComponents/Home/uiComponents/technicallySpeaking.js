@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/york%20college%20home%20thmubnail.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Cobots in the Classroom: The York College Story
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.png" />
@@ -137,20 +151,6 @@ export default function TechnicallySpeaking() {
                             <Details>Electrical Enclosure Climate Control 101
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/enclosure-climate-control-101" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/IO%20Link%20webpage.jpg" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>What is IO-Link?
-                                <ButtonDiv>
-                                    <Button href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
