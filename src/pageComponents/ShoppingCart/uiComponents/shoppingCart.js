@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import SkeletonItem from './../uiComponents/shoppingCartItemSkeleton'
 import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
-import { GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES } from 'setup/providerGQL'
 import { useLazyQuery } from '@apollo/client'
 import ErrorModal from 'pageComponents/_common/modals/ErrorModal'
 import MergeCartModal from './MergeCartModal'
 import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
+import { GET_CART_DATA } from 'setup/gqlQueries/gqlCartQueries'
 
 const Div = styled.div`
 	display: flex;
@@ -58,56 +58,28 @@ export default function ShoppingCart({ history }) {
         cart,
         emptyCart,
         userInfo,
-        itemPrices,
-        itemDetails,
-        customerPartNumbers,
-        sourceLocations,
-        getItemPrices,
-        getItemDetails,
-        getCustomerPartNumbers,
-        getSourceLocations,
         updateShoppingCart,
         cartPricing,
         showErrorModal,
         setShowErrorModal
     } = useContext(Context)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
-    const [itemAvailabilities, setItemAvailabilities] = useState([])
+    const [cartData, setCartData] = useState(null)
     const debouncedCart = useDebounceValue(cart, 1000)
 
-    const [getAvailabilitiesWithLeadTimes] = useLazyQuery(GET_ITEM_AVAILABILITIES_AND_LEAD_TIMES, {
+    const [getCartData] = useLazyQuery(GET_CART_DATA, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
-            setItemAvailabilities(data.itemAvailabilityAndLeadTimes)
+            setCartData(data.cartData)
         }
     })
     
     useEffect(() => {
         if (cart?.length) {
-            const hasMissingPrices = !!cart.find(item => !itemPrices.find(price => price.invMastUid === item.invMastUid && price.quantity === item.quantity))
-            hasMissingPrices && getItemPrices(cart)
-        }
-    }, [cart])
-    
-    useEffect(() => {
-        if (cart?.length) {
             const itemsAndQuantities = cart.map(({ invMastUid, quantity }) => ({ invMastUid, quantity: quantity }))
-            getAvailabilitiesWithLeadTimes({ variables: { itemsAndQuantities } })
+            getCartData({ variables: { itemsAndQuantities } })
         }
     }, [debouncedCart])
-
-    useEffect(() => {
-        if (cart) {
-            const itemsWithoutDetails = cart.filter(item => !itemDetails?.some(detail => detail.invMastUid === item.invMastUid))
-            if (itemsWithoutDetails.length) {
-                getItemDetails(itemsWithoutDetails)
-                getCustomerPartNumbers(itemsWithoutDetails)
-            }
-
-            const itemsWithoutSourceLocations = cart.filter(item => !sourceLocations?.some(loc => loc.invMastUid === item.invMastUid))
-            itemsWithoutSourceLocations.length && getSourceLocations(itemsWithoutSourceLocations)
-        }
-    }, [cart?.length])
 
     const handleSaveAsShoppingList = () => setShowShoppingListModal(true)
 
@@ -133,14 +105,10 @@ export default function ShoppingCart({ history }) {
                 {
                     ...{
                         history,
-                        itemDetails,
-                        itemPrices,
-                        itemAvailabilities,
-                        customerPartNumbers,
-                        sourceLocations,
                         cart,
                         updateShoppingCart,
-                        cartPricing
+                        cartPricing,
+                        cartData
                     }
                 }
             />
@@ -172,13 +140,9 @@ const CartComponent = (props) => {
     const {
         cart,
         updateShoppingCart,
-        itemDetails,
-        itemPrices,
-        itemAvailabilities,
-        customerPartNumbers,
-        sourceLocations,
         cartPricing,
-        history
+        history,
+        cartData
     } = props
 
     const [shoppingCart, setShoppingCart] = useState(cart || [])
@@ -221,11 +185,11 @@ const CartComponent = (props) => {
     }
 
     const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {
-        const details = itemDetails?.find(detail => detail.invMastUid === cartItem.invMastUid)
-        const itemPrice = itemPrices?.find(price => price.invMastUid === cartItem.invMastUid)
-        const itemAvailability = itemAvailabilities?.find(a => a.invMastUid === cartItem.invMastUid)
-        const itemCustomerPartNumbers = customerPartNumbers?.filter(p => p.invMastUid === cartItem.invMastUid)
-        const itemSourceLocations = sourceLocations?.filter(l => l.invMastUid === cartItem.invMastUid)
+        const details = cartData?.itemDetails.find(detail => detail.invMastUid === cartItem.invMastUid)
+        const itemPrice = cartData?.itemPrices.find(price => price.invMastUid === cartItem.invMastUid)
+        const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === cartItem.invMastUid)
+        const itemCustomerPartNumbers = cartData?.customerPartNumbers.filter(p => p.invMastUid === cartItem.invMastUid)
+        const itemSourceLocations = cartData?.sourceLocations.filter(l => l.invMastUid === cartItem.invMastUid)
 
         return (
             <Fragment key={index}>
