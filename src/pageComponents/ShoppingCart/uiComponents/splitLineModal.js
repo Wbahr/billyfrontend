@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { ButtonBlack } from '../../../styles/buttons'
@@ -6,6 +6,7 @@ import { Grid, Card, IconButton } from '@material-ui/core'
 import { Add as AddIcon, Close as CloseIcon } from '@material-ui/icons'
 import { getThumbnailImagePath } from '../../_common/helpers/generalHelperFunctions'
 import QuantityInput from '../../_common/form/quantityInput'
+import Context from '../../../setup/context'
 
 const Container = styled.div`
   display: flex;
@@ -43,11 +44,15 @@ const Thumbnail = styled.img`
     height: 100px;
 `
 
-export default function SplitLineModal({ open, index, hideSplitLineModal, cart, setCart, itemDetails, priceInfo }) {
+export default function SplitLineModal({ open, index, hideSplitLineModal, setCart, itemDetails, priceInfo }) {
+    const {
+        cart
+    } = useContext(Context)
+
     const unitSize = priceInfo?.unitSize || 1
     const roundToNearestIncrement = (amt) => Math.ceil(amt / unitSize) * unitSize
-    const splitQty = roundToNearestIncrement(Math.ceil(cart[index].quantity / 2))
-    const initialLines = [
+    const splitQty = roundToNearestIncrement(Math.ceil((cart?.[index]?.quantity || 1) / 2))
+    const initialLines = (!cart?.length || index >= cart.length) ? [] : [
         { ...cart[index], quantity: splitQty },
         { ...cart[index], quantity: cart[index].quantity - splitQty || 1, quoteLineId: null },
     ]

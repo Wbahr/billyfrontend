@@ -185,20 +185,15 @@ const CartComponent = (props) => {
     }
 
     const ShoppingCartItems = (shoppingCart || []).map((cartItem, index) => {
-        const details = cartData?.itemDetails.find(detail => detail.invMastUid === cartItem.invMastUid)
-        const itemPrice = cartData?.itemPrices.find(price => price.invMastUid === cartItem.invMastUid)
-        const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === cartItem.invMastUid)
-        const itemCustomerPartNumbers = cartData?.customerPartNumbers.filter(p => p.invMastUid === cartItem.invMastUid)
-        const itemSourceLocations = cartData?.sourceLocations.filter(l => l.invMastUid === cartItem.invMastUid)
 
         return (
             <Fragment key={index}>
-                {(details && cartItem.uniqueId) ? (
+                {(cartData && cartItem.uniqueId) ? (
                     <Draggable
                         key={index}
                         draggableId={String(index)}
                         index={index}
-                        isDragDisabled={!details || isDragDisabled}
+                        isDragDisabled={!cartData || isDragDisabled}
                     >
                         {(provided) => (
                             <div
@@ -207,12 +202,7 @@ const CartComponent = (props) => {
                             >
                                 <ShoppingCartItem
                                     key={index}
-                                    itemDetails={details}
-                                    priceInfo={itemPrice}
-                                    availabilityInfo={itemAvailability}
-                                    customerPartNumbers={itemCustomerPartNumbers}
-                                    sourceLocations={itemSourceLocations}
-                                    cart={shoppingCart || []}
+                                    cartData={cartData}
                                     setCartItem={setCartItem(index)}
                                     setCartItemField={setCartItemField(index)}
                                     {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
