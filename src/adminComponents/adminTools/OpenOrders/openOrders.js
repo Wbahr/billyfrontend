@@ -66,6 +66,7 @@ const GET_OPEN_ORDERS = gql`
 			poNo
 			orderType
 			status
+            jobName
     }
   }
 `
@@ -75,7 +76,6 @@ export default function OrderDatapage() {
 
     useQuery(GET_OPEN_ORDERS, {
         fetchPolicy: 'no-cache',
-        // variables: { orderNumber },
         onCompleted: result => {
             setOrderData(result.ordersForEmployees)
         }

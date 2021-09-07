@@ -256,6 +256,7 @@ export const GET_ORDERS = gql`
 			isMine
       quoteRefNo
       promiseDate
+      jobName
 			lineItems{
         invMastUid
         itemCode
