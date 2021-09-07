@@ -414,7 +414,7 @@ export default function Provider({ history, children }) {
 
                 const shouldUpdateState = shoppingCart === null || !lastCartItems || cartsMatch
                     && !cartItems.find((item, idx) => item.invMastUid !== lastCartItems[idx]?.invMastUid)
-
+                
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
                     setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
@@ -440,7 +440,7 @@ export default function Provider({ history, children }) {
     }, [debouncedCartPayload])
 
     const updateShoppingCart = (cartItems, notes=orderNotes) => {
-        setShoppingCart(cartItems)
+        setShoppingCart(cartItems) //Needed, or quick cart adds will lose items
         setOrderNotes(notes)
         lastShoppingCartPayload.current = cartItems
         updateCartWrapper({ actionString: 'update', orderNotes: notes, cartItems })
@@ -606,6 +606,7 @@ export default function Provider({ history, children }) {
                 sourceLocations,
                 getPurchaseHistory,
                 getItemPrices,
+                setItemPrices,
                 getItemAvailabilities,
                 getStocks,
                 getItemDetails,
