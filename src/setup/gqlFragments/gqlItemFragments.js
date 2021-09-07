@@ -139,3 +139,19 @@ export const FRAGMENT_ITEM_SOURCE_LOCATION = gql`
         sourceLocName
     }
 `
+
+export const FRAGMENT_ITEM_PRICE = gql`
+    fragment ItemPrice on ItemPriceResponseGraphType {
+        invMastUid
+        quantity
+        totalPrice
+        unitPrice
+        unitOfMeasure
+        spaNumber
+        spaCost
+        spaMargin
+        roundType
+        unitSize
+        spaType
+    }
+`

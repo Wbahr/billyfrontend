@@ -80,7 +80,7 @@ export default function SourceLocationModal(props) {
                     <Label>Source Locations: </Label>
                     <select value={selectedSourceLoc} onChange={handleSourceLocChange}>
                         <option value="">----</option>
-                        { sourceLocOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                        { sourceLocOptions?.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
                     </select>
                 </DivItem>
 

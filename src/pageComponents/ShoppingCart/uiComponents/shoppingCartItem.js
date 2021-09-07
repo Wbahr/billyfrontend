@@ -195,21 +195,22 @@ const DivFlex = styled.div`
 export default function ShoppingCartItem(props) {
 
     const {
-        cart,
         setCart,
         cartItem,
         setCartItem,
         setCartItemField,
         index,
-        itemDetails,
-        priceInfo,
-        availabilityInfo,
-        customerPartNumbers,
-        sourceLocations,
         history,
         setIsDragDisabled,
-        provided
+        provided,
+        cartData
     } = props
+
+    const itemDetails = cartData?.itemDetails.find(detail => detail.invMastUid === cartItem.invMastUid)
+    const itemPriceInfo = cartData?.itemPrices.find(price => price.invMastUid === cartItem.invMastUid)
+    const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === cartItem.invMastUid)
+    const itemCustomerPartNumbers = cartData?.customerPartNumbers.filter(p => p.invMastUid === cartItem.invMastUid)
+    const itemSourceLocations = cartData?.sourceLocations.filter(l => l.invMastUid === cartItem.invMastUid)
 
     const {
         unitPrice,
@@ -220,7 +221,8 @@ export default function ShoppingCartItem(props) {
         spaNumber,
         spaMargin,
         spaCost
-    } = priceInfo || {}
+    } = itemPriceInfo || {}
+
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
     const dispositions = [
@@ -232,7 +234,7 @@ export default function ShoppingCartItem(props) {
     ]
 
     const getDefaultDisposition = () => {
-        return availabilityInfo?.totalQuantity > availabilityInfo?.availability ? 'Backorder' : 'Stock'
+        return itemAvailability?.totalQuantity > itemAvailability?.availability ? 'Backorder' : 'Stock'
     }
 
     useEffect(() => {
@@ -348,14 +350,17 @@ export default function ShoppingCartItem(props) {
                                             <CustomerPartModal
                                                 open={showCustomerPartModal}
                                                 setOpen={() => setShowCustomerPartModal(false)}
-                                                invMastUid={cart?.[index].invMastUid}
-                                                {...{ customerPartNumbers, selectedCustomerPartNumber, selectCustomerPartNumber, clearCustomerPartNumber }}
+                                                invMastUid={cartItem?.invMastUid}
+                                                customerPartNumbers={itemCustomerPartNumbers}
+                                                selectedCustomerPartNumber={selectedCustomerPartNumber}
+                                                selectCustomerPartNumber={selectCustomerPartNumber}
+                                                clearCustomerPartNumber={clearCustomerPartNumber}
                                             />
                                         )}
 
                                         <LocationsModal
                                             invMastUid={itemDetails.invMastUid}
-                                            availabilityInfo={availabilityInfo}
+                                            availabilityInfo={itemAvailability}
                                             unitPrice={unitPrice}
                                         />
 
@@ -576,7 +581,7 @@ export default function ShoppingCartItem(props) {
             <SplitLineModal
                 open={showSplitLineModal}
                 hideSplitLineModal={() => setShowSplitLineModal(false)}
-                {...{ cart, setCart, index, itemDetails, priceInfo }}
+                {...{ setCart, index, itemDetails, itemPriceInfo }}
             />
             <FactoryStockModal
                 open={!!factoryStockModalData}
@@ -586,7 +591,7 @@ export default function ShoppingCartItem(props) {
             <SourceLocationModal
                 open={showSourceLocationModal}
                 hide={() => setShowSourceLocationModal(false)}
-                sourceLocations={sourceLocations}
+                sourceLocations={itemSourceLocations}
                 {...{ cartItem, setCartItem }}
             />
 

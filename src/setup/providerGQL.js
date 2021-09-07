@@ -182,7 +182,14 @@ export const ADD_CATALOG_ITEM = gql`
         invMastUid
         customerPartNumberId
         quantity
+        quoteLineQuantity
+        quoteUnitPrice
+        isQuoteLineActive
         itemNotes
+        quoteLineId
+        itemTotalTariff
+        itemUnitPrice
+        itemUnitPriceOriginal
         itemUnitPriceOverride
         airlineCost
         priceReasonId

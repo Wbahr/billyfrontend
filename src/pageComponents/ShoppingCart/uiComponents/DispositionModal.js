@@ -49,7 +49,7 @@ export default function DispositionModal(props) {
 
     const dispositionOptions = dispositions?.map(disposition => ({ label: disposition.text, value: disposition.value }))
 
-    const [selectedDisposition, setSelectedDisposition] = useState(cartItem?.disposition)
+    const [selectedDisposition, setSelectedDisposition] = useState(cartItem?.disposition || '')
     const [alert, setAlert] = useState(null)
 
     function handleClose(){
