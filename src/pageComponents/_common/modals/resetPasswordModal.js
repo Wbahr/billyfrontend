@@ -19,7 +19,20 @@ const DivContainer = styled.div`
   flex-direction: column;
   margin: 8px;
 `
-
+const ResetPasswordButton = styled.div`
+    margin: 18px 0 10px;
+    border: 1px solid #950f23;
+    padding: 7px;
+    background-image: linear-gradient(to top left,#950f23,#DB1633);
+    color: white;
+    text-align: center;
+    &:hover{
+        background-color: #DB1E34;
+    }
+`
+const ResetPassword = styled.p`
+    font-weight: bold;
+`
 export default function ResetPasswordModal({ open, hideModal }) {
     const [username, setUsername] = useState('')
     const [message, setMessage] = useState('')
@@ -61,17 +74,17 @@ export default function ResetPasswordModal({ open, hideModal }) {
     return (
         <Popup open={open} onClose={() => handleClose()} closeOnDocumentClick contentStyle={{ maxWidth: '350px', borderRadius: '5px' }}>
             <DivContainer>
-                <p>Reset Password</p>
+                <ResetPassword>Reset Password</ResetPassword>
                 {message && <p>{message}</p>}
                 <AirlineInput 
                     label="Username / Email:"
                     type="text"
                     name="username"
                     value={username}
-                    width='300px'
+                    width='100%'
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <button onClick={() => {handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</button>
+                <ResetPasswordButton onClick={() => {handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</ResetPasswordButton>
             </DivContainer>
         </Popup>
     )

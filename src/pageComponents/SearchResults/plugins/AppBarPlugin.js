@@ -9,7 +9,7 @@ const AppBar = styled.div`
 	z-index: 1;
 	display: flex;
 	width: 100%;
-	background-image: linear-gradient(to bottom right, rgb(219,22,51), #961427);
+	background-color: #cddee7;
 `
 
 export default function AppBarPlugin({ title, drawerOpen, setDrawerOpen }) {
@@ -31,7 +31,7 @@ export default function AppBarPlugin({ title, drawerOpen, setDrawerOpen }) {
                 })}
                 />
             </IconButton>
-            <Typography variant="h6" noWrap style={{ margin: 'auto 0', color: 'white' }}>
+            <Typography variant="h6" noWrap style={{ margin: 'auto 0', color: '#353536' }}>
                 {title}
             </Typography>
         </AppBar>
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: 24,
-        color: 'white'
+        color: '#353536'
     },
     chevronLeft: {
         transform: 'rotate(0deg)',

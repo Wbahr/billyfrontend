@@ -311,7 +311,7 @@ export default function FooterComponent() {
             <Container>
                 <Pcopyright> © Airline Hydraulics Corporation, {new Date().getFullYear()}</Pcopyright> |
                 <Pcopyright><A href="/pages/privacy-policy" target="_blank">Privacy Policy</A></Pcopyright> |
-                <Pcopyright><A href="https://airlinemedia.airlinehyd.com/Literature/Terms_and_Conditions.pdf">Terms &amp; Conditions</A></Pcopyright> |
+                <Pcopyright><A href="https://airlinemedia.airlinehyd.com/Literature/Airline_Terms_and_Conditions.pdf">Terms &amp; Conditions</A></Pcopyright> |
                 <Pcopyright><A href="/pages/legal-disclaimer">Legal Disclaimer</A></Pcopyright> |
                 <Pcopyright>Help Center</Pcopyright>
             </Container>

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Container = styled.div`
 		display: flex;
 		flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: space-around;
 `
 const Row = styled.div`
 		display: flex;
@@ -88,11 +88,10 @@ const Link = styled.a`
 const Wrapper = styled.div`
 		margin-bottom: 50px;
 		flex-wrap: wrap;
-        // max-width: 1500px;
         width: 100%;
         margin: 0 auto;
+        max-width: 1400px;
 `
-
 
 export default function TechnicallySpeaking() {
     
@@ -102,6 +101,34 @@ export default function TechnicallySpeaking() {
             <SectionHeader text='Technically Speaking' />
             <Wrapper>
                 <Container>
+                    <Row>
+                        <Link href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/york%20college%20home%20thmubnail.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Cobots in the Classroom: The York College Story
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
+                        <Link href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Wireless Ethernet Setup, Featuring the FL WLAN by Phoenix Contact
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
                     <Row>
                         <Link href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">
                             <ImgDiv>
@@ -124,34 +151,6 @@ export default function TechnicallySpeaking() {
                             <Details>How to Get Started with IO-Link
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/enclosure-climate-control-101" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/climate%20control%20101%20-%20homepage%20version.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Electrical Enclosure Climate Control 101
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/enclosure-climate-control-101" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/IO%20Link%20webpage.jpg" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>What is IO-Link?
-                                <ButtonDiv>
-                                    <Button href="http://blog.airlinehyd.com/what-is-io-link" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
