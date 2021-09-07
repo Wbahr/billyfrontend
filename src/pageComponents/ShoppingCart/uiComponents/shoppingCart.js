@@ -60,6 +60,7 @@ export default function ShoppingCart({ history }) {
         userInfo,
         updateShoppingCart,
         cartPricing,
+        setItemPrices,
         showErrorModal,
         setShowErrorModal
     } = useContext(Context)
@@ -71,6 +72,7 @@ export default function ShoppingCart({ history }) {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
             setCartData(data.cartData)
+            setItemPrices(data.cartData.itemPrices)
         }
     })
     

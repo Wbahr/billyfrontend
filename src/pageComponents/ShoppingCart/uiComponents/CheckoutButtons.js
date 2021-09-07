@@ -77,6 +77,9 @@ const CheckoutButtons = ({ history }) => {
                         missingItemNote && <span>Note required for $0 item</span>   
                     }
                     {
+                        pricesLoading && <span>Prices are Loading</span>
+                    }
+                    {
                         (userInfo?.isAirlineEngineerUser)
                             ? (
                                 <DivCheckoutButton disabled>
