@@ -114,7 +114,7 @@ export default function CustomerPartModal({ open, setOpen, invMastUid, selectCus
         selectCustomerPartNumber(value)
     }
 
-    const handlePartNumberChange = ({ target: { value } }) => setPartNumber(value.replace(/[^A-Za-z0-9 -]/, ''))
+    const handlePartNumberChange = ({ target: { value } }) => setPartNumber(value.replace(/[^A-Za-z0-9 -.,/=:#]/, ''))
 
     const isDuplicate = customerPartNumbers?.some(cpn => cpn.customerPartNumber === partNumber)
     const isEmpty = !partNumber.trim().length
