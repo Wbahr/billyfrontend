@@ -232,6 +232,10 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'extPrice',
             },
             {
+                Header: 'Job Name',
+                accessor: 'jobName',
+            },
+            {
                 Header: 'Filter',
                 accessor: 'filter'
             }
@@ -272,7 +276,7 @@ export default function OpenOrdersTable({ history }) {
         useSortBy,
         usePagination
     )
-
+    console.log(data)
     // let copyData = clipboardData(columns, data)
     return (
         <TableContainer>
