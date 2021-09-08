@@ -5,10 +5,11 @@ import Context from '../../../setup/context'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import QuantityInput from '../../_common/form/quantityInput'
 import AirlineChip from '../../_common/styledComponents/AirlineChip'
 import { Grid } from '@material-ui/core'
+import { format as dateFormat } from 'date-fns'
 
 const DivContainer = styled.div`
 		display: flex;
@@ -109,6 +110,8 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
         setQuantity(1)
     }
 
+    const formattedPromiseDate = item?.promiseDate ? dateFormat(new Date(item.promiseDate), 'MM/dd/yyyy') : null
+
     return (
         <DivContainer>
             <AddedModal
@@ -148,8 +151,7 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                     <P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
                 </DivCol2>
                 <DivCol2>
-                    <DivRow>Availability: {availability?.availability}</DivRow>
-                    <DivRow>{getAvailabilityMessage(1, availability?.availability, availability?.leadTimeDays)}</DivRow>
+                    <DivRow>Promise Date: {item?.promiseDate && formattedPromiseDate !== '12/31/49' ? formattedPromiseDate : 'TBD'}</DivRow>
                     {priceInfo && (
                         <Grid container justify="center">
                             <span>Qty:</span>
