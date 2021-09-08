@@ -69,6 +69,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
     const { editPriceReasonCodes } = useContext(Context)
+    const [originalPrice, setOriginalPrice] = useState()
 
     const {
         spaType,
@@ -84,6 +85,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setItemPrice(data.itemPrice)
             setMargin(calculateMargin(data.itemPrice))
             setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
+            setOriginalPrice(data.itemPrice)
         }
     }, [data])
 
@@ -141,7 +143,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                 <h4>Edit Item Price</h4>
                 <PriceInfoRow>
                     <PriceInfoItem>
-                        <Label>Item Price: </Label>
+                        <Label>Price: (orig. ${originalPrice}) 
+                        </Label>
                         <AirlineInput
                             type="currency"
                             value={itemPrice}
