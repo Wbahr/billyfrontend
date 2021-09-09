@@ -64,7 +64,7 @@ const Container = styled.div`
     }
 `
 
-export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data }) {
+export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data, itemID }) {
     const [itemPrice, setItemPrice] = useState(0)
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
@@ -75,7 +75,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         spaType,
         spaNumber,
         spaCost,
-        spaMargin
+        spaMargin,
     } = data || {}
 
     const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
@@ -141,6 +141,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         >
             <Container>
                 <h4>Edit Item Price</h4>
+                <h6>{itemID}</h6>
                 <PriceInfoRow>
                     <PriceInfoItem>
                         <Label>Price: (orig. ${originalPrice}) 
