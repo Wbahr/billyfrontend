@@ -15,6 +15,7 @@ import { faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faC
 } from '@fortawesome/free-solid-svg-icons'
 import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { ApolloProvider, ApolloClient, ApolloLink, HttpLink, InMemoryCache } from '@apollo/client'
+import { onError } from '@apollo/client/link/error'
 import ContextProvider from './setup/provider'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
@@ -36,16 +37,29 @@ const httpLink = new HttpLink({
     uri: `${process.env.REACT_APP_API_URL}/graphql`,
 })
 
+const errorLink = onError(response => {
+    if (response.networkError?.statusCode === 401){
+        if (localStorage.getItem('refreshToken')){
+            logout()
+            location.reload()
+        }
+    }
+})
+
 // Setup the header for the request
 const middlewareAuthLink = new ApolloLink((operation, forward) => {
     const token = localStorage.getItem('apiToken')
     const refreshToken = localStorage.getItem('refreshToken')
-    operation.setContext({
-        headers: {
-            authorization: token ? `Bearer ${token}` : null,
-            refreshToken: token ? `RefreshToken ${refreshToken}` : null
-        }
-    })
+
+    if (refreshToken && token){
+        operation.setContext({
+            headers: {
+                authorization: token ? `Bearer ${token}` : null,
+                refreshToken: token ? `RefreshToken ${refreshToken}` : null
+            }
+        })
+    }
+    
     return forward(operation)
 })
 
@@ -68,13 +82,8 @@ const afterwareLink = new ApolloLink((operation, forward) => {
 })
 
 const client = new ApolloClient({
-    onError: (response) => {
-        if (response.networkError.statusCode === 401){
-            logout()
-            location.reload()
-        }
-    },
     link: ApolloLink.from([
+        errorLink,
         middlewareAuthLink,
         afterwareLink,
         httpLink
