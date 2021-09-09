@@ -75,7 +75,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         spaType,
         spaNumber,
         spaCost,
-        spaMargin,
+        spaMargin
     } = data || {}
 
     const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
