@@ -64,7 +64,7 @@ const Container = styled.div`
     }
 `
 
-export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data }) {
+export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data, itemId }) {
     const [itemPrice, setItemPrice] = useState(0)
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
@@ -141,6 +141,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         >
             <Container>
                 <h4>Edit Item Price</h4>
+                <h6>{itemId}</h6>
                 <PriceInfoRow>
                     <PriceInfoItem>
                         <Label>Price: (orig. ${originalPrice}) 
