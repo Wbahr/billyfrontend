@@ -577,7 +577,7 @@ export default function ShoppingCartItem(props) {
                     cartItem
                 }}
                 setCartItem={setCartItem}
-                itemID = {itemDetails.itemCode}
+                itemId = {itemDetails.itemCode}
             />
             <SplitLineModal
                 open={showSplitLineModal}
