@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Popup from 'reactjs-popup'
 import styled from 'styled-components'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import AirlineInput from '../form/inputv2'
+import Context from 'setup/context'
 
 const MUTATION_RESET_PASSWORD_REQUEST = gql`
   mutation PasswordResetRequestMutation($resetInfo: PasswordResetRequestInputGraphType){
@@ -33,8 +34,12 @@ const ResetPasswordButton = styled.div`
 const ResetPassword = styled.p`
     font-weight: bold;
 `
-export default function ResetPasswordModal({ open, hideModal }) {
-    const [username, setUsername] = useState('')
+export default function ResetPasswordModal({ open, hideModal, history }) {
+    const {
+        setPasswordResetEmail
+    } = useContext(Context)
+
+    const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
 
     const [executePasswordResetRequest, { loading }] = useMutation(MUTATION_RESET_PASSWORD_REQUEST, {
@@ -42,20 +47,20 @@ export default function ResetPasswordModal({ open, hideModal }) {
             const requestData = data.requestPasswordReset
             if (requestData.success){
                 setMessage(requestData.message)
-                setTimeout(() => {
-                    handleClose()
-                    history.push('/login')
-                }, 5000)
+                handleClose()
+                setPasswordResetEmail(email)
+                history.push('/password-reset')
             } else {
                 setMessage('An error has occured. Please check your email/username and try again or contact us.')
-                setUsername('')
+                setEmail('')
+                setPasswordResetEmail('')
             }
         }
     })
 
     function handleClose(){
         hideModal()
-        setUsername('')
+        setEmail('')
         setMessage('')
     }
 
@@ -64,7 +69,7 @@ export default function ResetPasswordModal({ open, hideModal }) {
             {
                 variables: {
                     resetInfo: {
-                        username: username
+                        email: email
                     }
                 }
             }
@@ -77,12 +82,12 @@ export default function ResetPasswordModal({ open, hideModal }) {
                 <ResetPassword>Reset Password</ResetPassword>
                 {message && <p>{message}</p>}
                 <AirlineInput 
-                    label="Username / Email:"
+                    label="Email:"
                     type="text"
-                    name="username"
-                    value={username}
+                    name="email"
+                    value={email}
                     width='100%'
-                    onChange={(e) => setUsername(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <ResetPasswordButton onClick={() => {handleResetPassword()}}>{loading ? 'Requesting Reset...' : 'Reset Password'}</ResetPasswordButton>
             </DivContainer>
