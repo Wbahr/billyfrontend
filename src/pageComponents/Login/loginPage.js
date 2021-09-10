@@ -77,19 +77,23 @@ export default function LoginPage(props) {
     const [infoMessage, setInfoMessage] = useState('')
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
 
-    const context = useContext(Context)
+    const {
+        userInfo,
+        loginUser,
+        setPasswordResetEmail
+    } = useContext(Context)
     const history = props.history
 
     // Account for delays in loading context
     useEffect(() => {
-        if (context.userInfo) {
+        if (userInfo) {
             const urlParams = new URLSearchParams(props.location.search)
             const redirect = urlParams.get('next')
             if (redirect) {
                 history.push(redirect)
             }
         }
-    }, [context.userInfo])
+    }, [userInfo])
 
     const [executeLogIn, { loading, error }] = useLazyQuery(QUERY_LOGIN, {
         fetchPolicy: 'no-cache',
@@ -98,15 +102,14 @@ export default function LoginPage(props) {
             if (requestData.success) {
                 // Need to reset password
                 if (requestData.isPasswordReset) {
-                    setErrorMessage('')
-                    setInfoMessage(requestData.message)
-                    setPassword('')
+                    setPasswordResetEmail(email)
+                    history.push('/password-reset')
                 } else {
                     const mergeToken = localStorage.getItem('shoppingCartToken')
                     localStorage.setItem('apiToken', requestData.authorizationInfo.token)
                     localStorage.setItem('refreshToken', requestData.authorizationInfo.refreshToken)
                     localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
-                    context.loginUser(requestData.authorizationInfo.userInfo, mergeToken)
+                    loginUser(requestData.authorizationInfo.userInfo, mergeToken)
                     const urlParams = new URLSearchParams(props.location.search)
                     const redirect = urlParams.get('next')
                     if (redirect) {
@@ -149,6 +152,7 @@ export default function LoginPage(props) {
             <PasswordResetModal 
                 open={showPasswordResetModal} 
                 hideModal={() => setShowPasswordResetModal(false)}
+                history={history}
             />
             
             <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
