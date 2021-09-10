@@ -122,12 +122,12 @@ const PasswordResetPinPage = (props) => {
             </DivInput>
 
             <DivInput>
-                <Label>Password</Label>
+                <Label>New Password</Label>
                 <Input type='password' value={password} onChange={(evt) => { setPassword(evt.target.value) }} />
             </DivInput>
 
             <DivInput>
-                <Label>Confirm Password</Label>
+                <Label>Confirm New Password</Label>
                 <Input type='password' value={confirmPassword} onChange={(evt) => { setConfirmPassword(evt.target.value) }} />
             </DivInput>
             

@@ -167,7 +167,7 @@ export default function LoginPage(props) {
                 <InfoAlert>
                     <strong>
                         <em>
-                            You have reset your password successfuly. You may log in with your new password now
+                            You have successfully reset your account password. Please log in with your new credentials below.
                         </em>
                     </strong>
                 </InfoAlert>
