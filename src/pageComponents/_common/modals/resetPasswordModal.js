@@ -26,6 +26,7 @@ const ResetPasswordButton = styled.div`
     padding: 7px;
     background-image: linear-gradient(to top left,#950f23,#DB1633);
     color: white;
+    cursor: pointer;
     text-align: center;
     &:hover{
         background-color: #DB1E34;

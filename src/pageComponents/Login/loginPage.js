@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
+import queryString from 'query-string'
 import { useLazyQuery } from '@apollo/client'
 import Context from '../../setup/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
@@ -76,14 +77,15 @@ export default function LoginPage(props) {
     const [errorMessage, setErrorMessage] = useState('')
     const [infoMessage, setInfoMessage] = useState('')
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
-
     const {
         userInfo,
         loginUser,
         setPasswordResetEmail
     } = useContext(Context)
+    
     const history = props.history
-
+    const { passwordReset } = queryString.parse(history.location.search)
+    
     // Account for delays in loading context
     useEffect(() => {
         if (userInfo) {
@@ -124,7 +126,7 @@ export default function LoginPage(props) {
             }
         }
     })
-    
+
     const handleEnterPress = e => {
         if (e.key === 'Enter') handleSignIn()
     }
@@ -146,23 +148,32 @@ export default function LoginPage(props) {
             )
         }
     }
-	
+
     return (
         <LoginPageContainer>
-            <PasswordResetModal 
-                open={showPasswordResetModal} 
+            <PasswordResetModal
+                open={showPasswordResetModal}
                 hideModal={() => setShowPasswordResetModal(false)}
                 history={history}
             />
-            
-            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
-            
+
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')} />
+
             <P>Airline Hydraulics Login</P>
-            
-            {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
-            {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
+
+            {errorMessage.length > 0 && <ErrorAlert>{errorMessage}</ErrorAlert>}
+            {infoMessage.length > 0 && <InfoAlert>{infoMessage}</InfoAlert>}
+            {passwordReset === 'true' && (
+                <InfoAlert>
+                    <strong>
+                        <em>
+                            You have reset your password successfuly. You may log in with your new password now
+                        </em>
+                    </strong>
+                </InfoAlert>
+            )}
             {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
-            
+
             <DivInput>
                 <Label htmlFor='email'>Username or Email</Label>
                 <Input
@@ -172,7 +183,7 @@ export default function LoginPage(props) {
                     onKeyPress={handleEnterPress}
                 />
             </DivInput>
-            
+
             <DivInput>
                 <Label htmlFor='password'>Password</Label>
                 <Input
@@ -183,13 +194,13 @@ export default function LoginPage(props) {
                     onKeyPress={handleEnterPress}
                 />
             </DivInput>
-            
+
             <Button disabled={loading} onClick={handleSignIn}>
                 {loading ? 'Logging In...' : 'Log In'}
             </Button>
-            
+
             <A onClick={() => setShowPasswordResetModal(true)}>Forgot your Password?</A>
-            
+
             <A onClick={() => history.push('/signup')}>Create an Account</A>
         </LoginPageContainer>
     )
