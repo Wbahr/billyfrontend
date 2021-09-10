@@ -65,6 +65,7 @@ export default function Provider({ history, children }) {
     const [serviceParts, setServiceParts] = useState([])
     const [cartLoading, setCartLoading] = useState(false)
     const [showErrorModal, setShowErrorModal] = useState(false)
+    const [passwordResetEmail, setPasswordResetEmail] = useState('')
 
 
     const invoiceBatchSize = 1000
@@ -631,7 +632,9 @@ export default function Provider({ history, children }) {
                 removeServicePart,
                 cartLoading,
                 showErrorModal,
-                setShowErrorModal
+                setShowErrorModal,
+                passwordResetEmail,
+                setPasswordResetEmail
             }}
         >
             {children}

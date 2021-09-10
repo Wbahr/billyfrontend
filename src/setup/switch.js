@@ -48,6 +48,7 @@ import FourOFour from '../pageComponents/Error/fourOFourPage'
 import ErrorBoundary from './errorBoundary'
 import CategoriesPage from 'pageComponents/ProductCategories/categoriesPage'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import PasswordResetPinPage from 'pageComponents/PasswordReset/PasswordResetPinPage'
 
 
 function WrapperRoute({ auth, roles, component: Component, layout: LayoutWrapperComponent, ...otherProps }) {
@@ -111,7 +112,8 @@ class App extends React.Component {
                 <WrapperRoute exact path='/login' component={Login} layout={EmptyLayout}/>
                 <WrapperRoute exact path='/order-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/quote-complete/:orderId' component={OrderComplete} layout={HeaderFooterLayoutExpanded}/>
-                <WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
+                <WrapperRoute exact path='/password-reset' component={PasswordResetPinPage} layout={EmptyLayout}/>
+                {/*deprecated*/}<WrapperRoute exact path='/password-reset/:passwordToken' component={PasswordReset} layout={EmptyLayout}/>
                 <WrapperRoute exact path='/product/:item/:itemId' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/product/:item/:itemId/:customerPartNumber' component={ItemDetail} layout={HeaderFooterLayoutExpanded}/>
                 <WrapperRoute exact path='/power-distribution-products-and-electrical-enclosures' component={PowerDistributionProducts} layout={HeaderFooterLayoutExpanded}/>
