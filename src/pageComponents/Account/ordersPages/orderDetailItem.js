@@ -87,12 +87,18 @@ const ButtonSmall = styled.button`
 			box-shadow: 0 0 1px #000;
 		}
 	`
+const TrackingCodes = styled.div`
+    `
 
 export default function OrderDetailItem({ item, itemDetails, availability, priceInfo }) {
     const [quantity, setQuantity] = useState(1)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
     const imagePath = getThumbnailImagePath(itemDetails)
     const context = useContext(Context)
+    const trackingCode = item.trackingNumbers?.map(trackingNumberObject => (
+        <TrackingCodes key={trackingNumberObject.trackingNumber}><a href={trackingNumberObject.trackingUrl} target='_blank' rel='noreferrer'>{trackingNumberObject.trackingNumber}</a></TrackingCodes>)
+    )
+
 
     function handleAddedToCart(){
         setShowAddedToCartModal(false)
@@ -145,7 +151,7 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                     <P2>Quantity Ordered: {item.quantityOrdered}</P2>
                 </DivCol2>
                 <DivCol2>
-                    <P2>{item.trackingNumbers && item.trackingNumbers.length > 1 ? 'Tracking Codes:' : 'Tracking Code:'}</P2>
+                    <P2>{trackingCode?.length > 0 && <span>Tracking Codes: {trackingCode}</span>}</P2>
                     <P2>Order Unit Price: <NumberFormat value={item.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
                     <P2>Order Line Price: <NumberFormat value={item.totalPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
                     <P2>Current Unit Price: <NumberFormat value={priceInfo?.unitPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></P2>
