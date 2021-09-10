@@ -241,7 +241,7 @@ export function ShipToForm(props) {
                         placeholder="Search Saved Ship Tos"
                         changeFunction={(field, value) => handleSavedAddressSelectChange(field, value, handleChange)}
                     />
-                    {(values.shipto.selectedShipTo === -1) && (
+                    {(values.shipto.selectedShipTo === -1 && context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
                         <FormRow>
                             <FormikCheckbox
                                 label="Save Ship To"
