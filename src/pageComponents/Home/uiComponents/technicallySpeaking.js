@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.jpg" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>How to collect data from virtually any machine device
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/york%20college%20home%20thmubnail.png" />
@@ -138,20 +152,6 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>What is Industrial Wi-Fi?
                                 <ButtonDiv> <Button href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/how%20to%20get%20started%20with%20io-link-%20homepage%20version.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to Get Started with IO-Link
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">Read More</Button>
-                                </ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
