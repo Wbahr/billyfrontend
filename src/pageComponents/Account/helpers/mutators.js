@@ -57,7 +57,8 @@ export function formatTableData(type, data, orderId){
                                 filter: filterField,
                                 formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
                                 formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
-                                jobName: elem.jobName
+                                jobName: elem.jobName,
+                                itemCode: lineItem.itemCode
                             }
                         )
                     }
