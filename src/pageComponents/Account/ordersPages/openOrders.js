@@ -162,7 +162,7 @@ export default function OpenOrdersTable({ history }) {
             },
             {
                 Header: 'Item ID',
-                accessor: 'invMastUid',
+                accessor: 'itemCode',
             },
             {
                 Header: 'Customer Part',
@@ -213,7 +213,7 @@ export default function OpenOrdersTable({ history }) {
             },
             {
                 Header: 'Item ID',
-                accessor: 'invMastUid',
+                accessor: 'itemCode',
             },
             {
                 Header: 'Customer Part',
