@@ -63,6 +63,7 @@ export default function SearchResultsPage({ history }) {
                 innerSearchTerms: searchTerms,
                 sortType,
                 nonweb,
+                selectedCategoryId,
                 resultPage: 1,
                 brands: selectedBrands,
                 ...selectedAttributes
