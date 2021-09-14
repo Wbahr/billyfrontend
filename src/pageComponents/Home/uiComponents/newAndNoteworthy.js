@@ -75,6 +75,16 @@ export default function NewAndNoteworthy() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <A href="https://blog.airlinehyd.com/" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Web%20Thumb%20Amazon.jpg" />
+                            </ImgDiv>
+                            <TextDiv>
+                                <Details>Blog Subscription Giveaway</Details>
+                            </TextDiv>
+                        </A>
+                    </Row>
+                    <Row>
                         <A href="https://info.airlinehyd.com/hy-performance-acquisition" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/Press-room/PR%20david%20op.png" />
