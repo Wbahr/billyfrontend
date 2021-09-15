@@ -88,7 +88,8 @@ export function rexroth() {
                 <ProductItems
                     brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
+                    shopUrl="/search?searchTerm=Rexroth%20Aluminum%20Structural%20Framing%20%26%20Assembly&sortType=relevancy&nonweb=false&brands=Bosch%20Rexroth%20(BRL-LT)&resultPage=1"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/Aluminum%20Structural%20Framing.png"
                     title="Aluminum Structural Framing & Assembly"
                     text="Save time and money building complex guarding, machine frames, workstations and more with the simple bolt-together construction of Bosch Rexroth extruded aluminum. This high-quality structural framing material is as durable as steel, but much easier to assemble, reconfigure, and reuse. With Bosch Rexroth aluminum structural framing, there’s no welding, no painting and no waiting. It goes together quickly and can easily be modified for reuse if your requirements change. Look to Airline for fast delivery of the widest range of profile shapes, accessories, and connectors, available for every application and load requirement:"
                     additionalText={(
@@ -116,7 +117,8 @@ export function rexroth() {
                 <ProductItems
                     brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
+                    shopUrl="/search?searchTerm=Rexroth%20Linear%20Motion%20Technologies&sortType=relevancy&nonweb=false&brands=Bosch%20Rexroth%20(BRL-LT)&resultPage=1"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/Linear%20Motion%20Technologies.png"
                     title="Linear Motion Technologies"
                     text={(
                         <div>
@@ -142,13 +144,14 @@ export function rexroth() {
                 <ProductItems
                     brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/electric-drives-and-controls.png"
+                    shopUrl="/search?searchTerm=Rexroth%20Electric%20Drives%20and%20Controls&sortType=relevancy&nonweb=false&brands=Bosch%20Rexroth%20(BRC)&resultPage=1"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/Electric%20Drives%20and%20Controls.png"
                     title="Electric Drives and Controls"
                     text={(
                         <div>
                             <p>Put the world’s most comprehensive, state-of-the-art drive, control and machine automation products to work for you. Enhance machine control, improve flexibility and efficiency, and increase energy efficiency with individual products and complete industrial automation systems. We offer the following drive and control system solutions from Rexroth:</p>
                             <ul>
-                                <li><Span>CNC Systems</Span> - Choose from IndraMotion MTX micro, IndraMotion MTX standard, IndraMotion MTX performance or IndraMotion MTX advanced systems.</li>
+                                <li><Span>Motors and Gearboxes</Span> - Choose from Rexroth IndraDynA asynchronous servo motors, IndraDyn H high speed synchronous motors, IndraDyn L linear motors, IndraDyn S synchronous servo motors, or IndraDyn T torque motors. Rexroth also offers standard (GTE) and high-performance (GTM) planetary gearboxes for servo motors.</li>
                                 <li><Span>Drive Systems</Span> - Rexroth’s portfolio of drive technology includes:</li>
                                 <ul>
                                     <li>IndraDrive machine drive systems provide the intelligent drive electronics to satisfy the demands of complex single and multi-axis production systems.</li>
@@ -162,12 +165,12 @@ export function rexroth() {
                     additionalText={(
                         <div>
                             <ul>
-                                <li><Span>HMIs</Span> - The Rexroth IndraControl V HMI series offers operator panels, embedded PC panels, and a wide range of PC-based HMIs and industrial PCs to enhance operator control and manufacturing productivity. Rexroth’s IndraControl VSP/VPP series of PC-Based HMIs provide the full power of a PC with extra features to increase reliability, all in a smaller footprint.</li>
-                                <li><Span>I/O Systems</Span> - Choose from Rexroth Inline IP20, Fieldline IP67 or IndraControl Enhanced Fieldline components</li>
-                                <li><Span>Motors and Gearboxes</Span> - Choose from Rexroth IndraDynA asynchronous servo motors, IndraDyn H high speed synchronous motors, IndraDyn L linear motors, IndraDyn S synchronous servo motors, or IndraDyn T torque motors. Rexroth also offers standard (GTE) and high-performance (GTM) planetary gearboxes for servo motors.</li>
                                 <li><Span>PAC/Combined Motion-Logic Systems</Span> - In addition to their robust set of industry-specific platforms, Rexroth offers their controller-based IndraMotion MLC motion/logic system to satisfy the diverse cost, engineering and motion control and logic requirements across multiple industries.</li>
+                                <li><Span>I/O Systems</Span> - Choose from Rexroth Inline IP20, Fieldline IP67 or IndraControl Enhanced Fieldline components</li>
+                                <li><Span>HMIs</Span> - The Rexroth IndraControl V HMI series offers operator panels, embedded PC panels, and a wide range of PC-based HMIs and industrial PCs to enhance operator control and manufacturing productivity. Rexroth’s IndraControl VSP/VPP series of PC-Based HMIs provide the full power of a PC with extra features to increase reliability, all in a smaller footprint.</li>
                                 <li><Span>PLCs</Span> - Bosch Rexroth IndraLogic PLC systems, in conjunction with Rexroth's IndraControl platform and the innovative IndraWorks engineering framework enable users to get customized PLC systems for their automation concepts.</li>
                                 <li><Span>Cables, Connectors, Firmware, Software and a Suite of Safety Features</Span> - Rexroth has all of the elements you need to build complete, safe machine automation solutions.</li>
+                                <li><Span>CNC Systems</Span> - Choose from IndraMotion MTX micro, IndraMotion MTX standard, IndraMotion MTX performance or IndraMotion MTX advanced systems.</li>
                             </ul>
                         </div>
                     )}
@@ -201,13 +204,13 @@ export function rexroth() {
                 </ArticlesDiv>
                 <VideoDiv>
                     <Videos
-                        src="https://www.youtube.com/embed/N6j_0hKHAOU"
+                        src="https://www.youtube.com/embed/qCuk0L8Z8xY"
                     />
                     <Videos
-                        src="https://www.youtube.com/embed/Pwlelk8bzyE"
+                        src="https://www.youtube.com/embed/T5Fjowwto9k"
                     />
                     <Videos
-                        src="https://www.youtube.com/embed/jMwEhY8O8ik"
+                        src="https://www.youtube.com/embed/gJIChIs4g6A"
                     />
                 </VideoDiv>
                 <SectionHeader
