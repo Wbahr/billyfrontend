@@ -266,6 +266,8 @@ export const GET_ORDERS = gql`
         quantityOrdered
         quantityOpen
         quoteLineId
+        promiseDate
+        disposition
 			}
       quoteHeader {
         quoteId

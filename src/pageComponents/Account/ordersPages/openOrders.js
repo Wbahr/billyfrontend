@@ -156,8 +156,12 @@ export default function OpenOrdersTable({ history }) {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
                 Cell: props => {
+                    if (!props.value){
+                        return 'TBD'
+                    }
+                    
                     const formattedDate = dateFormat(new Date(props.value), 'MM/dd/yyyy') 
-                    return <span>{formattedDate === '12/31/49' ? 'TBD' : formattedDate}</span>
+                    return <span>{formattedDate === '12/31/2049' ? 'TBD' : formattedDate}</span>
                 }              
             },
             {
@@ -176,6 +180,10 @@ export default function OpenOrdersTable({ history }) {
                 Header: 'Unit $',
                 accessor: 'unitPrice',
                 Cell: props => {
+                    if (props.value === 'Cancelled'){
+                        return props.value
+                    }
+
                     return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 }
             },
@@ -183,6 +191,10 @@ export default function OpenOrdersTable({ history }) {
                 Header: 'Ext $',
                 accessor: 'extPrice',
                 Cell: props => {
+                    if (props.value === 'Cancelled'){
+                        return props.value
+                    }
+
                     return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 }
             },
