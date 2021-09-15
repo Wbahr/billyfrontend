@@ -43,22 +43,34 @@ export function formatTableData(type, data, orderId){
                     if (lineItem.quantityOpen > 0) {
                         let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
                         filterField = filterField.toUpperCase()
+
+                        let qtyRemaining = `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`
+                        let unitPrice = lineItem.unitPrice.toFixed(2)
+                        let extPrice = (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2)
+
+                        if (lineItem.disposition === 'C') {
+                            qtyRemaining = `0 / ${lineItem.quantityOrdered}`
+                            unitPrice = 'Cancelled'
+                            extPrice = 'Cancelled'
+                        }
+
                         mutatedData.push(
                             {
                                 orderNumber: elem.orderNumber,
                                 orderDate: elem.orderDate,
                                 poNo: elem.poNo,
-                                promiseDate: elem.promiseDate,
-                                qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
+                                promiseDate: lineItem.promiseDate,
+                                qtyRemaining: qtyRemaining,
                                 invMastUid: lineItem.invMastUid,
                                 customerPartNumber: lineItem.customerPartNumber,
-                                unitPrice: lineItem.unitPrice.toFixed(2),
-                                extPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
+                                unitPrice: unitPrice,
+                                extPrice: extPrice,
                                 filter: filterField,
-                                formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
-                                formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
+                                formattedOrderDate: !elem.orderDate ? '--' : dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                                formattedPromiseDate: !lineItem.promiseDate ? '--' : dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
                                 jobName: elem.jobName,
-                                itemCode: lineItem.itemCode
+                                itemCode: lineItem.itemCode,
+                                disposition: lineItem.disposition
                             }
                         )
                     }
