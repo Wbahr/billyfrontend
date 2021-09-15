@@ -67,7 +67,7 @@ export function formatTableData(type, data, orderId){
                                 extPrice: extPrice,
                                 filter: filterField,
                                 formattedOrderDate: !elem.orderDate ? '--' : dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
-                                formattedPromiseDate: !lineItem.promiseDate ? '--' : dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
+                                formattedPromiseDate: !lineItem.promiseDate ? '--' : dateFormat(new Date(lineItem.promiseDate), 'MM/dd/yyyy'),
                                 jobName: elem.jobName,
                                 itemCode: lineItem.itemCode,
                                 disposition: lineItem.disposition
