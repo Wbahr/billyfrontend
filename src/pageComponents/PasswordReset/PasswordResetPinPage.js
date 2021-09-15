@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import PasswordRequirements from './uiComponents/passwordRequirements'
 import Context from 'setup/context'
+import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 
 const MUTATION_PASSWORD_RESET = gql`
   mutation SubmitPasswordReset($passwordInfo: PasswordResetSubmitInputGraphType){
@@ -26,6 +27,7 @@ const ResetPageContainer = styled.div`
 
 const Img = styled.img`
   cursor: pointer;
+  margin-bottom: 10px;
 `
 
 const Button = styled.button`
@@ -92,9 +94,7 @@ const PasswordResetPinPage = (props) => {
     })
 
     const handlePasswordReset = () => {
-        if (password !== confirmPassword) {
-            //passwords do not match
-        } else {
+        if (isPasswordValid && password === confirmPassword) {
             executePasswordReset(
                 {
                     variables: {
@@ -114,7 +114,13 @@ const PasswordResetPinPage = (props) => {
 
             <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')} />
             
-            <p>You will receive a password reset link shortly at your {passwordResetEmail} email address.</p>
+            <InfoAlert>
+                <strong>
+                    <em>
+                        You will receive a password reset link shortly at your {passwordResetEmail} email address.
+                    </em>
+                </strong>
+            </InfoAlert>
 
             <DivInput>
                 <Label>PIN from Email</Label>
@@ -136,7 +142,7 @@ const PasswordResetPinPage = (props) => {
                 confirmPassword={confirmPassword}
                 isValidPassword={(isValid) => setIsPasswordValid(isValid)}
             />
-
+            {errorMessage.length > 0 && <ErrorAlert>{errorMessage}</ErrorAlert>}
             <Button onClick={() => { handlePasswordReset() }}>Submit Password Reset</Button>
         </ResetPageContainer>
     )
