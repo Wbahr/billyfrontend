@@ -28,7 +28,7 @@ export default function subAssemblies() {
                 />
                 <Service>
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/Hydraulic.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/Hydraulic.png"
                         title="Hydraulic"
                         text={(
                             <div>
@@ -44,7 +44,7 @@ export default function subAssemblies() {
                         )}
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/Pneumatic.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/Pneumatic.png"
                         title="Pneumatic"
                         text={(
                             <div>
@@ -58,7 +58,7 @@ export default function subAssemblies() {
                         )}
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/Electrical.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/Electrical.png"
                         title="Electrical"
                         text={(
                             <div>

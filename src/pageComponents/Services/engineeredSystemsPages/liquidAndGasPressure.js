@@ -37,7 +37,7 @@ export default function liquidAndGasPressure() {
                 <DetailDiv>
                     <Div>
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/DSC_4174.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/DSC_4174.png" />
                         </ImgDiv>
                         <ProductLayout
                             text={(
@@ -72,12 +72,12 @@ export default function liquidAndGasPressure() {
                             )}
                         />
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/Haskel%20Air%20Amplifier%20aad-2.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/Haskel%20Air%20Amplifier%20aad-2.png" />
                         </ImgDiv>
                     </Div>
                     <Div>
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/Haskel%20Liq%20Pump%20Cover.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/Haskel%20Liq%20Pump%20Cover.png" />
                         </ImgDiv>
                         <ProductLayout
                             title="Air-driven liquid pumps"
@@ -108,7 +108,7 @@ export default function liquidAndGasPressure() {
                             )}
                         />
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/AG-50%20Gas%20Booster.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/AG-50%20Gas%20Booster.png" />
                         </ImgDiv>
                     </Div>
                 </DetailDiv>

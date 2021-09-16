@@ -28,22 +28,22 @@ export default function automationEngineered() {
                 />
                 <Service>
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/engineer%20autmation.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/engineer%20autmation.png"
                         title="Engineering: "
                         text="Our Airline Application Engineer visits your site to review project requirements and determine the optimal solution. Our Automation Engineering department then designs a cost-effective, energy-efficient system. We can provide AutoCAD drawings and electrical schematics, or support the efforts of your internal engineering resources until the project design is complete."
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/fabrication.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/fabrication.png"
                         title="Fabrication: "
                         text="Throughout the process, our fabrication technicians, production coordinators and engineering staff work together to keep your project on schedule and on plan. We use components from world-class manufacturers such as Bosch Rexroth structural framing, conveyors, pneumatics, linear motion, drives and controls; SMC pneumatics; Omron PLC’s, sensors and HMI’s; and Eaton drives and controls."
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/programming.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/programming.png"
                         title="Programming, Installation, and Start-Up: "
                         text="Once assembled, our programmers set up the PLC/motion programming to ensure expected performance. We then work with your personnel, either at Airline or on-site, to assist with installation, start-up, training and any troubleshooting."
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/engineerings.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/engineerings.png"
                         title="Documentation: "
                         text="Our automation systems are supplied with comprehensive documentation, including AutoCAD drawings, electrical schematics, manufacturers’ component documentation, start-up procedures, maintenance instructions and troubleshooting information."
                     />

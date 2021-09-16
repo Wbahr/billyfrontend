@@ -41,7 +41,7 @@ export default function lubricationSystems() {
                 <ServiceDiv>
                     <Div>
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/lubrication.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/icons/lubrication.png" />
                         </ImgDiv>
                         <DetailDiv>
                             <Detail>
@@ -56,12 +56,12 @@ export default function lubricationSystems() {
                             </Detail>
                         </DetailDiv>
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/lubrication2.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/icons/lubrication2.png" />
                         </ImgDiv>
                     </Div>
                     <Div>
                         <ImgDiv>
-                            <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/lubrication3.png" />
+                            <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/icons/lubrication3.png" />
                         </ImgDiv>
                         <DetailDiv>
                             <Detail>

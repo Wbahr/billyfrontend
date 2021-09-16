@@ -43,25 +43,25 @@ export default function knowledgeCenterPage() {
             <MainDiv>
                 <Div>
                     <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/Hydraulic%20Resources%20Icon.png" />
+                        <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/Hydraulic%20Resources%20Icon.png" />
                     </ImgDiv>
                     <List>Hydraulic Resources</List>
                 </Div>
                 <Div>
                     <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/pneumatic%20resources.png" />
+                        <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/pneumatic%20resources.png" />
                     </ImgDiv>
                     <List>Pneumatic Resources</List>
                 </Div>
                 <Div>
                     <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/manufacturers%20resources.png" />
+                        <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/manufacturers%20resources.png" />
                     </ImgDiv>
                     <List>Manufacturer Resources</List>
                 </Div>
                 <Div>
                     <ImgDiv>
-                        <Img src="https://www.airlinehyd.com/customer/aihyco/images/other%20resources.png" />
+                        <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/other%20resources.png" />
                     </ImgDiv>
                     <List>Other Resources</List>
                 </Div>

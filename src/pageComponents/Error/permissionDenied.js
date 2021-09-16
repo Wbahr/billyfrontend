@@ -25,7 +25,7 @@ export default function PermissionDeniedPage() {
 
     return (
         <Container>
-            <img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
+            <img src="https://airlinemedia.airlinehyd.com/Graphics/images/error_message_image.png" width="325px" />
             <h1>Permission Denied.</h1>
         </Container>
     )

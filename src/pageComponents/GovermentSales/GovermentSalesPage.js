@@ -111,7 +111,7 @@ export default function GovermentSalesPage() {
                     <SpecialistDiv>
                         <SubTitle>
                             <SaleImgDiv>
-                                <Img src="https://www.airlinehyd.com/customer/aihyco/images/icons/technical%20help.jpg" />
+                                <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/icons/technical%20help.jpg" />
                             </SaleImgDiv>
                             <ContactSale>Contact one of our dedicated Government Sales Specialists.</ContactSale>
                         </SubTitle>

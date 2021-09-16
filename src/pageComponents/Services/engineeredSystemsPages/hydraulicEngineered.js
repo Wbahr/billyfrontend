@@ -29,24 +29,24 @@ export default function hydraulicEngineered() {
                 />
                 <Service>
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/engineering.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/engineering.png"
                         title="Engineering: "
                         text="Once your system or sub-assembly is designed, we can build entirely new hydraulic systems to prints, or upgrade existing machinery to meet current needs. Our manufactured hydraulic systems use high-quality components from world-class manufacturers such as Bosch Rexroth, HYDAC and Parker."
                     />
 
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/DSC_41344.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/DSC_41344.png"
                         title="Fabrication: "
                         text="Implementing best-in-class systems starts with our Certified Fluid Power Specialists determining which of the latest technologies and products will provide the optimal solution for your project. Then, our Hydraulic Engineering Department designs a reliable, cost-effective and energy-efficient system or customized assembly."
                     />
 
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/Installation.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/Installation.png"
                         title="Installation and Start-Up: "
                         text="We stand behind our work, aiming for 100% customer satisfaction. Once your system or sub-assembly is delivered, our hydraulic technicians are available to assist withinstallation, start-up and troubleshooting."
                     />
                     <ServiceLayout
-                        src="https://www.airlinehyd.com/customer/aihyco/images/Hyd%20Test%20Rig.png"
+                        src="https://airlinemedia.airlinehyd.com/Graphics/images/Hyd%20Test%20Rig.png"
                         title="Documentation: "
                         text="Our hydraulic systems are supplied with comprehensive documentation, including AutoCAD drawings, schematics, manufacturers’ component documentation, start-up procedures, maintenance instructions and troubleshooting information."
                     />

@@ -42,7 +42,7 @@ export default class ErrorBoundary extends React.Component {
             // You can render any custom fallback UI
             return (
                 <Container>
-                    <img src="https://www.airlinehyd.com/customer/aihyco/images/error_message_image.png" width="325px" />
+                    <img src="https://airlinemedia.airlinehyd.com/Graphics/images/error_message_image.png" width="325px" />
                     <h1>Something went wrong..</h1>
                     <h4>But we're on it!</h4>
                     <p>If you need immediate assistance, please call 800-999-7378.</p>

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Banner = styled.div`
     height: 200px;
-    background-image: url('https://www.airlinehyd.com/customer/aihyco/images/Headers/Basic_Background.png');
+    background-image: url('https://airlinemedia.airlinehyd.com/Graphics/images/Headers/Basic_Background.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

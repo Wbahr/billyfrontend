@@ -169,7 +169,7 @@ export default function ContactUsSidebar() {
                 <IconDiv><FontAwesomeIcon icon="print" size="1x" /> (215) 638-1707</IconDiv>
             </HeadquartersDiv>
             <LocationImgDiv>
-                <Img src="https://www.airlinehyd.com/customer/aihyco/images/Headquarters_Map_2017.png" />
+                <Img src="https://airlinemedia.airlinehyd.com/Graphics/images/Headquarters_Map_2017.png" />
             </LocationImgDiv>
         </SideDiv>
     )
