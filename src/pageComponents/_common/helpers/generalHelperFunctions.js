@@ -46,7 +46,7 @@ export const exportToPdf = (data, columns, name, ignoreCols=[], landscape) => {
 export const getImagePath = path => {
     return path
         ? '//' + path
-        : 'https://www.airlinehyd.com/images/no-image.jpg'
+        : 'https://airlinemedia.airlinehyd.com/Item_Images/no-image.png'
 }
 
 const ImageTypes = {
