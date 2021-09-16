@@ -129,7 +129,7 @@ export function smc() {
                 <ProductItems
                     brand="SMC Corporation Of America"
                     searchTerm="SMC"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/Air_Prep_Equipment.png"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/SMC/Air%20Prep%20Equipment.png"
                     title="Air Prep Equipment"
                     text="SMC's air preparation equipment and instrumentation provides unsurpassed sensing, regulation and filtration to provide the clean dry air necessary for the peak performance of your pneumatic system. SMC’s offering includes many sizes and variations of filter, regulator and/or lubrication (FRL) units and a wide range of accessories. Their electronic controls include electronic regulators, pressure switches and vacuum switches. SMC also has membrane dryers, desiccant dryers, and refrigerated dryers to keep moisture out of your systems."
                     reverse

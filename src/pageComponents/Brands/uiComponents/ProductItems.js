@@ -79,6 +79,7 @@ export default function ProductItems(props) {
         learnMoreLink,
         brand,
         selectedCategoryId,
+        shopUrl,
     } = props
 		
     const searchItem = { searchTerm: searchTerm + ' ' + title, brands: brand, selectedCategoryId: selectedCategoryId }
@@ -94,8 +95,8 @@ export default function ProductItems(props) {
                     <ShowMoreBtn onClick={() => setShowText(!showText)}>{showText ? <><FontAwesomeIcon icon='minus-circle' size='1x' /> Show Less </> : <><FontAwesomeIcon icon='plus-circle' size='1x' /> Show More  </>}</ShowMoreBtn>
                 }
                 {showText && additionalText}
-                <ShopProducts href={learnMoreLink ? learnMoreLink : searchForItem } target="_blank"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> {learnMoreLink ? 'Learn more and Shop for' : 'Shop for'} {title}</ShopProducts>
-            </ProductsDetails>
+                {shopUrl?<ShopProducts href={shopUrl} target='_blank'>Shop for {title}</ShopProducts>:<ShopProducts href={learnMoreLink ? learnMoreLink : searchForItem } target="_blank"><FontAwesomeIcon icon='arrow-circle-right' size='1x' /> {learnMoreLink ? 'Learn more and Shop for' : 'Shop for'} {title}</ShopProducts>}					
+            </ProductsDetails> 
         </ProductsDiv>
 
     )
