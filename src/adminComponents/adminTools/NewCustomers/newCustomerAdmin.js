@@ -57,8 +57,14 @@ export default function NewCustomerAdmin() {
     })
 
     const [approveRegistrationCall, { error: approveError, loading: approveLoading }] = useMutation(APPROVE_NEW_CUSTOMER, {
-        onCompleted: () => {
-            setAlertMessage('Registration approved.')
+        onCompleted: ({ approveRegistration: isApproved }) => {
+
+            if (isApproved){
+                setAlertMessage('Registration approved.')
+            } else {
+                setAlertMessage('There was an error approving this customer.')
+            }
+
             loadNewCustomers()
         }
     })
