@@ -77,7 +77,7 @@ export default function NewCardSection(props) {
 
     return (
         <Container>
-            {!isNewPaymentMethod && (
+            {isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
                     {!!context.userInfo && (
