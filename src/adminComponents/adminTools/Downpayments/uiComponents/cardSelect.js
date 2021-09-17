@@ -102,13 +102,13 @@ export default function CardSelect(props) {
         label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
     })
 
-    const isNewPaymentMethod = selectedCard !== 'new_card' && !(paymentInfo.paymentMethods || [])
+    const isNewPaymentMethod = selectedCard === 'new_card' && !(paymentInfo.paymentMethods || [])
         .some(method => method.paymentMethodId === selectedCard)
 
     const newOrSavedCardOptions = [
         { label: 'New Card', value: 'new_card' },
         ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
-    ].concat(isNewPaymentMethod ? { value: paymentInfo.paymentMethodId, label: 'xxxx xxxx xxxx xxxx - xx/xx' } : [])
+    ].concat(!isNewPaymentMethod ? { value: paymentInfo.paymentMethodId, label: 'xxxx xxxx xxxx xxxx - xx/xx' } : [])
 
     const orderTotal = context?.ordersCache?.filter(o => o.orderNumber === payment.orderNumber)[0]?.total
 

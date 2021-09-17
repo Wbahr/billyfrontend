@@ -43,7 +43,7 @@ function BillingInfoForm(props) {
         checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption,
         creditCardLoading, guestFetching, checkoutDropdownData } = props
     const context = useContext(Context)
-    const [cardIsValid, setCardIsValid] = useState(false)
+    const [cardIsValid, setCardIsValid] = useState()
 
     useDidUpdateEffect(() => {
         setFieldValue('billing.cardIsValid', cardIsValid)
@@ -140,13 +140,13 @@ function BillingInfoForm(props) {
         label: `${card.brand} xxxx${card.lastFour} - ${card.expirationMonth}/${card.expirationYear.toString().slice(2, 4)}`
     })
 
-    const isNewPaymentMethod = selectedCard !== 'new_card' && !(paymentInfo.paymentMethods || [])
+    const isNewPaymentMethod = selectedCard === 'new_card' && !(paymentInfo.paymentMethods || [])
         .some(method => method.paymentMethodId === selectedCard)
 
     const newOrSavedCardOptions = [
         { label: 'New Card', value: 'new_card' },
         ...(paymentInfo.paymentMethods || []).map(mapPaymentMethods)
-    ].concat(isNewPaymentMethod ? { value: paymentInfo.paymentMethodId, label: 'xxxx xxxx xxxx xxxx - xx/xx' } : [])
+    ].concat(!isNewPaymentMethod ? { value: paymentInfo.paymentMethodId, label: 'xxxx xxxx xxxx xxxx - xx/xx' } : [])
 
     return (
         <WrapForm>
@@ -178,6 +178,17 @@ function BillingInfoForm(props) {
             )}
 
             {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
+            {paymentMethod === 'credit_card' && !context.userInfo?.isAirlineEmployee && selectedCard !== 'new_card' && (
+                <DivNavigation>
+                    <ButtonBlack onClick={() => { 
+                        setSelectedCard('new_card')
+                        setCardIsValid(false)    
+                    }}
+                    >
+                        Change Credit Card
+                    </ButtonBlack>
+                </DivNavigation>
+            )}
             {paymentMethod === 'credit_card' && cardType === 'new_card' && (
                 <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod}/>
             )}

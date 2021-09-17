@@ -312,6 +312,9 @@ const FormContainer = props => {
     const { userInfo } = useContext(Context)
 
     const confirmCardSetup = (paymentInfo) => {
+        if (paymentInfo.paymentMethodId === selectedCard) {
+            setCurrentStep(2)
+        } else
         if (cardType === 'new_card' && !creditCardLoading) {
             setCreditCardLoading(true)
             const cardElement = elements.getElement(CardElement)
