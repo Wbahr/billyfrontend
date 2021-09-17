@@ -108,7 +108,7 @@ export default function TechnicallySpeaking() {
                             </ImgDiv>
                         </Link>
                         <TextDiv>
-                            <Details>New Site Launch :rocket: and a Message from our Website Director
+                            <Details>New Site Launch and a Message from our Website Director
                                 <ButtonDiv> <Button href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
