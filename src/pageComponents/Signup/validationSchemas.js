@@ -68,22 +68,22 @@ export const editCustomerSchema =  Yup.object().shape({
         .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
         .max(70),
     shippingAddress1: Yup.string()
-        .max(50)
-        .required(),
+        .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
+        .max(50),
     shippingAddress2: Yup.string()
         .max(50),
     shippingCity: Yup.string()
-        .max(50)
-        .required(),
+        .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
+        .max(50),
     shippingState: Yup.string()
-        .max(50)
-        .required(),
+        .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
+        .max(50),
     shippingPostal: Yup.string()
-        .max(11)
-        .required(),
+        .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
+        .max(11),
     shippingCountry: Yup.string()
-        .max(60)
-        .required(),
+        .when('customerId', { is: '', then: Yup.string().required('required'), otherwise: Yup.string().notRequired() })
+        .max(60),
     billingSame: Yup.boolean(),
     billingCompany: Yup.string()
         .max(70)
