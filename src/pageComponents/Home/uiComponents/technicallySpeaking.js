@@ -102,6 +102,18 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/new%20website%20blog%20post%20homepage%20version%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>New Site Launch and a Message from our Website Director
+                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">Read More</Button></ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.jpg" />
@@ -140,18 +152,6 @@ export default function TechnicallySpeaking() {
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">Read More</Button>
                                 </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>What is Industrial Wi-Fi?
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">Read More</Button></ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
