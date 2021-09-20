@@ -123,17 +123,17 @@ const PasswordResetPinPage = (props) => {
             </InfoAlert>
 
             <DivInput>
-                <Label>PIN from Email</Label>
+                <Label>The 6-Digit PIN Sent to Your Email</Label>
                 <Input type='text' value={resetPin} onChange={(evt) => { setResetPin(evt.target.value) }} />
             </DivInput>
 
             <DivInput>
-                <Label>New Password</Label>
+                <Label>Your New Password</Label>
                 <Input type='password' value={password} onChange={(evt) => { setPassword(evt.target.value) }} />
             </DivInput>
 
             <DivInput>
-                <Label>Confirm New Password</Label>
+                <Label>Confirm Your New Password</Label>
                 <Input type='password' value={confirmPassword} onChange={(evt) => { setConfirmPassword(evt.target.value) }} />
             </DivInput>
             
