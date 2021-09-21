@@ -282,8 +282,8 @@ export default function FooterComponent() {
                         <Item href="/search?searchTerm=hydraulics">Hydraulics</Item>
                         <Item href="/search?searchTerm=gear">Gears</Item>
                         <Item href="/search?searchTerm=tubing">Tubing</Item>
-                        <Item href="/categories/aluminum-structural-framing">Aluminum Framing</Item>
-                        <Item href="/categories/process-controls-components">Controls</Item>
+                        <Item href="/categories/ALUMINUM-STRUCTURAL-FRAMING-9">Aluminum Framing</Item>
+                        <Item href="/categories/PROCESS-CONTROL-COMPONENTS-11">Controls</Item>
                     </DivMenu>
 				
                     <DivSocial>
