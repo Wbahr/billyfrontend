@@ -72,15 +72,19 @@ export default function NewCardSection(props) {
     }
 
     const handleCheckboxChange = name => ({ target: { checked } }) => {
+        if (checked && context.userInfo?.isAirlineEmployee) {
+            
+        }
+
         setFieldValue(name, checked)
     }
 
     return (
         <Container>
-            {isNewPaymentMethod && (
+            {isNewPaymentMethod &&(
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
-                    {!!context.userInfo && (
+                    {!!context.userInfo && (context.impersonatedCompanyInfo?.customerIdP21 !== 192059)(
                         <FormikCheckbox
                             label="Save card for future payments?"
                             name="billing.savePaymentMethod"
