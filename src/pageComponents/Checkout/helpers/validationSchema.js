@@ -20,7 +20,7 @@ const contactSchema = object({
 
 const scheduleSchema = object({
     schedule: object({
-        packingBasis: string().min(1).required(),
+        packingBasis: string().min(1).required('Packing basis is required'),
         quoteRefNo: string().when('isQuote', (isQuote, schema) => {
             return isQuote
                 ? schema.min(1)
