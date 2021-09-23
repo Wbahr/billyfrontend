@@ -120,6 +120,12 @@ function CheckoutPage({ history }) {
     )
 
     useEffect(() => {
+
+        window.scrollTo({ top: 0 })
+
+    }, [])
+
+    useEffect(() => {
         if (!context.cart?.length) {
             history.replace('/cart')
         }
