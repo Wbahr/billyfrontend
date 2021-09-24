@@ -94,7 +94,13 @@ const convertObjectToSearchQuery = object => {
 }
 
 export const logout = () => {
-    const keysToRemove = ['userInfo', 'apiToken', 'refreshToken', 'shoppingCartToken', 'imperInfo']
+    removeAuthInfo()
+    const keysToRemove = ['shoppingCartToken']
+    keysToRemove.forEach(key => localStorage.removeItem(key))
+}
+
+export const removeAuthInfo = () => {
+    const keysToRemove = ['userInfo', 'apiToken', 'refreshToken', 'imperInfo']
     keysToRemove.forEach(key => localStorage.removeItem(key))
 }
 
