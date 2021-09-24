@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/building-over-a-busy-highway-an-airline-success-story" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Building%20vver%20a%20busy%20highway.jpg" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Building over a busy highway
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/building-over-a-busy-highway-an-airline-success-story" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/new%20website%20blog%20post%20homepage%20version%20copy.png" />
@@ -137,20 +151,6 @@ export default function TechnicallySpeaking() {
                             <Details>Cobots in the Classroom: The York College Story
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb%20copy.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Wireless Ethernet Setup, Featuring the FL WLAN by Phoenix Contact
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
