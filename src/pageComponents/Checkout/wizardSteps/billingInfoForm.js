@@ -39,11 +39,34 @@ const DivNavigation = styled.div`
 `
 
 function BillingInfoForm(props) {
-    const { setValues, setFieldValue, selectedCard, setSelectedCard, values: { contact, billing: { paymentMethod, cardType } },
-        checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption,
-        creditCardLoading, guestFetching, checkoutDropdownData, cardIsValid, setCardIsValid, resetCard } = props
+    const { 
+        setValues, 
+        setFieldValue, 
+        selectedCard, 
+        setSelectedCard, 
+        values: { 
+            contact, 
+            billing: { 
+                paymentMethod, 
+                cardType 
+            } 
+        },
+        checkoutDropdownData: { billingInfo }, 
+        handleMoveStep, 
+        isStepValid, 
+        paymentInfo, 
+        getPaymentInfo, 
+        showPoOption,
+        creditCardLoading, 
+        guestFetching, 
+        checkoutDropdownData, 
+        setFieldTouched, 
+        cardIsValid, 
+        setCardIsValid, 
+        resetCard 
+    } = props
+
     const context = useContext(Context)
-    
 
     useDidUpdateEffect(() => {
         setFieldValue('billing.cardIsValid', cardIsValid)
@@ -101,12 +124,21 @@ function BillingInfoForm(props) {
                 phone: (context.userInfo?.isImpersonatorUser ? contact?.phone : loggedInUserContactInfo?.phoneNumber) || '',
 
             })
+            touchBillingInfoFields()
         } else {
             setFieldValue('billing', {
                 ...props.values.billing,
                 paymentMethod: value,
                 cardType: value === 'credit_card' ? cardType : ''
             })
+            touchBillingInfoFields()
+        }
+    }
+
+    function touchBillingInfoFields() {
+        const fields = ['phone', 'email', 'firstName', 'lastName', 'country', 'stateOrProvince', 'zip', 'city', 'address1']
+        for (const field of fields) {
+            setFieldTouched(`billing.${field}`, true)
         }
     }
 
