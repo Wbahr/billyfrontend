@@ -44,10 +44,15 @@ function BillingInfoForm(props) {
         creditCardLoading, guestFetching, checkoutDropdownData, setFieldTouched } = props
     const context = useContext(Context)
     const [cardIsValid, setCardIsValid] = useState()
+    const [touchBilling, setTouchBilling] = useState(false)
 
     useDidUpdateEffect(() => {
         setFieldValue('billing.cardIsValid', cardIsValid)
     }, [cardIsValid])
+
+    useDidUpdateEffect(() => {
+        touchBillingInfoFields()
+    }, [touchBilling])
 
     useEffect(() => {
         if (context.userInfo) {
@@ -101,14 +106,14 @@ function BillingInfoForm(props) {
                 phone: (context.userInfo?.isImpersonatorUser ? contact?.phone : loggedInUserContactInfo?.phoneNumber) || '',
 
             })
-            touchBillingInfoFields()
+            setTouchBilling(!touchBilling)
         } else {
             setFieldValue('billing', {
                 ...props.values.billing,
                 paymentMethod: value,
                 cardType: value === 'credit_card' ? cardType : ''
             })
-            touchBillingInfoFields()
+            setTouchBilling(!touchBilling)
         }
     }
 

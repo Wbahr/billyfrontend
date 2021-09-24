@@ -10,6 +10,7 @@ import FormikCheckbox from '../../_common/formik/checkBox'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { packingBasis } from '../helpers/checkoutDropdownData'
+import { useDidUpdateEffect } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 
 const WrapForm = styled.div`
@@ -53,6 +54,8 @@ const Container = styled.div`
 export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
+    const [touchContact, setTouchContact] = useState(false)
+    const [touchShipTo, setTouchShipTo] = useState(false)
     const context = useContext(Context)
 
     const isQuote = history.location.pathname === '/create-quote'
@@ -60,6 +63,14 @@ export function ShipToForm(props) {
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
+
+    useDidUpdateEffect(() => {
+        touchShipToFields()
+    }, [touchShipTo])
+
+    useDidUpdateEffect(() => {
+        touchContactFields()
+    }, [touchContact])
 
     function handleSavedAddressChange(changeEvent, handleChange) {
         setFieldValue('shipto.selectedShipTo', -1)
@@ -118,7 +129,7 @@ export function ShipToForm(props) {
         setValues({ ...values, shipto, schedule })
         updateZip(shipToAddress?.id || -1, values.billing?.zip || '')
         handleChange(e)
-        touchShipToFields()
+        setTouchShipTo(!touchShipTo)
     }
     
     function touchShipToFields() {
@@ -149,7 +160,7 @@ export function ShipToForm(props) {
                 phone: contact?.phoneNumber || ''
             }
         })
-        setTimeout(() => touchContactFields())
+        setTouchContact(!touchContact)
     }
 
     function touchContactFields() {
