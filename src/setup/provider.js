@@ -23,7 +23,8 @@ import {
     getRidOf__typename,
     logout,
     distinct,
-    useDebounceValue
+    useDebounceValue,
+    removeAuthInfo
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS } from './gqlQueries/gqlItemQueries'
 import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER, WEB_USER } from 'pageComponents/_common/constants/UserTypeConstants'
@@ -301,17 +302,21 @@ export default function Provider({ history, children }) {
 
     function manageUserInfo(action, userInfo, impersonationInfo) {
         let currentUserType
+        const accessToken = localStorage.getItem('apiToken')
+        const refreshToken = localStorage.getItem('refreshToken')
         const userInfoStorage = localStorage.getItem('userInfo')
         const imperInfoStorage = localStorage.getItem('imperInfo')
         switch (action) {
         case 'load-context':
-            handleSetUserInfo(JSON.parse(userInfoStorage))
-            setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
-            if (!userInfoStorage) {
+            if (!accessToken || !refreshToken || !userInfoStorage) {
+                removeAuthInfo()
                 currentUserType = GUEST
             } else {
+                handleSetUserInfo(JSON.parse(userInfoStorage))
+                setImpersonatedCompanyInfo(JSON.parse(imperInfoStorage))
                 currentUserType = JSON.parse(userInfoStorage).role
             }
+
             break
         case 'begin-impersonation':
             localStorage.setItem('userInfo', JSON.stringify(userInfo))

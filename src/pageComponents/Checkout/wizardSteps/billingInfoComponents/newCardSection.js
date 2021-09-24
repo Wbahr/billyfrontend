@@ -80,7 +80,7 @@ export default function NewCardSection(props) {
             {isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
                     <StripePaymentSection {...props} />
-                    {!!context.userInfo && (
+                    {!!context.userInfo && (context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
                         <FormikCheckbox
                             label="Save card for future payments?"
                             name="billing.savePaymentMethod"

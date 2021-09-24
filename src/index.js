@@ -38,8 +38,14 @@ const httpLink = new HttpLink({
 })
 
 const errorLink = onError(response => {
+
+    //Reload the page on a 401 Unauthorized Error if the user has stored login info.
     if (response.networkError?.statusCode === 401){
-        if (localStorage.getItem('refreshToken')){
+        const accessToken = localStorage.getItem('apiToken')
+        const refreshToken = localStorage.getItem('refreshToken')
+        const userInfo = localStorage.getItem('userInfo')
+
+        if (accessToken || refreshToken || userInfo) {
             logout()
             location.reload()
         }
@@ -51,6 +57,7 @@ const middlewareAuthLink = new ApolloLink((operation, forward) => {
     const token = localStorage.getItem('apiToken')
     const refreshToken = localStorage.getItem('refreshToken')
 
+    //Attach the JWT tokens to every request.
     if (refreshToken && token){
         operation.setContext({
             headers: {
@@ -73,6 +80,12 @@ const afterwareLink = new ApolloLink((operation, forward) => {
 
         //And set them if present. The Refresh Token generated new tokens.
         if (newAccessToken){
+            //UserInfo is necessary for the site logic. Ensure it is not missing.
+            if (!localStorage.getItem('userInfo')){
+                logout()
+                location.reload()
+            }
+
             localStorage.setItem('apiToken', newAccessToken)
             localStorage.setItem('refreshToken', newRefreshToken)
         }
