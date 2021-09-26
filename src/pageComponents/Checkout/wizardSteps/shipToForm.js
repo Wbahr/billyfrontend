@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { packingBasis } from '../helpers/checkoutDropdownData'
 import { useDidUpdateEffect } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
+import Textarea from '../../_common/formik/textarea_v2'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -52,7 +53,7 @@ const Container = styled.div`
 `
 
 export function ShipToForm(props) {
-    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
+    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
     const [touchShipTo, setTouchShipTo] = useState(false)
@@ -129,16 +130,6 @@ export function ShipToForm(props) {
         setValues({ ...values, shipto, schedule })
         updateZip(shipToAddress?.id || -1, values.billing?.zip || '')
         handleChange(e)
-        setTouchShipTo(!touchShipTo)
-    }
-    
-    function touchShipToFields() {
-        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip', 'carrierId', 
-            'collectNumber', 'phone', 'email', 'firstName', 'lastName', 'shipToPackingBasis']
-        for (const field of fields) {
-            setFieldTouched(`shipto.${field}`, true)
-        }
-        setFieldTouched('schedule.packingBasis', true)
     }
 
     function handleSavedContactSelectChange(name, savedContact) {
@@ -161,13 +152,6 @@ export function ShipToForm(props) {
             }
         })
         setTouchContact(!touchContact)
-    }
-
-    function touchContactFields() {
-        const fields = ['phone', 'email', 'firstName', 'lastName']
-        for (const field of fields) {
-            setFieldTouched(`contact.${field}`, true)
-        }
     }
 
     function handleContinueClick() {
@@ -344,36 +328,38 @@ export function ShipToForm(props) {
                     changeFunction={handleCountryChange}
                 />
                 {values.shipto.country === 'us' && (
-                    <>
-                        <Field
-                            name="shipto.stateOrProvince"
-                            component={SelectField}
-                            options={StateList}
-                            placeholder="Select a State"
-                            label="State*"
-                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                            width="200px"
-                        />
-                        <FormikInput type="hidden" name="shipto.stateOrProvince" width='100%' />
-                    </>
+                    <Field
+                        name="shipto.stateOrProvince"
+                        component={SelectField}
+                        options={StateList}
+                        placeholder="Select a State"
+                        label="State*"
+                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                        width="200px"
+                    />
                 )}
                 {values.shipto.country === 'canada' && (
-                    <>
-                        <Field
-                            name="shipto.stateOrProvince"
-                            component={SelectField}
-                            options={CanadianProvinceList}
-                            placeholder="Select a Province"
-                            label="Province*"
-                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                            width="200px"
-                        />
-                        <FormikInput type="hidden" name="shipto.stateOrProvince" />
-                    </>
+                    <Field
+                        name="shipto.stateOrProvince"
+                        component={SelectField}
+                        options={CanadianProvinceList}
+                        placeholder="Select a Province"
+                        label="Province*"
+                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                        width="200px"
+                    />
                 )}
             </FormRow>
 
-            <FormikInput label="Shipping Notes" name="shipto.shippingNotes" width={800} />
+            <Textarea
+                label="Shipping Notes" 
+                name="shipto.shippingNotes" 
+                width={550} 
+                height={60}
+                rows={4}
+                maxLength={255}
+            />
+
             <Field
                 name="shipto.carrierId"
                 component={SelectField}
@@ -384,7 +370,7 @@ export function ShipToForm(props) {
                 changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
                 value={values.shipto.carrierId}
             />
-            <FormikInput type="hidden" name="shipto.carrierId" width='100%' />
+
             {context.userInfo && context.userInfo.isAirlineEmployee && (
                 <FormRow>
                     <FormikCheckbox

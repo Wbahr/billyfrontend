@@ -39,9 +39,33 @@ const DivNavigation = styled.div`
 `
 
 function BillingInfoForm(props) {
-    const { setValues, setFieldValue, selectedCard, setSelectedCard, values: { contact, billing: { paymentMethod, cardType } },
-        checkoutDropdownData: { billingInfo }, handleMoveStep, isStepValid, paymentInfo, getPaymentInfo, showPoOption,
-        creditCardLoading, guestFetching, checkoutDropdownData, setFieldTouched } = props
+    const { 
+        setValues, 
+        setFieldValue, 
+        selectedCard, 
+        setSelectedCard, 
+        values: { 
+            contact, 
+            billing: { 
+                paymentMethod, 
+                cardType 
+            } 
+        },
+        checkoutDropdownData: { billingInfo }, 
+        handleMoveStep, 
+        isStepValid, 
+        paymentInfo, 
+        getPaymentInfo, 
+        showPoOption,
+        creditCardLoading, 
+        guestFetching, 
+        checkoutDropdownData, 
+        setFieldTouched, 
+        cardIsValid, 
+        setCardIsValid, 
+        resetCard 
+    } = props
+
     const context = useContext(Context)
     const [cardIsValid, setCardIsValid] = useState()
     const [touchBilling, setTouchBilling] = useState(false)
@@ -194,11 +218,7 @@ function BillingInfoForm(props) {
             {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
             {paymentMethod === 'credit_card' && !context.userInfo?.isAirlineEmployee && selectedCard !== 'new_card' && (
                 <DivNavigation>
-                    <ButtonBlack onClick={() => { 
-                        setSelectedCard('new_card')
-                        setCardIsValid(false)    
-                    }}
-                    >
+                    <ButtonBlack onClick={() => { resetCard() }} >
                         Change Credit Card
                     </ButtonBlack>
                 </DivNavigation>

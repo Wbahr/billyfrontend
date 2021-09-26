@@ -24,7 +24,6 @@ const Label = styled.label`
 `
 
 const MainInput = styled(FormikField)`
-  height: 40px;
   padding: 0 8px;
   color: #303030;
   font-size: 16px;
@@ -40,7 +39,7 @@ const MainInput = styled(FormikField)`
   }
 `
 
-export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows }){
+export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows, height }){
     if (type === 'text' && _.isNil(changeFunction)){
         return (
             <DivContainer>
@@ -51,7 +50,7 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
                     name={name} 
                     placeholder={placeholder} 
                     disabled={disabled} 
-                    style={{ width: width || '400px' }}
+                    style={{ width: width || '400px', height: height || '40' }}
                     maxLength={maxLength}
                     rows={rows}
                 />
@@ -67,7 +66,7 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
                     name={name} 
                     placeholder={placeholder} 
                     disabled={disabled} 
-                    style={{ width: width || '400px' }}
+                    style={{ width: width || '400px', height: height || '40' }}
                     onChange={(e) => changeFunction(name, e.target.value)}
                     maxLength={maxLength}
                     rows={rows}
