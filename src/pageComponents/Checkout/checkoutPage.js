@@ -319,23 +319,43 @@ const FormContainer = props => {
     const { userInfo } = useContext(Context)
 
     const confirmCardSetup = (paymentInfo) => {
-        if (paymentInfo.paymentMethodId === selectedCard) {
-            setCurrentStep(2)
-            return
-        }
-        
         if (cardType === 'new_card' && !creditCardLoading) {
-            setCreditCardLoading(true)
             const cardElement = elements.getElement(CardElement)
+
+            if (!cardElement && paymentInfo.paymentSystemCustomerId && paymentInfo.paymentMethodId && paymentInfo.paymentMethodId !== 'new_card') {
+                setCurrentStep(2)
+                return
+            }
+
+            setCreditCardLoading(true)
+
             stripe
                 .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
                 .then(data => {
-                    setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
-                    setSelectedCard(data.setupIntent.payment_method)
-                    setCurrentStep(2)
+
+                    if (data.error){
+                        setCreditCardLoading(false)
+                        alert(data.error.message)
+                        return
+                    }
+
+                    if (data.setupIntent) {
+                        setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
+                        setSelectedCard(data.setupIntent.payment_method)
+                        setCurrentStep(2)
+                    } else {
+                        alert('Payment setup unsuccessful')
+                    }
+                    
                     setCreditCardLoading(false)
                 })
         } else {
+
+            //If information is invalid, do not proceed.
+            if (selectedCard === 'new_card' || !selectedCard) {
+                return
+            }
+
             setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
             setCurrentStep(2)
         }
