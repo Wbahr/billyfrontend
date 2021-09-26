@@ -67,7 +67,6 @@ function BillingInfoForm(props) {
     } = props
 
     const context = useContext(Context)
-    const [cardIsValid, setCardIsValid] = useState()
     const [touchBilling, setTouchBilling] = useState(false)
 
     useDidUpdateEffect(() => {

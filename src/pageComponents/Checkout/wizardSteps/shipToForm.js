@@ -53,7 +53,8 @@ const Container = styled.div`
 `
 
 export function ShipToForm(props) {
-    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, checkoutDropdownData, updateZip, isStepValid, handleMoveStep } = props
+    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, 
+        checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
     const [touchShipTo, setTouchShipTo] = useState(false)
@@ -130,6 +131,16 @@ export function ShipToForm(props) {
         setValues({ ...values, shipto, schedule })
         updateZip(shipToAddress?.id || -1, values.billing?.zip || '')
         handleChange(e)
+        setTouchShipTo(!touchShipTo)
+    }
+
+    function touchShipToFields() {
+        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip', 'carrierId', 
+            'collectNumber', 'phone', 'email', 'firstName', 'lastName', 'shipToPackingBasis']
+        for (const field of fields) {
+            setFieldTouched(`shipto.${field}`, true)
+        }
+        setFieldTouched('schedule.packingBasis', true)
     }
 
     function handleSavedContactSelectChange(name, savedContact) {
@@ -152,6 +163,13 @@ export function ShipToForm(props) {
             }
         })
         setTouchContact(!touchContact)
+    }
+
+    function touchContactFields() {
+        const fields = ['phone', 'email', 'firstName', 'lastName']
+        for (const field of fields) {
+            setFieldTouched(`contact.${field}`, true)
+        }
     }
 
     function handleContinueClick() {
