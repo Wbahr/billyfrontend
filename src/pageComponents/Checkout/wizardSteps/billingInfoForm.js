@@ -54,8 +54,8 @@ function BillingInfoForm(props) {
         checkoutDropdownData: { billingInfo }, 
         handleMoveStep, 
         isStepValid, 
-        paymentInfo, 
-        getPaymentInfo, 
+        setPaymentInfo,
+        paymentInfo,
         showPoOption,
         creditCardLoading, 
         guestFetching, 
@@ -78,12 +78,6 @@ function BillingInfoForm(props) {
     }, [touchBilling])
 
     useEffect(() => {
-        if (context.userInfo) {
-            getPaymentInfo(transformForPaymentInfo(props.values))
-        }
-    }, [context.userInfo])
-
-    useEffect(() => {
         window.scrollTo({ top: 0 })
         if (!paymentMethod) {
             setFieldValue('billing.paymentMethod', context.userInfo && billingInfo?.isNetTerms ? 'purchase_order' : 'credit_card')
@@ -101,6 +95,19 @@ function BillingInfoForm(props) {
                 cardIsValid: value === 'new_card' ? cardIsValid : true
             }
         })
+
+        if (value === 'new_card'){
+            setPaymentInfo({
+                ...paymentInfo,
+                paymentMethodId: ''
+            })
+        } else {
+            setPaymentInfo({
+                ...paymentInfo,
+                paymentMethodId: value
+            })
+        }
+
         setSelectedCard(value)
     }
 

@@ -318,17 +318,23 @@ const FormContainer = props => {
     const [guestFetching, setGuestFetching] = useState(false)
     const { userInfo } = useContext(Context)
 
+    //Initializes the Saved Payment Methods for logged-in users
+    useEffect(() => {
+        if (userInfo) {
+            getPaymentInfo(transformForPaymentInfo(props.values))
+        }
+    }, [userInfo])
+
     const confirmCardSetup = (paymentInfo) => {
         if (cardType === 'new_card' && !creditCardLoading) {
             const cardElement = elements.getElement(CardElement)
 
-            if (!cardElement && paymentInfo.paymentSystemCustomerId && paymentInfo.paymentMethodId && paymentInfo.paymentMethodId !== 'new_card') {
+            if (paymentInfo.paymentSystemCustomerId && paymentInfo.paymentMethodId && paymentInfo.paymentMethodId !== 'new_card') {
                 setCurrentStep(2)
                 return
             }
 
             setCreditCardLoading(true)
-
             stripe
                 .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
                 .then(data => {
@@ -391,19 +397,12 @@ const FormContainer = props => {
             // step, setup the credit card payment information.
             if (nextStepIdx === 2 && paymentMethod === 'credit_card') {
                 
-                // Logged in users need only to confirm the entered card information.
-                if (userInfo) {
-                    confirmCardSetup(paymentInfo)
+                //Retireve the payment information if missing.
+                if (!paymentInfo.paymentSystemSecretKey || !paymentInfo.paymentMethodId || !paymentInfo.paymentSystemCustomerId) {
+                    setGuestFetching(true)
+                    handleGuestPayment(transformForPaymentInfo(props.values))
                 } else {
-                    // Guests need to both confirm their card and
-                    // retrieve a new Customer token.
-                    // Prevent repeated payment method retrievals.
-                    if (!paymentInfo.paymentSystemSecretKey || !paymentInfo.paymentSystemCustomerId) {
-                        setGuestFetching(true)
-                        handleGuestPayment(transformForPaymentInfo(props.values))
-                    } else {
-                        confirmCardSetup(paymentInfo)
-                    }
+                    confirmCardSetup(paymentInfo)
                 }
             } else {
                 setCurrentStep(nextStepIdx)
@@ -427,7 +426,7 @@ const FormContainer = props => {
 
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, getPaymentInfo, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
+                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
                 {!validationSchema && <Loader />}
             </Container>
         </>
