@@ -54,8 +54,8 @@ function BillingInfoForm(props) {
         checkoutDropdownData: { billingInfo }, 
         handleMoveStep, 
         isStepValid, 
-        paymentInfo, 
-        getPaymentInfo, 
+        setPaymentInfo,
+        paymentInfo,
         showPoOption,
         creditCardLoading, 
         guestFetching, 
@@ -67,16 +67,15 @@ function BillingInfoForm(props) {
     } = props
 
     const context = useContext(Context)
+    const [touchBilling, setTouchBilling] = useState(false)
 
     useDidUpdateEffect(() => {
         setFieldValue('billing.cardIsValid', cardIsValid)
     }, [cardIsValid])
 
-    useEffect(() => {
-        if (context.userInfo) {
-            getPaymentInfo(transformForPaymentInfo(props.values))
-        }
-    }, [context.userInfo])
+    useDidUpdateEffect(() => {
+        touchBillingInfoFields()
+    }, [touchBilling])
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
@@ -96,6 +95,19 @@ function BillingInfoForm(props) {
                 cardIsValid: value === 'new_card' ? cardIsValid : true
             }
         })
+
+        if (value === 'new_card'){
+            setPaymentInfo({
+                ...paymentInfo,
+                paymentMethodId: ''
+            })
+        } else {
+            setPaymentInfo({
+                ...paymentInfo,
+                paymentMethodId: value
+            })
+        }
+
         setSelectedCard(value)
     }
 
@@ -124,14 +136,14 @@ function BillingInfoForm(props) {
                 phone: (context.userInfo?.isImpersonatorUser ? contact?.phone : loggedInUserContactInfo?.phoneNumber) || '',
 
             })
-            touchBillingInfoFields()
+            setTouchBilling(!touchBilling)
         } else {
             setFieldValue('billing', {
                 ...props.values.billing,
                 paymentMethod: value,
                 cardType: value === 'credit_card' ? cardType : ''
             })
-            touchBillingInfoFields()
+            setTouchBilling(!touchBilling)
         }
     }
 
