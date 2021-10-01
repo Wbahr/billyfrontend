@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/mguard" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/mGuard%20-%20homepage%20version%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details> How to Establish & Secure a Remote Network
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/mguard" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/building-over-a-busy-highway-an-airline-success-story" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Building%20vver%20a%20busy%20highway.jpg" />
@@ -137,20 +151,6 @@ export default function TechnicallySpeaking() {
                             <Details>How to collect data from virtually any machine device
                                 <ButtonDiv>
                                     <Button href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/york%20college%20home%20thmubnail.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Cobots in the Classroom: The York College Story
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">Read More</Button>
                                 </ButtonDiv>
                             </Details>
                         </TextDiv>
