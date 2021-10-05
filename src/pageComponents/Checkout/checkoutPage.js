@@ -111,10 +111,12 @@ function CheckoutPage({ history }) {
     const [currentStep, setCurrentStep] = useState(0)
     const [validationSchema, setValidationSchema] = useState(null)
 
+    const isQuote = history.location.pathname === '/create-quote'
+
     const [stepValidated, setStepValidated] = useState(
         {
             0: false,
-            1: history.location.pathname === '/create-quote',
+            1: isQuote,
             2: false
         }
     )
@@ -224,7 +226,7 @@ function CheckoutPage({ history }) {
             ...defaultQuote,
             cartWithDates: context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
             shoppingCartToken: localStorage.getItem('shoppingCartToken'),
-            isQuote: history.location.pathname === '/create-quote'
+            isQuote: isQuote
         },
         shipto: {
             ...defaultShipTo,
@@ -272,7 +274,7 @@ function CheckoutPage({ history }) {
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
                                     {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                        isQuote, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
                                 />
                             </form>
                         )}
@@ -308,7 +310,7 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, history } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, history } = props
     const stripe = useStripe()
     const elements = useElements()
     const [paymentInfo, setPaymentInfo] = useState({})
@@ -395,7 +397,7 @@ const FormContainer = props => {
 
             //If the payment is with a credit card and we are going to the final
             // step, setup the credit card payment information.
-            if (nextStepIdx === 2 && paymentMethod === 'credit_card') {
+            if (nextStepIdx === 2 && paymentMethod === 'credit_card' && !isQuote) {
                 
                 //Retireve the payment information if missing.
                 if (!paymentInfo.paymentSystemSecretKey || !paymentInfo.paymentMethodId || !paymentInfo.paymentSystemCustomerId) {
@@ -412,7 +414,7 @@ const FormContainer = props => {
 
     const FormStepComponent = getFormStepComponent(currentStep)
 
-    const stepLabels = ['Ship To', 'Bill To', history.location.pathname === '/create-quote' ? 'Quote Review' : 'Order Review']
+    const stepLabels = ['Ship To', 'Bill To', isQuote ? 'Quote Review' : 'Order Review']
 
     return (
         <>
