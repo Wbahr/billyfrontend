@@ -85,16 +85,6 @@ export default function NewAndNoteworthy() {
                         </A>
                     </Row>
                     <Row>
-                        <A href="https://blog.airlinehyd.com/" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Web%20Thumb%20Amazon.jpg" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>Blog Subscription Giveaway</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
                         <A href="https://info.airlinehyd.com/fast-wiring" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Fast%20wiring.png" />
