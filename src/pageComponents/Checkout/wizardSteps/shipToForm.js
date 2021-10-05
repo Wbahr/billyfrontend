@@ -65,6 +65,13 @@ export function ShipToForm(props) {
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
+    
+    //Checking if the user has the account if not, it will set the carrier field value to ID 187145 for UPS Ground as a default value.
+    useEffect(() => {
+        if (!context.userInfo) {
+            setFieldValue('shipto.carrierId', '187145')
+        }
+    }, [context.userInfo])
 
     useDidUpdateEffect(() => {
         touchShipToFields()
@@ -379,7 +386,7 @@ export function ShipToForm(props) {
             />
 
             <Field
-                name="shipto.carrierId"
+                name="shipto.carrierId" 
                 component={SelectField}
                 options={checkoutDropdownDataLabels.carriers}
                 placeholder="Select a Carrier"
