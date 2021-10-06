@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Field } from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import { ShippingScheduleForm } from './shippingScheduleForm'
 import FormikInput from '../../_common/formik/input_v2'
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import { packingBasis } from '../helpers/checkoutDropdownData'
 import { useDidUpdateEffect } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 import Textarea from '../../_common/formik/textarea_v2'
+import { FormikFormFieldError } from 'styles/formikForm'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -53,7 +54,7 @@ const Container = styled.div`
 `
 
 export function ShipToForm(props) {
-    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels, 
+    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels,
         checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
@@ -65,7 +66,7 @@ export function ShipToForm(props) {
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
-    
+
     //Checking if the user has the account if not, it will set the carrier field value to ID 187145 for UPS Ground as a default value.
     useEffect(() => {
         if (!context.userInfo) {
@@ -142,7 +143,7 @@ export function ShipToForm(props) {
     }
 
     function touchShipToFields() {
-        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip', 'carrierId', 
+        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip', 'carrierId',
             'collectNumber', 'phone', 'email', 'firstName', 'lastName', 'shipToPackingBasis']
         for (const field of fields) {
             setFieldTouched(`shipto.${field}`, true)
@@ -180,10 +181,16 @@ export function ShipToForm(props) {
     }
 
     function handleContinueClick() {
-        if (history.location.pathname === '/create-quote') {
-            handleMoveStep(2)
+        const disabled = !isStepValid && values.contact
+        if (disabled) {
+            touchContactFields()
+            touchShipToFields()
         } else {
-            handleMoveStep(1)
+            if (history.location.pathname === '/create-quote') {
+                handleMoveStep(2)
+            } else {
+                handleMoveStep(1)
+            }
         }
     }
 
@@ -203,7 +210,6 @@ export function ShipToForm(props) {
     }
 
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
-    const disabled = !isStepValid && values.contact
 
     return (
         <WrapForm>
@@ -353,48 +359,63 @@ export function ShipToForm(props) {
                     changeFunction={handleCountryChange}
                 />
                 {values.shipto.country === 'us' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label="State*"
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
                 {values.shipto.country === 'canada' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label="Province*"
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
             </FormRow>
 
             <Textarea
-                label="Shipping Notes" 
-                name="shipto.shippingNotes" 
-                width={550} 
+                label="Shipping Notes"
+                name="shipto.shippingNotes"
+                width={550}
                 height={60}
                 rows={4}
                 maxLength={255}
             />
 
-            <Field
-                name="shipto.carrierId" 
-                component={SelectField}
-                options={checkoutDropdownDataLabels.carriers}
-                placeholder="Select a Carrier"
-                label="Carrier*"
-                width="500px"
-                changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
-                value={values.shipto.carrierId}
-            />
+            <>
+                <Field
+                    name="shipto.carrierId"
+                    component={SelectField}
+                    options={checkoutDropdownDataLabels.carriers}
+                    placeholder="Select a Carrier"
+                    label="Carrier*"
+                    width="500px"
+                    changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
+                    value={values.shipto.carrierId}
+                />
+                <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                    <ErrorMessage name="shipto.carrierId" />
+                </FormikFormFieldError>
+            </>
 
             {context.userInfo && context.userInfo.isAirlineEmployee && (
                 <FormRow>
@@ -413,7 +434,7 @@ export function ShipToForm(props) {
                     <FontAwesomeIcon icon='shopping-cart' size="sm" color="white" />
                     Back to Cart
                 </ButtonBlack>
-                <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
+                <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
 
             <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />

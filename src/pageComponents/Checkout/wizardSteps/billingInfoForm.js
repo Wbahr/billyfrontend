@@ -84,13 +84,22 @@ function BillingInfoForm(props) {
         }
     }, [])
 
-    const handleContinueClick = () => handleMoveStep(2)
+    const handleContinueClick = () => {
+        const disabled = !isStepValid
+        if (disabled) {
+            touchBillingInfoFields()
+        } else {
+            handleMoveStep(2)
+        }
+        
+    }
 
     const handleCardChange = value => {
         setValues({
             ...props.values,
             billing: {
                 ...props.values.billing,
+                country: props.values.billing.country.toLowerCase() || 'us',
                 cardType: value === 'new_card' ? value : 'saved_card',
                 cardIsValid: value === 'new_card' ? cardIsValid : true
             }
@@ -129,7 +138,7 @@ function BillingInfoForm(props) {
                 city: billingInfo?.city || '',
                 stateOrProvince: billingInfo?.state || '',
                 zip: billingInfo?.zip || '',
-                country: billingInfo?.country.toLowerCase() || '',
+                country: billingInfo?.country.toLowerCase() || 'us',
                 firstName: (context.userInfo?.isImpersonatorUser ? contact?.firstName : loggedInUserContactInfo?.firstName) || '',
                 lastName: (context.userInfo?.isImpersonatorUser ? contact?.lastName : loggedInUserContactInfo?.lastName) || '',
                 email: (context.userInfo?.isImpersonatorUser ? contact?.email : loggedInUserContactInfo?.email) || '',
@@ -140,6 +149,7 @@ function BillingInfoForm(props) {
         } else {
             setFieldValue('billing', {
                 ...props.values.billing,
+                country: props.values.billing.country.toLowerCase() || 'us',
                 paymentMethod: value,
                 cardType: value === 'credit_card' ? cardType : ''
             })
@@ -148,7 +158,11 @@ function BillingInfoForm(props) {
     }
 
     function touchBillingInfoFields() {
-        const fields = ['phone', 'email', 'firstName', 'lastName', 'country', 'stateOrProvince', 'zip', 'city', 'address1']
+        const fields = ['phone', 'email', 'firstName', 'lastName', 'country', 'stateOrProvince', 
+            'zip', 'city', 'address1', 'paymentMethod', 'cardIsValid']
+        if (billingInfo?.isNetTerms) {
+            fields.push('purchaseOrder')
+        }
         for (const field of fields) {
             setFieldTouched(`billing.${field}`, true)
         }
@@ -243,7 +257,7 @@ function BillingInfoForm(props) {
                         <Loader/>
                     </div>
                 ) : (
-                    <ButtonRed disabled={!isStepValid} onClick={handleContinueClick}>Continue</ButtonRed>
+                    <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
                 )}
             </DivNavigation>
         </WrapForm>

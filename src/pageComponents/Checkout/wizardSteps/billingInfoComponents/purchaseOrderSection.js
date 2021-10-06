@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import { Field } from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import SelectField from '../../../_common/formik/select'
 import styled from 'styled-components'
 import Context from '../../../../setup/context'
+import { FormikFormFieldError } from 'styles/formikForm'
 
 const Row = styled.div`
 	display: flex;
@@ -40,7 +41,8 @@ export default function PurchaseOrderSection(props) {
             }
 
             setFieldValue('billing', {
-                ...values.billing
+                ...values.billing,
+                country: values.billing.country.toLowerCase() || 'us',
             })
         }
     }, [])
@@ -69,36 +71,51 @@ export default function PurchaseOrderSection(props) {
                 <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <Field
-                    name="billing.country"
-                    component={SelectField}
-                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
-                    placeholder="Select a Country"
-                    isSearchable={false}
-                    label="Country*"
-                    isDisabled={!!billingInfo.isNetTerms}
-                />
-                {values.billing.country === 'us' && (
+                <div>
                     <Field
-                        name="billing.stateOrProvince"
+                        name="billing.country"
                         component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        width="200px"
+                        options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                        placeholder="Select a Country"
+                        isSearchable={false}
+                        label="Country*"
                         isDisabled={!!billingInfo.isNetTerms}
                     />
+                    <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                        <ErrorMessage name="billing.country" />
+                    </FormikFormFieldError>
+                </div>
+                {values.billing.country === 'us' && (
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label="State*"
+                            width="200px"
+                            isDisabled={!!billingInfo.isNetTerms}
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
                 {values.billing.country === 'canada' && (
-                    <Field
-                        name="billing.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        width="200px"
-                        isDisabled={!!billingInfo.isNetTerms}
-                    />
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label="Province*"
+                            width="200px"
+                            isDisabled={!!billingInfo.isNetTerms}
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
 
             </Row>

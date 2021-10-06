@@ -134,6 +134,12 @@ export function getBillToSchema(requirePoNumber) {
                     then: string(),
                     otherwise: string().required('State/Province must be selected')
                 }),
+            country: string()
+                .when('cardType', {
+                    is: 'saved_card',
+                    then: string(),
+                    otherwise: string().required('Country must be selected')
+                }),
             zip: string()
                 .when('cardType', {
                     is: 'saved_card',
