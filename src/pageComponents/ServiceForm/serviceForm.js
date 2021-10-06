@@ -20,17 +20,18 @@ import {
     emptyPart
 } from './helpers'
 import { GET_CHECKOUT_DATA } from 'setup/providerGQL'
-import { 
-    partSchema, 
-    airlinePartSchema, 
-    shipToSchema, 
-    airlineShipToSchema, 
-    billToSchema, 
-    serviceSchema, 
-    airlineServiceSchema, 
-    confirmationSchema 
+import {
+    partSchema,
+    airlinePartSchema,
+    shipToSchema,
+    airlineShipToSchema,
+    billToSchema,
+    serviceSchema,
+    airlineServiceSchema,
+    confirmationSchema
 } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
+import { ButtonBlack } from 'styles/buttons'
 
 const DivContainer = styled.div`
   display: flex;
@@ -150,7 +151,7 @@ function ServiceForm({ history }) {
             3: confirmationSchema
         }
     }
-    
+
     const [getCheckoutData] = useLazyQuery(GET_CHECKOUT_DATA, {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
@@ -168,10 +169,12 @@ function ServiceForm({ history }) {
             .isValid(values)
             .then((valid) => setStepValidated({ ...stepValidated, [currentStep]: valid }))
     }
-    
+
     const loggedInUserContactInfo = checkoutDropdownData.contacts?.[0]
 
-    const initValues = {
+    const serviceDraft = JSON.parse(localStorage.getItem('serviceDraft'))
+
+    const initValues = serviceDraft || {
         contact: { ...defaultContact },
         communications: {
             email: false,
@@ -182,14 +185,14 @@ function ServiceForm({ history }) {
             ...defaultShipTo,
             selectedShipTo: -1,
             firstName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.firstName || '',
-            lastName: context.userInfo?.isImpersonatorUser  ? '' : loggedInUserContactInfo?.lastName || '',
+            lastName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.lastName || '',
             phone: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.phoneNumber || '',
             email: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.email || ''
         },
         billing: {
             ...defaultBilling,
             firstName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.firstName || '',
-            lastName: context.userInfo?.isImpersonatorUser  ? '' : loggedInUserContactInfo?.lastName || '',
+            lastName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.lastName || '',
             phone: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.phoneNumber || '',
             email: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.email || '',
             companyName: checkoutDropdownData.billingInfo?.companyName || '',
@@ -222,8 +225,10 @@ function ServiceForm({ history }) {
                             <form name="serviceForm" onSubmit={e => e.preventDefault()}>
                                 <FormContainer
                                     isStepValid={stepValidated[currentStep]}
-                                    {...{ ...formikProps, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        history, stepValidated, currentStep, setCurrentStep, validationSchema, formType, setFormType }}
+                                    {...{
+                                        ...formikProps, checkoutDropdownData, checkoutDropdownDataLabels,
+                                        history, stepValidated, currentStep, setCurrentStep, validationSchema, formType, setFormType
+                                    }}
                                 />
                             </form>
                         )}
@@ -240,7 +245,7 @@ const getFormStepComponent = currentStep => {
         return ShipToForm
     case 1:
         return BillingInfoForm
-    case 2: 
+    case 2:
         return PartsForm
     case 3:
         return ConfirmationScreen
@@ -251,7 +256,7 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, formType, setFormType, history } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, formType, setFormType, history, values } = props
 
     const handleMoveStep = nextStepIdx => {
         const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)
@@ -272,22 +277,23 @@ const FormContainer = props => {
                     <ServiceProgress {...{ stepLabels, currentStep, stepValidated, handleMoveStep }} />
                 </DivRow>
             </Div>
-
-            <RadioGroup 
-                aria-label="Form Type" 
-                name="formType" 
-                value={formType} 
-                onChange={(e) => setFormType(e.target.value)}
-                row
-                style={{ marginLeft: '20px' }}
-            >
-                <FormControlLabel value="parts" control={<Radio />} label="Repair part(s)" />
-                <FormControlLabel value="service" control={<Radio />} label="Service or Installation at Customer's Location" />
-            </RadioGroup>
-
+            <Div>
+                <RadioGroup
+                    aria-label="Form Type"
+                    name="formType"
+                    value={formType}
+                    onChange={(e) => setFormType(e.target.value)}
+                    row
+                    style={{ marginLeft: '20px' }}
+                >
+                    <FormControlLabel value="parts" control={<Radio />} label="Repair part(s)" />
+                    {/* <FormControlLabel value="service" control={<Radio />} label="Service or Installation at Customer's Location" /> */}
+                </RadioGroup>
+                <ButtonBlack onClick={() => localStorage.setItem('serviceDraft', JSON.stringify(values))}>Save As Draft</ButtonBlack>
+            </Div>
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, handleMoveStep, emptyPart, URGENCY, locationOptions }}/>
+                <FormStepComponent {...{ ...props, handleMoveStep, emptyPart, URGENCY, locationOptions }} />
                 {!validationSchema && <Loader />}
             </Container>
         </>
