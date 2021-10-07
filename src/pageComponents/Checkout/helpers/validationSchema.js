@@ -1,3 +1,5 @@
+import { ErrorSharp } from '@material-ui/icons'
+
 const { object, string, boolean, array } = require('yup')
 
 // Step 1
@@ -33,10 +35,12 @@ export const shipToSchema = object({
     shipto: object({
         firstName: string()
             .max(50)
-            .required('First Name is required'),
+            .required('First Name is required')
+            .matches(/^[-\sa-zA-Z]+$/, 'Invalid Name format'), 
         lastName: string()
             .max(50)
-            .required('Last Name is required'),
+            .required('Last Name is required')
+            .matches(/^[-\sa-zA-Z]+$/, 'Invalid Last name format'),
         address1: string()
             .min(5, 'Address Line 1 must be at least 5 characters long')
             .max(256)
@@ -89,6 +93,7 @@ export function getBillToSchema(requirePoNumber) {
                             .min(1, 'Purchase Order must be at least 1 character long')
                             .max(20, 'Purchase Order can not exceed 20 characters')
                             .required('PO Number is required')
+                            .matches(/^\S*$/, 'PO Number should begin with a non-space character' ) 
                         : schema
                 }),
             firstName: string()
@@ -129,6 +134,12 @@ export function getBillToSchema(requirePoNumber) {
                     is: 'saved_card',
                     then: string(),
                     otherwise: string().required('State/Province must be selected')
+                }),
+            country: string()
+                .when('cardType', {
+                    is: 'saved_card',
+                    then: string(),
+                    otherwise: string().required('Country must be selected')
                 }),
             zip: string()
                 .when('cardType', {

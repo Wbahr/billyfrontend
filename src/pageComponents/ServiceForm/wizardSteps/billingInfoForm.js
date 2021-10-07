@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { Field } from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import styled from 'styled-components'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import { DivNavigation } from '../../../styles/divs'
@@ -10,6 +10,7 @@ import FormikCheckbox from '../../_common/formik/checkBox'
 import FormikInput from '../../_common/formik/input_v2'
 import Loader from '../../_common/loader'
 import { defaultBilling } from '../helpers'
+import { FormikFormFieldError } from 'styles/formikForm'
 
 const WrapForm = styled.div`
     display: flex;
@@ -30,7 +31,7 @@ const FormRow = styled.div`
 `
 
 export default function BillingInfoForm(props) {
-    const { setFieldValue, values: { contact }, handleMoveStep, isStepValid, 
+    const { setFieldValue, values: { contact }, handleMoveStep, isStepValid,
         creditCardLoading, guestFetching, checkoutDropdownData, setFieldTouched, values } = props
     const context = useContext(Context)
 
@@ -38,6 +39,7 @@ export default function BillingInfoForm(props) {
         window.scrollTo({ top: 0 })
         setFieldValue('billing', {
             ...props.values.billing,
+            country: defaultBilling.country || 'us',
             firstName: (context.userInfo?.isImpersonatorUser ? contact?.firstName : loggedInUserContactInfo?.firstName) || '',
             lastName: (context.userInfo?.isImpersonatorUser ? contact?.lastName : loggedInUserContactInfo?.lastName) || '',
             email: (context.userInfo?.isImpersonatorUser ? contact?.email : loggedInUserContactInfo?.email) || '',
@@ -67,7 +69,7 @@ export default function BillingInfoForm(props) {
             setFieldValue('billing.city', defaultBilling.city)
             setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince)
             setFieldValue('billing.zip', defaultBilling.zip)
-            setFieldValue('billing.country', defaultBilling.country)
+            setFieldValue('billing.country', defaultBilling.country || 'us')
             setFieldValue('billing.companyName', defaultBilling.companyName)
             setFieldValue('billing.email', defaultBilling.email)
             setFieldValue('billing.phone', defaultBilling.phone)
@@ -80,9 +82,23 @@ export default function BillingInfoForm(props) {
         setTimeout(() => setFieldTouched('billing.zip', true))
     }
 
+    const handleContinueClick = () => {
+        const disabled = !isStepValid
+        if (disabled) {
+            touchFields()
+        } else {
+            handleMoveStep(2)
+        }
+    }
+
+    function touchFields() {
+        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip', 'firstName', 'lastName']
+        for (const field of fields) {
+            setFieldTouched(`billing.${field}`, true)
+        }
+    }
+
     const loggedInUserContactInfo = checkoutDropdownData.contacts?.[0]
-    
-    const handleContinueClick = () => handleMoveStep(2)
 
     return (
         <WrapForm>
@@ -123,24 +139,34 @@ export default function BillingInfoForm(props) {
                     label="Country*"
                 />
                 {values.billing.country === 'us' && (
-                    <Field
-                        name="billing.stateOrProvince"
-                        component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label="State*"
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
                 {values.billing.country === 'canada' && (
-                    <Field
-                        name="billing.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label="Province*"
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
             </FormRow>
 
@@ -151,7 +177,7 @@ export default function BillingInfoForm(props) {
                         <Loader />
                     </div>
                 ) : (
-                    <ButtonRed disabled={!isStepValid} onClick={handleContinueClick}>Continue</ButtonRed>
+                    <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
                 )}
             </DivNavigation>
         </WrapForm>

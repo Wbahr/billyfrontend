@@ -76,7 +76,9 @@ export const emptyPart = {
     safety: false,
     fluidType: null,
     toAirline: null,
-    toCustomer: null
+    toCustomer: null,
+    poNo: null,
+    carrierNumber: ''
 }
 
 export const transformForPaymentInfo = ({ billing: { address1, address2, city, state, zip, country },
