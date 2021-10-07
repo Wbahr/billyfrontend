@@ -93,7 +93,7 @@ export function getBillToSchema(requirePoNumber) {
                             .min(1, 'Purchase Order must be at least 1 character long')
                             .max(20, 'Purchase Order can not exceed 20 characters')
                             .required('PO Number is required')
-                            .matches(/^\S*$/, 'Space is not allowed' ) 
+                            .matches(/^\S*$/, 'PO Number should begin with a non-space character' ) 
                         : schema
                 }),
             firstName: string()
