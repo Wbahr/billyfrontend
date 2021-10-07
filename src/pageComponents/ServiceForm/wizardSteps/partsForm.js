@@ -28,12 +28,40 @@ const PartContainer = styled.div`
 `
 
 export default function PartsForm(props) {
-    const { isStepValid, handleMoveStep, values, emptyPart } = props
-    const handleContinueClick = () => handleMoveStep(3)
-
+    const { isStepValid, handleMoveStep, values, emptyPart, setFieldTouched } = props
+    
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
+
+    const handleContinueClick = () => {
+        const disabled = !isStepValid
+        if (disabled) {
+            touchFields()
+        } else {
+            handleMoveStep(3)
+        }
+    }
+
+    function touchFields() {
+        const fields = [
+            'type',
+            'quantity',
+            'manufacturer',
+            'modelCode',
+            'partNumber',
+            'failure',
+            'failureLocation',
+            'fluidType',
+            'toAirline',
+            'toCustomer',
+        ]
+        values.parts.forEach((part, i) => {
+            for (const field of fields) {
+                setFieldTouched(`parts[${i}].${field}`, true)
+            }
+        })
+    }
 
     return (
         <div>
@@ -63,7 +91,7 @@ export default function PartsForm(props) {
             />
             <DivNavigation>
                 <ButtonBlack onClick={() => handleMoveStep(1)}>Previous</ButtonBlack>
-                <ButtonRed disabled={!isStepValid} onClick={handleContinueClick}>Continue</ButtonRed>
+                <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
         </div>
     )
