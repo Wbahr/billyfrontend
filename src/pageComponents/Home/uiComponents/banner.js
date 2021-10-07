@@ -16,18 +16,18 @@ const Img = styled.img`
 `
 const LgBanner = styled.div`
 	display: flex;
-	background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new-site-background-02.png");
+	background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20header-main%20copy.png");
 	height: 300px;
 	background-color: #464646;
 	background-size: cover;
 	background-position: 50% 0;
 	background-repeat: no-repeat;
 	@media (max-width: 768px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new%20launch%20headers%20mobile-05.png);
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20medium%20copy.png);
 		height: 240px;
 	}
 	@media (max-width: 400px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/new%20launch%20headers%20mobile-06.png);
+		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20small%20copy.png);
 		height: 190px;
 	}
 `
@@ -98,7 +98,7 @@ const A = styled.a`
 export default () =>  (
     <BannerContainer>
         <Col>
-            <A href="https://info.airlinehyd.com/new-airlinehyd.com-launched" target="_blank">
+            <A href="https://bit.ly/3iBIotx" target="_blank">
                 <LgBanner />
             </A>
             <SmBanner>

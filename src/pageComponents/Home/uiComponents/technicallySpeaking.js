@@ -102,6 +102,20 @@ export default function TechnicallySpeaking() {
             <Wrapper>
                 <Container>
                     <Row>
+                        <Link href="https://blog.airlinehyd.com/understanding-cybersecurity" target="_blank">
+                            <ImgDiv>
+                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/webinar%20homepage%20version%20thumbnail%20copy.png" />
+                            </ImgDiv>
+                        </Link>
+                        <TextDiv>
+                            <Details>Understanding Industrial Cybersecurity
+                                <ButtonDiv>
+                                    <Button href="https://blog.airlinehyd.com/understanding-cybersecurity" target="_blank">Read More</Button>
+                                </ButtonDiv>
+                            </Details>
+                        </TextDiv>
+                    </Row>
+                    <Row>
                         <Link href="https://blog.airlinehyd.com/mguard" target="_blank">
                             <ImgDiv>
                                 <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/mGuard%20-%20homepage%20version%20copy.png" />
@@ -138,20 +152,6 @@ export default function TechnicallySpeaking() {
                         <TextDiv>
                             <Details>New Site Launch and a Message from our Website Director
                                 <ButtonDiv> <Button href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.jpg" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to collect data from virtually any machine device
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">Read More</Button>
-                                </ButtonDiv>
                             </Details>
                         </TextDiv>
                     </Row>
