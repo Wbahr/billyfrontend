@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Field } from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import SelectField from '../../../_common/formik/select'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import StripePaymentSection from '../../uiComponents/stripePayment'
@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { defaultBilling } from '../../helpers'
 import FormikCheckbox from '../../../_common/formik/checkBox'
 import Context from '../../../../setup/context'
+import { FormikFormFieldError } from 'styles/formikForm'
 
 const StyledCheckbox = styled.input`
 	width: 15px;
@@ -45,7 +46,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.city', values.shipto.city)
             setFieldValue('billing.stateOrProvince', values.shipto.stateOrProvince)
             setFieldValue('billing.zip', values.shipto.zip)
-            setFieldValue('billing.country', values.shipto.country)
+            setFieldValue('billing.country', values.shipto.country || 'us')
             setFieldValue('billing.companyName', values.shipto.companyName)
             setFieldValue('billing.email', values.shipto.email)
             setFieldValue('billing.phone', values.shipto.phone)
@@ -58,7 +59,7 @@ export default function NewCardSection(props) {
             setFieldValue('billing.city', defaultBilling.city)
             setFieldValue('billing.stateOrProvince', defaultBilling.stateOrProvince)
             setFieldValue('billing.zip', defaultBilling.zip)
-            setFieldValue('billing.country', defaultBilling.country)
+            setFieldValue('billing.country', defaultBilling.country || 'us')
             setFieldValue('billing.companyName', defaultBilling.companyName)
             setFieldValue('billing.email', defaultBilling.email)
             setFieldValue('billing.phone', defaultBilling.phone)
@@ -79,7 +80,12 @@ export default function NewCardSection(props) {
         <Container>
             {isNewPaymentMethod && (
                 <Row style={{ padding: '8px 10px' }}>
-                    <StripePaymentSection {...props} />
+                    <>
+                        <StripePaymentSection {...props} />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.cardIsValid" />
+                        </FormikFormFieldError>
+                    </>
                     {!!context.userInfo && (context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
                         <FormikCheckbox
                             label="Save card for future payments?"
@@ -125,33 +131,48 @@ export default function NewCardSection(props) {
             </Row>
 
             <Row>
-                <Field
-                    name="billing.country"
-                    component={SelectField}
-                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
-                    placeholder="Select a Country"
-                    isSearchable={false}
-                    label="Country*"
-                />
-                {values.billing.country === 'us' && (
+                <div>
                     <Field
-                        name="billing.stateOrProvince"
+                        name="billing.country"
                         component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        width="200px"
+                        options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                        placeholder="Select a Country"
+                        isSearchable={false}
+                        label="Country*"
                     />
+                    <FormikFormFieldError style={{ width: '200px', maxWidth: '100%' }}>
+                        <ErrorMessage name="billing.country" />
+                    </FormikFormFieldError>
+                </div>
+                {values.billing.country === 'us' && (
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label="State*"
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
                 {values.billing.country === 'canada' && (
-                    <Field
-                        name="billing.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        width="200px"
-                    />
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label="Province*"
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
             </Row>
         </Container>
