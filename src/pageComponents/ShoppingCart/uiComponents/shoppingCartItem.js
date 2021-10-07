@@ -191,7 +191,10 @@ const DivImgAndItemDetails = styled.div`
 const DivFlex = styled.div`
     display: flex;
 `
-
+const LineNumber = styled.div`
+    margin: 0 5px;
+    color: grey;
+` 
 export default function ShoppingCartItem(props) {
 
     const {
@@ -262,7 +265,7 @@ export default function ShoppingCartItem(props) {
 
     const { userInfo } = useContext(Context)
 
-    function selectCustomerPartNumber(value){
+    function selectCustomerPartNumber(value) {
         if (value === '-1') {
             setSelectedCustomerPartNumber(0) // Reset Dropdown
             setCartItemField('customerPartNumberId', 0)
@@ -328,13 +331,14 @@ export default function ShoppingCartItem(props) {
                                     <DivMove
                                         {...provided.dragHandleProps}
                                     >
-                                        <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+                                        <LineNumber>{index + 1}</LineNumber>
+                                        <FontAwesomeIcon icon="grip-lines" color="lightgrey" />
                                     </DivMove>
                                     <DivCol1>
                                         <Img src={getThumbnailImagePath(itemDetails)} />
                                     </DivCol1>
                                     <DivCol2>
-                                        <A1 onClick={() => {history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+                                        <A1 onClick={() => { history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`) }}>{itemDetails.itemDesc}</A1>
                                         <CopyToClipboard text={itemDetails.itemDesc}>
                                             <P2>Copy Item Desc</P2>
                                         </CopyToClipboard>
@@ -382,15 +386,15 @@ export default function ShoppingCartItem(props) {
                                         {(userInfo?.isAirlineEmployee || userInfo?.isWebUser) && (cartItem.quoteLineId) && (
                                             <>
                                                 {
-                                                    cartItem.isQuoteLineActive 
-                                                        ? (<strong>Quote Item</strong>) 
+                                                    cartItem.isQuoteLineActive
+                                                        ? (<strong>Quote Item</strong>)
                                                         : (
                                                             <button onClick={() => { handleQuoteItemReset() }}>Reset Quote Item</button>
                                                         )
                                                 }
                                             </>
-                                        )} 
-                                        
+                                        )}
+
                                     </DivCol2>
                                 </DivImgAndItemDetails>
                                 <DivCol3>
@@ -404,9 +408,10 @@ export default function ShoppingCartItem(props) {
                                                             <AirlineChip style={{
                                                                 marginLeft: '0.5rem',
                                                                 fontSize: '0.7rem',
-                                                                padding: '0 0.5rem' }}
+                                                                padding: '0 0.5rem'
+                                                            }}
                                                             >
-                                                                X {unitSize }
+                                                                X {unitSize}
                                                             </AirlineChip>
                                                         )
                                                     }
@@ -506,7 +511,7 @@ export default function ShoppingCartItem(props) {
                                             </DivTotalPrice>
                                         </DivItem>
                                     </DivItemInfo>
-    
+
                                     {userInfo?.isAirlineEmployee && (
                                         <>
                                             <Grid container alignItems="center">
@@ -518,16 +523,16 @@ export default function ShoppingCartItem(props) {
                                                     onChange={(event) => { handleDropshipChange(event) }}
                                                 />
                                             </Grid>
-    
+
                                             <DivItem>
                                                 <Label>Promise Date:</Label>
                                             </DivItem>
-    
+
                                             <Grid container>
                                                 <div style={{ marginRight: 8 }}>
-                                                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                                                    <FontAwesomeIcon icon="calendar" color="lightgrey" />
                                                 </div>
-        
+
                                                 <DatePicker
                                                     minDate={tomorrowDate}
                                                     maxDate={maxDate}
@@ -537,7 +542,7 @@ export default function ShoppingCartItem(props) {
                                             </Grid>
                                         </>
                                     )}
-                                
+
                                     <DivItemInfo>
                                         <DivItem>
                                             <Label>Item Notes:</Label>
@@ -554,9 +559,9 @@ export default function ShoppingCartItem(props) {
                                 </DivCol3>
 
                             </DivCard>
-                       
+
                             <DivRemove onClick={handleRemoveItem} alt='remove-item'>
-                                <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                                <FontAwesomeIcon icon="times-circle" color="lightgrey" />
                             </DivRemove>
                         </DivFlex>
                     )
@@ -577,7 +582,7 @@ export default function ShoppingCartItem(props) {
                     cartItem
                 }}
                 setCartItem={setCartItem}
-                itemId = {itemDetails.itemCode}
+                itemId={itemDetails.itemCode}
             />
             <SplitLineModal
                 open={showSplitLineModal}
