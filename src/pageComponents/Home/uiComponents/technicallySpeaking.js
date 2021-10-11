@@ -93,70 +93,38 @@ const Wrapper = styled.div`
         max-width: 1400px;
 `
 
-export default function TechnicallySpeaking() {
-    
+const key = 'BLOG'
+
+export default function TechnicallySpeaking({ homepage }) {
+    const items = homepage.filter(h => h.key === key)
+
+    const speaking = items.map(i => {
+        return (
+            <Row key={i.sort}>
+                <Link href={i.href} target="_blank">
+                    <ImgDiv>
+                        <Img src={i.imageUrl} />
+                    </ImgDiv>
+                </Link>
+                <TextDiv>
+                    <Details>
+                        {i.html}
+                        <ButtonDiv>
+                            <Button href={i.href} target="_blank">Read More</Button>
+                        </ButtonDiv>
+                    </Details>
+                </TextDiv>
+            </Row>
+        )
+    })
 
     return (
         <>
-            <SectionHeader text='Technically Speaking' />
+            <SectionHeader text={items[0].sectionName} />
             <Wrapper>
                 <Container>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/mguard" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/mGuard%20-%20homepage%20version%20copy.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details> How to Establish & Secure a Remote Network
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/mguard" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/building-over-a-busy-highway-an-airline-success-story" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Building%20vver%20a%20busy%20highway.jpg" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Building over a busy highway
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/building-over-a-busy-highway-an-airline-success-story" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/new%20website%20blog%20post%20homepage%20version%20copy.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>New Site Launch and a Message from our Website Director
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/airline-website-launch" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.jpg" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to collect data from virtually any machine device
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-collect-data-from-virtually-any-machine-device" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
+                    {speaking}
                 </Container>
-
                 <div>
                     <SeeAll>
                         <A href="https://blog.airlinehyd.com/" target="_blank">See All Blog Posts <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>

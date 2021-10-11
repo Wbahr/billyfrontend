@@ -39,57 +39,27 @@ const P = styled.p`
 		color: #212529;
 `
 
-export default function LineCards() {
+const key = 'LINE_CARDS'
+
+export default function LineCards({ homepage }) {
+    const items = homepage.filter(h => h.key === key)
+
+    const cards = items.map(i => (
+        <LineCardDiv key={i.sort}>
+            <a href={i.href}>
+                <ImgDiv>
+                    <Img src={i.imageUrl} />
+                </ImgDiv>
+                <NameDiv><P>{i.html}</P></NameDiv>
+            </a>
+        </LineCardDiv>
+    ))
+    
     return (
         <>
-            <SectionHeader text="Line Card &amp; Catalogs"/>
+            <SectionHeader text={items[0].sectionName} />
             <LineCardWrapper>
-                <LineCardDiv>
-                    <a href="/pages/resources/linecards">
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/line_card.png" />
-                        </ImgDiv>
-                        <NameDiv><P>View all line cards</P></NameDiv>
-                    </a>
-                </LineCardDiv>
-                
-                <LineCardDiv>
-                    <a
-                        href="//airlinemedia.airlinehyd.com/Literature/Airline_Hydraulic_Preferred_Products_Catalog.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/hydraulic-catalog.png" />
-                        </ImgDiv>
-                        <NameDiv><P>Hydraulic Catalog</P></NameDiv>
-                    </a>
-                </LineCardDiv>
-                
-                <LineCardDiv>
-                    <a
-                        href="https://airlinemedia.airlinehyd.com/Literature/Airline_Automation_Solutions.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/automation%20solutions.png" />
-                        </ImgDiv>
-                        <NameDiv><P>Automation Solutions</P></NameDiv>
-                    </a>
-                </LineCardDiv>
-                <LineCardDiv>
-                    <a
-                        href="https://airlinemedia.airlinehyd.com/Literature/Airline_Hydraulics_Aftermarket_Brochure.pdf"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <ImgDiv>
-                            <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Airline_Hydraulics_Aftermarket_Brochure.pdf.png" />
-                        </ImgDiv>
-                        <NameDiv><P>Aftermarket Services</P></NameDiv>
-                    </a>
-                </LineCardDiv>
+                {cards}
             </LineCardWrapper>
         </>
     )

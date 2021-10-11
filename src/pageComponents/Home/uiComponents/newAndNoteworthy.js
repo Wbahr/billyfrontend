@@ -66,54 +66,32 @@ const Wrapper = styled.div`
     margin: 0 auto;
 `
 
+const key = 'BLOCKS'
 
-export default function NewAndNoteworthy() {
+export default function NewAndNoteworthy({ homepage }) {
+    const items = homepage.filter(h => h.key === key)
+
+    const blocks = items.map(i => {
+        return (
+            <Row key={i.sort}>
+                <A href={i.href} target="_blank">
+                    <ImgDiv>
+                        <Img src={i.imageUrl} />
+                    </ImgDiv>
+                    <TextDiv>
+                        <Details>{i.html}</Details>
+                    </TextDiv>
+                </A>
+            </Row>
+        )
+    })
 
     return (
         <>
             {/* <SectionHeader text='New and Noteworthy' /> */}
             <Wrapper>
                 <Container>
-                    <Row>
-                        <A href="https://info.airlinehyd.com/webinar-cybersecurity" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/cybersecurity%20webinar%20website%20thumb.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>Free Webinar: Cybersecurity & Remote Connectivity Basics</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="https://info.airlinehyd.com/fast-wiring" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/Fast%20wiring.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>Solutions for Fast Control Cabinet Wiring</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="/pages/industries/inch-extrusionhtm" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/frame-world%20thumb.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>Fast-Shipping Inch Aluminum Extrusion</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
-                    <Row>
-                        <A href="https://info.airlinehyd.com/ctrlx" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/thumbnails/ctrlx%20thumb.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Details>ctrlX AUTOMATION</Details>
-                            </TextDiv>
-                        </A>
-                    </Row>
+                    {blocks}
                 </Container>
             </Wrapper>
         </>
