@@ -171,6 +171,15 @@ const Pprice = styled.p`
 	margin: 0;
 `
 
+const PlistPrice = styled.p`
+	color: #328EFC;
+	font-size: 14px;
+	font-weight: 700;
+	padding: 0 4px;
+    margin: 0;
+    text-decoration: line-through;
+`
+
 const ACall = styled.a`
 	color: #328EFC;
 	font-weight: 700;
@@ -197,6 +206,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
     const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
     let {
         unitPrice,
+        listPrice,
         unitOfMeasure,
         unitSize,
         roundType
@@ -392,10 +402,19 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                     <>
                                         {
                                             unitPrice ? (
-                                                <Div>
-                                                    <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                                    <P>/{unitOfMeasure}</P>
-                                                </Div>
+                                                <>
+                                                    <DivPartDetails>
+                                                        {listPrice && (
+                                                            <Div>
+                                                                <PlistPrice>${listPrice.toFixed(2)}</PlistPrice>
+                                                            </Div>
+                                                        )}
+                                                        <Div>
+                                                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                            <P>/{unitOfMeasure}</P>
+                                                        </Div>
+                                                    </DivPartDetails>
+                                                </>
                                             ) : (
                                                 <ACall href="tel:+18009997378">Call for Price</ACall>
                                             )
@@ -404,10 +423,19 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                 ) : (
                                     <>
                                         {unitPrice ? (
-                                            <Div>
-                                                <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                                <P>/{unitOfMeasure}</P>
-                                            </Div>
+                                            <>
+                                                <DivPartDetails>
+                                                    {listPrice && (
+                                                        <Div>
+                                                            <PlistPrice>${listPrice.toFixed(2)}</PlistPrice>
+                                                        </Div>
+                                                    )}   
+                                                    <Div>
+                                                        <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                        <P>/{unitOfMeasure}</P>
+                                                    </Div>
+                                                </DivPartDetails>
+                                            </>
                                         ) : !foundPrice ? (
                                             <Div>
                                                 <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }} />

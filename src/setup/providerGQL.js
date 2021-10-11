@@ -460,6 +460,7 @@ export const GET_ITEM_PRICE = gql`
       roundType
       unitSize
       spaType
+      listPrice
     }
   }
 `
