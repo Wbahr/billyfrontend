@@ -17,7 +17,8 @@ import {
     UPDATE_SHOPPING_LISTS,
     GET_PRICE_REASONS,
     GET_ITEMS_BY_ID,
-    QUERY_STOCK_AVAILABILITY_BATCH
+    QUERY_STOCK_AVAILABILITY_BATCH,
+    GET_HOMEPAGE
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -67,6 +68,7 @@ export default function Provider({ history, children }) {
     const [cartLoading, setCartLoading] = useState(false)
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [passwordResetEmail, setPasswordResetEmail] = useState('')
+    const [homepage, setHomepage] = useState([])
 
 
     const invoiceBatchSize = 1000
@@ -80,8 +82,17 @@ export default function Provider({ history, children }) {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             manageUserInfo('load-context')
             retrieveShoppingCart()
+            getHomepage()
         }
         didMountRef.current = true
+    })
+
+    const [getHomepage] = useLazyQuery(GET_HOMEPAGE, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const home = JSON.parse(JSON.stringify(data.getMarketingData))
+            setHomepage(home.sort((a, b) => a.sort > b.sort ? 1 : -1))
+        }
     })
 
     useEffect(() => {
@@ -639,7 +650,8 @@ export default function Provider({ history, children }) {
                 showErrorModal,
                 setShowErrorModal,
                 passwordResetEmail,
-                setPasswordResetEmail
+                setPasswordResetEmail,
+                homepage
             }}
         >
             {children}

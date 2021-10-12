@@ -16,18 +16,18 @@ const Img = styled.img`
 `
 const LgBanner = styled.div`
 	display: flex;
-	background-image: url("https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20header-main%20copy.png");
+	background-image: url(${props => props.large});
 	height: 300px;
 	background-color: #464646;
 	background-size: cover;
 	background-position: 50% 0;
 	background-repeat: no-repeat;
 	@media (max-width: 768px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20medium%20copy.png);
+		background-image: url(${props => props.medium});
 		height: 240px;
 	}
 	@media (max-width: 400px) {
-		background-image: url(https://airlinemedia.airlinehyd.com/Static_pages/home/banner/crossover%20corner%20small%20copy.png);
+		background-image: url(${props => props.small});
 		height: 190px;
 	}
 `
@@ -95,38 +95,47 @@ const A = styled.a`
 		}
 `
 
-export default () =>  (
-    <BannerContainer>
-        <Col>
-            <A href="https://bit.ly/3iBIotx" target="_blank">
-                <LgBanner />
-            </A>
-            <SmBanner>
-                <A href="/pages/about" target="_blank">
-                    <BannerDiv>
-                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/otto.png" alt="otto" /></ImgDiv>
-                        <AboutAirline>
-                            <AboutP>About Airline Hydraulics</AboutP>
-                            We offer components, engineered systems and service & repair for the technology fields of fluid power and more!
-                        </AboutAirline>
-                    </BannerDiv>
-                </A>
-                <A href="https://info.airlinehyd.com/culture-corner" target="_blank">
-                    <BannerDiv>
-                        <ImgDiv><Img src="https://airlinemedia.airlinehyd.com/Static_pages/home/esop.png" alt="esop" /></ImgDiv>
+const key = 'ABOUT_SECTION'
 
-                        <AboutAirline>
-                            <P> We're 100% Employee Owned and proud of it! </P>
-                        </AboutAirline>
-                    </BannerDiv>
-                </A>
+export default function Banner({ homepage }) {
+
+    const items = homepage.filter(h => h.key === key)
+    const topBanner = homepage.filter(h => h.key === 'TOP_BANNER')
+  
+    const large = topBanner.filter(b => b.sort === 1)[0].imageUrl
+    const medium = topBanner.filter(b => b.sort === 2)[0].imageUrl
+    const small = topBanner.filter(b => b.sort === 3)[0].imageUrl
+    const href = topBanner[0].Href
+    
+    const aboutSection = items.map(i => {
+        return (
+            <A href={i.href} key={i.sort} target="_blank">
                 <BannerDiv>
-                    <ImgDiv><FontAwesomeIcon icon='shipping-fast' size='3x' /></ImgDiv>
+                    <ImgDiv>
+                        {i.imageUrl.slice(0, 4) === 'http' ?
+                            <Img src={i.imageUrl} alt="otto" /> :
+                            <FontAwesomeIcon icon={i.imageUrl} size='3x' />
+                        }
+                    </ImgDiv>
                     <AboutAirline>
-                        <P> Expect same-day shipping on most in-stock orders placed before 3:00pm EST & shipped by UPS.</P>
+                        <AboutP>{i.title}</AboutP>
+                        <P>{i.html}</P>
                     </AboutAirline>
                 </BannerDiv>
-            </SmBanner>
-        </Col>
-    </BannerContainer>
-)
+            </A>
+        )
+    })
+
+    return (
+        <BannerContainer>
+            <Col>
+                <A href={href} target="_blank">
+                    <LgBanner {...{ large, medium, small, }} />
+                </A>
+                <SmBanner>
+                    {aboutSection}
+                </SmBanner>
+            </Col>
+        </BannerContainer>
+    )
+}
