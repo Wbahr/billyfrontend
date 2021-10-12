@@ -56,15 +56,31 @@ export default function ShipToForm(props) {
         isStepValid,
         handleMoveStep,
         locationOptions,
+        setFieldTouched
     } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
-    
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
 
-    const handleContinueClick = () => handleMoveStep(1)
+    const handleContinueClick = () => {
+        const disabled = !isStepValid && values.contact
+        if (disabled) {
+            touchFields()
+        } else {
+            handleMoveStep(1)
+        }
+    }
+
+    function touchFields() {
+        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip',
+            'phone', 'email', 'firstName', 'lastName']
+        for (const field of fields) {
+            setFieldTouched(`shipto.${field}`, true)
+        }
+    }
 
     function handleSavedAddressChange(changeEvent, handleChange) {
         setFieldValue('shipto.selectedShipTo', -1)
@@ -145,7 +161,6 @@ export default function ShipToForm(props) {
     }
 
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
-    const disabled = !isStepValid && values.contact
 
     return (
         <WrapForm>
@@ -326,31 +341,41 @@ export default function ShipToForm(props) {
                     changeFunction={handleCountryChange}
                 />
                 {values.shipto.country === 'us' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label="State*"
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
                 {values.shipto.country === 'canada' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label="Province*"
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
             </FormRow>
             <DivNavigation>
                 <div></div>
-                <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
+                <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
 
             <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />

@@ -93,6 +93,7 @@ export function getBillToSchema(requirePoNumber) {
                             .min(1, 'Purchase Order must be at least 1 character long')
                             .max(20, 'Purchase Order can not exceed 20 characters')
                             .required('PO Number is required')
+                            .matches(/^\S*$/, 'PO Number should begin with a non-space character' ) 
                         : schema
                 }),
             firstName: string()
@@ -133,6 +134,12 @@ export function getBillToSchema(requirePoNumber) {
                     is: 'saved_card',
                     then: string(),
                     otherwise: string().required('State/Province must be selected')
+                }),
+            country: string()
+                .when('cardType', {
+                    is: 'saved_card',
+                    then: string(),
+                    otherwise: string().required('Country must be selected')
                 }),
             zip: string()
                 .when('cardType', {

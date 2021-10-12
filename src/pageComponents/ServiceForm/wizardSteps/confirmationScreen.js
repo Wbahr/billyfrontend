@@ -68,6 +68,7 @@ export default function ConfirmationScreen(props) {
             const { formNo } = rtn
             if (formNo) {
                 history.push(`/serviceform-complete/${formNo}`)
+                localStorage.removeItem('serviceDraft')
             } else {
                 setShowSubmissionFailedModal(true)
             }
