@@ -1,5 +1,3 @@
-import { Container } from '@material-ui/core'
-import Articles from 'pageComponents/Brands/uiComponents/Articles.js'
 import React from 'react'
 import styled from 'styled-components'
 import SectionHeader from '../../_common/sectionHeader.js'
@@ -46,7 +44,7 @@ const ArticlesDiv = styled.div`
 		max-width: 600px;
 		width: 100%;
 		margin: 15px 10px;
-` 
+`
 
 const Img = styled.img`
 		width: 100%; 
@@ -77,55 +75,31 @@ const Title = styled.p`
 const ReadMoreButton = styled.a`
 		width: 25%;
 `
-export default function NewsAndEvents() {
+
+const key = 'NEWS'
+
+export default function NewsAndEvents({ homepage }) {
+    const items = homepage.filter(h => h.key === key)
+
+    const news = items.map(i => (
+        <ArticlesDiv key={i.sort}>
+            <ImgDiv>
+                <Img src={i.imageUrl} />
+            </ImgDiv>
+            <TextDiv>
+                <Title>{i.title}</Title>
+                <Details>{i.html}</Details>
+                <ReadMoreButton href={i.href} target="_blank">Read More &#10132;</ReadMoreButton>
+            </TextDiv>
+        </ArticlesDiv>
+    ))
     return (
         <>
-            
             <Wrapper>
                 <NewsContainer>
-                    <SectionHeader text='News and Events' />
+                    <SectionHeader text={items[0].sectionName} />
                     <Row>
-                        <ArticlesDiv>
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/PR.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Title>Airline Acquires Hy-Performance Hydraulics</Title>
-                                <Details>Airline Hydraulics (Airline) is pleased to announce the acquisition of Hy-Performance Hydraulics (Hy-Performance).</Details>
-                                <ReadMoreButton href="https://info.airlinehyd.com/hy-performance-acquisition" target="_blank">Read More &#10132;</ReadMoreButton>
-                            </TextDiv>
-                        </ArticlesDiv>
-                        <ArticlesDiv>
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/Aest-donation.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Title>Airline Hydraulics Donation Supports AEST Majors</Title>
-                                <Details>Research may soon fly forward in Osburn Hall, thanks to a recent donation. Millersville ‘University’s Department of Applied Engineering, Safety and Technology (AEST) recently received industrial networking and controls hardware from Todd Huber of Airline Hydraulics.</Details>
-                                <ReadMoreButton href="https://blogs.millersville.edu/news/2021/06/30/airline-hydraulics-donation-supports-aest-majors/" target="_blank">Read More &#10132;</ReadMoreButton>
-                            </TextDiv>
-                        </ArticlesDiv>
-                        <ArticlesDiv>
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/york-college.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Title>Airline and York College Partner in Manufacturing Initiative</Title>
-                                <Details>Airline is proud to partner with York College's "Developing Modular Cobot Automation Solutions for the Testing Environment" project, which aims to use robots in a laboratory setting to increase efficiency, reduce technician exposure to harmful chemicals, and increase reproducibility. </Details>
-                                <ReadMoreButton href="https://info.airlinehyd.com/pa-manufacturing-initiative-partnership" target="_blank">Read More &#10132;</ReadMoreButton>
-                            </TextDiv>
-                        </ArticlesDiv>
-                        <ArticlesDiv>
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/images/articles/tech%20traveler.png" />
-                            </ImgDiv>
-                            <TextDiv>
-                                <Title>Airline's Tech Traveler</Title>
-                                <Details>Experience the latest innovations in automation and fluid power, right at your doorstep, with Airline's Tech Traveler. </Details>
-                                <ReadMoreButton href="https://info.airlinehyd.com/book-tech-traveler" target="_blank">Read More &#10132;</ReadMoreButton>
-                            </TextDiv>
-                        </ArticlesDiv>
-                    
+                        {news}
                     </Row>
                 </NewsContainer>
             </Wrapper>
