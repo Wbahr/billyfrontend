@@ -404,7 +404,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                             unitPrice ? (
                                                 <>
                                                     <DivPartDetails>
-                                                        {listPrice && (
+                                                        {listPrice && (listPrice >= unitPrice) && (
                                                             <Div>
                                                                 <PlistPrice>${listPrice.toFixed(2)}</PlistPrice>
                                                             </Div>
