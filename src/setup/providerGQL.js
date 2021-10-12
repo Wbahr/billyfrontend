@@ -976,3 +976,17 @@ export const ADVANCED_IMPERSONATION_SEARCH = gql`
     }
   }
 `
+
+export const GET_HOMEPAGE = gql`
+  query getMarketingData{
+    getMarketingData {
+      html
+      href
+      imageUrl
+      key
+      sectionName
+      sort
+      title
+    }
+  }
+`
