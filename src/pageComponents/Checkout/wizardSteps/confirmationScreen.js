@@ -126,13 +126,27 @@ export default function ConfirmationScreen(props) {
         fetchPolicy: 'no-cache',
         onCompleted: ({ submitOrder }) => {
             const orderId = submitOrder?.webReferenceId || null
-            if (orderId) {
+
+            const {
+                webReferenceId,
+                errorMessages,
+                checkoutType,
+                affiliateName, //Company Name or Person's Name
+                itemsSubtotal,
+                taxTotal,
+                tariffTotal,
+                shippingCost,
+                grandTotal,
+                cartItems
+            } = submitOrder
+
+            if (webReferenceId) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
-                if (schedule.isQuote) {
-                    history.push(`/quote-complete/${orderId}`)
+                if (checkoutType === 'quote') {
+                    history.push(`/quote-complete/${webReferenceId}`)
                 } else {
-                    history.push(`/order-complete/${orderId}`)
+                    history.push(`/order-complete/${webReferenceId}`)
                 }
             } else {
                 setShowOrderFailedModal(true)

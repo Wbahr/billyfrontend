@@ -77,7 +77,21 @@ export const SUBMIT_ORDER = gql`
   mutation SubmitOrder($order: OrderInputDataInputGraphType){
     submitOrder(orderInput: $order){
       webReferenceId
-      messages
+      errorMessages
+      checkoutType
+      affiliateName
+      itemsSubTotal
+      taxTotal
+      tariffTotal
+      shippingCost
+      grandTotal
+      cartItems {
+        invMastUid
+        itemCode
+        brand
+        unitPrice
+        quantity
+      }
     }
   }
 `
