@@ -167,7 +167,6 @@ export default function ConfirmationScreen(props) {
                 })
             }
 
-
             if (webReferenceId) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
