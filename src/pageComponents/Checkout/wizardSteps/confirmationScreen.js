@@ -140,6 +140,34 @@ export default function ConfirmationScreen(props) {
                 cartItems
             } = submitOrder
 
+            if (orderId){
+                const dataLayer = window.dataLayer || [] 
+                dataLayer.push({ 
+                    event: 'transaction',
+                    ecommerce: { 
+                        purchase: { 
+                            actionField: { 
+                                id: webReferenceId, // Required 
+                                affiliation: affiliateName, 
+                                revenue: grandTotal,  // Total transaction value (incl. tax and shipping) 
+                                tax: taxTotal, 
+                                shipping: shippingCost
+                            }, 
+                            products: cartItems.map(item => {
+                                return { 
+                                    name: item.invMastUid, // Name or ID is required. 
+                                    id: item.itemCode, 
+                                    price: item.unitPrice, 
+                                    brand: item.brand, 
+                                    quantity: item.quatity, 
+                                }
+                            }) 
+                        } 
+                    } 
+                })
+            }
+
+
             if (webReferenceId) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
