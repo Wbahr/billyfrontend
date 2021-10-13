@@ -105,7 +105,7 @@ export default function Banner({ homepage }) {
     const large = topBanner.filter(b => b.sort === 1)[0].imageUrl
     const medium = topBanner.filter(b => b.sort === 2)[0].imageUrl
     const small = topBanner.filter(b => b.sort === 3)[0].imageUrl
-    const href = topBanner[0].Href
+    const href = topBanner[0].href
     
     const aboutSection = items.map(i => {
         return (
