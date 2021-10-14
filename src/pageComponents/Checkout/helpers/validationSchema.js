@@ -8,19 +8,19 @@ const contactSchema = object({
         firstName: string()
             .max(50)
             .required('First Name is required')
-            .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid name format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'First Name begin with a non-space character' ),
         lastName: string()
             .max(50)
             .required('Last Name is required')
-            .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid last name format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Last Name begin with a non-space character' ),
         phone: string()
             .min(10, 'Phone Number must be at least 10 characters long')
             .required('Phone Number is required')
-            .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid phone format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Phone Number begin with a non-space character' ),
         email: string()
             .email('Email is not valid')
             .required('Email is required')
-            .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid email format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Email begin with a non-space character' ),
     })
 })
 
@@ -40,36 +40,36 @@ export const shipToSchema = object({
         firstName: string()
             .max(50)
             .required('First Name is required')
-            .matches(/^[-\sa-zA-Z]+$/, 'Invalid Name format'), 
+            .matches(/^[A-Za-z]|[A-Za-z][A-Za-z\s]*[A-Za-z]$/, 'First Name begin with a non-space character'), 
         lastName: string()
             .max(50)
             .required('Last Name is required')
-            .matches(/^[-\sa-zA-Z]+$/, 'Invalid Last name format'),
+            .matches(/^[A-Za-z]|[A-Za-z][A-Za-z\s]*[A-Za-z]$/, 'Last Name begin with a non-space character'),
         address1: string()
             .min(5, 'Address Line 1 must be at least 5 characters long')
             .max(256)
             .required('Address Line 1 is required')
-            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid address format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Address begin with a non-space character' ),
         city: string()
             .min(2, 'City must be at least 2 characters long')
             .max(100)
             .required('City is required')
-            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid city format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'City begin with a non-space character' ),
         stateOrProvince: string()
             .required('State/Province must be selected'),
         zip: string()
             .min(5, 'Zip/Postal Code must be at least 5 characters long (6 in Canada)')
             .max(10)
             .required('Zip/Postal Code is required')
-            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid zip code format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Zip/Postal Code begin with a non-space character' ),
         phone: string()
             .min(10, 'Phone Number must be at least 10 characters long')
             .required('Phone Number is required')
-            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid phone format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Phone Number should begin with a non-space character' ),
         email: string()
             .email('Email is not valid')
             .required('Email is required')
-            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid email format, please remove any extra spaces' ),
+            .matches( /[^\s\\]/, 'Email should begin with a non-space character' ),
         carrierId: string()
             .required('Shipping Carrier must be selected'),
         collectNumber: string()
@@ -78,7 +78,7 @@ export const shipToSchema = object({
                 then: string()
                     .min(6, 'Collect Number should be at least 6 characters long')
                     .required('Collect Number is required')
-                    .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid collect number format, please remove any extra spaces' ),
+                    .matches( /[^\s\\]/, 'Collect Number should begin with a non-space character' ), 
                 otherwise: string()
             })
     })
@@ -103,7 +103,7 @@ export function getBillToSchema(requirePoNumber) {
                             .min(1, 'Purchase Order must be at least 1 character long')
                             .max(20, 'Purchase Order can not exceed 20 characters')
                             .required('PO Number is required')
-                            .matches( /^\S(?!.*\s{2}).*?\S$/, 'Invalid po format, please remove any extra spaces' ) 
+                            .matches( /[^\s\\]/, 'PO Number should begin with a non-space character' ) 
                         : schema
                 }),
             firstName: string()
@@ -113,7 +113,7 @@ export function getBillToSchema(requirePoNumber) {
                     otherwise: string()
                         .max(50)
                         .required('First Name is required')
-                        .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid Name format, please remove any extra spaces' ) 
+                        .matches( /[^\s\\]/, 'First Name should begin with a non-space character' ) 
                 }),
             lastName: string()
                 .when('cardType', {
@@ -122,7 +122,7 @@ export function getBillToSchema(requirePoNumber) {
                     otherwise: string()
                         .max(50)
                         .required('Last Name is required')
-                        .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid last name format, please remove any extra spaces' ),
+                        .matches( /[^\s\\]/, 'Last Name should begin with a non-space character' ) 
                 }),
             address1: string()
                 .when('cardType', {
@@ -132,7 +132,7 @@ export function getBillToSchema(requirePoNumber) {
                         .min(5, 'Address Line 1 must be at least 5 characters long')
                         .max(256)
                         .required('Address Line 1 is required')
-                        .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid address format, please remove any extra spaces' )
+                        .matches( /[^\s\\]/, 'Address should begin with a non-space character' ) 
                 }),
             city: string()
                 .when('cardType', {
@@ -141,7 +141,7 @@ export function getBillToSchema(requirePoNumber) {
                     otherwise: string().min(2, 'City must be at least 2 characters long')
                         .max(100)
                         .required('City is required')
-                        .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid city format, please remove any extra spaces' )
+                        .matches( /[^\s\\]/, 'City should begin with a non-space character' )
                 }),
             stateOrProvince: string()
                 .when('cardType', {
@@ -163,7 +163,7 @@ export function getBillToSchema(requirePoNumber) {
                         .min(5, 'Zip/Postal Code must be at least 5 characters long (6 in Canada)')
                         .max(10)
                         .required('Zip/Postal Code is required')
-                        .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid zip code format, please remove any extra spaces' )
+                        .matches( /[^\s\\]/, 'Zip/Postal Code should begin with a non-space character' )
                 })
         })
     })
@@ -176,6 +176,6 @@ export const confirmationSchema = object({
         ccEmails: array().of(string()
             .email('Email is not valid')
             .required('Email is required')
-            .matches(/^\S(?!.*\s{2}).*?\S$/, 'Invalid email format, please remove any extra spaces' ))
+            .matches( /[^\s\\]/, 'Email should begin with a non-space character' ))
     })
 })
