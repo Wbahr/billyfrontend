@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
+import { web } from 'webpack'
 
 const SectionRow = styled.div`
     display: flex;
@@ -125,14 +126,53 @@ export default function ConfirmationScreen(props) {
     const [submitOrder] = useMutation(SUBMIT_ORDER, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ submitOrder }) => {
-            const orderId = submitOrder?.webReferenceId || null
-            if (orderId) {
+            const {
+                webReferenceId,
+                errorMessages,
+                checkoutType,
+                affiliateName, //Company Name or Person's Name
+                itemsSubtotal,
+                taxTotal,
+                tariffTotal,
+                shippingCost,
+                grandTotal,
+                cartItems
+            } = submitOrder
+
+            if (checkoutType === 'order' && webReferenceId) {
+                const dataLayer = window.dataLayer || [] 
+                dataLayer.push({ 
+                    event: 'transaction',
+                    ecommerce: { 
+                        purchase: { 
+                            actionField: { 
+                                id: webReferenceId, // Required 
+                                affiliation: affiliateName, 
+                                revenue: grandTotal,  // Total transaction value (incl. tax and shipping) 
+                                tax: taxTotal, 
+                                shipping: shippingCost
+                            }, 
+                            products: cartItems.map(item => {
+                                return { 
+                                    name: item.invMastUid, // Name or ID is required. 
+                                    id: item.itemCode, 
+                                    price: item.unitPrice, 
+                                    brand: item.brand, 
+                                    quantity: item.quatity, 
+                                }
+                            }) 
+                        } 
+                    } 
+                })
+            }
+
+            if (webReferenceId) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
-                if (schedule.isQuote) {
-                    history.push(`/quote-complete/${orderId}`)
+                if (checkoutType === 'quote') {
+                    history.push(`/quote-complete/${webReferenceId}`)
                 } else {
-                    history.push(`/order-complete/${orderId}`)
+                    history.push(`/order-complete/${webReferenceId}`)
                 }
             } else {
                 setShowOrderFailedModal(true)
