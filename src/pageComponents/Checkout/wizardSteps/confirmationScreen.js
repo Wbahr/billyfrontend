@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
+import { web } from 'webpack'
 
 const SectionRow = styled.div`
     display: flex;
@@ -138,7 +139,7 @@ export default function ConfirmationScreen(props) {
                 cartItems
             } = submitOrder
 
-            if (checkoutType === 'order'){
+            if (checkoutType === 'order' && webReferenceId) {
                 const dataLayer = window.dataLayer || [] 
                 dataLayer.push({ 
                     event: 'transaction',
