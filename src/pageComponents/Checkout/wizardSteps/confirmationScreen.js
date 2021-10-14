@@ -125,8 +125,6 @@ export default function ConfirmationScreen(props) {
     const [submitOrder] = useMutation(SUBMIT_ORDER, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ submitOrder }) => {
-            const orderId = submitOrder?.webReferenceId || null
-
             const {
                 webReferenceId,
                 errorMessages,
@@ -140,7 +138,7 @@ export default function ConfirmationScreen(props) {
                 cartItems
             } = submitOrder
 
-            if (orderId){
+            if (checkoutType === 'order'){
                 const dataLayer = window.dataLayer || [] 
                 dataLayer.push({ 
                     event: 'transaction',
