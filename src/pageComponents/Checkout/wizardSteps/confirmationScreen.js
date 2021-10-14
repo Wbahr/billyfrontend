@@ -11,7 +11,6 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
-import { web } from 'webpack'
 
 const SectionRow = styled.div`
     display: flex;
