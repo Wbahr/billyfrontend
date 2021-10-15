@@ -17,6 +17,7 @@ import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import DatePicker from 'react-datepicker'
 import { Checkbox, Grid } from '@material-ui/core'
+import { format, sub } from 'date-fns'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -209,6 +210,8 @@ export default function ShoppingCartItem(props) {
         cartData
     } = props
 
+    const { impersonatedCompanyInfo } = useContext(Context)
+
     const itemDetails = cartData?.itemDetails.find(detail => detail.invMastUid === cartItem.invMastUid)
     const itemPriceInfo = cartData?.itemPrices.find(price => price.invMastUid === cartItem.invMastUid)
     const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === cartItem.invMastUid)
@@ -254,6 +257,8 @@ export default function ShoppingCartItem(props) {
     const tomorrowDate = new Date()
     const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
     tomorrowDate.setDate(tomorrowDate.getDate() + 1)
+    const currentDate = format(new Date, 'M/d/yyyy')
+    const beginningDate = format(sub(new Date(), { years: 1 }), 'M/d/yyyy')
 
     useEffect(() => {
         if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
@@ -478,6 +483,11 @@ export default function ShoppingCartItem(props) {
                                                                 <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
                                                             </EditPriceIcon>
                                                         </div>
+                                                        {userInfo.isImpersonatorUser && (
+                                                            <div style={{ display: 'flex', fontSize: '0.85rem' }}>
+                                                                <a target='_' href={`https://p21wc.airlinehyd.com/common/itemsummarylines.aspx?CompanyId=AIRLINE&CustomerId=${impersonatedCompanyInfo.customerIdP21}&ItemId=${itemDetails.itemCode}&CurrentDate=${currentDate}%20AM&BeginningDate=${beginningDate}&ShowComponents=False&ProductGroupId=&SupplierId=0&CustomerName=${impersonatedCompanyInfo.customerName}`}>Previous Purchases</a>
+                                                            </div>
+                                                        )}
                                                     </>
                                                 )}
                                             </DivItemPrice>
