@@ -485,7 +485,7 @@ export default function ShoppingCartItem(props) {
                                                         </div>
                                                         {userInfo.isImpersonatorUser && (
                                                             <div style={{ display: 'flex', fontSize: '0.85rem' }}>
-                                                                <a target='_' href={`https://p21wc.airlinehyd.com/common/itemsummarylines.aspx?CompanyId=AIRLINE&CustomerId=${impersonatedCompanyInfo.customerIdP21}&ItemId=${itemDetails.itemCode}&CurrentDate=${currentDate}%20AM&BeginningDate=${beginningDate}&ShowComponents=False&ProductGroupId=&SupplierId=0&CustomerName=${impersonatedCompanyInfo.customerName}`}>Previous Purchases</a>
+                                                                <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/itemsummarylines.aspx?CompanyId=AIRLINE&CustomerId=${impersonatedCompanyInfo.customerIdP21}&ItemId=${itemDetails.itemCode}&CurrentDate=${currentDate}%20AM&BeginningDate=${beginningDate}&ShowComponents=False&ProductGroupId=&SupplierId=0&CustomerName=${impersonatedCompanyInfo.customerName}`}>Previous Purchases</a>
                                                             </div>
                                                         )}
                                                     </>
