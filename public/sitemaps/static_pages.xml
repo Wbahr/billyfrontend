@@ -196,9 +196,6 @@
     <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq/hydraulic-resources/hydraulic-troubleshooting</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq/hydraulic-resources/hydraulic-schematic-symbols</loc>
-  </url>
-  <url>
     <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq/hydraulic-resources/hydraulic-engineering-formulas</loc>
   </url>
   <url>
@@ -253,16 +250,10 @@
     <loc>https://www.airlinehyd.com/pages/about/events</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/about/our-history</loc>
+    <loc>https://www.airlinehyd.com/pages/about/history</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/about/legal-disclaimer</loc>
-  </url>
-  <url>
-    <loc>https://www.airlinehyd.com/pages/historytimeline</loc>
-  </url>
-  <url>
-    <loc>https://www.airlinehyd.com/pages/contact/contactus</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/contact/contact-us</loc>
@@ -271,16 +262,13 @@
     <loc>https://www.airlinehyd.com/pages/about/mission-statement</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/services/trola-dyne-copy</loc>
-  </url>
-  <url>
     <loc>https://www.airlinehyd.com/pages/privacy-policy</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/legal-disclaimer</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/industries/inch-extrusionhtm</loc>
+    <loc>https://www.airlinehyd.com/pages/industries/inch-extrusion</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/services/indramat-repair</loc>
@@ -374,5 +362,8 @@
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/resources/hydraulic-schematic-symbols</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/locations/lancaster</loc>
   </url>
 </urlset>
