@@ -387,6 +387,14 @@ export default function ShoppingCartItem(props) {
                                                     <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
                                                 </>
                                             )}
+                                            {userInfo && userInfo.isAirlineEmployee && (
+                                                <>
+                                                    <DivSplitLine>|</DivSplitLine>
+                                                    <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Inventory/ItemDetail.aspx?ItemID=${itemDetails.itemCode}&invmastuid=${itemDetails.invMastUid}&companyid=AIRLINE`}>
+                                                        <DivSplitLine>WC Item Master</DivSplitLine>
+                                                    </a>
+                                                </>
+                                            )}
                                         </DivRow>
                                         {(userInfo?.isAirlineEmployee || userInfo?.isWebUser) && (cartItem.quoteLineId) && (
                                             <>

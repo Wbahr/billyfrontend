@@ -413,10 +413,12 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
     } else if (userInfo && impersonatedCompanyInfo) {
         return (
             <UserNameRow style={{ flex: 1 }}>
-                <PeUser>
-                    <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
-                    {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
-                </PeUser>
+                <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/CustomerDetails.aspx?CustomerID=${impersonatedCompanyInfo.customerIdP21}&CompanyID=AIRLINE`}>
+                    <PeUser>
+                        <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
+                        {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
+                    </PeUser>
+                </a>
                 <DivCancelImpersonation onClick={cancelImpersonation}>
                     <FontAwesomeIcon icon="times" color="white" />
                 </DivCancelImpersonation>
