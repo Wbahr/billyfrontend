@@ -1004,3 +1004,9 @@ export const GET_HOMEPAGE = gql`
     }
   }
 `
+
+export const GET_AUTHENTICATION_HEARTBEAT = gql`
+  mutation AuthenticationHeartbeat {
+    authenticationHeartbeat
+  }
+`

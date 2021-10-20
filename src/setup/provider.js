@@ -18,7 +18,8 @@ import {
     GET_PRICE_REASONS,
     GET_ITEMS_BY_ID,
     QUERY_STOCK_AVAILABILITY_BATCH,
-    GET_HOMEPAGE
+    GET_HOMEPAGE,
+    GET_AUTHENTICATION_HEARTBEAT
 } from './providerGQL'
 import {
     getRidOf__typename,
@@ -69,6 +70,8 @@ export default function Provider({ history, children }) {
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [passwordResetEmail, setPasswordResetEmail] = useState('')
     const [homepage, setHomepage] = useState([])
+    const [heartbeatInfo, setHeartbeatInfo] = useState(null)
+    const [heartbeatTimeoutWaiter, setHeartbeatTimeoutWaiter] = useState(null)
 
 
     const invoiceBatchSize = 1000
@@ -78,11 +81,22 @@ export default function Provider({ history, children }) {
     const currentPath = history.location.pathname
     const resetOnImpersonate = navAwayRoutes.includes(currentPath) || partialNavAwayRoutes.some(route => currentPath.includes(route))
 
+    const [getAuthenticationHeartbeat] = useMutation(GET_AUTHENTICATION_HEARTBEAT, {
+        fetchPolicy: 'no-cache',
+        onCompleted: _ => {
+            // Only with Mutations can you return a Promise resolver. This does not work with useLazyQuery()
+            // The .then() method becomes available on getAuthenticationHeartbeat()
+            return Promise.resolve()
+        }
+    })
+
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
-            manageUserInfo('load-context')
-            retrieveShoppingCart()
-            getHomepage()
+            getAuthenticationHeartbeat().finally(() => {
+                manageUserInfo('load-context')
+                retrieveShoppingCart()
+                getHomepage()
+            })
         }
         didMountRef.current = true
     })
@@ -102,7 +116,47 @@ export default function Provider({ history, children }) {
 
     useEffect(() => {
         userInfo?.isAirlineEmployee && getPriceReasons()
+
+        // This is the initial authentication heartbeat call, called when the User Info is bound.
+        // Setting the heartbeat info calls another useEffect that handles the recurring 
+        // heartbeat intervals.
+        if (userInfo) {
+            getAuthenticationHeartbeat().then((response) => {
+                const timeRemaining = response.data.authenticationHeartbeat
+
+                setHeartbeatInfo({ timeRemaining: timeRemaining })
+            })
+        } else {
+            setHeartbeatInfo(null)
+        }
     }, [userInfo])
+
+    // This hook runs every time new heartbeat info is set, and then sets a timeout
+    // for when to call the heartbeat call next.
+    // This hook is recursive (calls itself). Normally this is bad in React, but we manage this
+    // by setting a timeout that triggers near the end of the Access Token's expiration.
+    useEffect(()  => {
+        if (heartbeatInfo?.timeRemaining > 0){
+
+            //Prevent multiple timeout calls from being registered.
+            if (heartbeatTimeoutWaiter){
+                clearTimeout(heartbeatTimeoutWaiter)
+            }
+
+            setHeartbeatTimeoutWaiter(setTimeout(() => {
+                getAuthenticationHeartbeat().then((response) => {
+                    const timeRemaining = response.data.authenticationHeartbeat
+    
+                    setHeartbeatInfo({ timeRemaining: timeRemaining }) //The recursive call
+                })
+            }, heartbeatInfo.timeRemaining * 1000 - 60000)) //Convert to milliseconds with a 60-second buffer before expiration
+        } else {
+            if (heartbeatTimeoutWaiter){
+                clearTimeout(heartbeatTimeoutWaiter)
+                setHeartbeatTimeoutWaiter(null)
+            }
+        }
+    }, [heartbeatInfo])
 
     const [getPriceReasons] = useLazyQuery(GET_PRICE_REASONS, {
         fetchPolicy: 'no-cache',
@@ -406,7 +460,7 @@ export default function Provider({ history, children }) {
         }
         getOrders()
         showTopAlert('You have been successfully logged in.')
-        window.setTimeout(removeTopAlert, 3000)
+        window.setTimeout(removeTopAlert, 2000)
     }
 
     function logoutUser() {
@@ -415,7 +469,7 @@ export default function Provider({ history, children }) {
         history.push('/')
         emptyCart()
         showTopAlert('You have been logged out.')
-        window.setTimeout(removeTopAlert, 3500)
+        window.setTimeout(removeTopAlert, 2000)
     }
 
     const [shoppingCartApiCall] = useMutation(UPDATE_CART, {
