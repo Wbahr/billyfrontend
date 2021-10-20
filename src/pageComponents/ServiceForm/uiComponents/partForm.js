@@ -8,6 +8,7 @@ import FormikTextArea from '../../_common/formik/textarea_v3'
 import { ErrorMessage, Field } from 'formik'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 import styled from 'styled-components'
+import Required from '../../_common/required'
 
 const PART_TYPES = [
     'Accumulator',
@@ -219,7 +220,7 @@ export default function PartForm(props) {
             <FormRow>
                 <Container>
                     <FormikCreatableSelect
-                        label='Type of part*'
+                        label={<>Type of part<Required /></>}
                         name={`parts[${idx}].type`}
                         options={partOptions}
                         {...props}
@@ -228,7 +229,7 @@ export default function PartForm(props) {
                 {context.userInfo && context.userInfo.isAirlineEmployee && (
                     <Container>
                         <FormikCreatableSelect
-                            label='Part Repair Location*'
+                            label={<>Part Repair Location<Required /></>}
                             name={`parts[${idx}].repairLocation`}
                             options={locationOptions}
                             notCreatable={true}
@@ -258,19 +259,19 @@ export default function PartForm(props) {
                 </FormRow>
             )}
             <FormRow>
-                <FormikInput label="Quantity*" name={`parts[${idx}].quantity`} type='number' />
-                <FormikInput label="Manufacturer*" name={`parts[${idx}].manufacturer`} placeholder='If it is not known then enter N/A' />
+                <FormikInput label={<>Quantity<Required /></>} name={`parts[${idx}].quantity`} type='number' />
+                <FormikInput label={<>Manufacturer<Required /></>} name={`parts[${idx}].manufacturer`} placeholder='If it is not known then enter N/A' />
             </FormRow>
             <FormRow>
-                <FormikInput label="Model Code*" name={`parts[${idx}].modelCode`} placeholder='If it is not known then enter N/A' />
-                <FormikInput label="Part Number*" name={`parts[${idx}].partNumber`} placeholder='If it is not known then enter N/A' />
+                <FormikInput label={<>Model Code<Required /></>} name={`parts[${idx}].modelCode`} placeholder='If it is not known then enter N/A' />
+                <FormikInput label={<>Part Number<Required /></>} name={`parts[${idx}].partNumber`} placeholder='If it is not known then enter N/A' />
             </FormRow>
             <FormRow>
-                <FormikInput label="Serial Number Code" name={`parts[${idx}].serialNumber`} />
+                <FormikInput label={<>Serial Number Code</>} name={`parts[${idx}].serialNumber`} />
             </FormRow>
             <FormRow>
                 <FormikTextArea
-                    label="What failed on the part?*"
+                    label={<>What failed on the part?<Required /></>}
                     name={`parts[${idx}].failure`}
                     placeholder='If it is not known then enter N/A'
                     rows="3"
@@ -280,7 +281,7 @@ export default function PartForm(props) {
             </FormRow>
             <FormRow>
                 <FormikInput
-                    label="Where is the failure located on the part?*"
+                    label={<>Where is the failure located on the part?<Required /></>}
                     name={`parts[${idx}].failureLocation`}
                     placeholder='Example: cylinder cap-end port.'
                 />
@@ -329,7 +330,7 @@ export default function PartForm(props) {
             </FormRow>
             <FormRow>
                 <FormikCreatableSelect
-                    label="Part is involved with personnel handling and/or safety *"
+                    label={<>Part is involved with personnel handling and/or safety <Required /></>}
                     name={`parts[${idx}].safety`}
                     options={yesNoOptions}
                     value={values.parts[idx].safety}
@@ -340,7 +341,7 @@ export default function PartForm(props) {
             <FormRow>
                 <Container>
                     <FormikCreatableSelect
-                        label='Fluid type*'
+                        label={<>Fluid type<Required /></>}
                         name={`parts[${idx}].fluidType`}
                         options={fluidOptions}
                         {...props}
@@ -352,7 +353,7 @@ export default function PartForm(props) {
                 <FormRow>
                     <Container>
                         <FormikCreatableSelect
-                            label='Getting the part to Airline*'
+                            label={<>Getting the part to Airline<Required /></>}
                             name={`parts[${idx}].toAirline`}
                             options={toAirlineOptions}
                             {...props}
@@ -360,7 +361,7 @@ export default function PartForm(props) {
                         <Instructions>PLEASE DRAIN ALL FLUIDS FROM COMPONENTS BEFORE SHIPMENT.</Instructions>
                     </Container>
                     <FormikCreatableSelect
-                        label='Returning the part to the Customer*'
+                        label={<>Returning the part to the Customer<Required /></>}
                         name={`parts[${idx}].toCustomer`}
                         options={toCustomerOptions}
                         {...props}

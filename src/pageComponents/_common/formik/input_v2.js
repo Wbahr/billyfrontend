@@ -24,14 +24,15 @@ const MainCurrencyInput = styled(CurrencyInput)`
   }
 `
 
-
 const input = props => <Field {...props} />
 
-export default function Input({ type, disabled, name, label, placeholder, width, maxLength, style, onChange, value }){
+export default function Input(props){
+    const { type, disabled, name, label, placeholder, width, maxLength, style, onChange, value } = props
+    console.log(props)
     if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
         return (
             <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
-                {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+                {label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
                 <FormikFormField 
                     type={type}
                     name={name}
@@ -56,7 +57,7 @@ export default function Input({ type, disabled, name, label, placeholder, width,
     } else if (type === 'currency') {
         return (
             <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
-                {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}      
+                {label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}      
                 <FormikFormField name={name} style={{ maxWidth: '100%' }}>
                     {({
                         field, 
@@ -85,7 +86,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
     if (type === 'currency') {
         return (
             <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
-                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%', paddingRight: 7 }}>{`${label}`}</FormikFormFieldLabel>}      
+                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%', paddingRight: 7 }}>{label}</FormikFormFieldLabel>}      
                 <MainCurrencyInput
                     type={type}
                     name={name}
@@ -103,7 +104,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
     } else {
         return (
             <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
-                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%' }}>{`${label}`}</FormikFormFieldLabel>}
+                {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%' }}>{label}</FormikFormFieldLabel>}
                 <input 
                     type={type}
                     name={name}
@@ -123,7 +124,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
 export function FormikStyleLabel({ name, label, children, alignment, width }) {
     return (
         <FormikFormFieldContainer style={{ maxWidth: '100%', width: width }}>
-            {label && <FormikFormFieldLabel style={{ textAlign: alignment, width: '100%' }} htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+            {label && <FormikFormFieldLabel style={{ textAlign: alignment, width: '100%' }} htmlFor={name}>{label}</FormikFormFieldLabel>}
             {children}
         </FormikFormFieldContainer>
     )

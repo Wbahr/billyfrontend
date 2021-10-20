@@ -5,6 +5,7 @@ import ShippingScheduleLine from '../uiComponents/scheduleLine'
 import SelectField from '../../_common/formik/select'
 import FormikInput from '../../_common/formik/input_v2'
 import { packingBasis } from '../helpers/checkoutDropdownData'
+import Required from '../../_common/required'
 
 const FormRow = styled.div`
     display: flex;
@@ -109,7 +110,7 @@ export function ShippingScheduleForm(props) {
     return (
         <Container>
             <FormRow>
-                <label htmlFor="schedule.packingBasisName">How do you want your order to ship?*</label>
+                <label htmlFor="schedule.packingBasisName">How do you want your order to ship?<Required /></label>
                 <div style={{ flexGrow: 99, maxWidth: '100%' }}>
                     <Field
                         name="schedule.packingBasisName"
