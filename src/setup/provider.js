@@ -121,7 +121,7 @@ export default function Provider({ history, children }) {
 
         // This is the initial authentication heartbeat call, called when the User Info is bound.
         // Setting the heartbeat info calls another useEffect that handles the recurring 
-        // heartbeat intervals.
+        // heartbeat intervals. This hook also runs upon login and logout.
         if (userInfo) {
             getAuthenticationHeartbeat().then((response) => {
                 const timeRemaining = response.data.authenticationHeartbeat
