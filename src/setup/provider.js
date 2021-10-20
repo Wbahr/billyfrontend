@@ -94,6 +94,7 @@ export default function Provider({ history, children }) {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             getHomepage()
             
+            //Call the authentication heartbeat on first load before attempting to retrieve any other data.
             getAuthenticationHeartbeat().finally(() => {
                 manageUserInfo('load-context')
                 retrieveShoppingCart()
