@@ -92,10 +92,11 @@ export default function Provider({ history, children }) {
 
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
+            getHomepage()
+            
             getAuthenticationHeartbeat().finally(() => {
                 manageUserInfo('load-context')
                 retrieveShoppingCart()
-                getHomepage()
             })
         }
         didMountRef.current = true
