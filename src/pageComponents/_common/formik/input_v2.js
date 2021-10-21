@@ -28,7 +28,7 @@ const input = props => <Field {...props} />
 
 export default function Input(props){
     const { type, disabled, name, label, placeholder, width, maxLength, style, onChange, value } = props
-    console.log(props)
+
     if (type === 'text' || type === 'email' || type === 'password' || type === 'number') {
         return (
             <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
