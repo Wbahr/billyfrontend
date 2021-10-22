@@ -435,11 +435,11 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
 const servicesSubItems = [
     {
         label: 'Engineered Systems & Assemblies',
-        to: '/pages/services/engineered-systems-and-assemblies'    
+        to: '/pages/services/engineered-systems-and-manufacturing-services'    
     },
     {
         label: 'Repair │ Field Service │ Maintenance',
-        to: '/pages/services/repair-field-services'
+        to: '/pages/services/repair-field-service'
     },
     {
         label: 'Safety',
@@ -478,7 +478,7 @@ const industriesSubItems = [
     },
     {
         label: 'Construction and Off Road',
-        to: '/pages/industries/construction-and-off-road'
+        to: '/pages/industries/construction-off-road'
     },
     {
         label: 'Life Sciences',
@@ -498,7 +498,7 @@ const industriesSubItems = [
     },
     {
         label: 'Mining & Drilling',
-        to: '/pages/industries/mining-and-drilling'
+        to: '/pages/industries/mining-and-driller'
     },
     {
         label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
@@ -604,7 +604,7 @@ const resourcesSubItems = [
     },
     {
         label: 'Resources Center',
-        to: '/pages/resources/resources-center'
+        to: '/pages/resources/knowledge-center'
     },
     {
         label: 'Line Cards & Brochures',
@@ -703,7 +703,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Industries',
-        to: '/pages/industries',
+        to: '/pages/industries/industries',
         subItems: industriesSubItems
     },
     {
@@ -713,7 +713,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Resources',
-        to: '/pages/resources',
+        to: '/pages/resources/resources',
         subItems: resourcesSubItems
     },
     {
