@@ -34,7 +34,7 @@ const CreatableSelectComponent = (props) => {
 
     return (
         <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
-            {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+            {label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
             <FormikFormField
                 name={name}
                 id={name}

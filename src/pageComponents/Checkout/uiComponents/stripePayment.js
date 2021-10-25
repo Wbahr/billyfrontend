@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { CardElement } from '@stripe/react-stripe-js'
+import Required from '../../_common/required'
 
 const Container = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ export default function StripePaymentSection({ setCardIsValid }) {
 
     return (
         <Container>
-            <Label>Credit Card*</Label>
+            <Label>Credit Card<Required /></Label>
             <Div>
                 <CardElement style={cardStyle} onChange={handleChange}/>
                 <p>{error}</p>

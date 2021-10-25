@@ -5,6 +5,7 @@ import { StateList, CanadianProvinceList } from '../../../_common/helpers/helper
 import SelectField from '../../../_common/formik/select'
 import styled from 'styled-components'
 import Context from '../../../../setup/context'
+import Required from '../../../_common/required'
 import { FormikFormFieldError } from 'styles/formikForm'
 
 const Row = styled.div`
@@ -53,22 +54,22 @@ export default function PurchaseOrderSection(props) {
             {!!billingInfo.requiresPONumber && <Row><Label>A PO# is required for this order.</Label></Row>}
             {!!billingInfo.terms && <Row><Label>Terms: {billingInfo.terms}</Label></Row>}
             <Row>
-                {!!context.userInfo && <FormikInput label="PO Number*" name="billing.purchaseOrder" />}
+                {!!context.userInfo && <FormikInput label={<div>PO Number <Required /></div>} name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <FormikInput label="First Name*" name="billing.firstName" disabled={!!billingInfo.isNetTerms} />
-                <FormikInput label="Last Name*" name="billing.lastName" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>First Name<Required /></>} name="billing.firstName" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>Last Name<Required /></>} name="billing.lastName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
                 <FormikInput label='Email Invoice To' name="billing.email" disabled={!!billingInfo.isNetTerms} />
                 <FormikInput label="Phone" name="billing.phone" disabled={!!billingInfo.isNetTerms} />
             </Row>
-            <FormikInput label="Address 1*" name="billing.address1" width={500} disabled={!!billingInfo.isNetTerms} />
+            <FormikInput label={<>Address 1<Required /></>} name="billing.address1" width={500} disabled={!!billingInfo.isNetTerms} />
             <FormikInput label="Address 2" name="billing.address2" width={500} disabled={!!billingInfo.isNetTerms} />
             <Row>
-                <FormikInput label="City*" name="billing.city" disabled={!!billingInfo.isNetTerms} />
-                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>City<Required /></>} name="billing.city" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>Zip<Required /></>} name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
                 <div>
@@ -78,7 +79,7 @@ export default function PurchaseOrderSection(props) {
                         options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
                         placeholder="Select a Country"
                         isSearchable={false}
-                        label="Country*"
+                        label={<>Country<Required /></>}
                         isDisabled={!!billingInfo.isNetTerms}
                     />
                     <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
@@ -92,7 +93,7 @@ export default function PurchaseOrderSection(props) {
                             component={SelectField}
                             options={StateList}
                             placeholder="Select a State"
-                            label="State*"
+                            label={<>State<Required /></>}
                             width="200px"
                             isDisabled={!!billingInfo.isNetTerms}
                         />
@@ -108,7 +109,7 @@ export default function PurchaseOrderSection(props) {
                             component={SelectField}
                             options={CanadianProvinceList}
                             placeholder="Select a Province"
-                            label="Province*"
+                            label={<>Province<Required /></>}
                             width="200px"
                             isDisabled={!!billingInfo.isNetTerms}
                         />

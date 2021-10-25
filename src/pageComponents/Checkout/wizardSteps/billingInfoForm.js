@@ -10,6 +10,7 @@ import Select from '../../_common/form/select'
 import FormikInput from '../../_common/formik/input_v2'
 import Loader from '../../_common/loader'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
+import Required from '../../_common/required'
 
 const WrapForm = styled.div`
     display: flex;
@@ -210,7 +211,7 @@ function BillingInfoForm(props) {
         <WrapForm>
             {showPoOption && (
                 <FormRow>
-                    <label htmlFor="billing.paymentMethod">How would you like to pay?*</label>
+                    <label htmlFor="billing.paymentMethod">How would you like to pay? <Required /></label>
                     <Field
                         name="billing.paymentMethod"
                         component={RadioButtons}
@@ -224,7 +225,7 @@ function BillingInfoForm(props) {
 
             {paymentMethod === 'credit_card' && context.userInfo?.isAirlineEmployee && (
                 <FormRow>
-                    <label htmlFor="billing.cardType">New or Saved Card?*</label>
+                    <label htmlFor="billing.cardType">New or Saved Card? <Required /></label>
                     <Select
                         name="billing.cardType"
                         value={newOrSavedCardOptions.find(o => o.value === selectedCard)}
@@ -247,7 +248,7 @@ function BillingInfoForm(props) {
                 <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod}/>
             )}
             {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
-                <FormikInput label={billingInfo?.requirePoNumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />
+                <FormikInput label={billingInfo?.requirePoNumber ? <div>PO Number <Required /></div> : 'PO Number'} name="billing.purchaseOrder" />
             )}
 
             <DivNavigation>

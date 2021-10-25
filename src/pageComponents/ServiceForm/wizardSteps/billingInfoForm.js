@@ -11,6 +11,7 @@ import FormikInput from '../../_common/formik/input_v2'
 import Loader from '../../_common/loader'
 import { defaultBilling } from '../helpers'
 import { FormikFormFieldError } from 'styles/formikForm'
+import Required from '../../_common/required'
 
 const WrapForm = styled.div`
     display: flex;
@@ -112,22 +113,22 @@ export default function BillingInfoForm(props) {
                 />
             </FormRow>
             <FormRow>
-                <FormikInput label="First Name*" name="billing.firstName" />
-                <FormikInput label="Last Name*" name="billing.lastName" />
+                <FormikInput label={<>First Name<Required /></>} name="billing.firstName" />
+                <FormikInput label={<>Last Name<Required /></>} name="billing.lastName" />
             </FormRow>
             <FormRow>
                 <FormikInput label='Email Invoice To' name="billing.email" />
                 <FormikInput label="Phone" name="billing.phone" />
             </FormRow>
             <FormRow>
-                <FormikInput label="Address 1*" name="billing.address1" width={500} />
+                <FormikInput label={<>Address 1<Required /></>} name="billing.address1" width={500} />
             </FormRow>
             <FormRow>
                 <FormikInput label="Address 2" name="billing.address2" width={500} />
             </FormRow>
             <FormRow>
-                <FormikInput label="City*" name="billing.city" />
-                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} />
+                <FormikInput label={<>City<Required /></>} name="billing.city" />
+                <FormikInput label={<>Zip<Required /></>} name="billing.zip" width={150} style={{ width: 'auto' }} />
             </FormRow>
             <FormRow>
                 <Field
@@ -136,7 +137,7 @@ export default function BillingInfoForm(props) {
                     options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
                     placeholder="Select a Country"
                     isSearchable={false}
-                    label="Country*"
+                    label={<>Country<Required /></>}
                 />
                 {values.billing.country === 'us' && (
                     <>
@@ -145,7 +146,7 @@ export default function BillingInfoForm(props) {
                             component={SelectField}
                             options={StateList}
                             placeholder="Select a State"
-                            label="State*"
+                            label={<>State<Required /></>}
                             width="200px"
                         />
                         <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
@@ -160,7 +161,7 @@ export default function BillingInfoForm(props) {
                             component={SelectField}
                             options={CanadianProvinceList}
                             placeholder="Select a Province"
-                            label="Province*"
+                            label={<>Province<Required /></>}
                             width="200px"
                         />
                         <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>

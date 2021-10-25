@@ -97,7 +97,7 @@
     <loc>https://www.airlinehyd.com/pages/services/engineered-systems-and-assemblies/hose-assemblies</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/services/engineered-systems-and-assemblies</loc>
+    <loc>https://www.airlinehyd.com/pages/services/engineered-systems-and-manufacturing-services</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/about/careers</loc>
@@ -106,10 +106,10 @@
     <loc>https://www.airlinehyd.com/pages/about</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/resources</loc>
+    <loc>https://www.airlinehyd.com/pages/resources/resources</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/industries</loc>
+    <loc>https://www.airlinehyd.com/pages/industries/industries</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/services/engineered-systems-and-assemblies/structural-framing-systems/fume-hoods</loc>
@@ -187,10 +187,10 @@
     <loc>https://www.airlinehyd.com/pages/resources/catalogrequest</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq</loc>
+    <loc>https://www.airlinehyd.com/pages/resources/knowledge-center</loc>
   </url>
   <url>
-    <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq/hydraulic-resources</loc>
+    <loc>https://www.airlinehyd.com/pages/resources/hydraulic-resources</loc>
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/resources/knowledge-center-and-faq/hydraulic-resources/hydraulic-troubleshooting</loc>
@@ -365,5 +365,59 @@
   </url>
   <url>
     <loc>https://www.airlinehyd.com/pages/locations/lancaster</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/abb</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/butech</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/clippard</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/eaton</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/haskel</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/hydac</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/brands/icotek</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/lincoln</loc>
+  </url>
+ <url>
+    <loc>https://www.airlinehyd.com/brands/featured/omron</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/oriental-motor</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/paccar</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/parker</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/phoenix-contact</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/rexroth</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/rittal</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/ross</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/schmersal</loc>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/brands/featured/smc</loc>
   </url>
 </urlset>
