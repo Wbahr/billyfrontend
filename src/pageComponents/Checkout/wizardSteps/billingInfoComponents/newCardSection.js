@@ -9,6 +9,7 @@ import { defaultBilling } from '../../helpers'
 import FormikCheckbox from '../../../_common/formik/checkBox'
 import Context from '../../../../setup/context'
 import { FormikFormFieldError } from 'styles/formikForm'
+import Required from '../../../_common/required'
 
 const StyledCheckbox = styled.input`
 	width: 15px;
@@ -108,13 +109,13 @@ export default function NewCardSection(props) {
             </Row>
 
             <Row>
-                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? 'PO Number*' : 'PO Number'} name="billing.purchaseOrder" />}
+                {!!context.userInfo && <FormikInput label={billingInfo?.requiresPONumber ? <>PO Number<Required /></> : 'PO Number'} name="billing.purchaseOrder" />}
                 <FormikInput label="Company Name" name="billing.companyName" />
             </Row>
 
             <Row>
-                <FormikInput label="First Name*" name="billing.firstName" />
-                <FormikInput label="Last Name*" name="billing.lastName" />
+                <FormikInput label={<>First Name<Required /></>} name="billing.firstName" />
+                <FormikInput label={<>Last Name<Required /></>} name="billing.lastName" />
             </Row>
 
             <Row>
@@ -122,12 +123,12 @@ export default function NewCardSection(props) {
                 <FormikInput label="Phone" name="billing.phone" />
             </Row>
 
-            <FormikInput label="Address 1*" name="billing.address1" width={500} />
+            <FormikInput label={<>Address 1<Required /></>} name="billing.address1" width={500} />
             <FormikInput label="Address 2" name="billing.address2" width={500} />
 
             <Row>
-                <FormikInput label="City*" name="billing.city" />
-                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} />
+                <FormikInput label={<>City<Required /></>} name="billing.city" />
+                <FormikInput label={<>Zip<Required /></>} name="billing.zip" width={150} style={{ width: 'auto' }} />
             </Row>
 
             <Row>
@@ -138,7 +139,7 @@ export default function NewCardSection(props) {
                         options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
                         placeholder="Select a Country"
                         isSearchable={false}
-                        label="Country*"
+                        label={<>Country<Required /></>}
                     />
                     <FormikFormFieldError style={{ width: '200px', maxWidth: '100%' }}>
                         <ErrorMessage name="billing.country" />
@@ -151,7 +152,7 @@ export default function NewCardSection(props) {
                             component={SelectField}
                             options={StateList}
                             placeholder="Select a State"
-                            label="State*"
+                            label={<>State<Required /></>}
                             width="200px"
                         />
                         <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
@@ -166,7 +167,7 @@ export default function NewCardSection(props) {
                             component={SelectField}
                             options={CanadianProvinceList}
                             placeholder="Select a Province"
-                            label="Province*"
+                            label={<>Province<Required /></>}
                             width="200px"
                         />
                         <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>

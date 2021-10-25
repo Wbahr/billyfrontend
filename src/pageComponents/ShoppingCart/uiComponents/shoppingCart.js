@@ -9,6 +9,8 @@ import SaveShoppingListModal from '../../_common/modals/SaveShoppingListModal'
 import { useLazyQuery } from '@apollo/client'
 import ErrorModal from 'pageComponents/_common/modals/ErrorModal'
 import MergeCartModal from './MergeCartModal'
+import DatePicker from 'react-datepicker'
+import DispositionModal from './DispositionModal'
 import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 import { GET_CART_DATA } from 'setup/gqlQueries/gqlCartQueries'
 
@@ -53,6 +55,11 @@ const DivSave = styled(DivShare)`
 	margin-right: 16px;
 `
 
+const EditPriceIcon = styled.div`
+	cursor: pointer;
+	margin-left: 8px;
+`
+
 export default function ShoppingCart({ history }) {
     const {
         cart,
@@ -64,10 +71,24 @@ export default function ShoppingCart({ history }) {
         showErrorModal,
         setShowErrorModal
     } = useContext(Context)
+
+    const [showDispositionModal, setShowDispositionModal] = useState(false)
+    const [showPromiseEdit, setShowPromiseEdit] = useState(false)
     const [showShoppingListModal, setShowShoppingListModal] = useState(false)
     const [cartData, setCartData] = useState(null)
     const debouncedCart = useDebounceValue(cart, 1000)
 
+    const dispositions = [
+        { value: '', text: 'Stock' },
+        { value: 'B', text: 'Backorder' },
+        { value: 'D', text: 'Direct Ship' },
+        { value: 'H', text: 'Hold' },
+        { value: 'S', text: 'Special Order' }
+    ]
+
+    const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
+    const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
+    
     const [getCartData] = useLazyQuery(GET_CART_DATA, {
         fetchPolicy: 'no-cache',
         onCompleted: data => {
@@ -83,6 +104,24 @@ export default function ShoppingCart({ history }) {
         }
     }, [debouncedCart])
 
+    function bulkUpdateCart(field, value) {
+        const newCart = cart.map(item => {
+            return {
+                ...item,
+                [field]: value
+            }
+        })
+        updateShoppingCart(newCart)
+    }
+    
+    function bulkUpdateDisposition({ disposition }) {
+        bulkUpdateCart('disposition', disposition)
+    }
+
+    function bulkUpdatePromiseDate(date) {
+        bulkUpdateCart('promiseDateOverride', date)
+    }
+
     const handleSaveAsShoppingList = () => setShowShoppingListModal(true)
 
     return (
@@ -92,6 +131,40 @@ export default function ShoppingCart({ history }) {
                     <H3>Shopping Cart</H3>
                     <p onClick={emptyCart}>(empty cart)</p>
                 </DivRow>
+                {userInfo?.isAirlineEmployee && (
+                    <>
+                        <DivRow>
+                            <div style={{ display: 'flex', alignItems: 'flex-end', fontSize: '0.85rem' }}>
+                                <span>All Dispositions</span>
+                                <EditPriceIcon onClick={() => setShowDispositionModal(true)}>
+                                    <FontAwesomeIcon icon="pencil-alt" color='#328EFC' />
+                                </EditPriceIcon>
+                            </div>
+                        </DivRow>
+                        <DivRow>
+                            <div style={{ display: 'flex', alignItems: 'flex-end', fontSize: '0.85rem' }}>
+                                {showPromiseEdit ? (
+                                    <>
+                                        <div style={{ marginRight: 8 }}>
+                                            <FontAwesomeIcon icon="calendar" color="lightgrey" />
+                                        </div>
+                                        <DatePicker
+                                            minDate={tomorrowDate}
+                                            maxDate={maxDate}
+                                            selected={Date.parse(cart[0]?.promiseDateOverride || cart[0]?.promiseDate)}
+                                            onChange={(value) => bulkUpdatePromiseDate(value)}
+                                        />
+                                    </>
+                                ) :
+                                    <span>All Promise Dates</span>
+                                }
+                                <EditPriceIcon onClick={() => setShowPromiseEdit(!showPromiseEdit)}>
+                                    <FontAwesomeIcon icon="pencil-alt" color='#328EFC' />
+                                </EditPriceIcon>
+                            </div>
+                        </DivRow>
+                    </>
+                )}
                 <DivRow>
                     {userInfo ?	(
                         <DivSave onClick={handleSaveAsShoppingList}>
@@ -110,7 +183,10 @@ export default function ShoppingCart({ history }) {
                         cart,
                         updateShoppingCart,
                         cartPricing,
-                        cartData
+                        cartData,
+                        dispositions,
+                        tomorrowDate,
+                        maxDate
                     }
                 }
             />
@@ -133,6 +209,13 @@ export default function ShoppingCart({ history }) {
                 hide={() => setShowErrorModal(false)} 
                 text='There has been an error, please refresh and try again.'
             />
+            <DispositionModal
+                open={showDispositionModal}
+                hide={() => setShowDispositionModal(false)}
+                dispositions={dispositions}
+                cartItem={{ disposition: null }} 
+                setCartItem={bulkUpdateDisposition}
+            />
         </>
     )
 }
@@ -144,7 +227,10 @@ const CartComponent = (props) => {
         updateShoppingCart,
         cartPricing,
         history,
-        cartData
+        cartData,
+        dispositions,
+        tomorrowDate,
+        maxDate
     } = props
 
     const [shoppingCart, setShoppingCart] = useState(cart || [])
@@ -207,7 +293,8 @@ const CartComponent = (props) => {
                                     cartData={cartData}
                                     setCartItem={setCartItem(index)}
                                     setCartItemField={setCartItemField(index)}
-                                    {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided }}
+                                    {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided, 
+                                        dispositions, tomorrowDate, maxDate }}
                                 />   
                                 {provided.placeholder}
                             </div>

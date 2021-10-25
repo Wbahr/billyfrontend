@@ -207,7 +207,10 @@ export default function ShoppingCartItem(props) {
         history,
         setIsDragDisabled,
         provided,
-        cartData
+        cartData,
+        dispositions,
+        tomorrowDate,
+        maxDate
     } = props
 
     const { impersonatedCompanyInfo } = useContext(Context)
@@ -231,14 +234,6 @@ export default function ShoppingCartItem(props) {
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
 
-    const dispositions = [
-        { value: '', text: 'Stock' },
-        { value: 'B', text: 'Backorder' },
-        { value: 'D', text: 'Direct Ship' },
-        { value: 'H', text: 'Hold' },
-        { value: 'S', text: 'Special Order' }
-    ]
-
     const getDefaultDisposition = () => {
         return itemAvailability?.totalQuantity > itemAvailability?.availability ? 'Backorder' : 'Stock'
     }
@@ -254,12 +249,9 @@ export default function ShoppingCartItem(props) {
     const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.invMastUid, 10)
-    const tomorrowDate = new Date()
-    const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
     const currentDate = format(new Date, 'M/d/yyyy')
     const beginningDate = format(sub(new Date(), { years: 1 }), 'M/d/yyyy')
-
+    
     useEffect(() => {
         if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
             setIsDragDisabled(true)
