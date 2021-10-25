@@ -121,6 +121,7 @@ export default function ConfirmationScreen(props) {
     const { userInfo, emptyCart } = useContext(Context)
     const [submitting, setSubmitting] = useState(false)
     const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
+    const [orderFailErrorMessages, setOrderFailErrorMessages] = useState([])
 
     const [submitOrder] = useMutation(SUBMIT_ORDER, {
         fetchPolicy: 'no-cache',
@@ -174,7 +175,14 @@ export default function ConfirmationScreen(props) {
                     history.push(`/order-complete/${webReferenceId}`)
                 }
             } else {
-                setShowOrderFailedModal(true)
+
+                if (errorMessages){
+                    setOrderFailErrorMessages (errorMessages)
+                    setShowOrderFailedModal(true)
+
+                } else {
+                    setShowOrderFailedModal(true)
+                }
             }
             setSubmitting(false)
         },
@@ -352,7 +360,11 @@ export default function ConfirmationScreen(props) {
             </DivNavigation>
 
             {submitting && <ProcessingOrderModal isQuote={history.location.pathname === '/create-quote'} />}
-            {showOrderFailedModal && <OrderFailedModal />}
+            {showOrderFailedModal && (
+                <OrderFailedModal
+                    orderFailErrorMessages = {orderFailErrorMessages}
+                />
+            )}
         </Container>
     )
 }
