@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
-import DebounceInput from 'react-debounce-input'
-import { FormikStyleLabel } from 'pageComponents/_common/formik/input_v2'
+import React, { useContext, useState } from 'react'
+import { FormikStyleLabel, FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
+import { StateList, CanadianProvinceList } from '../../pageComponents/_common/helpers/helperObjects'
 import { useLazyQuery } from '@apollo/client'
+import { ButtonRed } from 'styles/buttons'
 import Select from 'react-select'
 import Modal from 'pageComponents/_common/modal'
 import AdvancedResultsTable from '../uiComponents/AdvancedResultsTable'
@@ -23,15 +24,18 @@ const FlexContainer = styled.div`
 	}
 `
 
+const BtnMargin = styled.div`
+    margin: 15px;
+`
+
 const WrapSelect = styled.div`
-    margin-left: -5px;
     margin-top: 2px;
 `
 
 const searchTypeOptions = [
-    { label: 'Address', value: 'address' },
-    { label: 'Ship To', value: 'shipTo' },
-    { label: 'Contact Name', value: 'contactName' },
+    { label: 'Customer Address', value: 'customer-address' },
+    { label: 'Ship To Address', value: 'shipto-address' },
+    { label: 'Contact Name', value: 'contact-name' },
 ]
 
 export default function AdvancedSearch({ open, onClose }) {
@@ -39,27 +43,39 @@ export default function AdvancedSearch({ open, onClose }) {
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const [searchTerm, setSearchTerm] = useState('')
-    const [searchType, setSearchType] = useState({ label: 'Address', value: 'address' })
-
+    const [searchTerms, setSearchTerms] = useState({ searchType: 'customer-address' })
+    const [stateCode, setStateCode] = useState({})
+    const [searchType, setSearchType] = useState({ label: 'Customer Address', value: 'customer-address' })
+    
     const [impersonationSearch] = useLazyQuery(ADVANCED_IMPERSONATION_SEARCH, {
         onCompleted: data => {
-            setData(data.getImpersonationCustomerList)
+            setData(data.customerImpersonateAdvancedSearch)
             setLoading(false)
         }
     })
 
-    useEffect(() => {
-        if (searchTerm.length > 0 && context.userInfo?.isAirlineEmployee) {
-            setLoading(true)
-            impersonationSearch({ variables: { searchString: searchTerm } })
-        } else {
-            setData([])
-        }
-    }, [searchTerm])
+    function search() {
+        setLoading(true)    
+        impersonationSearch({ variables: { ...searchTerms } })
+    }
+
+    function setSearchTerm(field, value) {
+        setSearchTerms({ ...searchTerms, [field]: value })
+    }
+
+    function handleSetSearchType(e) {
+        setStateCode({})
+        setSearchTerms({ searchType: e.value })
+        setSearchType(e)
+    }
+
+    function handleSetStateCode(e) {
+        setStateCode(e)
+        setSearchTerm('stateCode', e.value)
+    }
 
     function handleOnClose() {
-        setSearchTerm('')
+        setSearchTerms({})
         onClose()
     }
 
@@ -81,7 +97,7 @@ export default function AdvancedSearch({ open, onClose }) {
             baseUnit: 0,
         }
     })
-    
+
     function impersonate(e) {
         context.startImpersonation(e)
         handleOnClose()
@@ -92,12 +108,12 @@ export default function AdvancedSearch({ open, onClose }) {
             <Center>
                 Advanced Search
             </Center>
-            <FlexContainer>
-                <FormikStyleLabel label='Search For' width='300px'>
+            <Center>
+                <FormikStyleLabel label='Search By' width='300px'>
                     <WrapSelect>
                         <Select
                             value={searchType}
-                            onChange={setSearchType}
+                            onChange={handleSetSearchType}
                             options={searchTypeOptions}
                             isSearchable={true}
                             styles={SelectStyle}
@@ -105,15 +121,67 @@ export default function AdvancedSearch({ open, onClose }) {
                         />
                     </WrapSelect>
                 </FormikStyleLabel>
-                <FormikStyleLabel label='Search Term' width='300px'>
-                    <DebounceInput
-                        minLength={0}
-                        debounceTimeout={300}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        value={searchTerm}
+            </Center>
+            {searchType.value === 'contact-name' ? (
+                <FlexContainer>
+                    <FormikStyleInput
+                        label='First Name'
+                        width='300px'
+                        onChange={(e) => setSearchTerm('contactFirstName', e.target.value)}
+                        value={searchTerms.contactFirstName || ''}
+                        key='fname'
                     />
-                </FormikStyleLabel>
-            </FlexContainer>
+                    <FormikStyleInput
+                        label='Last Name'
+                        width='300px'
+                        onChange={(e) => setSearchTerm('contactLastName', e.target.value)}
+                        value={searchTerms.contactLastName || ''}
+                        key='lname'
+                    />
+                </FlexContainer>
+            ) : (
+                <FlexContainer>
+                    <FormikStyleInput
+                        label='Address'
+                        width='300px'
+                        onChange={(e) => setSearchTerm('address1', e.target.value)}
+                        value={searchTerms.address1 || ''}
+                        key='add'
+                    />
+                    <FormikStyleInput
+                        label='City'
+                        width='300px'
+                        onChange={(e) => setSearchTerm('city', e.target.value)}
+                        value={searchTerms.city || ''}
+                        key='city'
+                    />
+                    <FormikStyleLabel label='State/Province' width='300px' key='state'>
+                        <WrapSelect>
+                            <Select
+                                width='300px'
+                                onChange={handleSetStateCode}
+                                value={stateCode}
+                                options={[...StateList, ...CanadianProvinceList]}
+                                isSearchable={true}
+                                styles={SelectStyle}
+                                theme={theme}
+                            />
+                        </WrapSelect>
+                    </FormikStyleLabel>
+                    <FormikStyleInput
+                        label='Postal Code'
+                        width='300px'
+                        onChange={(e) => setSearchTerm('postalCode', e.target.value)}
+                        value={searchTerms.postalCode || ''}
+                        key='zip'
+                    />
+                </FlexContainer>
+            )}
+            <BtnMargin>
+                <Center>
+                    <ButtonRed onClick={search}>Search</ButtonRed>
+                </Center>
+            </BtnMargin>
             <AdvancedResultsTable impersonate={impersonate} data={data} loading={loading} />
         </Modal>
     )

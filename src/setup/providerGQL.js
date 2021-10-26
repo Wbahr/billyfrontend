@@ -982,11 +982,28 @@ export const GET_PREPAYMENTS = gql`
 `
 
 export const ADVANCED_IMPERSONATION_SEARCH = gql`
-  query GetImpersonationCustomerList($searchString: String){
-    getImpersonationCustomerList(searchString: $searchString){
-      customerIdP21
-      name
-      id
+  query ImpersonationCustomerAdvancedSearch(
+    $searchType: String, 
+    $searchString: String,
+    $address1: String,
+    $city: String,
+    $stateCode: String,
+    $postalCode: String,
+    $contactFirstName: String,
+    $contactLastName: String
+  ){
+    customerImpersonateAdvancedSearch(
+      searchType: $searchType, 
+      searchString: $searchString,
+      address1: $address1,
+      city: $city,
+      stateCode: $stateCode,
+      postalCode: $postalCode,
+      contactFirstName: $contactFirstName,
+      contactLastName: $contactLastName){
+        customerIdP21
+        customerName
+        resultString
     }
   }
 `

@@ -9,8 +9,9 @@ const TableContainer = styled.div`
 	flex-direction: column;
 	width: 100%;
 	box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
-	padding: 20px 40px;
+	padding: 0px 20px;
     margin: 0 auto 0 0;
+    height: 250px;
 `
 const OverflowContainer = styled.div`
     overflow: auto;
@@ -26,7 +27,7 @@ const TRheader = styled.tr`
 `
 
 const THheader = styled.th`
-	padding: 8px 16px;
+	padding: 3px 16px;
 	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 	font-weight: 500;
 	font-size: 15px;
@@ -68,13 +69,16 @@ export default function AdvancedResultsTable({ impersonate, data, loading }) {
     const columns = useMemo(
         () => [
             {
+                Header: 'ID',
+                accessor: 'customerIdP21',
+            },
+            {
                 Header: 'Customer',
-                accessor: 'name',
-                Cell: props => <span>{props.value}</span>
+                accessor: 'customerName',
             },
             {
                 Header: 'Terms',
-                accessor: 'terms',
+                accessor: 'resultString',
             },
         ],
         [],
@@ -102,12 +106,6 @@ export default function AdvancedResultsTable({ impersonate, data, loading }) {
             data,
             initialState: {
                 pageIndex: 0,
-                sortBy: [
-                    {
-                        id: 'createdDate',
-                        desc: true,
-                    }
-                ]
             },
         },
         useSortBy,
@@ -146,7 +144,7 @@ export default function AdvancedResultsTable({ impersonate, data, loading }) {
                                 {page.map((row, i) => {
                                     prepareRow(row)
                                     return (
-                                        <TRrow key={i} {...row.getRowProps()} onClick={() => impersonate(row.original.id)}>
+                                        <TRrow key={i} {...row.getRowProps()} onClick={() => impersonate(row.original.customerIdP21)}>
                                             {row.cells.map((cell, idx) => {
                                                 return (
                                                     <TDrow {...cell.getCellProps()} key={idx}>
