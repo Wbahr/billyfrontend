@@ -103,7 +103,7 @@ export function FormikStyleInput({ type, value, disabled, name, label, placehold
         )
     } else {
         return (
-            <FormikFormFieldContainer style={{ maxWidth: '100%' }}>
+            <FormikFormFieldContainer style={{  width: width || '400px', maxWidth: '100%' }}>
                 {label && <FormikFormFieldLabel htmlFor={name} style={{ textAlign: alignment, width: '100%' }}>{label}</FormikFormFieldLabel>}
                 <input 
                     type={type}
