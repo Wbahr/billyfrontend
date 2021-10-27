@@ -283,7 +283,7 @@ export function ShipToForm(props) {
                         options={checkoutDropdownDataLabels.shiptos}
                         width="800px"
                         label="Saved Ship To"
-                        placeholder="Search Saved Ship Tos"
+                        placeholder="Select Ship To"
                         changeFunction={(field, value) => handleSavedAddressSelectChange(field, value, handleChange)}
                     />
                     {(values.shipto.selectedShipTo === -1 && context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
@@ -298,138 +298,142 @@ export function ShipToForm(props) {
                     )}
                 </Container>
             )}
-            <FormikInput
-                label="Company Name"
-                name="shipto.companyName"
-                width={500}
-                onChange={(e) => handleSavedAddressChange(e, handleChange)}
-                value={values.shipto.companyName}
-            />
-
-            <FormRow>
-                <FormikInput label={<>First Name<Required /></>} name="shipto.firstName" />
-                <FormikInput label={<>Last Name<Required /></>} name="shipto.lastName" />
-            </FormRow>
-
-            <FormRow>
-                <FormikInput label={<>Phone<Required /></>} name="shipto.phone" />
-                <FormikInput label={<>Email<Required /></>} name="shipto.email" />
-            </FormRow>
-
-            <FormikInput
-                label={<>Address 1<Required /></>}
-                name="shipto.address1"
-                width={600}
-                onChange={(e) => handleSavedAddressChange(e, handleChange)}
-                value={values.shipto.address1}
-            />
-
-            <FormikInput
-                label="Address 2"
-                name="shipto.address2"
-                width={600}
-                onChange={(e) => handleSavedAddressChange(e, handleChange)}
-                value={values.shipto.address2}
-            />
-
-            <FormRow>
-                <FormikInput
-                    label={<>City<Required /></>}
-                    name="shipto.city"
-                    onChange={(e) => handleSavedAddressChange(e, handleChange)}
-                    value={values.shipto.city}
-                />
-                <FormikInput
-                    label={<>Zip<Required /></>}
-                    name="shipto.zip"
-                    width={150}
-                    onChange={(e) => handleZipChange(e, handleChange)}
-                    value={values.shipto.zip}
-                />
-            </FormRow>
-
-            <FormRow>
-                <Field
-                    name="shipto.country"
-                    component={SelectField}
-                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
-                    placeholder="Select a Country"
-                    width="250px"
-                    isSearchable={false}
-                    label={<>Country<Required /></>}
-                    changeFunction={handleCountryChange}
-                />
-                {values.shipto.country === 'us' && (
-                    <>
-                        <Field
-                            name="shipto.stateOrProvince"
-                            component={SelectField}
-                            options={StateList}
-                            placeholder="Select a State"
-                            label={<>State<Required /></>}
-                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                            width="200px"
-                        />
-                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
-                            <ErrorMessage name="shipto.stateOrProvince" />
-                        </FormikFormFieldError>
-                    </>
-                )}
-                {values.shipto.country === 'canada' && (
-                    <>
-                        <Field
-                            name="shipto.stateOrProvince"
-                            component={SelectField}
-                            options={CanadianProvinceList}
-                            placeholder="Select a Province"
-                            label={<>Province<Required /></>}
-                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                            width="200px"
-                        />
-                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
-                            <ErrorMessage name="shipto.stateOrProvince" />
-                        </FormikFormFieldError>
-                    </>
-                )}
-            </FormRow>
-
-            <Textarea
-                label="Shipping Notes"
-                name="shipto.shippingNotes"
-                width={550}
-                height={60}
-                rows={4}
-                maxLength={255}
-            />
-
-            <>
-                <Field
-                    name="shipto.carrierId"
-                    component={SelectField}
-                    options={checkoutDropdownDataLabels.carriers}
-                    placeholder="Select a Carrier"
-                    label={<>Carrier<Required /></>}
-                    width="500px"
-                    changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
-                    value={values.shipto.carrierId}
-                />
-                <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
-                    <ErrorMessage name="shipto.carrierId" />
-                </FormikFormFieldError>
-            </>
-
-            {context.userInfo && context.userInfo.isAirlineEmployee && (
-                <FormRow>
-                    <FormikCheckbox
-                        label="Ship Collect?"
-                        name="shipto.isCollect"
-                        value={values.shipto.isCollect}
-                        onChange={handleIsCollectChange}
+            {(!context.userInfo || values.shipto.selectedShipTo !== 0) && (
+                <>
+                    <FormikInput
+                        label="Company Name"
+                        name="shipto.companyName"
+                        width={500}
+                        onChange={(e) => handleSavedAddressChange(e, handleChange)}
+                        value={values.shipto.companyName}
                     />
-                </FormRow>
+
+                    <FormRow>
+                        <FormikInput label={<>First Name<Required /></>} name="shipto.firstName" />
+                        <FormikInput label={<>Last Name<Required /></>} name="shipto.lastName" />
+                    </FormRow>
+
+                    <FormRow>
+                        <FormikInput label={<>Phone<Required /></>} name="shipto.phone" />
+                        <FormikInput label={<>Email<Required /></>} name="shipto.email" />
+                    </FormRow>
+
+                    <FormikInput
+                        label={<>Address 1<Required /></>}
+                        name="shipto.address1"
+                        width={600}
+                        onChange={(e) => handleSavedAddressChange(e, handleChange)}
+                        value={values.shipto.address1}
+                    />
+
+                    <FormikInput
+                        label="Address 2"
+                        name="shipto.address2"
+                        width={600}
+                        onChange={(e) => handleSavedAddressChange(e, handleChange)}
+                        value={values.shipto.address2}
+                    />
+
+                    <FormRow>
+                        <FormikInput
+                            label={<>City<Required /></>}
+                            name="shipto.city"
+                            onChange={(e) => handleSavedAddressChange(e, handleChange)}
+                            value={values.shipto.city}
+                        />
+                        <FormikInput
+                            label={<>Zip<Required /></>}
+                            name="shipto.zip"
+                            width={150}
+                            onChange={(e) => handleZipChange(e, handleChange)}
+                            value={values.shipto.zip}
+                        />
+                    </FormRow>
+
+                    <FormRow>
+                        <Field
+                            name="shipto.country"
+                            component={SelectField}
+                            options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                            placeholder="Select a Country"
+                            width="250px"
+                            isSearchable={false}
+                            label={<>Country<Required /></>}
+                            changeFunction={handleCountryChange}
+                        />
+                        {values.shipto.country === 'us' && (
+                            <>
+                                <Field
+                                    name="shipto.stateOrProvince"
+                                    component={SelectField}
+                                    options={StateList}
+                                    placeholder="Select a State"
+                                    label={<>State<Required /></>}
+                                    changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                                    width="200px"
+                                />
+                                <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                                    <ErrorMessage name="shipto.stateOrProvince" />
+                                </FormikFormFieldError>
+                            </>
+                        )}
+                        {values.shipto.country === 'canada' && (
+                            <>
+                                <Field
+                                    name="shipto.stateOrProvince"
+                                    component={SelectField}
+                                    options={CanadianProvinceList}
+                                    placeholder="Select a Province"
+                                    label={<>Province<Required /></>}
+                                    changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                                    width="200px"
+                                />
+                                <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                                    <ErrorMessage name="shipto.stateOrProvince" />
+                                </FormikFormFieldError>
+                            </>
+                        )}
+                    </FormRow>
+
+                    <Textarea
+                        label="Shipping Notes"
+                        name="shipto.shippingNotes"
+                        width={550}
+                        height={60}
+                        rows={4}
+                        maxLength={255}
+                    />
+
+                    <>
+                        <Field
+                            name="shipto.carrierId"
+                            component={SelectField}
+                            options={checkoutDropdownDataLabels.carriers}
+                            placeholder="Select a Carrier"
+                            label={<>Carrier<Required /></>}
+                            width="500px"
+                            changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
+                            value={values.shipto.carrierId}
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.carrierId" />
+                        </FormikFormFieldError>
+                    </>
+
+                    {context.userInfo && context.userInfo.isAirlineEmployee && (
+                        <FormRow>
+                            <FormikCheckbox
+                                label="Ship Collect?"
+                                name="shipto.isCollect"
+                                value={values.shipto.isCollect}
+                                onChange={handleIsCollectChange}
+                            />
+                        </FormRow>
+                    )}
+                    {!!values.shipto.isCollect && <FormikInput label={<>Collect Number<Required /></>} name="shipto.collectNumber" />}
+                    <ShippingScheduleForm {...props} />
+                </>
             )}
-            {!!values.shipto.isCollect && <FormikInput label={<>Collect Number<Required /></>} name="shipto.collectNumber" />}
-            <ShippingScheduleForm {...props} />
             <DivNavigation>
                 <ButtonBlack onClick={() => history.push('/cart')}>
                     <FontAwesomeIcon icon='shopping-cart' size="sm" color="white" />
