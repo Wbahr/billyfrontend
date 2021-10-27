@@ -99,6 +99,7 @@ export function ShippingScheduleForm(props) {
                 itemDetails={details}
                 customerPartNumbers={customerPartNumbers}
                 index={index}
+                setFieldValue={setFieldValue}
             />
         )
     }
