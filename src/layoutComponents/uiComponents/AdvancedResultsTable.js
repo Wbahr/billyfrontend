@@ -144,7 +144,10 @@ export default function AdvancedResultsTable({ impersonate, data, loading }) {
                                 {page.map((row, i) => {
                                     prepareRow(row)
                                     return (
-                                        <TRrow key={i} {...row.getRowProps()} onClick={() => impersonate(row.original.customerIdP21)}>
+                                        <TRrow key={i} {...row.getRowProps()} onClick={() => {
+                                            impersonate(row.original.customerAirlineId)
+                                        }}
+                                        >
                                             {row.cells.map((cell, idx) => {
                                                 return (
                                                     <TDrow {...cell.getCellProps()} key={idx}>

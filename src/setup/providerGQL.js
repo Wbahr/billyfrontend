@@ -1002,6 +1002,7 @@ export const ADVANCED_IMPERSONATION_SEARCH = gql`
       contactFirstName: $contactFirstName,
       contactLastName: $contactLastName){
         customerIdP21
+        customerAirlineId
         customerName
         resultString
     }
