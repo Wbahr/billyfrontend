@@ -333,6 +333,11 @@ export default function quoteDetailPDF({ data }) {
                 <DivItemDetailCell width='35%'>
                     <P0>Item Code: {item.itemCode}</P0>
                     <P0>AHC#: {item.invMastUid}</P0>
+                    {item.customerPartNumber && (
+                        <>
+                            <P0>Customer Part #: {item.customerPartNumber}</P0>
+                        </>
+                    )}
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>
                     <P0>

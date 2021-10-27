@@ -229,7 +229,11 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
         return (
             <DivDownload>
                 <PDFDownloadLink document={<MyDocument data={pdfData} />} fileName={`airline_quote_${quoteId}.pdf`}>
-                    {({ loading }) => (loading ? 'Loading document...' : (
+                    {({ loading }) => (loading ? (
+                        <ButtonExport>
+                            <FontAwesomeIcon size='lg' icon="file-pdf" color="#eeeeee" />
+                        </ButtonExport>
+                    )  : (
                         <ButtonExport>
                             <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
                         </ButtonExport>
@@ -242,6 +246,7 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
     const exportColumns = [
         { accessor: 'itemCode', Header: 'Item Code' },
         { accessor: 'invMastUid', Header: 'AHC #' },
+        { accessor: 'customerPartNumber', Header: 'Customer Part #' },
         { accessor: 'unitPrice', Header: 'Quote Unit Price' },
         { accessor: 'totalPrice', Header: 'Quote Total Price' },
         { accessor: 'currentPrice', Header: 'Current Unit Price' },

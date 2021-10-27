@@ -192,7 +192,11 @@ export default function OrderDetail({ history, orderId }) {
     const OrderDetailDownloadButton = useMemo(() => {
         return (
             <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails?.accountOrderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
-                {({ loading }) => (loading ? 'Loading document...' : (
+                {({ loading }) => (loading ? (
+                    <ButtonExport>
+                        <FontAwesomeIcon size='lg' icon="file-pdf" color="#eeeeee" />
+                    </ButtonExport>
+                ) : (
                     <ButtonExport>
                         <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
                     </ButtonExport>
@@ -209,6 +213,10 @@ export default function OrderDetail({ history, orderId }) {
         {
             Header: 'AHC#',
             accessor: 'invMastUid',
+        },
+        {
+            Header: 'Customer Part #',
+            accessor: 'customerPartNumber',
         },
         {
             Header: 'Qty Recieved',
