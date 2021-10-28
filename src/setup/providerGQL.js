@@ -167,6 +167,7 @@ export const UPDATE_CART = gql`
         isQuoteLineActive
         itemNotes
         quoteLineId
+        pricePage
         itemTotalTariff
         itemUnitPrice
         itemUnitPriceOriginal

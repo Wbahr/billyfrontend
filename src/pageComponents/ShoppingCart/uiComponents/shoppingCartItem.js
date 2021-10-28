@@ -229,7 +229,8 @@ export default function ShoppingCartItem(props) {
         spaType,
         spaNumber,
         spaMargin,
-        spaCost
+        spaCost,
+        pricePage
     } = itemPriceInfo || {}
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
@@ -589,7 +590,8 @@ export default function ShoppingCartItem(props) {
                     spaMargin: spaMargin,
                     airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
                     priceReasonId: cartItem.priceReasonId,
-                    cartItem
+                    cartItem,
+                    pricePage
                 }}
                 setCartItem={setCartItem}
                 itemId={itemDetails.itemCode}
