@@ -156,7 +156,8 @@ export default function InvoiceDetail({ history, invoiceId }) {
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
                     <P2>AHC#: {item.invMastUid}</P2>
-                    {item.trackingNumbers.map(tracking => {
+                    {item.customerPartNumber && <P2>Customer Part #: {item.customerPartNumber}</P2>}
+                    {item.trackingNumbers?.map(tracking => {
                         return (
                             <DivTracking key={tracking.trackingNumber}>
                                 <P2>{tracking.carrierName}: </P2>

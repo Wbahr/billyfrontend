@@ -230,7 +230,7 @@ function CheckoutPage({ history }) {
         },
         shipto: {
             ...defaultShipTo,
-            selectedShipTo: -1,
+            selectedShipTo: 0,
             firstName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.firstName || '',
             lastName: context.userInfo?.isImpersonatorUser  ? '' : loggedInUserContactInfo?.lastName || '',
             phone: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.phoneNumber || '',

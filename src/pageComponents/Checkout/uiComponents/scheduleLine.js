@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -95,7 +95,7 @@ const getContent = (itemDetails, item, customerPartNumbers, index) => {
         const tomorrowDate = new Date()
         tomorrowDate.setDate(tomorrowDate.getDate() + 1)
         const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)
-		
+
         return (
             <DivCard>
                 <DivCol1>
@@ -137,8 +137,13 @@ const getContent = (itemDetails, item, customerPartNumbers, index) => {
     }
 }
 
-export default function ScheduleLine({ item, itemDetails, customerPartNumbers, index }) {
-	
+export default function ScheduleLine({ item, itemDetails, customerPartNumbers, index, setFieldValue }) {
+    useEffect(() => {
+        if (item?.promiseDate) {
+            setFieldValue(`schedule.cartWithDates.${index}.requestedShipDate`, item.promiseDate)
+        }
+    }, [item.promiseDate])
+
     return (
         <DivContainer key={index}>
             {getContent(itemDetails, item, customerPartNumbers, index)}
