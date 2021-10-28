@@ -75,7 +75,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         spaType,
         spaNumber,
         spaCost,
-        spaMargin
+        spaMargin,
+        pricePage
     } = data || {}
 
     const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
@@ -173,6 +174,12 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                             width='100px'
                         />
                     </PriceInfoItem>
+                </PriceInfoRow>
+                <DivItem>
+                    <Label>Price Page: </Label>
+                    <p>{pricePage || 'N/A'}</p>
+                </DivItem>
+                <PriceInfoRow>
                     <PriceInfoItem>
                         <Label>SPA Type: </Label>
                         <LabelInline>{spaType || 'N/A'}</LabelInline>
