@@ -250,6 +250,10 @@ export default function OrderDetail({ history, orderId }) {
             Header: 'P.O. Number', 
             accessor: 'poNo' 
         },
+        {
+            Header: 'Tracking #',
+            accessor: 'trackingNo'
+        },
         { 
             Header: 'Status', 
             accessor: 'status' 
@@ -295,7 +299,8 @@ export default function OrderDetail({ history, orderId }) {
     const exportData = orderDetails?.accountOrderDetails?.lineItems?.map(item => {
         return {
             ...item,
-            ...orderDetails.accountOrderDetails
+            ...orderDetails.accountOrderDetails,
+            trackingNo: item.trackingNumbers?.map(t => t.trackingNumber).join(' - ')
         }
     })
     
