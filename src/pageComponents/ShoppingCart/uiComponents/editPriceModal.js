@@ -41,6 +41,22 @@ const LabelInline = styled.label`
     background-color: #e3e3e3;
 `
 
+const SpaContainer = styled.div`
+    margin: 0 4px;
+    width: 100%;
+`
+
+const LabelSpa = styled.label`
+    padding: 0 8px;
+    color: #303030;
+    font-size: 16px;
+    border-radius: 1px;
+    border: 1px solid #e1e1e1;
+    margin-left: 5px;
+    width: 100%;
+    background-color: #e3e3e3;
+`
+
 const Label = styled.label`
     margin: 0;
     font-size: 12px;
@@ -192,10 +208,10 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         <Label>SPA Cost: </Label>
                         <LabelInline>{spaCost ? `$${spaCost.toFixed(2)}` : 'N/A'}</LabelInline>
                     </PriceInfoItem>
-                    <DivItem>
+                    <SpaContainer>
                         <Label>SPA Number: </Label>
-                        <LabelInline>{spaNumber || 'N/A'}</LabelInline>
-                    </DivItem>
+                        <LabelSpa>{spaNumber || 'N/A'}</LabelSpa>
+                    </SpaContainer>
                 </PriceInfoRow>
 
                 {itemPrice !== data?.originalItemPrice && (
