@@ -96,7 +96,7 @@ const DivMove = styled.div`
 	height: 100%;
 	align-items: center;
     padding: 0 12px;
-    min-width: 100px;
+    width: 52px;
 `
 
 const DivCol1 = styled.div`
