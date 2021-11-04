@@ -151,7 +151,10 @@ export default function Provider({ history, children }) {
     
                     setHeartbeatInfo({ timeRemaining: timeRemaining }) //The recursive call
                 })
-            }, heartbeatInfo.timeRemaining * 1000 - 60000)) //Convert to milliseconds with a 60-second buffer before expiration
+            }, heartbeatInfo.timeRemaining * 1000 - 30000))
+            //Convert to milliseconds with a 30-second buffer before expiration
+            //The server is designed to refresh the tokens on a heartbeat when the tokens are less than 
+            //60 seconds from expiring.
         } else {
             if (heartbeatTimeoutWaiter){
                 clearTimeout(heartbeatTimeoutWaiter)

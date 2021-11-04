@@ -95,7 +95,8 @@ const DivMove = styled.div`
 	display: flex;
 	height: 100%;
 	align-items: center;
-	padding: 0 12px;
+    padding: 0 12px;
+    width: 52px;
 `
 
 const DivCol1 = styled.div`
@@ -229,7 +230,8 @@ export default function ShoppingCartItem(props) {
         spaType,
         spaNumber,
         spaMargin,
-        spaCost
+        spaCost,
+        pricePage
     } = itemPriceInfo || {}
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
@@ -589,7 +591,8 @@ export default function ShoppingCartItem(props) {
                     spaMargin: spaMargin,
                     airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
                     priceReasonId: cartItem.priceReasonId,
-                    cartItem
+                    cartItem,
+                    pricePage
                 }}
                 setCartItem={setCartItem}
                 itemId={itemDetails.itemCode}
