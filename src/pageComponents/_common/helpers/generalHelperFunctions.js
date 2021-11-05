@@ -14,7 +14,9 @@ export const getCsvFormattedData = (data, columns, ignoreCols) => {
     const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
     return [
         columns.filter(filterCols).map(({ Header }) => Header),
-        ...data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+        ...data.map(d => columns.filter(filterCols).map(({ accessor }) => {
+            return d[accessor] === true ? 'X' : d[accessor] === false ? '' : d[accessor]
+        }))
     ]
 }
 
