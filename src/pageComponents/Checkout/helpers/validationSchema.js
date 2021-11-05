@@ -40,11 +40,11 @@ export const shipToSchema = object({
         firstName: string()
             .max(50)
             .required('First Name is required')
-            .matches(/^[A-Za-z]|[A-Za-z][A-Za-z\s]*[A-Za-z]$/, 'Please remove the leading space character'), 
+            .matches(/[^\s\\]/, 'Please remove the leading space character'), 
         lastName: string()
             .max(50)
             .required('Last Name is required')
-            .matches(/^[A-Za-z]|[A-Za-z][A-Za-z\s]*[A-Za-z]$/, 'Please remove the leading space character'),
+            .matches(/[^\s\\]/, 'Please remove the leading space character'),
         address1: string()
             .min(5, 'Address Line 1 must be at least 5 characters long')
             .max(256)
