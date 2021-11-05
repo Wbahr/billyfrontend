@@ -95,6 +95,7 @@ function BillingInfoForm(props) {
 
     const [checkPo] = useLazyQuery(CHECK_PO, {
         fetchPolicy: 'no-cache',
+        variables: { poNumber: purchaseOrder },
         onCompleted: result => {
             setDuplicatePo(result.isDuplicatePurchaseOrderNumber)
         }
