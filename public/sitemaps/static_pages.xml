@@ -541,7 +541,12 @@
 	<lastmod>2021-10-27</lastmod>
   </url>
   <url>
-    <loc>https://www.airlinehyd.co/pages/services/engineered-systems-and-assemblies/display-cases</loc>
+    <loc>https://www.airlinehyd.com/pages/services/engineered-systems-and-assemblies/display-cases</loc>
+	<changefreq>monthly</changefreq>
+	<lastmod>2021-10-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/services/display-cases</loc>
 	<changefreq>monthly</changefreq>
 	<lastmod>2021-10-27</lastmod>
   </url>
@@ -699,5 +704,25 @@
     <loc>https://www.airlinehyd.com/brands/featured/smc</loc>
 	<changefreq>monthly</changefreq>
 	<lastmod>2021-10-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/resources/hydnoisechart</loc>
+	<changefreq>monthly</changefreq>
+	<lastmod>2021-11-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/resources/flowchart</loc>
+	<changefreq>monthly</changefreq>
+	<lastmod>2021-11-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/resources/heatchart</loc>
+	<changefreq>monthly</changefreq>
+	<lastmod>2021-11-04</lastmod>
+  </url>
+  <url>
+    <loc>https://www.airlinehyd.com/pages/resources/pressurechart</loc>
+	<changefreq>monthly</changefreq>
+	<lastmod>2021-11-04</lastmod>
   </url>
 </urlset>
