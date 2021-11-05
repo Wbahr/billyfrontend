@@ -1029,3 +1029,11 @@ export const GET_AUTHENTICATION_HEARTBEAT = gql`
     authenticationHeartbeat
   }
 `
+
+export const CHECK_PO = gql`
+  query IsDuplicatePoNumber(
+    $poNumber: String
+  ) {
+    isDuplicatePurchaseOrderNumber(purchaseOrderNumber: $poNumber)
+  }
+`
