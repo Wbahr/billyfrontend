@@ -284,7 +284,6 @@ export const GET_ORDERS = gql`
         quoteLineId
         promiseDate
         disposition
-        isCancelled
 			}
       quoteHeader {
         quoteId
