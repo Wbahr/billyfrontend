@@ -41,7 +41,7 @@ export function formatTableData(type, data, orderId){
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
                     if (lineItem.quantityOpen > 0) {
-                        let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
+                        let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + elem.webReferenceNumber + ' '
                         filterField = filterField.toUpperCase()
 
                         let qtyRemaining = `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`
@@ -70,7 +70,8 @@ export function formatTableData(type, data, orderId){
                                 formattedPromiseDate: !lineItem.promiseDate ? '--' : dateFormat(new Date(lineItem.promiseDate), 'MM/dd/yyyy'),
                                 jobName: elem.jobName,
                                 itemCode: lineItem.itemCode,
-                                disposition: lineItem.disposition
+                                disposition: lineItem.disposition,
+                                webReferenceNumber: elem.webReferenceNumber
                             }
                         )
                     }

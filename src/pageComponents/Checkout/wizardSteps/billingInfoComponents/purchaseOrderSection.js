@@ -23,7 +23,7 @@ const Container = styled.div`
 `
 
 export default function PurchaseOrderSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo }, poMessage } = props
     const context = useContext(Context)
 
     useEffect(() => {
@@ -54,7 +54,10 @@ export default function PurchaseOrderSection(props) {
             {!!billingInfo.requiresPONumber && <Row><Label>A PO# is required for this order.</Label></Row>}
             {!!billingInfo.terms && <Row><Label>Terms: {billingInfo.terms}</Label></Row>}
             <Row>
-                {!!context.userInfo && <FormikInput label={<div>PO Number <Required /></div>} name="billing.purchaseOrder" />}
+                <div>
+                    {!!context.userInfo && <FormikInput label={<div>PO Number <Required /></div>} name="billing.purchaseOrder" />}
+                    { poMessage }
+                </div>
                 <FormikInput label="Company Name" name="billing.companyName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>

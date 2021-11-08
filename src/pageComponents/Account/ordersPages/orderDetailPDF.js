@@ -354,7 +354,7 @@ export default React.memo(({ orderId, data }) => {
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>
                     <P0>
-                        {item.quantityInvoiced}
+                        {item.isCancelled ? 'Cancelled' : item.quantityInvoiced}
                     </P0>
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>

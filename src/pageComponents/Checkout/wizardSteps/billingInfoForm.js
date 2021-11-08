@@ -5,11 +5,12 @@ import NewCardSection from './billingInfoComponents/newCardSection'
 import PurchaseOrderSection from './billingInfoComponents/purchaseOrderSection'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import Context from '../../../setup/context'
-import { transformForPaymentInfo } from '../helpers'
+import { useLazyQuery } from '@apollo/client'
 import Select from '../../_common/form/select'
 import FormikInput from '../../_common/formik/input_v2'
 import Loader from '../../_common/loader'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
+import { CHECK_PO } from '../../../setup/providerGQL'
 import Required from '../../_common/required'
 
 const WrapForm = styled.div`
@@ -39,6 +40,11 @@ const DivNavigation = styled.div`
   width: 100%;
 `
 
+const Po = styled.div`
+    font-size: 14px;
+    margin-left: 10px;
+`
+
 function BillingInfoForm(props) {
     const { 
         setValues, 
@@ -49,7 +55,8 @@ function BillingInfoForm(props) {
             contact, 
             billing: { 
                 paymentMethod, 
-                cardType 
+                cardType, 
+                purchaseOrder
             } 
         },
         checkoutDropdownData: { billingInfo }, 
@@ -68,6 +75,7 @@ function BillingInfoForm(props) {
     } = props
 
     const context = useContext(Context)
+    const [duplicatePo, setDuplicatePo] = useState(false)
     const [touchBilling, setTouchBilling] = useState(false)
 
     useDidUpdateEffect(() => {
@@ -85,6 +93,23 @@ function BillingInfoForm(props) {
         }
     }, [])
 
+    const [checkPo] = useLazyQuery(CHECK_PO, {
+        fetchPolicy: 'no-cache',
+        variables: { poNumber: purchaseOrder },
+        onCompleted: result => {
+            setDuplicatePo(result.isDuplicatePurchaseOrderNumber)
+        }
+    })
+    
+    useEffect(() => {
+        if (purchaseOrder.length > 0) {
+            const timeout = setTimeout(() => checkPo(purchaseOrder), 500)
+            return () => clearTimeout(timeout)
+        }
+    }, [purchaseOrder])
+
+    const poMessage = duplicatePo ? <Po>PO number has already been used.</Po> : null
+
     const handleContinueClick = () => {
         const disabled = !isStepValid
         if (disabled) {
@@ -92,7 +117,6 @@ function BillingInfoForm(props) {
         } else {
             handleMoveStep(2)
         }
-        
     }
 
     const handleCardChange = value => {
@@ -236,7 +260,7 @@ function BillingInfoForm(props) {
                 </FormRow>
             )}
 
-            {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props}/>}
+            {paymentMethod === 'purchase_order' && <PurchaseOrderSection {...props} poMessage={poMessage} />}
             {paymentMethod === 'credit_card' && !context.userInfo?.isAirlineEmployee && selectedCard !== 'new_card' && (
                 <DivNavigation>
                     <ButtonBlack onClick={() => { resetCard() }} >
@@ -245,10 +269,13 @@ function BillingInfoForm(props) {
                 </DivNavigation>
             )}
             {paymentMethod === 'credit_card' && cardType === 'new_card' && (
-                <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod}/>
+                <NewCardSection {...props} setCardIsValid={setCardIsValid} isNewPaymentMethod={isNewPaymentMethod} poMessage={poMessage} />
             )}
             {paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
                 <FormikInput label={billingInfo?.requirePoNumber ? <div>PO Number <Required /></div> : 'PO Number'} name="billing.purchaseOrder" />
+            )}
+            { paymentMethod === 'credit_card' && cardType === 'saved_card' && context.userInfo && (
+                poMessage
             )}
 
             <DivNavigation>

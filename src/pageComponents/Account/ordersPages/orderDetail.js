@@ -112,7 +112,7 @@ export default function OrderDetail({ history, orderId }) {
         promiseDate,
         lineItems
     } = orderDetails?.accountOrderDetails || {}
-
+    
     const invMastUids = lineItems?.map(item => item.invMastUid) || []
 
     const { data: itemsDetails } = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
@@ -225,6 +225,10 @@ export default function OrderDetail({ history, orderId }) {
         {
             Header: 'Qty Ordered',
             accessor: 'quantityOrdered',
+        },
+        {
+            Header: 'Cancelled',
+            accessor: 'isCancelled'
         },
         {
             Header: 'Unit Price',

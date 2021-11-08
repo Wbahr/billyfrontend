@@ -153,6 +153,10 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'poNo',
             },
             {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
+            },
+            {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
                 Cell: props => {
@@ -296,7 +300,7 @@ export default function OpenOrdersTable({ history }) {
 				<button>copy</button>
 		</CopyToClipboard> */}
             <DivRow>
-                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search PO#, Order #, Web Reference #' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
             </DivRow>
             <DivRow>
                 <div>

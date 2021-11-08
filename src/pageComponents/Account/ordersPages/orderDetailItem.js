@@ -146,7 +146,7 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                             </>
                         )}
                     </TextRow>
-                    <P2>Quantity Received: {item.quantityInvoiced}</P2>
+                    <P2>Quantity Received: {item.isCancelled ? 'Cancelled' : item.quantityInvoiced}</P2>
                     <P2>Quantity Ordered: {item.quantityOrdered}</P2>
                 </DivCol2>
                 <DivCol2>

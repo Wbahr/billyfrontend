@@ -262,7 +262,7 @@ export const GET_ORDERS = gql`
   query {
 		accountOrders{
 			orderNumber
-			orderDate
+      orderDate
 			poNo
 			buyer
 			total
@@ -272,6 +272,7 @@ export const GET_ORDERS = gql`
       quoteRefNo
       promiseDate
       jobName
+      webReferenceNumber
 			lineItems{
         invMastUid
         itemCode
@@ -315,7 +316,8 @@ export const GET_ORDERS_DETAIL = gql`
 			shipToState
 			shipToZip
 			shipToCountry
-			quoteRefNo
+      quoteRefNo
+      webReferenceNumber
       quoteHeader {
         quoteId
         isCompleted
@@ -337,6 +339,7 @@ export const GET_ORDERS_DETAIL = gql`
         quoteLineId
         promiseDate
         aroDays
+        isCancelled
 				trackingNumbers{
 					carrierId
 					carrierName
@@ -1027,5 +1030,13 @@ export const GET_HOMEPAGE = gql`
 export const GET_AUTHENTICATION_HEARTBEAT = gql`
   mutation AuthenticationHeartbeat {
     authenticationHeartbeat
+  }
+`
+
+export const CHECK_PO = gql`
+  query IsDuplicatePoNumber(
+    $poNumber: String
+  ) {
+    isDuplicatePurchaseOrderNumber(purchaseOrderNumber: $poNumber)
   }
 `
