@@ -12,6 +12,7 @@ import Loader from '../../_common/loader'
 import { useDidUpdateEffect } from '../../_common/helpers/generalHelperFunctions'
 import { CHECK_PO } from '../../../setup/providerGQL'
 import Required from '../../_common/required'
+import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 
 const WrapForm = styled.div`
     display: flex;
@@ -77,6 +78,7 @@ function BillingInfoForm(props) {
     const context = useContext(Context)
     const [duplicatePo, setDuplicatePo] = useState(false)
     const [touchBilling, setTouchBilling] = useState(false)
+    const debouncedPO = useDebounceValue(purchaseOrder, 1000)
 
     useDidUpdateEffect(() => {
         setFieldValue('billing.cardIsValid', cardIsValid)
@@ -95,18 +97,21 @@ function BillingInfoForm(props) {
 
     const [checkPo] = useLazyQuery(CHECK_PO, {
         fetchPolicy: 'no-cache',
-        variables: { poNumber: purchaseOrder },
+        variables: { poNumber: cleanPo(debouncedPO) },
         onCompleted: result => {
             setDuplicatePo(result.isDuplicatePurchaseOrderNumber)
         }
     })
+
+    function cleanPo(str) {
+        return str.replace('\ufeff', '').trim()
+    }
     
     useEffect(() => {
-        if (purchaseOrder.length > 0) {
-            const timeout = setTimeout(() => checkPo(purchaseOrder), 500)
-            return () => clearTimeout(timeout)
+        if (debouncedPO.length > 0) {
+            checkPo(debouncedPO)
         }
-    }, [purchaseOrder])
+    }, [debouncedPO])
 
     const poMessage = duplicatePo ? <Po>PO number has already been used.</Po> : null
 
