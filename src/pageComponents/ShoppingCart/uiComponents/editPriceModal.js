@@ -3,8 +3,10 @@ import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
+import { Button } from '@material-ui/core'
 import AirlineInput from '../../_common/form/inputv2'
 import AirlineSelect from '../../_common/form/select'
+import EditCostModal from './EditCostModal'
 import { ALLOW_ZERO } from '../../_common/constants/overrideReasons'
 
 const DivRow = styled.div`
@@ -81,9 +83,12 @@ const Container = styled.div`
 `
 
 export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, data, itemId }) {
+    const [itemCost, setItemCost] = useState(0)
     const [itemPrice, setItemPrice] = useState(0)
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
+    const [showEditCostModal, setShowEditCostModal] = useState()
+    const [allowCostEdit, setAllowCostEdit] = useState(false)
     const { editPriceReasonCodes } = useContext(Context)
     const [originalPrice, setOriginalPrice] = useState()
 
@@ -95,8 +100,8 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         pricePage
     } = data || {}
 
-    const filteredEditPriceReasonCodes = itemPrice === 0 ? 
-        editPriceReasonCodes.filter(r => ALLOW_ZERO.includes(r.id)) 
+    const filteredEditPriceReasonCodes = itemPrice === 0 ?
+        editPriceReasonCodes.filter(r => ALLOW_ZERO.includes(r.id))
         : editPriceReasonCodes
     const reasonCodeOptions = filteredEditPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
 
@@ -106,6 +111,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
             setMargin(calculateMargin(data.itemPrice))
             setSelectedReason(reasonCodeOptions.find(code => code.value === data.priceReasonId))
             setOriginalPrice(data.itemPrice)
+            setItemCost(data.airlineCost)
         }
     }, [data])
 
@@ -113,20 +119,24 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         setItemPrice(data.cartItem.quoteUnitPrice ?? data.originalItemPrice)
         setMargin(calculateMargin(data.cartItem.quoteUnitPrice ?? data.originalItemPrice))
         setSelectedReason(null)
+        setItemCost(data.airlineCost)
     }
 
     function calculateMargin(price) {
         const newMargin = (price - data.airlineCost) / price
         return (newMargin * 100).toFixed(1)
     }
-
+    
     const handleChangePrice = type => (e, maskValue, floatValue) => {
         if (type === 'price') {
             setItemPrice(floatValue)
             setMargin(calculateMargin(floatValue))
+        } else if (type === 'cost') {
+            setItemPrice(parseFloat((floatValue / (1 - (margin / 100))).toFixed(2)))
+            setItemCost(floatValue)
         } else {
             setMargin(floatValue)
-            setItemPrice(parseFloat((data.airlineCost / (1 - (floatValue / 100))).toFixed(2)))
+            setItemPrice(parseFloat((itemCost / (1 - (floatValue / 100))).toFixed(2)))
         }
     }
 
@@ -148,6 +158,15 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         setSelectedReason(reasonCodeOptions.find(code => code.value === value))
     }
 
+    const handleEditCost = () => {
+        setShowEditCostModal(true)
+        setAllowCostEdit(true)
+        setSelectedReason({
+            label: 'Incorrect Supplier Cost',
+            value: 222
+        })
+    }
+
     const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
         || (itemPrice === (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !data?.cartItem?.priceReasonId && !selectedReason?.value)
         || (itemPrice !== (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !selectedReason?.value)
@@ -164,7 +183,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                 <h6>{itemId}</h6>
                 <PriceInfoRow>
                     <PriceInfoItem>
-                        <Label>Price: (orig. ${originalPrice}) 
+                        <Label>Price: (orig. ${originalPrice})
                         </Label>
                         <AirlineInput
                             type="currency"
@@ -188,16 +207,28 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         <Label>Airline Cost: </Label>
                         <AirlineInput
                             type="currency"
-                            disabled={true}
-                            value={data?.airlineCost}
+                            disabled={!allowCostEdit}
+                            value={itemCost}
+                            onChange={handleChangePrice('cost')}
                             width='100px'
                         />
                     </PriceInfoItem>
                 </PriceInfoRow>
-                <DivItem>
-                    <Label>Price Page: </Label>
-                    <p>{pricePage || 'N/A'}</p>
-                </DivItem>
+                <PriceInfoRow>
+                    <PriceInfoItem></PriceInfoItem>
+                    <PriceInfoItem>
+                        <Label>Price Page: </Label>
+                        <p>{pricePage || 'N/A'}</p>
+                    </PriceInfoItem>
+                    <PriceInfoItem>
+                        <Button
+                            onClick={handleEditCost}
+                            size='small'
+                        >
+                            Edit
+                        </Button>
+                    </PriceInfoItem>
+                </PriceInfoRow>
                 <PriceInfoRow>
                     <PriceInfoItem>
                         <Label>SPA Type: </Label>
@@ -241,6 +272,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                     </ButtonRed>
                 </DivRow>
             </Container>
+            <EditCostModal showModal={showEditCostModal} hideModal={() => setShowEditCostModal(false)} />
         </Modal>
     )
 }
