@@ -95,7 +95,10 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
         pricePage
     } = data || {}
 
-    const reasonCodeOptions = editPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
+    const filteredEditPriceReasonCodes = itemPrice === 0 ? 
+        editPriceReasonCodes.filter(r => ALLOW_ZERO.includes(r.id)) 
+        : editPriceReasonCodes
+    const reasonCodeOptions = filteredEditPriceReasonCodes.map(code => ({ label: code.priceReason, value: code.id }))
 
     useEffect(() => {
         if (data) {
@@ -133,7 +136,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }
 
     const handleSave = () => {
-        if (itemPrice === (data?.cartItem.quoteUnitPrice ?? data.originalItemPrice)) {
+        if (itemPrice === (data?.cartItem.quoteUnitPrice ?? data.originalItemPrice) && itemPrice !== 0) {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: null, priceReasonId: null })
         } else {
             setCartItem({ ...data?.cartItem, itemUnitPriceOverride: itemPrice, priceReasonId: selectedReason.value })
@@ -146,7 +149,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }
 
     const saveDisabled = (itemPrice === data?.cartItem?.itemUnitPriceOverride && selectedReason?.value === data?.cartItem?.priceReasonId)
-        || (itemPrice === (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !data?.cartItem?.priceReasonId)
+        || (itemPrice === (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !data?.cartItem?.priceReasonId && !selectedReason?.value)
         || (itemPrice !== (data?.cartItem.quoteUnitPrice ?? data?.originalItemPrice) && !selectedReason?.value)
         || (itemPrice === 0 && !ALLOW_ZERO.includes(selectedReason?.value))
 
@@ -214,7 +217,7 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                     </SpaContainer>
                 </PriceInfoRow>
 
-                {itemPrice !== data?.originalItemPrice && (
+                {(itemPrice !== data?.originalItemPrice || itemPrice === 0) && (
                     <AirlineSelect
                         label="Reason"
                         options={reasonCodeOptions}
