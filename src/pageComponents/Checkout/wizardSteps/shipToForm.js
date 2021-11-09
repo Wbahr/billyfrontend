@@ -204,6 +204,7 @@ export function ShipToForm(props) {
     }
 
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
+    const handleIsRushChange = ({ target: { checked } }) => setFieldValue('shipto.isRush', checked)
 
     const handleCustomContactInput = name => ({ target: { value } }) => {
         setFieldValue(`contact.${name}`, value)
@@ -427,6 +428,12 @@ export function ShipToForm(props) {
                                 name="shipto.isCollect"
                                 value={values.shipto.isCollect}
                                 onChange={handleIsCollectChange}
+                            />
+                            <FormikCheckbox
+                                label="Rush?"
+                                name="shipto.isRush"
+                                value={values.shipto.isRush}
+                                onChange={handleIsRushChange}
                             />
                         </FormRow>
                     )}
