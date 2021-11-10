@@ -1031,11 +1031,6 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/nason.htm" target="_blank" rel="noopener noreferrer">Nason</BrandList></li>
-
-                        </Ul>
-                    </ListDiv>
-                    <ListDiv>
-                        <Ul>
                             <li><BrandList href="https://www.airlinehyd.com/pages/brands/new_age_industries.htm" target="_blank" rel="noopener noreferrer">New Age Industries</BrandList></li>
 
                         </Ul>
@@ -1043,7 +1038,11 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="/pages/brands/nvent-eriflex" target="_blank" rel="noopener noreferrer">nVent ERIFLEX</BrandList></li>
-
+                        </Ul>
+                    </ListDiv>
+                    <ListDiv>
+                        <Ul>
+                            <li><BrandList href="https://www.noshok.com/" target="_blank" rel="noopener noreferrer">NoShok</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
