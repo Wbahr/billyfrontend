@@ -282,6 +282,11 @@ export default function ConfirmationScreen(props) {
                             <P>Is Collect?</P>
                             <p>{!shipto.isCollect ? 'No' : 'Yes'}</p>
                         </DivTextRow>
+                        
+                        <DivTextRow>
+                            <P>Is Rush?</P>
+                            <p>{!shipto.isRush ? 'No' : 'Yes'}</p>
+                        </DivTextRow>
 
                         {shipto.isCollect && (
                             <DivTextRow>

@@ -46,6 +46,7 @@ export const defaultShipTo = {
     shippingNotes: '',
     carrierId: '',
     isCollect: false,
+    isRush: false,
     collectNumber: '',
     companyName: '',
 }
