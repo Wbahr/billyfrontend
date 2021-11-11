@@ -6,7 +6,6 @@ import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import { Button } from '@material-ui/core'
 import AirlineInput from '../../_common/form/inputv2'
 import AirlineSelect from '../../_common/form/select'
-import EditCostModal from './EditCostModal'
 import { ALLOW_ZERO } from '../../_common/constants/overrideReasons'
 
 const DivRow = styled.div`
@@ -87,7 +86,6 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     const [itemPrice, setItemPrice] = useState(0)
     const [margin, setMargin] = useState(0)
     const [selectedReason, setSelectedReason] = useState(null)
-    const [showEditCostModal, setShowEditCostModal] = useState()
     const [allowCostEdit, setAllowCostEdit] = useState(false)
     const { editPriceReasonCodes } = useContext(Context)
     const [originalPrice, setOriginalPrice] = useState()
@@ -159,7 +157,6 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
     }
 
     const handleEditCost = () => {
-        setShowEditCostModal(true)
         setAllowCostEdit(true)
         setSelectedReason({
             label: 'Incorrect Supplier Cost',
@@ -221,12 +218,14 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                         <p>{pricePage || 'N/A'}</p>
                     </PriceInfoItem>
                     <PriceInfoItem>
-                        <Button
-                            onClick={handleEditCost}
-                            size='small'
-                        >
-                            Edit
-                        </Button>
+                        <a href='https://lf-forms.airlinehyd.com/Forms/USeMV' target='_blank' rel='noreferrer'>
+                            <Button
+                                onClick={handleEditCost}
+                                size='small'
+                            >
+                                Edit
+                            </Button>
+                        </a>
                     </PriceInfoItem>
                 </PriceInfoRow>
                 <PriceInfoRow>
@@ -272,7 +271,6 @@ export default function EditPriceModal({ open, hideEditPriceModal, setCartItem, 
                     </ButtonRed>
                 </DivRow>
             </Container>
-            <EditCostModal showModal={showEditCostModal} hideModal={() => setShowEditCostModal(false)} />
         </Modal>
     )
 }
