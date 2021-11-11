@@ -354,6 +354,28 @@
 					font-weight: bold;
 				}
 			}
+			.product{
+				button{
+					border: none;
+					padding: 7px 20px;
+					font-weight: bold;
+					background-color: #B51029;
+					color: white;
+					border-radius: 3px;
+					font-size: 20px;
+				}
+				.productName{
+					text-transform: uppercase;
+					color: white;
+					font-weight: bold;
+					&:hover{
+						text-decoration: none;
+					}
+				}
+				.sectionalLine{
+					border-bottom: 1px solid #353536;
+				}
+			}
 			.services{
 				.indramatRepair{
 
