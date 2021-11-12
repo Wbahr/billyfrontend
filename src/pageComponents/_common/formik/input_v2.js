@@ -134,7 +134,7 @@ Input.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     disabled: PropTypes.bool,
-    label: PropTypes.string,
+    label: PropTypes.any,
     placeholder: PropTypes.string,
     width: PropTypes.number,
     maxLength: PropTypes.number,
