@@ -158,6 +158,10 @@ export default function OrdersTable({ history }) {
                 accessor: 'orderNumber',
             },
             {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
+            },
+            {
                 Header: 'PO #',
                 accessor: 'poNo',
             },
@@ -219,7 +223,7 @@ export default function OrdersTable({ history }) {
         <TableContainer>
             <h4>Orders</h4>
             <DivRow>
-                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search PO#, Order #, Web Ref #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
                 <Select style={{ width: '200px' }} value={showOrderType} onChange={(e) => setShowOrderType(e.target.value)}>
                     <option value='all'>All Orders</option>
                     <option value='Completed'>Completed Orders</option>
