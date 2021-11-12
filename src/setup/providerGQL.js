@@ -179,6 +179,8 @@ export const UPDATE_CART = gql`
         promiseDate
         promiseDateOverride
         isDropship
+        purchaseOrderCost
+        supplierId
       }
       subtotal
       tariff
@@ -1038,5 +1040,14 @@ export const CHECK_PO = gql`
     $poNumber: String
   ) {
     isDuplicatePurchaseOrderNumber(purchaseOrderNumber: $poNumber)
+  }
+`
+
+export const GET_SUPPLIERS = gql`
+  query allSuppliers {
+    allSuppliers {
+      id
+      name
+    }
   }
 `
