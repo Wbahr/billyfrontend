@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
+import { Link } from 'react-router-dom'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
@@ -197,6 +198,10 @@ const IMG = styled.img`
 	opacity: 0.6;
 `
 
+const StrikeThrough = styled.span`
+    text-decoration: line-through;
+`
+
 export default function ItemDetailPage({ history }) {
     const { 
         userInfo, 
@@ -291,6 +296,12 @@ export default function ItemDetailPage({ history }) {
     }, [accessoryItems])
 
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
+    const isDiscontinued = itemDetails?.isDiscontinued
+    const subDetails = itemDetails?.substituteItem
+
+    const subItemDetailsLink = itemDetails?.invMastUidSubstitute ? 
+        `/product/${subDetails?.itemCodeUrlSanitized || encodeURIComponent(subDetails?.itemCode)}/${itemDetails?.invMastUidSubstitute}` :
+        null
 
     useEffect(() => {
         document.title = `${itemDetails?.itemDesc || item} at Airline Hydraulics`
@@ -382,76 +393,100 @@ export default function ItemDetailPage({ history }) {
                 </Helmet>
                 
                 <DivTitle>
-                    <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
+                    {isDiscontinued ? (
+                        <StrikeThrough>
+                            <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>    
+                        </StrikeThrough>
+                    ) : (
+                        <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
+                    )}
                 </DivTitle>
 
                 <DivLeftCol>
                     <DivPhoto>
                         <Img src={getOriginalImagePath(itemDetails)} alt={getAltTextForOriginalImage(itemDetails)} />
                     </DivPhoto>
+                    {isDiscontinued ? (
+                        subItemDetailsLink ? (
+                            <Link to={subItemDetailsLink}>
+                                <ButtonRed>View Substitute Item</ButtonRed>
+                            </Link>
+                        ) : (
+                            <div>Item Discontinued</div>
+                        )
+                    ) : (
+                        <DivPurchaseInfo>
+                            <Row>
+                                <Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
+                                <P> /{unitOfMeasure}</P>
+                            </Row>
 
-                    <DivPurchaseInfo>
-                        <Row>
-                            <Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
-                            <P> /{unitOfMeasure}</P>
-                        </Row>
+                            <LocationsModal
+                                invMastUid={itemDetails?.invMastUid}
+                                availabilityInfo={itemAvailability}
+                                unitPrice={unitPrice}
+                            />
 
-                        <LocationsModal
-                            invMastUid={itemDetails?.invMastUid}
-                            availabilityInfo={itemAvailability}
-                            unitPrice={unitPrice}
-                        />
+                            <DivPurchaseInfoButtons>
+                                <RowCentered>
+                                    <span>Qty:</span>
+                                    <QuantityInput
+                                        quantity={quantity}
+                                        unitSize={unitSize}
+                                        unitOfMeasure={unitOfMeasure}
+                                        roundType={roundType}
+                                        handleUpdate={setQuantity}
+                                        min='0'
+                                    />
+                                    {(unitSize > 1) && (
+                                        <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                                            X {unitSize}
+                                        </AirlineChip>
+                                    )}
+                                </RowCentered>
 
-                        <DivPurchaseInfoButtons>
-                            <RowCentered>
-                                <span>Qty:</span>
-                                <QuantityInput
-                                    quantity={quantity}
-                                    unitSize={unitSize}
-                                    unitOfMeasure={unitOfMeasure}
-                                    roundType={roundType}
-                                    handleUpdate={setQuantity}
-                                    min='0'
-                                />
-                                {(unitSize > 1) && (
-                                    <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
-                                        X {unitSize}
-                                    </AirlineChip>
+                                {userInfo && !userInfo.isAirlineEngineerUser && (
+                                    <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
                                 )}
-                            </RowCentered>
 
-                            {userInfo && !userInfo.isAirlineEngineerUser && (
-                                <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
-                            )}
+                                {!!cachedItemPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                            </DivPurchaseInfoButtons>
 
-                            {!!cachedItemPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
-                        </DivPurchaseInfoButtons>
-
-                        {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
-                        {!!itemDetails.itemTechSpecs?.length && <a href='#techspec'>Tech Specs</a>}
-                        {accessoryItems?.length > 0 && <a href='#accessory'>Accessory</a>}
-                    </DivPurchaseInfo>
+                            {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
+                            {!!itemDetails.itemTechSpecs?.length && <a href='#techspec'>Tech Specs</a>}
+                            {accessoryItems?.length > 0 && <a href='#accessory'>Accessory</a>}
+                        </DivPurchaseInfo>
+                    )}
                 </DivLeftCol>
 
                 <DivDetails>
                     <PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 
-                    <Row>
-                        <Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
+                    {!isDiscontinued && (
+                        <Row>
+                            <Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 
-                        <LocationsModal
-                            invMastUid={itemDetails?.invMastUid}
-                            availabilityInfo={itemAvailability}
-                            unitPrice={unitPrice}
-                        />
-                    </Row>
+                            <LocationsModal
+                                invMastUid={itemDetails?.invMastUid}
+                                availabilityInfo={itemAvailability}
+                                unitPrice={unitPrice}
+                            />
+                        </Row>
+                    )}
 
                     <TABLE>
                         <tbody>
                             <TR2><TDGrey><H3>Manufacturer</H3></TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand?.logoLink} /></TDWhite></TR2>
                             <TR2><TDGrey><H3>Item ID</H3></TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
                             <TR2><TDGrey><H3>Manufacturer Part #</H3></TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
-                            <TR2><TDGrey><H3>AHC Part #</H3></TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
+                            <TR2><TDGrey><H3>AHC Part #</H3></TDGrey>
+                                {isDiscontinued ? (
+                                    <TDWhite><StrikeThrough>{itemDetails.invMastUid}</StrikeThrough> Discontinued</TDWhite>
+                                ) : (
+                                    <TDWhite>{itemDetails.invMastUid}</TDWhite>
+                                )}
+                                
+                            </TR2>
 
                             {!!CustomerPartOptions?.length && (
                                 <TR2>
