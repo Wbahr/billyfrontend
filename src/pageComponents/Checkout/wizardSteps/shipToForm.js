@@ -15,6 +15,7 @@ import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 import Textarea from '../../_common/formik/textarea_v2'
 import { FormikFormFieldError } from 'styles/formikForm'
 import Required from '../../_common/required'
+import PaperworkModal from '../uiComponents/PaperworkModal'
 import DatePicker from 'react-datepicker'
 import { Grid } from '@material-ui/core'
 
@@ -68,6 +69,7 @@ export function ShipToForm(props) {
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
     const [touchShipTo, setTouchShipTo] = useState(false)
+    const [showPaperworkModal, setShowPaperworkModal] = useState(false)
     const context = useContext(Context)
 
     const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
@@ -461,6 +463,11 @@ export function ShipToForm(props) {
                                 value={values.shipto.isRush}
                                 onChange={handleIsRushChange}
                             />
+                            <SavedContactDiv>
+                                <ButtonBlack onClick={() => setShowPaperworkModal(true)}>
+                                    QC Document
+                                </ButtonBlack>
+                            </SavedContactDiv>
                         </FormRow>
                     )}
                     {!!values.shipto.isCollect && <FormikInput label={<>Collect Number<Required /></>} name="shipto.collectNumber" />}
@@ -476,6 +483,7 @@ export function ShipToForm(props) {
             </DivNavigation>
 
             <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />
+            <PaperworkModal open={showPaperworkModal === true} hide={() => setShowPaperworkModal(false)} {...{ setFieldValue }} />
         </WrapForm>
     )
 }
