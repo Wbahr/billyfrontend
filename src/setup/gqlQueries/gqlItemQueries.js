@@ -22,6 +22,13 @@ export const GET_ITEM_DETAIL_PAGE_ITEM_INFO = gql`
 			...AssociatedItems
 			...ItemLinks
 			...TechSpecs
+			isDiscontinued
+			invMastUidSubstitute
+      substituteItem {
+				itemCode
+				itemCodeUrlSanitized
+				itemDesc
+			}
 		}
 	}
 	${FRAGMENT_ITEM_DETAIL}
