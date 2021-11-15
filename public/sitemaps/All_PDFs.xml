@@ -10,15 +10,15 @@
 	</sitemap>
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/Adaptall.xml</loc>
-		<lastmod>2019-06-03</lastmod>
+		<lastmod>2021-11-11</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/Hannay_PDFs.xml</loc>
 		<lastmod>2019-06-04</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://www.airlinehyd.com/sitemaps/Phoenix%20Contacts_PDFs.xml</loc>
-		<lastmod>2019-06-04</lastmod>
+		<loc>https://www.airlinehyd.com/sitemaps/Phoenix_Contacts_PDFs.xml</loc>
+		<lastmod>2021-11-11</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/Fibox_PDFs.xml</loc>
@@ -29,17 +29,13 @@
 		<lastmod>2019-06-04</lastmod>
 	</sitemap>
 	<sitemap>
-		<loc>https://www.airlinehyd.com/sitemaps/Cylinder%26Valves_PDFs.xml</loc>
-		<lastmod>2019-06-04</lastmod>
+		<loc>https://www.airlinehyd.com/sitemaps/Cylinder_Valves_PDFs.xml</loc>
+		<lastmod>2021-11-11</lastmod>
 	</sitemap>
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/Cooper_Bussman_PDFs.xml</loc>
 		<lastmod>2019-06-06</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://www.airlinehyd.com/sitemaps/Cogan_PDFs.xml</loc>
-		<lastmod>2019-06-06</lastmod>
-	</sitemap>
+	</sitemap>	
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/CGI_PDFs.xml</loc>
 		<lastmod>2019-06-06</lastmod>
@@ -95,11 +91,7 @@
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/Alkon_PDFs.xml</loc>
 		<lastmod>2019-06-07</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>https://www.airlinehyd.com/sitemaps/Alleghany_York_PDFs.xml</loc>
-		<lastmod>2019-06-07</lastmod>
-	</sitemap>
+	</sitemap>	
 	<sitemap>
 		<loc>https://www.airlinehyd.com/sitemaps/AllenAir_PDFs.xml</loc>
 		<lastmod>2019-06-10</lastmod>
@@ -280,4 +272,4 @@
 		<loc>https://www.airlinehyd.com/sitemaps/MTS_Sensors_PDFs.xml</loc>
 		<lastmod>2019-06-18</lastmod>
 	</sitemap>
-</sitemapindex>
+</sitemapindex>         
