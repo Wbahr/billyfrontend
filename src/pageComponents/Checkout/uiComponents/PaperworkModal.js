@@ -48,7 +48,7 @@ export default function PaperworkModal(props) {
 
     const paperworkOptions = [
         { label: 'Certificate of Conformance', value: 'coc', key: 'COC' },
-        { label: 'CofC', value: 'both', key: 'BOTH' },
+        { label: 'CofC + Special Paperwork', value: 'both', key: 'BOTH' },
         { label: 'Special Inspection Requirements', value: 'inspect', key: 'INSPECT' },
         { label: 'Special Paperwork', value: 'special', key: 'special' },
     ]
