@@ -80,6 +80,8 @@ export default function DispositionModal(props) {
         hide()
     }
 
+    const saveDisabled = ['S', 'D'].includes(selectedDisposition) && !selectedSupplier
+
     return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: 350, borderRadius: 3 }}>
             <Container>
@@ -121,7 +123,7 @@ export default function DispositionModal(props) {
                 )}
                 <DivRow>
                     <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-                    <ButtonRed onClick={handleSaveDisposition}>Save</ButtonRed>
+                    <ButtonRed onClick={handleSaveDisposition} disabled={saveDisabled}>Save</ButtonRed>
                 </DivRow>
             </Container>
         </Modal>
