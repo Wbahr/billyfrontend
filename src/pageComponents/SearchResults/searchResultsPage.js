@@ -1,162 +1,179 @@
-import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
-import queryString from 'query-string'
-import _ from 'lodash'
-import { GraphQLCall } from '../../config/api'
-import ItemResult from './uiComponents/itemResult'
-import ResultsSearch from './uiComponents/resultsSearch'
-import ResultsSummary from './uiComponents/resultsSummary'
-import Paginator from './uiComponents/paginator'
-import AttributeFilter from './uiComponents/attributeFilter'
-import CategoryFilter from './uiComponents/categoryFilter'
-import Loader from '../_common/loader'
+import React, { useState, useEffect,  } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { QUERY_ITEM_SEARCH } from '../../setup/providerGQL'
+import { buildSearchString, useDidUpdateEffect, cleanSearchState } from '../_common/helpers/generalHelperFunctions'
+import AppBarPlugin from './plugins/AppBarPlugin'
+import DrawerPlugin from './plugins/DrawerPlugin'
+import BrandsPlugin from './plugins/BrandsPlugin'
+import AttributesPlugin from './plugins/AttributesPlugin'
+import SortPlugin from './plugins/SortPlugin'
+import SearchTermsPlugin from './plugins/SearchTermsPlugin'
+import PaginationPlugin from './plugins/PaginationPlugin'
+import SearchContainer from './uiComponents/SearchContainer'
+import { useSearchState, useSearchQueryParams } from './hooks'
+import CategoriesPlugin from './plugins/CategoriesPlugin'
+import ResultSummaryPlugin from './plugins/ResultSummaryPlugin'
 
-const DivContainer = styled.div`
-  display: flex;
-`
+const RESULT_SIZE = 24
 
-const ResultsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 8px;
-`
+export default function SearchResultsPage({ history }) {
+    const [searchQueryParams, setQueryParam, clearSetQueryParam] = useSearchQueryParams(history)
+    const { 
+        sortType, 
+        searchTerm, 
+        searchTerms, 
+        resultPage, 
+        nonweb, 
+        selectedCategoryId,
+    } = searchQueryParams
 
-export default function SearchResultsPage(props) {
-  const didMountRef = useRef(false);
-  const prevHistoryRef = useRef();
-  const preformSearchRef = useRef(true);
-  const search = queryString.parse(location.search)
-  const [searchTerm, setSearchTerm] = useState(search.searchTerm)
-  const [resultPage, setResultPage] = useState(search.resultPage)
-  const [resultSize, setResultSize] = useState(search.resultSize)
-  const [sortType, setSortType] = useState(search.sortType)
-  const [searchResults, setSearchResults] = useState([])
-  const [totalResults, setTotalResults] = useState(0)
-  const [attributeCategories, setAttributeCategories] = useState([])
-  const [isSearching, setSearching] = useState(true)
-
-  useEffect(() => {
-    if (!didMountRef.current) {
-      prevHistoryRef.current = props.history.location
+    const setSearchTerms = newInnerSearchTerms => {
+        setQueryParam('innerSearchTerms', newInnerSearchTerms.join(',') || void 0)
+        handleSetSearchState({ searchTerms: newInnerSearchTerms })
     }
-    const prevHistory = prevHistoryRef.current
-    if(props.history.location.search !== prevHistory.search){
-      let searchNew = queryString.parse(props.history.location.search)
-      let searchOld = queryString.parse(prevHistory.search)
-      if (searchOld.searchTerm !== searchNew.searchTerm){
-        setSearchTerm(searchNew.searchTerm)
-      }
-      if (searchOld.resultPage !== searchNew.resultPage){
-        setResultPage(searchNew.resultPage)
-      }
-      if (searchOld.resultSize !== searchNew.resultSize){
-        setResultSize(searchNew.resultSize)
-      }
-      prevHistoryRef.current = props.history.location
-      preformSearchRef.current = true
-    }
-  })
 
-  useEffect(() => {
-    if(preformSearchRef.current){
-      const search = queryString.parse(location.search)
-      let body = {"query" : `{itemSearch(searchParams: {searchTerm: "${search.searchTerm}", resultSize: ${search.resultSize}, resultPage: ${search.resultPage}, sortType: "${search.sortType}"}){result,count,attributeCategories{categoryName,features{featureName,itemCount}}}}`}
-      setSearching(true) 
-      if (search.searchTerm !== ''){
-        GraphQLCall(JSON.stringify(body)).then((result) => parseQueryResults(result)).then(() => setSearching(false))
-        preformSearchRef.current = false
-      }
+    const setSortType = newSortType => {
+        setQueryParam('sortType', newSortType)
+        handleSetSearchState({ sortType: newSortType })
     }
-    if (!didMountRef.current) {
-      didMountRef.current = true
-    }
-  })
 
-  function parseQueryResults(result) {
-    let searchResultArray = _.get(result,`data.itemSearch.result`, [])
-    let totalResultCount = _.get(result,`data.itemSearch.count`, 0)
-    let attributeCategories = _.get(result,`data.itemSearch.attributeCategories`, [])
-    setSearchResults(searchResultArray)
-    setTotalResults(totalResultCount)
-    setAttributeCategories(attributeCategories)
-  }
-
-  function handleUpdateResults(updateObj){
-    const search = queryString.parse(location.search)
-    let query
-    let update = Object.keys(updateObj)[0]
-    switch(update){
-      case 'searchTerm':
-        setSearchTerm(updateObj.searchTerm)
-        setResultPage(1)
-        query = `?searchTerm=${updateObj.searchTerm}&resultSize=${search.resultSize}&resultPage=${1}&sortType=${search.sortType}`
-        break;
-      case 'resultSize':
-        setResultSize(updateObj.resultSize)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${updateObj.resultSize}&resultPage=${search.resultPage}&sortType=${search.sortType}`
-        break;
-      case 'page':
-        setResultPage(updateObj.page)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${updateObj.page}&sortType=${search.sortType}`
-        break;
-      case 'sort':
-        setSortType(updateObj.sort)
-        query = `?searchTerm=${search.searchTerm}&resultSize=${search.resultSize}&resultPage=${search.resultPage}&sortType=${updateObj.sort}`
-        break;
+    const setCategoryId = newCategoryId => {
+        setQueryParam('selectedCategoryId', newCategoryId)
+        handleSetSearchState({ selectedCategoryId: newCategoryId })
     }
-    props.history.push({
-      pathname: '/search',
-      search: query
+
+    const queryParamSearchState = { ...searchQueryParams, isSynced: false, results: [], totalResults: '--', isSearching: false }
+    const [searchState, setSearchState, { setBrands, setAttributes }] = useSearchState(queryParamSearchState)
+    const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
+    const { totalResults, isSynced, brands, attributes, category, childCategories } = searchState
+
+    const [lastSearchPayload, setLastSearchPayload] = useState({})
+
+    useDidUpdateEffect(() => {
+        if (!isSynced) {
+            const selectedBrands = brands.filter(b => b.selected).map(b => b.brandName).join(',')
+            const selectedAttributes = attributes.reduce((accum, { attributeName, features }) => {
+                const selectedFeatures = features.filter(f => f.selected).map(f => f.featureName)
+                if (selectedFeatures.length) accum[attributeName] = selectedFeatures.join(',')
+                return accum
+            }, {})
+
+            history.replace(buildSearchString({
+                searchTerm,
+                innerSearchTerms: searchTerms,
+                sortType,
+                nonweb,
+                selectedCategoryId,
+                resultPage: 1,
+                brands: selectedBrands,
+                ...selectedAttributes
+            }))
+
+            if (resultPage === '1') performItemSearch()
+        }
+    }, [searchState.brands, searchState.attributes])
+
+    useDidUpdateEffect(() => {
+        if (resultPage === '1') {
+            performItemSearch()
+        } else {
+            setQueryParam('resultPage', 1)
+        }
+    }, [searchTerm, searchTerms, sortType, nonweb, selectedCategoryId])
+
+    useEffect(() => {
+        performItemSearch()
+    }, [resultPage])
+
+    useDidUpdateEffect(() => { //When the header searchbar changes the query string the local search state needs to reset and perform a new search
+        if (!searchQueryParams.brands.length
+			&& !searchQueryParams.attributes.length //If these contain values, that means the search state updated the query string, so we do not need to reset
+        ) {
+            setSearchState(queryParamSearchState)
+        }
+    }, [searchQueryParams.brands.length, searchQueryParams.attributes.length])
+
+    const performItemSearch = () => {
+        handleSetSearchState({ isSearching: true })
+        const payload = {
+            search: {
+                searchTerm,
+                innerSearchTerms: searchTerms ? searchTerms.split(',') : [],
+                searchType: nonweb === 'true' ? 'nonweb' :'web',
+                sortType,
+                selectedCategoryId,
+                resultPage,
+                resultSize: RESULT_SIZE,
+                searchState: {
+                    brands,
+                    attributes
+                }
+            }
+        }
+        setLastSearchPayload(payload)
+        search({ variables: payload })
+    }
+
+    const clearFilter = () => {
+        clearSetQueryParam()
+    }
+
+    const [search, { variables }] = useLazyQuery(QUERY_ITEM_SEARCH, {
+        fetchPolicy: 'no-cache',
+        onCompleted: ({ itemSearch }) => {
+            if (variables.search === lastSearchPayload.search) {
+                const newSearchState = cleanSearchState(itemSearch)
+                handleSetSearchState({ ...newSearchState, isSynced: true, results: itemSearch.result, totalResults: itemSearch.searchTotalCount, isSearching: false })
+            }
+        },
+        onError: () => {
+            throw 'Search Failed: show error boundary'
+        }
     })
-  }
 
-  let SearchResults = _.map(searchResults, result => {
-    return(
-      <ItemResult key={result.frecno} result={result} updateResults={handleUpdateResults}/>
-    )
-  })
+    const handlePageChange = page => setQueryParam('resultPage', page)
 
-  let AttributeFilters = _.map(attributeCategories, attribute => {
-    return(
-      <AttributeFilter 
-        name={attribute.categoryName}
-        options={attribute.features}
-      />
-    )
-  }
-
-  )
-
-  return(
-    <DivContainer>
-      <div>
-        <CategoryFilter />
-        {AttributeFilters}
-      </div>
-      <ResultsContainer>
-        <div>
-          <ResultsSummary 
+    return (
+        <SearchContainer
             searchTerm={searchTerm}
-            resultSize={resultSize}
-            resultPage={resultPage}
-            totalResults={totalResults}
-          />
-          <ResultsSearch
-            resultSize={resultSize}
-            sortType={sortType}
-            updateSearchTerm={(newSearchTerm) => handleUpdateResults({'searchTerm': searchTerm + ' ' + newSearchTerm})}
-            updateResultSize={(newResultSize) => handleUpdateResults({'resultSize': newResultSize})}
-            updateSortType={(newSortType) => handleUpdateResults({'sort': newSortType})}
-          />
-        </div>
-        { isSearching ? <Loader/> : SearchResults}
-        <Paginator 
-          resultSize={resultSize}
-          resultPage={resultPage}
-          totalResults={totalResults}
-          updateCurrentPage={(currentPage) => handleUpdateResults({'page': currentPage})
-        } />
-      </ResultsContainer>
-    </DivContainer>
-  )
+            searchState={searchState}
+            history={history}
+        >
+            <AppBarPlugin
+                title="Search Results"
+            />
+            <DrawerPlugin>
+                <CategoriesPlugin 
+                    category={category}
+                    childCategories={childCategories}
+                    setCategoryId={setCategoryId}
+                />
+                <BrandsPlugin
+                    brands={searchState.brands}
+                    setBrands={setBrands}
+                />
+                <AttributesPlugin
+                    attributes={searchState.attributes}
+                    setAttributes={setAttributes}
+                />
+            </DrawerPlugin>
+            <ResultSummaryPlugin
+                searchTerm={searchTerm}
+            />
+            <SortPlugin
+                sortType={sortType}
+                setSortType={setSortType}
+            />
+            <SearchTermsPlugin
+                searchTerms={searchTerms}
+                setSearchTerms={setSearchTerms}
+                clearFilter={clearFilter}
+            />
+            <PaginationPlugin
+                page={resultPage}
+                onPageChange={handlePageChange}
+                totalResults={totalResults}
+            />
+        </SearchContainer>
+    )
 }

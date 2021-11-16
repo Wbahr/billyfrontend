@@ -1,0 +1,44 @@
+User-agent:*
+
+Disallow:/pages/about/privacy_policy
+Noindex:/pages/about/privacy_policy
+Disallow:/pages/about/legal-disclaimer
+Noindex:/pages/about/legal-disclaimer
+Disallow:/account/dashboard
+Noindex:/account/dashboard
+Disallow:/account/user-settings
+Noindex:/account/user-settings
+Disallow:/account/shipping-preferences
+Noindex:/account/shipping-preferences
+Disallow:/account/payment-preferences
+Noindex:/account/payment-preferences
+Disallow:/account/shopping-lists
+Noindex:/account/shopping-lists
+Disallow:/account/my-ordered-items
+Noindex:/account/my-ordered-items
+Disallow:/account/orders
+Noindex:/account/orders
+Disallow:/account/open-quotes
+Noindex:/account/open-quotes
+Disallow:/account/invoices
+Noindex:/account/invoices
+Disallow:/admin-dashboard
+Noindex:/admin-dashboard
+Disallow:/admin-dashboard/item-creation
+Noindex:/admin-dashboard/item-creation
+Disallow:/admin-dashboard/open-orders
+Noindex:/admin-dashboard/open-orders
+Disallow:/admin-dashboard/new-customers
+Noindex:/admin-dashboard/new-customers
+Disallow:/admin-dashboard/settings
+Noindex:/admin-dashboard/settings
+Disallow:/cart
+Noindex:/cart
+
+Allow: /
+
+Sitemap: https://www.airlinehyd.com/sitemaps/sitemap_index.xml
+# Sitemaps added by secondary process
+Sitemap: https://www.airlinehyd.com/sitemaps/products_index.xml
+Sitemap: https://www.airlinehyd.com/sitemaps/categories_index.xml
+Sitemap: https://www.airlinehyd.com/sitemaps/All_PDFs.xml

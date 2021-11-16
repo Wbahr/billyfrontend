@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Field, ErrorMessage } from 'formik'
+import { Field } from 'formik'
 
 const DivContainer = styled.div`
     display flex;
@@ -31,40 +31,41 @@ const DivError = styled.div`
 `
 
 export default function Input({
-  type,
-  disabled,
-  name,
-  label,
-  placeholder
+    type,
+    disabled,
+    name,
+    label,
+    placeholder,
+    onChange
 }){
-  return(
-    <DivContainer>
-      {label && <Label for={label}>{`${label}:`}</Label>}        
-      <Field name={name}>
-            {({
-              field,
-              form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-              meta,
-            }) => (
-              <>
-              <MainInput type={type} disabled={disabled} placeholder={placeholder} {...field} />
-              {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
-              </>
-            )}
-      </Field>
-    </DivContainer>
-  )
+    return (
+        <DivContainer>
+            {label && <Label htmlFor={label}>{`${label}:`}</Label>}        
+            <Field name={name}>
+                {({
+                    field,
+                    meta,
+                }) => (
+                    <>
+                        <MainInput {...field} type={type} disabled={disabled} placeholder={placeholder} onChange={() => {eval(onChange)}} />
+                        {(meta.touched && meta.error) && <DivError>{meta.error}</DivError>}
+                    </>
+                )}
+            </Field>
+        </DivContainer>
+    )
 }
 
 Input.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  disabled: PropTypes.bool,
-  label: PropTypes.string,
-  placeholder: PropTypes.string
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    disabled: PropTypes.bool,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.string
 }
 
 Input.defaultProps = {
-  type: 'text',
-  placeholder: ''
+    type: 'text',
+    placeholder: ''
 }

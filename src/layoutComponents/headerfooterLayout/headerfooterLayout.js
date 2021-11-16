@@ -1,7 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import Header from './header'
 import Footer from './footer'
+import { airlineRedTheme } from 'styles/theme'
 
 const Div = styled.div`
   display: flex;
@@ -21,14 +22,15 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HeaderFooterLayout(props) {
-  console.log(props)
-  return(
-    <Div>
-      <Header {...props}/>
-      <ContentScreenContainer {...props}>
-        {props.children}
-      </ContentScreenContainer>
-      <Footer />
-    </Div>
-  )
+    return (
+        <Div>
+            <ThemeProvider theme={airlineRedTheme}>
+                <Header {...props}/>
+                <ContentScreenContainer {...props}>
+                    {props.children}
+                </ContentScreenContainer>
+                <Footer />
+            </ThemeProvider>
+        </Div>
+    )
 }

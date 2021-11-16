@@ -1,38 +1,55 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import FeaturedManufacturers from './featuredManufacturers'
-import ShopOurProducts from './shopOurProducts'
-// import ContentScreen from '../../containerComponents/contentScreen'
-// import ItemResult from './uiComponents/itemResult'
-// import ResultsSearch from './uiComponents/resultsSearch'
-
-const Banner = styled.img`
-  box-shadow: 0px 3px 3px #dadada;
-`
+import FeaturedManufacturers from './uiComponents/featuredManufacturers'
+import Banner from './uiComponents/banner'
+import LineCards from './uiComponents/lineCard'
+import TechnicallySpeaking from './uiComponents/technicallySpeaking'
+import NewAndNoteworthy from './uiComponents/newAndNoteworthy'
+import NewsAndEvents from './uiComponents/newsAndEvents'
+import SectionHeader from '../_common/sectionHeader'
+import { CategoryContainer } from '../ProductCategories/categoriesPage'
+import RootCategories from '../ProductCategories/uiComponents/RootCategories'
+import { Helmet } from 'react-helmet'
+import Context from '../../setup/context'
 
 const ContentScreenContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-width: 1200px;
-  margin: 28px auto;
-  justify-content: space-between;
-  flex-grow: 99;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 0 auto;
+	justify-content: space-between;
+	flex-grow: 99;
 `
 
-class HomePage extends React.Component {
+export default function HomePage() {
+    const {
+        homepage
+    } = useContext(Context)
 
-  render(){
-    return(
-      <>
-        <Banner src='https://www.airlinehyd.com/customer/aihyco/images/Home/oct-web-banner-desktop.png' width='100%'/>
-        <ContentScreenContainer>
-          <ShopOurProducts {...this.props}/>
-          <FeaturedManufacturers/>
-        </ContentScreenContainer>
-      </>
+    return (
+        <>
+            {homepage.length > 0 && (
+                <ContentScreenContainer>
+                    <Helmet>
+                        <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
+                    </Helmet>
+
+                    <Banner {...{ homepage }} />
+                    <NewAndNoteworthy {...{ homepage }} />
+                    <div>
+                        <SectionHeader text='Shop by Categories' />
+
+                        <CategoryContainer>
+                            <RootCategories />
+                        </CategoryContainer>
+                    </div>
+
+                    <TechnicallySpeaking {...{ homepage }} />
+                    <FeaturedManufacturers {...{ homepage }} />
+                    <NewsAndEvents {...{ homepage }} />
+                    <LineCards {...{ homepage }} />
+                </ContentScreenContainer>
+            )}
+        </>
     )
-  }
 }
-
-export default HomePage

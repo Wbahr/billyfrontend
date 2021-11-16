@@ -1,14 +1,18 @@
 # ignore these directories
 /node_modules
+/build
 /dist
+.vscode/
+.idea
 
 # ignore these file types
 
 # ignore these files
-package-lock.json
 *.xml
 *.iml
 .DS_Store
 src/.DS_Store
 src/uiComponents/.DS_Store
 src/uiComponents/Brands/.DS_Store
+.eslintcache
+.env.local

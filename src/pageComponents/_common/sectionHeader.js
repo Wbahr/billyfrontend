@@ -1,34 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
-import { H2 } from './text'
+import { H1 } from './text'
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  border-bottom: 1px solid #ccc;
-  margin: 20px 0;
+  margin: 30px 0;
+  align-items: center;
 `
-
 const StyledHeaderDiv = styled.div`
-   border-bottom: 5px solid #DB1633;
-   width: max-content;
+   border-bottom: 2px solid #DB1633;
+   width: 10%;
 `
-
-class sectionHeader extends React.Component {
-	render(){
-		const {
-			text
-		} = this.props
-
-		return(
-      <Div>
-        <StyledHeaderDiv>
-          <H2>{text}</H2>
-        </StyledHeaderDiv>
-      </Div>
-		)
-	}
+export function sectionHeader({ text }) {
+    return (
+        <Div>
+            <H1>{text}</H1>
+            <StyledHeaderDiv/>
+        </Div>
+    )
 }
 
 export default sectionHeader

@@ -1,37 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
-// import _ from 'lodash'
+import { useParams } from 'react-router-dom'
+import * as brandsPages from './minimalBrandsPages'
+import FourOFourPage from '../Error/fourOFourPage'
 
-const Div = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding 0;
-  background-color: grey;
-`
-
-class GeneralFullBrand extends React.Component {
-  componentWillMount(){
-    console.log('brand: ',this.props.brand)
-  }
-  render(){
-    const {
-      brand:{
-        companyName,
-        companyDescription,
-      }
-    } = this.props
-
-    return(
-      <>
-        <p>{companyName}</p>
-        <p>{companyDescription}</p>
-      </>
-    )
-  }
+export default function GeneralMinimalBrand(props) {
+    const { page } = useParams()
+    
+    const filename = page.replace(/-/g, '')
+    
+    const Component = brandsPages[filename]
+    
+    return Component ? <Component {...props}/> : <FourOFourPage/>
 }
-
-export default GeneralFullBrand
