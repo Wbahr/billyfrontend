@@ -150,6 +150,10 @@ export default function QuotesTable({ history }) {
                 accessor: 'quoteNumber',
             },
             {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
+            },
+            {
                 Header: 'Status',
                 accessor: 'status'
             },
@@ -208,7 +212,7 @@ export default function QuotesTable({ history }) {
         <TableContainer>
             <h4>Open Quotes</h4>
             <DivRow>
-                <AirlineInput placeholder='Search Quote #, Quote Ref #, Item ID' value={filter} onChange={(e) => { setFilter(e.target.value) }}></AirlineInput>
+                <AirlineInput placeholder='Search Quote #, Quote Ref #, Web Ref #, Item ID' value={filter} onChange={(e) => { setFilter(e.target.value) }}></AirlineInput>
             </DivRow>
             {/* Date From */}
             <DivRow>

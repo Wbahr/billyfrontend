@@ -211,7 +211,8 @@ export default function ShoppingCartItem(props) {
         cartData,
         dispositions,
         tomorrowDate,
-        maxDate
+        maxDate,
+        supplierOptions
     } = props
 
     const { impersonatedCompanyInfo } = useContext(Context)
@@ -617,8 +618,10 @@ export default function ShoppingCartItem(props) {
             <DispositionModal
                 open={showDispositionModal}
                 hide={() => setShowDispositionModal(false)}
-                dispositions={dispositions}
-                {...{ cartItem, setCartItem }}
+                airlineCost={cartItem.airlineCost}
+                supplierId={cartItem.supplierId}
+                purchaseOrderCost={cartItem.purchaseOrderCost}
+                {...{ cartItem, setCartItem, dispositions, supplierOptions }}
             />
         </DivContainer>
     )

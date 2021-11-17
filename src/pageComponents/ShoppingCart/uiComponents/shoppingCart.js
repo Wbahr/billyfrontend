@@ -13,6 +13,7 @@ import DatePicker from 'react-datepicker'
 import DispositionModal from './DispositionModal'
 import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 import { GET_CART_DATA } from 'setup/gqlQueries/gqlCartQueries'
+import { GET_SUPPLIERS } from '../../../setup/providerGQL'
 
 const Div = styled.div`
 	display: flex;
@@ -78,6 +79,7 @@ export default function ShoppingCart({ history }) {
     const [cartData, setCartData] = useState(null)
     const debouncedCart = useDebounceValue(cart, 1000)
 
+    const [supplierOptions, setSupplierOptions] = useState([])
     const dispositions = [
         { value: '', text: 'Stock' },
         { value: 'B', text: 'Backorder' },
@@ -85,6 +87,22 @@ export default function ShoppingCart({ history }) {
         { value: 'H', text: 'Hold' },
         { value: 'S', text: 'Special Order' }
     ]
+
+    const [getSuppliers] = useLazyQuery(GET_SUPPLIERS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: result => {
+            const mappedOptions = result.allSuppliers.map(o => { 
+                return { value: o.id, label: `${o.id}, ${o.name}`, key: o.id } 
+            })
+            setSupplierOptions(mappedOptions)
+        }
+    })
+    
+    useEffect(() => {
+        if (userInfo?.isAirlineEmployee) {
+            getSuppliers()
+        }
+    }, [])
 
     const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
     const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
@@ -186,7 +204,8 @@ export default function ShoppingCart({ history }) {
                         cartData,
                         dispositions,
                         tomorrowDate,
-                        maxDate
+                        maxDate,
+                        supplierOptions
                     }
                 }
             />
@@ -229,6 +248,7 @@ const CartComponent = (props) => {
         history,
         cartData,
         dispositions,
+        supplierOptions,
         tomorrowDate,
         maxDate
     } = props
@@ -294,7 +314,7 @@ const CartComponent = (props) => {
                                     setCartItem={setCartItem(index)}
                                     setCartItemField={setCartItemField(index)}
                                     {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided, 
-                                        dispositions, tomorrowDate, maxDate }}
+                                        dispositions, tomorrowDate, maxDate, supplierOptions }}
                                 />   
                                 {provided.placeholder}
                             </div>

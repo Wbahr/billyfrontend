@@ -254,7 +254,8 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                 quantity: parseInt(quantity),
                 itemNotes: '',
                 itemUnitPriceOverride: null,
-                customerPartNumberId: customerPartNumber || null
+                customerPartNumberId: customerPartNumber || null,
+                supplierId: details.supplierId
             })
         }
 

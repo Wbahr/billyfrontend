@@ -16,13 +16,14 @@ export function formatTableData(type, data, orderId){
                     const lineItem = elem.lineItems[j]
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
-                let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
+                let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer + ' ' + elem.webReferenceNumber
                 filterField = filterField.toUpperCase()
                 const displayTotal = <NumberFormat value={elem.total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 mutatedData.push(
                     {
                         orderNumber: elem.orderNumber,
                         orderDate: elem.orderDate,
+                        webReferenceNumber: elem.webReferenceNumber,
                         poNo: elem.poNo,
                         status: elem.status,
                         buyer: elem.buyer,
@@ -92,7 +93,7 @@ export function formatTableData(type, data, orderId){
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
                 
-                let filterField = elem.orderNumber + ' ' + partNumbers
+                let filterField = elem.orderNumber + ' ' + partNumbers + ' ' + elem.webReferenceNumber
                 filterField = filterField.toUpperCase()
 
                 const displayTotal = '$' + elem.total.toFixed(2)
@@ -100,6 +101,7 @@ export function formatTableData(type, data, orderId){
                     {
                         quoteNumber: elem.orderNumber,
                         quoteDate: elem.orderDate,
+                        webReferenceNumber: elem.webReferenceNumber,
                         quoteRefNo: elem.quoteRefNo,
                         total: displayTotal,
                         status: elem.status,

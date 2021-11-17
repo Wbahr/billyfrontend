@@ -15,6 +15,9 @@ import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 import Textarea from '../../_common/formik/textarea_v2'
 import { FormikFormFieldError } from 'styles/formikForm'
 import Required from '../../_common/required'
+import PaperworkModal from '../uiComponents/PaperworkModal'
+import DatePicker from 'react-datepicker'
+import { Grid } from '@material-ui/core'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -54,13 +57,23 @@ const Container = styled.div`
     max-width: 100%;
 `
 
+const Label = styled.label`
+	margin: 0;
+	font-size: 12px;
+	font-style: italic;
+`
+
 export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels,
         checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
     const [touchShipTo, setTouchShipTo] = useState(false)
+    const [showPaperworkModal, setShowPaperworkModal] = useState(false)
     const context = useContext(Context)
+
+    const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
+    const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
 
     const isQuote = history.location.pathname === '/create-quote'
 
@@ -222,6 +235,21 @@ export function ShipToForm(props) {
                         name="schedule.quoteRefNo"
                         maxLength={40}
                     />
+                    <SavedContactDiv>
+                        <Label>Adjust Expiration Date:</Label>
+                        <Grid container>
+                            <div style={{ marginRight: 8 }}>
+                                <FontAwesomeIcon icon="calendar" color="lightgrey" />
+                            </div>
+
+                            <DatePicker
+                                minDate={tomorrowDate}
+                                maxDate={maxDate}
+                                selected={Date.parse(values.schedule.quoteExpirationDate)}
+                                onChange={(value) => setFieldValue('schedule.quoteExpirationDate', value)}
+                            />
+                        </Grid>
+                    </SavedContactDiv>
                 </FormRow>
             )}
             {context.userInfo?.isImpersonatorUser && (
@@ -435,6 +463,11 @@ export function ShipToForm(props) {
                                 value={values.shipto.isRush}
                                 onChange={handleIsRushChange}
                             />
+                            <SavedContactDiv>
+                                <ButtonBlack onClick={() => setShowPaperworkModal(true)}>
+                                    QC Document
+                                </ButtonBlack>
+                            </SavedContactDiv>
                         </FormRow>
                     )}
                     {!!values.shipto.isCollect && <FormikInput label={<>Collect Number<Required /></>} name="shipto.collectNumber" />}
@@ -450,6 +483,7 @@ export function ShipToForm(props) {
             </DivNavigation>
 
             <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />
+            <PaperworkModal open={showPaperworkModal === true} hide={() => setShowPaperworkModal(false)} {...{ setFieldValue }} />
         </WrapForm>
     )
 }
