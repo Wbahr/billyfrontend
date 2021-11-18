@@ -217,7 +217,13 @@ export function ShipToForm(props) {
     }
 
     const handleIsCollectChange = ({ target: { checked } }) => setFieldValue('shipto.isCollect', checked)
-    const handleIsRushChange = ({ target: { checked } }) => setFieldValue('shipto.isRush', checked)
+    const handleIsRushChange = ({ target: { checked } }) => { 
+        setFieldValue('shipto.isRush', checked)
+        if (checked) {
+            setFieldValue('schedule.packingBasisName', 3)
+            setFieldValue('schedule.packingBasis', 'Partial')
+        }
+    }
 
     const handleCustomContactInput = name => ({ target: { value } }) => {
         setFieldValue(`contact.${name}`, value)
