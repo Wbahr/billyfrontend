@@ -47,7 +47,7 @@ export default function Articles(props) {
         text,
         src,
         detail,
-        Link,
+        link,
     } = props
 
     return (
@@ -61,7 +61,7 @@ export default function Articles(props) {
                     <ArticlesShortLine></ArticlesShortLine>
                 </ArticlesTopic>
                 <ArticlesContentDetails>{detail}</ArticlesContentDetails>
-                <A href={Link} target="_blank">Read More >></A>
+                <A href={link} target="_blank" rel="noreferrer">Read More >></A>
             </ArticlesContentDiv>
         </SmallArticlesContent>
     )
