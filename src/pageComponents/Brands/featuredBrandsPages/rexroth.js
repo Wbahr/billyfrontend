@@ -41,6 +41,62 @@ const RelatedLinkDiv = styled.div`
 const Span = styled.span`
 	font-weight: bold;
 `
+const CtrlxAutomationContainer = styled.div`
+    display: flex;  
+    flex-wrap: wrap;
+    margin: 20px 0 20px 0;
+    background-image: url('https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/ctrlx-automation/Asset%201_2x.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 15px;
+    width: 100%;
+    @media (max-width: 768px) {
+	    flex-direction: column;
+    }
+`
+const CtrlxAutomationLogoDiv = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    height: 135px;
+`
+const CtrlxAutomationLogo = styled.img`
+    width: 100%;
+    max-width: 180px;
+    object-fit: contain;
+`
+const CtrlxAutomationDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 16px;
+    margin: 0px 30px 0 30px;
+    align-content: center;
+    flex-direction: column;
+    flex: 2;
+`
+const CtrlxAutomationDetails = styled.p`
+    color: white;
+`
+const ButtonDiv = styled.div`
+    text-align: center;
+    margin-top: 20px;
+    transition: 0.5s ease;
+    &:hover {
+        transform: translateY(-5px);
+`
+const ExploreNow = styled.a`
+    color: #18284c;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #1ca5c9;
+    border-radius: 3px;
+    text-align: center;
+    width: 30%;
+    padding: 10px 15px;
+    &:hover {
+        text-decoration: none;
+    }
+`
 
 export function rexroth() {
     const description = 'Bosch Rexroth is the world leader in the drive, motion and control technologies that power ' +
@@ -67,6 +123,16 @@ export function rexroth() {
                 <SectionHeader
                     text="Products"
                 />
+                <CtrlxAutomationContainer>
+                    <CtrlxAutomationLogoDiv>
+                        <CtrlxAutomationLogo src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Rexroth/ctrlx-automation/DC-AE_ctrl-Logo_17R_20191113_111140.jpg"  />
+                    </CtrlxAutomationLogoDiv>
+                    <CtrlxAutomationDiv>
+                        <CtrlxAutomationDetails>Learn about Bosch Rexroth’s <b>ctrlX AUTOMATION</b>, the complete solution for industry 4.0, providing hardware and software from a <b>single source</b>.</CtrlxAutomationDetails>
+                        <ButtonDiv><ExploreNow href="https://info.airlinehyd.com/ctrlx" target="_blank">EXPLORE NOW</ExploreNow></ButtonDiv>
+                    </CtrlxAutomationDiv>
+                </CtrlxAutomationContainer>
+
                 <ProductItems
                     brand="Bosch Rexroth (BRH)"
                     searchTerm="Rexroth"
