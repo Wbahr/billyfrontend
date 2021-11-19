@@ -210,7 +210,7 @@ export default function ShoppingCartItem(props) {
         provided,
         cartData,
         dispositions,
-        tomorrowDate,
+        todayDate,
         maxDate,
         supplierOptions
     } = props
@@ -547,7 +547,7 @@ export default function ShoppingCartItem(props) {
                                                 </div>
 
                                                 <DatePicker
-                                                    minDate={tomorrowDate}
+                                                    minDate={todayDate}
                                                     maxDate={maxDate}
                                                     selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
                                                     onChange={(value) => setCartItemField('promiseDateOverride', value)}
