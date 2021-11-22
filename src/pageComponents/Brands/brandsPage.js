@@ -230,7 +230,7 @@ export default function BrandsPage() {
                         </Link>
                     </BrandsImgDiv>
                     <BrandsImgDiv>
-                        <Link href="/Brands/featured/rittal">
+                        <Link href="/pages/rittal">
                             <BrandsImg src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Brand-logos/RITTAL.png" />
                         </Link>
                     </BrandsImgDiv>
@@ -1142,7 +1142,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Rittal.htm" target="_blank" rel="noopener noreferrer">Rittal</BrandList></li>
+                            <li><BrandList href="https://www.airlinehyd.com/pages/rittal" target="_blank" rel="noopener noreferrer">Rittal</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
