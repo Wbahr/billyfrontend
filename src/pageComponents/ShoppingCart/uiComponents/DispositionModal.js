@@ -39,8 +39,8 @@ const Container = styled.div`
   }
 `
 
-const MarginBottomDiv = styled.div`
-  margin-bottom: 5px;
+const MarginTopDiv = styled.div`
+  margin-top: 10px;
 `
 
 export default function DispositionModal(props) {
@@ -62,9 +62,10 @@ export default function DispositionModal(props) {
     const [cost, setCost] = useState(purchaseOrderCost || airlineCost)
     const [selectedSupplier, setSelectedSupplier] = useState(supplierId)
     const [selectedDisposition, setSelectedDisposition] = useState(cartItem?.disposition || '')
+    const [showPoChange, setShowPoChange] = useState(false)
     const [alert, setAlert] = useState(null)
 
-    function handleClose(){
+    function handleClose() {
         setAlert(null)
         hide()
     }
@@ -73,14 +74,18 @@ export default function DispositionModal(props) {
         if (!selectedDisposition) {
             setCartItem({ ...cartItem, disposition: null })
         } else if (['S', 'D'].includes(selectedDisposition)) {
-            setCartItem({ ...cartItem, disposition: selectedDisposition, supplierId: `${selectedSupplier}`, purchaseOrderCost: cost })
+            setCartItem({ 
+                ...cartItem, 
+                disposition: selectedDisposition, 
+                ...selectedSupplier ?  { supplierId: `${selectedSupplier}` } : {}, 
+                purchaseOrderCost: showPoChange ? cost : 0 })
         } else {
             setCartItem({ ...cartItem, disposition: selectedDisposition })
         }
         hide()
     }
 
-    const saveDisabled = ['S', 'D'].includes(selectedDisposition) && !selectedSupplier
+    const saveDisabled = ['S', 'D'].includes(selectedDisposition) && !selectedSupplier && showPoChange
 
     return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: 350, borderRadius: 3 }}>
@@ -91,36 +96,43 @@ export default function DispositionModal(props) {
                 <DivItem>
                     <Label>Dispositions: </Label>
                     <CustomSelect 
-                        value={dispositionOptions.filter(o => o.value === selectedDisposition)} 
+                        value={dispositionOptions?.filter(o => o.value === selectedDisposition)} 
                         setValue={setSelectedDisposition}
                         options={dispositionOptions}
+                        height='42px'
                     />
                 </DivItem>
                 
                 {['S', 'D'].includes(selectedDisposition) && (
+                    <DivItem>
+                        <ButtonRed onClick={() => setShowPoChange(!showPoChange)} style={{ fontSize: 12, marginBottom: 10 }}>
+                            {showPoChange && 'Do not'} Change Supplier or PO Cost
+                        </ButtonRed>
+                    </DivItem>
+                )}
+                {showPoChange && (
                     <>
                         <DivItem>
                             <Label>Supplier: </Label>
                             <CustomSelect 
-                                value={supplierOptions.filter(o => o.value === selectedSupplier)} 
+                                value={supplierOptions?.filter(o => o.value === selectedSupplier)} 
                                 setValue={setSelectedSupplier}
                                 options={supplierOptions}
+                                height='42px'
                             />
                         </DivItem>
-                    
-                        <MarginBottomDiv>
-                            <DivItem>
-                                <Label>PO Cost: </Label>
-                                <AirlineInput
-                                    type="number"
-                                    value={cost}
-                                    width='100px'
-                                    onChange={(e) => setCost(e.target.value)}
-                                />
-                            </DivItem>
-                        </MarginBottomDiv>
+                        <DivItem>
+                            <Label>PO Cost: </Label>
+                            <AirlineInput
+                                type="number"
+                                value={cost}
+                                width='290px'
+                                onChange={(e) => setCost(e.target.value)}
+                            />
+                        </DivItem>
                     </>
                 )}
+                <MarginTopDiv></MarginTopDiv>
                 <DivRow>
                     <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
                     <ButtonRed onClick={handleSaveDisposition} disabled={saveDisabled}>Save</ButtonRed>

@@ -215,6 +215,10 @@ export default function ItemDetailPage({ history }) {
         getStocks 
     } = useContext(Context)
 
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+    }, [])
+
     const { itemId, customerPartNumber, item } = useParams()
     const invMastUid = parseInt(itemId)
     const [accessoryItems, setAccessoryItems] = useState([])
@@ -298,7 +302,8 @@ export default function ItemDetailPage({ history }) {
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
     const isDiscontinued = itemDetails?.isDiscontinued
     const subDetails = itemDetails?.substituteItem
-
+    //Create the canonical for this page, based on the parameters to it not the data query. (ItemId is sanitized)
+    const canonUrl = `https://www.airlinehyd.com/product/${item}/${itemId}`
     const subItemDetailsLink = itemDetails?.invMastUidSubstitute ? 
         `/product/${subDetails?.itemCodeUrlSanitized || encodeURIComponent(subDetails?.itemCode)}/${itemDetails?.invMastUidSubstitute}` :
         null
@@ -338,21 +343,8 @@ export default function ItemDetailPage({ history }) {
         setQuantity(1)
     }
 
-    if (!itemDetails) {
-        return (<Loader />)
-    } else if (!itemDetails?.invMastUid) {
-        return (<p>No item found</p>)
-    } else {
-        const FeatureItems = itemDetails.itemFeatures?.map((elem, idx) => <li key={idx}>{elem.text}</li>)
-        const TechSpecItems = itemDetails.itemTechSpecs?.map((elem, idx) => (
-            <TR key={idx}>
-                <TDshort>{elem.name}</TDshort>
-                <TD>{elem.value}</TD>
-            </TR>
-        ))
-
-        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-        const AccessoryItems = accessoryItems?.map((ai, idx) => {
+    function buildAccessoryItems(accessoryItems) {
+        return accessoryItems?.map((ai, idx) => {
 
             const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
             const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
@@ -370,6 +362,26 @@ export default function ItemDetailPage({ history }) {
                 />
             )
         })
+    }
+
+    if (!itemDetails) {
+        return (<Loader />)
+    } else if (!itemDetails?.invMastUid) {
+        return (<p>No item found</p>)
+    } else {
+        const FeatureItems = itemDetails.itemFeatures?.map((elem, idx) => <li key={idx}>{elem.text}</li>)
+        const TechSpecItems = itemDetails.itemTechSpecs?.map((elem, idx) => (
+            <TR key={idx}>
+                <TDshort>{elem.name}</TDshort>
+                <TD>{elem.value}</TD>
+            </TR>
+        ))
+
+        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+
+        const SpareParts = buildAccessoryItems(accessoryItems?.filter(a => a.type === 1))
+        const AccessoryItems = buildAccessoryItems(accessoryItems?.filter(a => a.type === 2))
+        const SubstituteItems = buildAccessoryItems(accessoryItems?.filter(a => a.type === 3))
 
         const CustomerPartOptions = customerPartNumbers?.map((elem, idx) => (
             <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
@@ -380,6 +392,7 @@ export default function ItemDetailPage({ history }) {
                 <Helmet>
                     <title>Airline Hydraulics | {itemDetails.itemCode}</title>
                     <meta name="description" content={itemDetails.extendedDesc} />
+                    <link rel="canonical" href={canonUrl} />
                     {productSchema(itemDetails, cachedItemPrice, itemAvailability)}
                     {breadcrumbSchema([
                         {
@@ -531,10 +544,22 @@ export default function ItemDetailPage({ history }) {
                     {itemDetails.itemLinks?.length > 0 && <H2>Links</H2>}
                     <DivSection>{ItemLinks}</DivSection>
 
-                    {accessoryItems?.length > 0 && <H2 id='accessory'>Accessory Items</H2>}
+                    {SpareParts?.length > 0 && <H2 id='accessory'>Spare Parts</H2>}
+
+                    <DivAccessoryItems>
+                        {SpareParts}
+                    </DivAccessoryItems>
+
+                    {AccessoryItems?.length > 0 && <H2 id='accessory'>Accessory Items</H2>}
 
                     <DivAccessoryItems>
                         {AccessoryItems}
+                    </DivAccessoryItems>
+
+                    {SubstituteItems?.length > 0 && <H2 id='accessory'>Substitute Items</H2>}
+
+                    <DivAccessoryItems>
+                        {SubstituteItems}
                     </DivAccessoryItems>
 
                     {!itemInfo && SkeletonLoader}

@@ -104,7 +104,7 @@ export default function ShoppingCart({ history }) {
         }
     }, [])
 
-    const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
+    const todayDate = new Date().setDate(new Date().getDate())
     const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
     
     const [getCartData] = useLazyQuery(GET_CART_DATA, {
@@ -167,7 +167,7 @@ export default function ShoppingCart({ history }) {
                                             <FontAwesomeIcon icon="calendar" color="lightgrey" />
                                         </div>
                                         <DatePicker
-                                            minDate={tomorrowDate}
+                                            minDate={todayDate}
                                             maxDate={maxDate}
                                             selected={Date.parse(cart[0]?.promiseDateOverride || cart[0]?.promiseDate)}
                                             onChange={(value) => bulkUpdatePromiseDate(value)}
@@ -203,7 +203,7 @@ export default function ShoppingCart({ history }) {
                         cartPricing,
                         cartData,
                         dispositions,
-                        tomorrowDate,
+                        todayDate,
                         maxDate,
                         supplierOptions
                     }
@@ -249,7 +249,7 @@ const CartComponent = (props) => {
         cartData,
         dispositions,
         supplierOptions,
-        tomorrowDate,
+        todayDate,
         maxDate
     } = props
 
@@ -314,7 +314,7 @@ const CartComponent = (props) => {
                                     setCartItem={setCartItem(index)}
                                     setCartItemField={setCartItemField(index)}
                                     {...{ history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided, 
-                                        dispositions, tomorrowDate, maxDate, supplierOptions }}
+                                        dispositions, todayDate, maxDate, supplierOptions }}
                                 />   
                                 {provided.placeholder}
                             </div>

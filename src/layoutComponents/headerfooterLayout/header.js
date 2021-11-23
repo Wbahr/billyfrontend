@@ -572,7 +572,7 @@ const brandsSubItems = [
     },
     {
         label: 'Rittal',
-        to: '/brands/featured/rittal'
+        to: '/pages/rittal'
     },
     {
         label: 'Ross',
