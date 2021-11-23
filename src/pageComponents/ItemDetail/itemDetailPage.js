@@ -302,7 +302,8 @@ export default function ItemDetailPage({ history }) {
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
     const isDiscontinued = itemDetails?.isDiscontinued
     const subDetails = itemDetails?.substituteItem
-
+    //Create the canonical for this page, based on the parameters to it not the data query. (ItemId is sanitized)
+    const canonUrl = `https://www.airlinehyd.com/product/${item}/${itemId}`
     const subItemDetailsLink = itemDetails?.invMastUidSubstitute ? 
         `/product/${subDetails?.itemCodeUrlSanitized || encodeURIComponent(subDetails?.itemCode)}/${itemDetails?.invMastUidSubstitute}` :
         null
@@ -391,6 +392,7 @@ export default function ItemDetailPage({ history }) {
                 <Helmet>
                     <title>Airline Hydraulics | {itemDetails.itemCode}</title>
                     <meta name="description" content={itemDetails.extendedDesc} />
+                    <link rel="canonical" href={canonUrl} />
                     {productSchema(itemDetails, cachedItemPrice, itemAvailability)}
                     {breadcrumbSchema([
                         {
