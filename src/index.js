@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Router } from 'react-router-dom'
 import Switch from './setup/switch'
+import { Helmet } from 'react-helmet'
 import { createBrowserHistory } from 'history'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -128,6 +129,9 @@ const muiTheme = createMuiTheme(Object.assign({}, defaults, {
 ReactDOM.render(
     <ApolloProvider client={client}>
         <ContextProvider history={customHistory}>
+            <Helmet>
+                <title>Airline Hydraulics</title>
+            </Helmet>
             <MuiThemeProvider theme={muiTheme}>
                 <Elements stripe={stripePromise}>
                     <Router history={customHistory}>
