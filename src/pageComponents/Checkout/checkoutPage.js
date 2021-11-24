@@ -100,6 +100,18 @@ const Pformheader = styled.p`
   font-family: ProximaBold;
   text-transform: uppercase;
 `
+const SmallBanner = styled.div`
+		background-color: #007BFF;
+		padding: 8px;
+		text-align: center;
+		color: white;
+        margin-bottom: 30px;
+`
+
+const Message = styled.p`
+		font-size: 12px;
+		margin: 0;
+`
 
 function CheckoutPage({ history }) {
     const context = useContext(Context)
@@ -257,41 +269,45 @@ function CheckoutPage({ history }) {
     const showPoOption = checkoutDropdownData.billingInfo?.isNetTerms
 
     return (
-        <DivContainer>
-            <DivCheckoutCol>
-                {validationSchema && (
-                    <Formik
-                        initialValues={initValues}
-                        enableReinitialize={false}
-                        validationSchema={validationSchema[currentStep]}
-                        validate={handleValidateFields}
-                        validateOnBlur={true}
-                        validateOnChange={true}
-                    >
-                        {formikProps => (
-                            <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
-                                <FormContainer
-                                    isStepValid={stepValidated[currentStep]}
-                                    updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
-                                    {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        isQuote, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
-                                />
-                            </form>
-                        )}
-                    </Formik>
-                )}
-            </DivCheckoutCol>
+        <>
+            <SmallBanner><Message>Happy Thanksgiving! Airline's customer service team is off on Thursday, 11/25, and available with a limited staff from 8am - 12pm on Friday, 11/26.</Message></SmallBanner>
 
-            <DivOrderTotalCol>
-                <CheckoutOrderSummary
-                    history={history}
-                    currentStep={currentStep}
-                    zipcode={taxRateRequestInfo?.zipcode || ''}
-                    taxRate={taxRate}
-                    taxRateLoading={taxRateLoading}
-                />
-            </DivOrderTotalCol>
-        </DivContainer>
+            <DivContainer>
+                <DivCheckoutCol>
+                    {validationSchema && (
+                        <Formik
+                            initialValues={initValues}
+                            enableReinitialize={false}
+                            validationSchema={validationSchema[currentStep]}
+                            validate={handleValidateFields}
+                            validateOnBlur={true}
+                            validateOnChange={true}
+                        >
+                            {formikProps => (
+                                <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
+                                    <FormContainer
+                                        isStepValid={stepValidated[currentStep]}
+                                        updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
+                                        {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
+                                            isQuote, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                    />
+                                </form>
+                            )}
+                        </Formik>
+                    )}
+                </DivCheckoutCol>
+
+                <DivOrderTotalCol>
+                    <CheckoutOrderSummary
+                        history={history}
+                        currentStep={currentStep}
+                        zipcode={taxRateRequestInfo?.zipcode || ''}
+                        taxRate={taxRate}
+                        taxRateLoading={taxRateLoading}
+                    />
+                </DivOrderTotalCol>
+            </DivContainer>
+        </>
     )
 }
 
@@ -418,6 +434,7 @@ const FormContainer = props => {
 
     return (
         <>
+
             <Div>
                 <DivRow>
                     <FontAwesomeIcon icon="lock" />
