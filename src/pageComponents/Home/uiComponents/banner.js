@@ -95,18 +95,6 @@ const A = styled.a`
 		}
 `
 
-const AnnounceBanner = styled.div`
-		background-color: #007BFF;
-		padding: 8px;
-		text-align: center;
-		color: white;
-`
-
-const Message = styled.p`
-		font-size: 12px;
-		margin: 0;
-`
-
 const key = 'ABOUT_SECTION'
 
 export default function Banner({ homepage }) {
@@ -141,7 +129,6 @@ export default function Banner({ homepage }) {
     return (
         <BannerContainer>
             <Col>
-                <AnnounceBanner><Message>Happy Thanksgiving! Airline's customer service team is off on Thursday, 11/25, and available with a limited staff from 8am - 12pm on Friday, 11/26.</Message></AnnounceBanner>
                 <A href={href} target="_blank">
                     <LgBanner {...{ large, medium, small, }} />
                 </A>
