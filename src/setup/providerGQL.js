@@ -1053,3 +1053,13 @@ export const GET_SUPPLIERS = gql`
     }
   }
 `
+
+export const GET_ALERTS = gql`
+  query getWebsiteAlert{
+    websiteAlert {
+      style
+      noteHtml
+      endDate
+    }
+  }
+`

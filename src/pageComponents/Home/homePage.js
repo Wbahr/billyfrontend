@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import FeaturedManufacturers from './uiComponents/featuredManufacturers'
+import AnnounceBanner from '../_common/AnnounceBanner'
 import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
@@ -23,7 +24,8 @@ const ContentScreenContainer = styled.div`
 
 export default function HomePage() {
     const {
-        homepage
+        homepage,
+        alert
     } = useContext(Context)
 
     return (
@@ -34,6 +36,7 @@ export default function HomePage() {
                         <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
                     </Helmet>
 
+                    {alert && <AnnounceBanner {...{ alert }} />}
                     <Banner {...{ homepage }} />
                     <NewAndNoteworthy {...{ homepage }} />
                     <div>

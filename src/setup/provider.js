@@ -19,6 +19,7 @@ import {
     GET_ITEMS_BY_ID,
     QUERY_STOCK_AVAILABILITY_BATCH,
     GET_HOMEPAGE,
+    GET_ALERTS,
     GET_AUTHENTICATION_HEARTBEAT
 } from './providerGQL'
 import {
@@ -70,6 +71,7 @@ export default function Provider({ history, children }) {
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [passwordResetEmail, setPasswordResetEmail] = useState('')
     const [homepage, setHomepage] = useState([])
+    const [alert, setAlert] = useState(null)
     const [heartbeatInfo, setHeartbeatInfo] = useState(null)
     const [heartbeatTimeoutWaiter, setHeartbeatTimeoutWaiter] = useState(null)
 
@@ -93,7 +95,7 @@ export default function Provider({ history, children }) {
     useEffect(() => {
         if (!didMountRef.current) { // If page refreshed or first loaded, check to see if any tokens exist and update Context accordingly
             getHomepage()
-            
+            getAlert()
             //Call the authentication heartbeat on first load before attempting to retrieve any other data.
             getAuthenticationHeartbeat().finally(() => {
                 manageUserInfo('load-context')
@@ -108,6 +110,13 @@ export default function Provider({ history, children }) {
         onCompleted: data => {
             const home = JSON.parse(JSON.stringify(data.getMarketingData))
             setHomepage(home.sort((a, b) => a.sort > b.sort ? 1 : -1))
+        }
+    })
+
+    const [getAlert] = useLazyQuery(GET_ALERTS, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            setAlert(data.websiteAlert)
         }
     })
 
@@ -710,7 +719,8 @@ export default function Provider({ history, children }) {
                 setShowErrorModal,
                 passwordResetEmail,
                 setPasswordResetEmail,
-                homepage
+                homepage,
+                alert
             }}
         >
             {children}
