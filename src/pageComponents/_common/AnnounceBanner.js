@@ -23,9 +23,7 @@ export default function AnnounceBanner(props) {
 
     return (
         <Banner bgColor={styleOptions[alert.style]}>
-            <Message>
-                {alert.noteHtml}
-            </Message>
+            <Message dangerouslySetInnerHTML={{ __html: alert.noteHtml }} />
         </Banner>
     )
 }
