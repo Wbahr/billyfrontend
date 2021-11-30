@@ -44,6 +44,7 @@ const DivNavigation = styled.div`
 const Po = styled.div`
     font-size: 14px;
     margin-left: 10px;
+    color: red;
 `
 
 function BillingInfoForm(props) {
