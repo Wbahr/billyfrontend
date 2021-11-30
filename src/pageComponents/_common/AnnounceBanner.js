@@ -20,12 +20,10 @@ const styleOptions = {
 
 export default function AnnounceBanner(props) {
     const { alert } = props
-
+    console.log(alert)
     return (
         <Banner bgColor={styleOptions[alert.style]}>
-            <Message>
-                {alert.noteHtml}
-            </Message>
+            <Message dangerouslySetInnerHTML={{ __html: alert.noteHtml }} />
         </Banner>
     )
 }
