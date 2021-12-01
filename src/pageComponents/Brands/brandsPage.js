@@ -671,31 +671,31 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/ABB.htm" target="_blank" rel="noopener noreferrer">ABB</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/abb_jokab.htm">ABB (Jokab)</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/acme_electric.htm">Acme Electric</BrandList></li>
+                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/ABB" target="_blank" rel="noopener noreferrer">ABB</BrandList></li>
+                            <li><BrandList href="https://new.abb.com/low-voltage/products/safety-products">ABB (Jokab)</BrandList></li>
+                            <li><BrandList href="https://acmeelectric.com/">Acme Electric</BrandList></li>
                             <li><BrandList href="/pages/brands/adaptall">Adaptall</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/adsens.htm">Adsens</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/services.htm">Airline</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/air_starter_components.htm">Air Starter Components</BrandList></li>
-                            <li><BrandList href="http://www.alkoncorp.com/">Alkon</BrandList></li>
+                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/adsens">Adsens</BrandList></li>
+                            <li><BrandList href="https://www.airlinehyd.com/">Airline</BrandList></li>
+                            <li><BrandList href="https://www.ascairstarter.com/">Air Starter Components</BrandList></li>
+                            <li><BrandList href="https://www.alkoncorp.com/">Alkon</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/all-flo.htm">All-Flo</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/allenair.htm">Allenair</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/anchor.htm">Anchor</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/apollo_ball_valves.htm">Apollo Ball Valves	</BrandList></li>
+                            <li><BrandList href="https://www.psgdover.com/all-flo/">All-Flo</BrandList></li>
+                            <li><BrandList href="https://allenair.com/">Allenair</BrandList></li>
+                            <li><BrandList href="https://www.anchorfluidpower.com/index.html">Anchor</BrandList></li>
+                            <li><BrandList href="http://www.apollovalves.com/">Apollo Ball Valves	</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/applied_motion_products.htm">Applied Motion Products</BrandList></li>
+                            <li><BrandList href="https://www.applied-motion.com/">Applied Motion Products</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -706,25 +706,25 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/banner.htm" target="_blank" rel="noopener noreferrer">Banner Engineering</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/beijer.htm">Beijer</BrandList></li>
+                            <li><BrandList href="https://www.bannerengineering.com/us/en.html" target="_blank" rel="noopener noreferrer">Banner Engineering</BrandList></li>
+                            <li><BrandList href="https://www05.beijerelectronics.com/">Beijer</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/bell_everman.htm">Bell-Everman</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/rexroth.htm">Bosch Rexroth</BrandList></li>
+                            <li><BrandList href="https://www.bell-everman.com/">Bell-Everman</BrandList></li>
+                            <li><BrandList href="/brands/featured/rexroth">Bosch Rexroth</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/brennan.htm">Brennan Industries</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/bucher.htm">Bucher Hydraulics</BrandList></li>
+                            <li><BrandList href="https://brennaninc.com/">Brennan Industries</BrandList></li>
+                            <li><BrandList href="https://www.bucherhydraulics.com/30971/start/start.aspx">Bucher Hydraulics</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/BuTech.htm">BuTech</BrandList></li>
+                            <li><BrandList href="https://www.haskel.com/en-us/products/butech-high-pressure-valves">BuTech</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -735,23 +735,23 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/CalAmp.htm" target="_blank" rel="noopener noreferrer">CalAmp</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/camozzi.htm">Camozzi</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/casappa.htm">Casappa</BrandList></li>
+                            <li><BrandList href="https://www.calamp.com/" target="_blank" rel="noopener noreferrer">CalAmp</BrandList></li>
+                            <li><BrandList href="https://us.automation.camozzi.com/">Camozzi</BrandList></li>
+                            <li><BrandList href="https://www.casappa.com/eng/home.htm">Casappa</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/cervis.htm">Cervis</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/CGI.htm">CGI</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Clippard.htm">Clippard</BrandList></li>
+                            <li><BrandList href="https://cervisinc.com/">Cervis</BrandList></li>
+                            <li><BrandList href="https://www.cgimotion.com/">CGI</BrandList></li>
+                            <li><BrandList href="/brands/featured/clippard">Clippard</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/contrinex.htm">Contrinex</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/copley_controls.htm">Copley Controls</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/cylinders_valves.htm">Cylinders & Valves</BrandList></li>
+                            <li><BrandList href="https://www.contrinex.com/en-us/">Contrinex</BrandList></li>
+                            <li><BrandList href="https://www.copleycontrols.com/en/">Copley Controls</BrandList></li>
+                            <li><BrandList href="https://www.cylval.com/">Cylinders & Valves</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -769,25 +769,25 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/daman_manifolds.htm" target="_blank" rel="noopener noreferrer">Daman Manifolds</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/delta.htm">Delta Power</BrandList></li>
+                            <li><BrandList href="https://www.daman.com/" target="_blank" rel="noopener noreferrer">Daman Manifolds</BrandList></li>
+                            <li><BrandList href="https://www.global.weir/brands/delta-industrial/">Delta Power</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/deltrol">Deltrol</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/dixon_quick.htm">Dixon Quick Disconnect Couplings</BrandList></li>
+                            <li><BrandList href="https://deltrolfluid.com/">Deltrol</BrandList></li>
+                            <li><BrandList href="https://dixonvalve.com/division/dixon-quick-coupling">Dixon Quick Disconnect Couplings</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/dmic_ball_valves.htm">DMIC Ball Valves</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/durst.htm">Durst</BrandList></li>
+                            <li><BrandList href="https://www.dmic.com/">DMIC Ball Valves</BrandList></li>
+                            <li><BrandList href="https://www.regalrexnord.com/Brands/Durst">Durst</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/dynamic_gauges.htm">Dynamic Gauges</BrandList></li>
+                            <li><BrandList href="http://www.dynamicfc.com/">Dynamic Gauges</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -798,25 +798,25 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/eaton_b-line.htm" target="_blank" rel="noopener noreferrer">Daman Manifolds</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/eaton_bussmann.htm">Eaton Bussmann</BrandList></li>
+                            <li><BrandList href="/brands/featured/eaton">Eaton Bussmann</BrandList></li>
+                            <li><BrandList href="https://www.eaton.com/us/en-us/products/wiring-devices-connectivity/arrow-hart.html">Eaton Cooper Arrow Hart</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/eaton_cooper_arrow_hart.htm">Eaton Cooper Arrow Hart</BrandList></li>
-                            <li><BrandList href="http://www.edriveactuators.com/">E-Drive</BrandList></li>
+                            <li><BrandList href="https://www.edriveactuators.com/">E-Drive</BrandList></li>
+                            <li><BrandList href="https://epson.com/industrial-robots-factory-automation">Epson Robots</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="http://www.robots.epson.com/">Epson Robots</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/erico.htm">Erico</BrandList></li>
+                            <li><BrandList href="https://www.nvent.com/en-us/our-brands/ERICO">Erico</BrandList></li>
+                            <li><BrandList href="https://www.eskridgeinc.com/">Eskridge</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/eskridge.htm">Eskridge</BrandList></li>
+                            <li></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -827,22 +827,22 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/fibox.htm" target="_blank" rel="noopener noreferrer">Fibox</BrandList></li>
+                            <li><BrandList href="https://www.fiboxusa.com/" target="_blank" rel="noopener noreferrer">Fibox</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/flexa_conduit.htm">Flexa Conduit</BrandList></li>
+                            <li><BrandList href="https://www.flexa.de/home/EN_index_1000.html">Flexa Conduit</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/flow_ezy_strainers.htm">Flow Ezy Strainers	</BrandList></li>
+                            <li><BrandList href="https://www.flowezyfilters.com/">Flow Ezy Strainers</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/fulflo.htm">Fulflo Valves</BrandList></li>
+                            <li><BrandList href="https://www.fulflo.com/">Fulflo Valves</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -853,22 +853,22 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/GAM.htm" target="_blank" rel="noopener noreferrer">GAM</BrandList></li>
+                            <li><BrandList href="https://www.gamweb.com/" target="_blank" rel="noopener noreferrer">GAM</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/geartek.htm">Geartek</BrandList></li>
+                            <li><BrandList href="http://www.geartek.com/">Geartek</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/grace.htm">Grace</BrandList></li>
+                            <li><BrandList href="https://www.graceport.com/">Grace</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/GSM.htm">GSM</BrandList></li>
+                            <li><BrandList href="https://gsmotion.de/de/">GSM</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -879,31 +879,31 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hammond_manufacturing.htm" target="_blank" rel="noopener noreferrer">Hammond Manufacturing</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hammond_power_solutions.htm" target="_blank" rel="noopener noreferrer">Hammond Power Solutions</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hanna.htm" target="_blank" rel="noopener noreferrer">Hanna</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hannay_reels.htm" target="_blank" rel="noopener noreferrer">Hannay Reels</BrandList></li>
+                            <li><BrandList href="http://www.hammondmfg.com/" target="_blank" rel="noopener noreferrer">Hammond Manufacturing</BrandList></li>
+                            <li><BrandList href="https://americas.hammondpowersolutions.com/" target="_blank" rel="noopener noreferrer">Hammond Power Solutions</BrandList></li>
+                            <li><BrandList href="http://www.hannacylinders.com/" target="_blank" rel="noopener noreferrer">Hanna</BrandList></li>
+                            <li><BrandList href="https://www.hannay.com/en-US/" target="_blank" rel="noopener noreferrer">Hannay Reels</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Haskel.htm">Haskel</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/HECO.htm">Heco Gear</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hedland.htm">Hedland</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/high_country_tek.htm">High Country Tek</BrandList></li>
+                            <li><BrandList href="/brands/featured/haskel">Haskel</BrandList></li>
+                            <li><BrandList href="http://www.hecogear.com/">Heco Gear</BrandList></li>
+                            <li><BrandList href="https://www.instrumart.com/brands/1007/hedland?gclid=Cj0KCQiAtJeNBhCVARIsANJUJ2G2xhp1b3GT4tIEbKm1LdEycu6GRXMxffL0J85uIL8e2xYWk8snzjMaAhGvEALw_wcB">Hedland</BrandList></li>
+                            <li><BrandList href="https://www.enovationcontrols.com/hctmerge">High Country Tek</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/honor.htm">Honor Pumps USA</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/HYDAC.htm">HYDAC</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hydratech.htm">Hydratech Industries</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hydro_leduc.htm">Hydro Leduc</BrandList></li>
+                            <li><BrandList href="http://www.honorpumps.com/">Honor Pumps USA</BrandList></li>
+                            <li><BrandList href="/brands/featured/hydac">HYDAC</BrandList></li>
+                            <li><BrandList href="http://www.hydratechcylinders.com/">Hydratech Industries</BrandList></li>
+                            <li><BrandList href="https://hydroleduc.com/">Hydro Leduc</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/hypercyl.htm">HyperCyl</BrandList></li>
+                            <li><BrandList href="https://www.hypercyl.com/">HyperCyl</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -919,12 +919,12 @@ export default function BrandsPage() {
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/idec">IDEC</BrandList></li>
+                            <li><BrandList href="https://us.idec.com/idec-us/en/USD/">IDEC</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/ingersoll_rand.htm">Ingersoll Rand</BrandList></li>
+                            <li><BrandList href="https://www.ingersollrand.com/en-us/air-compressor">Ingersoll Rand</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -940,17 +940,17 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/kawasaki.htm" target="_blank" rel="noopener noreferrer">Kawasaki</BrandList></li>
+                            <li><BrandList href="https://www.kpm-usa.com/" target="_blank" rel="noopener noreferrer">Kawasaki</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/kobelt.htm">Kobelt</BrandList></li>
+                            <li><BrandList href="https://www.kobelt.com/">Kobelt</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/kyb.htm">KYB (Hydrostar)</BrandList></li>
+                            <li><BrandList href="https://www.kybfluidpower.com/">KYB (Hydrostar)</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -966,22 +966,22 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/lehigh_fluid_power.htm" target="_blank" rel="noopener noreferrer">Lehigh Fluid Power</BrandList></li>
-                            <li><BrandList href="http://www.lexairinc.com/">Lexair</BrandList></li>
+                            <li><BrandList href="http://lehighfluidpower.com/" target="_blank" rel="noopener noreferrer">Lehigh Fluid Power</BrandList></li>
+                            <li><BrandList href="https://www.lexairinc.com/">Lexair</BrandList></li>
 
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/linktech.htm">LinkTech</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/littelfuse.htm">Littelfuse</BrandList></li>
+                            <li><BrandList href="http://www.linktechcouplings.com/">LinkTech</BrandList></li>
+                            <li><BrandList href="https://www.littelfuse.com/">Littelfuse</BrandList></li>
 
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/lutze">Lutze</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/lynair.htm">Lynair</BrandList></li>
+                            <li><BrandList href="https://www.lutze.com/">Lutze</BrandList></li>
+                            <li><BrandList href="http://www.lynair.com/">Lynair</BrandList></li>
 
                         </Ul>
                     </ListDiv>
@@ -998,28 +998,28 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/magnom_filters.htm" target="_blank" rel="noopener noreferrer">Magnom Filters</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/maple_systems.htm" target="_blank" rel="noopener noreferrer">Maple Systems</BrandList></li>
+                            <li><BrandList href="https://magnom.com/" target="_blank" rel="noopener noreferrer">Magnom Filters</BrandList></li>
+                            <li><BrandList href="https://www.maplesystems.com/" target="_blank" rel="noopener noreferrer">Maple Systems</BrandList></li>
 
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/meltric.htm" target="_blank" rel="noopener noreferrer">Meltric</BrandList></li>
+                            <li><BrandList href="https://meltric.com/" target="_blank" rel="noopener noreferrer">Meltric</BrandList></li>
                             <li><BrandList href="http://www.milagon.com/" target="_blank" rel="noopener noreferrer">Milagon</BrandList></li>
 
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/milwaukee_cylinder.htm" target="_blank" rel="noopener noreferrer">Milwaukee Cylinder</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/MTS.htm" target="_blank" rel="noopener noreferrer">MTS</BrandList></li>
+                            <li><BrandList href="https://www.milwaukeecylinder.com/" target="_blank" rel="noopener noreferrer">Milwaukee Cylinder</BrandList></li>
+                            <li><BrandList href="http://www.mtssensors.com/" target="_blank" rel="noopener noreferrer">MTS</BrandList></li>
 
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/murr.htm" target="_blank" rel="noopener noreferrer">Murr</BrandList></li>
+                            <li><BrandList href="https://www.murrinc.com/us/" target="_blank" rel="noopener noreferrer">Murr</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -1030,8 +1030,8 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/nason.htm" target="_blank" rel="noopener noreferrer">Nason</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/new_age_industries.htm" target="_blank" rel="noopener noreferrer">New Age Industries</BrandList></li>
+                            <li><BrandList href="https://www.nasonptc.com/" target="_blank" rel="noopener noreferrer">Nason</BrandList></li>
+                            <li><BrandList href="https://www.newageindustries.com/" target="_blank" rel="noopener noreferrer">New Age Industries</BrandList></li>
 
                         </Ul>
                     </ListDiv>
@@ -1058,20 +1058,20 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/OEM_Controls.htm" target="_blank" rel="noopener noreferrer">OEM Controls</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/offpeak_technologies.htm" target="_blank" rel="noopener noreferrer">OffPeak Technologies</BrandList></li>
+                            <li><BrandList href="https://www.oemcontrols.com/" target="_blank" rel="noopener noreferrer">OEM Controls</BrandList></li>
+                            <li><BrandList href="http://www.offpeak-solutions.com/" target="_blank" rel="noopener noreferrer">OffPeak Technologies</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="http://www.omnicable.com/" target="_blank" rel="noopener noreferrer">Omni Cable</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/opto22.htm" target="_blank" rel="noopener noreferrer">Opto 22</BrandList></li>
+                            <li><BrandList href="https://www.omnicable.com/" target="_blank" rel="noopener noreferrer">Omni Cable</BrandList></li>
+                            <li><BrandList href="https://www.opto22.com/" target="_blank" rel="noopener noreferrer">Opto 22</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Omron.htm" target="_blank" rel="noopener noreferrer">Omron</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/oriental_motor.htm" target="_blank" rel="noopener noreferrer">Oriental Motor</BrandList></li>
+                            <li><BrandList href="/brands/featured/omron" target="_blank" rel="noopener noreferrer">Omron</BrandList></li>
+                            <li><BrandList href="/brands/featured/oriental-motor" target="_blank" rel="noopener noreferrer">Oriental Motor</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1087,25 +1087,25 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/paccar.htm" target="_blank" rel="noopener noreferrer">Paccar (Braden)</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/parker.htm" target="_blank" rel="noopener noreferrer">Parker</BrandList></li>
+                            <li><BrandList href="/Brands/featured/paccar" target="_blank" rel="noopener noreferrer">Paccar (Braden)</BrandList></li>
+                            <li><BrandList href="/Brands/featured/parker" target="_blank" rel="noopener noreferrer">Parker</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/phoenix_contact.htm" target="_blank" rel="noopener noreferrer">Phoenix Contact</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/pepperl_fuchs.htm" target="_blank" rel="noopener noreferrer">Pepperl & Fuchs</BrandList></li>
+                            <li><BrandList href="/brands/featured/phoenix-contact" target="_blank" rel="noopener noreferrer">Phoenix Contact</BrandList></li>
+                            <li><BrandList href="https://www.pepperl-fuchs.com/usa/en/index.htm" target="_blank" rel="noopener noreferrer">Pepperl & Fuchs</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/permco.htm" target="_blank" rel="noopener noreferrer">Permco</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/pro-face.htm" target="_blank" rel="noopener noreferrer">Pro-Face</BrandList></li>
+                            <li><BrandList href="https://www.permco.com/" target="_blank" rel="noopener noreferrer">Permco</BrandList></li>
+                            <li><BrandList href="https://profaceamerica.com/" target="_blank" rel="noopener noreferrer">Pro-Face</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/PSL.htm" target="_blank" rel="noopener noreferrer">PSL</BrandList></li>
+                            <li><BrandList href="https://powerside.com/" target="_blank" rel="noopener noreferrer">PSL</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -1116,7 +1116,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/QC_Industries.htm" target="_blank" rel="noopener noreferrer">QC Industries</BrandList></li>
+                            <li><BrandList href="https://qcconveyors.com/" target="_blank" rel="noopener noreferrer">QC Industries</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1142,12 +1142,12 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/rittal" target="_blank" rel="noopener noreferrer">Rittal</BrandList></li>
+                            <li><BrandList href="/pages/rittal" target="_blank" rel="noopener noreferrer">Rittal</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Ross.htm" target="_blank" rel="noopener noreferrer">Ross Controls</BrandList></li>
+                            <li><BrandList href="/brands/featured/ross" target="_blank" rel="noopener noreferrer">Ross Controls</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1168,25 +1168,25 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/Schmersal.htm" target="_blank" rel="noopener noreferrer">Schmersal</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/settima.htm" target="_blank" rel="noopener noreferrer">Settima</BrandList></li>
+                            <li><BrandList href="/Brands/featured/schmersal" target="_blank" rel="noopener noreferrer">Schmersal</BrandList></li>
+                            <li><BrandList href="https://www.settima.it/" target="_blank" rel="noopener noreferrer">Settima</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/skf.htm" target="_blank" rel="noopener noreferrer">SKF (Lincoln)</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/smc.htm" target="_blank" rel="noopener noreferrer">SMC</BrandList></li>
+                            <li><BrandList href="/brands/featured/lincoln" target="_blank" rel="noopener noreferrer">SKF (Lincoln)</BrandList></li>
+                            <li><BrandList href="/brands/featured/smc" target="_blank" rel="noopener noreferrer">SMC</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/star_hydraulics.htm" target="_blank" rel="noopener noreferrer">Star Hydraulics</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/STC.htm" target="_blank" rel="noopener noreferrer">STC</BrandList></li>
+                            <li><BrandList href="https://www.starhyd.com/index.html" target="_blank" rel="noopener noreferrer">Star Hydraulics</BrandList></li>
+                            <li><BrandList href="https://www.stcvalve.com/" target="_blank" rel="noopener noreferrer">STC</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/super_swivels.htm" target="_blank" rel="noopener noreferrer">Super Swivels</BrandList></li>
+                            <li><BrandList href="https://superswivels.com/" target="_blank" rel="noopener noreferrer">Super Swivels</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -1197,20 +1197,20 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/taimi.htm" target="_blank" rel="noopener noreferrer">Taimi</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/thermal_transfer.htm" target="_blank" rel="noopener noreferrer">Thermal Transfer (API Heat Transfer)</BrandList></li>
+                            <li><BrandList href="https://www.taimi.ca/" target="_blank" rel="noopener noreferrer">Taimi</BrandList></li>
+                            <li><BrandList href="https://www.thermaltransfer.com/" target="_blank" rel="noopener noreferrer">Thermal Transfer (API Heat Transfer)</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/tompkins.htm" target="_blank" rel="noopener noreferrer">Tompkins</BrandList></li>
+                            <li><BrandList href="https://www.tompkinsind.com/" target="_blank" rel="noopener noreferrer">Tompkins</BrandList></li>
                             <li><BrandList href="/pages/brands/turck" target="_blank" rel="noopener noreferrer">Turck</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/TWG.htm" target="_blank" rel="noopener noreferrer">TWG</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/twintec.htm" target="_blank" rel="noopener noreferrer">Twintec</BrandList></li>
+                            <li><BrandList href="https://twgdev.com/" target="_blank" rel="noopener noreferrer">TWG</BrandList></li>
+                            <li><BrandList href="https://www.twintecinc.com/" target="_blank" rel="noopener noreferrer">Twintec</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1226,7 +1226,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/unitronics.htm" target="_blank" rel="noopener noreferrer">Unitronics</BrandList></li>
+                            <li><BrandList href="https://www.unitronics.com/" target="_blank" rel="noopener noreferrer">Unitronics</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1252,12 +1252,12 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/vacuforce.htm" target="_blank" rel="noopener noreferrer">Vacuforce</BrandList></li>
+                            <li><BrandList href="https://www.vacuforce.com/" target="_blank" rel="noopener noreferrer">Vacuforce</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/voith.htm" target="_blank" rel="noopener noreferrer">Voith</BrandList></li>
+                            <li><BrandList href="https://voith.com/corp-en/index.html" target="_blank" rel="noopener noreferrer">Voith</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
@@ -1278,8 +1278,8 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/WEG.htm" target="_blank" rel="noopener noreferrer">WEG</BrandList></li>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/wittenstein.htm" target="_blank" rel="noopener noreferrer">Wittenstein</BrandList></li>
+                            <li><BrandList href="https://www.weg.net/institutional/US/en/" target="_blank" rel="noopener noreferrer">WEG</BrandList></li>
+                            <li><BrandList href="https://www.wittenstein-us.com/" target="_blank" rel="noopener noreferrer">Wittenstein</BrandList></li>
 
                         </Ul>
                     </ListDiv>
@@ -1290,12 +1290,12 @@ export default function BrandsPage() {
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/walvoil.htm" target="_blank" rel="noopener noreferrer">Walvoil Fluid Power</BrandList></li>
+                            <li><BrandList href="http://www.walvoil.com/" target="_blank" rel="noopener noreferrer">Walvoil Fluid Power</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/white_drive.htm" target="_blank" rel="noopener noreferrer">White Drive Products</BrandList></li>
+                            <li><BrandList href="https://www.whitedriveproducts.com/" target="_blank" rel="noopener noreferrer">White Drive Products</BrandList></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -1306,7 +1306,7 @@ export default function BrandsPage() {
                     </LetterDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.airlinehyd.com/pages/brands/yates.htm" target="_blank" rel="noopener noreferrer">Yates</BrandList></li>
+                            <li><BrandList href="https://www.yatesind.com/" target="_blank" rel="noopener noreferrer">Yates</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
