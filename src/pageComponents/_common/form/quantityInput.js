@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { useDebounce } from 'use-debounce'
 import { useDidUpdateEffect } from '../helpers/generalHelperFunctions'
-
-const IncrementDecrementButton = styled.button`
-    box-shadow: none;
-    border: none;
-    color: ${props => props.theme.buttons.secondary.textColor};
-    background-color: ${props => props.theme.buttons.secondary.backgroundColor};
-    margin: 0;
-    padding: 0;
-    font-size: 1.5rem;
-    line-height: 0;
-    height: 30px;
-    font-weight: bold;
-    width: 17px;
-`
+import IncrementDecrementButton from '../IncrementDecrementButton'
 
 const QuantityInput = (props) => {
     const {

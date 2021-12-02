@@ -502,7 +502,9 @@ export default function Provider({ history, children }) {
                 
                 if (shouldUpdateState) {
                     localStorage.setItem('shoppingCartToken', token)
-                    setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
+                    setShoppingCart(cartItems.map(({ __typename, ...rest }) => {
+                        return { ...rest, extraNotes: rest.extraNotes?.map(({ __typename, ...r }) => r) }
+                    }))
                     setOrderNotes(orderNotes)
                     setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
                 }
@@ -514,7 +516,9 @@ export default function Provider({ history, children }) {
         fetchPolicy: 'no-cache',
         onCompleted: ({ shoppingCartAddCatalogItem: { token, cartItems, subtotal, tariff, orderNotes } }) => {
             localStorage.setItem('shoppingCartToken', token)
-            setShoppingCart(cartItems.map(({ __typename, ...rest }) => rest))
+            setShoppingCart(cartItems.map(({ __typename, ...rest }) => {
+                return { ...rest, extraNotes: rest.extraNotes?.map(({ __typename, ...r }) => r) }
+            }))
             setOrderNotes(orderNotes)
             setShoppingCartPricing({ state: 'stable', subTotal: subtotal.toFixed(2), tariff: tariff.toFixed(2) })
         }
