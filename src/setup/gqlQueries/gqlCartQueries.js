@@ -24,6 +24,7 @@ export const GET_CART_DATA = gql`
             sourceLocations {
                 ...ItemSourceLocation
             }
+            lineNoteAreas
         }
     }
 	${FRAGMENT_ITEM_DETAIL}

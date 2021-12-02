@@ -183,6 +183,10 @@ export const UPDATE_CART = gql`
         isDropship
         purchaseOrderCost
         supplierId
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
@@ -217,6 +221,10 @@ export const ADD_CATALOG_ITEM = gql`
         promiseDate
         promiseDateOverride
         isDropship
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
