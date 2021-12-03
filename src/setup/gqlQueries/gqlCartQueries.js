@@ -34,3 +34,14 @@ export const GET_CART_DATA = gql`
     ${FRAGMENT_ITEM_SOURCE_LOCATION}
     ${FRAGMENT_ITEM_DETAIL_MEDIA}
 `
+
+export const GET_CART_AVAIILABILITIES = gql`
+    query CartDataQuery($itemsAndQuantities: [ItemAndQuantityInput]) {
+        cartData(itemsAndQuantities: $itemsAndQuantities) {
+            availabilities {
+                ...ItemAvailability
+            }
+        }
+    }
+	${FRAGMENT_ITEM_AVAILABILITY}
+`
