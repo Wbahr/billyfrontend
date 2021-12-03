@@ -303,6 +303,7 @@ function CheckoutPage({ history }) {
                         {formikProps => (
                             <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
                                 <FormContainer
+                                    isAirlineEmployee={context.userInfo?.isAirlineEmployee}
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
                                     {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
@@ -342,7 +343,7 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, history } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, isAirlineEmployee } = props
     const stripe = useStripe()
     const elements = useElements()
     const [paymentInfo, setPaymentInfo] = useState({})
@@ -461,7 +462,7 @@ const FormContainer = props => {
 
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
+                <FormStepComponent {...{ ...props, isAirlineEmployee, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
                 {!validationSchema && <Loader />}
             </Container>
         </>

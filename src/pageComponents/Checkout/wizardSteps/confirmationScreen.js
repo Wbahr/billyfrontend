@@ -111,7 +111,8 @@ export default function ConfirmationScreen(props) {
         itemsCustomerPartNumbers,
         isStepValid,
         validateForm,
-        setFieldValue
+        setFieldValue,
+        isAirlineEmployee
     } = props
 
     useEffect(() => {
@@ -143,6 +144,7 @@ export default function ConfirmationScreen(props) {
                 const dataLayer = window.dataLayer || [] 
                 dataLayer.push({ 
                     event: 'transaction',
+                    internalUser: !!isAirlineEmployee,
                     ecommerce: { 
                         purchase: { 
                             actionField: { 
