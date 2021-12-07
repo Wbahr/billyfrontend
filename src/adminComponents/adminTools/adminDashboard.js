@@ -46,6 +46,10 @@ export default function AdminDashboard() {
                     <Link to="/admin-dashboard/settings" style={{ textDecoration: 'none' }}>
                         <GridItem title="SYSTEM SETTINGS" Icon={FlashOn} />
                     </Link>
+
+                    <Link to="/admin-dashboard/order-payment-methods" style={{ textDecoration: 'none' }}>
+                        <GridItem title="ORDER PAYMENT METHODS" Icon={FlashOn} />
+                    </Link>
                 </Grid>
             </Grid>
         </Grid>
@@ -90,6 +94,7 @@ const useStyles = makeStyles(() => ({
     gridText: {
         ...textStyle,
         lineHeight: 1.8,
+        maxWidth: '241px',
         borderBottom: `3px solid ${PRIMARY_RED}`
     }
 }))
