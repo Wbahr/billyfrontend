@@ -330,7 +330,7 @@ export default React.memo(({ orderId, data }) => {
         total,
         packingBasis,
         promiseDate
-    } = data
+    } = data || {}
     const itemDetails = lineItems?.map((item, index) => {
         return (
             <DivItemDetail key={index}>

@@ -8,6 +8,7 @@ import { CircularProgress } from '@material-ui/core'
 import gql from 'graphql-tag'
 import { DebounceInput } from 'react-debounce-input'
 import CustomerSearch from 'pageComponents/_common/CustomerSearch'
+import { useHistory } from 'react-router-dom'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -144,6 +145,8 @@ const GET_ACCOUNTING_ORDERS = gql`
 
 const OrderPaymentMethods = (props) => {
 
+    const history = useHistory()
+
     const [orderData, setOrderData] = useState({
         totalResultCount: 0,
         orders: []
@@ -161,7 +164,9 @@ const OrderPaymentMethods = (props) => {
             setOrderData(result.ordersForAccounting)
         },
         variables: {
-            //startDate: dateFrom
+            filterText: textFilter,
+            orderStatus: orderStatusFilter,
+            airlineCustomerId: selectedCustomerFilter?.id
         }
     })
 
