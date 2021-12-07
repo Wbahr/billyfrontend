@@ -88,6 +88,7 @@ export default function NewCardSection(props) {
                         </FormikFormFieldError>
                     </>
                     {!!context.userInfo && (context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
+                        //192059 is the P21 customer id for web customer
                         <FormikCheckbox
                             label="Save card for future payments?"
                             name="billing.savePaymentMethod"

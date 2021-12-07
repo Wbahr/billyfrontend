@@ -1,6 +1,13 @@
+import React from 'react'
 import styled from 'styled-components'
 
-export const ButtonRed = styled.button`
+const Button = ({ className, children }) => (
+    <button className={className} type='button'>
+        {children}
+    </button>
+)
+
+export const ButtonRed = styled(Button)`
   cursor: pointer;  
   display: flex;
   align-items: center;
@@ -24,7 +31,7 @@ export const ButtonRed = styled.button`
   }
 `
 
-export const ButtonBlack = styled.button`
+export const ButtonBlack = styled(Button)`
   cursor: pointer;
   display: flex;
   align-items: center;
