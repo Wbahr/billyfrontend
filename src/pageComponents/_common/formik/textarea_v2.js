@@ -31,7 +31,7 @@ const formikStyle = {
     border: '1px solid #e1e1e1'
 }
 
-export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows, height }){
+export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows, height, onFocus }){
     if (type === 'text' && _.isNil(changeFunction)){
         return (
             <DivContainer>
@@ -44,6 +44,7 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
                     style={{ ...formikStyle, width: width || '400px', height: height || '40' }}
                     maxLength={maxLength}
                     rows={rows}
+                    onFocus={onFocus}
                 />
             </DivContainer>
         )
