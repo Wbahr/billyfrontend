@@ -3,12 +3,11 @@ import { useQuery } from '@apollo/client'
 import { format as dateFormat } from 'date-fns'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom' 
-import { ButtonBlack } from 'styles/buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CircularProgress } from '@material-ui/core'
-import DatePicker from 'react-datepicker'
 import gql from 'graphql-tag'
+import { DebounceInput } from 'react-debounce-input'
+import CustomerSearch from 'pageComponents/_common/CustomerSearch'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -63,26 +62,23 @@ const SpanSort = styled.span`
 	margin-left: 4px;
 `
 
-const DivSpacer = styled.div`
-	margin: 0 8px;
-`
-
-const DivRow = styled.div`
+const DivFilterItems = styled.div`
 	display: flex;
 	align-items: center;
 `
 
-const DivRowDate = styled(DivRow)`
-	margin-top: 16px;
+const DivFilterItem = styled.div`
+    flex-grow: 1;
+    display: flex;
 `
 
-const Pdate = styled.p`
+const Label = styled.p`
 	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 	font-weight: 400;
 	font-size: 14px;
 	margin: 0;
 	margin-right: 4px;
-	padding-top: 6px;
+	padding-top: 2px;
 `
 
 const SpinnerDiv = styled.div`
@@ -147,12 +143,16 @@ const GET_ACCOUNTING_ORDERS = gql`
 `
 
 const OrderPaymentMethods = (props) => {
-    const [dateFrom, setDateFrom] = useState(null)
 
     const [orderData, setOrderData] = useState({
         totalResultCount: 0,
         orders: []
     })
+
+    const [textFilter, setTextFilter] = useState('')
+    const [selectedCustomerFilter, setSelectedCustomerFilter] = useState(null)
+    const [orderStatusFilter, setOrderStatusFilter] = useState('all')
+
 
     const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
 
@@ -161,9 +161,17 @@ const OrderPaymentMethods = (props) => {
             setOrderData(result.ordersForAccounting)
         },
         variables: {
-            startDate: dateFrom
+            //startDate: dateFrom
         }
     })
+
+    const orderSelectHandler = (event, tableProps) => {
+        if (event.target.checked) {
+            setSelectedOrderNumber(tableProps.row.values.orderNumber)
+        } else {
+            setSelectedOrderNumber(null)
+        }
+    }
     
     const columns = useMemo(() => ([
         {
@@ -172,7 +180,7 @@ const OrderPaymentMethods = (props) => {
                 <span>
                     <input 
                         type='checkbox' 
-                        onClick={() => {setSelectedOrderNumber(props.row.values.orderNumber)}} 
+                        onChange={(event) => {orderSelectHandler(event, props)}} 
                         checked={props.row.values.orderNumber === selectedOrderNumber}
                     />
                 </span>
@@ -183,15 +191,15 @@ const OrderPaymentMethods = (props) => {
             accessor: 'orderNumber',
         },
         {
-            header: 'Web Ref #',
+            Header: 'Web Ref #',
             accessor: 'webReferenceId'
         },
         {
-            header: 'P21 Customer #',
+            Header: 'P21 Customer #',
             accessor: 'customerIdErp'
         },
         {
-            header: 'Customer Name',
+            Header: 'Customer Name',
             accessor: 'customer.name'
         },
         {
@@ -240,27 +248,35 @@ const OrderPaymentMethods = (props) => {
         <TableContainer>
             <DivRowSpace>
                 <h4>Update Order Payment Methods</h4>
-                <Link to='/admin-dashboard/downpayments/add'>
-                    <ButtonBlack>Add Downpayment</ButtonBlack>
-                </Link>
             </DivRowSpace>
-            <DivRow>
-                <div>
-                    <DivRowDate>
-                        <DivSpacer>
-                            <FontAwesomeIcon icon="calendar" color="lightgrey"/>
-                        </DivSpacer>
-                        <Pdate>Date from:</Pdate>
-                        <DatePicker
-                            selected={Date.parse(dateFrom)}
-                            onChange={(value) => setDateFrom(value)}
-                        />
-                        <DivSpacer onClick={() => {setDateFrom(null)}}>
-                            <FontAwesomeIcon style={{ cursor: 'pointer' }} icon="times-circle" color="lightgrey"/>
-                        </DivSpacer>
-                    </DivRowDate>
-                </div>
-            </DivRow>
+            <DivFilterItems>
+                <DivFilterItem>
+                    <Label>Filter Orders:</Label>
+                    <DebounceInput 
+                        type='text' 
+                        value={textFilter} 
+                        onChange={(event) => {setTextFilter(event.target.value)}} 
+                        debounceTimeout={1500} 
+                        forceNotifyByEnter={true} 
+                        forceNotifyOnBlur={true}
+                        placeholder="Order#, Web Ref#, Customer#"
+                    />
+                </DivFilterItem>
+                <DivFilterItem>
+                    <Label>{selectedCustomerFilter ? 'Customer' : 'Select Customer'}:</Label>
+                    <CustomerSearch customer={selectedCustomerFilter} setCustomer={setSelectedCustomerFilter} />
+                </DivFilterItem>
+                <DivFilterItem>
+                    <Label>Order Status:</Label>
+                    <select value={orderStatusFilter} onChange={(event) => { setOrderStatusFilter(event.target.value) }}>
+                        <option value='all'>All</option>
+                        <option value='open'>Open</option>
+                        <option value='complete'>Complete</option>
+                        <option value='credit-hold'>Credit Hold</option>
+                        <option value='cancelled'>Cancelled</option>
+                    </select>
+                </DivFilterItem>
+            </DivFilterItems>
             {
                 isOrdersLoading ? (
                     <SpinnerDiv>
