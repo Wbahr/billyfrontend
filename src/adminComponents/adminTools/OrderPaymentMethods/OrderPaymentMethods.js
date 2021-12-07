@@ -154,6 +154,8 @@ const OrderPaymentMethods = (props) => {
         orders: []
     })
 
+    const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
+
     const { error, loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
         onCompleted: result => {
             setOrderData(result.ordersForAccounting)
@@ -164,6 +166,18 @@ const OrderPaymentMethods = (props) => {
     })
     
     const columns = useMemo(() => ([
+        {
+            Header: 'Select',
+            Cell: props => (
+                <span>
+                    <input 
+                        type='checkbox' 
+                        onClick={() => {setSelectedOrderNumber(props.row.values.orderNumber)}} 
+                        checked={props.row.values.orderNumber === selectedOrderNumber}
+                    />
+                </span>
+            )
+        },
         {
             Header: 'Order #',
             accessor: 'orderNumber',
@@ -186,7 +200,7 @@ const OrderPaymentMethods = (props) => {
             Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy')}</span>
         },
         
-    ]), [])
+    ]), [selectedOrderNumber])
 
     const {
         getTableProps,
