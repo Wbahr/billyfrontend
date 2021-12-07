@@ -138,11 +138,6 @@ const getContent = (itemDetails, item, customerPartNumbers, index) => {
 }
 
 export default function ScheduleLine({ item, itemDetails, customerPartNumbers, index, setFieldValue }) {
-    useEffect(() => {
-        if (item?.promiseDate) {
-            setFieldValue(`schedule.cartWithDates.${index}.requestedShipDate`, item.promiseDate)
-        }
-    }, [item.promiseDate])
 
     return (
         <DivContainer key={index}>

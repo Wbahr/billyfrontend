@@ -183,6 +183,10 @@ export const UPDATE_CART = gql`
         isDropship
         purchaseOrderCost
         supplierId
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
@@ -217,6 +221,10 @@ export const ADD_CATALOG_ITEM = gql`
         promiseDate
         promiseDateOverride
         isDropship
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
@@ -382,66 +390,69 @@ export const GET_INVOICE = gql`
 	query AccountInvoiceDetail($invoiceNumber: String){
 		accountInvoiceDetail(invoiceNumber: $invoiceNumber){
 			invoiceNumber
-      orderNumber
-      orderDate
-      invoiceDate
-      termsDueDate
-      netDueDate
-      discDueDate
-      orderedBy
-      taker
-      poNo
-      totalAmount
-      status
-      discountAmount
-      amountPaid
-      isMine
-      terms
-      shipToName
-      shipToAddress1
-      shipToAddress2
-      shipToAddress3
-      shipToCity
-      shipToState
-      shipToZip
-      shipToCountry
-      billingName
-      billingAddress1
-      billingAddress2
-      billingAddress3
-      billingCity
-      billingState
-      billingZip
-      billingCountry
-      subTotal
-      totalTax
-      amountDue
-      lineItems {
-        invoiceLineId
-        orderNumber
-        isTaxItem
-        isOtherItem
-        invoiceLineType
-        invoiceLineNumber
-        orderLineNumber
-        quantityRequested
-        quantityShipped
-        pricingQuantity
-        invMastUid
-        itemCode
-        itemDescription
-        customerPartNumber
-        customerPartNumberId
-        unitPrice
-        itemTotalPrice
-        trackingNumbers{
-          trackingNumber
-          carrierId
-          carrierName
-          trackingUrl
-				}
-			}
-		}
+            orderNumber
+            orderDate
+            invoiceDate
+            termsDueDate
+            netDueDate
+            discDueDate
+            orderedBy
+            taker
+            poNo
+            totalAmount
+            freightAmount
+            status
+            discountAmount
+            amountPaid
+            isMine
+            terms
+            shipToName
+            shipToAddress1
+            shipToAddress2
+            shipToAddress3
+            shipToCity
+            shipToState
+            shipToZip
+            shipToCountry
+            deliveryInstructions
+            orderNote
+            billingName
+            billingAddress1
+            billingAddress2
+            billingAddress3
+            billingCity
+            billingState
+            billingZip
+            billingCountry
+            subTotal
+            totalTax
+            amountDue
+            lineItems {
+                invoiceLineId
+                orderNumber
+                isTaxItem
+                isOtherItem
+                invoiceLineType
+                invoiceLineNumber
+                orderLineNumber
+                quantityRequested
+                quantityShipped
+                pricingQuantity
+                invMastUid
+                itemCode
+                itemDescription
+                customerPartNumber
+                customerPartNumberId
+                unitPrice
+                itemTotalPrice
+                trackingNumbers {
+                    trackingNumber
+                    carrierId
+                    carrierName
+                    trackingUrl
+                }
+            }
+        }
 	}
 `
 
@@ -1050,6 +1061,16 @@ export const GET_SUPPLIERS = gql`
     allSuppliers {
       id
       name
+    }
+  }
+`
+
+export const GET_ALERTS = gql`
+  query getWebsiteAlert{
+    websiteAlert {
+      style
+      noteHtml
+      endDate
     }
   }
 `

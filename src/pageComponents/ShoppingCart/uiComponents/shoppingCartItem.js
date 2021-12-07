@@ -15,6 +15,7 @@ import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
+import IncrementDecrementButton from 'pageComponents/_common/IncrementDecrementButton'
 import DatePicker from 'react-datepicker'
 import { Checkbox, Grid } from '@material-ui/core'
 import { format, sub } from 'date-fns'
@@ -212,7 +213,8 @@ export default function ShoppingCartItem(props) {
         dispositions,
         todayDate,
         maxDate,
-        supplierOptions
+        supplierOptions,
+        setNoteModal
     } = props
 
     const { impersonatedCompanyInfo } = useContext(Context)
@@ -568,9 +570,29 @@ export default function ShoppingCartItem(props) {
                                                 value={cartItem.itemNotes || ''}
                                             />
                                         </DivItem>
+                                        {cartData?.lineNoteAreas && (
+                                            <IncrementDecrementButton style={{ alignSelf: 'flex-end', width: 30, borderRadius: 5 }} onClick={() => setNoteModal({ index })}>
+                                                +
+                                            </IncrementDecrementButton>
+                                        )}
                                     </DivItemInfo>
+                                    {cartItem.extraNotes && (
+                                        cartItem.extraNotes.map((n, noteIdx) => {
+                                            return (
+                                                <DivItemInfo key={noteIdx}>
+                                                    <DebounceInput
+                                                        disabled={true}
+                                                        style={{ width: 300 }}
+                                                        value={n.note}
+                                                    />
+                                                    <EditPriceIcon onClick={() => setNoteModal({ index, note: n.note, targetAreas: n.targetAreas, noteIdx })}>
+                                                        <FontAwesomeIcon icon="pencil-alt" color='#328EFC' />
+                                                    </EditPriceIcon>
+                                                </DivItemInfo>
+                                            )
+                                        })
+                                    )}
                                 </DivCol3>
-
                             </DivCard>
 
                             <DivRemove onClick={handleRemoveItem} alt='remove-item'>

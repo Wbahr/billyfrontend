@@ -21,7 +21,8 @@ import {
     defaultShipTo,
     transformForPaymentInfo
 } from './helpers'
-import { startOfTomorrow } from 'date-fns'
+import { startOfTomorrow, startOfToday, getDay, add } from 'date-fns'
+import { GET_CART_AVAIILABILITIES } from 'setup/gqlQueries/gqlCartQueries'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA, GET_PAYMENT_METHOD_INFO } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
@@ -110,6 +111,12 @@ function CheckoutPage({ history }) {
     const [taxRate, setTaxRate] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
     const [validationSchema, setValidationSchema] = useState(null)
+    const [cartWithDates, setCartWithDates] = useState([])
+    
+    const today = startOfToday()
+    const tomorrow = startOfTomorrow()
+    const dayAfterTomorrow = add(tomorrow, { days: 1 })
+    const dayOfWeek = getDay(today)
 
     const isQuote = history.location.pathname === '/create-quote'
 
@@ -161,6 +168,31 @@ function CheckoutPage({ history }) {
     useEffect(() => {
         getCheckoutData()
     }, [context.impersonatedCompanyInfo])
+
+    const [getCartData] = useLazyQuery(GET_CART_AVAIILABILITIES, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const { cartData } = data
+            const cartWithDates = context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: getRequestedDate(cartItem, cartData) }))
+            setCartWithDates(cartWithDates)
+        }
+    })
+
+    useEffect(() => {
+        if (context.cart?.length) {
+            const itemsAndQuantities = context.cart.map(({ invMastUid, quantity }) => ({ invMastUid, quantity: quantity }))
+            getCartData({ variables: { itemsAndQuantities } })
+        }
+    }, [context.cart])
+
+    function getRequestedDate(item, cartData) {
+        const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === item.invMastUid)
+        if (itemAvailability.availability > 0) {
+            return dayOfWeek === 0 ? tomorrow : today
+        } else {
+            return dayOfWeek === 6 ? dayAfterTomorrow : tomorrow
+        }
+    }
 
     function yupSchema(requiresPONumber) {
         return {
@@ -224,7 +256,7 @@ function CheckoutPage({ history }) {
         contact: { ...defaultContact },
         schedule: {
             ...defaultQuote,
-            cartWithDates: context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
+            cartWithDates,
             shoppingCartToken: localStorage.getItem('shoppingCartToken'),
             isQuote: isQuote
         },
@@ -271,6 +303,7 @@ function CheckoutPage({ history }) {
                         {formikProps => (
                             <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
                                 <FormContainer
+                                    isAirlineEmployee={context.userInfo?.isAirlineEmployee}
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
                                     {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
@@ -310,7 +343,7 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, history } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, isAirlineEmployee } = props
     const stripe = useStripe()
     const elements = useElements()
     const [paymentInfo, setPaymentInfo] = useState({})
@@ -429,7 +462,7 @@ const FormContainer = props => {
 
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
+                <FormStepComponent {...{ ...props, isAirlineEmployee, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
                 {!validationSchema && <Loader />}
             </Container>
         </>
