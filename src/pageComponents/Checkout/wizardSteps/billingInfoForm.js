@@ -256,6 +256,7 @@ function BillingInfoForm(props) {
             {paymentMethod === 'credit_card' && 
             context.userInfo?.isAirlineEmployee && 
             !context.impersonatedCompanyInfo?.customerIdP21 === 192059 && (
+                //192059 is the P21 customer id for web customer
                 <FormRow>
                     <label htmlFor="billing.cardType">New or Saved Card? <Required /></label>
                     <Select

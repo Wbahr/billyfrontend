@@ -333,6 +333,7 @@ export function ShipToForm(props) {
                         changeFunction={(field, value) => handleSavedAddressSelectChange(field, value, handleChange)}
                     />
                     {(values.shipto.selectedShipTo === -1 && context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
+                        //192059 is the P21 customer id for web customer
                         <FormRow>
                             <FormikCheckbox
                                 label="Save Ship To"
@@ -446,6 +447,7 @@ export function ShipToForm(props) {
                         name="shipto.shippingNotes"
                         onFocus={(() => {
                             if ((context?.userInfo?.isAirlineEmployee && context.impersonatedCompanyInfo?.customerIdP21 === 192059) || context?.userInfo === null) {
+                                //192059 is the P21 customer id for web customer
                                 setShowShippingWarning(true)
                             }
                         }
