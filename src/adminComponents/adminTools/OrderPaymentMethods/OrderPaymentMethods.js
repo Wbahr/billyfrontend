@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { format as dateFormat } from 'date-fns'
 import { useTable, usePagination, useSortBy  } from 'react-table'
@@ -155,6 +155,8 @@ const OrderPaymentMethods = (props) => {
     const [textFilter, setTextFilter] = useState('')
     const [selectedCustomerFilter, setSelectedCustomerFilter] = useState(null)
     const [orderStatusFilter, setOrderStatusFilter] = useState('all')
+    const [pageNumber, setPageNumber] = useState(1)
+    const [pageSize, setPageSize] = useState(5)
 
 
     const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
@@ -166,9 +168,17 @@ const OrderPaymentMethods = (props) => {
         variables: {
             filterText: textFilter,
             orderStatus: orderStatusFilter,
-            airlineCustomerId: selectedCustomerFilter?.id
-        }
+            airlineCustomerId: selectedCustomerFilter?.id,
+            pageNumber: pageNumber,
+            pageSize: pageSize
+        },
+        fetchPolicy: 'no-cache'
     })
+
+    //Reset the page to 1 after any filter change.
+    useEffect(() => {
+        setPageNumber(1)
+    }, [textFilter, selectedCustomerFilter, orderStatusFilter, pageSize])
 
     const orderSelectHandler = (event, tableProps) => {
         if (event.target.checked) {
@@ -177,6 +187,10 @@ const OrderPaymentMethods = (props) => {
             setSelectedOrderNumber(null)
         }
     }
+
+    const totalPageCount = Math.ceil(orderData.totalResultCount / pageSize)
+    const canPreviousPage = pageNumber > 1
+    const canNextPage = pageNumber < totalPageCount
     
     const columns = useMemo(() => ([
         {
@@ -200,6 +214,10 @@ const OrderPaymentMethods = (props) => {
             accessor: 'webReferenceId'
         },
         {
+            Header: 'Order Status',
+            accessor: 'status'
+        },
+        {
             Header: 'P21 Customer #',
             accessor: 'customerIdErp'
         },
@@ -219,18 +237,18 @@ const OrderPaymentMethods = (props) => {
         getTableProps,
         getTableBodyProps,
         headerGroups,
-        rows,
+        //rows,
         prepareRow,
         page,
-        canPreviousPage,
-        canNextPage,
-        pageOptions,
-        pageCount,
-        gotoPage,
-        nextPage,
-        previousPage,
-        setPageSize,
-        state: { pageIndex, pageSize },
+        //canPreviousPage,
+        //canNextPage,
+        //pageOptions,
+        //pageCount,
+        //gotoPage,
+        //nextPage,
+        //previousPage,
+        //setPageSize,
+        //state: { pageIndex, pageSize },
     } = useTable(
         {
             columns,
@@ -264,7 +282,7 @@ const OrderPaymentMethods = (props) => {
                         debounceTimeout={1500} 
                         forceNotifyByEnter={true} 
                         forceNotifyOnBlur={true}
-                        placeholder="Order#, Web Ref#, Customer#"
+                        placeholder="Order#, Web Ref#, PO#"
                     />
                 </DivFilterItem>
                 <DivFilterItem>
@@ -345,49 +363,42 @@ const OrderPaymentMethods = (props) => {
                 )
             }
             <div>
-                <ButtonPagination onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                <ButtonPagination onClick={() => setPageNumber(1)} disabled={!canPreviousPage}>
                     {'<<'}
                 </ButtonPagination>{' '}
-                <ButtonPagination onClick={() => previousPage()} disabled={!canPreviousPage}>
+                <ButtonPagination onClick={() => setPageNumber(pageNumber - 1)} disabled={!canPreviousPage}>
                     {'<'}
                 </ButtonPagination>{' '}
                 <span>
                     Page{' '}
                     <strong>
-                        {pageIndex + 1} of {pageOptions.length}
+                        {pageNumber} of {totalPageCount}
                     </strong>{' '}
                 </span>
-                <ButtonPagination onClick={() => nextPage()} disabled={!canNextPage}>
+                <ButtonPagination onClick={() => setPageNumber(pageNumber + 1)} disabled={!canNextPage}>
                     {'>'}
                 </ButtonPagination>{' '}
-                <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                <ButtonPagination onClick={() => setPageNumber(totalPageCount)} disabled={!canNextPage}>
                     {'>>'}
                 </ButtonPagination>{' '}
                 <span>
                     | Go to page:{' '}
-                    <input
+                    <DebounceInput
                         type="number"
-                        defaultValue={pageIndex + 1}
+                        value={pageNumber}
                         onChange={e => {
-                            const page = e.target.value ? Number(e.target.value) - 1 : 0
-                            gotoPage(page)
+                            const page = e.target.value ? Number(e.target.value) : 1
+                            setPageNumber(page)
                         }}
                         style={{ width: '100px' }}
+                        debounceTimeout={500}
                     />
                 </span>{' '}
-                <select
-                    value={pageSize}
-                    onChange={e => {
-                        setPageSize(Number(e.target.value))
-                    }}
-                >
-                    {[10, 25, 50].map(pageSize => (
-                        <option key={pageSize} value={pageSize}>
-                            Show {pageSize}
-                        </option>
-                    ))}
+                <select value={pageSize} onChange={e => { setPageSize(Number(e.target.value)) }}>
+                    <option value={5}>Show 5</option>
+                    <option value={10}>Show 10</option>
                 </select>
-                <p>Results: {rows.length}</p>
+                <p>Results: {orderData.totalResultCount}</p>
             </div>
         </TableContainer>
     )
