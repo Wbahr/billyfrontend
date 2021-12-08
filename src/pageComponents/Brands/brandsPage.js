@@ -336,12 +336,12 @@ export default function BrandsPage() {
                             <Li><CompanyList href="http://www.lehighfluidpower.com/" target="_blank" rel="noopener noreferrer">Lehigh Fluid Power</CompanyList> - General-Type Cylinders</Li>
                             <Li><CompanyList href="http://www.magnom.com/" target="_blank" rel="noopener noreferrer">Magnom Filters</CompanyList> - Magnetic Filtration</Li>
                             <Li><CompanyList href="http://www.milwaukeecylinder.com/" target="_blank" rel="noopener noreferrer">Milwaukee Cylinder</CompanyList> - Basic & NFPA-Type Cylinders</Li>
-                            <Li><CompanyList href="http://www.mtssensors.com/" target="_blank" rel="noopener noreferrer">MTS</CompanyList> - Linear Displacement Transducers</Li>
                             <Li><CompanyList href="http://www.nasonptc.com/" target="_blank" rel="noopener noreferrer">Nason</CompanyList> - Compact Hydraulic Cylinders, NFPA Cylinders</Li>
                             <Li><CompanyList href="http://www.oemcontrols.com/" target="_blank" rel="noopener noreferrer">OEM Controls</CompanyList> - Joysticks & Controllers</Li>
                             <Li><CompanyList href="http://www.parker.com/" target="_blank" rel="noopener noreferrer">Parker</CompanyList> - Low-Speed High-Torque Motors</Li>
                             <Li><CompanyList href="http://www.permco.com/" target="_blank" rel="noopener noreferrer">Permco</CompanyList> - Gear Pumps & Motors, Vane Pumps & Motors, Flow Dividers & Intensifiers</Li>
                             <Li><CompanyList href="http://www.settimafm.com/" target="_blank" rel="noopener noreferrer">Settima</CompanyList> - Continuum® Helical Gear Pumps & Screw Pumps</Li>
+                            <Li><CompanyList href="/pages/brands/temposonics" target="_blank" rel="noopener noreferrer">Temposonics</CompanyList> - Linear Displacement Transducers</Li>
                             <Li><CompanyList href="http://www.thermasys.com/" target="_blank" rel="noopener noreferrer">Thermal Transfer</CompanyList> - Air-to-Oil & Water-to-Oil Type Coolers </Li>
                             <Li><CompanyList href="http://voith.com/en/products-services/power-transmission/hydraulic-systems-and-components-10206.html" target="_blank" rel="noopener noreferrer">Voith</CompanyList> - Internal Gear Pumps</Li>
                             <Li><CompanyList href="http://www.walvoil.com/" target="_blank" rel="noopener noreferrer">Walvoil </CompanyList> - Mobile Monoblock & Sectional Valves & Operators</Li>
@@ -522,7 +522,6 @@ export default function BrandsPage() {
                     <CompanyListDiv>
                         <Ul>
                             <Li><CompanyList href="https://www.microscan.com/en-us" target="_blank" rel="noopener noreferrer">Microscan</CompanyList> - Barcode Readers, Machine Vision Technology</Li>
-                            <Li><CompanyList href="http://www.mtssensors.com/" target="_blank" rel="noopener noreferrer">MTS</CompanyList> - Linear Displacement Transducers</Li>
                             <Li><CompanyList href="http://www.murrinc.com/" target="_blank" rel="noopener noreferrer">Murr</CompanyList> - IP20 & IP67 Remote I/O, Ethernet Switches</Li>
                             <Li><CompanyList href="https://automation.omron.com/en/us/" target="_blank" rel="noopener noreferrer">Omron</CompanyList> - Temperature & Process Controllers, Servo Drives & Motors, VFDs, Photo & Proximity Sensors, Machine Automation Controllers & PLCs, Remote I/O, HMIs, Industrial PCs, Vision & Identification Sensors & Systems, Laser Marking</Li>
                             <Li><CompanyList href="http://www.opto22.com/" target="_blank" rel="noopener noreferrer">Opto 22</CompanyList> - Wireless I/O, Fieldbus/Distributed I/O, Controllers, PACs with Open Architecture, Solid State Relays</Li>
@@ -533,6 +532,7 @@ export default function BrandsPage() {
                             <Li><CompanyList href="https://qcconveyors.com/" target="_blank" rel="noopener noreferrer">QC Conveyors</CompanyList> - Conveying Systems</Li>
                             <Li><CompanyList href="https://robotiq.com/" target="_blank" rel="noopener noreferrer">Robotiq </CompanyList> - Plug + Play Grippers & Components for Collaborative Robots</Li>
                             <Li><CompanyList href="http://www.smcusa.com/" target="_blank" rel="noopener noreferrer">SMC</CompanyList> - Fieldbus/Distributed I/O, Electro-Mechanical Linear & Rotary Actuators</Li>
+                            <Li><CompanyList href="/pages/brands/temposonics" target="_blank" rel="noopener noreferrer">Temposonics</CompanyList> - Linear Displacement Transducers</Li>
                             <Li><CompanyList href="https://www.turck.us/en/" target="_blank" rel="noopener noreferrer">Turck</CompanyList> - Ultrasonic & Proximity Sensors, Encoders, Fieldbus/Distributed I/O, Cables, Accessories</Li>
                             <Li><CompanyList href="http://www.unitronics.com/" target="_blank" rel="noopener noreferrer">Unitronics</CompanyList> - HMIs & HMIs with Contro</Li>
                             <Li><CompanyList href="http://www.weg.net/institutional/US/en/" target="_blank" rel="noopener noreferrer">WEG</CompanyList> - Electric Motors, Soft Starters, Industrial Controls, Variable Frequency Drives</Li>
@@ -1013,13 +1013,12 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.milwaukeecylinder.com/" target="_blank" rel="noopener noreferrer">Milwaukee Cylinder</BrandList></li>
-                            <li><BrandList href="http://www.mtssensors.com/" target="_blank" rel="noopener noreferrer">MTS</BrandList></li>
-
+                            <li><BrandList href="https://www.murrinc.com/us/" target="_blank" rel="noopener noreferrer">Murr</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
-                            <li><BrandList href="https://www.murrinc.com/us/" target="_blank" rel="noopener noreferrer">Murr</BrandList></li>
+                            <li></li>
                         </Ul>
                     </ListDiv>
                 </Div>
@@ -1198,23 +1197,24 @@ export default function BrandsPage() {
                     <ListDiv>
                         <Ul>
                             <li><BrandList href="https://www.taimi.ca/" target="_blank" rel="noopener noreferrer">Taimi</BrandList></li>
+                            <li><BrandList href="/pages/brands/temposonics" target="_blank" rel="noopener noreferrer">Temposonics</BrandList></li>
+                        </Ul>
+                    </ListDiv>
+                    <ListDiv>
+                        <Ul>
                             <li><BrandList href="https://www.thermaltransfer.com/" target="_blank" rel="noopener noreferrer">Thermal Transfer (API Heat Transfer)</BrandList></li>
-                        </Ul>
-                    </ListDiv>
-                    <ListDiv>
-                        <Ul>
                             <li><BrandList href="https://www.tompkinsind.com/" target="_blank" rel="noopener noreferrer">Tompkins</BrandList></li>
+                        </Ul>
+                    </ListDiv>
+                    <ListDiv>
+                        <Ul>
                             <li><BrandList href="/pages/brands/turck" target="_blank" rel="noopener noreferrer">Turck</BrandList></li>
-                        </Ul>
-                    </ListDiv>
-                    <ListDiv>
-                        <Ul>
                             <li><BrandList href="https://twgdev.com/" target="_blank" rel="noopener noreferrer">TWG</BrandList></li>
-                            <li><BrandList href="https://www.twintecinc.com/" target="_blank" rel="noopener noreferrer">Twintec</BrandList></li>
                         </Ul>
                     </ListDiv>
                     <ListDiv>
                         <Ul>
+                            <li><BrandList href="https://www.twintecinc.com/" target="_blank" rel="noopener noreferrer">Twintec</BrandList></li>
                             <li><BrandList href="" target="_blank" rel="noopener noreferrer"/></li>
                         </Ul>
                     </ListDiv>
