@@ -69,7 +69,7 @@ export default function NoteModal(props) {
         lineNoteAreas
     } = props
 
-    const [areas, setAreas] = useState([])
+    const [areas, setAreas] = useState(['Order Entry'])
     const [noteInput, setNoteInput] = useState('')
 
     useEffect(() => {
@@ -99,23 +99,19 @@ export default function NoteModal(props) {
     })
 
     function handleClose() {
-        setAreas([])
+        setAreas(['Order Entry'])
         setNoteInput('')
         hide()
     }
 
     function handleAddNote() {
         addNote(values.index, areas, noteInput, values.noteIdx)
-        setAreas([])
-        setNoteInput('')
-        hide()
+        handleClose()
     }
 
     function handleRemoveNote() {
         removeNote(values.index, values.noteIdx)
-        setAreas([])
-        setNoteInput('')
-        hide()
+        handleClose()
     }
 
     const saveDisabled = areas.length === 0 || noteInput.length === 0
