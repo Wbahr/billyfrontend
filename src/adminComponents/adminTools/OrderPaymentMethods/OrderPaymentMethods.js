@@ -279,7 +279,7 @@ const OrderPaymentMethods = (props) => {
                         type='text' 
                         value={textFilter} 
                         onChange={(event) => {setTextFilter(event.target.value)}} 
-                        debounceTimeout={1500} 
+                        debounceTimeout={1000} 
                         forceNotifyByEnter={true} 
                         forceNotifyOnBlur={true}
                         placeholder="Order#, Web Ref#, PO#"
@@ -314,13 +314,6 @@ const OrderPaymentMethods = (props) => {
                                         {headerGroup.headers.map((column, i) => (
                                             <THheader key={i} {...column.getHeaderProps(column.getSortByToggleProps())}>
                                                 {column.render('Header')}
-                                                <SpanSort>
-                                                    {column.isSorted
-                                                        ? column.isSortedDesc
-                                                            ?  <FontAwesomeIcon icon="caret-up" color="black"/>
-                                                            :  <FontAwesomeIcon icon="caret-down" color="black"/>
-                                                        : <FontAwesomeIcon icon="caret-down" color="lightgrey"/>}
-                                                </SpanSort>
                                             </THheader>
                                         ))}
                                     </TRheader>
@@ -336,14 +329,6 @@ const OrderPaymentMethods = (props) => {
                                                     return (
                                                         <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
                                                             {cell.render('Cell')}
-                                                        </TDrow>
-                                                    )
-                                                } else if (cell.column.id === 'total' && cell.value.props.value < 0 ) {
-                                                    return (
-                                                        <TDrow {...cell.getCellProps()}>
-                                                            <RefundTextColor>
-                                                                {cell.render('Cell')}
-                                                            </RefundTextColor>	
                                                         </TDrow>
                                                     )
                                                 } else {
