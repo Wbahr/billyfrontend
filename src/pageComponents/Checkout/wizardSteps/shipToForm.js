@@ -63,6 +63,16 @@ const Label = styled.label`
 	font-style: italic;
 `
 
+const Warning = styled.div`
+    color: red;
+    background: rgba(255, 0, 0, .1);
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 550px;
+    margin: 5px 10px;
+    padding: 5px;
+`
+
 export function ShipToForm(props) {
     const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels,
         checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
@@ -70,6 +80,7 @@ export function ShipToForm(props) {
     const [touchContact, setTouchContact] = useState(false)
     const [touchShipTo, setTouchShipTo] = useState(false)
     const [showPaperworkModal, setShowPaperworkModal] = useState(false)
+    const [showShippingWarning, setShowShippingWarning] = useState(false)
     const context = useContext(Context)
 
     const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
@@ -322,6 +333,7 @@ export function ShipToForm(props) {
                         changeFunction={(field, value) => handleSavedAddressSelectChange(field, value, handleChange)}
                     />
                     {(values.shipto.selectedShipTo === -1 && context.impersonatedCompanyInfo?.customerIdP21 !== 192059) && (
+                        //192059 is the P21 customer id for web customer
                         <FormRow>
                             <FormikCheckbox
                                 label="Save Ship To"
@@ -433,11 +445,24 @@ export function ShipToForm(props) {
                     <Textarea
                         label="Shipping Notes"
                         name="shipto.shippingNotes"
+                        onFocus={(() => {
+                            if ((context?.userInfo?.isAirlineEmployee && context.impersonatedCompanyInfo?.customerIdP21 === 192059) || context?.userInfo === null) {
+                                //192059 is the P21 customer id for web customer
+                                setShowShippingWarning(true)
+                            }
+                        }
+                        )}
                         width={550}
                         height={60}
                         rows={4}
                         maxLength={255}
                     />
+
+                    {showShippingWarning && (
+                        <Warning>
+                            *If you have a shipping account # you would prefer to use, you must <a href="https://www.airlinehyd.com/signup﻿">request an account</a> for the best possible service.
+                        </Warning>
+                    )}
 
                     <>
                         <Field
