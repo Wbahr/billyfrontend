@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import CustomerSelect from './uiComponents/customerSelect'
+import ExistingCustomer from './uiComponents/existingCustomer'
+import NewCustomer from './uiComponents/newCustomer'
 
 const SignupPageContainer = styled.div`
   display: flex;
@@ -32,17 +34,48 @@ const A = styled.a`
 const Img = styled.img`
   cursor: pointer;
 `
-
-export default function LoginPage({ history }) {
-    return (
-        <SignupPageContainer>
-            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
-            <P>Create an Airline Hydraulics Account</P>
-            <CustomerSelect />
-            <A onClick={() => history.push('/login')}>Already have an account?</A>
-            <A onClick={() => history.push('/cart')}>Checkout as a guest</A>
-        </SignupPageContainer>
-    )
+const Div = styled.div`
+  margin: 20px 0 14px;
+`
+const H5 = styled.h5`
+`
+const CreateAccount = styled.p`
+`
+const Ul = styled.ul`
+`
+const Link = styled.a`
+`
+export default function LoginPage({ history }) { 
+    const [signupType, setSignupType] = useState('')
+    if (signupType == 'existing') {
+        return (<ExistingCustomer />)
+    } else if (signupType == 'new') {
+        return (<NewCustomer />)
+    } else {
+        return (
+            <SignupPageContainer>
+                <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
+                <P>Create an Airline Hydraulics Account</P>
+                <CustomerSelect />
+                <Div>
+                    <H5>&#10065; Why create an account?</H5>
+                    <CreateAccount>There’s a lot of reasons to make an Airline web account. Not only is checking out faster, but you can also:</CreateAccount>
+                    <Ul>
+                        <li>Access order status and history </li>
+                        <li>Receive special pricing, discounts, and promotions (for select volume customers) </li>
+                        <li>Set up business shipping accounts for LTL, collect, and retail shipping services </li>
+                        <li>Save account information like billing and shipping addresses </li>
+                        <li>Manage payment methods and tax-exemptions (if applicable) </li>
+                        <li>Get support for large or complicated orders </li>
+                        <li>Discuss pricing and availability with a sales engineer </li>
+                    </Ul>
+                    <CreateAccount>Get started by completing the signup form for <Link onClick={() => setSignupType('existing')}>existing Airline customers</Link> or <Link onClick={() => setSignupType('new')}>new Airline customers</Link></CreateAccount>
+                </Div>
+                <A onClick={() => history.push('/login')}>Already have an account?</A>
+                <A onClick={() => history.push('/cart')}>Checkout as a guest</A>
+            </SignupPageContainer>
+        )
+    }
 }
 
 LoginPage.propTypes = {
