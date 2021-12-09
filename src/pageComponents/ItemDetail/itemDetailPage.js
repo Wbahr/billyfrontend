@@ -377,7 +377,7 @@ export default function ItemDetailPage({ history }) {
             </TR>
         ))
 
-        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
+        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx} target="_blank" rel="noreferrer">{elem.title}</a>)
 
         const SpareParts = buildAccessoryItems(accessoryItems?.filter(a => a.type === 1))
         const AccessoryItems = buildAccessoryItems(accessoryItems?.filter(a => a.type === 2))

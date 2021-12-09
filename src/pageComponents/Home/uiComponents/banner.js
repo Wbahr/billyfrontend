@@ -17,7 +17,7 @@ const Img = styled.img`
 const LgBanner = styled.div`
 	display: flex;
 	background-image: url(${props => props.large});
-	height: 300px;
+	height: 350px;
 	background-color: #464646;
 	background-size: cover;
 	background-position: 50% 0;
