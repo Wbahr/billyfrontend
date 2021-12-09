@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery, useQuery } from '@apollo/client'
 import { format as dateFormat } from 'date-fns'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import styled from 'styled-components'
@@ -59,10 +59,6 @@ const ButtonPagination = styled.button`
 	border-radius: 1px;
 `
 
-const SpanSort = styled.span`
-	margin-left: 4px;
-`
-
 const DivFilterItems = styled.div`
 	display: flex;
 	align-items: center;
@@ -86,10 +82,6 @@ const SpinnerDiv = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 50px;
-`
-
-const RefundTextColor = styled.span`
-	color: red;
 `
 const DivRowSpace = styled.div`
     display: flex;
@@ -143,6 +135,47 @@ const GET_ACCOUNTING_ORDERS = gql`
   }
 `
 
+const GET_ACCOUNTING_ORDER = gql`
+  query OrdersForAccounting(
+    $orderNumber: String
+  ) {
+    ordersForAccounting(
+      orderNumber: $orderNumber
+    ){
+      totalResultCount
+      orders {
+        orderNumber
+        webReferenceId
+        customerIdErp
+        dateCreated
+        status
+        activePaymentMethod {
+            type
+            name
+            lastFour
+            expiration
+            paymentSystemMethodId
+            isPrimary
+        }
+        customer {
+            id
+            name
+            customerIdP21
+            paymentSystemCustomerId
+        }
+        savedPaymentMethods {
+            type
+            name
+            lastFour
+            expiration
+            paymentSystemMethodId
+            isPrimary
+        }
+      }
+    }
+  }
+`
+
 const OrderPaymentMethods = (props) => {
 
     const history = useHistory()
@@ -160,6 +193,7 @@ const OrderPaymentMethods = (props) => {
 
 
     const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
+    const [selectedOrder, setSelectedOrder] = useState(null)
 
     const { error, loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
         onCompleted: result => {
@@ -175,10 +209,30 @@ const OrderPaymentMethods = (props) => {
         fetchPolicy: 'no-cache'
     })
 
+    const [getOrder] = useLazyQuery(GET_ACCOUNTING_ORDER, {
+        fetchPolicy: 'no-cache',
+        onCompleted: result => {
+            const orders = result.ordersForAccounting.orders
+            setSelectedOrder(orders.length ? orders[0] : null)
+        }
+    })
+
     //Reset the page to 1 after any filter change.
     useEffect(() => {
         setPageNumber(1)
     }, [textFilter, selectedCustomerFilter, orderStatusFilter, pageSize])
+
+    useEffect(() => {
+        if (selectedOrderNumber){
+            getOrder({
+                variables: {
+                    orderNumber: selectedOrderNumber
+                }
+            })
+        } else {
+            setSelectedOrder(null)
+        }
+    }, [selectedOrderNumber])
 
     const orderSelectHandler = (event, tableProps) => {
         if (event.target.checked) {
