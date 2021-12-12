@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { ButtonBlack, ButtonRed } from 'styles/buttons'
 import { CircularProgress } from '@material-ui/core'
-import NewPaymentMethodComponent from './NewPaymentMethodComponent'
+import SelectNewPaymentMethodComponent from './SelectNewPaymentMethodComponent'
 
 const RadioLabel = styled.label`
     margin-left: 10px;
@@ -205,7 +205,7 @@ const SelectPaymentMethodComponent = (props) => {
                                     <div style={{ alignSelf: 'center' }}>
                                         {
                                             isNewPaymentMethod ? (
-                                                <NewPaymentMethodComponent
+                                                <SelectNewPaymentMethodComponent
                                                     order={order}
                                                     isSavingEvent={isStripeSavingEventHandler}
                                                     newPaymentSavedEvent={newStripePaymentSavedEventHandler}

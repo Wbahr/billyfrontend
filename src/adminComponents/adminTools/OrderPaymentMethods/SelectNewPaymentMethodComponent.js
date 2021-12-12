@@ -49,7 +49,7 @@ const SAVE_PAYMENT_METHOD_TO_ORDER = gql`
     }
 `
 
-const NewPaymentMethodComponent = (props) => {
+const SelectNewPaymentMethodComponent = (props) => {
 
     const {
         order,
@@ -142,4 +142,4 @@ const NewPaymentMethodComponent = (props) => {
     )
 }
 
-export default NewPaymentMethodComponent
+export default SelectNewPaymentMethodComponent
