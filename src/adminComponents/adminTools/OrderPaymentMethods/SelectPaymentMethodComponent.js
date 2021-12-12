@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { ButtonBlack, ButtonRed } from 'styles/buttons'
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { CircularProgress } from '@material-ui/core'
-import StripePaymentSection from 'pageComponents/Checkout/uiComponents/stripePayment'
+import NewPaymentMethodComponent from './NewPaymentMethodComponent'
 
 const RadioLabel = styled.label`
     margin-left: 10px;
@@ -43,15 +42,7 @@ const GET_ACCOUNTING_ORDER_SAVED_PAYMENT_METHODS = gql`
   }
 `
 
-export const PREPARE_NEW_PAYMENT_METHOD_INFO = gql`
-	mutation PrepareNewPaymentMethodInfo ($airlineCustomerId: Int){
-		prepareInfoForNewPaymentMethod(airlineCustomerId: $airlineCustomerId){
-			paymentSystemSecretKey
-		}
-    }
-`
-
-export const SAVE_PAYMENT_METHOD_TO_ORDER = gql`
+const SAVE_PAYMENT_METHOD_TO_ORDER = gql`
     mutation SavePaymentMethodToOrder (
         $orderNumber: String,
         $paymentSystemMethodId: String,
@@ -88,20 +79,13 @@ const SelectPaymentMethodComponent = (props) => {
 
     const [savedPaymentMethods, setSavedPaymentMethods] = useState([])
 
-    const stripe = useStripe()
-    const elements = useElements()
-    const [cardIsValid, setCardIsValid] = useState(false)
-
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(order.activePaymentMethod?.paymentSystemMethodId)
     const [isNewPaymentMethod, setIsNewPaymentMethod] = useState(false)
-    const [isInfoLoadingForNewPayment, setIsInfoLoadingForNewPayment] = useState(false)
-    const [isSaveForReuse, setIsSaveForReuse] = useState(false)
+    
     const [isSavingNewPaymentMethod, setIsSavingNewPaymentMethod] = useState(false)
     const [isLoadingSavedPaymentMethods, setIsLoadingSavedPaymentMethods] = useState(true)
 
-    const [paymentSystemSecretKey, setPaymentSystemSecretKey] = useState('')
-
-    const getOrderSavedPaymentMethodsQuery = useQuery(GET_ACCOUNTING_ORDER_SAVED_PAYMENT_METHODS, {
+    const _ = useQuery(GET_ACCOUNTING_ORDER_SAVED_PAYMENT_METHODS, {
         onCompleted: result => {
             if (result.ordersForAccounting.orders.length){
                 setSavedPaymentMethods(result.ordersForAccounting.orders[0].savedPaymentMethods)
@@ -112,14 +96,6 @@ const SelectPaymentMethodComponent = (props) => {
             orderNumber: order.orderNumber
         },
         fetchPolicy: 'no-cache'
-    })
-
-    const [prepareInfoForNewPaymentMethod] = useMutation(PREPARE_NEW_PAYMENT_METHOD_INFO, {
-        fetchPolicy: 'no-cache',
-        onCompleted: ({ prepareInfoForNewPaymentMethod }) => {
-            newCardSetup(prepareInfoForNewPaymentMethod)
-            setIsInfoLoadingForNewPayment(false)
-        }
     })
 
     const [savePaymentMethodToOrder] = useMutation(SAVE_PAYMENT_METHOD_TO_ORDER, {
@@ -133,21 +109,6 @@ const SelectPaymentMethodComponent = (props) => {
         }
     })
 
-    useEffect(() => {
-        if (isNewPaymentMethod) {
-            setIsInfoLoadingForNewPayment(true)
-            prepareInfoForNewPaymentMethod({
-                variables: {
-                    airlineCustomerId: order.customer.id
-                }
-            })
-        }
-    }, [isNewPaymentMethod])
-
-    const newCardSetup = ({ paymentSystemSecretKey }) => {
-        setPaymentSystemSecretKey(paymentSystemSecretKey)
-    }
-
     const selectExistingPaymentMethodHandler = (event) => {
         if (event.target.checked) {
             setSelectedPaymentMethod(event.target.value)
@@ -160,43 +121,18 @@ const SelectPaymentMethodComponent = (props) => {
             savePaymentMethodToOrder({
                 variables: {
                     orderNumber: order.orderNumber,
-                    paymentSystemMethodId: selectedPaymentMethod,
-                    isSavePaymentMethodForReuse: isSaveForReuse
+                    paymentSystemMethodId: selectedPaymentMethod
                 }
             })
         }
     }
 
-    const saveNewPaymentMethodHandler = () => {
-        setIsSavingNewPaymentMethod(true)
+    const isStripeSavingEventHandler = (isSaving) => {
+        setIsSavingNewPaymentMethod(isSaving)
+    }
 
-        const cardElement = elements.getElement(CardElement)
-        stripe
-            .confirmCardSetup(paymentSystemSecretKey, { payment_method: { card: cardElement } })
-            .then(data => {
-
-                if (data.error){
-                    alert(data.error.message)
-                    return
-                }
-
-                if (data.setupIntent) {
-                    setSelectedPaymentMethod(data.setupIntent.payment_method)
-
-                    setIsLoadingSavedPaymentMethods(true)
-                    savePaymentMethodToOrder({
-                        variables: {
-                            orderNumber: order.orderNumber,
-                            paymentSystemMethodId: data.setupIntent.payment_method,
-                            isSavePaymentMethodForReuse: isSaveForReuse
-                        }
-                    })
-                } else {
-                    alert('Payment setup unsuccessful')
-                }
-
-                setIsSavingNewPaymentMethod(false)
-            })
+    const newStripePaymentSavedEventHandler = () => {
+        selectPaymentMethodEvent()
     }
 
     return (
@@ -269,23 +205,15 @@ const SelectPaymentMethodComponent = (props) => {
                                     <div style={{ alignSelf: 'center' }}>
                                         {
                                             isNewPaymentMethod ? (
-                                                isInfoLoadingForNewPayment || isSavingNewPaymentMethod ? (
-                                                    <SpinnerDiv>
-                                                        <CircularProgress />
-                                                    </SpinnerDiv>
-                                                ) : (
-                                                    <>
-                                                        <StripePaymentSection setCardIsValid={(isValid) => { setCardIsValid(isValid) }} />
-                                                        <input type='checkbox' id="saveForReuse" checked={isSaveForReuse} onChange={(event) => { setIsSaveForReuse(event.target.checked) }} />
-                                                        <label htmlFor='saveForReuse'> Save for Reuse</label>
-                                                        <ButtonBlack disabled={!cardIsValid} onClick={() => { saveNewPaymentMethodHandler() }}>Make Active Payment Method</ButtonBlack>
-                                                    </>
-                                                    
-                                                )
+                                                <NewPaymentMethodComponent
+                                                    order={order}
+                                                    isSavingEvent={isStripeSavingEventHandler}
+                                                    newPaymentSavedEvent={newStripePaymentSavedEventHandler}
+                                                /> 
                                             ) : (
                                                 <ButtonBlack onClick={() => { setIsNewPaymentMethod(true) }}>Add a new Payment Method</ButtonBlack>
                                             )
-                                        }                                        
+                                        }                           
                                     </div>
                                 </div>
                             </div>
