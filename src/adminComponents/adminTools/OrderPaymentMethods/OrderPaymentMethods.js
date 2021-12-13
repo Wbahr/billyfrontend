@@ -142,7 +142,7 @@ const OrderPaymentMethods = (props) => {
                                         {
                                             isEditingPaymentMethod ? (
                                                 <>
-                                                    <SectionHeader>Saved Payment Methods</SectionHeader>
+                                                    <SectionHeader>Select a Different Payment Method</SectionHeader>
                                                     <SelectPaymentMethodComponent
                                                         order={selectedOrder}
                                                         selectPaymentMethodEvent={selectPaymentMethodHandler}

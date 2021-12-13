@@ -87,7 +87,6 @@ const SelectNewPaymentMethodComponent = (props) => {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
             if (result.savePaymentMethodToOrder){
-                isSavingEvent(false)
                 newPaymentSavedEvent()
             }
         }
@@ -133,7 +132,7 @@ const SelectNewPaymentMethodComponent = (props) => {
                     <>
                         <StripePaymentSection setCardIsValid={(isValid) => { setCardIsValid(isValid) }} />
                         <input type='checkbox' id="saveForReuse" checked={isSaveForReuse} onChange={(event) => { setIsSaveForReuse(event.target.checked) }} />
-                        <label htmlFor='saveForReuse'> Save for Reuse</label>
+                        <label htmlFor='saveForReuse'> Save to the Customer for re-use</label>
                         <ButtonBlack disabled={!cardIsValid} onClick={() => { saveNewPaymentMethodHandler() }}>Make Active Payment Method</ButtonBlack>
                     </>                               
                 )

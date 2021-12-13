@@ -2,7 +2,7 @@ import React from 'react'
 import { Switch, Route, useRouteMatch, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
-import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn } from '@material-ui/icons'
+import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn, MonetizationOn } from '@material-ui/icons'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 import AdminDashboard from './adminTools/adminDashboard'
 import ItemCreation from './adminTools/ItemCreation/itemCreation'
@@ -117,7 +117,7 @@ export default function AdminHome({ history }) {
                     <Divider/>
                     <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn/>}/>
                     <Divider/>
-                    <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<FlashOn/>}/>
+                    <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<MonetizationOn/>}/>
                     <Divider/>
                 </List>
             </Drawer>

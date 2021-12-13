@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Paper, Typography as Text } from '@material-ui/core'
-import { AddBox as AddBoxIcon, Code as CodeIcon, ContactMail, FlashOn, CreditCard } from '@material-ui/icons'
+import { AddBox as AddBoxIcon, Code as CodeIcon, ContactMail, FlashOn, CreditCard, MonetizationOn } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
@@ -48,7 +48,7 @@ export default function AdminDashboard() {
                     </Link>
 
                     <Link to="/admin-dashboard/order-payment-methods" style={{ textDecoration: 'none' }}>
-                        <GridItem title="ORDER PAYMENT METHODS" Icon={FlashOn} />
+                        <GridItem title="ORDER PAYMENT METHODS" Icon={MonetizationOn} />
                     </Link>
                 </Grid>
             </Grid>
