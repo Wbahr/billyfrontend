@@ -56,10 +56,22 @@ const ButtonPagination = styled.button`
 
 const AccountingOrderAuditTable = (props) => {
     const {
-        order: {
-            auditRecords
-        }
+        order
     } = props
+
+    const {
+        savedPaymentMethods,
+        activePaymentMethod,
+        auditRecords
+    } = order || {}
+
+    //Combine the saved payment methods and active payment method into one list for a lookup array.
+    //Filter out duplicates
+    const allPaymentMethods = (
+        activePaymentMethod 
+            ? [...savedPaymentMethods, activePaymentMethod ] 
+            : savedPaymentMethods
+    ).filter((m, index, arr) => arr.indexOf(m) === index)
 
     const columns = useMemo(() => ([
         {
@@ -68,11 +80,35 @@ const AccountingOrderAuditTable = (props) => {
         },
         {
             Header: 'Old Value',
-            accessor: 'oldValue'
+            accessor: 'oldValue',
+            Cell: props => {
+                if (props.value) {
+                    const paymentMethod = allPaymentMethods.find(m => m.paymentSystemMethodId === props.value)
+
+                    //Display the payment method name instead of the token if possible
+                    if (paymentMethod){
+                        return paymentMethod.name
+                    }
+                }
+
+                return props.value
+            }
         },
         {
             Header: 'New Value',
-            accessor: 'newValue'
+            accessor: 'newValue',
+            Cell: props => {
+                if (props.value) {
+                    const paymentMethod = allPaymentMethods.find(m => m.paymentSystemMethodId === props.value)
+
+                    //Display the payment method name instead of the token if possible
+                    if (paymentMethod){
+                        return paymentMethod.name
+                    }
+                }
+
+                return props.value
+            }
         },
         {
             Header: 'Employee',
@@ -83,7 +119,7 @@ const AccountingOrderAuditTable = (props) => {
             accessor: 'dateModified',
             Cell: props => <span>{dateFormat(new Date(props.value), 'MM/dd/yyyy HH:mm a')}</span>
         },
-    ]))
+    ]), [auditRecords])
 
     const {
         getTableProps,
@@ -107,6 +143,7 @@ const AccountingOrderAuditTable = (props) => {
             data: auditRecords,
             initialState: {
                 pageIndex: 0,
+                pageSize: 5,
                 sortBy: [
                     {
                         id: 'dateModified',
@@ -182,37 +219,13 @@ const AccountingOrderAuditTable = (props) => {
                     <ButtonPagination onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
                         {'>>'}
                     </ButtonPagination>{' '}
-                    {/* <select value={pageSize} onChange={e => { setPageSize(Number(e.target.value)) }}>
+                    <select value={pageSize} onChange={e => { setPageSize(Number(e.target.value)) }}>
                         <option value={5}>Show 5</option>
                         <option value={10}>Show 10</option>
-                    </select> */}
+                    </select>
                     <p>Results: {rows.length}</p>
                 </div>
             </TableContainer>
-            {/* <table>
-                <thead>
-                    <tr>
-                        <th>Field Changed</th>
-                        <th>Old Value</th>
-                        <th>New Value</th>
-                        <th>Employee</th>
-                        <th>Date/Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        auditRecords?.map(a => (
-                            <tr key={a.id}>
-                                <td>{a.fieldAlias}</td>
-                                <td>{a.oldValue}</td>
-                                <td>{a.newValue}</td>
-                                <td>{a.employee.name}</td>
-                                <td>{dateFormat(new Date(a.dateModified), 'MM/dd/yyyy HH:mm a')}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table> */}
         </>
     )
 }
