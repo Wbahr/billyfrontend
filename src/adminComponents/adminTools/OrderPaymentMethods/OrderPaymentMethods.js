@@ -7,6 +7,7 @@ import AccountingOrderSearchTable from './AccountingOrderSearchTable'
 import { ButtonBlack } from 'styles/buttons'
 import SelectPaymentMethodComponent from './SelectPaymentMethodComponent'
 import { CircularProgress } from '@material-ui/core'
+import AccountingOrderAuditTable from './AccountingOrderAuditTable'
 
 const SectionHeader = styled.h3`
     text-decoration: underline;
@@ -54,6 +55,19 @@ const GET_ACCOUNTING_ORDER = gql`
             expiration
             paymentSystemMethodId
             isPrimary
+        }
+        auditRecords {
+            id
+            orderNumber
+            fieldAlias
+            oldValue
+            newValue
+            dateModified
+            employeeId
+            employee {
+                id
+                name
+            }
         }
       }
     }
@@ -120,8 +134,34 @@ const OrderPaymentMethods = (props) => {
                         selectedOrder && (
                             <div>
                                 <div>
-                                    <SectionHeader>Selected order from {selectedOrder.customer.name}</SectionHeader>
-                                    <h4>Order Number: {selectedOrder.orderNumber}, Web Reference#: {selectedOrder.webReferenceId}</h4>
+                                    <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap' }}>
+                                        <div>
+                                            <SectionHeader>Selected Order</SectionHeader>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Customer: </td>
+                                                        <td>{selectedOrder.customer.customerIdP21} - {selectedOrder.customer.name}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Order #: </td>
+                                                        <td>{selectedOrder.orderNumber}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Web Reference #: </td>
+                                                        <td>{selectedOrder.webReferenceId}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <SectionHeader>Order Change Audit</SectionHeader>
+                                            <AccountingOrderAuditTable 
+                                                order={selectedOrder}
+                                            />
+                                        </div>
+                                    </div>
+                                    
                                 </div>
 
                                 <div>
