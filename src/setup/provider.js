@@ -46,7 +46,8 @@ export default function Provider({ history, children }) {
         isAirlineEmployee: newUserInfo?.role === AIRLINE_ENGINEER_USER || newUserInfo?.role === IMPERSONATOR_USER,
         isAirlineEngineerUser: newUserInfo?.role === AIRLINE_ENGINEER_USER,
         isImpersonatorUser: newUserInfo?.role === IMPERSONATOR_USER,
-        isWebUser: newUserInfo?.role === WEB_USER
+        isWebUser: newUserInfo?.role === WEB_USER,
+        permissions: newUserInfo?.permissions || []
     } : null)
     const [impersonatedCompanyInfo, setImpersonatedCompanyInfo] = useState(null)
     const [userType, setUserType] = useState({ current: null, previous: null })
