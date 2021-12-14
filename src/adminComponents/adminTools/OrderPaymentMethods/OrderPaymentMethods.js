@@ -134,31 +134,23 @@ const OrderPaymentMethods = (props) => {
                         selectedOrder && (
                             <div>
                                 <div>
-                                    <div>
-                                        <SectionHeader>Selected Order</SectionHeader>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Customer: </td>
-                                                    <td>{selectedOrder.customer.customerIdP21} - {selectedOrder.customer.name}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Order #: </td>
-                                                    <td>{selectedOrder.orderNumber}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Web Reference #: </td>
-                                                    <td>{selectedOrder.webReferenceId}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div>
-                                        <SectionHeader>Order Change Audit</SectionHeader>
-                                        <AccountingOrderAuditTable 
-                                            order={selectedOrder}
-                                        />
-                                    </div>
+                                    <SectionHeader>Selected Order</SectionHeader>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>Customer: </td>
+                                                <td>{selectedOrder.customer.customerIdP21} - {selectedOrder.customer.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Order #: </td>
+                                                <td>{selectedOrder.orderNumber}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Web Reference #: </td>
+                                                <td>{selectedOrder.webReferenceId}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <div>
@@ -192,6 +184,13 @@ const OrderPaymentMethods = (props) => {
                                         }
                                                 
                                     </div>
+                                </div>
+
+                                <div>
+                                    <SectionHeader>Order Change Audit</SectionHeader>
+                                    <AccountingOrderAuditTable 
+                                        order={selectedOrder}
+                                    />
                                 </div>
                             </div>
                     

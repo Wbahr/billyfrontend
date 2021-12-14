@@ -14,6 +14,8 @@ import Settings from './adminTools/Settings/settings'
 import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
 import EditNewCustomer from './adminTools/NewCustomers/editNewCustomer'
 import OrderPaymentMethods from './adminTools/OrderPaymentMethods/OrderPaymentMethods'
+import DemandPermissionComponent from 'pageComponents/_common/security/DemandPermissionComponent'
+import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
 
 const drawerWidth = 240
 
@@ -117,8 +119,11 @@ export default function AdminHome({ history }) {
                     <Divider/>
                     <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn/>}/>
                     <Divider/>
-                    <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<MonetizationOn/>}/>
-                    <Divider/>
+                    <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS}>
+                        <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<MonetizationOn/>}/>
+                        <Divider/>
+                    </DemandPermissionComponent>
+                    
                 </List>
             </Drawer>
             
@@ -158,7 +163,9 @@ export default function AdminHome({ history }) {
                     </Route>
 
                     <Route path="/admin-dashboard/order-payment-methods">
-                        <OrderPaymentMethods />
+                        <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS} errorMessage='Permission Denied'>
+                            <OrderPaymentMethods />
+                        </DemandPermissionComponent>
                     </Route>
                 </Switch>
             </main>

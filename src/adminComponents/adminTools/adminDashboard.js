@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { PRIMARY_RED } from '../../pageComponents/_common/constants/colors'
+import DemandPermissionComponent from 'pageComponents/_common/security/DemandPermissionComponent'
+import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
 
 const minWidth = 340
 const minHeight = 280
@@ -47,9 +49,12 @@ export default function AdminDashboard() {
                         <GridItem title="SYSTEM SETTINGS" Icon={FlashOn} />
                     </Link>
 
-                    <Link to="/admin-dashboard/order-payment-methods" style={{ textDecoration: 'none' }}>
-                        <GridItem title="ORDER PAYMENT METHODS" Icon={MonetizationOn} />
-                    </Link>
+                    <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS}>
+                        <Link to="/admin-dashboard/order-payment-methods" style={{ textDecoration: 'none' }}>
+                            <GridItem title="ORDER PAYMENT METHODS" Icon={MonetizationOn} />
+                        </Link>
+                    </DemandPermissionComponent>
+                    
                 </Grid>
             </Grid>
         </Grid>
