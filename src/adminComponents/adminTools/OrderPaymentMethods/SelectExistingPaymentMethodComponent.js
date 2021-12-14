@@ -105,7 +105,7 @@ const SelectExistingPaymentMethodsComponent = (props) => {
     })
 
     const saveExistingPaymentMethodHandler = () => {
-        if (selectedPaymentMethod && selectedPaymentMethod !== order.activePaymentMethod.paymentSystemMethodId) {
+        if (selectedPaymentMethod && selectedPaymentMethod !== order.activePaymentMethod?.paymentSystemMethodId) {
             setIsLoadingSavedPaymentMethods(true)
             savePaymentMethodToOrder({
                 variables: {
