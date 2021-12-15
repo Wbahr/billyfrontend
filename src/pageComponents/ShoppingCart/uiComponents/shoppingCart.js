@@ -147,7 +147,7 @@ export default function ShoppingCart({ history }) {
     function addNote(index, areas, note, noteIdx) {
         const newCart = shoppingCart.map((cartItem, idx) => {
             if (idx === index) {
-                if (noteIdx) {
+                if (noteIdx !== undefined) {
                     cartItem.extraNotes[noteIdx] = { note, targetAreas: areas }
                 } else {
                     cartItem.extraNotes = cartItem?.extraNotes ? 
