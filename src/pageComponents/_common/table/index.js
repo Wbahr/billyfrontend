@@ -128,8 +128,8 @@ export default function DataGrid({ columns, data, loading, dense, stickyHeader }
                 count={data.length}
                 rowsPerPage={pageSize}
                 page={pageIndex}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </PaperContainer>
     )
