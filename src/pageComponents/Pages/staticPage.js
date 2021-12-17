@@ -151,9 +151,6 @@ export default function StaticPage() {
     const pageId2 = params.pageId2 || null
     const pageId3 = params.pageId3 || null
     const pageId4 = params.pageId4 || null
-    const location = useLocation()
-    console.log("params", params)
-    console.log("location", location)
 
     const {
         loading,
