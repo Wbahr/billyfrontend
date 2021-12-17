@@ -13,16 +13,14 @@ export const CategoryContainer = styled.div`
 `
 
 export default function CategoriesPage() {
-    console.log("Exec cats page")
     const params = useParams()
-    console.log(params)
     return (
         <CategoryContainer>
             <Helmet>
                 <title>Airline Hydraulics | Categories</title>
             </Helmet>
-            { params && <CategorySearch cat={params.categoryUrlSlug} />}          
-            { !params && <RootCategories />}
+            { params.categoryUrlSlug && <CategorySearch categoryUrlSlug={params.categoryUrlSlug} />}          
+            { !params.categoryUrlSlug && <RootCategories />}
         </CategoryContainer>
     )
 }

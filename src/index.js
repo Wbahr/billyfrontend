@@ -203,6 +203,7 @@ ReactDOM.render(
                         <Route path='brands' element={<BrandsPage />} />
                         <Route path='brands/:page' element={<GeneralMinimalBrand />} />
                         <Route path='brands/featured/:page' element={<GeneralFullBrand />} />
+                        <Route path='categories' element={<CategoriesPage />} />
                         <Route path='categories/:categoryUrlSlug' element={<CategoriesPage />} />
                         <Route path='contact-us' element={<ContactUsPage />} />
                         <Route path='credit-application' element={<CreditApplication />} />

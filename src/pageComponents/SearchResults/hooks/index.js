@@ -7,7 +7,9 @@ const initialSearchState = {
     totalResults: '--',
     isSearching: false,
     sortType: 'relevancy',
-    searchTerms: []
+    searchTerms: [],
+    brands: [],
+    attributes: [],
 }
 
 export const useSearchState = (initialValue) => {

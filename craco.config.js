@@ -10,28 +10,23 @@ We need to move that file creation stuff to the server-side and stop fattening t
 
 /* https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.md#configuration */
 const webpack = require('webpack')
+const path = require('path');
 
 module.exports = {
     webpack: {
-        configure: {
-            ignoreWarnings: [/Failed to parse source map/],
-            plugins: [
-                new webpack.ProvidePlugin({
-                    Buffer: ['buffer', 'Buffer'],
-                })
-            ],
-            /*optimization: {
-                splitChunks: {
-                    chunks: 'all'
-                }
-            },*/
-            resolve: {
-                fallback: {
-                    "zlib": require.resolve("browserify-zlib"),
-                    "stream": require.resolve("stream-browserify"),
-                    "buffer": require.resolve("buffer/"),
-                }
-            }
-        },
+        configure: (webpackConfig, { env, paths }) => { 
+            webpackConfig.ignoreWarnings = [/Failed to parse source map/]
+            webpackConfig.plugins.push(new webpack.ProvidePlugin({
+                Buffer: ['buffer', 'Buffer'],
+            }))
+            webpackConfig.resolve.fallback = {
+                "zlib": require.resolve("browserify-zlib"),
+                "stream": require.resolve("stream-browserify"),
+                "buffer": require.resolve("buffer/"),
+            };
+            //Set the build folder to dist/
+            paths.appBuild = webpackConfig.output.path = path.resolve('dist/');
+            return webpackConfig;  // Important: return the modified config
+        }
     },
 }

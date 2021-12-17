@@ -61,6 +61,7 @@
         "start": "craco start",
         "build": "craco build",
         "test": "craco test",
+        "build-deploy": "craco build",
         "start_cra": "react-scripts start",
         "build_cra": "react-scripts build",
         "test_cra": "react-scripts test",
