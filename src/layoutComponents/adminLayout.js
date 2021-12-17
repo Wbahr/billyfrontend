@@ -1,3 +1,4 @@
+import AdminHome from 'adminComponents/adminHome'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 import React from 'react'
 import { Outlet } from 'react-router'
@@ -21,7 +22,7 @@ export default function AdminLayout() {
             <MainScreenContainer>
                 <ErrorBoundary>
                     <Auth roles={[AIRLINE_ENGINEER_USER, IMPERSONATOR_USER]} >
-                        <Outlet />
+                        <AdminHome />
                     </Auth>
                 </ErrorBoundary>
             </MainScreenContainer>

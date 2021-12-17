@@ -66,6 +66,20 @@ import GeneralMinimalBrand from 'pageComponents/Brands/generalMinimalBrand'
 import GeneralFullBrand from 'pageComponents/Brands/generalFullBrand'
 import ContactUsPage from './pageComponents/ContactUs/contactUsPage'
 
+//Admin Stuff
+import DemandPermissionComponent from './pageComponents/_common/security/DemandPermissionComponent'
+import AdminDashboard from './adminComponents/adminTools/adminDashboard'
+import ItemCreation from './adminComponents/adminTools/ItemCreation/itemCreation'
+import OpenOrders from './adminComponents/adminTools/OpenOrders/openOrders'
+import DownpaymentsTable from './adminComponents/adminTools/Downpayments/downpaymentsTable'
+import AddDownpayment from './adminComponents/adminTools/Downpayments/addDownpayment'
+import Settings from './adminComponents/adminTools/Settings/settings'
+import NewCustomerAdmin from './adminComponents/adminTools/NewCustomers/newCustomerAdmin'
+import EditNewCustomer from './adminComponents/adminTools/NewCustomers/editNewCustomer'
+import OrderPaymentMethods from './adminComponents/adminTools/OrderPaymentMethods/OrderPaymentMethods'
+import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
+import AdminHome from 'adminComponents/adminHome'
+
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare,
     faGripLines, faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faFacebookF, faLinkedinIn, faTwitter,
     faYoutube, faMapPin, faFax, faSearch, faUserCircle, faTimes, faUser, faUserPlus, faGlobeAmericas, faAddressBook,
@@ -235,8 +249,17 @@ ReactDOM.render(
                         {/*deprecated*/} <Route exact path='password-reset/:passwordToken' element={<PasswordReset />} />
                     </Route >
                     <Route element={<AdminLayout />}>
-                        {/* ADMIN INTERNAL TOOLS (MANAGES ITS OWN SUB ROUTES)*/}
-                        <Route path='admin-dashboard' element={<AdminLayout />} />
+                        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                        <Route path="/admin-dashboard/item-creation" element={<ItemCreation />} />
+                        <Route path="/admin-dashboard/open-orders" element={<OpenOrders />} />
+                        <Route path="/admin-dashboard/downpayments" element={<DownpaymentsTable />} />
+                        <Route path="/admin-dashboard/downpayments/add" element={<AddDownpayment />} />
+                        <Route path="/admin-dashboard/new-customers" element={<NewCustomerAdmin />} />
+                        <Route path="/admin-dashboard/new-customers/:regId" element={<EditNewCustomer />} />
+                        <Route path="/admin-dashboard/settings" element={<Settings />} />
+                        <Route path="/admin-dashboard/order-payment-methods" element={<DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS} errorMessage='Permission Denied'>
+                            <OrderPaymentMethods />
+                        </DemandPermissionComponent>} />
                     </Route>
                 </Route>
             </Routes>

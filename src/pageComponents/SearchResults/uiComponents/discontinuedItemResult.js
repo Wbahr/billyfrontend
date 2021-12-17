@@ -109,7 +109,7 @@ const PpartAvailability = styled.p`
 `
 
 const ButtonRed = styled.button`
-	background-color: #b51029;
+	background-color: ${props => props.disabled ? 'grey' : '#b51029'}; 
 	color: white;
 	font-weight: 600;
 	border: 0;
@@ -117,7 +117,7 @@ const ButtonRed = styled.button`
 	box-shadow: 1px 1px 2px #000;
 	margin: 4px auto;
 	&:hover{
-		background-color: rgb(219, 22, 51);
+		background-color: ${props => props.disabled ? 'grey' : 'rgb(219, 22, 51)'};
 	}
 	&:active{
 		background-color: #b51029;
@@ -362,9 +362,8 @@ export default function ItemResult({ result, details, subDetails, addedToCart, i
                                 <ACall href="tel:+18009997378">Call for Price</ACall>
                             )}
                         </DivPartNumberRowSpread>
-                    
                         <DivSpace>
-                            <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>
+                            <ButtonRed onClick={handleAddToCart} disabled={foundAvailability?.availability <= 0}>Add to Cart</ButtonRed> 
                         </DivSpace>
                     </>
                 )}

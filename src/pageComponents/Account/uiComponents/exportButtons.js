@@ -28,16 +28,16 @@ export default function ExportButtons({ data, columns, title, hidePDF }) {
     const exportIgnoreColumns = ['filter']
     const prepareDataForExport = ({ total, ...rest }) => ({ ...rest, total: total.props.value })
 
-    const preparedData = title === 'Orders' ? data.map(prepareDataForExport) : data
+    const preparedData = title === 'Orders' ? data?.map(prepareDataForExport) : data
 
     const handleExcelExport = () => {
-        if (data.length) {
+        if (data?.length) {
             exportToExcel(preparedData, columns, title, exportIgnoreColumns)
         }
     }
 
     const handlePdfExport = () => {
-        if (data.length) {
+        if (data?.length) {
             exportToPdf(preparedData, columns, title, exportIgnoreColumns, title === 'Open Orders')
         }
     }

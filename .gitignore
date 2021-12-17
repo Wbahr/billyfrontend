@@ -4,6 +4,7 @@
 /dist
 .vscode/
 .idea
+.vs/
 
 # ignore these file types
 

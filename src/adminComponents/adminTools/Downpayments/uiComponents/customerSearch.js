@@ -68,7 +68,7 @@ const DebounceInputStyle = {
     padding: '0px 8px',
 }
 
-export default function CustomerSearch(props) {
+export default function CustomerSearchWithImpersonation(props) {
     const { customer, setCustomer } = props
 
     const [impersonationTerm, setImpersonationTerm] = useState('')

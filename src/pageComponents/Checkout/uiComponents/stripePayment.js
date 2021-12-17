@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { CardElement } from '@stripe/react-stripe-js'
 import Required from '../../_common/required'
@@ -48,6 +48,11 @@ const cardStyle = {
 
 export default function StripePaymentSection({ setCardIsValid }) {
     const [error, setError] = useState(null)
+
+    //The Stripe element is invalid upon initial load
+    useEffect(() => {
+        setCardIsValid(false)
+    }, [])
 
     const handleChange = async (event) => {
         setCardIsValid(event.complete && !event.error)

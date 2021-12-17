@@ -3,11 +3,11 @@ import { useLazyQuery, useMutation } from '@apollo/client'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { useNavigate } from 'react-router-dom'
 import CardSelect from './uiComponents/cardSelect'
-import CustomerSearch from './uiComponents/customerSearch'
-import Context from '../../../setup/context'
+import CustomerSearchWithImpersonation from './uiComponents/customerSearch'
+import Context from 'setup/context'
 import OrderSelect from './uiComponents/orderSelect'
 import { ButtonRed } from 'styles/buttons'
-import { GET_CHECKOUT_DATA, GET_ORDERS_DETAIL, ADD_PREPAYMENT } from '../../../setup/providerGQL'
+import { GET_CHECKOUT_DATA, GET_ORDERS_DETAIL, ADD_PREPAYMENT } from 'setup/providerGQL'
 import styled from 'styled-components'
 
 const Centered = styled.div`
@@ -159,7 +159,7 @@ export default function AddDownpayment() {
         <Centered>
             <Container>
                 <Row>
-                    <CustomerSearch customer={customer} setCustomer={setCustomer} />
+                    <CustomerSearchWithImpersonation customer={customer} setCustomer={setCustomer} />
                     <OrderSelect orderNumber={{ value: payment.orderNumber, label: payment.orderNumber }} setOrderNumber={setOrderNumber} />
                 </Row>
                 <CardSelect 
