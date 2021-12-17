@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CardSelect from './uiComponents/cardSelect'
 import CustomerSearchWithImpersonation from './uiComponents/customerSearch'
 import Context from 'setup/context'
@@ -43,7 +43,7 @@ const emptyPayment = {
 export default function AddDownpayment() {
     const context = useContext(Context)
     const elements = useElements()
-    const history = useHistory()
+    const navigate = useNavigate()
     const stripe = useStripe()
 
     const [cardIsValid, setCardIsValid] = useState(false)
@@ -138,7 +138,7 @@ export default function AddDownpayment() {
         onCompleted: result => {
             setRequestSending(false)
             if (result.addPrepayment.amountToCharge) {
-                history.push('/admin-dashboard/downpayments')
+                navigate('/admin-dashboard/downpayments')
             }
         }
     }) 

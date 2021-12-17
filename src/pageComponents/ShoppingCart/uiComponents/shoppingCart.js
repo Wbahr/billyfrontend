@@ -62,7 +62,7 @@ const EditPriceIcon = styled.div`
 	margin-left: 8px;
 `
 
-export default function ShoppingCart({ history }) {
+export default function ShoppingCart() {
     const {
         cart,
         emptyCart,
@@ -227,7 +227,6 @@ export default function ShoppingCart({ history }) {
             <CartComponent
                 {
                     ...{
-                        history,
                         cart,
                         updateShoppingCart,
                         cartPricing,
@@ -286,7 +285,6 @@ const CartComponent = (props) => {
         cart,
         updateShoppingCart,
         cartPricing,
-        history,
         cartData,
         dispositions,
         supplierOptions,
@@ -357,7 +355,7 @@ const CartComponent = (props) => {
                                     setCartItem={setCartItem(index)}
                                     setCartItemField={setCartItemField(index)}
                                     {...{
-                                        history, index, setIsDragDisabled, setCart, cartItem, cartPricing, provided,
+                                        index, setIsDragDisabled, setCart, cartItem, cartPricing, provided,
                                         dispositions, todayDate, maxDate, supplierOptions, setNoteModal
                                     }}
                                 />

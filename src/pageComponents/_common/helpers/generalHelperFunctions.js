@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
+import { jsPDF } from "jspdf"
+
 
 export const searchObjectArrayForString = (options, searchString) => { //Searches all key values for substring match
     return options.filter(o => Object.keys(o).some(key => o[key].toString().toLowerCase().includes(searchString.toLowerCase())))
@@ -31,18 +33,14 @@ export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
 }
 
 export const exportToPdf = (data, columns, name, ignoreCols=[], landscape) => {
-    import('jspdf').then(jsPDF => {
-        import('jspdf-autotable').then(() => {
-            const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
-            const pdfFormat = {
-                head: [columns.filter(filterCols).map(({ Header }) => Header)],
-                body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
-            }
-            const doc = landscape ? new jsPDF.jsPDF('landscape') : new jsPDF.jsPDF() 
-            doc.autoTable(pdfFormat)
-            doc.save(`${name}.pdf`)
-        })
-    })
+    const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
+    const pdfFormat = {
+        head: [columns.filter(filterCols).map(({ Header }) => Header)],
+        body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+    }
+    const doc = landscape ? new jsPDF.jsPDF('landscape') : new jsPDF.jsPDF() 
+    doc.autoTable(pdfFormat)
+    doc.save(`${name}.pdf`)
 }
 
 export const getImagePath = path => {

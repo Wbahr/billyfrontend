@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
+import { useLocation, useNavigate } from 'react-router'
 
 const SectionRow = styled.div`
     display: flex;
@@ -89,7 +90,6 @@ const Container = styled.div`
 
 export default function ConfirmationScreen(props) {
     const {
-        history,
         values: {
             schedule,
             shipto,
@@ -114,7 +114,8 @@ export default function ConfirmationScreen(props) {
         setFieldValue,
         isAirlineEmployee
     } = props
-
+    const navigate = useNavigate()
+    const location = useLocation()
     useEffect(() => {
         validateForm() // this is the only page we want to validate on mount
     }, [])
@@ -172,9 +173,9 @@ export default function ConfirmationScreen(props) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
                 if (checkoutType === 'quote') {
-                    history.push(`/quote-complete/${webReferenceId}`)
+                    navigate(`/quote-complete/${webReferenceId}`)
                 } else {
-                    history.push(`/order-complete/${webReferenceId}`)
+                    navigate(`/order-complete/${webReferenceId}`)
                 }
             } else {
 
@@ -195,7 +196,7 @@ export default function ConfirmationScreen(props) {
     })
 
     const handlePreviousClick = () => {
-        if (history.location.pathname === '/create-quote') {
+        if (location.pathname === '/create-quote') {
             handleMoveStep(0)
         } else {
             handleMoveStep(1)
@@ -250,7 +251,7 @@ export default function ConfirmationScreen(props) {
                         onChange={handleCheckboxChange('confirmationEmail.sendToShipTo')}
                     />
                     <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-                    {history.location.pathname === '/create-quote' && (
+                    {location.pathname === '/create-quote' && (
                         <FormikCheckbox
                             value={imagesOnQuote}
                             label="Include Images on Quotes?"
@@ -362,11 +363,11 @@ export default function ConfirmationScreen(props) {
                 <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
                 <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}>
                     <FontAwesomeIcon icon='lock' size="sm" color="white" />
-                    Submit {history.location.pathname === '/create-quote' ? 'Quote' : 'Order'}
+                    Submit {location.pathname === '/create-quote' ? 'Quote' : 'Order'}
                 </ButtonRed>
             </DivNavigation>
 
-            {submitting && <ProcessingOrderModal isQuote={history.location.pathname === '/create-quote'} />}
+            {submitting && <ProcessingOrderModal isQuote={location.pathname === '/create-quote'} />}
             {showOrderFailedModal && (
                 <OrderFailedModal
                     orderFailErrorMessages = {orderFailErrorMessages}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import CustomerSelect from './uiComponents/customerSelect'
@@ -45,7 +45,8 @@ const Ul = styled.ul`
 `
 const Link = styled.a`
 `
-export default function LoginPage({ history }) { 
+export default function LoginPage() { 
+    const navigate = useNavigate()
     const [signupType, setSignupType] = useState('')
     if (signupType == 'existing') {
         return (<ExistingCustomer />)
@@ -54,7 +55,7 @@ export default function LoginPage({ history }) {
     } else {
         return (
             <SignupPageContainer>
-                <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
+                <Img src={AirlineLogoCircle} height='75px' onClick={() => navigate('/')}/>
                 <P>Create an Airline Hydraulics Account</P>
                 <CustomerSelect />
                 <Div>
@@ -71,13 +72,9 @@ export default function LoginPage({ history }) {
                     </Ul>
                     <CreateAccount>Get started by completing the signup form for <Link onClick={() => setSignupType('existing')}>existing Airline customers</Link> or <Link onClick={() => setSignupType('new')}>new Airline customers</Link></CreateAccount>
                 </Div>
-                <A onClick={() => history.push('/login')}>Already have an account?</A>
-                <A onClick={() => history.push('/cart')}>Checkout as a guest</A>
+                <A onClick={() => navigate('/login')}>Already have an account?</A>
+                <A onClick={() => navigate('/cart')}>Checkout as a guest</A>
             </SignupPageContainer>
         )
     }
-}
-
-LoginPage.propTypes = {
-    history: PropTypes.object.isRequired
 }

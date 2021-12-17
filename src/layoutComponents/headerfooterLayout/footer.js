@@ -2,9 +2,7 @@ import React, { useEffect }  from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ButtonBlack } from 'styles/buttons'
 import OttoDrift from 'pageComponents/_common/ottoDrift'
-import { green, pink } from '@material-ui/core/colors'
 
 const Newsletter = styled.div`
 	display: flex;

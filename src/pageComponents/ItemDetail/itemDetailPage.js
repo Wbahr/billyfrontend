@@ -202,7 +202,7 @@ const StrikeThrough = styled.span`
     text-decoration: line-through;
 `
 
-export default function ItemDetailPage({ history }) {
+export default function ItemDetailPage() {
     const { 
         userInfo, 
         addItem, 
@@ -356,7 +356,6 @@ export default function ItemDetailPage({ history }) {
                     itemDetails={details}
                     availability={availability}
                     price={price}
-                    history={history}
                     setShowAddedToCartModal={setShowAddedToCartModal}
                     isParentCalculateStock={true}
                 />

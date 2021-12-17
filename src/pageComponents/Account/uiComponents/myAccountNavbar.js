@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router'
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -32,8 +33,9 @@ const Pselected = styled.p`
   border-radius: 20px;
 `
 
-export default function MyAccountNavbar({ history, page, AccountPages }) {
+export default function MyAccountNavbar({ page, AccountPages }) {
     const [navbarLinks, setNavbarLinks] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const tempNavbarLinks = []
@@ -41,7 +43,7 @@ export default function MyAccountNavbar({ history, page, AccountPages }) {
             if (page === AccountPages[i].page) {
                 tempNavbarLinks.push(<Pselected key={i}>{AccountPages[i].label}</Pselected>)
             } else {
-                tempNavbarLinks.push(<p key={i} onClick={() => history.push(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
+                tempNavbarLinks.push(<p key={i} onClick={() => navigate(`/account/${AccountPages[i].page}`)}>{AccountPages[i].label}</p>)
             }
         }
         setNavbarLinks(tempNavbarLinks)
@@ -58,6 +60,5 @@ export default function MyAccountNavbar({ history, page, AccountPages }) {
 }
 
 MyAccountNavbar.propTypes = {
-    history: PropTypes.object.isRequired,
     page: PropTypes.string.isRequired
 }

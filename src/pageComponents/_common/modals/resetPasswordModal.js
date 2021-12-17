@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import AirlineInput from '../form/inputv2'
 import Context from 'setup/context'
+import { useNavigate } from 'react-router'
 
 const MUTATION_RESET_PASSWORD_REQUEST = gql`
   mutation PasswordResetRequestMutation($resetInfo: PasswordResetRequestInputGraphType){
@@ -35,11 +36,11 @@ const ResetPasswordButton = styled.div`
 const ResetPassword = styled.p`
     font-weight: bold;
 `
-export default function ResetPasswordModal({ open, hideModal, history }) {
+export default function ResetPasswordModal({ open, hideModal }) {
     const {
         setPasswordResetEmail
     } = useContext(Context)
-
+    const navigate = useNavigate()
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
 
@@ -50,7 +51,7 @@ export default function ResetPasswordModal({ open, hideModal, history }) {
                 setMessage(requestData.message)
                 handleClose()
                 setPasswordResetEmail(email)
-                history.push('/password-reset')
+                navigate('/password-reset')
             } else {
                 setMessage('An error has occured. Please check your email/username and try again or contact us.')
                 setEmail('')

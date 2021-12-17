@@ -27,7 +27,6 @@ export default function HomePage() {
         homepage,
         alert
     } = useContext(Context)
-
     return (
         <>
             {homepage.length > 0 && (

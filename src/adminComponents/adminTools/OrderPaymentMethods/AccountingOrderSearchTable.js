@@ -7,7 +7,7 @@ import { CircularProgress } from '@material-ui/core'
 import gql from 'graphql-tag'
 import { DebounceInput } from 'react-debounce-input'
 import CustomerSearch from 'pageComponents/_common/CustomerSearch'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -135,12 +135,11 @@ const GET_ACCOUNTING_ORDERS = gql`
 `
 
 const AccountingOrderSearchTable = (props) => {
-
-    const history = useHistory()
-
     const {
         orderSelectEvent
     } = props
+
+    const navigate = useNavigate()
 
     const [orderData, setOrderData] = useState({
         totalResultCount: 0,
@@ -156,7 +155,7 @@ const AccountingOrderSearchTable = (props) => {
 
     const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
 
-    const { error, loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
+    const { loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
         onCompleted: result => {
             setOrderData(result.ordersForAccounting)
         },
@@ -190,7 +189,7 @@ const AccountingOrderSearchTable = (props) => {
     }
 
     const setPageNumberHandler = (newPageNumber) => {
-        if (newPageNumber != pageNumber){
+        if (newPageNumber !== pageNumber){
             setSelectedOrderNumber(null)
             setPageNumber(newPageNumber)
         }
@@ -336,7 +335,7 @@ const AccountingOrderSearchTable = (props) => {
                                                 {row.cells.map(cell => {
                                                     if (cell.column.id === 'orderNumber') {
                                                         return (
-                                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                                 {cell.render('Cell')}
                                                             </TDrow>
                                                         )

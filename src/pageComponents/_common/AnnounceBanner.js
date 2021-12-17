@@ -6,6 +6,7 @@ const Banner = styled.div`
 		padding: 8px;
 		text-align: center;
 		color: white;
+        width: 100%;
 `
 
 const Message = styled.div`

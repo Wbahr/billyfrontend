@@ -37,59 +37,59 @@ const emptyItem = {
 }
 
 class RedPalletPage extends React.Component {
-  state = {
-      initValues: {
-          ShipTos: [],
-          RepairItems: []
-      }
-  }
+    state = {
+        initValues: {
+            ShipTos: [],
+            RepairItems: []
+        }
+    }
 
-  userDataMutator = (response) => {
-      const mutatedResponse = response
-      for (let i = 0; i < mutatedResponse.ShipTos.length;i++) {
-          if (mutatedResponse.ShipTos[i].IsDefault){
-              mutatedResponse.address_1 = response.ShipTos[i].Line1
-              mutatedResponse.address_2 = response.ShipTos[i].Line2
-              mutatedResponse.city = response.ShipTos[i].City
-              mutatedResponse.state = response.ShipTos[i].State
-              mutatedResponse.zip = response.ShipTos[i].Zip
-              mutatedResponse.phone = response.ShipTos[i].Phone
-          }
-      }
+    userDataMutator = (response) => {
+        const mutatedResponse = response
+        for (let i = 0; i < mutatedResponse.ShipTos.length; i++) {
+            if (mutatedResponse.ShipTos[i].IsDefault) {
+                mutatedResponse.address_1 = response.ShipTos[i].Line1
+                mutatedResponse.address_2 = response.ShipTos[i].Line2
+                mutatedResponse.city = response.ShipTos[i].City
+                mutatedResponse.state = response.ShipTos[i].State
+                mutatedResponse.zip = response.ShipTos[i].Zip
+                mutatedResponse.phone = response.ShipTos[i].Phone
+            }
+        }
 
-      mutatedResponse.RepairItems = [emptyItem]
-      mutatedResponse.Company = response.CustomerName
-      return mutatedResponse
-  }
+        mutatedResponse.RepairItems = [emptyItem]
+        mutatedResponse.Company = response.CustomerName
+        return mutatedResponse
+    }
 
-  render(){
-      return (
-          <>
-              <DivRedPallet>
-                  <img src={RPlogo} width={'50%'} height={'auto'}/>
-                  <StyledTextGrey>Airline’s Red Pallet Program is a fast and easy way to get your repair pickups scheduled and move on with
-                      your day. Simply fill out the information about your repair needs and hit submit. You will be contacted
-                      promptly with details regarding the pick up of your components. <StyledTextGreyBold>*Required Fields</StyledTextGreyBold>
-                  </StyledTextGrey>
-                  <DivAlert>
-                      <span>Note: There will be a minimum charge of $95.00 per item for tear down & evaluation. If an order is not placed, item
-                          will be returned as is un-assembled.
-                      </span>
-                  </DivAlert>
-              </DivRedPallet>
-              {/* { !_.isNil(this.state.initValues) &&
+    render() {
+        return (
+            <>
+                <DivRedPallet>
+                    <img src={RPlogo} width={'50%'} height={'auto'} />
+                    <StyledTextGrey>Airline’s Red Pallet Program is a fast and easy way to get your repair pickups scheduled and move on with
+                        your day. Simply fill out the information about your repair needs and hit submit. You will be contacted
+                        promptly with details regarding the pick up of your components. <StyledTextGreyBold>*Required Fields</StyledTextGreyBold>
+                    </StyledTextGrey>
+                    <DivAlert>
+                        <span>Note: There will be a minimum charge of $95.00 per item for tear down & evaluation. If an order is not placed, item
+                            will be returned as is un-assembled.
+                        </span>
+                    </DivAlert>
+                </DivRedPallet>
+                {/* { !_.isNil(this.state.initValues) &&
           <RedPalletForm
             initValues={this.state.initValues}
             emptyItem={emptyItem}
           />
         } */}
-              <RedPalletForm
-                  initValues={this.state.initValues}
-                  emptyItem={emptyItem}
-              />
-          </>
-      )
-  }
+                <RedPalletForm
+                    initValues={this.state.initValues}
+                    emptyItem={emptyItem}
+                />
+            </>
+        )
+    }
 }
 
 export default RedPalletPage

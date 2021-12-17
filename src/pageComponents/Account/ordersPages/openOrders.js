@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -83,7 +84,7 @@ const Pdate = styled.p`
 	padding-top: 6px;
 `
 
-export default function OpenOrdersTable({ history }) {
+export default function OpenOrdersTable() {
     const context = useContext(Context)
     const didMountRef = useRef(false)
     const [data, setData] = useState([])
@@ -91,6 +92,7 @@ export default function OpenOrdersTable({ history }) {
     const [showOrderType] = useState('all')
     const [dateFrom, setDateFrom] = useState()
     const [dateTo, setDateTo] = useState()
+    const navigate = useNavigate()
 
     const isNil = val => val == null
     
@@ -362,7 +364,7 @@ export default function OpenOrdersTable({ history }) {
                                 {row.cells.map((cell, i) => {
                                     if (cell.column.id === 'orderNumber') {
                                         return (
-                                            <TDrow key={i} {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                            <TDrow key={i} {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                 {cell.render('Cell')}
                                             </TDrow>
                                         )

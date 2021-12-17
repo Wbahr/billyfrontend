@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from 'react'
 import styled from 'styled-components'
-import StripePaymentSection from 'pageComponents/Checkout/uiComponents/stripePayment'
+import StripePaymentSection from '../../../../pageComponents/Checkout/uiComponents/stripePayment'
 import Context from 'setup/context'
-import Loader from 'pageComponents/_common/loader'
-import { FormikStyleLabel, FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
-import { transformForPaymentInfo } from 'pageComponents/Checkout/helpers'
-import Select from 'pageComponents/_common/form/select'
+import Loader from '../../../../pageComponents/_common/loader'
+import { FormikStyleLabel, FormikStyleInput } from '../../../../pageComponents/_common/formik/input_v2'
+import { transformForPaymentInfo } from '../../../../pageComponents/Checkout/helpers'
+import Select from '../../../../pageComponents/_common/form/select'
 import { useLazyQuery } from '@apollo/client'
-import { useDidUpdateEffect } from 'pageComponents/_common/helpers/generalHelperFunctions'
-import { GET_PAYMENT_METHOD_INFO } from 'setup/providerGQL'
+import { useDidUpdateEffect } from '../../../../pageComponents/_common/helpers/generalHelperFunctions'
+import { GET_PAYMENT_METHOD_INFO } from '../../../../setup/providerGQL'
 
 const WrapSelect = styled.div`
     margin-left: -5px;

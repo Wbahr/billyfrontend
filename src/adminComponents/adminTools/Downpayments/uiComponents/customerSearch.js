@@ -4,7 +4,7 @@ import Context from '../../../../setup/context'
 import DebounceInput from 'react-debounce-input'
 import { FormikStyleLabel } from '../../../../pageComponents/_common/formik/input_v2'
 import { useLazyQuery } from '@apollo/client'
-import { IMPERSONATION_SEARCH } from 'setup/providerGQL'
+import { IMPERSONATION_SEARCH } from '../../../../setup/providerGQL'
 
 const Container = styled.div`
     display: flex;

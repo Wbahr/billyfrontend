@@ -23,7 +23,7 @@ const Div = styled.div`
 	align-items: flex-end;
 `
 
-export default function SubtotalBox({ history }) {
+export default function SubtotalBox() {
     const { cartPricing, updateOrderNotes, orderNotes } = useContext(Context)
 
     const [notes, setNotes] = useState(orderNotes)
@@ -63,7 +63,7 @@ export default function SubtotalBox({ history }) {
             <Div>
                 <h5>Subtotal: {subtotal}</h5>
 
-                <CheckoutButtons history={history} />
+                <CheckoutButtons />
             </Div>
         </Container>
     )

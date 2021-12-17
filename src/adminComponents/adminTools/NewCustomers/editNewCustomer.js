@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useRouteMatch } from 'react-router'
-import Loader from 'pageComponents/_common/loader'
+import { useMatch, useParams } from 'react-router'
+import Loader from '../../../pageComponents/_common/loader'
 import { useQuery, useMutation } from '@apollo/client'
-import { GET_NEW_CUSTOMER, SAVE_NEW_CUSTOMER } from 'setup/providerGQL'
-import { ShowErrorAlert, ShowInfoAlert } from 'styles/alerts'
+import { GET_NEW_CUSTOMER, SAVE_NEW_CUSTOMER } from '../../../setup/providerGQL'
+import { ShowErrorAlert, ShowInfoAlert } from '../../../styles/alerts'
 import { Link } from 'react-router-dom'
-import NewCustomerForm, { mapToForm, mapToApi } from 'pageComponents/Signup/uiComponents/newCustomerForm'
-import { editCustomerSchema } from 'pageComponents/Signup/validationSchemas'
-import Modal from 'pageComponents/_common/modal'
+import NewCustomerForm, { mapToForm, mapToApi } from '../../../pageComponents/Signup/uiComponents/newCustomerForm'
+import { editCustomerSchema } from '../../../pageComponents/Signup/validationSchemas'
+import Modal from '../../../pageComponents/_common/modal'
 
 export default function EditNewCustomer() {
     const { regId } = useParams()
-    const { path } = useRouteMatch()
+    const { path } = useMatch()
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [saved, setSaved] = useState(false)

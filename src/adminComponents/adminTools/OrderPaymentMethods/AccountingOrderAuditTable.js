@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { format as dateFormat } from 'date-fns'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import styled from 'styled-components'
-import { DebounceInput } from 'react-debounce-input'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -55,6 +55,7 @@ const ButtonPagination = styled.button`
 `
 
 const AccountingOrderAuditTable = (props) => {
+    const navigate = useNavigate()
     const {
         order
     } = props
@@ -181,7 +182,7 @@ const AccountingOrderAuditTable = (props) => {
                                             {row.cells.map(cell => {
                                                 if (cell.column.id === 'orderNumber') {
                                                     return (
-                                                        <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                                        <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                             {cell.render('Cell')}
                                                         </TDrow>
                                                     )

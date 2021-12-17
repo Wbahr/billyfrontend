@@ -19,7 +19,7 @@ export default function AdminDashboard() {
                 <Paper style={{ padding: 10, borderBottom: `3px solid ${PRIMARY_RED}` }}>
                     <Grid container justify="center">
                         <Link to="/">
-                            <img src={AirlineLogo} height="50px" style={{ marginTop: 4, marginRight: 20 }} />
+                            <img src={AirlineLogo} height="50px" style={{ marginTop: 4, marginRight: 20 }} alt="Airline Logo" title="Go Home" />
                         </Link>
     
                         <Text align="center" variant="h3" style={textStyle}>

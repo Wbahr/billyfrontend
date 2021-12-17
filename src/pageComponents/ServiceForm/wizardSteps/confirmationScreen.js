@@ -7,6 +7,7 @@ import Context from '../../../setup/context'
 import ProcessingSubmissionModal from '../uiComponents/processingSubmissionModal'
 import SubmissionFailedModal from '../uiComponents/submissionFailedModal'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router'
 
 const CAPTCHA_KEY = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 
@@ -29,8 +30,8 @@ const CaptchaContainer = styled.div`
 `
 
 export default function ConfirmationScreen(props) {
-    const { handleMoveStep, values, history } = props
-
+    const { handleMoveStep, values } = props
+    const navigate = useNavigate()
     const context = useContext(Context)
 
     const [captchaPassed, setCaptchaPassed] = useState(false)
@@ -67,7 +68,7 @@ export default function ConfirmationScreen(props) {
         new Promise(res => res({ formNo: 100 })).then(rtn => {
             const { formNo } = rtn
             if (formNo) {
-                history.push(`/serviceform-complete/${formNo}`)
+                navigate(`/serviceform-complete/${formNo}`)
                 localStorage.removeItem('serviceDraft')
             } else {
                 setShowSubmissionFailedModal(true)

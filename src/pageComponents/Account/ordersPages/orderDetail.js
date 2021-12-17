@@ -14,6 +14,7 @@ import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/
 import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'setup/gqlQueries/gqlItemQueries'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './orderDetailPDF'
+import { useNavigate } from 'react-router'
 
 
 const DivOrderInfoContainer = styled.div`
@@ -85,11 +86,12 @@ const Container = styled.div`
     margin: 10px 0;
 `
 
-export default function OrderDetail({ history, orderId }) {
+export default function OrderDetail({ orderId }) {
     const context = useContext(Context)
     const [filter, setFilter] = useState('')
     const [isTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+    const navigate = useNavigate()
 
     const { loading: isOrderDetailsLoading, data: orderDetails, error } = useQuery(GET_ORDERS_DETAIL, {
         fetchPolicy: 'no-cache',
@@ -325,7 +327,7 @@ export default function OrderDetail({ history, orderId }) {
                     <h4>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</h4>
                     <DivDownload>{OrderDetailDownloadButton}</DivDownload>
                     <ExportButtons data={exportData} columns={exportColumns} title={`airline_order_${orderId}.pdf`} hidePDF={true} />
-                    <p onClick={() => { history.push('/account/orders') }}>Back to Orders</p>
+                    <p onClick={() => { navigate('/account/orders') }}>Back to Orders</p>
                     <ButtonSmall onClick={() => handleAddOrder()}>Add Order to Cart</ButtonSmall>
                 </DivHeader>
                 <DivOrderInfoContainer>

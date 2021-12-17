@@ -19,6 +19,7 @@ import IncrementDecrementButton from 'pageComponents/_common/IncrementDecrementB
 import DatePicker from 'react-datepicker'
 import { Checkbox, Grid } from '@material-ui/core'
 import { format, sub } from 'date-fns'
+import { useNavigate } from 'react-router'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -199,14 +200,13 @@ const LineNumber = styled.div`
     color: grey;
 ` 
 export default function ShoppingCartItem(props) {
-
+    const navigate = useNavigate()
     const {
         setCart,
         cartItem,
         setCartItem,
         setCartItemField,
         index,
-        history,
         setIsDragDisabled,
         provided,
         cartData,
@@ -340,7 +340,7 @@ export default function ShoppingCartItem(props) {
                                         <Img src={getThumbnailImagePath(itemDetails)} />
                                     </DivCol1>
                                     <DivCol2>
-                                        <A1 onClick={() => { history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`) }}>{itemDetails.itemDesc}</A1>
+                                        <A1 onClick={() => { navigate(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`) }}>{itemDetails.itemDesc}</A1>
                                         <CopyToClipboard text={itemDetails.itemDesc}>
                                             <P2>Copy Item Desc</P2>
                                         </CopyToClipboard>

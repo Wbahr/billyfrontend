@@ -1,5 +1,6 @@
 import * as React from 'react'
-import Select, { Creatable } from 'react-select'
+import Select from 'react-select'
+import Creatable from 'react-select/creatable'
 import { ErrorMessage } from 'formik'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 

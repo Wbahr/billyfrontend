@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Popup from 'reactjs-popup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+import 'reactjs-popup/dist/index.css';
+
 const CloseDiv = styled.div`
   display: flex;
   flex-direction: row-reverse;  

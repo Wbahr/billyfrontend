@@ -18,6 +18,7 @@ import Required from '../../_common/required'
 import PaperworkModal from '../uiComponents/PaperworkModal'
 import DatePicker from 'react-datepicker'
 import { Grid } from '@material-ui/core'
+import { useNavigate, useLocation } from 'react-router'
 
 const WrapForm = styled.div`
 	display: flex;
@@ -74,7 +75,7 @@ const Warning = styled.div`
 `
 
 export function ShipToForm(props) {
-    const { history, values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels,
+    const { values, setValues, handleChange, setFieldValue, checkoutDropdownDataLabels,
         checkoutDropdownData, updateZip, isStepValid, handleMoveStep, setFieldTouched } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const [touchContact, setTouchContact] = useState(false)
@@ -82,11 +83,13 @@ export function ShipToForm(props) {
     const [showPaperworkModal, setShowPaperworkModal] = useState(false)
     const [showShippingWarning, setShowShippingWarning] = useState(false)
     const context = useContext(Context)
+    const navigate = useNavigate()
 
     const tomorrowDate = new Date().setDate(new Date().getDate() + 1)
     const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
+    const location = useLocation()
 
-    const isQuote = history.location.pathname === '/create-quote'
+    const isQuote = location.pathname === '/create-quote'
 
     useEffect(() => {
         window.scrollTo({ top: 0 })
@@ -211,7 +214,7 @@ export function ShipToForm(props) {
             touchContactFields()
             touchShipToFields()
         } else {
-            if (history.location.pathname === '/create-quote') {
+            if (location.pathname === '/create-quote') {
                 handleMoveStep(2)
             } else {
                 handleMoveStep(1)
@@ -506,7 +509,7 @@ export function ShipToForm(props) {
                 </>
             )}
             <DivNavigation>
-                <ButtonBlack onClick={() => history.push('/cart')}>
+                <ButtonBlack onClick={() => navigate('/cart')}>
                     <FontAwesomeIcon icon='shopping-cart' size="sm" color="white" />
                     Back to Cart
                 </ButtonBlack>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Route, Switch } from 'react-router'
+import { useParams } from 'react-router'
 import CategorySearch from './uiComponents/CategorySearch'
 import RootCategories from './uiComponents/RootCategories'
 import Helmet from 'react-helmet'
@@ -13,15 +13,14 @@ export const CategoryContainer = styled.div`
 `
 
 export default function CategoriesPage() {
+    const params = useParams()
     return (
         <CategoryContainer>
             <Helmet>
                 <title>Airline Hydraulics | Categories</title>
             </Helmet>
-            <Switch>
-                <Route path="/categories/:categoryUrlSlug" component={CategorySearch}/>
-                <Route path="/categories" component={RootCategories}/>
-            </Switch>
+            { params.categoryUrlSlug && <CategorySearch categoryUrlSlug={params.categoryUrlSlug} />}          
+            { !params.categoryUrlSlug && <RootCategories />}
         </CategoryContainer>
     )
 }

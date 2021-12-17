@@ -108,7 +108,7 @@ const locationOptions = [
     { label: 'Pittsburgh (PA)', value: 'Pittsburgh' }
 ]
 
-function ServiceForm({ history }) {
+function ServiceForm() {
     const context = useContext(Context)
     const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
     const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
@@ -227,7 +227,7 @@ function ServiceForm({ history }) {
                                     isStepValid={stepValidated[currentStep]}
                                     {...{
                                         ...formikProps, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        history, stepValidated, currentStep, setCurrentStep, validationSchema, formType, setFormType
+                                        stepValidated, currentStep, setCurrentStep, validationSchema, formType, setFormType
                                     }}
                                 />
                             </form>
@@ -256,7 +256,7 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, formType, setFormType, history, values } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, formType, setFormType, values } = props
 
     const handleMoveStep = nextStepIdx => {
         const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)

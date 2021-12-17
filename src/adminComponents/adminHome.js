@@ -1,21 +1,13 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch, Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, Outlet } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
 import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn, MonetizationOn } from '@material-ui/icons'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
-import AdminDashboard from './adminTools/adminDashboard'
-import ItemCreation from './adminTools/ItemCreation/itemCreation'
-import OpenOrders from './adminTools/OpenOrders/openOrders'
-import DownpaymentsTable from './adminTools/Downpayments/downpaymentsTable'
-import AddDownpayment from './adminTools/Downpayments/addDownpayment'
-import AppHeader from './appHeader'
-import Settings from './adminTools/Settings/settings'
-import NewCustomerAdmin from './adminTools/NewCustomers/newCustomerAdmin'
-import EditNewCustomer from './adminTools/NewCustomers/editNewCustomer'
-import OrderPaymentMethods from './adminTools/OrderPaymentMethods/OrderPaymentMethods'
-import DemandPermissionComponent from 'pageComponents/_common/security/DemandPermissionComponent'
+
 import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
+import AppHeader from './appHeader'
+import DemandPermissionComponent from 'pageComponents/_common/security/DemandPermissionComponent'
 
 const drawerWidth = 240
 
@@ -81,8 +73,7 @@ function ListItemLink(props) {
     )
 }
 
-export default function AdminHome({ history }) {
-    const { path } = useRouteMatch()
+export default function AdminHome() {
     const classes = useStyles()
 
     return (
@@ -91,15 +82,15 @@ export default function AdminHome({ history }) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Link component={RouterLink} to="/">
-                        <img src={AirlineLogo} height="50px" style={{ marginRight: 20 }} />
+                        <img src={AirlineLogo} height="50px" style={{ marginRight: 20 }} alt="Airline Hydraulics" />
                     </Link>
-                    
+
                     <Text variant="h4" style={{ marginTop: 10 }}>
                         Admin Tools
                     </Text>
                 </Toolbar>
             </AppBar>
-            
+
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -107,67 +98,29 @@ export default function AdminHome({ history }) {
             >
                 <div className={classes.toolbar} />
                 <List aria-label="main mailbox folders">
-                    <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon/>}/>
-                    <Divider/>
-                    <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon/>}/>
-                    <Divider/>
-                    <ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon/>}/>
-                    <Divider/>
-                    <ListItemLink to="/admin-dashboard/downpayments" primary="Downpayments" icon={<CreditCard/>}/>
-                    <Divider/>
-                    <ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail/>}/>
-                    <Divider/>
-                    <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn/>}/>
-                    <Divider/>
+                    <ListItemLink to="/admin-dashboard" primary="Dashboard" icon={<DashboardIcon />} />
+                    <Divider />
+                    <ListItemLink to="/admin-dashboard/item-creation" primary="Item Creation" icon={<AddBoxIcon />} />
+                    <Divider />
+                    <ListItemLink to="/admin-dashboard/open-orders" primary="Open Orders" icon={<CodeIcon />} />
+                    <Divider />
+                    <ListItemLink to="/admin-dashboard/downpayments" primary="Downpayments" icon={<CreditCard />} />
+                    <Divider />
+                    <ListItemLink to="/admin-dashboard/new-customers" primary="New Customers" icon={<ContactMail />} />
+                    <Divider />
+                    <ListItemLink to="/admin-dashboard/settings" primary="System Settings" icon={<FlashOn />} />
+                    <Divider />
                     <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS}>
-                        <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<MonetizationOn/>}/>
-                        <Divider/>
+                        <ListItemLink to="/admin-dashboard/order-payment-methods" primary="Order Payment Methods" icon={<MonetizationOn />} />
+                        <Divider />
                     </DemandPermissionComponent>
-                    
+
                 </List>
             </Drawer>
-            
+
             <main className={classes.content}>
                 <AppHeader />
-                <Switch>
-                    <Route exact path={path}>
-                        <AdminDashboard />
-                    </Route>
-                    
-                    <Route path="/admin-dashboard/item-creation">
-                        <ItemCreation history={history} />
-                    </Route>
-                    
-                    <Route path="/admin-dashboard/open-orders">
-                        <OpenOrders />
-                    </Route>
-                    
-                    <Route exact path="/admin-dashboard/downpayments">
-                        <DownpaymentsTable />
-                    </Route>
-
-                    <Route exact path="/admin-dashboard/downpayments/add">
-                        <AddDownpayment />
-                    </Route>
-
-                    <Route exact path="/admin-dashboard/new-customers">
-                        <NewCustomerAdmin />
-                    </Route>
-                    
-                    <Route exact path="/admin-dashboard/new-customers/:regId">
-                        <EditNewCustomer />
-                    </Route>
-                    
-                    <Route path="/admin-dashboard/settings">
-                        <Settings />
-                    </Route>
-
-                    <Route path="/admin-dashboard/order-payment-methods">
-                        <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS} errorMessage='Permission Denied'>
-                            <OrderPaymentMethods />
-                        </DemandPermissionComponent>
-                    </Route>
-                </Switch>
+                <Outlet />
             </main>
         </div>
     )

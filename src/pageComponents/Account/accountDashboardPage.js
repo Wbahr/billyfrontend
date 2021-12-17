@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import MyAccountNavbar from './uiComponents/myAccountNavbar'
 import PaymentManagementPage from './accountPages/paymentManagement'
@@ -18,7 +17,8 @@ const AccountInfoContainer = styled.div`
   margin: 0 auto;
 `
 
-export default function AccountDashboard({ history }) {
+export default function AccountDashboard() {
+    
     const [pageComponent, setPageComponent] = useState()
     const { page } = useParams()
 
@@ -46,9 +46,9 @@ export default function AccountDashboard({ history }) {
     ]
     useEffect(() => {
         if (page === 'dashboard'){
-            setPageComponent(<AccountManagementPage history={history}/>)
+            setPageComponent(<AccountManagementPage/>)
         } else if (page === 'user-settings'){
-            setPageComponent(<UserSettingsPage history={history}/>)
+            setPageComponent(<UserSettingsPage/>)
         } else if (page === 'shipping-preferences'){
             setPageComponent(<ShipToManagementPage/>)
         } else if (page === 'payment-preferences'){
@@ -60,14 +60,10 @@ export default function AccountDashboard({ history }) {
 
     return (
         <div>
-            <MyAccountNavbar history={history} page={page} AccountPages={AccountPages}/>
+            <MyAccountNavbar page={page} AccountPages={AccountPages}/>
             <AccountInfoContainer>  
                 {pageComponent}      
             </AccountInfoContainer>
         </div>
     )
-}
-
-AccountDashboard.propTypes = {
-    history: PropTypes.object.isRequired
 }

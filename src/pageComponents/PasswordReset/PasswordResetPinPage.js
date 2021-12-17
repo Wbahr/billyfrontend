@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import PasswordRequirements from './uiComponents/passwordRequirements'
 import Context from 'setup/context'
 import { ErrorAlert, InfoAlert } from '../../styles/alerts'
+import { useNavigate } from 'react-router'
 
 const MUTATION_PASSWORD_RESET = gql`
   mutation SubmitPasswordReset($passwordInfo: PasswordResetSubmitInputGraphType){
@@ -68,11 +69,7 @@ const PasswordResetPinPage = (props) => {
         passwordResetEmail,
         setPasswordResetEmail
     } = useContext(Context)
-
-    const {
-        history
-    } = props
-
+    const navigate = useNavigate()
     const [resetPin, setResetPin] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -84,7 +81,7 @@ const PasswordResetPinPage = (props) => {
             const responseData = data.submitPasswordReset
             if (responseData.success) {
                 setPasswordResetEmail('')
-                history.push('/login?passwordReset=true')
+                navigate('/login?passwordReset=true')
             } else {
                 setErrorMessage(responseData.message)
                 setPassword('')
@@ -112,7 +109,7 @@ const PasswordResetPinPage = (props) => {
     return (
         <ResetPageContainer>
 
-            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')} />
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => navigate('/')} />
             
             <InfoAlert>
                 <strong>

@@ -46,7 +46,7 @@ const DivLineItemTotal = styled(DivLineItem)`
 	}
 `
 
-export default function OrderSummary({ history }) {
+export default function OrderSummary() {
     const {
         cartPricing
     } = useContext(Context)
@@ -110,7 +110,7 @@ export default function OrderSummary({ history }) {
                         )}
                     </p>
                 </DivLineItemTotal>
-                <CheckoutButtons history={history} />
+                <CheckoutButtons />
             </Div>
         </>
     )
