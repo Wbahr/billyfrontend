@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 
 const DivOption = styled.div`
@@ -24,9 +25,9 @@ const DivOption = styled.div`
 export default function ImpersonationSearchComponent(props) {
     const {
         open,
-        options,
-        history
+        options
     } = props
+    const navigate = useNavigate()
 
     const Container = styled.div`
     visibility: ${open ? 'visible' : 'hidden'};
@@ -40,7 +41,7 @@ export default function ImpersonationSearchComponent(props) {
 
     const Links = options.map((option, index) => {
         return (
-            <DivOption key={`impersonation-option-${index}`} onClick={() => {history.push(option.link)}}>
+            <DivOption key={`impersonation-option-${index}`} onClick={() => {navigate(option.link)}}>
                 {option.label}
             </DivOption>
         )

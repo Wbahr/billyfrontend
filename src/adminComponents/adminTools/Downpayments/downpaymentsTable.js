@@ -2,12 +2,12 @@ import React, { useState, useMemo, useContext } from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy  } from 'react-table'
 import { useQuery } from '@apollo/client'
-import { GET_PREPAYMENTS } from 'setup/providerGQL'
+import { GET_PREPAYMENTS } from '../../../setup/providerGQL'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom' 
+import { Link, useNavigate } from 'react-router-dom' 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { ButtonBlack } from 'styles/buttons'
+import { ButtonBlack } from '../../../styles/buttons'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
 import { CircularProgress } from '@material-ui/core'
@@ -103,7 +103,8 @@ const DivRowSpace = styled.div`
     flex-wrap: wrap;
 `
 
-export default function OrdersTable({ history }) {
+export default function OrdersTable() {
+    const navigate = useNavigate()
     const context = useContext(Context)
     const [data, setData] = useState([])
     const [dateFrom, setDateFrom] = useState(null)
@@ -257,7 +258,7 @@ export default function OrdersTable({ history }) {
                                             {row.cells.map(cell => {
                                                 if (cell.column.id === 'orderNumber') {
                                                     return (
-                                                        <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                                        <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                             {cell.render('Cell')}
                                                         </TDrow>
                                                     )

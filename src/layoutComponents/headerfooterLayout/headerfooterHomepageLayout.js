@@ -2,7 +2,9 @@ import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import Header from './header'
 import Footer from './footer'
-import { airlineRedTheme } from 'styles/theme'
+import { airlineRedTheme } from '../../styles/theme'
+import ErrorBoundary from 'setup/errorBoundary'
+import { Outlet } from 'react-router'
 
 const Div = styled.div`
   display: flex;
@@ -23,16 +25,18 @@ const ContentScreenContainer = styled.div`
   flex-grow: 99;
 `
 
-export default function HeaderFooterLayout(props) {
+export default function HeaderFooterLayout() {
     return (
-        <Div>
-            <ThemeProvider theme={airlineRedTheme}>
-                <Header {...props}/>
-                <ContentScreenContainer {...props}>
-                    {props.children}
-                </ContentScreenContainer>
-                <Footer {...props}/>
-            </ThemeProvider>
-        </Div>
+        <ErrorBoundary>
+            <Div>
+                <ThemeProvider theme={airlineRedTheme}>
+                    <Header />
+                    <ContentScreenContainer>
+                        <Outlet />
+                    </ContentScreenContainer>
+                    <Footer />
+                </ThemeProvider>
+            </Div>
+        </ErrorBoundary>
     )
 }

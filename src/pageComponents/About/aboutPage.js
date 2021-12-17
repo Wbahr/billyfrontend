@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import TransactionalServices from './aboutSubPages/transactionalServicesPage'
 
 export default function AboutPage() {
@@ -18,8 +17,4 @@ export default function AboutPage() {
             {pageComponent}
         </>
     )
-}
-
-AboutPage.propTypes = {
-    history: PropTypes.object.isRequired
 }

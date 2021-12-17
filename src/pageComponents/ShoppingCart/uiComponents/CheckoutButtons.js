@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Context from '../../../setup/context'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { cartMissingItemNote } from 'pageComponents/_common/helpers/generalHelperFunctions'
+import { useNavigate } from 'react-router'
 
 const DivButtonContainer = styled.div`
 	margin: auto auto 0 auto;
@@ -41,8 +42,8 @@ const DivQuoteButton = styled(DivCheckoutButton)`
 	background-color: #535353;
 `
 
-const CheckoutButtons = ({ history }) => {
-
+export default function CheckoutButtons() {
+    const navigate = useNavigate()
     const {
         userInfo,
         cart,
@@ -56,13 +57,13 @@ const CheckoutButtons = ({ history }) => {
     
     const moveToCheckoutHandler = () => {
         if (!hasZeroPriceItem && !missingItemNote) {
-            history.push('/checkout')
+            navigate('/checkout')
         }
     }
 
     const moveToCreateQuoteHandler = () => {
         if (!hasZeroPriceItem && !missingItemNote) {
-            history.push('/create-quote')
+            navigate('/create-quote')
         }
     }
 
@@ -107,5 +108,3 @@ const CheckoutButtons = ({ history }) => {
         </>
     )
 }
-
-export default CheckoutButtons

@@ -20,6 +20,7 @@ import { CSVLink } from 'react-csv'
 import QuantityInput from '../../_common/form/quantityInput'
 import AirlineChip from '../../_common/styledComponents/AirlineChip'
 import Table from '../../_common/table'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
   display: flex;
@@ -76,13 +77,14 @@ const ButtonExport = styled.div`
 	}
 `
 
-export default function ItemPurchaseHistoryTable({ history }) {
+export default function ItemPurchaseHistoryTable() {
     const context = useContext(Context)
     const [data, setData] = useState([])
     const [filter, setFilter] = useState('')
     const [dateFrom, setDateFrom] = useState(null)
     const [dateTo, setDateTo] = useState(null)
     const [showModal, setShowModal] = useState(false)
+    const navigate = useNavigate()
 	
     useEffect(() => {
         context.getPurchaseHistory()
@@ -111,7 +113,7 @@ export default function ItemPurchaseHistoryTable({ history }) {
     }, [context.purchaseHistory, filter, dateFrom, dateTo])
 	
     const handleViewOrderHistory = ({ row }) => () => {
-        history.push(`/account/orders?filter=${row.values.itemId}`)
+        navigate(`/account/orders?filter=${row.values.itemId}`)
     }
 	
     const handleAddToCartAmtChange = ({ data, row }) => ({ target: { value } }) => {

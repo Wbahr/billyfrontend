@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { FRAGMENT_ITEM_AVAILABILITY } from 'setup/gqlFragments/gqlItemFragments'
+import { FRAGMENT_ITEM_AVAILABILITY } from './gqlFragments/gqlItemFragments'
 
 export const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){

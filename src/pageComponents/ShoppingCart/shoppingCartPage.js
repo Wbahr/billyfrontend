@@ -47,12 +47,12 @@ export default function ShoppingCartPage(props) {
                 </Helmet>
 
                 <DivShoppingCartCol>
-                    <ShoppingCart history={props.history} />
-                    <SubtotalBox history={props.history} />
+                    <ShoppingCart />
+                    <SubtotalBox />
                 </DivShoppingCartCol>
 
                 <DivOrderTotalCol>
-                    <OrderSummary history={props.history} />
+                    <OrderSummary />
                 </DivOrderTotalCol>
             </DivContainer>
         </>

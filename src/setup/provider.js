@@ -30,9 +30,10 @@ import {
     removeAuthInfo
 } from '../pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ITEM_CUSTOMER_PART_NUMBERS, GET_ITEM_SOURCE_LOCATIONS } from './gqlQueries/gqlItemQueries'
-import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER, WEB_USER } from 'pageComponents/_common/constants/UserTypeConstants'
+import { AIRLINE_ENGINEER_USER, GUEST, IMPERSONATOR_USER, WEB_USER } from '../pageComponents/_common/constants/UserTypeConstants'
+import { useLocation, useNavigate } from 'react-router'
 
-export default function Provider({ history, children }) {
+export default function Provider({ children }) {
     const didMountRef = useRef(false)
     const invoicesLoaded = useRef(false)
     const lastShoppingCartPayload = useRef(null)
@@ -41,6 +42,8 @@ export default function Provider({ history, children }) {
     const [orderNotes, setOrderNotes] = useState('')
     const [shoppingCartPricing, setShoppingCartPricing] = useState({ state: 'stable', subTotal: '--', tariff: '--' })
     const [userInfo, setUserInfo] = useState(null)
+    const navigate = useNavigate()
+    const location = useLocation()
     const handleSetUserInfo = newUserInfo => setUserInfo(newUserInfo ? {
         ...newUserInfo,
         isAirlineEmployee: newUserInfo?.role === AIRLINE_ENGINEER_USER || newUserInfo?.role === IMPERSONATOR_USER,
@@ -80,7 +83,7 @@ export default function Provider({ history, children }) {
 
     const navAwayRoutes = ['/cart', '/checkout', '/create-quote']
     const partialNavAwayRoutes = ['/account']
-    const currentPath = history.location.pathname
+    const currentPath = location.pathname
     const resetOnImpersonate = navAwayRoutes.includes(currentPath) || partialNavAwayRoutes.some(route => currentPath.includes(route))
 
     const [getAuthenticationHeartbeat] = useMutation(GET_AUTHENTICATION_HEARTBEAT, {
@@ -205,7 +208,7 @@ export default function Provider({ history, children }) {
                 localStorage.setItem('refreshToken', refreshToken)
                 manageUserInfo('end-impersonation', userInfo, impersonationUserInfo)
                 retrieveShoppingCart('retrieve')
-                if (resetOnImpersonate) history.push('/')
+                if (resetOnImpersonate) navigate('/')
             }
         }
     })
@@ -402,7 +405,7 @@ export default function Provider({ history, children }) {
             localStorage.setItem('imperInfo', JSON.stringify(impersonationInfo))
             localStorage.removeItem('shoppingCartToken')
             handleSetUserInfo(userInfo)
-            if (resetOnImpersonate) history.push('/')
+            if (resetOnImpersonate) navigate('/')
             setShoppingCart(null)
             setOrdersCache([])
             setInvoiceCache([])
@@ -446,6 +449,8 @@ export default function Provider({ history, children }) {
             setItemPrices([])
             setCustomerPartNumbers([])
             break
+        default:
+            break;
         }
         setUserType({ current: currentUserType, previous: !userType.current ? GUEST : userType.current })
     }
@@ -480,7 +485,7 @@ export default function Provider({ history, children }) {
     function logoutUser() {
         if (window.drift?.api) window.drift.api.widget.show()
         manageUserInfo('logout')
-        history.push('/')
+        navigate('/')
         emptyCart()
         showTopAlert('You have been logged out.')
         window.setTimeout(removeTopAlert, 2000)

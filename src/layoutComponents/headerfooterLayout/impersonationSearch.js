@@ -5,9 +5,9 @@ import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
 import Context from '../../setup/context'
 import DebounceInput from 'react-debounce-input'
 import { useLazyQuery } from '@apollo/client'
-import { GET_ALL_USER_CARTS, IMPERSONATION_SEARCH } from 'setup/providerGQL'
-import { CartsDropdownMenu, DropDownMenuAction } from 'pageComponents/_common/dropdown-menu/DropdownMenu'
-import Loader from 'pageComponents/_common/loader'
+import { GET_ALL_USER_CARTS, IMPERSONATION_SEARCH } from '../../setup/providerGQL'
+import { CartsDropdownMenu, DropDownMenuAction } from '../../pageComponents/_common/dropdown-menu/DropdownMenu'
+import Loader from '../../pageComponents/_common/loader'
 
 const Container = styled.div`
   display: flex;

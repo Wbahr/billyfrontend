@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import queryString from 'query-string'
+import { useLocation, useNavigate } from 'react-router'
 
 const initialSearchState = {
     results: [],
@@ -19,7 +20,9 @@ export const useSearchState = (initialValue) => {
 }
 
 
-export const useSearchQueryParams = (history) => {
+export const useSearchQueryParams = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
     const setQueryParam = (fieldName, value) => {
         let search = ''
         if (value){
@@ -30,13 +33,13 @@ export const useSearchQueryParams = (history) => {
             search = queryString.stringify(parsed)
         }
 
-        history.push({ pathname: '/search', search })
+       navigate({ pathname: '/search', search })
     }
 	
     const clearSetQueryParam = () => {
         const { searchTerm } = queryString.parse(location.search)
         const search = queryString.stringify({ searchTerm })
-        history.push({ pathname: '/search', search })
+        navigate({ pathname: '/search', search })
     }
 
     const getParsedQueryString = () => {
@@ -49,7 +52,7 @@ export const useSearchQueryParams = (history) => {
 	
     useEffect(() => {
         setParsedQueryString(getParsedQueryString())
-    }, [history.location.search])
+    }, [location.search])
 	
     const { searchTerm, innerSearchTerms='', sortType='relevancy', nonweb='false', resultPage, 
         selectedCategoryId, brands: selectedBrands, selectedAttributes } = parsedQueryString

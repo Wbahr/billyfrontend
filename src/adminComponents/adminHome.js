@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch, Link as RouterLink } from 'react-router-dom'
+import { Routes, Route, useLocation, Link as RouterLink } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
 import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn } from '@material-ui/icons'
@@ -78,8 +78,8 @@ function ListItemLink(props) {
     )
 }
 
-export default function AdminHome({ history }) {
-    const { path } = useRouteMatch()
+export default function AdminHome() {
+    const location = useLocation()
     const classes = useStyles()
 
     return (
@@ -88,7 +88,7 @@ export default function AdminHome({ history }) {
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Link component={RouterLink} to="/">
-                        <img src={AirlineLogo} height="50px" style={{ marginRight: 20 }} />
+                        <img src={AirlineLogo} height="50px" style={{ marginRight: 20 }} alt="Airline Hydraulics" />
                     </Link>
                     
                     <Text variant="h4" style={{ marginTop: 10 }}>
@@ -121,13 +121,13 @@ export default function AdminHome({ history }) {
             
             <main className={classes.content}>
                 <AppHeader />
-                <Switch>
-                    <Route exact path={path}>
+                <Routes>
+                    <Route exact path={location}>
                         <AdminDashboard />
                     </Route>
                     
                     <Route path="/admin-dashboard/item-creation">
-                        <ItemCreation history={history} />
+                        <ItemCreation />
                     </Route>
                     
                     <Route path="/admin-dashboard/open-orders">
@@ -153,7 +153,7 @@ export default function AdminHome({ history }) {
                     <Route path="/admin-dashboard/settings">
                         <Settings />
                     </Route>
-                </Switch>
+                </Routes>
             </main>
         </div>
     )

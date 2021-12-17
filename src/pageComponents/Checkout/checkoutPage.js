@@ -8,7 +8,6 @@ import CheckoutProgress from './uiComponents/checkoutProgress'
 import { connect } from 'formik'
 import { useQuery } from '@apollo/client'
 import { Formik } from 'formik'
-import { ShippingScheduleForm } from './wizardSteps/shippingScheduleForm'
 import { ShipToForm } from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
@@ -29,6 +28,7 @@ import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSch
 import Loader from 'pageComponents/_common/loader'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import { useLocation, useNavigate } from 'react-router'
 
 const DivContainer = styled.div`
   display: flex;
@@ -102,7 +102,7 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-function CheckoutPage({ history }) {
+function CheckoutPage() {
     const context = useContext(Context)
     const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
     const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
@@ -117,8 +117,10 @@ function CheckoutPage({ history }) {
     const tomorrow = startOfTomorrow()
     const dayAfterTomorrow = add(tomorrow, { days: 1 })
     const dayOfWeek = getDay(today)
+    const location = useLocation()
+    const navigate = useNavigate()
 
-    const isQuote = history.location.pathname === '/create-quote'
+    const isQuote = location.pathname === '/create-quote'
 
     const [stepValidated, setStepValidated] = useState(
         {
@@ -136,11 +138,11 @@ function CheckoutPage({ history }) {
 
     useEffect(() => {
         if (!context.cart?.length) {
-            history.replace('/cart')
+            navigate('/cart', { replace: true })
         }
 
         if (context.userInfo?.isAirlineEngineerUser){
-            history.replace('/cart')
+            navigate('/cart', { replace: true })
         }
     }, [])
 
@@ -307,7 +309,7 @@ function CheckoutPage({ history }) {
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
                                     {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        isQuote, history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                        isQuote, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
                                 />
                             </form>
                         )}
@@ -317,7 +319,6 @@ function CheckoutPage({ history }) {
 
             <DivOrderTotalCol>
                 <CheckoutOrderSummary
-                    history={history}
                     currentStep={currentStep}
                     zipcode={taxRateRequestInfo?.zipcode || ''}
                     taxRate={taxRate}

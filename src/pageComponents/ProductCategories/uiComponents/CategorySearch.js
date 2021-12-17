@@ -65,7 +65,7 @@ const ShortBorder = styled.div`
 
 const RESULT_SIZE = 24
 
-export default function CategorySearch({ match, history }) {
+export default function CategorySearch({ categoryUrlSlug }) {
 
     const [categorySearch, setCategorySearch] = useState(null)
     const [resultPage, setResultPage] = useState(1)
@@ -75,7 +75,6 @@ export default function CategorySearch({ match, history }) {
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
     const { results, totalResults, searchTerms, sortType, brands, attributes, isSynced } = searchState
 
-    const categoryUrlSlug = match.params.categoryUrlSlug
     const categoryName = categorySearch?.category?.name
     const seoHtml = categorySearch?.category?.seoHtml
 
@@ -184,7 +183,6 @@ export default function CategorySearch({ match, history }) {
             {results && (
                 <SearchContainer
                     searchState={searchState}
-                    history={history}
                 >
                     <AppBarPlugin
                         title={categoryName}

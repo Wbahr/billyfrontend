@@ -8,6 +8,7 @@ import { GET_INVOICE } from '../../../setup/providerGQL'
 import { useQuery } from '@apollo/client'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './invoiceDetailPDF'
+import { useNavigate } from 'react-router'
 
 const isNil = val => val == null
 
@@ -114,9 +115,9 @@ const DivTotalContainer = styled.div`
     }
 `
 
-export default function InvoiceDetail({ history, invoiceId }) {
+export default function InvoiceDetail({ invoiceId }) {
     const [data, setData] = useState({})
-
+    const navigate = useNavigate()
     useQuery(GET_INVOICE, {
         fetchPolicy: 'no-cache',
         variables: {
@@ -213,7 +214,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
                     <PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
                         {({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
                     </PDFDownloadLink>
-                    <p onClick={() => {history.push('/account/invoices')}}>&laquo; Back to Invoices</p>
+                    <p onClick={() => {navigate('/account/invoices')}}>&laquo; Back to Invoices</p>
                 </DivHeader>
                 <DivOrderInfoContainer>
                     <DivOrderInfo>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router'
 import styled, { ThemeProvider } from 'styled-components'
 import { airlineRedTheme } from '../styles/theme'
 
@@ -8,11 +9,11 @@ const MainScreenContainer = styled.div`
   padding-top: 24px;
 `
 
-export default function EmptyLayout(props) {
+export default function EmptyLayout() {
     return (
         <ThemeProvider theme={airlineRedTheme}>
             <MainScreenContainer>
-                {props.children}
+                <Outlet />
             </MainScreenContainer>
         </ThemeProvider>
     )

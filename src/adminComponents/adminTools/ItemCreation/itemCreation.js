@@ -78,7 +78,7 @@ const ButtonContainer = styled.div`
 	}
 `
 
-export default function ItemCreationPage({ history }) {
+export default function ItemCreationPage() {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedSupplier, setSelectedSupplier] = useState(0)
     const [searchEnabled, setSearchEnabled] = useState(false)
@@ -193,7 +193,6 @@ export default function ItemCreationPage({ history }) {
                 <ItemCreationModal
                     submitResponse={submitResponse}
                     handleCloseModal={() => setSubmitResponse(null)}
-                    history={history}
                 />
             )}
 

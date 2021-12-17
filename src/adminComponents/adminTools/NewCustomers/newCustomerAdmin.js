@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'setup/providerGQL'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 import { ButtonRed, ButtonBlack } from 'styles/buttons'
 import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
@@ -46,7 +46,7 @@ export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState([])
     const [alertMessage, setAlertMessage] = useState(null)
     const [rejectId, setRejectId] = useState(null)
-    const { path } = useRouteMatch()
+    const { path } = useMatch()
 
     const [rejectRegistrationMutation, { error: rejectError, loading: rejectLoading }] = useMutation(REJECT_NEW_CUSTOMER, {
         onCompleted: () => {

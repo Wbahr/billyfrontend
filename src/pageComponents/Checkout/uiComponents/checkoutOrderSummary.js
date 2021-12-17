@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import Context from '../../../setup/context'
 import NumberFormat from 'react-number-format'
+import { useLocation } from 'react-router'
 
 const Div = styled.div`
   display: flex;
@@ -47,11 +48,12 @@ const DivLineItemTotal = styled(DivLineItem)`
   }
 `
 
-export default function CheckoutOrderSummary({ history, currentStep, zipcode, taxRate, taxRateLoading }) {
+export default function CheckoutOrderSummary({  currentStep, zipcode, taxRate, taxRateLoading }) {
     const { cartPricing: { subTotal, tariff } } = useContext(Context)
     const taxAmount = subTotal * taxRate
+    const location = useLocation()
 
-    const title = history.location.pathname === '/create-quote' ? 'Quote' : 'Order'
+    const title = location.pathname === '/create-quote' ? 'Quote' : 'Order'
 
     return (
         <Div>

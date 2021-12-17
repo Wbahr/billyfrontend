@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AdvancedSearch from '../modals/AdvancedSearch'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../setup/context'
 import ImpersonationSearch from './impersonationSearch'
@@ -16,8 +16,8 @@ import { Button, Menu } from '@material-ui/core'
 import queryString from 'query-string'
 
 const Nav = styled.div`
-	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
-	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
+	position: ${props => props.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
+	position: ${props => props.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
 	top: 0;
 	z-index: 4;
 `
@@ -196,10 +196,11 @@ const ImpersonationSearchRow = styled.div`
     flex-wrap: wrap;
 `
 
-export default function HeaderComponent({ history }) {
+export default function HeaderComponent() {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
-
+    const location = useLocation()
+    const navigate = useNavigate()
     const [categories, setCategories] = useState([])
     const tabDeclaration = headerTabs(categories)
     const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
@@ -251,10 +252,10 @@ export default function HeaderComponent({ history }) {
     const tabComponents = tabDeclaration.map(toMenu)
 
     const handleSearch = () => {
-        const parsedQueryString = queryString.parse(history.location.search)
+        const parsedQueryString = queryString.parse(location.search)
         const search = searchTerm?.length ? searchTerm : parsedQueryString.searchTerm
         const hasNonWebChanged = searchAsCustomer !== !!parsedQueryString.nonweb
-        if (search?.length || hasNonWebChanged) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
+        if (search?.length || hasNonWebChanged) navigate(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
     }
 
     const handleKeyPress = e => e.key === 'Enter' && handleSearch()
@@ -297,7 +298,7 @@ export default function HeaderComponent({ history }) {
             <Row style={{ justifyContent: 'center' }}>
                 {context.userInfo
                     ? <P onClick={context.logoutUser}>Sign Out</P>
-                    : <P onClick={() => history.push('/login')}>Sign In</P>
+                    : <P onClick={() => navigate('/login')}>Sign In</P>
                 }
 
                 <P>|</P>
@@ -345,7 +346,7 @@ export default function HeaderComponent({ history }) {
     )
 
     return (
-        <Nav history={history}>
+        <Nav location={location}>
             {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
             <NavTop>
                 <ReverseNavContainer>

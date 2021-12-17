@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { format as dateFormat } from 'date-fns'
 import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -86,7 +87,7 @@ const Select = styled.select`
 	margin-left: 16px;
 `
 
-export default function InvoicesTable({ history }) {
+export default function InvoicesTable() {
     const context = useContext(Context)
     const didMountRef = useRef(false)
     const [data, setData] = useState([])
@@ -94,6 +95,7 @@ export default function InvoicesTable({ history }) {
     const [showInvoiceType, setShowInvoiceType] = useState('all')
     const [dateFrom, setDateFrom] = useState(null)
     const [dateTo, setDateTo] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!didMountRef.current && context.invoiceCache.length === 0) {
@@ -292,13 +294,13 @@ export default function InvoicesTable({ history }) {
                                 {row.cells.map(cell => {
                                     if (cell.column.id === 'orderNumber') {
                                         return (
-                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                 {cell.render('Cell')}
                                             </TDrow>
                                         )
                                     } else if (cell.column.id === 'invoiceNumber') {
                                         return (
-                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/invoice-detail/${cell.value}`)}>
+                                            <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/invoice-detail/${cell.value}`)}>
                                                 {cell.render('Cell')}
                                             </TDrow>
                                         )
