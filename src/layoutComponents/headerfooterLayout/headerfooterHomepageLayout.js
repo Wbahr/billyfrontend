@@ -19,7 +19,7 @@ const ContentScreenContainer = styled.div`
   height: 100%;
   // margin-top: 110px
   // max-width: 1200px;
-  margin: 0 auto;
+  // margin: 0 auto;
   align-items: flex-start;
   justify-content: space-between;
   flex-grow: 99;
