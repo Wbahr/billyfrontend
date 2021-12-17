@@ -78,7 +78,6 @@ import NewCustomerAdmin from './adminComponents/adminTools/NewCustomers/newCusto
 import EditNewCustomer from './adminComponents/adminTools/NewCustomers/editNewCustomer'
 import OrderPaymentMethods from './adminComponents/adminTools/OrderPaymentMethods/OrderPaymentMethods'
 import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
-import AdminHome from 'adminComponents/adminHome'
 
 library.add(fab, faCheckSquare, faCoffee, faPhoneAlt, faChevronLeft, faChevronRight, faCaretDown, faCaretUp, faShare,
     faGripLines, faLock, faSave, faTimesCircle, faCalendar, faDivide, faShoppingCart, faFacebookF, faLinkedinIn, faTwitter,

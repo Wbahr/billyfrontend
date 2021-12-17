@@ -18,7 +18,7 @@ const DemandPermissionComponent = (props) => {
     //Forces the 'children' component into an array.
     //It could be an array or an object depending on how many
     //child components are provided.
-    const childComponentArray = (children || []).constructor.name == 'Array'
+    const childComponentArray = (children || []).constructor.name === 'Array'
         ? [...children]
         : [children || {}]
 

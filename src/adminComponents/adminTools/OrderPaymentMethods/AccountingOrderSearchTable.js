@@ -155,7 +155,7 @@ const AccountingOrderSearchTable = (props) => {
 
     const [selectedOrderNumber, setSelectedOrderNumber] = useState(null)
 
-    const { error, loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
+    const { loading: isOrdersLoading } = useQuery(GET_ACCOUNTING_ORDERS, {
         onCompleted: result => {
             setOrderData(result.ordersForAccounting)
         },
@@ -189,7 +189,7 @@ const AccountingOrderSearchTable = (props) => {
     }
 
     const setPageNumberHandler = (newPageNumber) => {
-        if (newPageNumber != pageNumber){
+        if (newPageNumber !== pageNumber){
             setSelectedOrderNumber(null)
             setPageNumber(newPageNumber)
         }

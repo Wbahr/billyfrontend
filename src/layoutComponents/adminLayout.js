@@ -1,7 +1,6 @@
 import AdminHome from 'adminComponents/adminHome'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
 import React from 'react'
-import { Outlet } from 'react-router'
 import Auth from 'setup/auth'
 import ErrorBoundary from 'setup/errorBoundary'
 import styled, { ThemeProvider } from 'styled-components'

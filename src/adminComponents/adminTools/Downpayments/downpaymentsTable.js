@@ -109,7 +109,7 @@ export default function OrdersTable() {
     const [data, setData] = useState([])
     const [dateFrom, setDateFrom] = useState(null)
 	
-    const { error } = useQuery(GET_PREPAYMENTS, {
+    useQuery(GET_PREPAYMENTS, {
         onCompleted: result => {
             setData(result.getRemittances)
         },
