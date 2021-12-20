@@ -17,7 +17,7 @@ import { FormikFormFieldError } from 'styles/formikForm'
 import Required from '../../_common/required'
 import PaperworkModal from '../uiComponents/PaperworkModal'
 import DatePicker from 'react-datepicker'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useNavigate, useLocation } from 'react-router'
 
 const WrapForm = styled.div`

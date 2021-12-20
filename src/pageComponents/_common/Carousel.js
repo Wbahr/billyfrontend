@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { scrollHorizontal } from './helpers/generalHelperFunctions'
-import { ChevronLeft, ChevronRight } from '@material-ui/icons'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React from 'react'
 import styled from 'styled-components'
 

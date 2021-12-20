@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
-import { Checkbox, Grid } from '@material-ui/core'
+import { Checkbox, Grid } from '@mui/material'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import { DivNavigation } from '../../../styles/divs'
 import Context from '../../../setup/context'

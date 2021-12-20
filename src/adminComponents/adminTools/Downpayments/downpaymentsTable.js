@@ -10,7 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { ButtonBlack } from '../../../styles/buttons'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 
 const TableContainer = styled.div`
 	display: flex;

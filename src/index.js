@@ -19,7 +19,7 @@ import ContextProvider from './setup/provider'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import { logout } from './pageComponents/_common/helpers/generalHelperFunctions'
-import { MuiThemeProvider, createTheme } from '@material-ui/core/styles'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { PRIMARY_RED, SECONDARY_GRAY } from './pageComponents/_common/constants/colors'
 import './index.css'
 import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom'
@@ -179,7 +179,7 @@ const muiTheme = createTheme(Object.assign({}, defaults, {
 }))
 
 ReactDOM.render(
-    <MuiThemeProvider theme={muiTheme}>
+    <ThemeProvider theme={muiTheme}>
         <Helmet>
             <title>Airline Hydraulics</title>
         </Helmet>
@@ -264,6 +264,6 @@ ReactDOM.render(
                 </Route>
             </Routes>
         </BrowserRouter >
-    </MuiThemeProvider >
+    </ThemeProvider >
     , document.getElementById('index')
 )

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Store as BrandIcon } from '@material-ui/icons'
+import { Store as BrandIcon } from '@mui/icons-material'
 import clsx from 'clsx'
 
 const DivTitle = styled.div`

@@ -62,6 +62,7 @@ const Img = styled.img`
 const Label = styled.label`
   margin: 0;
   font-size: 14px;
+  padding: 3px;
 `
 
 const LabelBold = styled(Label)`

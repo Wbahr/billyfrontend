@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Checkbox } from '@material-ui/core'
+import { Checkbox } from '@mui/material'
 import Modal from '../../_common/modal'
 import styled from 'styled-components'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
