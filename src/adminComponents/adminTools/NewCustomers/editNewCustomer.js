@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useMatch, useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router'
 import Loader from '../../../pageComponents/_common/loader'
 import { useQuery, useMutation } from '@apollo/client'
 import { GET_NEW_CUSTOMER, SAVE_NEW_CUSTOMER } from '../../../setup/providerGQL'
@@ -11,7 +11,7 @@ import Modal from '../../../pageComponents/_common/modal'
 
 export default function EditNewCustomer() {
     const { regId } = useParams()
-    const { path } = useMatch()
+    const location = useLocation()
     const [data, setData] = useState(null)
     const [error, setError] = useState(null)
     const [saved, setSaved] = useState(false)
@@ -52,7 +52,7 @@ export default function EditNewCustomer() {
                 <>
                     <Modal open={saved} onClose={() => setSaved(false)} >
                         <ShowInfoAlert message="Saved Successfully" />
-                        <Link to={`${path.split('/:')[0]}`}>Go Back to New Registrations</Link>
+                        <Link to={`${location.pathname.split('/:')[0]}`}>Go Back to New Registrations</Link>
                     </Modal>
                     <NewCustomerForm 
                         useExpandedMode={true}

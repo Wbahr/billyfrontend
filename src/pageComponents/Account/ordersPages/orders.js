@@ -11,7 +11,7 @@ import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
 import { parse } from 'query-string'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router'
 
 const TableContainer = styled.div`

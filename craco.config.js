@@ -13,6 +13,18 @@ const webpack = require('webpack')
 const path = require('path');
 
 module.exports = {
+    babel: {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+          ],
+          "plugins": [
+            "babel-plugin-styled-components",
+            ["@babel/plugin-proposal-class-properties", { "loose": true }],
+            "@babel/plugin-transform-regenerator",
+            "@babel/plugin-transform-destructuring"
+          ]
+    },
     webpack: {
         configure: (webpackConfig, { env, paths }) => { 
             webpackConfig.ignoreWarnings = [/Failed to parse source map/]
@@ -23,6 +35,10 @@ module.exports = {
                 "zlib": require.resolve("browserify-zlib"),
                 "stream": require.resolve("stream-browserify"),
                 "buffer": require.resolve("buffer/"),
+            };
+            webpackConfig.resolve.alias = {
+                /* https://mui.com/guides/styled-engine/ */
+                '@mui/styled-engine': '@mui/styled-engine-sc'
             };
             //Set the build folder to dist/
             paths.appBuild = webpackConfig.output.path = path.resolve('dist/');

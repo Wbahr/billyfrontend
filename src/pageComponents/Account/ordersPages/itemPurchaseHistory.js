@@ -7,7 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import { format as dateFormat } from 'date-fns'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import NumberFormat from 'react-number-format'
 import {
     exportToExcel,

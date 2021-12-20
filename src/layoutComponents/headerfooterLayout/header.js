@@ -12,7 +12,7 @@ import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropd
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
 import { GET_ROOT_CATEGORIES_HEADER } from 'setup/providerGQL'
-import { Button, Menu } from '@material-ui/core'
+import { Button, Menu } from '@mui/material'
 import queryString from 'query-string'
 
 const Nav = styled.div`

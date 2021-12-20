@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { ButtonBlack, ButtonRed } from 'styles/buttons'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 
 const SpinnerDiv = styled.div`
 	display: flex;

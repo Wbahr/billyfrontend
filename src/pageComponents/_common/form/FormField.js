@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
-import { TextField, Grid, Typography as Text } from '@material-ui/core'
-import { Autocomplete } from '@material-ui/lab'
+import { TextField, Grid, Typography as Text } from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete'
 import { searchObjectArrayForString } from '../helpers/generalHelperFunctions'
 
 export const MemoizedField = props => {

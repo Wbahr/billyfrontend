@@ -17,7 +17,7 @@ import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import IncrementDecrementButton from 'pageComponents/_common/IncrementDecrementButton'
 import DatePicker from 'react-datepicker'
-import { Checkbox, Grid } from '@material-ui/core'
+import { Checkbox, Grid } from '@mui/material'
 import { format, sub } from 'date-fns'
 import { useNavigate } from 'react-router'
 
@@ -488,7 +488,7 @@ export default function ShoppingCartItem(props) {
                                                                 <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
                                                             </EditPriceIcon>
                                                         </div>
-                                                        {userInfo.isImpersonatorUser && (
+                                                        {userInfo.isImpersonatorUser && impersonatedCompanyInfo && (
                                                             <div style={{ display: 'flex', fontSize: '0.85rem' }}>
                                                                 <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/itemsummarylines.aspx?CompanyId=AIRLINE&CustomerId=${impersonatedCompanyInfo.customerIdP21}&ItemId=${itemDetails.itemCode}&CurrentDate=${currentDate}%20AM&BeginningDate=${beginningDate}&ShowComponents=False&ProductGroupId=&SupplierId=0&CustomerName=${impersonatedCompanyInfo.customerName}`}>Previous Purchases</a>
                                                             </div>

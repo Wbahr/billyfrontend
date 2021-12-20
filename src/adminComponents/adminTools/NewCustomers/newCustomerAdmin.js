@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useMutation, useLazyQuery } from '@apollo/client'
 import Loader from 'pageComponents/_common/loader'
 import { GET_NEW_CUSTOMERS, REJECT_NEW_CUSTOMER, APPROVE_NEW_CUSTOMER } from 'setup/providerGQL'
-import { Link, useMatch } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { ButtonRed, ButtonBlack } from 'styles/buttons'
 import { ShowInfoAlert, ShowErrorAlert } from 'styles/alerts'
 import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
@@ -32,7 +32,7 @@ const Container = styled.div`
 const DivRow = styled.div`
     display: flex;
     width: 90%;
-    justify-content: space-between;
+    justifyContent: space-between;
 `
 
 const Styles = styled.div`
@@ -46,7 +46,7 @@ export default function NewCustomerAdmin() {
     const [newCustomers, setNewCustomers] = useState([])
     const [alertMessage, setAlertMessage] = useState(null)
     const [rejectId, setRejectId] = useState(null)
-    const { path } = useMatch()
+    const location = useLocation()
 
     const [rejectRegistrationMutation, { error: rejectError, loading: rejectLoading }] = useMutation(REJECT_NEW_CUSTOMER, {
         onCompleted: () => {
@@ -83,7 +83,7 @@ export default function NewCustomerAdmin() {
     const tableButtonStyle = { height: 24, fontSize: 'inherit' }
     
     const renderEditLink = ({ row: { values: { id } } }) => {
-        return <Link to={`${path}/${id}`}>Edit</Link>
+        return <Link to={`${location.pathname}/${id}`}>Edit</Link>
     }
     const formatDateTime = ({ value }) => format(parseISO(value), 'MMM do yy p')
     

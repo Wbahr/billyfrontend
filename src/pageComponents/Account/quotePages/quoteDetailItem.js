@@ -6,7 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import NumberFormat from 'react-number-format'
 import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { getThumbnailImagePath, getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import QuantityInput from '../../_common/form/quantityInput'
 import AirlineChip from '../../_common/styledComponents/AirlineChip'
 

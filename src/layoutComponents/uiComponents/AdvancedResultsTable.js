@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy } from 'react-table'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 
 const TableContainer = styled.div`
 	display: flex;

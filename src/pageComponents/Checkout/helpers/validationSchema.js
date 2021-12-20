@@ -1,4 +1,4 @@
-import { ErrorSharp } from '@material-ui/icons'
+import { ErrorSharp } from '@mui/icons-material'
 
 const { object, string, boolean, array } = require('yup')
 

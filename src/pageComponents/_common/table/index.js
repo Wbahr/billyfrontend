@@ -8,7 +8,7 @@ import {
     TableHead, TablePagination,
     TableRow,
     TableSortLabel
-} from '@material-ui/core'
+} from '@mui/material'
 import Loader from '../loader'
 import React from 'react'
 import styled from 'styled-components'

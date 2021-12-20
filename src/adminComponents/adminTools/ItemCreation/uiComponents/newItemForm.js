@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import * as Yup from 'yup'
 import { useMutation } from '@apollo/client'
 import { MemoizedField } from 'pageComponents/_common/form/FormField'

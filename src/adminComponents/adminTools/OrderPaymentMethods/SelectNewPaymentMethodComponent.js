@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import gql from 'graphql-tag'
 import { ButtonBlack } from 'styles/buttons'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 import StripePaymentSection from 'pageComponents/Checkout/uiComponents/stripePayment'
 
 const SpinnerDiv = styled.div`

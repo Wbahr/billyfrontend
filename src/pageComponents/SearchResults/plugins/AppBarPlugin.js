@@ -1,9 +1,9 @@
 import React from 'react'
-import { IconButton, Typography } from '@material-ui/core'
-import { ChevronLeft as ChevronLeftIcon, Tune as FilterIcon } from '@material-ui/icons'
+import { IconButton, Typography } from '@mui/material'
+import { ChevronLeft as ChevronLeftIcon, Tune as FilterIcon } from '@mui/icons-material'
 import clsx from 'clsx'
 import styled from 'styled-components'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 
 const AppBar = styled.div`
 	z-index: 1;

@@ -9,7 +9,7 @@ import AirlineChip from '../../../pageComponents/_common/styledComponents/Airlin
 import LocationsModal from '../../_common/modals/LocationsModal'
 import CustomerPartModal from '../../_common/modals/CustomerPartModal'
 import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from '../../../pageComponents/_common/constants/UserTypeConstants'
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from '@mui/material/Tooltip'
 
 const DivItemResultContainer = styled.div`
 	display: flex;

@@ -1,5 +1,5 @@
 import Modal from '../modal'
-import { Grid, Typography as Text } from '@material-ui/core'
+import { Grid, Typography as Text } from '@mui/material'
 import { ButtonRed } from '../../../styles/buttons'
 import React from 'react'
 

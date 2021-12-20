@@ -1,6 +1,6 @@
 import React from 'react'
-import { Close as CloseIcon } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/core/styles'
+import { Close as CloseIcon } from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 
 const containerStyle = {
     display: 'flex',

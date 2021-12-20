@@ -8,7 +8,7 @@ import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import QuantityInput from '../../_common/form/quantityInput'
 import AirlineChip from '../../_common/styledComponents/AirlineChip'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { format as dateFormat } from 'date-fns'
 
 const DivContainer = styled.div`

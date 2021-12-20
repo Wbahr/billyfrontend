@@ -6,7 +6,7 @@ import gql from 'graphql-tag'
 import AccountingOrderSearchTable from './AccountingOrderSearchTable'
 import { ButtonBlack } from 'styles/buttons'
 import SelectPaymentMethodComponent from './SelectPaymentMethodComponent'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 import AccountingOrderAuditTable from './AccountingOrderAuditTable'
 
 const SectionHeader = styled.h3`

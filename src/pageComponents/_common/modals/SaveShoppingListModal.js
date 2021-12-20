@@ -5,7 +5,7 @@ import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../form/inputv2'
 import Select from '../form/select'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 
 const DivRow = styled.div`
   display: flex;

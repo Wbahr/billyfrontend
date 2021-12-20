@@ -75,7 +75,14 @@ export default function Settings() {
     useQuery(GET_ALL_SETTINGS, {
         fetchPolicy: 'no-cache',
         onCompleted: result => {
-            setSettingsData(result.appSettings)
+            setSettingsData({               
+                contactUsNotificationEmails: result.appSettings.contactUsNotificationEmails,
+                newCustomerNotificationEmails: result.appSettings.newCustomerNotificationEmails,
+                emailFrom: result.appSettings.emailFrom,
+                siteBaseUrl: result.appSettings.siteBaseUrl,
+                adminDashNewCustomersRelativeUrl: result.appSettings.adminDashNewCustomersRelativeUrl,
+                orderConfirmationEmailRecipients: result.appSettings.orderConfirmationEmailRecipients || [],
+            })
         }
     })
 

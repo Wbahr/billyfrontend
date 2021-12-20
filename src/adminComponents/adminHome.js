@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link as RouterLink, Outlet } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@material-ui/core'
-import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn, MonetizationOn } from '@material-ui/icons'
+import { makeStyles } from '@mui/styles'
+import { Drawer, AppBar, CssBaseline, Toolbar, Link, List, ListItem, Divider, ListItemText, ListItemIcon, Typography as Text } from '@mui/material'
+import { AddBox as AddBoxIcon, Dashboard as DashboardIcon, Code as CodeIcon, ContactMail, CreditCard, FlashOn, MonetizationOn } from '@mui/icons-material'
 import AirlineLogo from '../imgs/airline/airline_vector.png'
 
 import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'

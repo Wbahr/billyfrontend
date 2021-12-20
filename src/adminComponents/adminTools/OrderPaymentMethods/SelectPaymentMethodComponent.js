@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ButtonBlack } from 'styles/buttons'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 import SelectNewPaymentMethodComponent from './SelectNewPaymentMethodComponent'
 import SelectExistingPaymentMethodsComponent from './SelectExistingPaymentMethodComponent'
 
