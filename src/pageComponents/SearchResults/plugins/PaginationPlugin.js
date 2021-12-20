@@ -21,7 +21,6 @@ export default function PaginationPlugin({ totalResults, resultSize = DEFAULT_RE
             <Pagination
                 count={Math.ceil(totalResults / resultSize)}
                 page={parseInt(page)}
-                onChange
                 onPageChange={handlePageChange}
             />
         </PaginationContainer>
