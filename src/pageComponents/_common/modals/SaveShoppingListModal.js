@@ -139,8 +139,8 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     }, [context.shoppingLists, selectedUser])
 
     const handleUserChange = value => setSelectedUser(userOptions.find(user => user.value === value))
-
-    if (userOptions && userOptions.length === 0 && !context.getWebUserContactsState?.loading) 
+    //If there are no web users for this customer and we're impersonating, block functionality
+    if (userOptions && userOptions.length === 0 && context?.impersonatedCompanyInfo && !context.getWebUserContactsState?.loading) 
         return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
             <Container>
