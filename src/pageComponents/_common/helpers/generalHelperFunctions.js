@@ -158,7 +158,6 @@ export function scrollHorizontal(element, change, duration) {
     const start = element.scrollLeft
     let currentTime = 0
     const increment = 20
-
     const animateScroll = () => {
         currentTime += increment
         element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration)
