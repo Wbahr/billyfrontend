@@ -16,6 +16,7 @@ import Auth from 'setup/auth'
 
 const Container = styled.div`
   display: flex;
+  overflow-x: scroll;
 `
 
 export default function AccountManagementPage() {
