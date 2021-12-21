@@ -35,7 +35,7 @@ const DivRow = styled.div`
 	flex-wrap: nowrap;
 	width: 100%;
 	padding: 0 15px;
-	overflow-X: auto;
+	overflow-x: auto;
 	&:hover ${RightScrollControl} {
 		opacity: 1;
 	}

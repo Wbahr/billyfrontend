@@ -15,11 +15,11 @@ export default function PaginationPlugin({ totalResults, resultSize = DEFAULT_RE
         onPageChange(p)
         window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-
+    const count = Math.ceil(totalResults / resultSize);
     return (
         <PaginationContainer>
             <Pagination
-                count={Math.ceil(totalResults / resultSize)}
+                count={isNaN(count) ? 0 : count}
                 page={parseInt(page)}
                 onChange={handlePageChange}
             />
