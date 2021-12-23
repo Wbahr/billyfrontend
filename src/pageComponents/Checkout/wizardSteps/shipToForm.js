@@ -98,7 +98,7 @@ export function ShipToForm(props) {
     //Checking if the user has the account if not, it will set the carrier field value to ID 187145 for UPS Ground as a default value.
     useEffect(() => {
         if (!context.userInfo) {
-            setFieldValue('shipto.carrierId', '187145')
+            setFieldValue('shipto.carrierId', 187145)
         }
     }, [context.userInfo])
 
@@ -116,7 +116,7 @@ export function ShipToForm(props) {
     }
 
     const handleCarrierChange = (field, value) => {
-        setFieldValue(field, value)
+        setFieldValue(field, parseInt(value))
     }
 
     function handleCountryChange(field, value) {
@@ -149,10 +149,10 @@ export function ShipToForm(props) {
             city: shipToAddress?.physCity || '',
             stateOrProvince: shipToAddress?.physState || '',
             zip: shipToAddress?.physPostalCode || '',
-            saveShipTo: 0,
+            saveShipTo: false,
             isCollect: !!shipToAddress?.collectNumberUps,
             collectNumber: shipToAddress?.collectNumberUps || '',
-            carrierId: shipToAddress?.carrierId || '',
+            carrierId: shipToAddress?.carrierId || -1,
             shippingNotes: shipToAddress?.shippingNote || ''
         }
 
@@ -476,7 +476,7 @@ export function ShipToForm(props) {
                             label={<>Carrier<Required /></>}
                             width="500px"
                             changeFunction={(field, value) => handleCarrierChange(field, value, handleChange)}
-                            value={values.shipto.carrierId}
+                            value={parseInt(values.shipto.carrierId)}
                         />
                         <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
                             <ErrorMessage name="shipto.carrierId" />

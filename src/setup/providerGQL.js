@@ -681,7 +681,29 @@ export const CATEGORY_SEARCH = gql`
     searchType
     sortType
     searchTotalCount
-    result
+    result {
+        //THIS IS NOT A PROPER SOLUTION//
+      invMastUid
+      itemCode
+      itemDescription
+      extendedDescription
+      mfgPartNumber
+      availabilityMetric
+      popularity
+      relevancy
+      modelCode
+      brandName
+      combinedSearch
+      isDiscontinued
+      invMastUidSubstitute
+      modelCodeExcludeSpecial
+      itemCodeExcludeSpecial
+      categoryPaths
+      invMastUidString
+      isRestricted
+      restrictedCustomers
+
+    }
   }
 }
 

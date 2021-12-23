@@ -33,11 +33,11 @@ function formatShipToData(data){
 function formatCarriers(data){
     const mutatedData = []
     if (!_.isNil(data)){
-        for (let i=0;data.length > i;i++){
+        for (let i=0;data.length > i; i++){
             const element = data[i]
             mutatedData.push({
                 label: element.name,
-                value: String(element.id) /* P21 carrier ID is a string */
+                value: element.id
             })
         }
     }

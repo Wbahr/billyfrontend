@@ -71,12 +71,12 @@ export default function SearchResultsPage() {
                 ...selectedAttributes
             }), {replace: true })
 
-            if (resultPage === '1') performItemSearch()
+            if (resultPage === 1) performItemSearch()
         }
     }, [searchState.brands, searchState.attributes])
 
     useDidUpdateEffect(() => {
-        if (resultPage === '1') {
+        if (resultPage === 1) {
             performItemSearch()
         } else {
             setQueryParam('resultPage', 1)
