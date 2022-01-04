@@ -47,7 +47,7 @@ export const useSearchQueryParams = () => {
     const getParsedQueryString = () => {
         const parsed = queryString.parse(location.search)
         const { searchTerm, innerSearchTerms, sortType, nonweb, selectedCategoryId, resultPage, brands, ...selectedAttributes } = parsed
-        return { searchTerm, innerSearchTerms, sortType, nonweb, selectedCategoryId, resultPage, brands, selectedAttributes }
+        return { searchTerm, innerSearchTerms, sortType, nonweb, selectedCategoryId, resultPage: parseInt(resultPage), brands, selectedAttributes }
     }
 	
     const [parsedQueryString, setParsedQueryString] = useState(getParsedQueryString)

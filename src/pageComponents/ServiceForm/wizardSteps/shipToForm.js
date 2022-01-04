@@ -117,10 +117,10 @@ export default function ShipToForm(props) {
             city: shipToAddress?.physCity || '',
             stateOrProvince: shipToAddress?.physState || '',
             zip: shipToAddress?.physPostalCode || '',
-            saveShipTo: 0,
+            saveShipTo: false,
             isCollect: !!shipToAddress?.collectNumberUps,
             collectNumber: shipToAddress?.collectNumberUps || '',
-            carrierId: shipToAddress?.carrierId || '',
+            carrierId: shipToAddress?.carrierId || -1,
             shippingNotes: shipToAddress?.shippingNote || ''
         }
         setFieldValue('shipto', shipto)

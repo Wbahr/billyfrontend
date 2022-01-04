@@ -1,6 +1,5 @@
 import { ErrorSharp } from '@mui/icons-material'
-
-const { object, string, boolean, array } = require('yup')
+const { object, string, boolean, array, number } = require('yup')
 
 // Step 1
 const contactSchema = object({
@@ -70,7 +69,7 @@ export const shipToSchema = object({
             .email('Email is not valid')
             .required('Email is required')
             .matches( /[^\s\\]/, 'Please remove the leading space character' ),
-        carrierId: string()
+        carrierId: number().integer()
             .required('Shipping Carrier must be selected'),
         collectNumber: string()
             .when('isCollect', {

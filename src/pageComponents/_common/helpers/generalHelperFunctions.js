@@ -50,12 +50,12 @@ export const getImagePath = path => {
 }
 
 const ImageTypes = {
-    Original: 0,
-    Large: 1,
-    Zoom: 2,
-    Thumbnail: 3,
+    Original: "ORIGINAL",
+    Large: "LARGE",
+    Zoom: "ZOOM",
+    Thumbnail: "THUMB",
 }
-const MediaType_Image = 0
+const MediaType_Image = "IMAGE"
 
 const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaType === MediaType_Image && i.sequence === 1
 const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1
@@ -81,7 +81,7 @@ export const buildSearchString = ({
     nonweb='false',
     innerSearchTerms,
     brands,
-    resultPage='1',
+    resultPage=1,
     ...attributes
 }) => {
     return convertObjectToSearchQuery({ searchTerm, sortType, nonweb, innerSearchTerms, brands, resultPage, ...attributes })
