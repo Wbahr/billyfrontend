@@ -634,6 +634,10 @@ const resourcesSubItems = [
 
 const aboutSubItems = [
     {
+        label: 'About us',
+        to: '/pages/about',
+    },
+    {
         label: 'Locations',
         to: '/pages/about/locations',
     },
