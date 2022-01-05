@@ -6,12 +6,13 @@ import CheckBox from 'pageComponents/_common/formik/checkBox'
 import { ShowErrorAlert } from 'styles/alerts'
 import { FormikFormGroup, FormikFormContainer, FormikFormFieldContainer, FormikFormFieldError } from 'styles/formikForm'
 import styled from 'styled-components'
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@mui/icons-material/Search'
 import SearchCustomerModal from './searchCustomerModal'
 import { ButtonLink } from 'styles/tables'
 import PasswordRequirements from 'pageComponents/PasswordReset/uiComponents/passwordRequirements'
 import SelectField from '../../_common/formik/select'
 import { CanadianProvinceList, StateList } from '../../_common/helpers/helperObjects'
+import Required from '../../_common/required'
 
 const DivCenter = styled.div`
   display: flex;
@@ -168,18 +169,18 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                 {showCustomerLookup === true && <CustomerLookup />}
                 <FormikFormGroup>
                     <H3>Account Information</H3>
-                    {useExpandedMode === false && showCustomerLookup === false && <FormikInput label="Customer ID*" type="text" name="customerId" />}
-                    <FormikInput label="First Name*" type="text" name="firstName" />
-                    <FormikInput label="Last Name*" type="text" name="lastName" />
+                    {useExpandedMode === false && showCustomerLookup === false && <FormikInput label={<>Customer ID<Required /></>} type="text" name="customerId" />}
+                    <FormikInput label={<>First Name<Required /></>} type="text" name="firstName" />
+                    <FormikInput label={<>Last Name<Required /></>} type="text" name="lastName" />
                     <FormikInput label="Job Title" type="text" name="jobTitle" />
-                    <FormikInput label="Phone*" type="text" name="phone" />
+                    <FormikInput label={<>Phone<Required /></>} type="text" name="phone" />
                     <FormikInput label="Phone Extension" type="text" name="phoneExtension" />
-                    <FormikInput label="Email*" type="email" name="email" />
+                    <FormikInput label={<>Email<Required /></>} type="email" name="email" />
                     <FormikInput label="Fax" type="text" name="fax" />
                     {choosePasswordEnabled && (
                         <>
-                            <FormikInput label="Password*" type="password" name="password" />
-                            <FormikInput label="Verify Password*" type="password" name="verifyPassword" />
+                            <FormikInput label={<>Password<Required /></>} type="password" name="password" />
+                            <FormikInput label={<>Verify Password<Required /></>} type="password" name="verifyPassword" />
                             <DivRow>
                                 <PasswordRequirements
                                     password={values.password}
@@ -198,13 +199,13 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                         <FormikFormGroup>
                             <H3>Shipping Information</H3>
                             <FormikInput
-                                label="Company*"
+                                label={<>Company<Required /></>}
                                 type="text"
                                 name="shippingCompany"
                                 disabled={values.customerId !== ''}
                             />
                             <FormikInput
-                                label="Address Line 1*"
+                                label={<>Address Line 1<Required /></>}
                                 type="text"
                                 name="shippingAddress1"
                                 disabled={values.customerId !== ''}
@@ -216,13 +217,13 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                 disabled={values.customerId !== ''}
                             />
                             <FormikInput
-                                label="City*"
+                                label={<>City<Required /></>}
                                 type="text"
                                 name="shippingCity"
                                 disabled={values.customerId !== ''}
                             />
                             <FormikInput
-                                label="Zip/Postal Code*"
+                                label={<>Zip/Postal Code<Required /></>}
                                 type="text"
                                 name="shippingPostal"
                                 disabled={values.customerId !== ''}
@@ -236,7 +237,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                     placeholder="Select a Country"
                                     width="250px"
                                     isSearchable={false}
-                                    label="Country*"
+                                    label={<>Country<Required /></>}
                                     disabled={values.customerId !== ''}
                                 />
                             </div>
@@ -248,7 +249,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                         component={SelectField}
                                         options={StateList}
                                         placeholder="Select a State"
-                                        label="State*"
+                                        label={<>State<Required /></>}
                                         width="200px"
                                         disabled={values.customerId !== ''}
                                     />
@@ -262,7 +263,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                         component={SelectField}
                                         options={CanadianProvinceList}
                                         placeholder="Select a Province"
-                                        label="Province*"
+                                        label={<>Province<Required /></>}
                                         width="200px"
                                         disabled={values.customerId !== ''}
                                     />
@@ -279,13 +280,13 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                 disabled={values.customerId !== ''}
                             />
                             <FormikInput
-                                label="Company*"
+                                label={<>Company<Required /></>}
                                 type="text"
                                 name="billingCompany"
                                 disabled={billingDisabled}
                             />
                             <FormikInput
-                                label="Address Line 1*"
+                                label={<>Address Line 1<Required /></>}
                                 type="text"
                                 name="billingAddress1"
                                 disabled={billingDisabled}
@@ -297,13 +298,13 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                 disabled={billingDisabled}
                             />
                             <FormikInput
-                                label="City*"
+                                label={<>City<Required /></>}
                                 type="text"
                                 name="billingCity"
                                 disabled={billingDisabled}
                             />
                             <FormikInput
-                                label="Zip/Postal Code*"
+                                label={<>Zip/Postal Code<Required /></>}
                                 type="text"
                                 name="billingPostal"
                                 disabled={billingDisabled}
@@ -316,7 +317,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                     placeholder="Select a Country"
                                     width="250px"
                                     isSearchable={false}
-                                    label="Country*"
+                                    label={<>Country<Required /></>}
                                     disabled={billingDisabled}
                                 />
                             </div>
@@ -327,7 +328,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                         component={SelectField}
                                         options={StateList}
                                         placeholder="Select a State"
-                                        label="State*"
+                                        label={<>State<Required /></>}
                                         width="200px"
                                         disabled={billingDisabled}
                                     />
@@ -340,7 +341,7 @@ const FormWrapper = ({ useExpandedMode, choosePasswordEnabled, buttonText, showC
                                         component={SelectField}
                                         options={CanadianProvinceList}
                                         placeholder="Select a Province"
-                                        label="Province*"
+                                        label={<>Province<Required /></>}
                                         width="200px"
                                         disabled={billingDisabled}
                                     />

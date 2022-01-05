@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Modal from '../../_common/modal'
+import AirlineInput from '../../_common/form/inputv2'
+import CustomSelect from '../../_common/form/select'
 import styled from 'styled-components'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 
@@ -37,6 +39,10 @@ const Container = styled.div`
   }
 `
 
+const MarginTopDiv = styled.div`
+  margin-top: 10px;
+`
+
 export default function DispositionModal(props) {
 
     const {
@@ -45,14 +51,21 @@ export default function DispositionModal(props) {
         dispositions,
         cartItem,
         setCartItem,
+        supplierOptions,
+        airlineCost,
+        supplierId,
+        purchaseOrderCost
     } = props
 
-    const dispositionOptions = dispositions?.map(disposition => ({ label: disposition.text, value: disposition.value }))
-
+    const dispositionOptions = dispositions?.map(disposition => ({ label: disposition.text, value: disposition.value, key: disposition.value }))
+    
+    const [cost, setCost] = useState(purchaseOrderCost || airlineCost)
+    const [selectedSupplier, setSelectedSupplier] = useState(supplierId)
     const [selectedDisposition, setSelectedDisposition] = useState(cartItem?.disposition || '')
+    const [showPoChange, setShowPoChange] = useState(false)
     const [alert, setAlert] = useState(null)
 
-    function handleClose(){
+    function handleClose() {
         setAlert(null)
         hide()
     }
@@ -60,15 +73,19 @@ export default function DispositionModal(props) {
     const handleSaveDisposition = () => {
         if (!selectedDisposition) {
             setCartItem({ ...cartItem, disposition: null })
+        } else if (['S', 'D'].includes(selectedDisposition)) {
+            setCartItem({ 
+                ...cartItem, 
+                disposition: selectedDisposition, 
+                ...selectedSupplier ?  { supplierId: `${selectedSupplier}` } : {}, 
+                purchaseOrderCost: showPoChange ? cost : 0 })
         } else {
             setCartItem({ ...cartItem, disposition: selectedDisposition })
         }
         hide()
     }
 
-    const handleDispositionChange = (event) => {
-        setSelectedDisposition(event.target.value)
-    }
+    const saveDisabled = ['S', 'D'].includes(selectedDisposition) && !selectedSupplier && showPoChange
 
     return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: 350, borderRadius: 3 }}>
@@ -78,14 +95,47 @@ export default function DispositionModal(props) {
 
                 <DivItem>
                     <Label>Dispositions: </Label>
-                    <select value={selectedDisposition} onChange={handleDispositionChange}>
-                        { dispositionOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                    </select>
+                    <CustomSelect 
+                        value={dispositionOptions?.filter(o => o.value === selectedDisposition)} 
+                        setValue={setSelectedDisposition}
+                        options={dispositionOptions}
+                        height='42px'
+                    />
                 </DivItem>
-
+                
+                {['S', 'D'].includes(selectedDisposition) && (
+                    <DivItem>
+                        <ButtonRed onClick={() => setShowPoChange(!showPoChange)} style={{ fontSize: 12, marginBottom: 10 }}>
+                            {showPoChange && 'Do not'} Change Supplier or PO Cost
+                        </ButtonRed>
+                    </DivItem>
+                )}
+                {showPoChange && (
+                    <>
+                        <DivItem>
+                            <Label>Supplier: </Label>
+                            <CustomSelect 
+                                value={supplierOptions?.filter(o => o.value === selectedSupplier)} 
+                                setValue={setSelectedSupplier}
+                                options={supplierOptions}
+                                height='42px'
+                            />
+                        </DivItem>
+                        <DivItem>
+                            <Label>PO Cost: </Label>
+                            <AirlineInput
+                                type="number"
+                                value={cost}
+                                width='290px'
+                                onChange={(e) => setCost(e.target.value)}
+                            />
+                        </DivItem>
+                    </>
+                )}
+                <MarginTopDiv></MarginTopDiv>
                 <DivRow>
                     <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>
-                    <ButtonRed onClick={handleSaveDisposition}>Save</ButtonRed>
+                    <ButtonRed onClick={handleSaveDisposition} disabled={saveDisabled}>Save</ButtonRed>
                 </DivRow>
             </Container>
         </Modal>

@@ -1,19 +1,27 @@
+import React from 'react'
 import styled from 'styled-components'
 
-export const ButtonRed = styled.button`
+const Button = ({ className, children, onClick, type }) => (
+    <button className={className} onClick={onClick} type={type ?? 'button'}>
+        {children}
+    </button>
+)
+
+export const ButtonRed = styled(Button)`
+  cursor: pointer;  
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: ${props => props.theme.mainColor};
   background-image: linear-gradient(to top left, ${props => props.theme.mainColorBlend}, ${props => props.theme.mainColor});
   color: ${props => props.theme.buttonForegroundColor};
-  padding: 8px 16px;
-  cursor: pointer;
+  padding: 4px 12px;
   box-shadow: 1px 1px 2px ${props => props.theme.buttonShadow};
-  font-size: 20px;
+  font-size: 18px;
   font-family: ${props => props.theme.fontName};
   font-weight: 600;
   border: none;
+  margin: 5px 0;
   &:disabled {
     cursor: default;
     background-image: linear-gradient(to top left, grey, darkgrey);
@@ -23,7 +31,7 @@ export const ButtonRed = styled.button`
   }
 `
 
-export const ButtonBlack = styled.button`
+export const ButtonBlack = styled(Button)`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -31,6 +39,7 @@ export const ButtonBlack = styled.button`
   color: ${props => props.theme.buttonForegroundColor};
   background-image: linear-gradient(to top left, ${props => props.theme.altButtonColorBlend}, ${props => props.theme.altButtonColor});
   padding: 4px 12px;
+  box-shadow: 1px 1px 2px ${props => props.theme.buttonShadow};
   font-size: 18px;
   font-family: ${props => props.theme.fontName};
   font-weight: 600;

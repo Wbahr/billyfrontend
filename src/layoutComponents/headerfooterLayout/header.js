@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import AdvancedSearch from '../modals/AdvancedSearch'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import TopAlert from './headerAlertModal'
 import Context from '../../setup/context'
 import ImpersonationSearch from './impersonationSearch'
@@ -12,12 +12,12 @@ import { NavigationItemContainer, DropdownMenu, DropdownMenuItem, MyAccountDropd
 import { buildSearchString, onWindowResize } from '../../pageComponents/_common/helpers/generalHelperFunctions'
 import { useQuery } from '@apollo/client'
 import { GET_ROOT_CATEGORIES_HEADER } from 'setup/providerGQL'
-import { Button, Menu } from '@material-ui/core'
+import { Button, Menu } from '@mui/material'
 import queryString from 'query-string'
 
 const Nav = styled.div`
-	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
-	position: ${props => props.history.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
+	position: ${props => props.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : '-webkit-sticky'};
+	position: ${props => props.location.pathname === '/search' && window.innerWidth < 750 ? 'relative' : 'sticky'};
 	top: 0;
 	z-index: 4;
 `
@@ -196,10 +196,11 @@ const ImpersonationSearchRow = styled.div`
     flex-wrap: wrap;
 `
 
-export default function HeaderComponent({ history }) {
+export default function HeaderComponent() {
     const tabContainerRef = useRef(null)
     const tabRefs = useRef([])
-
+    const location = useLocation()
+    const navigate = useNavigate()
     const [categories, setCategories] = useState([])
     const tabDeclaration = headerTabs(categories)
     const [visibleTabCount, setVisibleTabCount] = useState(tabDeclaration.length)
@@ -251,10 +252,10 @@ export default function HeaderComponent({ history }) {
     const tabComponents = tabDeclaration.map(toMenu)
 
     const handleSearch = () => {
-        const parsedQueryString = queryString.parse(history.location.search)
+        const parsedQueryString = queryString.parse(location.search)
         const search = searchTerm?.length ? searchTerm : parsedQueryString.searchTerm
         const hasNonWebChanged = searchAsCustomer !== !!parsedQueryString.nonweb
-        if (search?.length || hasNonWebChanged) history.push(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
+        if (search?.length || hasNonWebChanged) navigate(buildSearchString({ searchTerm: search, nonweb: searchAsCustomer }))
     }
 
     const handleKeyPress = e => e.key === 'Enter' && handleSearch()
@@ -297,7 +298,7 @@ export default function HeaderComponent({ history }) {
             <Row style={{ justifyContent: 'center' }}>
                 {context.userInfo
                     ? <P onClick={context.logoutUser}>Sign Out</P>
-                    : <P onClick={() => history.push('/login')}>Sign In</P>
+                    : <P onClick={() => navigate('/login')}>Sign In</P>
                 }
 
                 <P>|</P>
@@ -345,7 +346,7 @@ export default function HeaderComponent({ history }) {
     )
 
     return (
-        <Nav history={history}>
+        <Nav location={location}>
             {context.topAlert?.show && <TopAlert message={context.topAlert.message} close={context.removeTopAlert}/>}
             <NavTop>
                 <ReverseNavContainer>
@@ -413,10 +414,12 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
     } else if (userInfo && impersonatedCompanyInfo) {
         return (
             <UserNameRow style={{ flex: 1 }}>
-                <PeUser>
-                    <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
-                    {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
-                </PeUser>
+                <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/CustomerDetails.aspx?CustomerID=${impersonatedCompanyInfo.customerIdP21}&CompanyID=AIRLINE`}>
+                    <PeUser>
+                        <FontAwesomeIcon icon="user-circle" color="#f3f3f3" />
+                        {impersonatedCompanyInfo.customerName} - {impersonatedCompanyInfo.customerIdP21} [Impersonating]
+                    </PeUser>
+                </a>
                 <DivCancelImpersonation onClick={cancelImpersonation}>
                     <FontAwesomeIcon icon="times" color="white" />
                 </DivCancelImpersonation>
@@ -435,11 +438,11 @@ function UserNameSection({ userInfo, impersonatedCompanyInfo, cancelImpersonatio
 const servicesSubItems = [
     {
         label: 'Engineered Systems & Assemblies',
-        to: '/pages/services/engineered-systems-and-assemblies'    
+        to: '/pages/services/engineered-systems-and-manufacturing-services'    
     },
     {
         label: 'Repair │ Field Service │ Maintenance',
-        to: '/pages/services/repair-field-services'
+        to: '/pages/services/repair-field-service'
     },
     {
         label: 'Safety',
@@ -478,7 +481,7 @@ const industriesSubItems = [
     },
     {
         label: 'Construction and Off Road',
-        to: '/pages/industries/construction-and-off-road'
+        to: '/pages/industries/construction-off-road'
     },
     {
         label: 'Life Sciences',
@@ -498,7 +501,7 @@ const industriesSubItems = [
     },
     {
         label: 'Mining & Drilling',
-        to: '/pages/industries/mining-and-drilling'
+        to: '/pages/industries/mining-and-driller'
     },
     {
         label: <span>Power Distribution Products <br/> & Electrical Enclosures</span>,
@@ -570,7 +573,7 @@ const brandsSubItems = [
     },
     {
         label: 'Rittal',
-        to: '/brands/featured/rittal'
+        to: '/pages/rittal'
     },
     {
         label: 'Ross',
@@ -604,7 +607,7 @@ const resourcesSubItems = [
     },
     {
         label: 'Resources Center',
-        to: '/pages/resources/resources-center'
+        to: '/pages/resources/knowledge-center'
     },
     {
         label: 'Line Cards & Brochures',
@@ -630,6 +633,10 @@ const resourcesSubItems = [
 ]
 
 const aboutSubItems = [
+    {
+        label: 'About us',
+        to: '/pages/about',
+    },
     {
         label: 'Locations',
         to: '/pages/about/locations',
@@ -682,10 +689,10 @@ const contactSubItems = [
         label: 'Government Sales',
         to: '/pages/government-sales'
     },
-    {
-        label: 'Service Request',
-        to: '/serviceform'
-    }
+    // {
+    //     label: 'Service Request',
+    //     to: '/serviceform'
+    // }
 ]
 const headerTabs = categories => [
     {
@@ -703,7 +710,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Industries',
-        to: '/pages/industries',
+        to: '/pages/industries/industries',
         subItems: industriesSubItems
     },
     {
@@ -713,7 +720,7 @@ const headerTabs = categories => [
     },
     {
         label: 'Resources',
-        to: '/pages/resources',
+        to: '/pages/resources/resources',
         subItems: resourcesSubItems
     },
     {

@@ -153,5 +153,6 @@ export const FRAGMENT_ITEM_PRICE = gql`
         roundType
         unitSize
         spaType
+        pricePage
     }
 `

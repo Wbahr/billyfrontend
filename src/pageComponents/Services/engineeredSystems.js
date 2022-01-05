@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import HydraulicEngineered from './engineeredSystemsPages/hydraulicEngineered'
 import LubricationSystems from './engineeredSystemsPages/lubricationSystems'
 import AutomationEngineered from './engineeredSystemsPages/automationEngineered'
@@ -72,7 +71,4 @@ export default function EngineeredSystemsPage() {
             {pageComponent}
         </>
     )
-}
-EngineeredSystemsPage.propTypes = {
-    history: PropTypes.object.isRequired
 }

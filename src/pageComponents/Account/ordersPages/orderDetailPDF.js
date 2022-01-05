@@ -330,7 +330,7 @@ export default React.memo(({ orderId, data }) => {
         total,
         packingBasis,
         promiseDate
-    } = data
+    } = data || {}
     const itemDetails = lineItems?.map((item, index) => {
         return (
             <DivItemDetail key={index}>
@@ -338,6 +338,11 @@ export default React.memo(({ orderId, data }) => {
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
                     <P2>AHC#: {item.invMastUid}</P2>
+                    {item.customerPartNumber && (
+                        <>
+                            <P2>Customer Part #: {item.customerPartNumber}</P2>
+                        </>
+                    )}
                     {item.trackingNumbers?.map(tracking => {
                         return (
                             <DivTracking key={tracking.trackingNumber}>
@@ -349,7 +354,7 @@ export default React.memo(({ orderId, data }) => {
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>
                     <P0>
-                        {item.quantityInvoiced}
+                        {item.isCancelled ? 'Cancelled' : item.quantityInvoiced}
                     </P0>
                 </DivItemDetailCell>
                 <DivItemDetailCell width='18%' align='center'>

@@ -15,8 +15,8 @@ export const defaultBilling = {
     cardType: 'new_card',
     cardIsValid: false,
     companyName: '',
-    savePaymentMethod: 0,
-    sameAsShipping: 0,
+    savePaymentMethod: false,
+    sameAsShipping: false,
 }
 
 export const defaultConfirmationEmail = {
@@ -44,7 +44,7 @@ export const defaultShipTo = {
     phone: '',
     email: '',
     shippingNotes: '',
-    carrierId: '',
+    carrierId: -1,
     isCollect: false,
     collectNumber: '',
     companyName: '',
@@ -76,7 +76,9 @@ export const emptyPart = {
     safety: false,
     fluidType: null,
     toAirline: null,
-    toCustomer: null
+    toCustomer: null,
+    poNo: null,
+    carrierNumber: ''
 }
 
 export const transformForPaymentInfo = ({ billing: { address1, address2, city, state, zip, country },

@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client'
 import { SUBMIT_ORDER } from '../../../setup/providerGQL'
 import ProcessingOrderModal from '../uiComponents/processingOrderModal'
 import OrderFailedModal from '../uiComponents/orderFailedModal'
+import { useLocation, useNavigate } from 'react-router'
 
 const SectionRow = styled.div`
     display: flex;
@@ -89,7 +90,6 @@ const Container = styled.div`
 
 export default function ConfirmationScreen(props) {
     const {
-        history,
         values: {
             schedule,
             shipto,
@@ -111,9 +111,11 @@ export default function ConfirmationScreen(props) {
         itemsCustomerPartNumbers,
         isStepValid,
         validateForm,
-        setFieldValue
+        setFieldValue,
+        isAirlineEmployee
     } = props
-
+    const navigate = useNavigate()
+    const location = useLocation()
     useEffect(() => {
         validateForm() // this is the only page we want to validate on mount
     }, [])
@@ -121,21 +123,69 @@ export default function ConfirmationScreen(props) {
     const { userInfo, emptyCart } = useContext(Context)
     const [submitting, setSubmitting] = useState(false)
     const [showOrderFailedModal, setShowOrderFailedModal] = useState(false)
+    const [orderFailErrorMessages, setOrderFailErrorMessages] = useState([])
 
     const [submitOrder] = useMutation(SUBMIT_ORDER, {
         fetchPolicy: 'no-cache',
         onCompleted: ({ submitOrder }) => {
-            const orderId = submitOrder?.webReferenceId || null
-            if (orderId) {
+            const {
+                webReferenceId,
+                errorMessages,
+                checkoutType,
+                affiliateName, //Company Name or Person's Name
+                itemsSubtotal,
+                taxTotal,
+                tariffTotal,
+                shippingCost,
+                grandTotal,
+                cartItems
+            } = submitOrder
+
+            if (checkoutType === 'order' && webReferenceId) {
+                const dataLayer = window.dataLayer || [] 
+                dataLayer.push({ 
+                    event: 'transaction',
+                    internalUser: !!isAirlineEmployee,
+                    ecommerce: { 
+                        purchase: { 
+                            actionField: { 
+                                id: webReferenceId, // Required 
+                                affiliation: affiliateName, 
+                                revenue: grandTotal,  // Total transaction value (incl. tax and shipping) 
+                                tax: taxTotal, 
+                                shipping: shippingCost
+                            }, 
+                            products: cartItems.map(item => {
+                                return { 
+                                    name: item.invMastUid, // Name or ID is required. 
+                                    id: item.itemCode, 
+                                    price: item.unitPrice, 
+                                    brand: item.brand, 
+                                    quantity: item.quatity, 
+                                }
+                            }) 
+                        } 
+                    } 
+                })
+            }
+
+            if (webReferenceId) {
                 localStorage.removeItem('shoppingCartToken')
                 emptyCart()
-                if (schedule.isQuote) {
-                    history.push(`/quote-complete/${orderId}`)
+                if (checkoutType === 'quote') {
+                    navigate(`/quote-complete/${webReferenceId}`)
                 } else {
-                    history.push(`/order-complete/${orderId}`)
+                    navigate(`/order-complete/${webReferenceId}`)
                 }
             } else {
-                setShowOrderFailedModal(true)
+
+                if (errorMessages){
+                    setOrderFailErrorMessages (errorMessages)
+                    setShowOrderFailedModal(true)
+
+                } else {
+                    setShowOrderFailedModal(true)
+                }
             }
             setSubmitting(false)
         },
@@ -146,7 +196,7 @@ export default function ConfirmationScreen(props) {
     })
 
     const handlePreviousClick = () => {
-        if (history.location.pathname === '/create-quote') {
+        if (location.pathname === '/create-quote') {
             handleMoveStep(0)
         } else {
             handleMoveStep(1)
@@ -201,7 +251,7 @@ export default function ConfirmationScreen(props) {
                         onChange={handleCheckboxChange('confirmationEmail.sendToShipTo')}
                     />
                     <FormikFieldArray name="confirmationEmail.ccEmails" label="CC Emails" addMore="Add a CC email" />
-                    {history.location.pathname === '/create-quote' && (
+                    {location.pathname === '/create-quote' && (
                         <FormikCheckbox
                             value={imagesOnQuote}
                             label="Include Images on Quotes?"
@@ -234,6 +284,11 @@ export default function ConfirmationScreen(props) {
                         <DivTextRow>
                             <P>Is Collect?</P>
                             <p>{!shipto.isCollect ? 'No' : 'Yes'}</p>
+                        </DivTextRow>
+                        
+                        <DivTextRow>
+                            <P>Is Rush?</P>
+                            <p>{!shipto.isRush ? 'No' : 'Yes'}</p>
                         </DivTextRow>
 
                         {shipto.isCollect && (
@@ -308,12 +363,16 @@ export default function ConfirmationScreen(props) {
                 <ButtonBlack onClick={handlePreviousClick}>Previous</ButtonBlack>
                 <ButtonRed disabled={!isStepValid} onClick={handleCheckoutSubmit}>
                     <FontAwesomeIcon icon='lock' size="sm" color="white" />
-                    Submit {history.location.pathname === '/create-quote' ? 'Quote' : 'Order'}
+                    Submit {location.pathname === '/create-quote' ? 'Quote' : 'Order'}
                 </ButtonRed>
             </DivNavigation>
 
-            {submitting && <ProcessingOrderModal isQuote={history.location.pathname === '/create-quote'} />}
-            {showOrderFailedModal && <OrderFailedModal />}
+            {submitting && <ProcessingOrderModal isQuote={location.pathname === '/create-quote'} />}
+            {showOrderFailedModal && (
+                <OrderFailedModal
+                    orderFailErrorMessages = {orderFailErrorMessages}
+                />
+            )}
         </Container>
     )
 }

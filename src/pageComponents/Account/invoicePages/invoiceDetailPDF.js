@@ -124,6 +124,27 @@ const P0 = ({ children }) => (
     </Text>
 )
 
+const P0R = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        margin: '0',
+        marginLeft: 'auto'
+    }}
+    >
+        { children }
+    </Text>
+)
+const P1L = ({ children }) => (
+    <Text style={{
+        fontSize: '10pt',
+        margin: '0',
+        marginLeft: '2mm'
+    }}
+    >
+        { children }
+    </Text>
+)
+
 const P1 = ({ children }) => (
     <Text style={{
         fontSize: '10pt'
@@ -199,7 +220,9 @@ const Row = ({ children }) => (
 const DivTotalContainer = ({ children }) => (
     <View style={{
         display: 'flex',
-        width: '30%',
+        flexDirection: 'column',
+        width: '50%',
+        marginright: '0',
         marginLeft: 'auto',
         padding: '1mm 4mm',
         borderTop: '1pt solid black',
@@ -223,6 +246,8 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
         shipToCity,
         shipToState,
         shipToZip,
+        deliveryInstructions,
+        orderNote,
         billingName,
         billingAddress1,
         billingAddress2,
@@ -241,7 +266,9 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
         orderedBy,
         subTotal,
         totalTax,
-        amountDue
+        amountDue,
+        freightAmount,
+        totalAmount
     } = data
 
     const itemDetails = lineItems?.map( item => {
@@ -251,7 +278,8 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
                     <P2>AHC#: {item.invMastUid}</P2>
-                    {item.trackingNumbers.map(tracking => {
+                    {item.customerPartNumber && <P2>Customer Part #: {item.customerPartNumber}</P2>}
+                    {item.trackingNumbers?.map(tracking => {
                         return (
                             <DivTracking key={tracking.trackingNumber}>
                                 <P2>{tracking.carrierName}: </P2>
@@ -341,10 +369,10 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
                 </DivOrderInfoContainer>
                 <DivOrderInfoContainer>
                     <DivOrderInfo>
-                        <P1>Delivery Instructions:</P1><P0> ???</P0>
+                        <P1>{deliveryInstructions && 'Delivery Instructions:'}</P1><P0>{deliveryInstructions}</P0>
                     </DivOrderInfo>
                     <DivOrderInfo>
-                        <P1>Order Note:</P1><P0></P0>
+                        <P1>{orderNote && 'Order Note:'}</P1><P0>{orderNote}</P0>
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <DivItemDetailHeader>
@@ -372,9 +400,11 @@ export default function InvoiceDetailPDF({ invoiceId, data }) {
                 </DivItemDetailHeader>
                 {itemDetails}
                 <DivTotalContainer>
-                    <P0>Subtotal: ${subTotal.toFixed(2)}</P0>
-                    <P0>Total Tax: ${totalTax.toFixed(2)}</P0>
-                    <P0>Amount Due: ${amountDue.toFixed(2)}</P0>
+                    <Row><P1L>Subtotal:</P1L><P0R>${subTotal.toFixed(2)}</P0R></Row>
+                    <Row><P1L>Total Tax:</P1L><P0R>${totalTax.toFixed(2)}</P0R></Row>
+                    {freightAmount > 0 && <Row><P1L>Shipping:</P1L><P0R>${freightAmount.toFixed(2)}</P0R></Row>}
+                    <Row><P1L>Total:</P1L><P0R>${totalAmount.toFixed(2)}</P0R></Row>
+                    <Row><P1L>Amount Due:</P1L><P0R>${amountDue.toFixed(2)}</P0R></Row>
                 </DivTotalContainer>
             </Page>
         </Document>

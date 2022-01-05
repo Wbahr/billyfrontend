@@ -16,7 +16,7 @@ import SortPlugin from '../../SearchResults/plugins/SortPlugin'
 import SearchTermsPlugin from '../../SearchResults/plugins/SearchTermsPlugin'
 import { useSearchState } from '../../SearchResults/hooks'
 import ResultSummaryPlugin from '../../SearchResults/plugins/ResultSummaryPlugin'
-import { ArrowForward } from '@material-ui/icons'
+import { ArrowForward } from '@mui/icons-material'
 import Carousel from '../../_common/Carousel'
 import { Helmet } from 'react-helmet'
 import { breadcrumbSchema } from '../../_common/richSearchSchemas/breadcrumbSchema'
@@ -65,7 +65,7 @@ const ShortBorder = styled.div`
 
 const RESULT_SIZE = 24
 
-export default function CategorySearch({ match, history }) {
+export default function CategorySearch({ categoryUrlSlug }) {
 
     const [categorySearch, setCategorySearch] = useState(null)
     const [resultPage, setResultPage] = useState(1)
@@ -75,7 +75,6 @@ export default function CategorySearch({ match, history }) {
     const handleSetSearchState = newSearchData => setSearchState({ ...searchState, ...newSearchData })
     const { results, totalResults, searchTerms, sortType, brands, attributes, isSynced } = searchState
 
-    const categoryUrlSlug = match.params.categoryUrlSlug
     const categoryName = categorySearch?.category?.name
     const seoHtml = categorySearch?.category?.seoHtml
 
@@ -184,7 +183,6 @@ export default function CategorySearch({ match, history }) {
             {results && (
                 <SearchContainer
                     searchState={searchState}
-                    history={history}
                 >
                     <AppBarPlugin
                         title={categoryName}

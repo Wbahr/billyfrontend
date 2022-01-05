@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useContext } from 'react'
 import _ from 'lodash'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useTable, usePagination, useSortBy } from 'react-table'
 import { formatTableData } from '../helpers/mutators'
@@ -83,7 +84,7 @@ const Pdate = styled.p`
 	padding-top: 6px;
 `
 
-export default function QuotesTable({ history }) {
+export default function QuotesTable() {
     const context = useContext(Context)
     const didMountRef = useRef(false)
     const [data, setData] = useState([])
@@ -92,6 +93,7 @@ export default function QuotesTable({ history }) {
     const [dateFrom, setDateFrom] = useState()
     const [dateTo, setDateTo] = useState()
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!didMountRef.current && context.ordersCache.length === 0) {
@@ -148,6 +150,10 @@ export default function QuotesTable({ history }) {
             {
                 Header: 'Quote #',
                 accessor: 'quoteNumber',
+            },
+            {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
             },
             {
                 Header: 'Status',
@@ -208,7 +214,7 @@ export default function QuotesTable({ history }) {
         <TableContainer>
             <h4>Open Quotes</h4>
             <DivRow>
-                <AirlineInput placeholder='Search Quote #, Quote Ref #, Item ID' value={filter} onChange={(e) => { setFilter(e.target.value) }}></AirlineInput>
+                <AirlineInput placeholder='Search Quote #, Quote Ref #, Web Ref #, Item ID' value={filter} onChange={(e) => { setFilter(e.target.value) }}></AirlineInput>
             </DivRow>
             {/* Date From */}
             <DivRow>
@@ -271,7 +277,7 @@ export default function QuotesTable({ history }) {
                                 {row.cells.map(cell => {
                                     if (cell.column.id === 'quoteNumber') {
                                         return (
-                                            <TDrow {...cell.getCellProps()} isQuoteDetail onClick={() => history.push(`/account/quote-detail/${cell.value}`)}>
+                                            <TDrow {...cell.getCellProps()} isQuoteDetail onClick={() => navigate(`/account/quote-detail/${cell.value}`)}>
                                                 {cell.render('Cell')}
                                             </TDrow>
                                         )

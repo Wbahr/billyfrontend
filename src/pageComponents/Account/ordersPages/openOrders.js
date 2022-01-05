@@ -11,6 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
+import { useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -83,7 +84,7 @@ const Pdate = styled.p`
 	padding-top: 6px;
 `
 
-export default function OpenOrdersTable({ history }) {
+export default function OpenOrdersTable() {
     const context = useContext(Context)
     const didMountRef = useRef(false)
     const [data, setData] = useState([])
@@ -91,6 +92,7 @@ export default function OpenOrdersTable({ history }) {
     const [showOrderType] = useState('all')
     const [dateFrom, setDateFrom] = useState()
     const [dateTo, setDateTo] = useState()
+    const navigate = useNavigate()
 
     const isNil = val => val == null
     
@@ -153,16 +155,24 @@ export default function OpenOrdersTable({ history }) {
                 accessor: 'poNo',
             },
             {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
+            },
+            {
                 Header: 'Promise Date',
                 accessor: 'promiseDate', // accessor is the "key" in the data
                 Cell: props => {
+                    if (!props.value){
+                        return 'TBD'
+                    }
+                    
                     const formattedDate = dateFormat(new Date(props.value), 'MM/dd/yyyy') 
-                    return <span>{formattedDate === '12/31/49' ? 'TBD' : formattedDate}</span>
+                    return <span>{formattedDate === '12/31/2049' ? 'TBD' : formattedDate}</span>
                 }              
             },
             {
                 Header: 'Item ID',
-                accessor: 'invMastUid',
+                accessor: 'itemCode',
             },
             {
                 Header: 'Customer Part',
@@ -176,6 +186,10 @@ export default function OpenOrdersTable({ history }) {
                 Header: 'Unit $',
                 accessor: 'unitPrice',
                 Cell: props => {
+                    if (props.value === 'Cancelled'){
+                        return props.value
+                    }
+
                     return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 }
             },
@@ -183,6 +197,10 @@ export default function OpenOrdersTable({ history }) {
                 Header: 'Ext $',
                 accessor: 'extPrice',
                 Cell: props => {
+                    if (props.value === 'Cancelled'){
+                        return props.value
+                    }
+
                     return <NumberFormat value={props.value} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 }
             },
@@ -213,7 +231,7 @@ export default function OpenOrdersTable({ history }) {
             },
             {
                 Header: 'Item ID',
-                accessor: 'invMastUid',
+                accessor: 'itemCode',
             },
             {
                 Header: 'Customer Part',
@@ -284,7 +302,7 @@ export default function OpenOrdersTable({ history }) {
 				<button>copy</button>
 		</CopyToClipboard> */}
             <DivRow>
-                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search PO#, Order #, Web Reference #' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
             </DivRow>
             <DivRow>
                 <div>
@@ -346,7 +364,7 @@ export default function OpenOrdersTable({ history }) {
                                 {row.cells.map((cell, i) => {
                                     if (cell.column.id === 'orderNumber') {
                                         return (
-                                            <TDrow key={i} {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                            <TDrow key={i} {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                 {cell.render('Cell')}
                                             </TDrow>
                                         )

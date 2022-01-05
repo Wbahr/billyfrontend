@@ -29,11 +29,12 @@ const SelectComponent = ({
     value,
     setValue,
     field,
+    height,
     ...props
 }) => {
 
     return (
-        <div style={{ margin: 'auto 0', width: width || '300px', padding: '0 8px', height: '71px' }}>
+        <div style={{ margin: 'auto 0', width: width || '300px', padding: '0 8px', height: height || '71px' }}>
             {props.label && <label style={LabelStyle} htmlFor={field?.name}>{props.label}</label>}
             <Select
                 {...props}

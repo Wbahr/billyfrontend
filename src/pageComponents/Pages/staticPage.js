@@ -4,8 +4,8 @@ import { useQuery } from '@apollo/client'
 import FourOFourPage from 'pageComponents/Error/fourOFourPage'
 import Loader from 'pageComponents/_common/loader'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import  'style.scss'
+import { Link, useParams, useLocation } from 'react-router-dom'
+import 'style.scss'
 import { Helmet } from 'react-helmet'
 
 const Container = styled.div`
@@ -133,54 +133,55 @@ function Crumbs({ name, primaryAncestor, secondaryAncestor, tertiaryAncestor, ba
     )
 }
 
-function CrumbPage({ primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }){
+function CrumbPage({ primaryAncestor, secondaryAncestor, tertiaryAncestor, baseUrl }) {
     return (
         <>
             <CrumbContainer>
-                {primaryAncestor && <> &#9751;<Crumb baseUrl={baseUrl} ancestor={primaryAncestor}/></>}
-                {secondaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={secondaryAncestor}/></>}
-                {tertiaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={tertiaryAncestor}/></>}
+                {primaryAncestor && <> &#9751;<Crumb baseUrl={baseUrl} ancestor={primaryAncestor} /></>}
+                {secondaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={secondaryAncestor} /></>}
+                {tertiaryAncestor && <>&nbsp;&raquo;&nbsp;<Crumb baseUrl={baseUrl} ancestor={tertiaryAncestor} /></>}
             </CrumbContainer>
         </>
     )
 }
 
-export default function StaticPage({ match }) {
-    const pageId1 = match.params.pageId1
-    const pageId2 = match.params.pageId2 || null
-    const pageId3 = match.params.pageId3 || null
-    const pageId4 = match.params.pageId4 || null
-    
+export default function StaticPage() {
+    const params = useParams()
+    const pageId1 = params.pageId1
+    const pageId2 = params.pageId2 || null
+    const pageId3 = params.pageId3 || null
+    const pageId4 = params.pageId4 || null
 
-    const {  data: { getStaticPage={} }={}, error } = useQuery(GET_STATIC_PAGE, {
+    const {
+        loading,
+        data: {
+            getStaticPage = {}
+        } = {},
+    } = useQuery(GET_STATIC_PAGE, {
         variables: { pageId1, pageId2, pageId3, pageId4 }
     })
-
     return (
         <Container>
-            <Helmet>
-                <title>{getStaticPage.metaTitle || 'Airline Hydraulics'}</title>
-                <meta name="description" content={getStaticPage.metaDescription || 'Airline Hydraulics Corporation'}/>
-                {getStaticPage.javascript && (
-                    <script type="text/javascript">
-                        {getStaticPage.javascript}
-                    </script>
-                )}
-            </Helmet>
-            
-            <DivRowHeader>
-                <Crumbs {...getStaticPage} baseUrl={match.path.split('/:')[0]} />
-            </DivRowHeader>
-            
-            <DivRow>
-                <CrumbPage {...getStaticPage} baseUrl={match.path.split('/:')[0]}/>
-                {getStaticPage.html
-                    ? <div dangerouslySetInnerHTML={{ __html: getStaticPage.html }} />
-                    : error
-                        ? <FourOFourPage/>
-                        : <Loader/>
-                }
-            </DivRow>
+            {!getStaticPage && <FourOFourPage />}
+            {loading && <Loader />}
+            {!loading && getStaticPage && <>
+                <Helmet>
+                    <title>{getStaticPage.metaTitle || 'Airline Hydraulics'}</title>
+                    <meta name="description" content={getStaticPage.metaDescription || 'Airline Hydraulics Corporation'} />
+                    {getStaticPage.javascript && (
+                        <script type="text/javascript">
+                            {getStaticPage.javascript}
+                        </script>
+                    )}
+                </Helmet>
+                <DivRowHeader>
+                    <Crumbs {...getStaticPage} baseUrl='/pages' />
+                </DivRowHeader>
+                <DivRow>
+                    <CrumbPage {...getStaticPage} baseUrl='/pages' />
+                    <div dangerouslySetInnerHTML={{ __html: getStaticPage.html }} />
+                </DivRow>
+            </>}
         </Container>
     )
 }

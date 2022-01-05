@@ -45,6 +45,7 @@ export const shipToSchema = object({
             .max(100)
             .required('City is required'),
         stateOrProvince: string()
+            .min(2)
             .required('State/Province must be selected'),
         zip: string()
             .min(5, 'Zip/Postal Code must be at least 5 characters long (6 in Canada)')
@@ -117,22 +118,22 @@ export const billToSchema = object({
 //Step 3
 export const partSchema = object({
     parts: array().of(object({
-        type: string().required('Type of part is required'),
+        type: string().min(2).nullable().required('Type of part is required'),
         quantity: string().required('Quantity is required'),
         manufacturer: string().required('Manufacturer is required'),
         modelCode: string().required('Model code is required'),
         partNumber: string().required('Part number is required'),
         failure: string().required('What failed is required'),
         failureLocation: string().required('Failure location is required'),
-        fluidType: string().required('Fluid Type is required'),
-        toAirline: string().required('Getting part to Airline is required'),
-        toCustomer: string().required('Returning part is required')
+        fluidType: string().min(2).nullable().required('Fluid Type is required'),
+        toAirline: string().min(2).nullable().required('Getting part to Airline is required'),
+        toCustomer: string().min(2).nullable().required('Returning part is required')
     }))
 })
 
 export const airlinePartSchema = object({
     parts: array().of(object({
-        type: string().required('Type of part is required'),
+        type: string().min(2).nullable().required('Type of part is required'),
         repairLocation: string().required('Repair location is required'),
         quantity: number().positive('Quantity must be more than zero').required('Quantity is required'),
         manufacturer: string().required('Manufacturer is required'),
@@ -140,9 +141,9 @@ export const airlinePartSchema = object({
         partNumber: string().required('Part number is required'),
         failure: string().required('What failed is required'),
         failureLocation: string().required('Failure location is required'),
-        fluidType: string().required('Fluid Type is required'),
-        toAirline: string().required('Getting part to Airline is required'),
-        toCustomer: string().required('Returning part is required')
+        fluidType: string().min(2).nullable().required('Fluid Type is required'),
+        toAirline: string().min(2).nullable().required('Getting part to Airline is required'),
+        toCustomer: string().min(2).nullable().required('Returning part is required')
     }))
 })
 

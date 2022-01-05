@@ -1,14 +1,16 @@
 import React, { useContext } from 'react'
-import { Button, Grid, Dialog, DialogTitle, DialogActions, Typography as Text } from '@material-ui/core'
+import { Button, Grid, Dialog, DialogTitle, DialogActions, Typography as Text } from '@mui/material'
 import Context from '../../../../setup/context'
+import { useNavigate } from 'react-router-dom'
 
-export default function ItemCreationModal({ submitResponse, handleCloseModal, history }) {
+export default function ItemCreationModal({ submitResponse, handleCloseModal }) {
     const context = useContext(Context)
+    const navigate = useNavigate()
     const href = `/product/${submitResponse.itemId}/${submitResponse.invMastUid}`
     
     const handleAddToCart = () => {
         context.addItem({ invMastUid: submitResponse.invMastUid, quantity: 1 })
-        history.push('/cart')
+        navigate('/cart')
     }
     
     return (

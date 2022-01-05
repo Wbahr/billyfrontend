@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import FeaturedManufacturers from './uiComponents/featuredManufacturers'
+import AnnounceBanner from '../_common/AnnounceBanner'
 import Banner from './uiComponents/banner'
 import LineCards from './uiComponents/lineCard'
 import TechnicallySpeaking from './uiComponents/technicallySpeaking'
@@ -10,6 +11,7 @@ import SectionHeader from '../_common/sectionHeader'
 import { CategoryContainer } from '../ProductCategories/categoriesPage'
 import RootCategories from '../ProductCategories/uiComponents/RootCategories'
 import { Helmet } from 'react-helmet'
+import Context from '../../setup/context'
 
 const ContentScreenContainer = styled.div`
 	display: flex;
@@ -21,26 +23,35 @@ const ContentScreenContainer = styled.div`
 `
 
 export default function HomePage() {
+    const {
+        homepage,
+        alert
+    } = useContext(Context)
     return (
-        <ContentScreenContainer>
-            <Helmet>
-                <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
-            </Helmet>
+        <>
+            {homepage.length > 0 && (
+                <ContentScreenContainer>
+                    <Helmet>
+                        <title>Airline Hydraulics | Products and Solutions to Power Your Ideas</title>
+                    </Helmet>
 
-            <Banner />
-            <NewAndNoteworthy />
-            <div>
-                <SectionHeader text='Shop by Categories' />
+                    {alert && <AnnounceBanner {...{ alert }} />}
+                    <Banner {...{ homepage }} />
+                    <NewAndNoteworthy {...{ homepage }} />
+                    <div>
+                        <SectionHeader text='Shop by Categories' />
 
-                <CategoryContainer>
-                    <RootCategories />
-                </CategoryContainer>
-            </div>
+                        <CategoryContainer>
+                            <RootCategories />
+                        </CategoryContainer>
+                    </div>
 
-            <TechnicallySpeaking />
-            <FeaturedManufacturers />
-            <NewsAndEvents />
-            <LineCards />
-        </ContentScreenContainer>
+                    <TechnicallySpeaking {...{ homepage }} />
+                    <FeaturedManufacturers {...{ homepage }} />
+                    <NewsAndEvents {...{ homepage }} />
+                    <LineCards {...{ homepage }} />
+                </ContentScreenContainer>
+            )}
+        </>
     )
 }

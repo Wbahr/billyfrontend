@@ -14,6 +14,7 @@ import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/
 import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'setup/gqlQueries/gqlItemQueries'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './orderDetailPDF'
+import { useNavigate } from 'react-router'
 
 
 const DivOrderInfoContainer = styled.div`
@@ -85,11 +86,12 @@ const Container = styled.div`
     margin: 10px 0;
 `
 
-export default function OrderDetail({ history, orderId }) {
+export default function OrderDetail({ orderId }) {
     const context = useContext(Context)
     const [filter, setFilter] = useState('')
     const [isTableView] = useState(false)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
+    const navigate = useNavigate()
 
     const { loading: isOrderDetailsLoading, data: orderDetails, error } = useQuery(GET_ORDERS_DETAIL, {
         fetchPolicy: 'no-cache',
@@ -112,7 +114,7 @@ export default function OrderDetail({ history, orderId }) {
         promiseDate,
         lineItems
     } = orderDetails?.accountOrderDetails || {}
-
+    
     const invMastUids = lineItems?.map(item => item.invMastUid) || []
 
     const { data: itemsDetails } = useQuery(GET_ORDER_DETAIL_ITEM_DETAIL, {
@@ -192,7 +194,11 @@ export default function OrderDetail({ history, orderId }) {
     const OrderDetailDownloadButton = useMemo(() => {
         return (
             <PDFDownloadLink document={<MyDocument orderId={orderId} data={orderDetails?.accountOrderDetails} />} fileName={`airline_order_${orderId}.pdf`}>
-                {({ loading }) => (loading ? 'Loading document...' : (
+                {({ loading }) => (loading ? (
+                    <ButtonExport>
+                        <FontAwesomeIcon size='lg' icon="file-pdf" color="#eeeeee" />
+                    </ButtonExport>
+                ) : (
                     <ButtonExport>
                         <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
                     </ButtonExport>
@@ -211,12 +217,20 @@ export default function OrderDetail({ history, orderId }) {
             accessor: 'invMastUid',
         },
         {
+            Header: 'Customer Part #',
+            accessor: 'customerPartNumber',
+        },
+        {
             Header: 'Qty Recieved',
             accessor: 'quantityInvoiced',
         },
         {
             Header: 'Qty Ordered',
             accessor: 'quantityOrdered',
+        },
+        {
+            Header: 'Cancelled',
+            accessor: 'isCancelled'
         },
         {
             Header: 'Unit Price',
@@ -241,6 +255,10 @@ export default function OrderDetail({ history, orderId }) {
         { 
             Header: 'P.O. Number', 
             accessor: 'poNo' 
+        },
+        {
+            Header: 'Tracking #',
+            accessor: 'trackingNo'
         },
         { 
             Header: 'Status', 
@@ -287,7 +305,8 @@ export default function OrderDetail({ history, orderId }) {
     const exportData = orderDetails?.accountOrderDetails?.lineItems?.map(item => {
         return {
             ...item,
-            ...orderDetails.accountOrderDetails
+            ...orderDetails.accountOrderDetails,
+            trackingNo: item.trackingNumbers?.map(t => t.trackingNumber).join(' - ')
         }
     })
     
@@ -308,7 +327,7 @@ export default function OrderDetail({ history, orderId }) {
                     <h4>{total > 0 ? 'Order #' : 'RMA #'}{orderId}</h4>
                     <DivDownload>{OrderDetailDownloadButton}</DivDownload>
                     <ExportButtons data={exportData} columns={exportColumns} title={`airline_order_${orderId}.pdf`} hidePDF={true} />
-                    <p onClick={() => { history.push('/account/orders') }}>Back to Orders</p>
+                    <p onClick={() => { navigate('/account/orders') }}>Back to Orders</p>
                     <ButtonSmall onClick={() => handleAddOrder()}>Add Order to Cart</ButtonSmall>
                 </DivHeader>
                 <DivOrderInfoContainer>

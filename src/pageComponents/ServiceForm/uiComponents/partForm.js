@@ -1,5 +1,5 @@
-import React, { useContext, useRef } from 'react'
-import { Button } from '@material-ui/core'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Button } from '@mui/material'
 import Context from '../../../setup/context'
 import FormikCheckbox from '../../_common/formik/checkBox'
 import FormikCreatableSelect from '../../_common/formik/createableSelect'
@@ -8,6 +8,7 @@ import FormikTextArea from '../../_common/formik/textarea_v3'
 import { ErrorMessage, Field } from 'formik'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 import styled from 'styled-components'
+import Required from '../../_common/required'
 
 const PART_TYPES = [
     'Accumulator',
@@ -111,12 +112,39 @@ const partOptions = makeOptions(PART_TYPES)
 const fluidOptions = makeOptions(FLUID_TYPES)
 const toAirlineOptions = makeOptions(TO_AIRLINE_SHIP_TYPES)
 const toCustomerOptions = makeOptions(TO_CUSTOMER_SHIP_TYPES)
+const yesNoOptions = [
+    { label: 'Yes', value: true },
+    { label: 'No', value: false },
+]
 
 export default function PartForm(props) {
-    const { idx, URGENCY, locationOptions, values, formType } = props
+    const { idx, URGENCY, locationOptions, values, formType, setFieldValue } = props
+    const [carrierNumbers, setCarrierNumbers] = useState({})
+    const [poNumbers, setPoNumbers] = useState([])
     const uploadRef = useRef()
 
     const context = useContext(Context)
+    
+    useEffect(() => {
+        getPoNumbers()
+        getCarrierNumbers()
+    }, [])
+
+    function getPoNumbers() {
+        //po number call
+        setPoNumbers([])
+    }
+
+    function getCarrierNumbers() {
+        //carrier number call
+        setCarrierNumbers({ UPS: 1 })
+    }
+
+    useEffect(() => {
+        if (values.parts[idx].toCustomer) {
+            setFieldValue(`parts[${idx}].carrierNumber`, carrierNumbers[values.parts[idx].toCustomer] || '')
+        }
+    }, [values.parts[idx].toCustomer])
 
     const RadioButtons = () => (
         <Flex role='group'>
@@ -192,7 +220,7 @@ export default function PartForm(props) {
             <FormRow>
                 <Container>
                     <FormikCreatableSelect
-                        label='Type of part*'
+                        label={<>Type of part<Required /></>}
                         name={`parts[${idx}].type`}
                         options={partOptions}
                         {...props}
@@ -201,7 +229,7 @@ export default function PartForm(props) {
                 {context.userInfo && context.userInfo.isAirlineEmployee && (
                     <Container>
                         <FormikCreatableSelect
-                            label='Part Repair Location*'
+                            label={<>Part Repair Location<Required /></>}
                             name={`parts[${idx}].repairLocation`}
                             options={locationOptions}
                             notCreatable={true}
@@ -211,25 +239,39 @@ export default function PartForm(props) {
                 )}
             </FormRow>
             <FormRow>
-                <FormikInput label="Quantity*" name={`parts[${idx}].quantity`} type='number' />
-                <FormikInput label="Manufacturer*" name={`parts[${idx}].manufacturer`} placeholder='If it is not known then enter N/A' />
-            </FormRow>
-            <FormRow>
-                <FormikInput label="Model Code*" name={`parts[${idx}].modelCode`} placeholder='If it is not known then enter N/A' />
-                <FormikInput label="Part Number*" name={`parts[${idx}].partNumber`} placeholder='If it is not known then enter N/A' />
-            </FormRow>
-            <FormRow>
-                <FormikInput label="Serial Number Code" name={`parts[${idx}].serialNumber`} />
-                <FormikCheckbox
+                <FormikCreatableSelect
                     label="Warranty Claim"
                     name={`parts[${idx}].warranty`}
-                    style={{ alignSelf: 'flex-end' }}
                     value={values.parts[idx].warranty}
+                    options={yesNoOptions}
+                    notCreatable={true}
+                    {...props}
                 />
+            </FormRow>
+            {values.parts[idx].warranty === true && (
+                <FormRow>
+                    <FormikCreatableSelect
+                        label="PO Number"
+                        name={`parts[${idx}].poNo`}
+                        options={poNumbers}
+                        {...props}
+                    />
+                </FormRow>
+            )}
+            <FormRow>
+                <FormikInput label={<>Quantity<Required /></>} name={`parts[${idx}].quantity`} type='number' />
+                <FormikInput label={<>Manufacturer<Required /></>} name={`parts[${idx}].manufacturer`} placeholder='If it is not known then enter N/A' />
+            </FormRow>
+            <FormRow>
+                <FormikInput label={<>Model Code<Required /></>} name={`parts[${idx}].modelCode`} placeholder='If it is not known then enter N/A' />
+                <FormikInput label={<>Part Number<Required /></>} name={`parts[${idx}].partNumber`} placeholder='If it is not known then enter N/A' />
+            </FormRow>
+            <FormRow>
+                <FormikInput label={<>Serial Number Code</>} name={`parts[${idx}].serialNumber`} />
             </FormRow>
             <FormRow>
                 <FormikTextArea
-                    label="What failed on the part?*"
+                    label={<>What failed on the part?<Required /></>}
                     name={`parts[${idx}].failure`}
                     placeholder='If it is not known then enter N/A'
                     rows="3"
@@ -239,7 +281,7 @@ export default function PartForm(props) {
             </FormRow>
             <FormRow>
                 <FormikInput
-                    label="Where is the failure located on the part?*"
+                    label={<>Where is the failure located on the part?<Required /></>}
                     name={`parts[${idx}].failureLocation`}
                     placeholder='Example: cylinder cap-end port.'
                 />
@@ -285,17 +327,21 @@ export default function PartForm(props) {
                     name={`parts[${idx}].certification`}
                     value={values.parts[idx].certification}
                 />
-
-                <FormikCheckbox
-                    label="Part is involved with personnel handling and/or safety"
+            </FormRow>
+            <FormRow>
+                <FormikCreatableSelect
+                    label={<>Part is involved with personnel handling and/or safety <Required /></>}
                     name={`parts[${idx}].safety`}
+                    options={yesNoOptions}
                     value={values.parts[idx].safety}
+                    notCreatable={true}
+                    {...props}
                 />
             </FormRow>
             <FormRow>
                 <Container>
                     <FormikCreatableSelect
-                        label='Fluid type*'
+                        label={<>Fluid type<Required /></>}
                         name={`parts[${idx}].fluidType`}
                         options={fluidOptions}
                         {...props}
@@ -307,7 +353,7 @@ export default function PartForm(props) {
                 <FormRow>
                     <Container>
                         <FormikCreatableSelect
-                            label='Getting the part to Airline*'
+                            label={<>Getting the part to Airline<Required /></>}
                             name={`parts[${idx}].toAirline`}
                             options={toAirlineOptions}
                             {...props}
@@ -315,11 +361,20 @@ export default function PartForm(props) {
                         <Instructions>PLEASE DRAIN ALL FLUIDS FROM COMPONENTS BEFORE SHIPMENT.</Instructions>
                     </Container>
                     <FormikCreatableSelect
-                        label='Returning the part to the Customer*'
+                        label={<>Returning the part to the Customer<Required /></>}
                         name={`parts[${idx}].toCustomer`}
                         options={toCustomerOptions}
                         {...props}
                     />
+                    {['Fedex', 'UPS', 'LTL'].includes(values.parts[idx].toCustomer) && (
+                        <Container>
+                            <FormikInput
+                                label="Carrier Number"
+                                name={`parts[${idx}].carrierNumber`}
+                                {...props}
+                            />
+                        </Container>
+                    )}
                 </FormRow>
             )}
         </div>

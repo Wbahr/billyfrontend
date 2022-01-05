@@ -4,7 +4,7 @@ import Context from '../../../setup/context'
 import NewItemForm from './uiComponents/newItemForm'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import gql from 'graphql-tag'
-import { Button, CircularProgress, Grid } from '@material-ui/core'
+import { Button, CircularProgress, Grid } from '@mui/material'
 import ItemCreationModal from './uiComponents/itemCreationModal'
 import ItemResult from '../../../pageComponents/SearchResults/uiComponents/itemResult'
 import { InputType } from 'pageComponents/_common/form/FormField'
@@ -78,7 +78,7 @@ const ButtonContainer = styled.div`
 	}
 `
 
-export default function ItemCreationPage({ history }) {
+export default function ItemCreationPage() {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedSupplier, setSelectedSupplier] = useState(0)
     const [searchEnabled, setSearchEnabled] = useState(false)
@@ -193,7 +193,6 @@ export default function ItemCreationPage({ history }) {
                 <ItemCreationModal
                     submitResponse={submitResponse}
                     handleCloseModal={() => setSubmitResponse(null)}
-                    history={history}
                 />
             )}
 

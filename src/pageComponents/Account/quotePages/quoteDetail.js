@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { getAvailabilityMessage } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { GET_ORDERS_DETAIL, GET_ITEM_PRICE, GET_ITEM_AVAILABILITY } from 'setup/providerGQL'
 import { GET_ORDER_DETAIL_ITEM_DETAIL } from 'setup/gqlQueries/gqlItemQueries'
+import { useNavigate } from 'react-router'
 
 const DivOrderInfoContainer = styled.div`
     display: flex;
@@ -84,11 +85,12 @@ const ButtonSmall = styled.button`
     }
   `
 
-export default function QuoteDetail({ history, orderId: quoteId }) {
+export default function QuoteDetail({ orderId: quoteId }) {
     const context = useContext(Context)
     const [filter, setFilter] = useState('')
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
-
+    const navigate = useNavigate()
+    
     const { loading: isOrderDetailsLoading, data: orderDetails } = useQuery(GET_ORDERS_DETAIL, {
         fetchPolicy: 'no-cache',
         variables: { orderNumber: String(quoteId) }
@@ -229,7 +231,11 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
         return (
             <DivDownload>
                 <PDFDownloadLink document={<MyDocument data={pdfData} />} fileName={`airline_quote_${quoteId}.pdf`}>
-                    {({ loading }) => (loading ? 'Loading document...' : (
+                    {({ loading }) => (loading ? (
+                        <ButtonExport>
+                            <FontAwesomeIcon size='lg' icon="file-pdf" color="#eeeeee" />
+                        </ButtonExport>
+                    )  : (
                         <ButtonExport>
                             <FontAwesomeIcon size='lg' icon="file-pdf" color="#ff0000" />
                         </ButtonExport>
@@ -242,6 +248,7 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
     const exportColumns = [
         { accessor: 'itemCode', Header: 'Item Code' },
         { accessor: 'invMastUid', Header: 'AHC #' },
+        { accessor: 'customerPartNumber', Header: 'Customer Part #' },
         { accessor: 'unitPrice', Header: 'Quote Unit Price' },
         { accessor: 'totalPrice', Header: 'Quote Total Price' },
         { accessor: 'currentPrice', Header: 'Current Unit Price' },
@@ -282,7 +289,7 @@ export default function QuoteDetail({ history, orderId: quoteId }) {
                     <h4>Quote #{quoteId}</h4>
                     {QuoteDetailDownloadButton}
                     <ExportButtons data={exportData} columns={exportColumns} title={`airline_quote_${quoteId}`} hidePDF={true} />
-                    <p onClick={() => {history.push('/account/open-quotes')}}>Back to Quotes</p>
+                    <p onClick={() => {navigate('/account/open-quotes')}}>Back to Quotes</p>
                     <ButtonSmall onClick={() => handleAddQuote()}>Add Quote to Cart</ButtonSmall>
                 </DivHeader>
                 <DivOrderInfoContainer>

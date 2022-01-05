@@ -127,7 +127,7 @@ export default function CustomerPartModal({ open, setOpen, invMastUid, selectCus
                     {customerPartNumbers?.map(elem =>
                         <option key={elem.id} value={elem.id}>{elem.customerPartNumber}</option>
                     )}
-                    <option value="-1">Create Part#</option>
+                    <option value="-1">Add New Customer Part#</option>
                 </select>
 
                 {selectedCustomerPartNumber !== 0 && (

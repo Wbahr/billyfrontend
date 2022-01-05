@@ -6,7 +6,7 @@ import { FormikStyleInput } from 'pageComponents/_common/formik/input_v2'
 import { useLazyQuery } from '@apollo/client'
 import { IMPERSONATION_SEARCH } from 'setup/providerGQL'
 import { ButtonRed } from 'styles/buttons'
-import SearchIcon from '@material-ui/icons/Search'
+import SearchIcon from '@mui/icons-material/Search'
 import Loader from 'pageComponents/_common/loader'
 
 const ResultListItem = styled.li`

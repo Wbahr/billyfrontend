@@ -93,70 +93,38 @@ const Wrapper = styled.div`
         max-width: 1400px;
 `
 
-export default function TechnicallySpeaking() {
-    
+const key = 'BLOG'
+
+export default function TechnicallySpeaking({ homepage }) {
+    const items = homepage.filter(h => h.key === key)
+
+    const speaking = items.map(i => {
+        return (
+            <Row key={i.sort}>
+                <Link href={i.href} target="_blank">
+                    <ImgDiv>
+                        <Img src={i.imageUrl} />
+                    </ImgDiv>
+                </Link>
+                <TextDiv>
+                    <Details>
+                        {i.html}
+                        <ButtonDiv>
+                            <Button href={i.href} target="_blank">Read More</Button>
+                        </ButtonDiv>
+                    </Details>
+                </TextDiv>
+            </Row>
+        )
+    })
 
     return (
         <>
-            <SectionHeader text='Technically Speaking' />
+            <SectionHeader text={items[0].sectionName} />
             <Wrapper>
                 <Container>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/york%20college%20home%20thmubnail.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Cobots in the Classroom: The York College Story
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/cobot-york-college" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb%20copy.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>Wireless Ethernet Setup, Featuring the FL WLAN by Phoenix Contact
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/introducing-the-wlan-1101-by-phoenix-contact" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/Webpage%20Thumb.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>What is Industrial Wi-Fi?
-                                <ButtonDiv> <Button href="https://blog.airlinehyd.com/what-is-industrial-wifi" target="_blank">Read More</Button></ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
-                    <Row>
-                        <Link href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">
-                            <ImgDiv>
-                                <Img src="https://airlinemedia.airlinehyd.com/Static_pages/blog/thumbnail/how%20to%20get%20started%20with%20io-link-%20homepage%20version.png" />
-                            </ImgDiv>
-                        </Link>
-                        <TextDiv>
-                            <Details>How to Get Started with IO-Link
-                                <ButtonDiv>
-                                    <Button href="https://blog.airlinehyd.com/how-to-get-started-with-io-link" target="_blank">Read More</Button>
-                                </ButtonDiv>
-                            </Details>
-                        </TextDiv>
-                    </Row>
+                    {speaking}
                 </Container>
-
                 <div>
                     <SeeAll>
                         <A href="https://blog.airlinehyd.com/" target="_blank">See All Blog Posts <FontAwesomeIcon icon='arrow-circle-right' size='1x' /></A>

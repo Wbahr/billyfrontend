@@ -23,37 +23,28 @@ const Label = styled.label`
   margin-left: 7px;
 `
 
-const MainInput = styled(FormikField)`
-  height: 40px;
-  padding: 0 8px;
-  color: #303030;
-  font-size: 16px;
-  border-radius: 1px;
-  border: 1px solid #e1e1e1;  
-  :focus{
-    border: 1px solid #007bff;  
-    outline: none;
-  }
-  ::placeholder {
-    color: grey;
-    font-size: 14px;
-  }
-`
+const formikStyle = {
+    padding: '0 8px',
+    color: '#303030',
+    fontSize: '16px',
+    borderRadius: '1px',
+    border: '1px solid #e1e1e1'
+}
 
-export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows }){
+export default function TextArea({ type, disabled, name, label, placeholder, width, changeFunction, maxLength, rows, height, onFocus }){
     if (type === 'text' && _.isNil(changeFunction)){
         return (
             <DivContainer>
                 {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-                <MainInput 
-                    type="text" 
+                <FormikField 
                     as="textarea"
                     name={name} 
                     placeholder={placeholder} 
                     disabled={disabled} 
-                    style={{ width: width || '400px' }}
+                    style={{ ...formikStyle, width: width || '400px', height: height || '40' }}
                     maxLength={maxLength}
                     rows={rows}
+                    onFocus={onFocus}
                 />
             </DivContainer>
         )
@@ -61,13 +52,12 @@ export default function TextArea({ type, disabled, name, label, placeholder, wid
         return (
             <DivContainer>
                 {label && <Label htmlFor={label}>{`${label}`}</Label>}        
-                <MainInput 
-                    type="text" 
+                <FormikField 
                     as="textarea"
                     name={name} 
                     placeholder={placeholder} 
                     disabled={disabled} 
-                    style={{ width: width || '400px' }}
+                    style={{ ...formikStyle, width: width || '400px', height: height || '40' }}
                     onChange={(e) => changeFunction(name, e.target.value)}
                     maxLength={maxLength}
                     rows={rows}

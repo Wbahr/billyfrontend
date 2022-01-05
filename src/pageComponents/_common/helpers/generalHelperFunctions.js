@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from 'react'
+import { jsPDF } from "jspdf"
+
 
 export const searchObjectArrayForString = (options, searchString) => { //Searches all key values for substring match
     return options.filter(o => Object.keys(o).some(key => o[key].toString().toLowerCase().includes(searchString.toLowerCase())))
@@ -14,7 +16,9 @@ export const getCsvFormattedData = (data, columns, ignoreCols) => {
     const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
     return [
         columns.filter(filterCols).map(({ Header }) => Header),
-        ...data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+        ...(data || []).map(d => columns.filter(filterCols).map(({ accessor }) => {
+            return d[accessor] === true ? 'X' : d[accessor] === false ? '' : d[accessor]
+        }))
     ]
 }
 
@@ -29,33 +33,29 @@ export const exportToExcel = (data, columns, name, ignoreCols=[]) => {
 }
 
 export const exportToPdf = (data, columns, name, ignoreCols=[], landscape) => {
-    import('jspdf').then(jsPDF => {
-        import('jspdf-autotable').then(() => {
-            const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
-            const pdfFormat = {
-                head: [columns.filter(filterCols).map(({ Header }) => Header)],
-                body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
-            }
-            const doc = landscape ? new jsPDF.jsPDF('landscape') : new jsPDF.jsPDF() 
-            doc.autoTable(pdfFormat)
-            doc.save(`${name}.pdf`)
-        })
-    })
+    const filterCols = ({ accessor }) => !ignoreCols.includes(accessor)
+    const pdfFormat = {
+        head: [columns.filter(filterCols).map(({ Header }) => Header)],
+        body: data.map(d => columns.filter(filterCols).map(({ accessor }) => d[accessor]))
+    }
+    const doc = landscape ? new jsPDF.jsPDF('landscape') : new jsPDF.jsPDF() 
+    doc.autoTable(pdfFormat)
+    doc.save(`${name}.pdf`)
 }
 
 export const getImagePath = path => {
     return path
         ? '//' + path
-        : 'https://www.airlinehyd.com/images/no-image.jpg'
+        : 'https://airlinemedia.airlinehyd.com/Item_Images/no-image.png'
 }
 
 const ImageTypes = {
-    Original: 0,
-    Large: 1,
-    Zoom: 2,
-    Thumbnail: 3,
+    Original: "ORIGINAL",
+    Large: "LARGE",
+    Zoom: "ZOOM",
+    Thumbnail: "THUMB",
 }
-const MediaType_Image = 0
+const MediaType_Image = "IMAGE"
 
 const firstMatchingImageType = type => i => i.itemMediaType === type && i.mediaType === MediaType_Image && i.sequence === 1
 const firstImage = i => i.mediaType === MediaType_Image && i.sequence === 1
@@ -81,7 +81,7 @@ export const buildSearchString = ({
     nonweb='false',
     innerSearchTerms,
     brands,
-    resultPage='1',
+    resultPage=1,
     ...attributes
 }) => {
     return convertObjectToSearchQuery({ searchTerm, sortType, nonweb, innerSearchTerms, brands, resultPage, ...attributes })
@@ -94,7 +94,13 @@ const convertObjectToSearchQuery = object => {
 }
 
 export const logout = () => {
-    const keysToRemove = ['userInfo', 'apiToken', 'refreshToken', 'shoppingCartToken', 'imperInfo']
+    removeAuthInfo()
+    const keysToRemove = ['shoppingCartToken']
+    keysToRemove.forEach(key => localStorage.removeItem(key))
+}
+
+export const removeAuthInfo = () => {
+    const keysToRemove = ['userInfo', 'apiToken', 'refreshToken', 'imperInfo']
     keysToRemove.forEach(key => localStorage.removeItem(key))
 }
 
@@ -152,7 +158,6 @@ export function scrollHorizontal(element, change, duration) {
     const start = element.scrollLeft
     let currentTime = 0
     const increment = 20
-
     const animateScroll = () => {
         currentTime += increment
         element.scrollLeft = Math.easeInOutQuad(currentTime, start, change, duration)

@@ -1,10 +1,12 @@
 import React from 'react'
-import { Grid, Paper, Typography as Text } from '@material-ui/core'
-import { AddBox as AddBoxIcon, Code as CodeIcon, ContactMail, FlashOn, CreditCard } from '@material-ui/icons'
-import { makeStyles } from '@material-ui/core/styles'
+import { Grid, Paper, Typography as Text } from '@mui/material'
+import { AddBox as AddBoxIcon, Code as CodeIcon, ContactMail, FlashOn, CreditCard, MonetizationOn } from '@mui/icons-material'
+import { makeStyles } from '@mui/styles'
 import { Link } from 'react-router-dom'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { PRIMARY_RED } from '../../pageComponents/_common/constants/colors'
+import DemandPermissionComponent from 'pageComponents/_common/security/DemandPermissionComponent'
+import { PERMISSION_ACCOUNTING_VIEW_ORDERS } from 'pageComponents/_common/constants/permissionConstants'
 
 const minWidth = 340
 const minHeight = 280
@@ -17,7 +19,7 @@ export default function AdminDashboard() {
                 <Paper style={{ padding: 10, borderBottom: `3px solid ${PRIMARY_RED}` }}>
                     <Grid container justify="center">
                         <Link to="/">
-                            <img src={AirlineLogo} height="50px" style={{ marginTop: 4, marginRight: 20 }} />
+                            <img src={AirlineLogo} height="50px" style={{ marginTop: 4, marginRight: 20 }} alt="Airline Logo" title="Go Home" />
                         </Link>
     
                         <Text align="center" variant="h3" style={textStyle}>
@@ -46,6 +48,13 @@ export default function AdminDashboard() {
                     <Link to="/admin-dashboard/settings" style={{ textDecoration: 'none' }}>
                         <GridItem title="SYSTEM SETTINGS" Icon={FlashOn} />
                     </Link>
+
+                    <DemandPermissionComponent permission={PERMISSION_ACCOUNTING_VIEW_ORDERS}>
+                        <Link to="/admin-dashboard/order-payment-methods" style={{ textDecoration: 'none' }}>
+                            <GridItem title="ORDER PAYMENT METHODS" Icon={MonetizationOn} />
+                        </Link>
+                    </DemandPermissionComponent>
+                    
                 </Grid>
             </Grid>
         </Grid>
@@ -90,6 +99,7 @@ const useStyles = makeStyles(() => ({
     gridText: {
         ...textStyle,
         lineHeight: 1.8,
+        maxWidth: '241px',
         borderBottom: `3px solid ${PRIMARY_RED}`
     }
 }))

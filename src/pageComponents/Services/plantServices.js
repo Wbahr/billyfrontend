@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import MachineSafeguarding from './plantServicesPages/machineSafeguarding'
 import FluidCleanliness from './plantServicesPages/fluidCleanliness'
 import ArcFlashSafety from './plantServicesPages/arcFlashSafety'
@@ -41,7 +40,4 @@ export default function PlantServicesPage() {
             {pageComponent}
         </>
     )
-}
-PlantServicesPage.propTypes = {
-    history: PropTypes.object.isRequired
 }

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { AccountTree as AttributeIcon } from '@material-ui/icons'
+import { AccountTree as AttributeIcon } from '@mui/icons-material'
 import clsx from 'clsx'
 import AttributeTypeFilter from './attributeTypeFilter'
 

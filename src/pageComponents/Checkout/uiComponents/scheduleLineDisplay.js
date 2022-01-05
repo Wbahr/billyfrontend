@@ -62,6 +62,7 @@ const Img = styled.img`
 const Label = styled.label`
   margin: 0;
   font-size: 14px;
+  padding: 3px;
 `
 
 const LabelBold = styled(Label)`
@@ -82,7 +83,7 @@ const P2 = styled.p`
 export default function ScheduleLineDisplay({ item, price, itemDetails, customerPartNumbers }) {
 
     const imagePath = getThumbnailImagePath(itemDetails)
-    let date = item.requestedShipDate
+    let date = new Date(item.requestedShipDate)
     date = (date.getMonth() +1) + '/' +  date.getDate() + '/' +  date.getFullYear()
 
     const selectedCustomerPartNumber = customerPartNumbers?.find(elem => elem.id === item.customerPartNumberId)

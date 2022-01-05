@@ -31,7 +31,7 @@ const Suggestion = styled.div`
 export default function ShopOurProducts(props) {
 
     function handleSearch(searchTerm) {
-        props.history.push(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
+        props.navigate(`/search/?searchTerm=${encodeURIComponent(searchTerm)}&resultSize=10&resultPage=1&sortType=${encodeURIComponent('relevancy')}`)
 
     }
     return (

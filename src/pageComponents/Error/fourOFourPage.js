@@ -17,7 +17,7 @@ export default function FourOFourPage() {
     return (
         <DivContainer>
             <p>404. We can't find this page. :(</p>
-            <img height="300px" src="https://www.airlinehyd.com/customer/aihyco/images/404_error_message_image.png"/>
+            <img height="300px" src="https://airlinemedia.airlinehyd.com/404_error_message_image.png"/>
         </DivContainer>
     )
 }

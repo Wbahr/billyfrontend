@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
-import PasswordResetModal from '../_common/modals/resetPasswordModal'
 import PasswordRequirements from './uiComponents/passwordRequirements'
-import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 import Context from 'setup/context'
+import { ErrorAlert, InfoAlert } from '../../styles/alerts'
+import { useNavigate } from 'react-router'
 
 const MUTATION_PASSWORD_RESET = gql`
   mutation SubmitPasswordReset($passwordInfo: PasswordResetSubmitInputGraphType){
@@ -17,16 +17,59 @@ const MUTATION_PASSWORD_RESET = gql`
   }
 `
 
+const ResetPageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  margin: 28px auto;
+  flex-grow: 99;
+`
+
+const Img = styled.img`
+  cursor: pointer;
+  margin-bottom: 10px;
+`
+
+const Button = styled.button`
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 8px 16px;
+  &:hover{
+    background-color: #DB1633;
+    transition: background-color 300ms;
+  }
+  margin-top: 10px;
+`
+
+const Label = styled.label`
+  color: grey;
+  font-size: 14px;
+  font-weight: 300;
+  padding-left: 4px;
+  margin: 0;
+`
+
+const Input = styled.input`
+  width: 300px;
+  height: 42px;
+  padding: 0 8px;
+`
+
+const DivInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`
+
 const PasswordResetPinPage = (props) => {
     const {
         passwordResetEmail,
         setPasswordResetEmail
     } = useContext(Context)
-
-    const {
-        history
-    } = props
-
+    const navigate = useNavigate()
     const [resetPin, setResetPin] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -38,7 +81,7 @@ const PasswordResetPinPage = (props) => {
             const responseData = data.submitPasswordReset
             if (responseData.success) {
                 setPasswordResetEmail('')
-                history.push('/login?passwordReset=true')
+                navigate('/login?passwordReset=true')
             } else {
                 setErrorMessage(responseData.message)
                 setPassword('')
@@ -48,9 +91,7 @@ const PasswordResetPinPage = (props) => {
     })
 
     const handlePasswordReset = () => {
-        if (password !== confirmPassword) {
-            //passwords do not match
-        } else {
+        if (isPasswordValid && password === confirmPassword) {
             executePasswordReset(
                 {
                     variables: {
@@ -66,33 +107,41 @@ const PasswordResetPinPage = (props) => {
     }
 
     return (
-        <>
-            <p>You will receive a password reset link shortly at your {passwordResetEmail} email address.</p>
+        <ResetPageContainer>
 
-            <div>
-                <label>PIN from Email</label>
-                <input type='text' value={resetPin} onChange={(evt) => { setResetPin(evt.target.value) }} />
-            </div>
-
-            <div>
-                <label>Password</label>
-                <input type='password' value={password} onChange={(evt) => { setPassword(evt.target.value) }} />
-            </div>
-
-            <div>
-                <label>Confirm Password</label>
-                <input type='password' value={confirmPassword} onChange={(evt) => { setConfirmPassword(evt.target.value) }} />
-            </div>
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => navigate('/')} />
             
+            <InfoAlert>
+                <strong>
+                    <em>
+                        You will receive a password reset link shortly at your {passwordResetEmail} email address.
+                    </em>
+                </strong>
+            </InfoAlert>
 
+            <DivInput>
+                <Label>The 6-Digit PIN Sent to Your Email</Label>
+                <Input type='text' value={resetPin} onChange={(evt) => { setResetPin(evt.target.value) }} />
+            </DivInput>
+
+            <DivInput>
+                <Label>Your New Password</Label>
+                <Input type='password' value={password} onChange={(evt) => { setPassword(evt.target.value) }} />
+            </DivInput>
+
+            <DivInput>
+                <Label>Confirm Your New Password</Label>
+                <Input type='password' value={confirmPassword} onChange={(evt) => { setConfirmPassword(evt.target.value) }} />
+            </DivInput>
+            
             <PasswordRequirements
                 password={password}
                 confirmPassword={confirmPassword}
                 isValidPassword={(isValid) => setIsPasswordValid(isValid)}
             />
-
-            <button onClick={() => { handlePasswordReset() }}>Submit Password Reset</button>
-        </>
+            {errorMessage.length > 0 && <ErrorAlert>{errorMessage}</ErrorAlert>}
+            <Button onClick={() => { handlePasswordReset() }}>Submit Password Reset</Button>
+        </ResetPageContainer>
     )
 }
 

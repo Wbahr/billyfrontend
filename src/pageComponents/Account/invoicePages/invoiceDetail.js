@@ -8,6 +8,7 @@ import { GET_INVOICE } from '../../../setup/providerGQL'
 import { useQuery } from '@apollo/client'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import MyDocument from './invoiceDetailPDF'
+import { useNavigate } from 'react-router'
 
 const isNil = val => val == null
 
@@ -72,7 +73,7 @@ const DivItemDetailCell = styled.div`
 
 const P1 = styled.p`
 		font-weight: bold;
-		margin: 0;
+		margin: 0px 4px 0px auto;
 	`
 
 const P2 = styled.p`
@@ -92,21 +93,31 @@ const DivTracking = styled.div`
 	`
 
 const Row = styled.div`
-		display: flex;
-`
+        display: flex;
+    `
 
 const DivTotalContainer = styled.div`
 	width: 300px;
+    display: flex;
+    flex-direction: column; 
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	padding: 5px 12px;
-	margin-left: auto;
-	margin-top: 16px;
+    margin-right: 0;
+    margin-left: auto;
+    p {
+        margin: 0;
+        margin-left: 8px;  
+    }
+    span {
+        margin: 0;
+        margin-left: auto;
+    }
 `
 
-export default function InvoiceDetail({ history, invoiceId }) {
+export default function InvoiceDetail({ invoiceId }) {
     const [data, setData] = useState({})
-
+    const navigate = useNavigate()
     useQuery(GET_INVOICE, {
         fetchPolicy: 'no-cache',
         variables: {
@@ -128,6 +139,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
         shipToCity,
         shipToState,
         shipToZip,
+        deliveryInstructions,
         billingName,
         billingAddress1,
         billingAddress2,
@@ -139,6 +151,7 @@ export default function InvoiceDetail({ history, invoiceId }) {
         terms,
         taker,
         orderNumber,
+        orderNote,
         invoiceDate,
         netDueDate,
         discDueDate,
@@ -146,7 +159,9 @@ export default function InvoiceDetail({ history, invoiceId }) {
         orderedBy,
         subTotal,
         totalTax,
-        amountDue
+        amountDue,
+        freightAmount,
+        totalAmount
     } = data
 
     const itemDetails = lineItems?.map(item => {
@@ -156,7 +171,8 @@ export default function InvoiceDetail({ history, invoiceId }) {
                     <P1>{item.itemDescription}</P1>
                     <P2>Item Code: {item.itemCode}</P2>
                     <P2>AHC#: {item.invMastUid}</P2>
-                    {item.trackingNumbers.map(tracking => {
+                    {item.customerPartNumber && <P2>Customer Part #: {item.customerPartNumber}</P2>}
+                    {item.trackingNumbers?.map(tracking => {
                         return (
                             <DivTracking key={tracking.trackingNumber}>
                                 <P2>{tracking.carrierName}: </P2>
@@ -194,11 +210,11 @@ export default function InvoiceDetail({ history, invoiceId }) {
             <PageContainer>
                 <DivHeader>
                     <img src={AirlineLogo} height="40px"/>
-                    <h4 style={{ paddingLeft: '8px' }}>Invoice #{invoiceId}</h4>
+                    <h4 style={{ paddingLeft: '8px', paddingRight: '8px' }}>Invoice #{invoiceId}</h4>
                     <PDFDownloadLink document={<MyDocument invoiceId={invoiceId} data={data}/>} fileName={`airline_invoice_${invoiceId}.pdf`}>
                         {({ loading }) => (loading ? 'Loading document...' : 'Download this Invoice')}
                     </PDFDownloadLink>
-                    <p onClick={() => {history.push('/account/invoices')}}>Back to Invoices</p>
+                    <p onClick={() => {navigate('/account/invoices')}}>&laquo; Back to Invoices</p>
                 </DivHeader>
                 <DivOrderInfoContainer>
                     <DivOrderInfo>
@@ -240,10 +256,10 @@ export default function InvoiceDetail({ history, invoiceId }) {
                 </DivOrderInfoContainer>
                 <DivOrderInfoContainer>
                     <DivOrderInfo>
-                        <P1>Delivery Instructions:</P1><p> ???</p>
+                        <P1>{deliveryInstructions && 'Delivery Instructions:'}</P1><p>{deliveryInstructions}</p>
                     </DivOrderInfo>
                     <DivOrderInfo>
-                        <P1>Order Note:</P1><p></p>
+                        <P1>{orderNote && 'Order Note:'}</P1><p>{orderNote}</p>
                     </DivOrderInfo>
                 </DivOrderInfoContainer>
                 <DivItemDetailHeader>
@@ -270,6 +286,8 @@ export default function InvoiceDetail({ history, invoiceId }) {
                 <DivTotalContainer>
                     <Row><P1>Subtotal: </P1><NumberFormat value={subTotal} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
                     <Row><P1>Tax: </P1><NumberFormat value={totalTax} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
+                    {freightAmount > 0 && <Row><P1>Shipping: </P1><NumberFormat value={freightAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>}
+                    <Row><P1>Total: </P1><NumberFormat value={totalAmount} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
                     <Row><P1>Amount Due: </P1><NumberFormat value={amountDue} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/></Row>
                 </DivTotalContainer>
             </PageContainer>

@@ -11,6 +11,7 @@ import { ButtonRed } from '../../../styles/buttons'
 import { DivNavigation } from '../../../styles/divs'
 import CustomShipToWarning from '../../_common/modals/CustomShipToWarning'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
+import Required from '../../_common/required'
 
 const WrapForm = styled.div`
     display: flex;
@@ -56,15 +57,31 @@ export default function ShipToForm(props) {
         isStepValid,
         handleMoveStep,
         locationOptions,
+        setFieldTouched
     } = props
     const [showSaveShipToModal, setShowSaveShipToModal] = useState(false)
     const context = useContext(Context)
-    
+
     useEffect(() => {
         window.scrollTo({ top: 0 })
     }, [])
 
-    const handleContinueClick = () => handleMoveStep(1)
+    const handleContinueClick = () => {
+        const disabled = !isStepValid && values.contact
+        if (disabled) {
+            touchFields()
+        } else {
+            handleMoveStep(1)
+        }
+    }
+
+    function touchFields() {
+        const fields = ['country', 'address1', 'city', 'stateOrProvince', 'zip',
+            'phone', 'email', 'firstName', 'lastName']
+        for (const field of fields) {
+            setFieldTouched(`shipto.${field}`, true)
+        }
+    }
 
     function handleSavedAddressChange(changeEvent, handleChange) {
         setFieldValue('shipto.selectedShipTo', -1)
@@ -100,10 +117,10 @@ export default function ShipToForm(props) {
             city: shipToAddress?.physCity || '',
             stateOrProvince: shipToAddress?.physState || '',
             zip: shipToAddress?.physPostalCode || '',
-            saveShipTo: 0,
+            saveShipTo: false,
             isCollect: !!shipToAddress?.collectNumberUps,
             collectNumber: shipToAddress?.collectNumberUps || '',
-            carrierId: shipToAddress?.carrierId || '',
+            carrierId: shipToAddress?.carrierId || -1,
             shippingNotes: shipToAddress?.shippingNote || ''
         }
         setFieldValue('shipto', shipto)
@@ -145,7 +162,6 @@ export default function ShipToForm(props) {
     }
 
     const changeContactLink = `${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Customers/ContactDetails.aspx?ContactID=${values.contact.savedContact}`
-    const disabled = !isStepValid && values.contact
 
     return (
         <WrapForm>
@@ -156,7 +172,7 @@ export default function ShipToForm(props) {
                         component={SelectField}
                         options={checkoutDropdownDataLabels.contacts}
                         width="500px"
-                        label="Saved Order Contacts*"
+                        label={<>Saved Order Contacts<Required /></>}
                         placeholder="Search Saved Contacts"
                         changeFunction={handleSavedContactSelectChange}
                     />
@@ -164,28 +180,28 @@ export default function ShipToForm(props) {
                         <Container>
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
-                                label="Order Contact First Name*"
+                                label={<>Order Contact First Name<Required /></>}
                                 name="contact.firstName"
                                 onChange={handleCustomContactInput('firstName')}
                                 value={values.contact.firstName}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
-                                label="Order Contact Last Name*"
+                                label={<>Order Contact Last Name<Required /></>}
                                 name="contact.lastName"
                                 onChange={handleCustomContactInput('lastName')}
                                 value={values.contact.lastName}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
-                                label="Order Contact Phone*"
+                                label={<>Order Contact Phone<Required /></>}
                                 name="contact.phone"
                                 onChange={handleCustomContactInput('phone')}
                                 value={values.contact.phone}
                             />
                             <FormikInput
                                 disabled={values.contact.savedContact !== -1}
-                                label="Order Contact Email*"
+                                label={<>Order Contact Email<Required /></>}
                                 name="contact.email"
                                 onChange={handleCustomContactInput('email')}
                                 value={values.contact.email}
@@ -204,7 +220,7 @@ export default function ShipToForm(props) {
             {context.userInfo?.isAirlineEmployee && (
                 <FormRow>
                     <FormikCreatableSelect
-                        label='This form is submitted to location*'
+                        label={<>This form is submitted to location<Required /></>}
                         name={'shipto.submissionLocation'}
                         options={locationOptions}
                         notCreatable={true}
@@ -244,18 +260,18 @@ export default function ShipToForm(props) {
             />
 
             <FormRow>
-                <FormikInput label="First Name*" name="shipto.firstName" />
-                <FormikInput label="Last Name*" name="shipto.lastName" />
+                <FormikInput label={<>First Name<Required /></>} name="shipto.firstName" />
+                <FormikInput label={<>Last Name<Required /></>} name="shipto.lastName" />
             </FormRow>
 
             <FormRow>
-                <FormikInput label="Phone*" name="shipto.phone" />
-                <FormikInput label="Email*" name="shipto.email" />
+                <FormikInput label={<>Phone<Required /></>} name="shipto.phone" />
+                <FormikInput label={<>Email<Required /></>} name="shipto.email" />
             </FormRow>
 
             <FormRow>
                 <FormikFormFieldContainer>
-                    <FormikFormFieldLabel htmlFor='communications'>Preferred Communication Channel(s)*</FormikFormFieldLabel>
+                    <FormikFormFieldLabel htmlFor='communications'>Preferred Communication Channel(s)<Required /></FormikFormFieldLabel>
                     <Flex>
                         <FormikCheckbox
                             label="Email"
@@ -283,7 +299,7 @@ export default function ShipToForm(props) {
             </FormRow>
 
             <FormikInput
-                label="Address 1*"
+                label={<>Address 1<Required /></>}
                 name="shipto.address1"
                 width={600}
                 onChange={(e) => handleSavedAddressChange(e, handleChange)}
@@ -300,13 +316,13 @@ export default function ShipToForm(props) {
 
             <FormRow>
                 <FormikInput
-                    label="City*"
+                    label={<>City<Required /></>}
                     name="shipto.city"
                     onChange={(e) => handleSavedAddressChange(e, handleChange)}
                     value={values.shipto.city}
                 />
                 <FormikInput
-                    label="Zip*"
+                    label={<>Zip<Required /></>}
                     name="shipto.zip"
                     width={150}
                     onChange={(e) => handleZipChange(e, handleChange)}
@@ -322,35 +338,45 @@ export default function ShipToForm(props) {
                     placeholder="Select a Country"
                     width="250px"
                     isSearchable={false}
-                    label="Country*"
+                    label={<>Country<Required /></>}
                     changeFunction={handleCountryChange}
                 />
                 {values.shipto.country === 'us' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label={<>State<Required /></>}
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
                 {values.shipto.country === 'canada' && (
-                    <Field
-                        name="shipto.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
-                        width="200px"
-                    />
+                    <>
+                        <Field
+                            name="shipto.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label={<>Province<Required /></>}
+                            changeFunction={(field, value) => handleStateChange(field, value, handleChange)}
+                            width="200px"
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="shipto.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </>
                 )}
             </FormRow>
             <DivNavigation>
                 <div></div>
-                <ButtonRed disabled={disabled} onClick={handleContinueClick}>Continue</ButtonRed>
+                <ButtonRed onClick={handleContinueClick}>Continue</ButtonRed>
             </DivNavigation>
 
             <CustomShipToWarning open={showSaveShipToModal} onClose={() => setShowSaveShipToModal(false)} />

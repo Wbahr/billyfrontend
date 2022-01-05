@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { scrollHorizontal } from './helpers/generalHelperFunctions'
-import { ChevronLeft, ChevronRight } from '@material-ui/icons'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -35,7 +35,7 @@ const DivRow = styled.div`
 	flex-wrap: nowrap;
 	width: 100%;
 	padding: 0 15px;
-	overflow-X: auto;
+	overflow-x: auto;
 	&:hover ${RightScrollControl} {
 		opacity: 1;
 	}

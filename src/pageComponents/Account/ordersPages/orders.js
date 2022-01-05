@@ -11,7 +11,8 @@ import Context from '../../../setup/context'
 import ExportButtons from '../uiComponents/exportButtons'
 import { format as dateFormat } from 'date-fns'
 import { parse } from 'query-string'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router'
 
 const TableContainer = styled.div`
 	display: flex;
@@ -98,18 +99,20 @@ const RefundTextColor = styled.span`
 	color: red;
 `
 
-export default function OrdersTable({ history }) {
+export default function OrdersTable() {
     const context = useContext(Context)
     const [data, setData] = useState([])
     const [filter, setFilter] = useState('')
     const [showOrderType, setShowOrderType] = useState('all')
     const [dateFrom, setDateFrom] = useState(null)
     const [dateTo, setDateTo] = useState(null)
+    const location = useLocation()
+    const navigate = useNavigate()
 	
     useEffect(() => {
         if (!context.ordersCache.length) context.getOrders()
 		
-        const search = history.location.search
+        const search = location.search
         if (search && search.includes('filter')) {
             setFilter(parse(search).filter)
         }
@@ -156,6 +159,10 @@ export default function OrdersTable({ history }) {
             {
                 Header: 'Order #',
                 accessor: 'orderNumber',
+            },
+            {
+                Header: 'Web Reference #',
+                accessor: 'webReferenceNumber',
             },
             {
                 Header: 'PO #',
@@ -219,7 +226,7 @@ export default function OrdersTable({ history }) {
         <TableContainer>
             <h4>Orders</h4>
             <DivRow>
-                <AirlineInput placeholder='Search PO#, Order #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
+                <AirlineInput placeholder='Search PO#, Order #, Web Ref #, Item ID' value={filter} onChange={(e) => {setFilter(e.target.value)}}></AirlineInput>
                 <Select style={{ width: '200px' }} value={showOrderType} onChange={(e) => setShowOrderType(e.target.value)}>
                     <option value='all'>All Orders</option>
                     <option value='Completed'>Completed Orders</option>
@@ -294,7 +301,7 @@ export default function OrdersTable({ history }) {
                                         {row.cells.map(cell => {
                                             if (cell.column.id === 'orderNumber') {
                                                 return (
-                                                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => history.push(`/account/order-detail/${cell.value}`)}>
+                                                    <TDrow {...cell.getCellProps()} isOrderDetail onClick={() => navigate(`/account/order-detail/${cell.value}`)}>
                                                         {cell.render('Cell')}
                                                     </TDrow>
                                                 )

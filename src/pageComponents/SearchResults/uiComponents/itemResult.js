@@ -4,12 +4,12 @@ import Context from '../../../setup/context'
 import { Link } from 'react-router-dom'
 import { getLargeImagePath } from '../../_common/helpers/generalHelperFunctions'
 import { Image as SkeletonImage, Detail1 as SkeletonDetail } from './skeletonItem'
-import QuantityInput from 'pageComponents/_common/form/quantityInput'
-import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
+import QuantityInput from '../../../pageComponents/_common/form/quantityInput'
+import AirlineChip from '../../../pageComponents/_common/styledComponents/AirlineChip'
 import LocationsModal from '../../_common/modals/LocationsModal'
 import CustomerPartModal from '../../_common/modals/CustomerPartModal'
-import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from 'pageComponents/_common/constants/UserTypeConstants'
-import Tooltip from '@material-ui/core/Tooltip'
+import { AIRLINE_ENGINEER_USER, IMPERSONATOR_USER } from '../../../pageComponents/_common/constants/UserTypeConstants'
+import Tooltip from '@mui/material/Tooltip'
 
 const DivItemResultContainer = styled.div`
 	display: flex;
@@ -171,6 +171,15 @@ const Pprice = styled.p`
 	margin: 0;
 `
 
+const PlistPrice = styled.p`
+	color: #328EFC;
+	font-size: 14px;
+	font-weight: 700;
+	padding: 0 4px;
+    margin: 0;
+    text-decoration: line-through;
+`
+
 const ACall = styled.a`
 	color: #328EFC;
 	font-weight: 700;
@@ -197,6 +206,7 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
     const foundPrice = itemPrices.find(item => item.invMastUid === result.invMastUid)
     let {
         unitPrice,
+        listPrice,
         unitOfMeasure,
         unitSize,
         roundType
@@ -244,7 +254,8 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                 quantity: parseInt(quantity),
                 itemNotes: '',
                 itemUnitPriceOverride: null,
-                customerPartNumberId: customerPartNumber || null
+                customerPartNumberId: customerPartNumber || null,
+                supplierId: details.supplierId
             })
         }
 
@@ -392,10 +403,19 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                     <>
                                         {
                                             unitPrice ? (
-                                                <Div>
-                                                    <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                                    <P>/{unitOfMeasure}</P>
-                                                </Div>
+                                                <>
+                                                    <DivPartDetails>
+                                                        {listPrice && (listPrice >= unitPrice) && (
+                                                            <Div>
+                                                                <PlistPrice>${listPrice.toFixed(2)}</PlistPrice>
+                                                            </Div>
+                                                        )}
+                                                        <Div>
+                                                            <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                            <P>/{unitOfMeasure}</P>
+                                                        </Div>
+                                                    </DivPartDetails>
+                                                </>
                                             ) : (
                                                 <ACall href="tel:+18009997378">Call for Price</ACall>
                                             )
@@ -404,10 +424,19 @@ export default function ItemResult({ result, details, addedToCart, isParentCalcu
                                 ) : (
                                     <>
                                         {unitPrice ? (
-                                            <Div>
-                                                <Pprice>${unitPrice.toFixed(2)}</Pprice>
-                                                <P>/{unitOfMeasure}</P>
-                                            </Div>
+                                            <>
+                                                <DivPartDetails>
+                                                    {listPrice && (
+                                                        <Div>
+                                                            <PlistPrice>${listPrice.toFixed(2)}</PlistPrice>
+                                                        </Div>
+                                                    )}   
+                                                    <Div>
+                                                        <Pprice>${unitPrice.toFixed(2)}</Pprice>
+                                                        <P>/{unitOfMeasure}</P>
+                                                    </Div>
+                                                </DivPartDetails>
+                                            </>
                                         ) : !foundPrice ? (
                                             <Div>
                                                 <SkeletonDetail style={{ margin: 'auto 0 auto 75px', width: 50 }} />

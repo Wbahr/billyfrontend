@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 
 const DivConfirmationBox = styled.div`
 	display: flex;
@@ -11,10 +11,10 @@ const DivConfirmationBox = styled.div`
 	margin: auto;
 `
 
-export default function OrderCompletePage(props) {
+export default function OrderCompletePage() {
     const { orderId } = useParams()
-    const { history } = props
-    const isQuote = history.location.pathname.includes('quote-complete')
+    const location = useLocation()
+    const isQuote = location.pathname.includes('quote-complete')
     return (
         <DivConfirmationBox>
             <p>{isQuote ? 'Web Quote Number' : 'Web Order Number'} ({orderId}) Confirmed</p>

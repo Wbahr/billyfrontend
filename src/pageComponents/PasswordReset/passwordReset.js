@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
 import { useMutation } from '@apollo/client'
@@ -83,7 +84,7 @@ const MUTATION_PASSWORD_RESET = gql`
   }
 `
 
-export default function PasswordResetPage({ history }) {
+export default function PasswordResetPage() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -93,7 +94,7 @@ export default function PasswordResetPage({ history }) {
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
     const [passwordIsValid, setPasswordIsValid] = useState(false)
     const { passwordToken } = useParams()
-
+    const navigate = useNavigate()
 
     const [executePasswordReset, { loading, error }] = useMutation(MUTATION_PASSWORD_RESET, {
         onCompleted: data => {
@@ -103,7 +104,7 @@ export default function PasswordResetPage({ history }) {
                 setShowResendToken('')
                 setErrorMessage('')
                 setInfoMessage(responseData.message)
-                setTimeout(() => history.push('/login'), 1500)
+                setTimeout(() => navigate('/login'), 1500)
             } else {
                 setErrorMessage(responseData.message)
                 setShowResendToken(true)
@@ -137,7 +138,7 @@ export default function PasswordResetPage({ history }) {
                 open={showPasswordResetModal}
                 hideModal={() => { setShowPasswordResetModal(false) }}
             />
-            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')} />
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => navigate('/')} />
             <P>Airline Hydraulics Password Reset</P>
             {errorMessage.length > 0 && <ErrorAlert>{errorMessage}</ErrorAlert>}
             {infoMessage.length > 0 && <InfoAlert>{infoMessage}</InfoAlert>}
@@ -163,7 +164,7 @@ export default function PasswordResetPage({ history }) {
                 />
             </Marge>
             <Button disabled={loading || !passwordIsValid} onClick={() => handlePasswordReset()}>{loading ? 'Resetting Password...' : 'Reset Password'}</Button>
-            <A onClick={() => history.push('/signup')}>Create an Account</A>
+            <A onClick={() => navigate('/signup')}>Create an Account</A>
         </PasswordResetPageContainer>
     )
 }

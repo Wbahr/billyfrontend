@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useLazyQuery } from '@apollo/client'
+import { Link } from 'react-router-dom'
 import Loader from '../_common/loader'
 import AccessoryItem from './uiComponents/accessoryItem'
 import AddedModal from '../SearchResults/uiComponents/addedModal'
@@ -197,7 +198,11 @@ const IMG = styled.img`
 	opacity: 0.6;
 `
 
-export default function ItemDetailPage({ history }) {
+const StrikeThrough = styled.span`
+    text-decoration: line-through;
+`
+
+export default function ItemDetailPage() {
     const { 
         userInfo, 
         addItem, 
@@ -209,6 +214,10 @@ export default function ItemDetailPage({ history }) {
         stockAvailabilities,
         getStocks 
     } = useContext(Context)
+
+    useEffect(() => {
+        window.scrollTo({ top: 0 })
+    }, [])
 
     const { itemId, customerPartNumber, item } = useParams()
     const invMastUid = parseInt(itemId)
@@ -291,6 +300,13 @@ export default function ItemDetailPage({ history }) {
     }, [accessoryItems])
 
     const itemDetails = itemInfo?.itemDetails || cachedItemDetails
+    const isDiscontinued = itemDetails?.isDiscontinued
+    const subDetails = itemDetails?.substituteItem
+    //Create the canonical for this page, based on the parameters to it not the data query. (ItemId is sanitized)
+    const canonUrl = `https://www.airlinehyd.com/product/${item}/${itemId}`
+    const subItemDetailsLink = itemDetails?.invMastUidSubstitute ? 
+        `/product/${subDetails?.itemCodeUrlSanitized || encodeURIComponent(subDetails?.itemCode)}/${itemDetails?.invMastUidSubstitute}` :
+        null
 
     useEffect(() => {
         document.title = `${itemDetails?.itemDesc || item} at Airline Hydraulics`
@@ -327,6 +343,26 @@ export default function ItemDetailPage({ history }) {
         setQuantity(1)
     }
 
+    function buildAccessoryItems(accessoryItems) {
+        return accessoryItems?.map((ai, idx) => {
+
+            const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
+            const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
+            const price = accessoryItemPrices.find(p => p.invMastUid === ai.associatedInvMastUid)
+
+            return (
+                <AccessoryItem
+                    key={idx}
+                    itemDetails={details}
+                    availability={availability}
+                    price={price}
+                    setShowAddedToCartModal={setShowAddedToCartModal}
+                    isParentCalculateStock={true}
+                />
+            )
+        })
+    }
+
     if (!itemDetails) {
         return (<Loader />)
     } else if (!itemDetails?.invMastUid) {
@@ -340,25 +376,11 @@ export default function ItemDetailPage({ history }) {
             </TR>
         ))
 
-        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx}>{elem.title}</a>)
-        const AccessoryItems = accessoryItems?.map((ai, idx) => {
+        const ItemLinks = itemDetails.itemLinks?.map((elem, idx) => <a href={elem.linkPath} key={idx} target="_blank" rel="noreferrer">{elem.title}</a>)
 
-            const details = accessoryItemsInfo?.itemDetailsBatch?.find(d => d.invMastUid === ai.associatedInvMastUid)
-            const availability = accessoryItemsInfo?.itemAvailability?.find(a => a.invMastUid === ai.associatedInvMastUid)
-            const price = accessoryItemPrices.find(p => p.invMastUid === ai.associatedInvMastUid)
-
-            return (
-                <AccessoryItem
-                    key={idx}
-                    itemDetails={details}
-                    availability={availability}
-                    price={price}
-                    history={history}
-                    setShowAddedToCartModal={setShowAddedToCartModal}
-                    isParentCalculateStock={true}
-                />
-            )
-        })
+        const SpareParts = buildAccessoryItems(accessoryItems?.filter(a => a.type === 1))
+        const AccessoryItems = buildAccessoryItems(accessoryItems?.filter(a => a.type === 2))
+        const SubstituteItems = buildAccessoryItems(accessoryItems?.filter(a => a.type === 3))
 
         const CustomerPartOptions = customerPartNumbers?.map((elem, idx) => (
             <option value={elem.id} key={idx}>{elem.customerPartNumber}</option>
@@ -369,6 +391,7 @@ export default function ItemDetailPage({ history }) {
                 <Helmet>
                     <title>Airline Hydraulics | {itemDetails.itemCode}</title>
                     <meta name="description" content={itemDetails.extendedDesc} />
+                    <link rel="canonical" href={canonUrl} />
                     {productSchema(itemDetails, cachedItemPrice, itemAvailability)}
                     {breadcrumbSchema([
                         {
@@ -382,76 +405,100 @@ export default function ItemDetailPage({ history }) {
                 </Helmet>
                 
                 <DivTitle>
-                    <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
+                    {isDiscontinued ? (
+                        <StrikeThrough>
+                            <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>    
+                        </StrikeThrough>
+                    ) : (
+                        <H1ItemTitle>{itemDetails.itemDesc}</H1ItemTitle>
+                    )}
                 </DivTitle>
 
                 <DivLeftCol>
                     <DivPhoto>
                         <Img src={getOriginalImagePath(itemDetails)} alt={getAltTextForOriginalImage(itemDetails)} />
                     </DivPhoto>
+                    {isDiscontinued ? (
+                        subItemDetailsLink ? (
+                            <Link to={subItemDetailsLink}>
+                                <ButtonRed>View Substitute Item</ButtonRed>
+                            </Link>
+                        ) : (
+                            <div>Item Discontinued</div>
+                        )
+                    ) : (
+                        <DivPurchaseInfo>
+                            <Row>
+                                <Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
+                                <P> /{unitOfMeasure}</P>
+                            </Row>
 
-                    <DivPurchaseInfo>
-                        <Row>
-                            <Pprice>{!unitPrice ? '--' : `$${unitPrice.toFixed(2)}`}</Pprice>
-                            <P> /{unitOfMeasure}</P>
-                        </Row>
+                            <LocationsModal
+                                invMastUid={itemDetails?.invMastUid}
+                                availabilityInfo={itemAvailability}
+                                unitPrice={unitPrice}
+                            />
 
-                        <LocationsModal
-                            invMastUid={itemDetails?.invMastUid}
-                            availabilityInfo={itemAvailability}
-                            unitPrice={unitPrice}
-                        />
+                            <DivPurchaseInfoButtons>
+                                <RowCentered>
+                                    <span>Qty:</span>
+                                    <QuantityInput
+                                        quantity={quantity}
+                                        unitSize={unitSize}
+                                        unitOfMeasure={unitOfMeasure}
+                                        roundType={roundType}
+                                        handleUpdate={setQuantity}
+                                        min='0'
+                                    />
+                                    {(unitSize > 1) && (
+                                        <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
+                                            X {unitSize}
+                                        </AirlineChip>
+                                    )}
+                                </RowCentered>
 
-                        <DivPurchaseInfoButtons>
-                            <RowCentered>
-                                <span>Qty:</span>
-                                <QuantityInput
-                                    quantity={quantity}
-                                    unitSize={unitSize}
-                                    unitOfMeasure={unitOfMeasure}
-                                    roundType={roundType}
-                                    handleUpdate={setQuantity}
-                                    min='0'
-                                />
-                                {(unitSize > 1) && (
-                                    <AirlineChip style={{ marginLeft: '0.5rem', fontSize: '0.9rem' }}>
-                                        X {unitSize}
-                                    </AirlineChip>
+                                {userInfo && !userInfo.isAirlineEngineerUser && (
+                                    <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
                                 )}
-                            </RowCentered>
 
-                            {userInfo && !userInfo.isAirlineEngineerUser && (
-                                <ButtonRed onClick={() => setShowAddListModal(true)}>Add to List</ButtonRed>
-                            )}
+                                {!!cachedItemPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
+                            </DivPurchaseInfoButtons>
 
-                            {!!cachedItemPrice && <ButtonRed onClick={handleAddToCart}>Add to Cart</ButtonRed>}
-                        </DivPurchaseInfoButtons>
-
-                        {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
-                        {!!itemDetails.itemTechSpecs?.length && <a href='#techspec'>Tech Specs</a>}
-                        {accessoryItems?.length > 0 && <a href='#accessory'>Accessory</a>}
-                    </DivPurchaseInfo>
+                            {!!itemDetails.itemFeatures?.length && <a href='#feature'>Features</a>}
+                            {!!itemDetails.itemTechSpecs?.length && <a href='#techspec'>Tech Specs</a>}
+                            {accessoryItems?.length > 0 && <a href='#accessory'>Accessory</a>}
+                        </DivPurchaseInfo>
+                    )}
                 </DivLeftCol>
 
                 <DivDetails>
                     <PItemExtendedDescription>{itemDetails.extendedDesc}</PItemExtendedDescription>
 
-                    <Row>
-                        <Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
+                    {!isDiscontinued && (
+                        <Row>
+                            <Pprice>{!unitPrice ? '--' : `Price: $${unitPrice.toFixed(2)}/${unitOfMeasure}`}</Pprice>
 
-                        <LocationsModal
-                            invMastUid={itemDetails?.invMastUid}
-                            availabilityInfo={itemAvailability}
-                            unitPrice={unitPrice}
-                        />
-                    </Row>
+                            <LocationsModal
+                                invMastUid={itemDetails?.invMastUid}
+                                availabilityInfo={itemAvailability}
+                                unitPrice={unitPrice}
+                            />
+                        </Row>
+                    )}
 
                     <TABLE>
                         <tbody>
                             <TR2><TDGrey><H3>Manufacturer</H3></TDGrey><TDWhite><IMG width='100px' src={itemDetails.brand?.logoLink} /></TDWhite></TR2>
                             <TR2><TDGrey><H3>Item ID</H3></TDGrey><TDWhite>{itemDetails.itemCode}</TDWhite></TR2>
                             <TR2><TDGrey><H3>Manufacturer Part #</H3></TDGrey><TDWhite>{itemDetails.mfgPartNo}</TDWhite></TR2>
-                            <TR2><TDGrey><H3>AHC Part #</H3></TDGrey><TDWhite>{itemDetails.invMastUid}</TDWhite></TR2>
+                            <TR2><TDGrey><H3>AHC Part #</H3></TDGrey>
+                                {isDiscontinued ? (
+                                    <TDWhite><StrikeThrough>{itemDetails.invMastUid}</StrikeThrough> Discontinued</TDWhite>
+                                ) : (
+                                    <TDWhite>{itemDetails.invMastUid}</TDWhite>
+                                )}
+                                
+                            </TR2>
 
                             {!!CustomerPartOptions?.length && (
                                 <TR2>
@@ -496,10 +543,22 @@ export default function ItemDetailPage({ history }) {
                     {itemDetails.itemLinks?.length > 0 && <H2>Links</H2>}
                     <DivSection>{ItemLinks}</DivSection>
 
-                    {accessoryItems?.length > 0 && <H2 id='accessory'>Accessory Items</H2>}
+                    {SpareParts?.length > 0 && <H2 id='accessory'>Spare Parts</H2>}
+
+                    <DivAccessoryItems>
+                        {SpareParts}
+                    </DivAccessoryItems>
+
+                    {AccessoryItems?.length > 0 && <H2 id='accessory'>Accessory Items</H2>}
 
                     <DivAccessoryItems>
                         {AccessoryItems}
+                    </DivAccessoryItems>
+
+                    {SubstituteItems?.length > 0 && <H2 id='accessory'>Substitute Items</H2>}
+
+                    <DivAccessoryItems>
+                        {SubstituteItems}
                     </DivAccessoryItems>
 
                     {!itemInfo && SkeletonLoader}

@@ -16,13 +16,14 @@ export function formatTableData(type, data, orderId){
                     const lineItem = elem.lineItems[j]
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
-                let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer
+                let filterField = elem.orderNumber + ' ' + elem.poNo + ' ' + partNumbers + ' ' + elem.buyer + ' ' + elem.webReferenceNumber
                 filterField = filterField.toUpperCase()
                 const displayTotal = <NumberFormat value={elem.total} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} fixedDecimalScale/>
                 mutatedData.push(
                     {
                         orderNumber: elem.orderNumber,
                         orderDate: elem.orderDate,
+                        webReferenceNumber: elem.webReferenceNumber,
                         poNo: elem.poNo,
                         status: elem.status,
                         buyer: elem.buyer,
@@ -41,23 +42,37 @@ export function formatTableData(type, data, orderId){
                 for (let j = 0; j < elem.lineItems.length ;j++) {
                     const lineItem = elem.lineItems[j]
                     if (lineItem.quantityOpen > 0) {
-                        let filterField = elem.poNo + ' ' + elem.orderNumber + ' '
+                        let filterField = elem.poNo + ' ' + elem.orderNumber + ' ' + elem.webReferenceNumber + ' '
                         filterField = filterField.toUpperCase()
+
+                        let qtyRemaining = `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`
+                        let unitPrice = lineItem.unitPrice.toFixed(2)
+                        let extPrice = (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2)
+
+                        if (lineItem.disposition === 'C') {
+                            qtyRemaining = `0 / ${lineItem.quantityOrdered}`
+                            unitPrice = 'Cancelled'
+                            extPrice = 'Cancelled'
+                        }
+
                         mutatedData.push(
                             {
                                 orderNumber: elem.orderNumber,
                                 orderDate: elem.orderDate,
                                 poNo: elem.poNo,
-                                promiseDate: elem.promiseDate,
-                                qtyRemaining: `${lineItem.quantityOpen} / ${lineItem.quantityOrdered}`,
+                                promiseDate: lineItem.promiseDate,
+                                qtyRemaining: qtyRemaining,
                                 invMastUid: lineItem.invMastUid,
                                 customerPartNumber: lineItem.customerPartNumber,
-                                unitPrice: lineItem.unitPrice.toFixed(2),
-                                extPrice: (lineItem.unitPrice * lineItem.quantityOrdered).toFixed(2),
+                                unitPrice: unitPrice,
+                                extPrice: extPrice,
                                 filter: filterField,
-                                formattedOrderDate: isNil(elem.orderDate) ? '--' :dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
-                                formattedPromiseDate: isNil(elem.promiseDate) ? '--' :dateFormat(new Date(elem.promiseDate), 'MM/dd/yyyy'),
-                                jobName: elem.jobName
+                                formattedOrderDate: !elem.orderDate ? '--' : dateFormat(new Date(elem.orderDate), 'MM/dd/yyyy'),
+                                formattedPromiseDate: !lineItem.promiseDate ? '--' : dateFormat(new Date(lineItem.promiseDate), 'MM/dd/yyyy'),
+                                jobName: elem.jobName,
+                                itemCode: lineItem.itemCode,
+                                disposition: lineItem.disposition,
+                                webReferenceNumber: elem.webReferenceNumber
                             }
                         )
                     }
@@ -78,7 +93,7 @@ export function formatTableData(type, data, orderId){
                     partNumbers = partNumbers + ' ' + lineItem.itemCode + ' ' + lineItem.customerPartNumber
                 }
                 
-                let filterField = elem.orderNumber + ' ' + partNumbers
+                let filterField = elem.orderNumber + ' ' + partNumbers + ' ' + elem.webReferenceNumber
                 filterField = filterField.toUpperCase()
 
                 const displayTotal = '$' + elem.total.toFixed(2)
@@ -86,6 +101,7 @@ export function formatTableData(type, data, orderId){
                     {
                         quoteNumber: elem.orderNumber,
                         quoteDate: elem.orderDate,
+                        webReferenceNumber: elem.webReferenceNumber,
                         quoteRefNo: elem.quoteRefNo,
                         total: displayTotal,
                         status: elem.status,

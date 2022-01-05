@@ -1,5 +1,6 @@
 import * as React from 'react'
-import Select, { Creatable } from 'react-select'
+import Select from 'react-select'
+import Creatable from 'react-select/creatable'
 import { ErrorMessage } from 'formik'
 import { FormikFormFieldContainer, FormikFormFieldLabel, FormikFormFieldError, FormikFormField } from 'styles/formikForm'
 
@@ -26,16 +27,20 @@ const CreatableSelectComponent = (props) => {
         placeholder, 
         style, 
         setFieldValue,
-        notCreatable
+        notCreatable,
+        value
     } = props
+    
+    const valueProp = value !== undefined ? { value: options?.find(option => option.value === value) || '' } : {}
 
     return (
         <FormikFormFieldContainer style={{ ...style, maxWidth: '100%' }}>
-            {label && <FormikFormFieldLabel htmlFor={name}>{`${label}`}</FormikFormFieldLabel>}
+            {label && <FormikFormFieldLabel htmlFor={name}>{label}</FormikFormFieldLabel>}
             <FormikFormField
                 name={name}
                 id={name}
-                placeholder={placeholder || notCreatable ? 'Select' : 'Select or type'}
+                {...valueProp}
+                placeholder={placeholder || notCreatable ? 'Select' : 'Select or type for other'}
                 disabled={disabled}
                 options={options}
                 style={{ width: width || '400px', maxWidth: '100%' }}

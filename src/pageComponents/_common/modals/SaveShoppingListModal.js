@@ -5,7 +5,7 @@ import Context from '../../../setup/context'
 import { ButtonBlack, ButtonRed } from '../../../styles/buttons'
 import AirlineInput from '../form/inputv2'
 import Select from '../form/select'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@mui/material'
 
 const DivRow = styled.div`
   display: flex;
@@ -54,32 +54,32 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
     const [selectedShoppingList, setSelectedShoppingList] = useState(null)
     const [shoppingListOptions, setShoppingListOptions] = useState([])
     const [error, setError] = useState('')
-	
+
     const loading = context.upsertShoppingListState?.loading
     const userOptions = context.webUserContacts.map(({ firstName, lastName, webUserId }) => ({ label: `${firstName} ${lastName || ''}`, value: webUserId }))
-	
+
     useEffect(() => {
         setSelectedUser(preSelectedUser)
     }, [preSelectedUser, open])
-	
+
     useEffect(() => {
         if (!context.userInfo?.webUserId) context.getWebUserContacts()
         context.getShoppingLists()
     }, [context.userInfo])
-	
+
     useEffect(() => {
         if (listName?.length || listNotes?.length) {
             setSelectedShoppingList(null)
         }
     }, [listName, listNotes])
-	
+
     useEffect(() => {
         if (selectedShoppingList) {
             setListName('')
             setListNotes('')
         }
     }, [selectedShoppingList])
-	
+
     const handleClose = () => {
         setListName('')
         setError('')
@@ -87,14 +87,14 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
         setSelectedShoppingList(null)
         hide()
     }
-	
+
     const handleListNameChange = ({ target: { value } }) => setListName(value)
     const handleListNotesChange = ({ target: { value } }) => setListNotes(value)
-	
+
     const handleListChange = value => {
         setSelectedShoppingList(shoppingListOptions.find(list => list.value === value))
     }
-	
+
     const handleSaveList = () => {
         if (!context.userInfo.webUserId && !selectedUser) {
             setError('Please select a user to save this list for')
@@ -127,9 +127,9 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
             setError('Please enter a name or select a list')
         }
     }
-	
+
     const mapShoppingListOptions = list => ({ label: list.name, value: list.id, ...list })
-	
+
     useEffect(() => {
         if (context.userInfo?.webUserId) {
             setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
@@ -137,17 +137,25 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
             selectedUser && setShoppingListOptions(context.shoppingLists.map(mapShoppingListOptions))
         }
     }, [context.shoppingLists, selectedUser])
-	
+
     const handleUserChange = value => setSelectedUser(userOptions.find(user => user.value === value))
-	
+    //If there are no web users for this customer and we're impersonating, block functionality
+    if (userOptions && userOptions.length === 0 && context?.impersonatedCompanyInfo && !context.getWebUserContactsState?.loading) 
+        return (
+        <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
+            <Container>
+                <p>There are no web users in this company, so a shopping list cannot be saved.</p>
+            </Container>
+        </Modal>)
+    
+
     return (
         <Modal open={open} onClose={handleClose} contentStyle={{ maxWidth: '350px', borderRadius: '3px' }}>
             <Container>
                 <h4>Save Shopping List</h4>
-				
-                { !context.userInfo?.webUserId && context.getWebUserContactsState?.loading
+                {!context.userInfo?.webUserId && context.getWebUserContactsState?.loading
                     ? (
-                        <CircularProgress/>
+                        <CircularProgress />
                     ) : !context.userInfo?.webUserId && (
                         <DivItem>
                             <Label>Select User</Label>
@@ -158,37 +166,35 @@ export default function SaveShoppingListModal({ open, hide, items, preSelectedUs
                                 placeholder='Search by Name'
                             />
                         </DivItem>
-                    )}
-				
-                {
-                    enableAddToExisting && (
-                        <div>
-                            <p>Add items to existing list</p>
-                            <DivItem>
-                                <Label>Select List</Label>
-                                <Select
-                                    value={selectedShoppingList}
-                                    setValue={handleListChange}
-                                    options={shoppingListOptions.filter(list => list.webUserIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
-                                    placeholder='Search lists by Name, Item ID'
-                                />
-                            </DivItem>
-                            <p>or</p>
-							
-                            <p>Save as new List</p>
-                        </div>
                     )
                 }
+                {enableAddToExisting && (
+                    <div>
+                        <p>Add items to existing list</p>
+                        <DivItem>
+                            <Label>Select List</Label>
+                            <Select
+                                value={selectedShoppingList}
+                                setValue={handleListChange}
+                                options={shoppingListOptions.filter(list => list.webUserIdOwner === (context.userInfo.webUserId || selectedUser?.value))}
+                                placeholder='Search lists by Name, Item ID'
+                            />
+                        </DivItem>
+                        <p>or</p>
+
+                        <p>Save as new List</p>
+                    </div>
+                )}
                 <DivItem>
                     <Label>Shopping List Name: </Label>
-                    <AirlineInput value={listName} width="300px" onChange={handleListNameChange}/>
+                    <AirlineInput value={listName} width="300px" onChange={handleListNameChange} />
                 </DivItem>
-				
+
                 <DivItem>
                     <Label>Notes: </Label>
-                    <textarea value={listNotes} onChange={handleListNotesChange} rows={5} style={{ width: 300 }}/>
+                    <textarea value={listNotes} onChange={handleListNotesChange} rows={5} style={{ width: 300 }} />
                 </DivItem>
-				
+
                 <ErrorSpan>{error}</ErrorSpan>
                 <DivRow>
                     <ButtonBlack onClick={handleClose}>Cancel</ButtonBlack>

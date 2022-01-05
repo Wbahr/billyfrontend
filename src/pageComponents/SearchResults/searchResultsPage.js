@@ -13,11 +13,13 @@ import SearchContainer from './uiComponents/SearchContainer'
 import { useSearchState, useSearchQueryParams } from './hooks'
 import CategoriesPlugin from './plugins/CategoriesPlugin'
 import ResultSummaryPlugin from './plugins/ResultSummaryPlugin'
+import { useNavigate } from 'react-router'
 
 const RESULT_SIZE = 24
 
-export default function SearchResultsPage({ history }) {
-    const [searchQueryParams, setQueryParam, clearSetQueryParam] = useSearchQueryParams(history)
+export default function SearchResultsPage() {
+    const navigate = useNavigate()
+    const [searchQueryParams, setQueryParam, clearSetQueryParam] = useSearchQueryParams()
     const { 
         sortType, 
         searchTerm, 
@@ -58,22 +60,23 @@ export default function SearchResultsPage({ history }) {
                 return accum
             }, {})
 
-            history.replace(buildSearchString({
+            navigate(buildSearchString({
                 searchTerm,
                 innerSearchTerms: searchTerms,
                 sortType,
                 nonweb,
+                selectedCategoryId,
                 resultPage: 1,
                 brands: selectedBrands,
                 ...selectedAttributes
-            }))
+            }), {replace: true })
 
-            if (resultPage === '1') performItemSearch()
+            if (resultPage === 1) performItemSearch()
         }
     }, [searchState.brands, searchState.attributes])
 
     useDidUpdateEffect(() => {
-        if (resultPage === '1') {
+        if (resultPage === 1) {
             performItemSearch()
         } else {
             setQueryParam('resultPage', 1)
@@ -136,7 +139,6 @@ export default function SearchResultsPage({ history }) {
         <SearchContainer
             searchTerm={searchTerm}
             searchState={searchState}
-            history={history}
         >
             <AppBarPlugin
                 title="Search Results"

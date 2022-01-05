@@ -15,8 +15,11 @@ import QuantityInput from 'pageComponents/_common/form/quantityInput'
 import AirlineChip from 'pageComponents/_common/styledComponents/AirlineChip'
 import DispositionModal from './DispositionModal'
 import LocationsModal from '../../_common/modals/LocationsModal'
+import IncrementDecrementButton from 'pageComponents/_common/IncrementDecrementButton'
 import DatePicker from 'react-datepicker'
-import { Checkbox, Grid } from '@material-ui/core'
+import { Checkbox, Grid } from '@mui/material'
+import { format, sub } from 'date-fns'
+import { useNavigate } from 'react-router'
 
 const DivContainer = styled.div`
 	display: flex;
@@ -94,7 +97,8 @@ const DivMove = styled.div`
 	display: flex;
 	height: 100%;
 	align-items: center;
-	padding: 0 12px;
+    padding: 0 12px;
+    width: 52px;
 `
 
 const DivCol1 = styled.div`
@@ -191,20 +195,29 @@ const DivImgAndItemDetails = styled.div`
 const DivFlex = styled.div`
     display: flex;
 `
-
+const LineNumber = styled.div`
+    margin: 0 5px;
+    color: grey;
+` 
 export default function ShoppingCartItem(props) {
-
+    const navigate = useNavigate()
     const {
         setCart,
         cartItem,
         setCartItem,
         setCartItemField,
         index,
-        history,
         setIsDragDisabled,
         provided,
-        cartData
+        cartData,
+        dispositions,
+        todayDate,
+        maxDate,
+        supplierOptions,
+        setNoteModal
     } = props
+
+    const { impersonatedCompanyInfo } = useContext(Context)
 
     const itemDetails = cartData?.itemDetails.find(detail => detail.invMastUid === cartItem.invMastUid)
     const itemPriceInfo = cartData?.itemPrices.find(price => price.invMastUid === cartItem.invMastUid)
@@ -220,18 +233,11 @@ export default function ShoppingCartItem(props) {
         spaType,
         spaNumber,
         spaMargin,
-        spaCost
+        spaCost,
+        pricePage
     } = itemPriceInfo || {}
 
     const [selectedCustomerPartNumber, setSelectedCustomerPartNumber] = useState(cartItem.customerPartNumberId || 0)
-
-    const dispositions = [
-        { value: '', text: 'Stock' },
-        { value: 'B', text: 'Backorder' },
-        { value: 'D', text: 'Direct Ship' },
-        { value: 'H', text: 'Hold' },
-        { value: 'S', text: 'Special Order' }
-    ]
 
     const getDefaultDisposition = () => {
         return itemAvailability?.totalQuantity > itemAvailability?.availability ? 'Backorder' : 'Stock'
@@ -248,10 +254,9 @@ export default function ShoppingCartItem(props) {
     const [showSourceLocationModal, setShowSourceLocationModal] = useState(false)
     const [showDispositionModal, setShowDispositionModal] = useState(false)
     const itemId = parseInt(cartItem.invMastUid, 10)
-    const tomorrowDate = new Date()
-    const maxDate = new Date('01 Jan 2970 00:00:00 GMT')
-    tomorrowDate.setDate(tomorrowDate.getDate() + 1)
-
+    const currentDate = format(new Date, 'M/d/yyyy')
+    const beginningDate = format(sub(new Date(), { years: 1 }), 'M/d/yyyy')
+    
     useEffect(() => {
         if (showSplitLineModal || factoryStockModalData || showCustomerPartModal || showSourceLocationModal || showDispositionModal || showEditPriceModal) {
             setIsDragDisabled(true)
@@ -262,7 +267,7 @@ export default function ShoppingCartItem(props) {
 
     const { userInfo } = useContext(Context)
 
-    function selectCustomerPartNumber(value){
+    function selectCustomerPartNumber(value) {
         if (value === '-1') {
             setSelectedCustomerPartNumber(0) // Reset Dropdown
             setCartItemField('customerPartNumberId', 0)
@@ -328,13 +333,14 @@ export default function ShoppingCartItem(props) {
                                     <DivMove
                                         {...provided.dragHandleProps}
                                     >
-                                        <FontAwesomeIcon icon="grip-lines" color="lightgrey"/>
+                                        <LineNumber>{index + 1}</LineNumber>
+                                        <FontAwesomeIcon icon="grip-lines" color="lightgrey" />
                                     </DivMove>
                                     <DivCol1>
                                         <Img src={getThumbnailImagePath(itemDetails)} />
                                     </DivCol1>
                                     <DivCol2>
-                                        <A1 onClick={() => {history.push(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`)}}>{itemDetails.itemDesc}</A1>
+                                        <A1 onClick={() => { navigate(`/product/${itemDetails.itemCodeUrlSanitized}/${itemDetails.invMastUid}`) }}>{itemDetails.itemDesc}</A1>
                                         <CopyToClipboard text={itemDetails.itemDesc}>
                                             <P2>Copy Item Desc</P2>
                                         </CopyToClipboard>
@@ -378,19 +384,27 @@ export default function ShoppingCartItem(props) {
                                                     <DivSplitLine onClick={() => setShowCustomerPartModal(true)}>Custom Part No.</DivSplitLine>
                                                 </>
                                             )}
+                                            {userInfo && userInfo.isAirlineEmployee && (
+                                                <>
+                                                    <DivSplitLine>|</DivSplitLine>
+                                                    <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/Common/Inventory/ItemDetail.aspx?ItemID=${itemDetails.itemCode}&invmastuid=${itemDetails.invMastUid}&companyid=AIRLINE`}>
+                                                        <DivSplitLine>WC Item Master</DivSplitLine>
+                                                    </a>
+                                                </>
+                                            )}
                                         </DivRow>
                                         {(userInfo?.isAirlineEmployee || userInfo?.isWebUser) && (cartItem.quoteLineId) && (
                                             <>
                                                 {
-                                                    cartItem.isQuoteLineActive 
-                                                        ? (<strong>Quote Item</strong>) 
+                                                    cartItem.isQuoteLineActive
+                                                        ? (<strong>Quote Item</strong>)
                                                         : (
                                                             <button onClick={() => { handleQuoteItemReset() }}>Reset Quote Item</button>
                                                         )
                                                 }
                                             </>
-                                        )} 
-                                        
+                                        )}
+
                                     </DivCol2>
                                 </DivImgAndItemDetails>
                                 <DivCol3>
@@ -404,9 +418,10 @@ export default function ShoppingCartItem(props) {
                                                             <AirlineChip style={{
                                                                 marginLeft: '0.5rem',
                                                                 fontSize: '0.7rem',
-                                                                padding: '0 0.5rem' }}
+                                                                padding: '0 0.5rem'
+                                                            }}
                                                             >
-                                                                X {unitSize }
+                                                                X {unitSize}
                                                             </AirlineChip>
                                                         )
                                                     }
@@ -473,6 +488,11 @@ export default function ShoppingCartItem(props) {
                                                                 <FontAwesomeIcon icon="pencil-alt" color={cartItem.disposition ? '#328EFC' : 'grey'} />
                                                             </EditPriceIcon>
                                                         </div>
+                                                        {userInfo.isImpersonatorUser && impersonatedCompanyInfo && (
+                                                            <div style={{ display: 'flex', fontSize: '0.85rem' }}>
+                                                                <a target='_' href={`${process.env.REACT_APP_WEB_CONNECT_URL}/common/itemsummarylines.aspx?CompanyId=AIRLINE&CustomerId=${impersonatedCompanyInfo.customerIdP21}&ItemId=${itemDetails.itemCode}&CurrentDate=${currentDate}%20AM&BeginningDate=${beginningDate}&ShowComponents=False&ProductGroupId=&SupplierId=0&CustomerName=${impersonatedCompanyInfo.customerName}`}>Previous Purchases</a>
+                                                            </div>
+                                                        )}
                                                     </>
                                                 )}
                                             </DivItemPrice>
@@ -506,7 +526,7 @@ export default function ShoppingCartItem(props) {
                                             </DivTotalPrice>
                                         </DivItem>
                                     </DivItemInfo>
-    
+
                                     {userInfo?.isAirlineEmployee && (
                                         <>
                                             <Grid container alignItems="center">
@@ -518,18 +538,18 @@ export default function ShoppingCartItem(props) {
                                                     onChange={(event) => { handleDropshipChange(event) }}
                                                 />
                                             </Grid>
-    
+
                                             <DivItem>
                                                 <Label>Promise Date:</Label>
                                             </DivItem>
-    
+
                                             <Grid container>
                                                 <div style={{ marginRight: 8 }}>
-                                                    <FontAwesomeIcon icon="calendar" color="lightgrey"/>
+                                                    <FontAwesomeIcon icon="calendar" color="lightgrey" />
                                                 </div>
-        
+
                                                 <DatePicker
-                                                    minDate={tomorrowDate}
+                                                    minDate={todayDate}
                                                     maxDate={maxDate}
                                                     selected={Date.parse(cartItem.promiseDateOverride || cartItem.promiseDate)}
                                                     onChange={(value) => setCartItemField('promiseDateOverride', value)}
@@ -537,7 +557,7 @@ export default function ShoppingCartItem(props) {
                                             </Grid>
                                         </>
                                     )}
-                                
+
                                     <DivItemInfo>
                                         <DivItem>
                                             <Label>Item Notes:</Label>
@@ -550,13 +570,33 @@ export default function ShoppingCartItem(props) {
                                                 value={cartItem.itemNotes || ''}
                                             />
                                         </DivItem>
+                                        {cartData?.lineNoteAreas && (
+                                            <IncrementDecrementButton style={{ alignSelf: 'flex-end', width: 30, borderRadius: 5 }} onClick={() => setNoteModal({ index })}>
+                                                +
+                                            </IncrementDecrementButton>
+                                        )}
                                     </DivItemInfo>
+                                    {cartItem.extraNotes && (
+                                        cartItem.extraNotes.map((n, noteIdx) => {
+                                            return (
+                                                <DivItemInfo key={noteIdx}>
+                                                    <DebounceInput
+                                                        disabled={true}
+                                                        style={{ width: 300 }}
+                                                        value={n.note}
+                                                    />
+                                                    <EditPriceIcon onClick={() => setNoteModal({ index, note: n.note, targetAreas: n.targetAreas, noteIdx })}>
+                                                        <FontAwesomeIcon icon="pencil-alt" color='#328EFC' />
+                                                    </EditPriceIcon>
+                                                </DivItemInfo>
+                                            )
+                                        })
+                                    )}
                                 </DivCol3>
-
                             </DivCard>
-                       
+
                             <DivRemove onClick={handleRemoveItem} alt='remove-item'>
-                                <FontAwesomeIcon icon="times-circle" color="lightgrey"/>
+                                <FontAwesomeIcon icon="times-circle" color="lightgrey" />
                             </DivRemove>
                         </DivFlex>
                     )
@@ -574,9 +614,11 @@ export default function ShoppingCartItem(props) {
                     spaMargin: spaMargin,
                     airlineCost: cartItem.airlineCost, /*Airline cost only comes from the shopping cart, when authorized */
                     priceReasonId: cartItem.priceReasonId,
-                    cartItem
+                    cartItem,
+                    pricePage
                 }}
                 setCartItem={setCartItem}
+                itemId={itemDetails.itemCode}
             />
             <SplitLineModal
                 open={showSplitLineModal}
@@ -598,8 +640,10 @@ export default function ShoppingCartItem(props) {
             <DispositionModal
                 open={showDispositionModal}
                 hide={() => setShowDispositionModal(false)}
-                dispositions={dispositions}
-                {...{ cartItem, setCartItem }}
+                airlineCost={cartItem.airlineCost}
+                supplierId={cartItem.supplierId}
+                purchaseOrderCost={cartItem.purchaseOrderCost}
+                {...{ cartItem, setCartItem, dispositions, supplierOptions }}
             />
         </DivContainer>
     )

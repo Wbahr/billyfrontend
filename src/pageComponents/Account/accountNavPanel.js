@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 import Context from '../../setup/context'
+import { useNavigate } from 'react-router'
 
 const Container = styled.div`
   display: flex;
@@ -66,7 +67,8 @@ const CustomerId = styled.p`
   line-height: 1.5;
 `
 
-export default function AccountManagementPage({ history }) {
+export default function AccountManagementPage() {
+    const navigate = useNavigate()
     const context = useContext(Context)
 
     return (
@@ -78,28 +80,28 @@ export default function AccountManagementPage({ history }) {
             </div>
             <DivNavSection>
                 <h5>Manage Account</h5>
-                {context.userInfo?.isAirlineEmployee && <p onClick={() => history.push('/admin-dashboard')}>Admin Tools</p>}
-                <p onClick={() => history.push('/account/dashboard')}>Account Settings</p>
-                <p onClick={() => history.push('/account/shopping-lists')}>Shopping Lists</p>
-                <p onClick={() => history.push('/account/my-ordered-items')}>Item Purchase History</p>
+                {context.userInfo?.isAirlineEmployee && <p onClick={() => navigate('/admin-dashboard')}>Admin Tools</p>}
+                <p onClick={() => navigate('/account/dashboard')}>Account Settings</p>
+                <p onClick={() => navigate('/account/shopping-lists')}>Shopping Lists</p>
+                <p onClick={() => navigate('/account/my-ordered-items')}>Item Purchase History</p>
             </DivNavSection>
             <DivNavSection>
                 <h5>Order Information</h5>
-                <p onClick={() => history.push('/account/orders')}>Orders</p>
-                <p onClick={() => history.push('/account/open-orders-report')}>Open Orders Report</p>
+                <p onClick={() => navigate('/account/orders')}>Orders</p>
+                <p onClick={() => navigate('/account/open-orders-report')}>Open Orders Report</p>
             </DivNavSection>
             <DivNavSection>
                 <h5>Quotes</h5>
-                <p onClick={() => history.push('/account/open-quotes')}>Open Quotes</p>
-                <p onClick={() => history.push('/pages/contact/contact-us')}>Request a Quote</p>
+                <p onClick={() => navigate('/account/open-quotes')}>Open Quotes</p>
+                <p onClick={() => navigate('/pages/contact/contact-us')}>Request a Quote</p>
             </DivNavSection>
             <DivNavSection>
                 <h5>Invoices</h5>
-                <p onClick={() => history.push('/account/invoices')}>Invoices</p>
+                <p onClick={() => navigate('/account/invoices')}>Invoices</p>
             </DivNavSection>      
             <DivNavSection>
                 <h5>Customer Service</h5>
-                <p onClick={() => history.push('/pages/contact/contact-us')}>Contact Us</p>
+                <p onClick={() => navigate('/pages/contact/contact-us')}>Contact Us</p>
             </DivNavSection>
         </Container>
     )

@@ -25,7 +25,7 @@ export const airlineRedTheme = {
     buttonShadow: 'black',
     altButtonColor: '#003978',
     altButtonColorBlend: '#001d3d',
-    backgroundImageUrl: 'https://www.airlinehyd.com/customer/aihyco/images/Home/CategoryBackground.jpg',
+    backgroundImageUrl: 'https://airlinemedia.airlinehyd.com/Graphics/images/Home/CategoryBackground.jpg',
     sectionBackgroundImageUrl: 'https://airlinemedia.airlinehyd.com/Static_pages/Brands/brands-bg.jpg',
     fancyFontName: 'Proxima',
     fancyFontNameBold: 'ProximaBold',

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react'
-import { Field } from 'formik'
+import { Field, ErrorMessage } from 'formik'
 import FormikInput from '../../../_common/formik/input_v2'
 import { StateList, CanadianProvinceList } from '../../../_common/helpers/helperObjects'
 import SelectField from '../../../_common/formik/select'
 import styled from 'styled-components'
 import Context from '../../../../setup/context'
+import Required from '../../../_common/required'
+import { FormikFormFieldError } from 'styles/formikForm'
 
 const Row = styled.div`
 	display: flex;
@@ -21,7 +23,7 @@ const Container = styled.div`
 `
 
 export default function PurchaseOrderSection(props) {
-    const { values, setFieldValue, checkoutDropdownData: { billingInfo } } = props
+    const { values, setFieldValue, checkoutDropdownData: { billingInfo }, poMessage } = props
     const context = useContext(Context)
 
     useEffect(() => {
@@ -40,7 +42,8 @@ export default function PurchaseOrderSection(props) {
             }
 
             setFieldValue('billing', {
-                ...values.billing
+                ...values.billing,
+                country: values.billing.country.toLowerCase() || 'us',
             })
         }
     }, [])
@@ -51,54 +54,72 @@ export default function PurchaseOrderSection(props) {
             {!!billingInfo.requiresPONumber && <Row><Label>A PO# is required for this order.</Label></Row>}
             {!!billingInfo.terms && <Row><Label>Terms: {billingInfo.terms}</Label></Row>}
             <Row>
-                {!!context.userInfo && <FormikInput label="PO Number*" name="billing.purchaseOrder" />}
+                <div>
+                    {!!context.userInfo && <FormikInput label={<div>PO Number <Required /></div>} name="billing.purchaseOrder" />}
+                    { poMessage }
+                </div>
                 <FormikInput label="Company Name" name="billing.companyName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <FormikInput label="First Name*" name="billing.firstName" disabled={!!billingInfo.isNetTerms} />
-                <FormikInput label="Last Name*" name="billing.lastName" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>First Name<Required /></>} name="billing.firstName" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>Last Name<Required /></>} name="billing.lastName" disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
                 <FormikInput label='Email Invoice To' name="billing.email" disabled={!!billingInfo.isNetTerms} />
                 <FormikInput label="Phone" name="billing.phone" disabled={!!billingInfo.isNetTerms} />
             </Row>
-            <FormikInput label="Address 1*" name="billing.address1" width={500} disabled={!!billingInfo.isNetTerms} />
+            <FormikInput label={<>Address 1<Required /></>} name="billing.address1" width={500} disabled={!!billingInfo.isNetTerms} />
             <FormikInput label="Address 2" name="billing.address2" width={500} disabled={!!billingInfo.isNetTerms} />
             <Row>
-                <FormikInput label="City*" name="billing.city" disabled={!!billingInfo.isNetTerms} />
-                <FormikInput label="Zip*" name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>City<Required /></>} name="billing.city" disabled={!!billingInfo.isNetTerms} />
+                <FormikInput label={<>Zip<Required /></>} name="billing.zip" width={150} style={{ width: 'auto' }} disabled={!!billingInfo.isNetTerms} />
             </Row>
             <Row>
-                <Field
-                    name="billing.country"
-                    component={SelectField}
-                    options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
-                    placeholder="Select a Country"
-                    isSearchable={false}
-                    label="Country*"
-                    isDisabled={!!billingInfo.isNetTerms}
-                />
-                {values.billing.country === 'us' && (
+                <div>
                     <Field
-                        name="billing.stateOrProvince"
+                        name="billing.country"
                         component={SelectField}
-                        options={StateList}
-                        placeholder="Select a State"
-                        label="State*"
-                        width="200px"
+                        options={[{ label: 'United States', value: 'us' }, { label: 'Canada', value: 'canada' }]}
+                        placeholder="Select a Country"
+                        isSearchable={false}
+                        label={<>Country<Required /></>}
                         isDisabled={!!billingInfo.isNetTerms}
                     />
+                    <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                        <ErrorMessage name="billing.country" />
+                    </FormikFormFieldError>
+                </div>
+                {values.billing.country === 'us' && (
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={StateList}
+                            placeholder="Select a State"
+                            label={<>State<Required /></>}
+                            width="200px"
+                            isDisabled={!!billingInfo.isNetTerms}
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
                 {values.billing.country === 'canada' && (
-                    <Field
-                        name="billing.stateOrProvince"
-                        component={SelectField}
-                        options={CanadianProvinceList}
-                        placeholder="Select a Province"
-                        label="Province*"
-                        width="200px"
-                        isDisabled={!!billingInfo.isNetTerms}
-                    />
+                    <div>
+                        <Field
+                            name="billing.stateOrProvince"
+                            component={SelectField}
+                            options={CanadianProvinceList}
+                            placeholder="Select a Province"
+                            label={<>Province<Required /></>}
+                            width="200px"
+                            isDisabled={!!billingInfo.isNetTerms}
+                        />
+                        <FormikFormFieldError style={{ width: '400px', maxWidth: '100%' }}>
+                            <ErrorMessage name="billing.stateOrProvince" />
+                        </FormikFormFieldError>
+                    </div>
                 )}
 
             </Row>

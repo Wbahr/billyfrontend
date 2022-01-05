@@ -5,7 +5,7 @@ import Loader from '../../_common/loader'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { GET_ALL_USER_CARTS, IMPERSONATION_SEARCH, MERGE_CART_TO_CUSTOMER } from '../../../setup/providerGQL'
 import Context from '../../../setup/context'
-import { Search as SearchIcon } from '@material-ui/icons'
+import { Search as SearchIcon } from '@mui/icons-material'
 import {
     Dialog,
     DialogActions,
@@ -20,7 +20,7 @@ import {
     InputAdornment,
     Button,
     Divider
-} from '@material-ui/core'
+} from '@mui/material'
 import { useDebounceValue } from '../../_common/helpers/generalHelperFunctions'
 
 const DivShare = styled.div`

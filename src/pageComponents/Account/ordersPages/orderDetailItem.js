@@ -8,7 +8,7 @@ import AddedModal from '../../SearchResults/uiComponents/addedModal'
 import { getThumbnailImagePath } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import QuantityInput from '../../_common/form/quantityInput'
 import AirlineChip from '../../_common/styledComponents/AirlineChip'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { format as dateFormat } from 'date-fns'
 
 const DivContainer = styled.div`
@@ -63,7 +63,7 @@ const TextRow = styled.div`
 		display: flex;
 	`
 
-const P2 = styled.p`
+const P2 = styled.div`
 		cursor: pointer;
 		color: grey;
 		font-size: 12px !important;
@@ -88,8 +88,7 @@ const ButtonSmall = styled.button`
 		}
 	`
 const TrackingCodes = styled.div`
-    `
-
+`
 export default function OrderDetailItem({ item, itemDetails, availability, priceInfo }) {
     const [quantity, setQuantity] = useState(1)
     const [showShowAddedToCartModal, setShowAddedToCartModal] = useState(false)
@@ -147,7 +146,7 @@ export default function OrderDetailItem({ item, itemDetails, availability, price
                             </>
                         )}
                     </TextRow>
-                    <P2>Quantity Received: {item.quantityInvoiced}</P2>
+                    <P2>Quantity Received: {item.isCancelled ? 'Cancelled' : item.quantityInvoiced}</P2>
                     <P2>Quantity Ordered: {item.quantityOrdered}</P2>
                 </DivCol2>
                 <DivCol2>

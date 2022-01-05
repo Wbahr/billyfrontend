@@ -70,9 +70,17 @@ export function clippard() {
                 <ProductItems
                     brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
+                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/cordis-high-resolution-proportional-pressure-controls_1.png"
+                    text="The Clippard Cordis is a revolutionary microcontroller primed for escape velocity from a proportional control market that has grown stagnant. Built with the highest quality Clippard EVP and DVP proportional valves at its heart, the Cordis is designed to outperform the competition in every way. With unparalleled performance and flexibility not possible with current analog proportional controllers, the Cordis makes everything from calibration to sensor variety acceptance to future development opportunities more accessible and less complicated. The future of proportional pressure control has arrived, and it's digital."                   
+                    title="Proportional Pressure Controls"
+                />
+                <ProductItems
+                    brand="Clippard Instrument Lab Inc"
+                    searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/cylinders.png"
                     text='Minimatic Cylinders range from 5/32" to 1 1/8" in bore size, and are available in spring return and double acting models, with a full line of associated devices for mounting and use.'
                     title="Cylinders"
+                    reverse
                 />
                 <ProductItems
                     brand="Clippard Instrument Lab Inc"
@@ -80,13 +88,14 @@ export function clippard() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/Directional%20control%20valves.png"
                     title="Directional Control Valves"
                     text=" Every air system is unique, and Clippard has the air valve you need. Clippard control valves are available in poppet or spool design; 2-, 3-, or 4-way functions, in sizes from #3-56 and #10-32 (M5) through 1/8” NPT (G1/8) ports; and for pressures to 300 psig/21 bar. They are available with solenoid, air pilot, manual and mechanical actuators. Mounting styles include in-line, panel mount, manifold mount or clearance holes for mounting screws."
-                    reverse
+
                 />
                 <ProductItems
                     brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/electronic%20valves.png"
                     title="Electronic Valves"
+                    reverse
                     text={(
                         <div>
                             <p>Clippard’s product range includes:</p>
@@ -106,21 +115,13 @@ export function clippard() {
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/circuit%20boards.jpg"
                     title="Circuit Boards & I/O Modules"
                     text="Clippard clear acrylic pneumatic circuit boards are designed to provide a compact and highly efficient pneumatic control system, with the use of Clippard modular components and other Clippard products. Clippard’s pneumatic I/O devices are ideal for Intrinsically Safe environments; simple custom machinery requiring only one program; and PLC type applications that have all pneumatic components for inputs and outputs. This system provides a safe, simple, and cost-efficient answer for pneumatic automation control solutions."
-                    reverse
                 />
                 <ProductItems
                     brand="Clippard Instrument Lab Inc"
                     searchTerm="Clippard"
                     src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/Clippard/fitting.jpg"
-                    title="Fittings"
-                    text="Clippard precision fittings will save you time, space, and money when designing versatile, productive, trouble free, pneumatic circuits. Our endless variety of fittings insure that you find just the right “fit” when plumbing pneumatic circuits or assemblies. These fittings are small in size but large in performance, allowing for streamlining of pneumatic assemblies and eliminating the need for larger, more expensive, cumbersome fittings"
-                />
-                <ProductItems
-                    brand="Clippard Instrument Lab Inc"
-                    searchTerm="Clippard"
-                    src="https://airlinemedia.airlinehyd.com/Static_pages/Brands/no-image.jpg"
-                    title="Hose & Tubing"
-                    text="Clippard offers a variety of miniature hose and tubing from copper and nylon tubing to flexible urethane, and vinyl."
+                    title="Fittings, Hose & Tubing"
+                    text="Clippard precision fittings will save you time, space, and money when designing versatile, productive, trouble free, pneumatic circuits. Our endless variety of fittings insure that you find just the right “fit” when plumbing pneumatic circuits or assemblies. These fittings are small in size but large in performance, allowing for streamlining of pneumatic assemblies and eliminating the need for larger, more expensive, cumbersome fittings. In addintion, Clippard offers a variety of miniature hose and tubing from copper and nylon tubing to flexible urethane, and vinyl."                    
                     reverse
                 />
                 <ProductItems

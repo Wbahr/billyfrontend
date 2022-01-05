@@ -2,9 +2,7 @@ import React, { useEffect }  from 'react'
 import styled from 'styled-components'
 import AirlineLogo from '../../imgs/airline/airline_vector.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ButtonBlack } from 'styles/buttons'
 import OttoDrift from 'pageComponents/_common/ottoDrift'
-import { green, pink } from '@material-ui/core/colors'
 
 const Newsletter = styled.div`
 	display: flex;
@@ -282,8 +280,8 @@ export default function FooterComponent() {
                         <Item href="/search?searchTerm=hydraulics">Hydraulics</Item>
                         <Item href="/search?searchTerm=gear">Gears</Item>
                         <Item href="/search?searchTerm=tubing">Tubing</Item>
-                        <Item href="/categories/aluminum-structural-framing">Aluminum Framing</Item>
-                        <Item href="/categories/process-controls-components">Controls</Item>
+                        <Item href="/categories/ALUMINUM-STRUCTURAL-FRAMING-9">Aluminum Framing</Item>
+                        <Item href="/categories/PROCESS-CONTROL-COMPONENTS-11">Controls</Item>
                     </DivMenu>
 				
                     <DivSocial>

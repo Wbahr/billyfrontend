@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import AllCategories from './shopSubPages/allCategories'
 import AluminumStructuralFraming from './shopSubPages/framing'
 import AutomationAndControl from './shopSubPages/automationAndControl'
@@ -67,8 +66,4 @@ export default function ShopPage() {
             {pageComponent}
         </>
     )
-}
-
-ShopPage.propTypes = {
-    history: PropTypes.object.isRequired
 }

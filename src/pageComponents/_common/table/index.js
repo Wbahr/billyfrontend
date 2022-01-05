@@ -8,7 +8,7 @@ import {
     TableHead, TablePagination,
     TableRow,
     TableSortLabel
-} from '@material-ui/core'
+} from '@mui/material'
 import Loader from '../loader'
 import React from 'react'
 import styled from 'styled-components'
@@ -128,8 +128,8 @@ export default function DataGrid({ columns, data, loading, dense, stickyHeader }
                 count={data.length}
                 rowsPerPage={pageSize}
                 page={pageIndex}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
             />
         </PaperContainer>
     )

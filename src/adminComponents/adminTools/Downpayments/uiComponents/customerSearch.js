@@ -4,7 +4,7 @@ import Context from '../../../../setup/context'
 import DebounceInput from 'react-debounce-input'
 import { FormikStyleLabel } from '../../../../pageComponents/_common/formik/input_v2'
 import { useLazyQuery } from '@apollo/client'
-import { IMPERSONATION_SEARCH } from 'setup/providerGQL'
+import { IMPERSONATION_SEARCH } from '../../../../setup/providerGQL'
 
 const Container = styled.div`
     display: flex;
@@ -68,7 +68,7 @@ const DebounceInputStyle = {
     padding: '0px 8px',
 }
 
-export default function CustomerSearch(props) {
+export default function CustomerSearchWithImpersonation(props) {
     const { customer, setCustomer } = props
 
     const [impersonationTerm, setImpersonationTerm] = useState('')

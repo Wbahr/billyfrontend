@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CardSelect from './uiComponents/cardSelect'
-import CustomerSearch from './uiComponents/customerSearch'
-import Context from '../../../setup/context'
+import CustomerSearchWithImpersonation from './uiComponents/customerSearch'
+import Context from 'setup/context'
 import OrderSelect from './uiComponents/orderSelect'
 import { ButtonRed } from 'styles/buttons'
-import { GET_CHECKOUT_DATA, GET_ORDERS_DETAIL, ADD_PREPAYMENT } from '../../../setup/providerGQL'
+import { GET_CHECKOUT_DATA, GET_ORDERS_DETAIL, ADD_PREPAYMENT } from 'setup/providerGQL'
 import styled from 'styled-components'
 
 const Centered = styled.div`
@@ -43,7 +43,7 @@ const emptyPayment = {
 export default function AddDownpayment() {
     const context = useContext(Context)
     const elements = useElements()
-    const history = useHistory()
+    const navigate = useNavigate()
     const stripe = useStripe()
 
     const [cardIsValid, setCardIsValid] = useState(false)
@@ -138,7 +138,7 @@ export default function AddDownpayment() {
         onCompleted: result => {
             setRequestSending(false)
             if (result.addPrepayment.amountToCharge) {
-                history.push('/admin-dashboard/downpayments')
+                navigate('/admin-dashboard/downpayments')
             }
         }
     }) 
@@ -159,7 +159,7 @@ export default function AddDownpayment() {
         <Centered>
             <Container>
                 <Row>
-                    <CustomerSearch customer={customer} setCustomer={setCustomer} />
+                    <CustomerSearchWithImpersonation customer={customer} setCustomer={setCustomer} />
                     <OrderSelect orderNumber={{ value: payment.orderNumber, label: payment.orderNumber }} setOrderNumber={setOrderNumber} />
                 </Row>
                 <CardSelect 

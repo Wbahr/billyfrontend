@@ -8,7 +8,6 @@ import CheckoutProgress from './uiComponents/checkoutProgress'
 import { connect } from 'formik'
 import { useQuery } from '@apollo/client'
 import { Formik } from 'formik'
-import { ShippingScheduleForm } from './wizardSteps/shippingScheduleForm'
 import { ShipToForm } from './wizardSteps/shipToForm'
 import BillingInfoForm from './wizardSteps/billingInfoForm'
 import ConfirmationScreen from './wizardSteps/confirmationScreen'
@@ -21,13 +20,15 @@ import {
     defaultShipTo,
     transformForPaymentInfo
 } from './helpers'
-import { startOfTomorrow } from 'date-fns'
+import { startOfTomorrow, startOfToday, getDay, add } from 'date-fns'
+import { GET_CART_AVAIILABILITIES } from 'setup/gqlQueries/gqlCartQueries'
 import { GET_CHECKOUT_ITEM_DETAIL, GET_ITEM_CUSTOMER_PART_NUMBERS } from 'setup/gqlQueries/gqlItemQueries'
 import { GET_ITEM_PRICE, GET_TAX_RATE, GET_CHECKOUT_DATA, GET_PAYMENT_METHOD_INFO } from 'setup/providerGQL'
 import { shippingScheduleSchema, shipToSchema, airlineShipToSchema, getBillToSchema, confirmationSchema } from './helpers/validationSchema'
 import Loader from 'pageComponents/_common/loader'
 import { cartHasZeroPricedItem } from 'pageComponents/_common/helpers/generalHelperFunctions'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
+import { useLocation, useNavigate } from 'react-router'
 
 const DivContainer = styled.div`
   display: flex;
@@ -101,7 +102,7 @@ const Pformheader = styled.p`
   text-transform: uppercase;
 `
 
-function CheckoutPage({ history }) {
+function CheckoutPage() {
     const context = useContext(Context)
     const [checkoutDropdownData, setCheckoutDropdownData] = useState([])
     const [checkoutDropdownDataLabels, setCheckoutDropdownDataLabels] = useState([])
@@ -110,22 +111,38 @@ function CheckoutPage({ history }) {
     const [taxRate, setTaxRate] = useState(0)
     const [currentStep, setCurrentStep] = useState(0)
     const [validationSchema, setValidationSchema] = useState(null)
+    const [cartWithDates, setCartWithDates] = useState([])
+    
+    const today = startOfToday()
+    const tomorrow = startOfTomorrow()
+    const dayAfterTomorrow = add(tomorrow, { days: 1 })
+    const dayOfWeek = getDay(today)
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    const isQuote = location.pathname === '/create-quote'
 
     const [stepValidated, setStepValidated] = useState(
         {
             0: false,
-            1: history.location.pathname === '/create-quote',
+            1: isQuote,
             2: false
         }
     )
 
     useEffect(() => {
+
+        window.scrollTo({ top: 0 })
+
+    }, [])
+
+    useEffect(() => {
         if (!context.cart?.length) {
-            history.replace('/cart')
+            navigate('/cart', { replace: true })
         }
 
         if (context.userInfo?.isAirlineEngineerUser){
-            history.replace('/cart')
+            navigate('/cart', { replace: true })
         }
     }, [])
 
@@ -153,6 +170,31 @@ function CheckoutPage({ history }) {
     useEffect(() => {
         getCheckoutData()
     }, [context.impersonatedCompanyInfo])
+
+    const [getCartData] = useLazyQuery(GET_CART_AVAIILABILITIES, {
+        fetchPolicy: 'no-cache',
+        onCompleted: data => {
+            const { cartData } = data
+            const cartWithDates = context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: getRequestedDate(cartItem, cartData) }))
+            setCartWithDates(cartWithDates)
+        }
+    })
+
+    useEffect(() => {
+        if (context.cart?.length) {
+            const itemsAndQuantities = context.cart.map(({ invMastUid, quantity }) => ({ invMastUid, quantity: quantity }))
+            getCartData({ variables: { itemsAndQuantities } })
+        }
+    }, [context.cart])
+
+    function getRequestedDate(item, cartData) {
+        const itemAvailability = cartData?.availabilities.find(a => a.invMastUid === item.invMastUid)
+        if (itemAvailability.availability > 0) {
+            return dayOfWeek === 0 ? tomorrow : today
+        } else {
+            return dayOfWeek === 6 ? dayAfterTomorrow : tomorrow
+        }
+    }
 
     function yupSchema(requiresPONumber) {
         return {
@@ -216,13 +258,13 @@ function CheckoutPage({ history }) {
         contact: { ...defaultContact },
         schedule: {
             ...defaultQuote,
-            cartWithDates: context.cart?.map(cartItem => ({ ...cartItem, requestedShipDate: startOfTomorrow() })),
+            cartWithDates,
             shoppingCartToken: localStorage.getItem('shoppingCartToken'),
-            isQuote: history.location.pathname === '/create-quote'
+            isQuote: isQuote
         },
         shipto: {
             ...defaultShipTo,
-            selectedShipTo: -1,
+            selectedShipTo: 0,
             firstName: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.firstName || '',
             lastName: context.userInfo?.isImpersonatorUser  ? '' : loggedInUserContactInfo?.lastName || '',
             phone: context.userInfo?.isImpersonatorUser ? '' : loggedInUserContactInfo?.phoneNumber || '',
@@ -263,10 +305,11 @@ function CheckoutPage({ history }) {
                         {formikProps => (
                             <form name="checkoutForm" onSubmit={e => e.preventDefault()}>
                                 <FormContainer
+                                    isAirlineEmployee={context.userInfo?.isAirlineEmployee}
                                     isStepValid={stepValidated[currentStep]}
                                     updateZip={(shipToId, zipcode) => setTaxRateRequestInfo({ shipToId, zipcode })}
                                     {...{ ...formikProps, ...itemInfo, checkoutDropdownData, checkoutDropdownDataLabels,
-                                        history, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
+                                        isQuote, showPoOption, stepValidated, currentStep, setCurrentStep, validationSchema }}
                                 />
                             </form>
                         )}
@@ -276,7 +319,6 @@ function CheckoutPage({ history }) {
 
             <DivOrderTotalCol>
                 <CheckoutOrderSummary
-                    history={history}
                     currentStep={currentStep}
                     zipcode={taxRateRequestInfo?.zipcode || ''}
                     taxRate={taxRate}
@@ -302,31 +344,69 @@ const getFormStepComponent = currentStep => {
 
 
 const FormContainer = props => {
-    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, history } = props
+    const { currentStep, setCurrentStep, stepValidated, validationSchema, values: { billing: { cardType, paymentMethod } }, isQuote, isAirlineEmployee } = props
     const stripe = useStripe()
     const elements = useElements()
     const [paymentInfo, setPaymentInfo] = useState({})
     const [selectedCard, setSelectedCard] = useState('new_card')
     const [creditCardLoading, setCreditCardLoading] = useState(false)
+    const [cardIsValid, setCardIsValid] = useState()
     const [guestFetching, setGuestFetching] = useState(false)
     const { userInfo } = useContext(Context)
 
+    //Initializes the Saved Payment Methods for logged-in users
+    useEffect(() => {
+        if (userInfo) {
+            getPaymentInfo(transformForPaymentInfo(props.values))
+        }
+    }, [userInfo])
+
     const confirmCardSetup = (paymentInfo) => {
         if (cardType === 'new_card' && !creditCardLoading) {
-            setCreditCardLoading(true)
             const cardElement = elements.getElement(CardElement)
+
+            if (paymentInfo.paymentSystemCustomerId && paymentInfo.paymentMethodId && paymentInfo.paymentMethodId !== 'new_card') {
+                setCurrentStep(2)
+                return
+            }
+
+            setCreditCardLoading(true)
             stripe
                 .confirmCardSetup(paymentInfo.paymentSystemSecretKey, { payment_method: { card: cardElement } })
                 .then(data => {
-                    setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
-                    setSelectedCard(data.setupIntent.payment_method)
-                    setCurrentStep(2)
+
+                    if (data.error){
+                        setCreditCardLoading(false)
+                        alert(data.error.message)
+                        return
+                    }
+
+                    if (data.setupIntent) {
+                        setPaymentInfo({ ...paymentInfo, paymentMethodId: data.setupIntent.payment_method })
+                        setSelectedCard(data.setupIntent.payment_method)
+                        setCurrentStep(2)
+                    } else {
+                        alert('Payment setup unsuccessful')
+                    }
+                    
                     setCreditCardLoading(false)
                 })
         } else {
+
+            //If information is invalid, do not proceed.
+            if (selectedCard === 'new_card' || !selectedCard) {
+                return
+            }
+
             setPaymentInfo({ ...paymentInfo, paymentMethodId: selectedCard })
             setCurrentStep(2)
         }
+    }
+
+    const resetCard = () => {
+        setSelectedCard('new_card')
+        setCardIsValid(false) 
+        setPaymentInfo({}) 
     }
 
     const [getPaymentInfo] = useLazyQuery(GET_PAYMENT_METHOD_INFO, {
@@ -348,12 +428,17 @@ const FormContainer = props => {
     const handleMoveStep = nextStepIdx => {
         const prevStepKeys = Object.keys(stepValidated).filter(i => i < nextStepIdx)
         if (prevStepKeys.every(i => stepValidated[i]) && nextStepIdx !== currentStep) {
-            if (nextStepIdx === 2 && paymentMethod !== 'purchase_order') {
-                if (userInfo) {
-                    confirmCardSetup(paymentInfo)
-                } else {
+
+            //If the payment is with a credit card and we are going to the final
+            // step, setup the credit card payment information.
+            if (nextStepIdx === 2 && paymentMethod === 'credit_card' && !isQuote) {
+                
+                //Retireve the payment information if missing.
+                if (!paymentInfo.paymentSystemSecretKey || !paymentInfo.paymentMethodId || !paymentInfo.paymentSystemCustomerId) {
                     setGuestFetching(true)
                     handleGuestPayment(transformForPaymentInfo(props.values))
+                } else {
+                    confirmCardSetup(paymentInfo)
                 }
             } else {
                 setCurrentStep(nextStepIdx)
@@ -363,10 +448,11 @@ const FormContainer = props => {
 
     const FormStepComponent = getFormStepComponent(currentStep)
 
-    const stepLabels = ['Ship To', 'Bill To', history.location.pathname === '/create-quote' ? 'Quote Review' : 'Order Review']
+    const stepLabels = ['Ship To', 'Bill To', isQuote ? 'Quote Review' : 'Order Review']
 
     return (
         <>
+
             <Div>
                 <DivRow>
                     <FontAwesomeIcon icon="lock" />
@@ -377,7 +463,7 @@ const FormContainer = props => {
 
             <Container>
                 <Pformheader>{stepLabels[currentStep]}</Pformheader>
-                <FormStepComponent {...{ ...props, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, getPaymentInfo, handleMoveStep }}/>
+                <FormStepComponent {...{ ...props, isAirlineEmployee, paymentInfo, setPaymentInfo, selectedCard, setSelectedCard, creditCardLoading, guestFetching, handleMoveStep, cardIsValid, setCardIsValid, resetCard }}/>
                 {!validationSchema && <Loader />}
             </Container>
         </>

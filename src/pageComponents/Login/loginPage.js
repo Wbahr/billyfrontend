@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import AirlineLogoCircle from '../../imgs/airline/airline_circle_vector.png'
+import queryString from 'query-string'
 import { useLazyQuery } from '@apollo/client'
 import Context from '../../setup/context'
 import PasswordResetModal from '../_common/modals/resetPasswordModal'
 import { ErrorAlert, InfoAlert } from '../../styles/alerts'
 import { QUERY_LOGIN } from 'setup/providerGQL'
+import { useLocation, useNavigate } from 'react-router'
 
 const LoginPageContainer = styled.div`
   display: flex;
@@ -70,27 +72,29 @@ const Button = styled.button`
   }
 `
 
-export default function LoginPage(props) {
+export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [infoMessage, setInfoMessage] = useState('')
     const [showPasswordResetModal, setShowPasswordResetModal] = useState(false)
-
     const {
         userInfo,
         loginUser,
         setPasswordResetEmail
     } = useContext(Context)
-    const history = props.history
+    const navigate = useNavigate()
+    const location = useLocation()
 
+    const { passwordReset } = queryString.parse(location.search)
+    
     // Account for delays in loading context
     useEffect(() => {
         if (userInfo) {
-            const urlParams = new URLSearchParams(props.location.search)
+            const urlParams = new URLSearchParams(location.search)
             const redirect = urlParams.get('next')
             if (redirect) {
-                history.push(redirect)
+                navigate(redirect)
             }
         }
     }, [userInfo])
@@ -103,19 +107,19 @@ export default function LoginPage(props) {
                 // Need to reset password
                 if (requestData.isPasswordReset) {
                     setPasswordResetEmail(email)
-                    history.push('/password-reset')
+                    navigate('/password-reset')
                 } else {
                     const mergeToken = localStorage.getItem('shoppingCartToken')
                     localStorage.setItem('apiToken', requestData.authorizationInfo.token)
                     localStorage.setItem('refreshToken', requestData.authorizationInfo.refreshToken)
                     localStorage.setItem('userInfo', JSON.stringify(requestData.authorizationInfo.userInfo))
                     loginUser(requestData.authorizationInfo.userInfo, mergeToken)
-                    const urlParams = new URLSearchParams(props.location.search)
+                    const urlParams = new URLSearchParams(location.search)
                     const redirect = urlParams.get('next')
                     if (redirect) {
-                        history.push(redirect)
+                        navigate(redirect)
                     } else {
-                        history.push('/')
+                        navigate('/')
                     }
                 }
             } else {
@@ -124,7 +128,7 @@ export default function LoginPage(props) {
             }
         }
     })
-    
+
     const handleEnterPress = e => {
         if (e.key === 'Enter') handleSignIn()
     }
@@ -146,23 +150,31 @@ export default function LoginPage(props) {
             )
         }
     }
-	
+
     return (
         <LoginPageContainer>
-            <PasswordResetModal 
-                open={showPasswordResetModal} 
+            <PasswordResetModal
+                open={showPasswordResetModal}
                 hideModal={() => setShowPasswordResetModal(false)}
-                history={history}
             />
-            
-            <Img src={AirlineLogoCircle} height='75px' onClick={() => history.push('/')}/>
-            
+
+            <Img src={AirlineLogoCircle} height='75px' onClick={() => navigate('/')} />
+
             <P>Airline Hydraulics Login</P>
-            
-            {errorMessage.length > 0  && <ErrorAlert>{errorMessage}</ErrorAlert>}
-            {infoMessage.length > 0  && <InfoAlert>{infoMessage}</InfoAlert>}
+
+            {errorMessage.length > 0 && <ErrorAlert>{errorMessage}</ErrorAlert>}
+            {infoMessage.length > 0 && <InfoAlert>{infoMessage}</InfoAlert>}
+            {passwordReset === 'true' && (
+                <InfoAlert>
+                    <strong>
+                        <em>
+                            You have successfully reset your account password. Please log in with your new credentials below.
+                        </em>
+                    </strong>
+                </InfoAlert>
+            )}
             {error && <p>An unexpected error has occured. Please try again or contact us.</p>}
-            
+
             <DivInput>
                 <Label htmlFor='email'>Username or Email</Label>
                 <Input
@@ -172,7 +184,7 @@ export default function LoginPage(props) {
                     onKeyPress={handleEnterPress}
                 />
             </DivInput>
-            
+
             <DivInput>
                 <Label htmlFor='password'>Password</Label>
                 <Input
@@ -183,14 +195,14 @@ export default function LoginPage(props) {
                     onKeyPress={handleEnterPress}
                 />
             </DivInput>
-            
+
             <Button disabled={loading} onClick={handleSignIn}>
                 {loading ? 'Logging In...' : 'Log In'}
             </Button>
-            
+
             <A onClick={() => setShowPasswordResetModal(true)}>Forgot your Password?</A>
-            
-            <A onClick={() => history.push('/signup')}>Create an Account</A>
+
+            <A onClick={() => navigate('/signup')}>Create an Account</A>
         </LoginPageContainer>
     )
 }

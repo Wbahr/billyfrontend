@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { FRAGMENT_ITEM_AVAILABILITY } from 'setup/gqlFragments/gqlItemFragments'
+import { FRAGMENT_ITEM_AVAILABILITY } from './gqlFragments/gqlItemFragments'
 
 export const BEGIN_IMPERSONATION = gql`
   query BeginImpersonation ($customerId: Int){
@@ -77,7 +77,21 @@ export const SUBMIT_ORDER = gql`
   mutation SubmitOrder($order: OrderInputDataInputGraphType){
     submitOrder(orderInput: $order){
       webReferenceId
-      messages
+      errorMessages
+      checkoutType
+      affiliateName
+      itemsSubTotal
+      taxTotal
+      tariffTotal
+      shippingCost
+      grandTotal
+      cartItems {
+        invMastUid
+        itemCode
+        brand
+        unitPrice
+        quantity
+      }
     }
   }
 `
@@ -94,6 +108,7 @@ export const GET_ITEM_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
+      supplierId
       itemMedia {
         path
         sequence
@@ -125,6 +140,7 @@ export const GET_ITEMS_BY_ID = gql`
       tariff
       unitSizeMultiple
       availability
+      supplierId
       itemMedia {
         path
         sequence
@@ -153,6 +169,7 @@ export const UPDATE_CART = gql`
         isQuoteLineActive
         itemNotes
         quoteLineId
+        pricePage
         itemTotalTariff
         itemUnitPrice
         itemUnitPriceOriginal
@@ -164,6 +181,12 @@ export const UPDATE_CART = gql`
         promiseDate
         promiseDateOverride
         isDropship
+        purchaseOrderCost
+        supplierId
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
@@ -198,6 +221,10 @@ export const ADD_CATALOG_ITEM = gql`
         promiseDate
         promiseDateOverride
         isDropship
+        extraNotes {
+          note
+          targetAreas
+        }
       }
       subtotal
       tariff
@@ -247,7 +274,7 @@ export const GET_ORDERS = gql`
   query {
 		accountOrders{
 			orderNumber
-			orderDate
+      orderDate
 			poNo
 			buyer
 			total
@@ -257,6 +284,7 @@ export const GET_ORDERS = gql`
       quoteRefNo
       promiseDate
       jobName
+      webReferenceNumber
 			lineItems{
         invMastUid
         itemCode
@@ -266,6 +294,8 @@ export const GET_ORDERS = gql`
         quantityOrdered
         quantityOpen
         quoteLineId
+        promiseDate
+        disposition
 			}
       quoteHeader {
         quoteId
@@ -298,7 +328,8 @@ export const GET_ORDERS_DETAIL = gql`
 			shipToState
 			shipToZip
 			shipToCountry
-			quoteRefNo
+      quoteRefNo
+      webReferenceNumber
       quoteHeader {
         quoteId
         isCompleted
@@ -320,6 +351,7 @@ export const GET_ORDERS_DETAIL = gql`
         quoteLineId
         promiseDate
         aroDays
+        isCancelled
 				trackingNumbers{
 					carrierId
 					carrierName
@@ -358,66 +390,69 @@ export const GET_INVOICE = gql`
 	query AccountInvoiceDetail($invoiceNumber: String){
 		accountInvoiceDetail(invoiceNumber: $invoiceNumber){
 			invoiceNumber
-      orderNumber
-      orderDate
-      invoiceDate
-      termsDueDate
-      netDueDate
-      discDueDate
-      orderedBy
-      taker
-      poNo
-      totalAmount
-      status
-      discountAmount
-      amountPaid
-      isMine
-      terms
-      shipToName
-      shipToAddress1
-      shipToAddress2
-      shipToAddress3
-      shipToCity
-      shipToState
-      shipToZip
-      shipToCountry
-      billingName
-      billingAddress1
-      billingAddress2
-      billingAddress3
-      billingCity
-      billingState
-      billingZip
-      billingCountry
-      subTotal
-      totalTax
-      amountDue
-      lineItems {
-        invoiceLineId
-        orderNumber
-        isTaxItem
-        isOtherItem
-        invoiceLineType
-        invoiceLineNumber
-        orderLineNumber
-        quantityRequested
-        quantityShipped
-        pricingQuantity
-        invMastUid
-        itemCode
-        itemDescription
-        customerPartNumber
-        customerPartNumberId
-        unitPrice
-        itemTotalPrice
-        trackingNumbers{
-          trackingNumber
-          carrierId
-          carrierName
-          trackingUrl
-				}
-			}
-		}
+            orderNumber
+            orderDate
+            invoiceDate
+            termsDueDate
+            netDueDate
+            discDueDate
+            orderedBy
+            taker
+            poNo
+            totalAmount
+            freightAmount
+            status
+            discountAmount
+            amountPaid
+            isMine
+            terms
+            shipToName
+            shipToAddress1
+            shipToAddress2
+            shipToAddress3
+            shipToCity
+            shipToState
+            shipToZip
+            shipToCountry
+            deliveryInstructions
+            orderNote
+            billingName
+            billingAddress1
+            billingAddress2
+            billingAddress3
+            billingCity
+            billingState
+            billingZip
+            billingCountry
+            subTotal
+            totalTax
+            amountDue
+            lineItems {
+                invoiceLineId
+                orderNumber
+                isTaxItem
+                isOtherItem
+                invoiceLineType
+                invoiceLineNumber
+                orderLineNumber
+                quantityRequested
+                quantityShipped
+                pricingQuantity
+                invMastUid
+                itemCode
+                itemDescription
+                customerPartNumber
+                customerPartNumberId
+                unitPrice
+                itemTotalPrice
+                trackingNumbers {
+                    trackingNumber
+                    carrierId
+                    carrierName
+                    trackingUrl
+                }
+            }
+        }
 	}
 `
 
@@ -458,6 +493,7 @@ export const GET_ITEM_PRICE = gql`
       roundType
       unitSize
       spaType
+      listPrice
     }
   }
 `
@@ -965,11 +1001,76 @@ export const GET_PREPAYMENTS = gql`
 `
 
 export const ADVANCED_IMPERSONATION_SEARCH = gql`
-  query GetImpersonationCustomerList($searchString: String){
-    getImpersonationCustomerList(searchString: $searchString){
-      customerIdP21
-      name
+  query ImpersonationCustomerAdvancedSearch(
+    $searchType: String, 
+    $searchString: String,
+    $address1: String,
+    $city: String,
+    $stateCode: String,
+    $postalCode: String,
+    $contactFirstName: String,
+    $contactLastName: String
+  ){
+    customerImpersonateAdvancedSearch(
+      searchType: $searchType, 
+      searchString: $searchString,
+      address1: $address1,
+      city: $city,
+      stateCode: $stateCode,
+      postalCode: $postalCode,
+      contactFirstName: $contactFirstName,
+      contactLastName: $contactLastName){
+        customerIdP21
+        customerAirlineId
+        customerName
+        resultString
+    }
+  }
+`
+
+export const GET_HOMEPAGE = gql`
+  query getMarketingData{
+    getMarketingData {
+      html
+      href
+      imageUrl
+      key
+      sectionName
+      sort
+      title
+    }
+  }
+`
+
+export const GET_AUTHENTICATION_HEARTBEAT = gql`
+  mutation AuthenticationHeartbeat {
+    authenticationHeartbeat
+  }
+`
+
+export const CHECK_PO = gql`
+  query IsDuplicatePoNumber(
+    $poNumber: String
+  ) {
+    isDuplicatePurchaseOrderNumber(purchaseOrderNumber: $poNumber)
+  }
+`
+
+export const GET_SUPPLIERS = gql`
+  query allSuppliers {
+    allSuppliers {
       id
+      name
+    }
+  }
+`
+
+export const GET_ALERTS = gql`
+  query getWebsiteAlert{
+    websiteAlert {
+      style
+      noteHtml
+      endDate
     }
   }
 `
