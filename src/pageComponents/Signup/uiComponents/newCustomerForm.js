@@ -50,7 +50,7 @@ export default function NewCustomerForm({ useExpandedMode, newCustomerInitialVal
 export function mapToForm(data) {
     return {
         id: data.id || '',
-        customerId: String(data.customerIdP21 || ''),
+        customerId: parseInt(data.customerIdP21) || null,
         customerSearch: '',
         firstName: data.firstName || '',
         lastName: data.lastName || '',
@@ -89,7 +89,7 @@ export function mapToApi(values) {
         variables: {
             reg: {
                 id: nullIf(values.id),
-                customerIdP21: nullIf(values.customerId),
+                customerIdP21: parseInt(values.customerId) || null,
                 firstName: values.firstName,
                 lastName: values.lastName,
                 jobTitle: values.jobTitle,
