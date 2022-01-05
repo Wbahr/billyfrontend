@@ -191,7 +191,7 @@ export function ShipToForm(props) {
                 phone: contact?.phoneNumber || ''
             },
             contact: {
-                savedContact,
+                savedContact: parseInt(savedContact),
                 firstName: contact?.firstName || '',
                 lastName: contact?.lastName || '',
                 email: contact?.email || '',
