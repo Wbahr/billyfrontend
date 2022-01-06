@@ -98,6 +98,7 @@ export const InputType = ({ id, type, value, onChange, onSelectChange, options, 
     const handleBlur = () => setTouched(true)
     switch (type) {
     case 'select':
+        //Warning: When using this component, the selected value will come back as an object of the options list, not a scalar value.
         return (
             <Autocomplete
                 id={id}
@@ -106,10 +107,9 @@ export const InputType = ({ id, type, value, onChange, onSelectChange, options, 
                 autoHighlight
                 value={value || null}
                 onChange={onSelectChange}
-                options={options} //[{ label, value }]
-                getOptionLabel={option => option.label || ''}
-                getOptionSelected={(option, selected) => option.value === selected.value}
-                renderOption={renderOptionWithValue}
+                options={options} //must be an object with structure [{ label, value }]
+                getOptionLabel={(option) => option.label}
+                isOptionEqualToValue={(option, value) => option.value === value.value }
                 filterOptions={(options, state) => searchObjectArrayForString(options, state.inputValue)}
                 renderInput={(params) => (
                     <TextField {...params} {...rest} error={showError} helperText={errorText}/>
@@ -131,7 +131,7 @@ export const InputType = ({ id, type, value, onChange, onSelectChange, options, 
                 rows={rows || 3}
                 value={value}
                 onChange={onChange}
-                InputProps={{ inputProps: { shrink: !!value } }}
+                InputLabelProps={{shrink: !!value }}
                 error={showError}
                 helperText={errorText}
                 onBlur={handleBlur}
@@ -139,10 +139,3 @@ export const InputType = ({ id, type, value, onChange, onSelectChange, options, 
         )
     }
 }
-
-const renderOptionWithValue = ({ label, value }) => (
-    <Grid key={value} container>
-        <Text>{label}</Text>
-        <Text style={{ color: '#999', fontSize: 12, textAlign: 'left', margin: 'auto 10px' }}>{value}</Text>
-    </Grid>
-)
