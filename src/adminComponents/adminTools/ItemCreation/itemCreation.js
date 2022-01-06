@@ -122,7 +122,7 @@ export default function ItemCreationPage() {
     const maxPage = 3
     useQuery(QUERY_ITEM_CREATION_DATA, {
         onCompleted: data => {
-            setSupplierList(data.suppliers.map(({ __typename, ...o }) => ({ ...o, value: o.id, label: o.name })))
+            setSupplierList(data.suppliers.map(({ __typename, ...o }) => ({ ...o, value: o.id, label: o.name + ` (${o.id})` })))
             setUnitsOfMeasure(data.unitsOfMeasure.map(({ __typename, ...rest }) => rest))
             setProductGroups(data.productGroups.map(({ __typename, ...rest }) => rest))
         }
