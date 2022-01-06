@@ -78,10 +78,12 @@ export default function NewItemForm(props) {
             .min(5)
             .max(3000)
             .required(),
-        unitOfMeasure: Yup.string()
+        unitOfMeasure: Yup.object().shape({
+                value: Yup.string()
+            }).nullable()
+            .required()
             .label('Unit Of Measure')
-            .meta({ options: unitsOfMeasureList, type: 'select' })
-            .required(),
+            .meta({ options: unitsOfMeasureList, type: 'select' }),
         airlinePartCost: Yup.number()
             .label('Airline Cost')
             .min(0.01)
@@ -95,14 +97,18 @@ export default function NewItemForm(props) {
             .label('Tariff')
             .min(0)
             .max(9999999),
-        productGroup: Yup.string()
+        productGroup: Yup.object().shape({
+            value: Yup.number()
+            }).nullable()
+            .required()
             .label('Product Group')
-            .meta({ options: productGroupsList, type: 'select' })
-            .required(),
-        supplier: Yup.string()
+            .meta({ options: productGroupsList, type: 'select' }),
+        supplier: Yup.object().shape({
+                value: Yup.number()
+            }).nullable()
+            .required()
             .label('Supplier')
             .meta({ options: supplierList, type: 'select' })
-            .required()
     })
     
     const [executeCreateItem] = useMutation(CREATE_ITEM, {
